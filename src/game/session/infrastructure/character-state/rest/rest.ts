@@ -70,6 +70,24 @@ export async function applyLongRestState(input: {
   const deathSaves = resetDeathSaves();
   state.deathSaveSuccesses = deathSaves.deathSaveSuccesses;
   state.deathSaveFailures = deathSaves.deathSaveFailures;
+
+  if (character.speciesSlug) {
+    const inspirationRows = await dataSource.query<{ ok: number }[]>(
+      `SELECT 1 AS ok
+       FROM rpg.phb_effect e
+       JOIN rpg.phb_species sp
+         ON sp.id = e.owner_id AND e.owner_kind = 'species'
+       WHERE sp.slug = $1
+         AND e.kind = 'grant_inspiration'
+         AND e.trigger = 'on_rest_long'
+       LIMIT 1`,
+      [character.speciesSlug],
+    );
+    if (inspirationRows.length > 0) {
+      state.inspiration = true;
+    }
+  }
+
   await stateRepo.save(state);
 
   await recoverArtifactRandomSpellUses(dataSource, character.id);

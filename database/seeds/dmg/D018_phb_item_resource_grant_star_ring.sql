@@ -1,5 +1,6 @@
 -- DMG §0 #6: resource Anel das Estrelas Cadentes
 -- Ver docs/source/extracts/dmg/wiring-status.md
+-- Grants: SSOT em effects/E007 (species) / E012 (subclass) / E013 (item) / E00* feats
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES (
@@ -15,22 +16,4 @@ ON CONFLICT (slug) DO UPDATE SET
   item_id = EXCLUDED.item_id,
   min_level = EXCLUDED.min_level;
 
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
-  recover_one_on_short, recover_all_on_short, recover_all_on_long
-)
-SELECT
-  'item'::rpg.resource_owner_kind,
-  i.id,
-  rd.id,
-  1,
-  'fixed'::rpg.resource_max_formula,
-  6,
-  FALSE,
-  FALSE,
-  TRUE
-FROM rpg.phb_item i
-JOIN rpg.phb_resource_definition rd
-  ON rd.slug = 'starRingCharges' AND rd.item_id = i.id
-WHERE i.slug = 'anel-das-estrelas-cadentes'
-ON CONFLICT DO NOTHING;
+

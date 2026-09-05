@@ -15,6 +15,7 @@ import { CharacterResponseDto } from '../dto/character-response.dto';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/query/seed-starting-inventory.handler';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   AUTH_USER_MISSING_MESSAGE,
   assertAuthUserExists,
@@ -36,6 +37,7 @@ export class CreateCharacterHandler {
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
+    private readonly effectCatalog: LoadEffectCatalog,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -72,6 +74,7 @@ export class CreateCharacterHandler {
       catalogLookup: this.catalogLookup,
       sheetValidator: this.sheetValidator,
       dto,
+      effectCatalog: this.effectCatalog,
     });
 
     const sheetInput = toCreateSheetInput(dto, characterFeats);
@@ -82,6 +85,7 @@ export class CreateCharacterHandler {
       grantedSpellCatalog: this.grantedSpellCatalog,
       resolveSubclassOptionGrants: this.resolveSubclassOptionGrants,
       dataSource: this.dataSource,
+      effectCatalog: this.effectCatalog,
     });
 
     await this.sheetValidator.validateCreateRequiredFields(sheetInput, ctx);

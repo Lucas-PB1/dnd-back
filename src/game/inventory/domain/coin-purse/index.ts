@@ -22,6 +22,7 @@ export {
   purseToCopper,
   copperToPurse,
   halfCoinPurseValue,
+  applyPurchaseDiscount,
   assertCanDebitCoins,
   debitCoins,
   debitCoinsWithExchange,

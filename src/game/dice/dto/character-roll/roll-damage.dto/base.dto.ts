@@ -117,4 +117,49 @@ export class RollDamageBaseDto {
   @IsArray()
   @IsIn([...CUNNING_STRIKE_EFFECTS], { each: true })
   cunningStrikeEffects?: string[];
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Atacante Selvagem: rola o dano da arma duas vezes; API devolve ambas (escolha no cliente)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  savageAttacker?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Charger: +1d8 no dano (toggle auto-off); requer talento charger',
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargerStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Elemental Adept / damage_die_floor: faces 1 viram 2 nos dados de dano',
+  })
+  @IsOptional()
+  @IsBoolean()
+  damageDieFloor?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Marksman luck / damage_die_flip: virar o menor dado (lados > 4)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  damageDieFlip?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Pyromaniac / damage_die_explode: face máxima gera um dado extra',
+  })
+  @IsOptional()
+  @IsBoolean()
+  damageDieExplode?: boolean;
 }

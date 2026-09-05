@@ -1,7 +1,12 @@
 import { collectClassExtraSkillSlugs } from '../../validation/class-options/class-extra-skill-slots';
 import { collectSubclassBonusSkillSlugs } from '../../validation/class-options/subclass-option-effects';
 import {
-  FIXED_FEAT_SKILL_SLUGS,
+  expertiseSkillSlugsFromEffects,
+  fixedSkillSlugsFromEffects,
+  proficiencyOptionKeysFromEffects,
+} from '@game/effects';
+import type { CatalogEffect } from '@game/effects';
+import {
   PROF_OR_EXPERTISE_FEAT_OPTION_KEYS,
   SKILL_SPECIES_CHOICE_KINDS,
   type CharacterFeatLike,
@@ -11,18 +16,7 @@ import {
   type SpeciesChoiceLike,
 } from './types';
 
-function collectFixedFeatSkillSlugs(
-  characterFeats: readonly CharacterFeatLike[] | undefined,
-): string[] {
-  if (!characterFeats?.length) return [];
-  const slugs: string[] = [];
-  for (const feat of characterFeats) {
-    const fixed = FIXED_FEAT_SKILL_SLUGS[feat.featSlug];
-    if (fixed) slugs.push(...fixed);
-  }
-  return slugs;
-}
-
+/** @deprecated Prefira efeitos `grant_proficiency` do catálogo. */
 function isFeatSkillProficiencyOptionKey(optionKey: string): boolean {
   return (
     optionKey === 'newSkill' ||
@@ -32,12 +26,44 @@ function isFeatSkillProficiencyOptionKey(optionKey: string): boolean {
   );
 }
 
+function collectFixedFeatSkillSlugsFromEffects(
+  characterFeats: readonly CharacterFeatLike[] | undefined,
+  featEffects: readonly CatalogEffect[] | undefined,
+): string[] {
+  if (!characterFeats?.length || !featEffects?.length) return [];
+  return fixedSkillSlugsFromEffects(
+    featEffects,
+    characterFeats.map((feat) => feat.featSlug),
+  );
+}
+
+function collectExpertiseFeatSkillSlugsFromEffects(
+  characterFeats: readonly CharacterFeatLike[] | undefined,
+  featEffects: readonly CatalogEffect[] | undefined,
+): string[] {
+  if (!characterFeats?.length || !featEffects?.length) return [];
+  return expertiseSkillSlugsFromEffects(
+    featEffects,
+    characterFeats.map((feat) => feat.featSlug),
+  );
+}
+
 export function collectFeatSkillOptionSlugs(
   featOptions: readonly FeatOptionLike[] | undefined,
+  featEffects?: readonly CatalogEffect[],
 ): string[] {
   if (!featOptions?.length) return [];
   return featOptions
-    .filter((option) => isFeatSkillProficiencyOptionKey(option.optionKey))
+    .filter((option) => {
+      const effectKeys = proficiencyOptionKeysFromEffects({
+        effects: featEffects ?? [],
+        featSlug: option.featSlug,
+        proficiencyKind: 'skill',
+      });
+      return effectKeys.length
+        ? effectKeys.includes(option.optionKey)
+        : isFeatSkillProficiencyOptionKey(option.optionKey);
+    })
     .map((option) => option.valueId)
     .filter(Boolean);
 }
@@ -74,7 +100,7 @@ function collectPriorProficientSkillSlugs(input: SkillBonusSources): string[] {
       ...(input.classSkillSlugs ?? []),
       ...(input.backgroundSkillSlugs ?? []),
       ...collectSpeciesSkillSlugs(input.speciesChoices),
-      ...collectFeatSkillOptionSlugs(featOptions),
+      ...collectFeatSkillOptionSlugs(featOptions, input.featEffects),
       ...collectClassExtraSkillSlugs(input.classOptions),
       ...collectSubclassBonusSkillSlugs(input.subclassOptions),
     ]),
@@ -88,7 +114,10 @@ export function collectExpertiseSkillSlugs(
   const result = new Set<string>(
     collectClassExpertiseSkillSlugs(input.classOptions),
   );
-  const fixedFeatSkills = collectFixedFeatSkillSlugs(input.characterFeats);
+  const fixedFeatSkills = collectFixedFeatSkillSlugsFromEffects(
+    input.characterFeats,
+    input.featEffects,
+  );
 
   for (const option of input.featOptions ?? []) {
     if (option.optionKey === 'expertiseSkill' && option.valueId) {
@@ -107,6 +136,13 @@ export function collectExpertiseSkillSlugs(
     if (prior.has(skill)) result.add(skill);
   }
 
+  for (const skill of collectExpertiseFeatSkillSlugsFromEffects(
+    input.characterFeats,
+    input.featEffects,
+  )) {
+    if (prior.has(skill)) result.add(skill);
+  }
+
   return [...result];
 }
 
@@ -119,8 +155,12 @@ export function collectProficientSkillSlugs(
       (input.featOptions ?? []).filter((option) =>
         PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey),
       ),
+      input.featEffects,
     ),
-    ...collectFixedFeatSkillSlugs(input.characterFeats),
+    ...collectFixedFeatSkillSlugsFromEffects(
+      input.characterFeats,
+      input.featEffects,
+    ),
     ...collectClassExpertiseSkillSlugs(input.classOptions),
   ]);
   return [...set];

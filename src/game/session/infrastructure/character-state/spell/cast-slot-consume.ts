@@ -6,6 +6,7 @@ import type { EldritchFreeCastResolution } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog, hasSlotElevate, hasSlotReduce } from '@game/effects';
 import {
   consumeGrantedFreeCast,
   freeCastsRemaining,
@@ -14,7 +15,11 @@ import {
   CastSpellDto,
 } from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
-import { consumeSpellSlot, loadMaxSlots } from '../resources/spell-slots';
+import {
+  consumeSpellSlot,
+  loadMaxSlots,
+  recoverSpellSlot,
+} from '../resources/spell-slots';
 import {
   resolveGrantedFreeCastBudget,
 } from './cast-granted-economy';
@@ -36,6 +41,7 @@ export async function consumeNonItemCastCost(input: {
   eldritchFreeCast: EldritchFreeCastResolution | null;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   classSlots: Repository<VClassSpellSlots>;
   subclassSlots: Repository<VSubclassSpellSlots>;
   spendFreeCastResource: () => Promise<void>;
@@ -49,6 +55,7 @@ export async function consumeNonItemCastCost(input: {
     eldritchFreeCast,
     sheetRepository,
     grantedSpellCatalog,
+    effectCatalog,
     classSlots,
     subclassSlots,
   } = input;
@@ -71,6 +78,7 @@ export async function consumeNonItemCastCost(input: {
           dto.spellSlug,
           sheetRepository,
           grantedSpellCatalog,
+          effectCatalog,
         );
     if (budget.economy !== 'once_per_long_rest') {
       throw new BadRequestException(
@@ -120,12 +128,48 @@ export async function consumeNonItemCastCost(input: {
       character.level,
       character.subclassSlug,
     );
+    if (dto.flexElevateExtraSlots && dto.flexReduce) {
+      throw new BadRequestException(
+        'Flex elevate and reduce cannot be used together',
+      );
+    }
     slotLevelUsed = consumeSpellSlot(
       state,
       maxSlots,
       spellLevel,
       dto.slotLevel,
     );
+    if (dto.flexElevateExtraSlots || dto.flexReduce) {
+      const sheet = await sheetRepository.load(character.id);
+      const featSlugs = sheet.characterFeats.map((f) => f.featSlug);
+      const effects = await effectCatalog.load({
+        ownerKind: 'feat',
+        ownerSlugs: featSlugs,
+      });
+      if (dto.flexElevateExtraSlots) {
+        if (!hasSlotElevate(effects, featSlugs)) {
+          throw new BadRequestException(
+            'Flex elevate requires the Flex Caster feat',
+          );
+        }
+        for (let i = 0; i < dto.flexElevateExtraSlots; i += 1) {
+          consumeSpellSlot(state, maxSlots, spellLevel, slotLevelUsed);
+        }
+      }
+      if (dto.flexReduce) {
+        if (!hasSlotReduce(effects, featSlugs)) {
+          throw new BadRequestException(
+            'Flex reduce requires the Flex Caster feat',
+          );
+        }
+        if (slotLevelUsed !== spellLevel) {
+          throw new BadRequestException(
+            'Flex reduce requires casting at the spell base level',
+          );
+        }
+        recoverSpellSlot(state, 1);
+      }
+    }
   }
 
   return {

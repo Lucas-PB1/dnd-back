@@ -2,10 +2,16 @@ import type {
   FeatOptionDto,
   SpeciesChoiceDto,
 } from '@game/sheet/dto/character-sheet.dto';
+import type { CatalogEffect } from '@game/effects';
+import {
+  resolveCastMaxUses,
+  resolveFeatCastEconomyFromEffects,
+  resolveFeatFreeCastMaxUsesFromEffects,
+  resolveSpeciesSpellCastEconomyFromEffects,
+} from '@game/effects';
 import type {
   CharacterSpellSource,
   FeatGrantedSpellRow,
-  SpeciesGrantedSpellRow,
 } from './granted-spells/types';
 import { resolveFeatSlugForGrantedSpell } from './resolve-granted-spellcasting-ability';
 
@@ -15,34 +21,30 @@ export type CastEconomy = 'at_will' | 'once_per_long_rest' | 'slot_only';
 export const GREATER_FREYR_FEAT_SLUG = 'greater-blessing-of-freyr-and-freyja';
 export const CURAR_FERIMENTOS_SPELL_SLUG = 'curar-ferimentos';
 
-const SPECIES_CHOICE_KINDS_FOR_LINEAGE = new Set([
-  'elf_lineage',
-  'gnome_lineage',
-  'infernal_legacy',
-]);
-
-function matchingSpeciesUnlockLevel(
-  spellSlug: string,
-  speciesSlug: string | undefined,
-  speciesChoices: readonly SpeciesChoiceDto[] | undefined,
-  catalogRows: readonly SpeciesGrantedSpellRow[],
-): number | null {
-  if (!speciesSlug) return null;
-  let best: number | null = null;
-  for (const row of catalogRows) {
-    if (row.speciesSlug !== speciesSlug || row.spellSlug !== spellSlug) continue;
-    if (row.choiceKind == null) {
-      best = best == null ? row.unlockLevel : Math.max(best, row.unlockLevel);
-      continue;
-    }
-    if (!SPECIES_CHOICE_KINDS_FOR_LINEAGE.has(row.choiceKind)) continue;
-    const selected = speciesChoices?.find((c) => c.choiceKind === row.choiceKind)
-      ?.choiceSlug;
-    if (selected === row.choiceSlug) {
-      best = best == null ? row.unlockLevel : Math.max(best, row.unlockLevel);
-    }
+function isSpeciesChoiceCantrip(input: {
+  spellSlug: string;
+  speciesSlug?: string;
+  speciesChoices?: readonly SpeciesChoiceDto[];
+}): boolean {
+  if (input.speciesSlug === 'elf') {
+    const lineage = input.speciesChoices?.find(
+      (c) => c.choiceKind === 'elf_lineage',
+    )?.choiceSlug;
+    const cantrip = input.speciesChoices?.find(
+      (c) => c.choiceKind === 'high_elf_cantrip',
+    )?.choiceSlug;
+    if (lineage === 'high-elf' && cantrip === input.spellSlug) return true;
   }
-  return best;
+  if (input.speciesSlug === 'bearfolk') {
+    const lineage = input.speciesChoices?.find(
+      (c) => c.choiceKind === 'bearfolk_lineage',
+    )?.choiceSlug;
+    const cantrip = input.speciesChoices?.find(
+      (c) => c.choiceKind === 'andari_druid_cantrip',
+    )?.choiceSlug;
+    if (lineage === 'andari' && cantrip === input.spellSlug) return true;
+  }
+  return false;
 }
 
 function featOptionKeyForSpell(
@@ -61,13 +63,27 @@ function featOptionKeyForSpell(
     featFixedSpells,
   );
   if (!feat) return null;
-  // Fixed catalog grants (misty step etc.) are typically once per long rest free.
   return 'bonusSpell';
+}
+
+function featSlugForSpell(
+  spellSlug: string,
+  featOptions: readonly FeatOptionDto[] | undefined,
+  featFixedSpells: readonly FeatGrantedSpellRow[],
+): string | null {
+  for (const option of featOptions ?? []) {
+    if (option.valueId === spellSlug) return option.featSlug;
+  }
+  return (
+    resolveFeatSlugForGrantedSpell(spellSlug, featOptions, featFixedSpells)
+      ?.featSlug ?? null
+  );
 }
 
 /**
  * Economia de conjuração para magias concedidas (domain rules PHB 2024).
- * Cantrips → at_will; lineage L3+ e firstLevel/bonusSpell → once_per_long_rest.
+ * Espécie: `phb_effect` cast_economy (+ truques de escolha Alto Elfo/Andari).
+ * Feat: preferência efeitos; fallback heurística por optionKey.
  */
 export function resolveGrantedSpellCastEconomy(input: {
   spellSlug: string;
@@ -76,7 +92,8 @@ export function resolveGrantedSpellCastEconomy(input: {
   featFixedSpells?: readonly FeatGrantedSpellRow[];
   speciesSlug?: string;
   speciesChoices?: readonly SpeciesChoiceDto[];
-  speciesCatalog?: readonly SpeciesGrantedSpellRow[];
+  featEffects?: readonly CatalogEffect[];
+  speciesEffects?: readonly CatalogEffect[];
 }): CastEconomy {
   const source = input.source ?? 'class';
 
@@ -90,6 +107,20 @@ export function resolveGrantedSpellCastEconomy(input: {
       input.featOptions,
       input.featFixedSpells ?? [],
     );
+    const featSlug = featSlugForSpell(
+      input.spellSlug,
+      input.featOptions,
+      input.featFixedSpells ?? [],
+    );
+    if (featSlug && input.featEffects?.length) {
+      const fromEffect = resolveFeatCastEconomyFromEffects({
+        effects: input.featEffects,
+        featSlug,
+        optionKey: key,
+      });
+      if (fromEffect) return fromEffect;
+    }
+    // @deprecated Preferir phb_effect cast_economy quando o optionKey está coberto.
     if (key === 'cantrip1' || key === 'cantrip2') return 'at_will';
     if (
       key === 'firstLevelSpell' ||
@@ -103,15 +134,14 @@ export function resolveGrantedSpellCastEconomy(input: {
   }
 
   if (source === 'species') {
-    const unlock = matchingSpeciesUnlockLevel(
-      input.spellSlug,
-      input.speciesSlug,
-      input.speciesChoices,
-      input.speciesCatalog ?? [],
-    );
-    if (unlock == null) return 'slot_only';
-    if (unlock <= 1) return 'at_will';
-    if (unlock >= 3) return 'once_per_long_rest';
+    if (input.speciesEffects?.length) {
+      const fromEffect = resolveSpeciesSpellCastEconomyFromEffects({
+        effects: input.speciesEffects,
+        spellSlug: input.spellSlug,
+      });
+      if (fromEffect) return fromEffect.economy;
+    }
+    if (isSpeciesChoiceCantrip(input)) return 'at_will';
     return 'slot_only';
   }
 
@@ -123,9 +153,35 @@ export function freeCastMaxUses(input: {
   economy: CastEconomy;
   spellSlug: string;
   featSlug?: string | null;
+  optionKey?: string | null;
   proficiencyBonus?: number;
+  featEffects?: readonly CatalogEffect[];
+  speciesEffects?: readonly CatalogEffect[];
 }): number {
   if (input.economy !== 'once_per_long_rest') return 0;
+  if (input.featSlug && input.featEffects?.length && input.optionKey) {
+    const fromEffect = resolveFeatFreeCastMaxUsesFromEffects({
+      effects: input.featEffects,
+      featSlug: input.featSlug,
+      optionKey: input.optionKey,
+      proficiencyBonus: input.proficiencyBonus ?? 1,
+    });
+    if (fromEffect != null) return fromEffect;
+  }
+  if (input.speciesEffects?.length) {
+    const sat = resolveSpeciesSpellCastEconomyFromEffects({
+      effects: input.speciesEffects,
+      spellSlug: input.spellSlug,
+    });
+    if (sat) {
+      return resolveCastMaxUses({
+        economy: sat.economy,
+        usesFormula: sat.usesFormula,
+        fixedUses: sat.fixedUses,
+        proficiencyBonus: input.proficiencyBonus ?? 1,
+      });
+    }
+  }
   if (
     input.featSlug === GREATER_FREYR_FEAT_SLUG &&
     input.spellSlug === CURAR_FERIMENTOS_SPELL_SLUG
@@ -134,7 +190,6 @@ export function freeCastMaxUses(input: {
   }
   return 1;
 }
-
 export function freeCastsRemaining(
   economy: CastEconomy,
   spellSlug: string,

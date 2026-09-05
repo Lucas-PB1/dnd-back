@@ -29,4 +29,8 @@ export type CharacterResourceSpender = {
     character: PlayerCharacter,
     key: string,
   ): Promise<void>;
+  /** Lê inspiração na ficha de sessão. */
+  getInspiration(character: PlayerCharacter): Promise<boolean>;
+  /** Persiste inspiração na ficha de sessão. */
+  setInspiration(character: PlayerCharacter, value: boolean): Promise<void>;
 };

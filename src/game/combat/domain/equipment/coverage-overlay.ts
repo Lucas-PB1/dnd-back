@@ -1,10 +1,9 @@
-import { formatSigned } from '../weapon-attacks/weapon-attack-predicates';
+import { formatSigned } from "../weapon-attacks/weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttack,
-} from '../weapon-attacks/weapon-attack.types';
+} from "../weapon-attacks/weapon-attack.types";
 
-/** Aplica bônus de cobertura DMG por peça (após encanto Valdas). */
 export function applyCoverageBonusToAttack(
   piece: EquippedWeaponPiece,
   attack: WeaponAttack,

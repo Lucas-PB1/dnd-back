@@ -21,8 +21,64 @@ import {
   piecesFromInventory,
 } from './build-pieces';
 import type { WeaponAttackResolveContext } from './types';
+import {
+  grantedWeaponPropertySlugsFromEffects,
+  hasVersatileOneHandFullDamage,
+  overrideWeaponRangeFtFromEffects,
+} from '@game/effects';
 
 export type { WeaponAttackResolveContext } from './types';
+
+function applyFeatWeaponMerges(
+  pieces: EquippedWeaponPiece[],
+  context: WeaponAttackResolveContext,
+): EquippedWeaponPiece[] {
+  const effects = context.featEffects ?? [];
+  const featSlugs = context.featSlugs ?? [];
+  if (effects.length === 0 || featSlugs.length === 0) return pieces;
+
+  const granted = grantedWeaponPropertySlugsFromEffects(effects, featSlugs);
+  const rangeOverride = overrideWeaponRangeFtFromEffects(effects, featSlugs);
+  const versatileFull = hasVersatileOneHandFullDamage(effects, featSlugs);
+
+  return pieces.map((piece) => {
+    const propertySlugs = [...piece.propertySlugs];
+    for (const prop of granted) {
+      if (
+        prop === 'returning' &&
+        propertySlugs.includes('thrown') &&
+        !propertySlugs.includes('returning')
+      ) {
+        propertySlugs.push('returning');
+      }
+      if (
+        prop === 'light' &&
+        propertySlugs.includes('versatile') &&
+        !propertySlugs.includes('light')
+      ) {
+        propertySlugs.push('light');
+      }
+    }
+    let versatileDamage = piece.versatileDamage;
+    if (versatileFull && piece.versatileDamage) {
+      // Empunhadura Expandida: 1H usa dano entre parênteses — sinaliza via property
+      if (!propertySlugs.includes('versatile-full-1h')) {
+        propertySlugs.push('versatile-full-1h');
+      }
+      versatileDamage = piece.versatileDamage;
+    }
+    return {
+      ...piece,
+      propertySlugs,
+      versatileDamage,
+      ...(rangeOverride && propertySlugs.includes('thrown')
+        ? {
+            /* alcance tipado fica na note de combate; peças não têm rangeFt hoje */
+          }
+        : {}),
+    };
+  });
+}
 
 @Injectable()
 export class ResolveEquippedWeaponAttacks {
@@ -89,6 +145,8 @@ export class ResolveEquippedWeaponAttacks {
       return [];
     }
 
+    const mergedPieces = applyFeatWeaponMerges(pieces, context);
+
     const weaponProficiencySlugs = [
       ...(await this.loadWeaponProficiencySlugs(context.classSlug)),
       ...extraWeaponProficiencyFromClassOrder(
@@ -96,7 +154,7 @@ export class ResolveEquippedWeaponAttacks {
         context.classOptions,
       ),
     ];
-    return computeWeaponAttacks(scores, pieces, {
+    return computeWeaponAttacks(scores, mergedPieces, {
       proficiencyBonus: context.proficiencyBonus,
       weaponProficiencySlugs,
       featSlugs: context.featSlugs,
@@ -111,6 +169,8 @@ export class ResolveEquippedWeaponAttacks {
       subclassSlug: context.subclassSlug,
       rageActive: context.rageActive,
       recklessActive: context.recklessActive,
+      unarmedDamageDie: context.unarmedDamageDie,
+      featEffects: context.featEffects,
     });
   }
 

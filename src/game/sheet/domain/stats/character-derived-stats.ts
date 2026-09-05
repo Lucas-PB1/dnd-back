@@ -9,6 +9,7 @@ import {
   skillCheckBonus,
   skillProficiencyRank,
 } from './character-check-bonuses';
+import type { CatalogEffect } from '@game/effects';
 
 export { computeAbilityModifiers };
 export type { AbilityModifiers };
@@ -30,6 +31,7 @@ export function computePassivePerception(
       valueId: string;
     }[];
     characterFeats?: readonly { featSlug: string }[];
+    featEffects?: readonly CatalogEffect[];
     classOptions?: readonly { optionKey: string; valueId: string }[];
     subclassOptions?: readonly { optionKey: string; valueId: string }[];
     classSlug?: string | null;
@@ -66,6 +68,7 @@ export function computeDerivedStats(input: {
     valueId: string;
   }[];
   characterFeats?: readonly { featSlug: string }[];
+  featEffects?: readonly CatalogEffect[];
   classOptions?: readonly { optionKey: string; valueId: string }[];
   subclassOptions?: readonly { optionKey: string; valueId: string }[];
   classSlug?: string | null;
@@ -82,6 +85,7 @@ export function computeDerivedStats(input: {
         speciesChoices: input.speciesChoices,
         featOptions: input.featOptions,
         characterFeats: input.characterFeats,
+        featEffects: input.featEffects,
         classOptions: input.classOptions,
         subclassOptions: input.subclassOptions,
         classSlug: input.classSlug,

@@ -16,7 +16,6 @@ export function mergeCharacterSpellsWithGrantedSources(
   const level = context.level ?? 1;
   const previousLevel = context.previousLevel ?? level;
   const featFixed = context.featFixedSpells ?? [];
-  const speciesCatalog = context.speciesCatalog ?? [];
   const subclassGrants = context.subclassGrantedSpells ?? [];
   const classGrants = context.classGrantedSpells ?? [];
 
@@ -30,7 +29,7 @@ export function mergeCharacterSpellsWithGrantedSources(
       context.speciesSlug,
       context.speciesChoices,
       level,
-      speciesCatalog,
+      context.speciesEffects ?? [],
     ),
     collectGrantedSpellSlugsAtLevel(level, subclassGrants),
     collectGrantedSpellSlugsAtLevel(level, classGrants),
@@ -46,7 +45,7 @@ export function mergeCharacterSpellsWithGrantedSources(
       context.previousSpeciesSlug,
       context.previousSpeciesChoices,
       previousLevel,
-      speciesCatalog,
+      context.previousSpeciesEffects ?? context.speciesEffects ?? [],
     ),
     collectGrantedSpellSlugsAtLevel(
       previousLevel,

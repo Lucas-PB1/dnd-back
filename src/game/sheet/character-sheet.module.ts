@@ -19,6 +19,7 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
 import { SpellcastingModule } from '../spellcasting/spellcasting.module';
+import { EffectsModule } from '../effects/effects.module';
 import { PlayerCharacterSkill } from './infrastructure/player-character-skill.entity';
 import {
   PlayerCharacterEquipment,
@@ -109,6 +110,7 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
     forwardRef(() => CampaignModule),
     CombatModule,
     SpellcastingModule,
+    EffectsModule,
   ],
   controllers: [CharactersController, CharacterThreadController],
   providers: [

@@ -57,4 +57,15 @@ export class CharacterRollResponseDto {
     description: 'Ataque bloqueado por cobertura total (sem rolagem)',
   })
   blocked?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Atacante Selvagem: segunda rolagem de dano da arma (jogador escolhe)',
+    type: 'array',
+  })
+  alternateRolls?: Array<{
+    expression: string;
+    total: number;
+    rolls: number[];
+  }>;
 }

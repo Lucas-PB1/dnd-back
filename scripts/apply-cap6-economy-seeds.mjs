@@ -14,6 +14,7 @@ if (!url) {
 
 const files = [
   'database/seeds/grim-hollow/J061_phb_resource_ghpg_cap6_transformations.sql',
+  'database/seeds/effects/E008_ghpg_transform.sql',
   'database/seeds/combat/C078_phb_feat_economy_ghpg_cap6_transformations.sql',
 ];
 

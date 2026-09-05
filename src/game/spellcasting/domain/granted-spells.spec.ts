@@ -1,10 +1,10 @@
+import type { CatalogEffect } from '@game/effects';
 import {
   annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
   mergeCharacterSpellsWithGrantedSources,
   type FeatGrantedSpellRow,
-  type SpeciesGrantedSpellRow,
 } from './granted-spells';
 
 const FEAT_FIXED: FeatGrantedSpellRow[] = [
@@ -12,91 +12,73 @@ const FEAT_FIXED: FeatGrantedSpellRow[] = [
   { featSlug: 'shadow-touched', spellSlug: 'invisibilidade' },
 ];
 
-const SPECIES_CATALOG: SpeciesGrantedSpellRow[] = [
-  {
-    speciesSlug: 'aasimar',
-    choiceKind: null,
-    choiceSlug: null,
-    unlockLevel: 1,
-    spellSlug: 'luz',
-  },
-  {
-    speciesSlug: 'tiefling',
-    choiceKind: null,
-    choiceSlug: null,
-    unlockLevel: 1,
-    spellSlug: 'taumaturgia',
-  },
-  {
-    speciesSlug: 'tiefling',
-    choiceKind: 'infernal_legacy',
-    choiceSlug: 'infernal',
-    unlockLevel: 1,
-    spellSlug: 'raio-de-fogo',
-  },
-  {
-    speciesSlug: 'tiefling',
-    choiceKind: 'infernal_legacy',
-    choiceSlug: 'infernal',
-    unlockLevel: 3,
-    spellSlug: 'repreensao-diabolica',
-  },
-  {
-    speciesSlug: 'tiefling',
-    choiceKind: 'infernal_legacy',
-    choiceSlug: 'infernal',
-    unlockLevel: 5,
-    spellSlug: 'escuridao',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'drow',
-    unlockLevel: 1,
-    spellSlug: 'luzes-dancantes',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'drow',
-    unlockLevel: 3,
-    spellSlug: 'fogo-das-fadas',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'drow',
-    unlockLevel: 5,
-    spellSlug: 'escuridao',
-  },
-  {
-    speciesSlug: 'gnome',
-    choiceKind: 'gnome_lineage',
-    choiceSlug: 'forest-gnome',
-    unlockLevel: 1,
-    spellSlug: 'ilusao-menor',
-  },
-  {
-    speciesSlug: 'gnome',
-    choiceKind: 'gnome_lineage',
-    choiceSlug: 'forest-gnome',
-    unlockLevel: 1,
-    spellSlug: 'falar-com-animais',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'high-elf',
-    unlockLevel: 1,
-    spellSlug: 'prestidigitacao-arcana',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'high-elf',
-    unlockLevel: 3,
-    spellSlug: 'detectar-magia',
-  },
+function grantSpellEffect(
+  ownerSlug: string,
+  spellSlug: string,
+  unlockLevel: number,
+): CatalogEffect {
+  return {
+    id: `${ownerSlug}-${spellSlug}-${unlockLevel}`,
+    kind: 'grant_spell',
+    ownerKind: 'species',
+    ownerId: '1',
+    ownerSlug,
+    trigger: 'on_build',
+    unlockLevel,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: {
+      spellId: '1',
+      spellSlug,
+      optionKey: null,
+      spellLevel: unlockLevel <= 1 ? 0 : 1,
+    },
+    castEconomy: null,
+    numeric: null,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
+
+/** Efeitos já gated (como `loadGatedSpeciesEffects` devolveria). */
+const AASIMAR_EFFECTS = [grantSpellEffect('aasimar', 'luz', 1)];
+const TIEFLING_INFERNAL_EFFECTS = [
+  grantSpellEffect('tiefling', 'taumaturgia', 1),
+  grantSpellEffect('tiefling', 'raio-de-fogo', 1),
+  grantSpellEffect('tiefling', 'repreensao-diabolica', 3),
+  grantSpellEffect('tiefling', 'escuridao', 5),
+];
+const ELF_DROW_EFFECTS = [
+  grantSpellEffect('elf', 'luzes-dancantes', 1),
+  grantSpellEffect('elf', 'fogo-das-fadas', 3),
+  grantSpellEffect('elf', 'escuridao', 5),
+];
+const ELF_HIGH_EFFECTS = [
+  grantSpellEffect('elf', 'prestidigitacao-arcana', 1),
+  grantSpellEffect('elf', 'detectar-magia', 3),
+];
+const GNOME_FOREST_EFFECTS = [
+  grantSpellEffect('gnome', 'ilusao-menor', 1),
+  grantSpellEffect('gnome', 'falar-com-animais', 1),
 ];
 
 describe('granted-spells', () => {
@@ -224,12 +206,12 @@ describe('granted-spells', () => {
   });
 
   describe('collectSpeciesGrantedSpellSlugs', () => {
-    it('grants aasimar light cantrip from catalog', () => {
+    it('grants aasimar light cantrip from effects', () => {
       const slugs = collectSpeciesGrantedSpellSlugs(
         'aasimar',
         [],
         1,
-        SPECIES_CATALOG,
+        AASIMAR_EFFECTS,
       );
       expect([...slugs]).toEqual(['luz']);
     });
@@ -242,7 +224,7 @@ describe('granted-spells', () => {
         'tiefling',
         choices,
         1,
-        SPECIES_CATALOG,
+        TIEFLING_INFERNAL_EFFECTS,
       );
       expect([...lv1].sort()).toEqual(['raio-de-fogo', 'taumaturgia']);
 
@@ -250,7 +232,7 @@ describe('granted-spells', () => {
         'tiefling',
         choices,
         5,
-        SPECIES_CATALOG,
+        TIEFLING_INFERNAL_EFFECTS,
       );
       expect([...lv5].sort()).toEqual([
         'escuridao',
@@ -263,10 +245,10 @@ describe('granted-spells', () => {
     it('gates elf lineage spells by level', () => {
       const choices = [{ choiceKind: 'elf_lineage', choiceSlug: 'drow' }];
       expect([
-        ...collectSpeciesGrantedSpellSlugs('elf', choices, 1, SPECIES_CATALOG),
+        ...collectSpeciesGrantedSpellSlugs('elf', choices, 1, ELF_DROW_EFFECTS),
       ]).toEqual(['luzes-dancantes']);
       expect([
-        ...collectSpeciesGrantedSpellSlugs('elf', choices, 3, SPECIES_CATALOG),
+        ...collectSpeciesGrantedSpellSlugs('elf', choices, 3, ELF_DROW_EFFECTS),
       ].sort()).toEqual(['fogo-das-fadas', 'luzes-dancantes']);
     });
 
@@ -275,7 +257,7 @@ describe('granted-spells', () => {
         'gnome',
         [{ choiceKind: 'gnome_lineage', choiceSlug: 'forest-gnome' }],
         1,
-        SPECIES_CATALOG,
+        GNOME_FOREST_EFFECTS,
       );
       expect([...forest].sort()).toEqual(['falar-com-animais', 'ilusao-menor']);
     });
@@ -285,7 +267,7 @@ describe('granted-spells', () => {
         'elf',
         [{ choiceKind: 'elf_lineage', choiceSlug: 'high-elf' }],
         1,
-        SPECIES_CATALOG,
+        ELF_HIGH_EFFECTS,
       );
       expect([...defaultSlugs]).toEqual(['prestidigitacao-arcana']);
 
@@ -296,9 +278,19 @@ describe('granted-spells', () => {
           { choiceKind: 'high_elf_cantrip', choiceSlug: 'raio-de-fogo' },
         ],
         3,
-        SPECIES_CATALOG,
+        ELF_HIGH_EFFECTS,
       );
       expect([...swapped].sort()).toEqual(['detectar-magia', 'raio-de-fogo']);
+    });
+
+    it('uses grant_spell effects only (no MV fallback)', () => {
+      const slugs = collectSpeciesGrantedSpellSlugs(
+        'elf',
+        [{ choiceKind: 'elf_lineage', choiceSlug: 'drow' }],
+        1,
+        [grantSpellEffect('elf', 'luzes-dancantes', 1)],
+      );
+      expect([...slugs]).toEqual(['luzes-dancantes']);
     });
 
     it('adds Andari Druid cantrip when andari_druid_cantrip is chosen', () => {
@@ -413,7 +405,8 @@ describe('granted-spells', () => {
             { choiceKind: 'elf_lineage', choiceSlug: 'drow' },
           ],
           previousLevel: 2,
-          speciesCatalog: SPECIES_CATALOG,
+          speciesEffects: ELF_DROW_EFFECTS,
+          previousSpeciesEffects: ELF_DROW_EFFECTS,
         },
       );
 
@@ -444,7 +437,8 @@ describe('granted-spells', () => {
           previousSpeciesSlug: 'aasimar',
           previousSpeciesChoices: [],
           previousLevel: 1,
-          speciesCatalog: SPECIES_CATALOG,
+          speciesEffects: AASIMAR_EFFECTS,
+          previousSpeciesEffects: AASIMAR_EFFECTS,
           featFixedSpells: FEAT_FIXED,
         },
       );

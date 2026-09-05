@@ -2,6 +2,7 @@
  * Smoke: catálogo feat economy + personagem com Lucky (se existir).
  * Uso: npx jest --config ./test/jest-e2e.config.js --runInBand smoke-feat-economy
  */
+import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
@@ -78,9 +79,13 @@ describe('smoke feat combat economy', () => {
 
     const grants = await db.query<{ slug: string }[]>(
       `SELECT rd.slug
-       FROM rpg.phb_resource_grant g
-       JOIN rpg.phb_resource_definition rd ON rd.id = g.resource_id
-       WHERE g.owner_kind = 'feat' AND rd.slug = 'luckPoints'`,
+       FROM rpg.phb_effect e
+       JOIN rpg.phb_feat f ON f.id = e.owner_id AND e.owner_kind = 'feat'
+       JOIN rpg.phb_effect_resource er ON er.effect_id = e.id
+       JOIN rpg.phb_resource_definition rd ON rd.id = er.resource_id
+       WHERE e.kind = 'grant_resource'
+         AND f.slug = 'lucky'
+         AND rd.slug = 'luckPoints'`,
     );
     expect(grants.length).toBe(1);
   });

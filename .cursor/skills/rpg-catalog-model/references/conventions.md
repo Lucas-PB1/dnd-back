@@ -13,7 +13,7 @@
 `created_at`, `updated_at` em: spell, class, subclass, species, background, item
 
 ## ENUMs (schema rpg)
-Ver `database/migrations/010_types/002_types.sql`
+Ver `database/baseline/001_full_schema.sql` (enums).
 
 ## Seeds
 - `database/seeds/000_truncate.sql` — ordem FK-safe

@@ -1,26 +1,35 @@
 # Ordem dos seeds
 
-1. `000_truncate.sql`
-2. `phb/S000`–`S080` (`S000` = edição PHB; resto catálogo)
-3. `subclass/S001`–`S007`
-4. `valdas/V001`–`V023`
-5. `valdas-gunslinger/G001`–`G028`
-6. `valdas-player-pack-2/P001`–`P014`
-7. `steinhardt-eldritch-hunt/H001`–`H025` — Steinhardt Eldritch Hunt Player Pack (subclasses, magias, feats, backgrounds, species, itens, resources)
-8. `northlands-heroes/N001`–`N035` — Northlands (Waves 1–4 + Cap. 5 + Blessings/Eir/Greater/Masterwork/Giantkin FKs)
-9. `dmg/` — itens mágicos DMG 2024
-10. `combat/C001`–`C056` — catálogo mecânico de combate (manobras, Golpe Astuto, economy/painéis, Eir, …)
+Aplicados por `scripts/run-seeds.mjs` na ordem de **packs** (não lexicográfica pura entre pastas):
 
-Packs aplicados nesta ordem (Gunslinger depende de magias do Player Pack, ex.: `finger-guns`; Pack 2 depende da edição Valdas e da classe Gunslinger; Eldritch Hunt é independente após classes PHB).
+1. `000_truncate.sql`
+2. `phb/`
+3. `subclass/`
+4. `valdas/` → `valdas-gunslinger/` → `valdas-player-pack-2/`
+5. `steinhardt-eldritch-hunt/`
+6. `northlands-heroes/`
+7. `griffons-saddlebag/`
+8. `grim-hollow/`
+9. `dmg/`
+10. `combat/`
+11. `creatures/`
+12. **`effects/`** — por último (`phb_effect` de todos os packs; depende de feats/resources)
+
+Dentro de cada pack: ordem lexicográfica do path.
+
+## Motor de efeitos
+
+SSOT de dados: `database/seeds/effects/E00*.sql` (… combat_mod E014; Cap.6 table_action E015). Tabelas `phb_resource_grant` / `phb_combat_modifier` **DROP**.
+Schema: baseline (`phb_effect` + satélites).  
+Docs: [`docs/plans/effect-engine.md`](../../../docs/plans/effect-engine.md) · [`docs/architecture/effect-engine-read-path.md`](../../../docs/architecture/effect-engine-read-path.md).
 
 ## Como aplicar
 
 ```bash
 npm run db:setup              # local: reset → migrate → seed
 npm run db:setup:all          # local + Supabase (wipe remoto com --confirm)
-# ou só dados após schema:
 npm run db:seed
 npm run db:seed:supabase
 ```
 
-Não use scripts avulsos `apply-*` / `reseed-*` — o SSOT é `database/seeds/` via `run-seeds.mjs`.
+Não use scripts avulsos `apply-*` / `reseed-*` — SSOT = `database/seeds/` via `run-seeds.mjs`.

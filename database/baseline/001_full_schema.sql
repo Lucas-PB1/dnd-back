@@ -1,12 +1,12 @@
--- Baseline schema `rpg` — greenfield DDL (schema + runtime)
+-- Baseline schema `rpg` â€” greenfield DDL (schema + runtime)
 
--- Schema rpg + extensão pg_trgm
+-- Schema rpg + extensÃ£o pg_trgm
 
 CREATE SCHEMA IF NOT EXISTS rpg;
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- ENUMs do catálogo PHB (baseline canônico)
+-- ENUMs do catÃ¡logo PHB (baseline canÃ´nico)
 
 CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
@@ -185,7 +185,7 @@ CREATE TYPE rpg.panel_action_section AS ENUM (
   'channel'
 );
 
--- Runtime game_actor: tipos de ficha e conjuração inata
+-- Runtime game_actor: tipos de ficha e conjuraÃ§Ã£o inata
 
 CREATE TYPE rpg.actor_kind AS ENUM (
   'creature',
@@ -218,7 +218,190 @@ CREATE TYPE rpg.eldritch_invocation_kind AS ENUM (
   'reaction'
 );
 
--- Grim Hollow — tipos de herança e traços modulares
+
+CREATE TYPE rpg.effect_kind AS ENUM (
+  'grant_spell',
+  'free_cast',
+  'grant_resource',
+  'combat_mod',
+  'temp_hp',
+  'heal',
+  'spend_resource',
+  'table_note',
+  'initiative_pb',
+  'grant_inspiration',
+  'combat_note',
+  'grant_proficiency',
+  'purchase_discount',
+  'damage_reroll_choice',
+  'damage_die_override',
+  'check_advantage',
+  'damage_bonus',
+  'add_proficiency_bonus',
+  'death_save_advantage',
+  'hit_die_roll_twice_keep_high',
+  'reduce_exhaustion_on_rest',
+  'grant_expertise',
+  'grant_language',
+  'spellcasting_ability',
+  'grant_spell_by_level',
+  'damage_resistance_reaction',
+  'damage_reduce_reaction',
+  'stabilize_on_death_save',
+  'grant_magic_item_choice',
+  'identify_magic_item',
+  'vehicle_check_advantage',
+  'advantage_until_consumed',
+  'extra_melee_attack_on_crit',
+  'craft_item_on_long_rest',
+  'choose_ability_for_check',
+  'initiative_advantage_vs_target',
+  'increase_ability_score',
+  'speed_bonus',
+  'grant_climb_speed',
+  'grant_swim_speed',
+  'dash_speed_bonus',
+  'ac_bonus',
+  'attack_bonus',
+  'save_bonus',
+  'spell_attack_bonus',
+  'spell_save_dc_bonus',
+  'spell_range_bonus',
+  'feature_dc',
+  'light_bonus_ability_mod',
+  'damage_die_floor',
+  'damage_die_reroll',
+  'damage_die_flip',
+  'damage_die_explode',
+  'extra_melee_attack',
+  'succeed_failed_save',
+  'mounted_attack_advantage',
+  'ignore_damage_resistance',
+  'ignore_exhaustion_penalties',
+  'grant_weapon_mastery',
+  'grant_weapon_property',
+  'grant_sense',
+  'wield_two_handed_one_hand',
+  'versatile_one_hand_full_damage',
+  'add_ability_mod_to_check',
+  'carry_as_larger_size',
+  'improve_critical',
+  'override_weapon_range',
+  'bind_focus_to_weapon',
+  'expand_spell_list',
+  'slot_elevate',
+  'slot_reduce',
+  'magic_item_save_dc',
+  'expend_hit_dice',
+  'recover_spell_slot',
+  'reduce_target_speed_on_hit',
+  'inspiration_refund_on_fail',
+  'grant_fly_speed',
+  'damage_resistance',
+  'grant_all_skill_proficiencies',
+  'miss_becomes_hit',
+  'heal_bonus',
+  'slot_refund_on_die_match',
+  'survive_at_zero',
+  'teleport_after_action',
+  'modify_d20_roll',
+  'redirect_damage_reaction',
+  'bonus_action_disengage',
+  'slow_fall',
+  'extra_damage_on_nat20',
+  'heal_from_dice_pool',
+  'scaled_damage_dice',
+  'grant_feat',
+  'save_advantage',
+  'reroll_d20_on_nat1',
+  'reach_bonus',
+  'rest_quirk',
+  'environmental_immunity',
+  'speed_set'
+);
+
+CREATE TYPE rpg.effect_owner_kind AS ENUM (
+  'class',
+  'subclass',
+  'species',
+  'feat',
+  'item',
+  'heritage',
+  'character_thread'
+);
+
+CREATE TYPE rpg.effect_trigger AS ENUM (
+  'passive',
+  'on_build',
+  'on_table_action',
+  'on_resource_spend',
+  'on_cast',
+  'on_purchase',
+  'on_damage_roll',
+  'on_d20_nat1',
+  'on_bloodied',
+  'on_rest_short',
+  'on_rest_long',
+  'on_death_save',
+  'on_critical_hit'
+);
+
+CREATE TYPE rpg.effect_cast_economy AS ENUM (
+  'at_will',
+  'once_per_long_rest',
+  'slot_only'
+);
+
+CREATE TYPE rpg.effect_uses_formula AS ENUM (
+  'fixed',
+  'proficiency_bonus'
+);
+
+CREATE TYPE rpg.effect_amount_formula AS ENUM (
+  'fixed',
+  'proficiency_bonus',
+  'proficiency_bonus_times_2',
+  'level',
+  'level_times_2',
+  'level_div_2',
+  'dice_pb_d4',
+  'dice_pb_d6',
+  'dice_hit_die_plus_pb',
+  'proficiency_bonus_plus_cha',
+  'dice_1d4'
+);
+
+CREATE TYPE rpg.effect_combat_mod_kind AS ENUM (
+  'hp_bonus',
+  'unarmored_defense'
+);
+
+CREATE TYPE rpg.effect_proficiency_kind AS ENUM (
+  'skill',
+  'tool',
+  'instrument'
+);
+
+CREATE TYPE rpg.effect_damage_applies_to AS ENUM (
+  'unarmed',
+  'weapon'
+);
+
+CREATE TYPE rpg.effect_sense_slug AS ENUM (
+  'darkvision',
+  'tremorsense',
+  'blindsight',
+  'truesight'
+);
+
+CREATE TYPE rpg.effect_env_hazard AS ENUM (
+  'extreme_cold',
+  'extreme_heat',
+  'high_altitude',
+  'snow_blindness'
+);
+
+-- Grim Hollow â€” tipos de heranÃ§a e traÃ§os modulares
 
 CREATE TYPE rpg.heritage_category AS ENUM ('common', 'rare', 'eldritch');
 
@@ -226,7 +409,7 @@ CREATE TYPE rpg.heritage_trait_category AS ENUM ('combat', 'exploration', 'rolep
 
 CREATE TYPE rpg.heritage_trait_take_mode AS ENUM ('stack', 'choice_each_take');
 
--- Grim Hollow — identidade de herança (17 jogáveis)
+-- Grim Hollow â€” identidade de heranÃ§a (17 jogÃ¡veis)
 
 CREATE TABLE rpg.phb_heritage (
   id BIGSERIAL PRIMARY KEY,
@@ -250,12 +433,12 @@ CREATE TABLE rpg.phb_heritage (
 CREATE INDEX idx_phb_heritage_category ON rpg.phb_heritage(category);
 
 COMMENT ON TABLE rpg.phb_heritage IS
-  'Heranças Grim Hollow — identidade racial (Anão, Elfo, …) com 8 traços modulares do pool global.';
+  'HeranÃ§as Grim Hollow â€” identidade racial (AnÃ£o, Elfo, â€¦) com 8 traÃ§os modulares do pool global.';
 
 COMMENT ON COLUMN rpg.phb_heritage.image_url IS
-  'Caminho público da ilustração (ex. /catalog/heritages/dwarf.png).';
+  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/heritages/dwarf.png).';
 
--- Grim Hollow — pool global de traços modulares (~107)
+-- Grim Hollow â€” pool global de traÃ§os modulares (~107)
 
 CREATE TABLE rpg.phb_heritage_trait (
   id BIGSERIAL PRIMARY KEY,
@@ -277,7 +460,7 @@ CREATE INDEX idx_phb_heritage_trait_category ON rpg.phb_heritage_trait(category)
 CREATE INDEX idx_phb_heritage_trait_anchor ON rpg.phb_heritage_trait(anchor_id);
 
 COMMENT ON TABLE rpg.phb_heritage_trait IS
-  'Traços modulares GH — pool global; repetição aplica benefit_improved conforme max_takes/take_mode.';
+  'TraÃ§os modulares GH â€” pool global; repetiÃ§Ã£o aplica benefit_improved conforme max_takes/take_mode.';
 
 
 CREATE TABLE rpg.phb_edition (
@@ -563,7 +746,7 @@ CREATE TABLE rpg.phb_background_boost_option (
   label TEXT NOT NULL
 );
 
--- Character Threads (Northlands) — catálogo (antes de resource_definition para FK)
+-- Character Threads (Northlands) â€” catÃ¡logo (antes de resource_definition para FK)
 CREATE TABLE rpg.phb_character_thread (
   id BIGSERIAL NOT NULL UNIQUE,
   slug TEXT PRIMARY KEY,
@@ -635,7 +818,7 @@ CREATE TABLE rpg.phb_resource_definition (
   )
 );
 
--- owner_id = subclass_id | species_id | feat_id conforme scope (sem FK polimórfica)
+-- owner_id = subclass_id | species_id | feat_id conforme scope (sem FK polimÃ³rfica)
 
 CREATE TABLE rpg.phb_option_def (
   scope rpg.option_scope NOT NULL,
@@ -684,32 +867,7 @@ CREATE INDEX idx_phb_option_value_scope_owner
   ON rpg.phb_option_value(scope, owner_id);
 
 
-CREATE TABLE rpg.phb_resource_grant (
-  owner_kind rpg.resource_owner_kind NOT NULL,
-  owner_id BIGINT NOT NULL,
-  resource_id BIGINT NOT NULL REFERENCES rpg.phb_resource_definition(id) ON DELETE CASCADE,
-  unlock_level INTEGER NOT NULL CHECK (unlock_level BETWEEN 1 AND 20),
-  max_formula rpg.resource_max_formula NOT NULL,
-  fixed_max INTEGER CHECK (fixed_max IS NULL OR fixed_max >= 0),
-  feature_id BIGINT REFERENCES rpg.phb_subclass_feature(id) ON DELETE SET NULL,
-  recover_one_on_short BOOLEAN NOT NULL DEFAULT FALSE,
-  recover_all_on_short BOOLEAN NOT NULL DEFAULT FALSE,
-  recover_all_on_long BOOLEAN NOT NULL DEFAULT TRUE,
-  recover_on_long_dice TEXT NULL,
-  min_trait_takes INTEGER NOT NULL DEFAULT 1 CHECK (min_trait_takes >= 1),
-  PRIMARY KEY (owner_kind, owner_id, resource_id, unlock_level),
-  CONSTRAINT prg_formula_fixed CHECK (
-    (max_formula = 'fixed' AND fixed_max IS NOT NULL)
-    OR (max_formula <> 'fixed' AND fixed_max IS NULL)
-  ),
-  CONSTRAINT prg_feature_owner CHECK (
-    feature_id IS NULL OR owner_kind = 'subclass'::rpg.resource_owner_kind
-  )
-);
-
-CREATE INDEX idx_phb_resource_grant_owner
-  ON rpg.phb_resource_grant(owner_kind, owner_id);
-
+-- phb_resource_grant: DROP — SSOT = phb_effect.grant_resource
 
 CREATE TABLE rpg.phb_spell_source (
   id BIGSERIAL PRIMARY KEY,
@@ -911,7 +1069,7 @@ CREATE TABLE rpg.phb_weapon_property_link (
   PRIMARY KEY (weapon_id, property_id)
 );
 
--- Whitelist de ferramentas por antecedente (substitui “toda a categoria”)
+-- Whitelist de ferramentas por antecedente (substitui â€œtoda a categoriaâ€)
 
 CREATE TABLE rpg.phb_background_tool_option (
   background_id BIGINT NOT NULL REFERENCES rpg.phb_background(id) ON DELETE CASCADE,
@@ -922,7 +1080,7 @@ CREATE TABLE rpg.phb_background_tool_option (
 CREATE INDEX idx_phb_background_tool_option_item
   ON rpg.phb_background_tool_option(item_id);
 
--- Magias concedidas por talento ou espécie (unificado; linhagens via option_value + traits)
+-- Magias concedidas por talento ou espÃ©cie (unificado; linhagens via option_value + traits)
 
 CREATE TABLE rpg.phb_spell_grant (
   origin_type rpg.spell_grant_origin NOT NULL,
@@ -934,38 +1092,255 @@ CREATE TABLE rpg.phb_spell_grant (
 
 CREATE INDEX idx_phb_spell_grant_origin ON rpg.phb_spell_grant(origin_type, origin_id);
 
-CREATE TABLE rpg.phb_combat_modifier (
+-- phb_combat_modifier: DROP — SSOT = phb_effect.combat_mod
+
+CREATE TABLE rpg.phb_effect (
   id BIGSERIAL PRIMARY KEY,
-  kind rpg.combat_modifier_kind NOT NULL,
-  owner_kind rpg.combat_modifier_owner NOT NULL,
+  kind rpg.effect_kind NOT NULL,
+  owner_kind rpg.effect_owner_kind NOT NULL,
   owner_id BIGINT NOT NULL,
-  label TEXT NOT NULL,
+  trigger rpg.effect_trigger NOT NULL,
+  unlock_level INTEGER NOT NULL DEFAULT 1
+    CHECK (unlock_level BETWEEN 1 AND 20),
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  min_trait_takes INTEGER NOT NULL DEFAULT 1
+    CHECK (min_trait_takes >= 1),
+  action_slug TEXT NULL,
+  resource_slug TEXT NULL,
+  label TEXT NULL,
+  requires_option_key TEXT NULL,
+  requires_option_value TEXT NULL,
+  CONSTRAINT phb_effect_table_action_trigger CHECK (
+    (trigger = 'on_table_action' AND action_slug IS NOT NULL)
+    OR (trigger <> 'on_table_action')
+  ),
+  CONSTRAINT phb_effect_resource_spend_trigger CHECK (
+    (trigger = 'on_resource_spend' AND resource_slug IS NOT NULL)
+    OR (trigger <> 'on_resource_spend')
+  ),
+  CONSTRAINT phb_effect_requires_option CHECK (
+    (requires_option_key IS NULL AND requires_option_value IS NULL)
+    OR (requires_option_key IS NOT NULL AND requires_option_value IS NOT NULL)
+  )
+);
+
+CREATE INDEX idx_phb_effect_owner
+  ON rpg.phb_effect (owner_kind, owner_id);
+
+CREATE INDEX idx_phb_effect_kind_trigger
+  ON rpg.phb_effect (kind, trigger);
+
+CREATE INDEX idx_phb_effect_action_slug
+  ON rpg.phb_effect (action_slug)
+  WHERE action_slug IS NOT NULL;
+
+CREATE INDEX idx_phb_effect_resource_slug
+  ON rpg.phb_effect (resource_slug)
+  WHERE resource_slug IS NOT NULL;
+
+CREATE TABLE rpg.phb_effect_spell (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  spell_id BIGINT NULL REFERENCES rpg.phb_spell(id) ON DELETE CASCADE,
+  option_key TEXT NULL,
+  spell_level INTEGER NULL CHECK (spell_level IS NULL OR spell_level BETWEEN 0 AND 9),
+  CONSTRAINT phb_effect_spell_target CHECK (
+    spell_id IS NOT NULL OR option_key IS NOT NULL
+  )
+);
+
+CREATE TABLE rpg.phb_effect_cast_economy (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  economy rpg.effect_cast_economy NOT NULL,
+  uses_formula rpg.effect_uses_formula NOT NULL DEFAULT 'fixed',
+  fixed_uses INTEGER NULL CHECK (fixed_uses IS NULL OR fixed_uses >= 1),
+  CONSTRAINT phb_effect_cast_uses CHECK (
+    (uses_formula = 'fixed' AND fixed_uses IS NOT NULL)
+    OR (uses_formula = 'proficiency_bonus' AND fixed_uses IS NULL)
+    OR (economy <> 'once_per_long_rest')
+  )
+);
+
+CREATE TABLE rpg.phb_effect_resource (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  resource_id BIGINT NOT NULL
+    REFERENCES rpg.phb_resource_definition(id) ON DELETE CASCADE,
+  max_formula rpg.resource_max_formula NOT NULL,
+  fixed_max INTEGER CHECK (fixed_max IS NULL OR fixed_max >= 0),
+  recover_one_on_short BOOLEAN NOT NULL DEFAULT FALSE,
+  recover_all_on_short BOOLEAN NOT NULL DEFAULT FALSE,
+  recover_all_on_long BOOLEAN NOT NULL DEFAULT TRUE,
+  recover_on_long_dice TEXT NULL,
+  CONSTRAINT phb_effect_resource_formula_fixed CHECK (
+    (max_formula = 'fixed' AND fixed_max IS NOT NULL)
+    OR (max_formula <> 'fixed' AND fixed_max IS NULL)
+  )
+);
+
+CREATE TABLE rpg.phb_effect_combat_mod (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  mod_kind rpg.effect_combat_mod_kind NOT NULL,
   flat_bonus INTEGER NOT NULL DEFAULT 0,
   per_level_bonus INTEGER NOT NULL DEFAULT 0,
   from_level INTEGER NOT NULL DEFAULT 1 CHECK (from_level >= 1),
   second_ability_slug TEXT REFERENCES rpg.phb_ability(slug),
   allows_shield BOOLEAN NOT NULL DEFAULT FALSE,
-  min_trait_takes INTEGER NOT NULL DEFAULT 1 CHECK (min_trait_takes >= 1),
-  heritage_trait_id BIGINT NULL REFERENCES rpg.phb_heritage_trait(id) ON DELETE CASCADE,
-  CONSTRAINT pcm_kind_fields CHECK (
-    (kind = 'hp_bonus' AND second_ability_slug IS NULL
-      AND owner_kind IN ('species', 'subclass', 'feat', 'heritage'))
-    OR (kind = 'unarmored_defense' AND second_ability_slug IS NOT NULL
-      AND flat_bonus = 0 AND per_level_bonus = 0
-      AND owner_kind IN ('class', 'subclass'))
-  ),
-  CONSTRAINT pcm_heritage_trait_owner CHECK (
-    (owner_kind = 'heritage' AND heritage_trait_id IS NOT NULL AND owner_id = heritage_trait_id)
-    OR (owner_kind <> 'heritage' AND heritage_trait_id IS NULL)
+  CONSTRAINT phb_effect_combat_mod_fields CHECK (
+    (mod_kind = 'hp_bonus' AND second_ability_slug IS NULL)
+    OR (mod_kind = 'unarmored_defense' AND second_ability_slug IS NOT NULL
+        AND flat_bonus = 0 AND per_level_bonus = 0)
   )
 );
 
-CREATE INDEX idx_phb_combat_modifier_owner
-  ON rpg.phb_combat_modifier(kind, owner_kind, owner_id);
+CREATE TABLE rpg.phb_effect_numeric (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  amount_formula rpg.effect_amount_formula NOT NULL,
+  flat INTEGER NULL CHECK (flat IS NULL OR flat >= 0),
+  CONSTRAINT phb_effect_numeric_fixed CHECK (
+    (amount_formula = 'fixed' AND flat IS NOT NULL)
+    OR (amount_formula <> 'fixed' AND flat IS NULL)
+  )
+);
 
-CREATE INDEX idx_phb_combat_modifier_heritage_trait
-  ON rpg.phb_combat_modifier(heritage_trait_id)
-  WHERE heritage_trait_id IS NOT NULL;
+CREATE TABLE rpg.phb_effect_note (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  note TEXT NOT NULL CHECK (length(trim(note)) > 0)
+);
+
+CREATE TABLE rpg.phb_effect_proficiency (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  option_key TEXT NOT NULL,
+  proficiency_kind rpg.effect_proficiency_kind NOT NULL
+);
+
+CREATE TABLE rpg.phb_effect_purchase_discount (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  percent_off INTEGER NOT NULL CHECK (percent_off BETWEEN 1 AND 99),
+  non_magic_only BOOLEAN NOT NULL DEFAULT TRUE,
+  food_drink_only BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE rpg.phb_effect_damage_die (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  applies_to rpg.effect_damage_applies_to NOT NULL,
+  die TEXT NOT NULL CHECK (die ~ '^[0-9]+d[0-9]+$')
+);
+
+CREATE TABLE rpg.phb_effect_weapon (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  property_slug TEXT NULL
+    CHECK (property_slug IS NULL OR length(trim(property_slug)) > 0),
+  range_normal_ft INTEGER NULL
+    CHECK (range_normal_ft IS NULL OR range_normal_ft > 0),
+  range_long_ft INTEGER NULL
+    CHECK (range_long_ft IS NULL OR range_long_ft > 0),
+  CONSTRAINT phb_effect_weapon_mode CHECK (
+    (
+      property_slug IS NOT NULL
+      AND range_normal_ft IS NULL
+      AND range_long_ft IS NULL
+    )
+    OR (
+      property_slug IS NULL
+      AND range_normal_ft IS NOT NULL
+      AND range_long_ft IS NOT NULL
+      AND range_long_ft >= range_normal_ft
+    )
+  )
+);
+
+CREATE TABLE rpg.phb_effect_feat (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  option_key TEXT NOT NULL,
+  feat_category TEXT NULL
+    CHECK (feat_category IS NULL OR length(trim(feat_category)) > 0)
+);
+
+CREATE TABLE rpg.phb_effect_save_advantage (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  ability_slugs TEXT[] NULL,
+  condition_slug TEXT NULL
+    CHECK (condition_slug IS NULL OR length(trim(condition_slug)) > 0),
+  CONSTRAINT phb_effect_save_advantage_scope CHECK (
+    ability_slugs IS NOT NULL OR condition_slug IS NOT NULL
+  )
+);
+
+CREATE TABLE rpg.phb_effect_sense (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  sense_slug rpg.effect_sense_slug NOT NULL,
+  range_ft INTEGER NOT NULL CHECK (range_ft > 0),
+  duration_minutes INTEGER NULL CHECK (duration_minutes IS NULL OR duration_minutes > 0)
+);
+
+CREATE TABLE rpg.phb_effect_damage_type (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  damage_type_slug TEXT NULL
+    CHECK (damage_type_slug IS NULL OR length(trim(damage_type_slug)) > 0),
+  option_key TEXT NULL,
+  CONSTRAINT phb_effect_damage_type_target CHECK (
+    damage_type_slug IS NOT NULL OR option_key IS NOT NULL
+  )
+);
+
+CREATE TABLE rpg.phb_effect_language (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  language_slug TEXT NULL
+    REFERENCES rpg.phb_language(slug),
+  option_key TEXT NULL,
+  choice_count INTEGER NOT NULL DEFAULT 1 CHECK (choice_count >= 1),
+  CONSTRAINT phb_effect_language_target CHECK (
+    language_slug IS NOT NULL OR option_key IS NOT NULL
+  )
+);
+
+CREATE TABLE rpg.phb_effect_check_advantage (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  skill_slug TEXT NULL,
+  circumstance_tag TEXT NULL,
+  ability_slug TEXT NULL,
+  CONSTRAINT phb_effect_check_advantage_scope CHECK (
+    skill_slug IS NOT NULL OR circumstance_tag IS NOT NULL OR ability_slug IS NOT NULL
+  )
+);
+
+CREATE TABLE rpg.phb_effect_reach (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  bonus_ft INTEGER NOT NULL CHECK (bonus_ft > 0),
+  exclude_property_slugs TEXT[] NULL
+);
+
+CREATE TABLE rpg.phb_effect_rest_quirk (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  long_rest_hours INTEGER NOT NULL DEFAULT 8
+    CHECK (long_rest_hours BETWEEN 1 AND 8),
+  no_sleep BOOLEAN NOT NULL DEFAULT FALSE,
+  magic_cannot_force_sleep BOOLEAN NOT NULL DEFAULT FALSE,
+  no_food_drink_air BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE rpg.phb_effect_environmental_immunity (
+  effect_id BIGINT PRIMARY KEY
+    REFERENCES rpg.phb_effect(id) ON DELETE CASCADE,
+  hazard_slug rpg.effect_env_hazard NOT NULL
+);
 
 -- Class economy actions (Actions tab catalog)
 
@@ -1035,7 +1410,7 @@ CREATE TABLE rpg.phb_background_language (
   PRIMARY KEY (background_id, language_id)
 );
 
--- Conjuração por subclasse (Spellslinger etc.)
+-- ConjuraÃ§Ã£o por subclasse (Spellslinger etc.)
 
 CREATE TABLE rpg.phb_subclass_spellcasting (
   subclass_id BIGINT PRIMARY KEY REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
@@ -1051,7 +1426,7 @@ CREATE TABLE rpg.phb_subclass_spellcasting (
 CREATE INDEX idx_subclass_spellcasting_list
   ON rpg.phb_subclass_spellcasting(spell_list_class_id);
 
--- Cotas de truques / magias preparadas por nível (subclasse conjuradora)
+-- Cotas de truques / magias preparadas por nÃ­vel (subclasse conjuradora)
 
 CREATE TABLE rpg.phb_subclass_progression (
   subclass_id BIGINT NOT NULL REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
@@ -1091,7 +1466,7 @@ CREATE TABLE rpg.phb_subclass_precaution_spell (
 CREATE INDEX idx_subclass_precaution_spell_subclass ON rpg.phb_subclass_precaution_spell(subclass_id);
 CREATE INDEX idx_subclass_precaution_spell_spell ON rpg.phb_subclass_precaution_spell(spell_id);
 
--- Pré-requisitos estruturados de talentos.
+-- PrÃ©-requisitos estruturados de talentos.
 
 CREATE TABLE rpg.phb_feat_requirement (
   feat_id BIGINT PRIMARY KEY REFERENCES rpg.phb_feat(id) ON DELETE CASCADE,
@@ -1109,9 +1484,9 @@ CREATE TABLE rpg.phb_feat_requirement_ability (
   PRIMARY KEY (feat_id, ability_id)
 );
 
--- Aumentos de atributo concedidos por capacidade de classe em um nível fixo
--- (ex.: Bárbaro "Campeão Primitivo" e Monge "Corpo e Mente" no nível 20),
--- que elevam atributos acima do teto normal de 20 até um teto próprio.
+-- Aumentos de atributo concedidos por capacidade de classe em um nÃ­vel fixo
+-- (ex.: BÃ¡rbaro "CampeÃ£o Primitivo" e Monge "Corpo e Mente" no nÃ­vel 20),
+-- que elevam atributos acima do teto normal de 20 atÃ© um teto prÃ³prio.
 CREATE TABLE rpg.phb_class_ability_boost (
   id BIGSERIAL PRIMARY KEY,
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
@@ -1123,7 +1498,7 @@ CREATE TABLE rpg.phb_class_ability_boost (
   UNIQUE (class_id, ability_slug, from_level)
 );
 
--- Permite elegibilidade de maestria só para armas à distância (Pistoleiro Valdas).
+-- Permite elegibilidade de maestria sÃ³ para armas Ã  distÃ¢ncia (Pistoleiro Valdas).
 -- Gunslinger (Valdas) maneuvers catalog
 
 CREATE TABLE rpg.phb_gunslinger_maneuver (
@@ -1209,7 +1584,7 @@ CREATE TABLE rpg.phb_class_panel_action (
 CREATE INDEX idx_class_panel_action_class ON rpg.phb_class_panel_action(class_id);
 CREATE INDEX idx_class_panel_action_subclass ON rpg.phb_class_panel_action(subclass_id);
 
--- Economy actions: class XOR species; filtro opcional por escolha de espécie.
+-- Economy actions: class XOR species; filtro opcional por escolha de espÃ©cie.
 
 
 
@@ -1268,7 +1643,7 @@ CREATE UNIQUE INDEX uq_resource_item
 CREATE INDEX idx_class_economy_action_item
   ON rpg.phb_class_economy_action(item_id);
 
--- Tipos + tabela de Invocações Místicas (Bruxo PHB 2024)
+-- Tipos + tabela de InvocaÃ§Ãµes MÃ­sticas (Bruxo PHB 2024)
 
 CREATE TABLE rpg.phb_eldritch_invocation (
   id BIGSERIAL PRIMARY KEY,
@@ -1296,7 +1671,7 @@ CREATE TABLE rpg.phb_eldritch_invocation (
 CREATE INDEX idx_phb_eldritch_invocation_min_level
   ON rpg.phb_eldritch_invocation(min_level);
 
--- Catálogo de Metamagia (Feiticeiro PHB 2024)
+-- CatÃ¡logo de Metamagia (Feiticeiro PHB 2024)
 
 CREATE TABLE rpg.phb_metamagic (
   id BIGSERIAL PRIMARY KEY,
@@ -1316,17 +1691,14 @@ CREATE INDEX idx_phb_metamagic_sort
 -- Recover 1dN ao Descanso Longo (amanhecer) para pools de cargas de item.
 
 
-COMMENT ON COLUMN rpg.phb_resource_grant.recover_on_long_dice IS
-  'Expressão NdM[+K] recuperada no long rest (ex. 1d6+1). NULL = usa recover_all_on_long.';
-
--- Fase 6: liga economy action → magia do catálogo (cast de item).
+-- Fase 6: liga economy action â†’ magia do catÃ¡logo (cast de item).
 
 
 CREATE INDEX idx_class_economy_action_spell
   ON rpg.phb_class_economy_action(spell_slug)
   WHERE spell_slug IS NOT NULL;
 
--- Tabelas 1d100 de propriedades aleatórias de Artefato (DMG Treasure).
+-- Tabelas 1d100 de propriedades aleatÃ³rias de Artefato (DMG Treasure).
 CREATE TABLE rpg.dmg_artifact_random_property (
   id          BIGSERIAL PRIMARY KEY,
   kind        TEXT NOT NULL CHECK (
@@ -1353,9 +1725,9 @@ CREATE INDEX idx_dmg_artifact_random_property_roll
   ON rpg.dmg_artifact_random_property (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_artifact_random_property IS
-  'Faixas 1d100 de propriedades aleatórias de artefato (benéfica/prejudicial × menor/maior).';
+  'Faixas 1d100 de propriedades aleatÃ³rias de artefato (benÃ©fica/prejudicial Ã— menor/maior).';
 
--- Tabelas de geração de item senciente (DMG Treasure — Sentient Magic Items).
+-- Tabelas de geraÃ§Ã£o de item senciente (DMG Treasure â€” Sentient Magic Items).
 CREATE TABLE rpg.dmg_sentient_trait_table (
   id          BIGSERIAL PRIMARY KEY,
   kind        TEXT NOT NULL CHECK (
@@ -1383,9 +1755,9 @@ CREATE INDEX idx_dmg_sentient_trait_table_roll
   ON rpg.dmg_sentient_trait_table (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_sentient_trait_table IS
-  'Faixas de rolagem para gerar alinhamento/comunicação/sentidos/propósito/attrs de item senciente.';
+  'Faixas de rolagem para gerar alinhamento/comunicaÃ§Ã£o/sentidos/propÃ³sito/attrs de item senciente.';
 
--- Contadores de catálogo (view/purchase) — não polui phb_item (seed-owned).
+-- Contadores de catÃ¡logo (view/purchase) â€” nÃ£o polui phb_item (seed-owned).
 CREATE TABLE rpg.phb_item_catalog_stats (
   item_slug       TEXT PRIMARY KEY
     REFERENCES rpg.phb_item (slug) ON DELETE CASCADE,
@@ -1403,13 +1775,13 @@ CREATE INDEX idx_phb_item_catalog_stats_view
   ON rpg.phb_item_catalog_stats (view_count DESC);
 
 COMMENT ON TABLE rpg.phb_item_catalog_stats IS
-  'Telemetria de catálogo: visualizações e compras (Beyond shop).';
+  'Telemetria de catÃ¡logo: visualizaÃ§Ãµes e compras (Beyond shop).';
 
--- Marca opção de catálogo com edição de origem (ex.: lineages Northlands no Elfo PHB).
--- NULL = herda da espécie-pai / sempre disponível com ela.
+-- Marca opÃ§Ã£o de catÃ¡logo com ediÃ§Ã£o de origem (ex.: lineages Northlands no Elfo PHB).
+-- NULL = herda da espÃ©cie-pai / sempre disponÃ­vel com ela.
 
 
--- Pré-requisito: talento(s) já adquiridos.
+-- PrÃ©-requisito: talento(s) jÃ¡ adquiridos.
 
 CREATE TABLE rpg.phb_feat_requirement_feat (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
@@ -1421,7 +1793,7 @@ CREATE TABLE rpg.phb_feat_requirement_feat (
 CREATE INDEX idx_phb_feat_requirement_feat_required
   ON rpg.phb_feat_requirement_feat (required_feat_id);
 
--- Pré-requisitos adicionais de talentos: perícia, espécie (OR) e Maestria em Arma.
+-- PrÃ©-requisitos adicionais de talentos: perÃ­cia, espÃ©cie (OR) e Maestria em Arma.
 
 
 
@@ -1443,7 +1815,7 @@ CREATE INDEX idx_phb_feat_requirement_skill_skill
 CREATE INDEX idx_phb_feat_requirement_species_species
   ON rpg.phb_feat_requirement_species (species_id);
 
--- Proficiência de arma exigida + opção de talento pré-requisito (ex.: Adepto Elemental / tipo).
+-- ProficiÃªncia de arma exigida + opÃ§Ã£o de talento prÃ©-requisito (ex.: Adepto Elemental / tipo).
 
 CREATE TABLE rpg.phb_feat_requirement_weapon_proficiency (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
@@ -1462,7 +1834,7 @@ CREATE TABLE rpg.phb_feat_requirement_feat_option (
 CREATE INDEX idx_phb_feat_requirement_feat_option_required
   ON rpg.phb_feat_requirement_feat_option (required_feat_id);
 
--- Opções de talento de origem quando o antecedente não tem feat_id fixo.
+-- OpÃ§Ãµes de talento de origem quando o antecedente nÃ£o tem feat_id fixo.
 
 CREATE TABLE rpg.phb_background_feat_option (
   background_id BIGINT NOT NULL REFERENCES rpg.phb_background(id) ON DELETE CASCADE,
@@ -1473,7 +1845,7 @@ CREATE TABLE rpg.phb_background_feat_option (
 CREATE INDEX idx_phb_background_feat_option_feat
   ON rpg.phb_background_feat_option (feat_id);
 
--- Catálogo read-only: templates de criatura (stat blocks)
+-- CatÃ¡logo read-only: templates de criatura (stat blocks)
 
 CREATE TABLE rpg.phb_creature_template (
   slug TEXT PRIMARY KEY,
@@ -1583,7 +1955,7 @@ CREATE TABLE rpg.phb_vehicle_template_action (
 CREATE INDEX idx_phb_vehicle_template_action_slug
   ON rpg.phb_vehicle_template_action(template_slug);
 
--- Stat blocks completos: atributos, descrição de ações, veículos Northlands
+-- Stat blocks completos: atributos, descriÃ§Ã£o de aÃ§Ãµes, veÃ­culos Northlands
 
 
 
@@ -1604,7 +1976,7 @@ CREATE TABLE rpg.phb_vehicle_template_trait (
 CREATE INDEX idx_phb_vehicle_template_trait_slug
   ON rpg.phb_vehicle_template_trait(template_slug);
 
--- Ilustrações de catálogo (montarias, criaturas, veículos, itens da loja)
+-- IlustraÃ§Ãµes de catÃ¡logo (montarias, criaturas, veÃ­culos, itens da loja)
 
 
 
@@ -1613,27 +1985,27 @@ CREATE INDEX idx_phb_vehicle_template_trait_slug
 
 
 COMMENT ON COLUMN rpg.phb_creature_template.image_url IS
-  'Caminho público da ilustração (ex. /catalog/mounts/camelo.png no front).';
+  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/mounts/camelo.png no front).';
 
 COMMENT ON COLUMN rpg.phb_vehicle_template.image_url IS
-  'Caminho público da ilustração no front.';
+  'Caminho pÃºblico da ilustraÃ§Ã£o no front.';
 
 COMMENT ON COLUMN rpg.phb_item.image_url IS
-  'Caminho público da ilustração no front (loja/compêndio).';
+  'Caminho pÃºblico da ilustraÃ§Ã£o no front (loja/compÃªndio).';
 
--- Ilustrações de espécies e subclasses no compêndio
+-- IlustraÃ§Ãµes de espÃ©cies e subclasses no compÃªndio
 
 
 
 
 
 COMMENT ON COLUMN rpg.phb_species.image_url IS
-  'Caminho público da ilustração (ex. /catalog/species/feathren.png).';
+  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/species/feathren.png).';
 
 COMMENT ON COLUMN rpg.phb_subclass.image_url IS
-  'Caminho público da ilustração (ex. /catalog/subclasses/path-of-the-glacier.png).';
+  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/subclasses/path-of-the-glacier.png).';
 
--- Grim Hollow — build tradicional sugerido por herança (preset 8 traços)
+-- Grim Hollow â€” build tradicional sugerido por heranÃ§a (preset 8 traÃ§os)
 
 CREATE TABLE rpg.phb_heritage_traditional (
   id BIGSERIAL PRIMARY KEY,
@@ -1648,11 +2020,11 @@ CREATE INDEX idx_phb_heritage_traditional_heritage
   ON rpg.phb_heritage_traditional(heritage_id, sort_order);
 
 COMMENT ON TABLE rpg.phb_heritage_traditional IS
-  'Preset recomendado por herança (3+3+2 combate/exploração/interpretação) — atalho no wizard.';
+  'Preset recomendado por heranÃ§a (3+3+2 combate/exploraÃ§Ã£o/interpretaÃ§Ã£o) â€” atalho no wizard.';
 
 
 
--- Função de auditoria updated_at
+-- FunÃ§Ã£o de auditoria updated_at
 
 CREATE OR REPLACE FUNCTION rpg.set_updated_at()
 RETURNS TRIGGER AS $$
@@ -1688,8 +2060,8 @@ CREATE TRIGGER tr_phb_item_updated_at BEFORE UPDATE ON rpg.phb_item FOR EACH ROW
 
 CREATE VIEW rpg.v_phb_ability_generation_method AS
 SELECT slug, name, description FROM (VALUES
-  ('standard-array'::rpg.ability_generation_method, 'Conjunto Padrão', 'Use os seis valores fixos abaixo e atribua a Força, Destreza, Constituição, Inteligência, Sabedoria e Carisma.'),
-  ('roll'::rpg.ability_generation_method, 'Geração Aleatória', 'Jogue 4d6, descarte o menor dado e some os três restantes. Repita seis vezes. A soma dos seis atributos costuma ficar entre 72 e 80 (média ~73).'),
+  ('standard-array'::rpg.ability_generation_method, 'Conjunto PadrÃ£o', 'Use os seis valores fixos abaixo e atribua a ForÃ§a, Destreza, ConstituiÃ§Ã£o, InteligÃªncia, Sabedoria e Carisma.'),
+  ('roll'::rpg.ability_generation_method, 'GeraÃ§Ã£o AleatÃ³ria', 'Jogue 4d6, descarte o menor dado e some os trÃªs restantes. Repita seis vezes. A soma dos seis atributos costuma ficar entre 72 e 80 (mÃ©dia ~73).'),
   ('point-buy'::rpg.ability_generation_method, 'Custo de Pontos', '27 pontos para distribuir entre os seis atributos, conforme a tabela de custos.')
 ) AS t(slug, name, description);
 
@@ -1698,27 +2070,27 @@ SELECT slug, name, type_label, sort_order FROM (VALUES
   ('origin'::rpg.feat_category, 'Origem', 'Talento de Origem', 1),
   ('general'::rpg.feat_category, 'Geral', 'Talento Geral', 2),
   ('fighting-style'::rpg.feat_category, 'Estilo de Luta', 'Talento de Estilo de Luta', 3),
-  ('epic-boon'::rpg.feat_category, 'Dádiva Épica', 'Talento de Dádiva Épica', 4),
-  ('gh-transformation'::rpg.feat_category, 'Transformação GH', 'Transformação Grim Hollow', 5)
+  ('epic-boon'::rpg.feat_category, 'DÃ¡diva Ã‰pica', 'Talento de DÃ¡diva Ã‰pica', 4),
+  ('gh-transformation'::rpg.feat_category, 'TransformaÃ§Ã£o GH', 'TransformaÃ§Ã£o Grim Hollow', 5)
 ) AS t(slug, name, type_label, sort_order);
 
 CREATE VIEW rpg.v_phb_weapon_proficiency AS
 SELECT slug, label FROM (VALUES
   ('armas-simples', 'Armas Simples'),
   ('armas-marciais', 'Armas Marciais'),
-  ('armas-avancadas', 'Armas Avançadas'),
+  ('armas-avancadas', 'Armas AvanÃ§adas'),
   ('adagas', 'Adagas'),
   ('dardos', 'Dardos'),
   ('fundas', 'Fundas'),
-  ('bordoes', 'Bordões'),
+  ('bordoes', 'BordÃµes'),
   ('bestas-leves', 'Bestas Leves'),
-  ('bestas-de-mao', 'Bestas de Mão'),
+  ('bestas-de-mao', 'Bestas de MÃ£o'),
   ('espada-longa', 'Espada Longa'),
   ('rapieira', 'Rapieira'),
   ('espada-curta', 'Espada Curta'),
   ('machadinhas', 'Machadinhas'),
   ('armas-marciais-leves', 'Armas Marciais (leves)'),
-  ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)')
+  ('armas-marciais-a-distancia', 'Armas Marciais (Ã  DistÃ¢ncia)')
 ) AS t(slug, label);
 
 
@@ -1847,8 +2219,8 @@ JOIN rpg.phb_class_skill_pool p ON p.class_id = c.id
 JOIN rpg.phb_skill s ON s.id = p.skill_id
 ORDER BY c.slug, s.slug;
 
--- Opções de truque para Alto Elfo (lista de cantrips de Mago).
--- Kind opcional: não entra nos requiredKinds da validação padrão;
+-- OpÃ§Ãµes de truque para Alto Elfo (lista de cantrips de Mago).
+-- Kind opcional: nÃ£o entra nos requiredKinds da validaÃ§Ã£o padrÃ£o;
 -- validado no application quando presente.
 
 CREATE VIEW rpg.v_phb_high_elf_cantrip_options AS
@@ -1875,12 +2247,12 @@ JOIN rpg.phb_skill s ON s.id = bs.skill_id
 ORDER BY b.slug, s.slug;
 
 
--- Enriquece v_phb_background com talento de origem e proficiência em ferramenta
+-- Enriquece v_phb_background com talento de origem e proficiÃªncia em ferramenta
 
--- Opções de ferramenta quando o antecedente exige escolha (tool_proficiency_kind = choice)
+-- OpÃ§Ãµes de ferramenta quando o antecedente exige escolha (tool_proficiency_kind = choice)
 
 -- Recria a view para incluir feature_description (CREATE OR REPLACE
--- não permite inserir coluna no meio da lista existente).
+-- nÃ£o permite inserir coluna no meio da lista existente).
 
 CREATE VIEW rpg.v_phb_subclass_mechanics AS
 SELECT
@@ -1891,21 +2263,16 @@ SELECT
   sf.description AS feature_description,
   sf.feature_kind,
   sf.option_key,
-  rd.slug AS resource_slug,
-  rd.name AS resource_name,
-  psr.unlock_level AS resource_unlock_level,
-  psr.max_formula,
-  psr.fixed_max
+  NULL::text AS resource_slug,
+  NULL::text AS resource_name,
+  NULL::integer AS resource_unlock_level,
+  NULL::rpg.resource_max_formula AS max_formula,
+  NULL::integer AS fixed_max
 FROM rpg.phb_subclass_feature sf
 JOIN rpg.phb_subclass s ON s.id = sf.subclass_id
-JOIN rpg.phb_class c ON c.id = s.class_id
-LEFT JOIN rpg.phb_resource_grant psr
-  ON psr.owner_kind = 'subclass'::rpg.resource_owner_kind
- AND psr.owner_id = s.id
- AND psr.feature_id = sf.id
-LEFT JOIN rpg.phb_resource_definition rd ON rd.id = psr.resource_id;
+JOIN rpg.phb_class c ON c.id = s.class_id;
 
--- View canônica rpg.v_phb_class (flavor + mastery eligibility)
+-- View canÃ´nica rpg.v_phb_class (flavor + mastery eligibility)
 CREATE VIEW rpg.v_phb_class AS
 SELECT
   c.slug AS class_slug,
@@ -1992,8 +2359,8 @@ JOIN rpg.phb_background_language bl ON bl.background_id = b.id
 JOIN rpg.phb_language l ON l.id = bl.language_id
 ORDER BY b.slug, l.slug;
 
--- View unificada: magias concedidas por espécie (fixas + linhagem/legado)
--- Magias fixas de talento (além de featOptions)
+-- View unificada: magias concedidas por espÃ©cie (fixas + linhagem/legado)
+-- Magias fixas de talento (alÃ©m de featOptions)
 CREATE VIEW rpg.v_phb_feat_granted_spell AS
 SELECT
   f.slug AS feat_slug,
@@ -2007,66 +2374,88 @@ WHERE g.origin_type = 'feat'::rpg.spell_grant_origin;
 
 CREATE VIEW rpg.v_phb_hp_bonus_source AS
 SELECT
-  cm.owner_kind::text AS source_kind,
+  e.owner_kind::text AS source_kind,
   sp.slug AS source_slug,
-  cm.label,
+  COALESCE(e.label, 'PV') AS label,
   cm.flat_bonus,
   cm.per_level_bonus,
-  cm.from_level
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_species sp ON sp.id = cm.owner_id
-WHERE cm.kind = 'hp_bonus' AND cm.owner_kind = 'species'
+  cm.from_level,
+  e.requires_option_key,
+  e.requires_option_value,
+  COALESCE(e.requires_option_key, '') AS option_key_norm,
+  COALESCE(e.requires_option_value, '') AS option_value_norm
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_species sp ON sp.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'species'
+  AND cm.mod_kind = 'hp_bonus'
 
 UNION ALL
 
 SELECT
-  cm.owner_kind::text,
+  e.owner_kind::text,
   sc.slug,
-  cm.label,
+  COALESCE(e.label, 'PV'),
   cm.flat_bonus,
   cm.per_level_bonus,
-  cm.from_level
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_subclass sc ON sc.id = cm.owner_id
-WHERE cm.kind = 'hp_bonus' AND cm.owner_kind = 'subclass'
+  cm.from_level,
+  e.requires_option_key,
+  e.requires_option_value,
+  COALESCE(e.requires_option_key, '') AS option_key_norm,
+  COALESCE(e.requires_option_value, '') AS option_value_norm
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_subclass sc ON sc.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'subclass'
+  AND cm.mod_kind = 'hp_bonus'
 
 UNION ALL
 
 SELECT
-  cm.owner_kind::text,
+  e.owner_kind::text,
   f.slug,
-  cm.label,
+  COALESCE(e.label, 'PV'),
   cm.flat_bonus,
   cm.per_level_bonus,
-  cm.from_level
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_feat f ON f.id = cm.owner_id
-WHERE cm.kind = 'hp_bonus' AND cm.owner_kind = 'feat';
+  cm.from_level,
+  e.requires_option_key,
+  e.requires_option_value,
+  COALESCE(e.requires_option_key, '') AS option_key_norm,
+  COALESCE(e.requires_option_value, '') AS option_value_norm
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_feat f ON f.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'feat'
+  AND cm.mod_kind = 'hp_bonus';
 
 CREATE VIEW rpg.v_phb_unarmored_defense AS
 SELECT
-  cm.owner_kind::text AS source_kind,
+  e.owner_kind::text AS source_kind,
   c.slug AS source_slug,
-  cm.label,
+  COALESCE(e.label, 'Defesa sem Armadura') AS label,
   cm.second_ability_slug,
   cm.allows_shield
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_class c ON c.id = cm.owner_id
-WHERE cm.kind = 'unarmored_defense' AND cm.owner_kind = 'class'
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_class c ON c.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'class'
+  AND cm.mod_kind = 'unarmored_defense'
 
 UNION ALL
 
 SELECT
-  cm.owner_kind::text,
+  e.owner_kind::text,
   sc.slug,
-  cm.label,
+  COALESCE(e.label, 'Defesa sem Armadura'),
   cm.second_ability_slug,
   cm.allows_shield
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_subclass sc ON sc.id = cm.owner_id
-WHERE cm.kind = 'unarmored_defense' AND cm.owner_kind = 'subclass';
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_subclass sc ON sc.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'subclass'
+  AND cm.mod_kind = 'unarmored_defense';
 
--- Espaços de magia + cotas por nível de personagem (subclasse conjuradora)
+-- EspaÃ§os de magia + cotas por nÃ­vel de personagem (subclasse conjuradora)
 
 CREATE VIEW rpg.v_subclass_spell_slots AS
 SELECT
@@ -2099,8 +2488,8 @@ GROUP BY
   sp.prepared_spells,
   list_c.slug;
 
--- Adiciona pré-requisitos estruturados à view de talentos.
--- Aumentos de atributo por classe/nível com a classe normalizada (slug).
+-- Adiciona prÃ©-requisitos estruturados Ã  view de talentos.
+-- Aumentos de atributo por classe/nÃ­vel com a classe normalizada (slug).
 CREATE VIEW rpg.v_phb_class_ability_boost AS
 SELECT
   c.slug AS class_slug,
@@ -2126,7 +2515,7 @@ JOIN rpg.phb_spell s ON s.id = g.spell_id
 WHERE g.origin_type = 'class'::rpg.spell_grant_origin;
 
 
--- Inclui machadinhas (handaxe) nas labels de proficiência de arma.
+-- Inclui machadinhas (handaxe) nas labels de proficiÃªncia de arma.
 
 CREATE VIEW rpg.v_phb_feat AS
 SELECT
@@ -2218,8 +2607,8 @@ LEFT JOIN LATERAL (
   WHERE benefit.feat_id = feat.id
 ) benefits ON TRUE;
 
--- Opções de truque para Andari (lista de cantrips de Druida).
--- Kind opcional na validação padrão; exigido quando bearfolk_lineage = andari.
+-- OpÃ§Ãµes de truque para Andari (lista de cantrips de Druida).
+-- Kind opcional na validaÃ§Ã£o padrÃ£o; exigido quando bearfolk_lineage = andari.
 
 CREATE VIEW rpg.v_phb_andari_druid_cantrip_options AS
 SELECT
@@ -2296,9 +2685,9 @@ GROUP BY
 
 -- Magias concedidas por ancestria Giantkin (Nuvem / Tempestade)
 
--- Views: bundle de template de criatura / veículo (catálogo read-only)
+-- Views: bundle de template de criatura / veÃ­culo (catÃ¡logo read-only)
 
--- Bundle de catálogo: thread + goals + milestones + benefits
+-- Bundle de catÃ¡logo: thread + goals + milestones + benefits
 
 CREATE VIEW rpg.v_phb_character_thread_bundle AS
 SELECT
@@ -2347,7 +2736,7 @@ SELECT
   ), '[]'::jsonb) AS milestones
 FROM rpg.phb_character_thread t;
 
--- Views: expõe image_url nos bundles de criatura/veículo
+-- Views: expÃµe image_url nos bundles de criatura/veÃ­culo
 
 CREATE VIEW rpg.v_phb_creature_template_bundle AS
 SELECT
@@ -2582,7 +2971,7 @@ SELECT * FROM (
 
   UNION ALL
 
-  -- Feathren aviária L1 (truque)
+  -- Feathren aviÃ¡ria L1 (truque)
   SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
   FROM rpg.phb_species_trait t
   JOIN rpg.phb_species sp ON sp.id = t.species_id
@@ -2629,7 +3018,7 @@ LEFT JOIN rpg.phb_source_citation cit ON cit.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = cit.edition_id
 LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id;
 
--- v_phb_armor: edition_slug e image_url para compêndio (ex. escudos GH)
+-- v_phb_armor: edition_slug e image_url para compÃªndio (ex. escudos GH)
 
 CREATE VIEW rpg.v_phb_armor AS
 SELECT
@@ -2650,9 +3039,9 @@ FROM rpg.phb_armor a
 JOIN rpg.phb_item i ON i.id = a.item_id
 JOIN rpg.phb_armor_category c ON c.id = a.category_id;
 
--- Pool global, slots modulares, speed trade e tamanho por herança GH
+-- Pool global, slots modulares, speed trade e tamanho por heranÃ§a GH
 
--- Build tradicional sugerido (8 traços por herança)
+-- Build tradicional sugerido (8 traÃ§os por heranÃ§a)
 
 CREATE VIEW rpg.v_phb_heritage_traditional_build AS
 SELECT
@@ -2673,24 +3062,25 @@ JOIN rpg.phb_heritage h ON h.id = trt.heritage_id
 JOIN rpg.phb_heritage_trait tr ON tr.id = trt.trait_id
 ORDER BY h.slug, trt.sort_order;
 
--- Passivos de combate/ficha ligados a traços de herança
+-- Passivos de combate/ficha ligados a traÃ§os de heranÃ§a
 
 CREATE VIEW rpg.v_phb_heritage_passive_modifier AS
 SELECT
   ht.slug AS trait_slug,
-  cm.kind::text AS kind,
-  cm.label,
+  cm.mod_kind::text AS kind,
+  COALESCE(e.label, 'Passivo') AS label,
   cm.flat_bonus,
   cm.per_level_bonus,
   cm.from_level,
-  cm.min_trait_takes,
+  e.min_trait_takes,
   cm.second_ability_slug,
   cm.allows_shield
-FROM rpg.phb_combat_modifier cm
-JOIN rpg.phb_heritage_trait ht ON ht.id = cm.heritage_trait_id
-WHERE cm.owner_kind = 'heritage'::rpg.combat_modifier_owner;
+FROM rpg.phb_effect e
+JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
+JOIN rpg.phb_heritage_trait ht ON ht.id = e.owner_id
+WHERE e.kind = 'combat_mod' AND e.owner_kind = 'heritage';
 
--- Ações de economia (Usar) ligadas a traços de herança
+-- AÃ§Ãµes de economia (Usar) ligadas a traÃ§os de heranÃ§a
 
 CREATE VIEW rpg.v_phb_heritage_economy_action AS
 SELECT
@@ -2714,7 +3104,7 @@ JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id
 WHERE a.heritage_trait_id IS NOT NULL;
 
 
--- Escolhas de linhagem/ancestralidade por espécie
+-- Escolhas de linhagem/ancestralidade por espÃ©cie
 
 CREATE VIEW rpg.v_phb_species_trait_choices AS
 -- Elf lineage (option_key = 'lineageId')
@@ -2999,7 +3389,7 @@ FROM rpg.phb_species_trait t
 JOIN rpg.phb_species sp ON sp.id = t.species_id
 JOIN (
   VALUES
-    ('medium', 'Médio'),
+    ('medium', 'MÃ©dio'),
     ('small', 'Pequeno')
 ) AS sz(slug, name)
   ON t.choice_kind IN (
@@ -3080,7 +3470,7 @@ JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.ow
   AND t.choice_kind = 'trollkin_ancestry'::rpg.species_choice_kind
 
 UNION ALL
--- Feathren ancestria aviária (option_key = 'feathrenAvianAncestryId')
+-- Feathren ancestria aviÃ¡ria (option_key = 'feathrenAvianAncestryId')
 SELECT
   sp.slug,
   t.name,
@@ -3115,7 +3505,7 @@ JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.ow
   AND t.choice_kind = 'feathren_feline_ancestry'::rpg.species_choice_kind
 LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
 UNION ALL
--- Variante cultural anã (option_key = 'dwarfCultureId')
+-- Variante cultural anÃ£ (option_key = 'dwarfCultureId')
 SELECT
   sp.slug,
   t.name,
@@ -3146,10 +3536,10 @@ SELECT
   NULL::text AS edition_slug
 FROM rpg.v_phb_high_elf_cantrip_options o
 UNION ALL
--- Truque de Druida Andari (Dádiva da Natureza; exigido se bearfolk_lineage = andari)
+-- Truque de Druida Andari (DÃ¡diva da Natureza; exigido se bearfolk_lineage = andari)
 SELECT
   'bearfolk'::text AS species_slug,
-  'Dádiva da Natureza'::text AS trait_name,
+  'DÃ¡diva da Natureza'::text AS trait_name,
   'andari_druid_cantrip'::rpg.species_choice_kind AS choice_kind,
   o.choice_slug,
   o.choice_name,
@@ -3162,7 +3552,7 @@ FROM rpg.v_phb_andari_druid_cantrip_options o;
 
 
 
--- Escolhas modulares de traço por herança GH
+-- Escolhas modulares de traÃ§o por heranÃ§a GH
 
 CREATE VIEW rpg.v_phb_heritage_trait_choices AS
 SELECT
@@ -3172,8 +3562,8 @@ SELECT
   regexp_replace(t.name, '\.$', '', 'g') AS trait_name,
   ('[' || CASE t.category
     WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'Exploração'
-    ELSE 'Interpretação'
+    WHEN 'exploration' THEN 'ExploraÃ§Ã£o'
+    ELSE 'InterpretaÃ§Ã£o'
   END || '] ' || regexp_replace(t.name, '\.$', '', 'g')) AS label,
   t.benefit_base,
   t.benefit_improved,
@@ -3207,8 +3597,8 @@ SELECT
   regexp_replace(t.name, '\.$', '', 'g'),
   ('[' || CASE t.category
     WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'Exploração'
-    ELSE 'Interpretação'
+    WHEN 'exploration' THEN 'ExploraÃ§Ã£o'
+    ELSE 'InterpretaÃ§Ã£o'
   END || '] ' || regexp_replace(t.name, '\.$', '', 'g')),
   t.benefit_base,
   t.benefit_improved,
@@ -3244,8 +3634,8 @@ SELECT
   910000 + v.sort_order
 FROM rpg.phb_heritage h
 JOIN (VALUES
-  (1, 'no', 'Não', 'Mantém o deslocamento base da herança.'),
-  (2, 'yes', 'Sim', 'Reduz 1,5 m de deslocamento; escolha o 9º traço modular.')
+  (1, 'no', 'NÃ£o', 'MantÃ©m o deslocamento base da heranÃ§a.'),
+  (2, 'yes', 'Sim', 'Reduz 1,5 m de deslocamento; escolha o 9Âº traÃ§o modular.')
 ) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
 WHERE h.allows_speed_trade
 
@@ -3264,11 +3654,11 @@ SELECT
 FROM rpg.phb_heritage h
 JOIN (VALUES
   (1, 'small', 'Pequeno', 'Tamanho Pequeno.'),
-  (2, 'medium', 'Médio', 'Tamanho Médio.')
+  (2, 'medium', 'MÃ©dio', 'Tamanho MÃ©dio.')
 ) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
 WHERE h.allows_size_choice;
 
--- v_phb_class_economy_action inclui ações de traços de herança GH
+-- v_phb_class_economy_action inclui aÃ§Ãµes de traÃ§os de heranÃ§a GH
 
 CREATE VIEW rpg.v_phb_class_economy_action AS
 SELECT
@@ -3303,7 +3693,7 @@ LEFT JOIN rpg.phb_feat f ON f.id = a.feat_id
 LEFT JOIN rpg.phb_item i ON i.id = a.item_id
 LEFT JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id;
 
--- Materialized views (catálogo estático — refresh pós-seed)
+-- Materialized views (catÃ¡logo estÃ¡tico â€” refresh pÃ³s-seed)
 
 CREATE MATERIALIZED VIEW rpg.mv_spell_by_class AS
   SELECT * FROM rpg.v_spell_by_class;
@@ -3356,7 +3746,7 @@ CREATE MATERIALIZED VIEW rpg.mv_phb_species_granted_spell AS
 CREATE MATERIALIZED VIEW rpg.mv_phb_heritage_trait_choices AS
   SELECT * FROM rpg.v_phb_heritage_trait_choices;
 
--- Índices adicionais do catálogo
+-- Ãndices adicionais do catÃ¡logo
 
 CREATE INDEX idx_phb_species_trait_choice ON rpg.phb_species_trait(choice_kind);
 
@@ -3452,7 +3842,13 @@ CREATE UNIQUE INDEX idx_mv_phb_character_thread_bundle
   ON rpg.mv_phb_character_thread_bundle (slug);
 
 CREATE UNIQUE INDEX idx_mv_phb_hp_bonus_source
-  ON rpg.mv_phb_hp_bonus_source (source_kind, source_slug, from_level);
+  ON rpg.mv_phb_hp_bonus_source (
+    source_kind,
+    source_slug,
+    from_level,
+    option_key_norm,
+    option_value_norm
+  );
 
 CREATE UNIQUE INDEX idx_mv_phb_unarmored_defense
   ON rpg.mv_phb_unarmored_defense (source_kind, source_slug);
@@ -3484,7 +3880,7 @@ CREATE UNIQUE INDEX idx_mv_phb_species_granted_spell
 CREATE UNIQUE INDEX idx_mv_phb_heritage_trait_choices
   ON rpg.mv_phb_heritage_trait_choices (heritage_slug, choice_kind, trait_slug);
 
--- Criticals: ownership FK (auth.users quando existir); subclass ∈ class; HP current ≤ max
+-- Criticals: ownership FK (auth.users quando existir); subclass âˆˆ class; HP current â‰¤ max
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -3533,7 +3929,7 @@ CREATE TRIGGER tr_player_character_updated_at
   BEFORE UPDATE ON rpg.player_character
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
--- Invariante: subclass_slug pertence à class_slug (CHECK com subquery não é permitido)
+-- Invariante: subclass_slug pertence Ã  class_slug (CHECK com subquery nÃ£o Ã© permitido)
 CREATE OR REPLACE FUNCTION rpg.enforce_pc_subclass_belongs_to_class()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -3564,7 +3960,7 @@ CREATE TRIGGER tr_player_character_subclass_class
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character.user_id FK — auth schema not present';
+    RAISE NOTICE 'Skipping player_character.user_id FK â€” auth schema not present';
     RETURN;
   END IF;
   ALTER TABLE rpg.player_character
@@ -3572,7 +3968,7 @@ BEGIN
     FOREIGN KEY (user_id) REFERENCES auth.users(id);
 END $$;
 
--- Perícias escolhidas da pool da classe (PHB skill choice)
+-- PerÃ­cias escolhidas da pool da classe (PHB skill choice)
 
 CREATE TABLE rpg.player_character_skill (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
@@ -3583,7 +3979,7 @@ CREATE TABLE rpg.player_character_skill (
 CREATE INDEX idx_player_character_skill_character
   ON rpg.player_character_skill(character_id);
 
--- Extensões da ficha: espécie, subclasse, feats, magias, equipamento, idiomas
+-- ExtensÃµes da ficha: espÃ©cie, subclasse, feats, magias, equipamento, idiomas
 CREATE TABLE rpg.player_character_species_choice (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   choice_kind TEXT NOT NULL,
@@ -3648,12 +4044,12 @@ CREATE INDEX idx_player_character_equipment_character
 CREATE INDEX idx_player_character_language_character
   ON rpg.player_character_language(character_id);
 
--- RLS para tabelas de jogador (Supabase — requer schema auth)
+-- RLS para tabelas de jogador (Supabase â€” requer schema auth)
 
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player RLS — auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping player RLS â€” auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -3713,7 +4109,7 @@ BEGIN
     );
 END $$;
 
--- Inventário do personagem (mochila + equipado)
+-- InventÃ¡rio do personagem (mochila + equipado)
 
 CREATE TABLE rpg.player_character_item (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
@@ -3780,7 +4176,7 @@ CREATE INDEX idx_player_character_item_attuned
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character_item RLS — auth schema not present';
+    RAISE NOTICE 'Skipping player_character_item RLS â€” auth schema not present';
     RETURN;
   END IF;
 
@@ -3793,21 +4189,21 @@ BEGIN
     );
 END $$;
 
--- Estado de mesa (slots gastos, concentração, condições, HP temporário)
+-- Estado de mesa (slots gastos, concentraÃ§Ã£o, condiÃ§Ãµes, HP temporÃ¡rio)
 CREATE VIEW rpg.v_phb_condition AS
 SELECT slug, name FROM (VALUES
   ('blinded'::rpg.condition_slug, 'Cegueira'),
-  ('charmed'::rpg.condition_slug, 'Enfeitiçado'),
+  ('charmed'::rpg.condition_slug, 'EnfeitiÃ§ado'),
   ('deafened'::rpg.condition_slug, 'Surdez'),
-  ('exhaustion'::rpg.condition_slug, 'Exaustão'),
+  ('exhaustion'::rpg.condition_slug, 'ExaustÃ£o'),
   ('frightened'::rpg.condition_slug, 'Amedrontado'),
   ('grappled'::rpg.condition_slug, 'Agarrado'),
   ('incapacitated'::rpg.condition_slug, 'Incapacitado'),
-  ('invisible'::rpg.condition_slug, 'Invisível'),
+  ('invisible'::rpg.condition_slug, 'InvisÃ­vel'),
   ('paralyzed'::rpg.condition_slug, 'Paralisado'),
   ('petrified'::rpg.condition_slug, 'Petrificado'),
   ('poisoned'::rpg.condition_slug, 'Envenenado'),
-  ('prone'::rpg.condition_slug, 'Caído'),
+  ('prone'::rpg.condition_slug, 'CaÃ­do'),
   ('restrained'::rpg.condition_slug, 'Restringido'),
   ('stunned'::rpg.condition_slug, 'Atordoado'),
   ('unconscious'::rpg.condition_slug, 'Inconsciente')
@@ -3815,7 +4211,7 @@ SELECT slug, name FROM (VALUES
 
 
 -- Campanhas: mesa, membros (mestre/jogador/auxiliar) e personagens vinculados.
--- Personagem continua do dono; pode estar em várias campanhas.
+-- Personagem continua do dono; pode estar em vÃ¡rias campanhas.
 
 CREATE TABLE rpg.campaign (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -3835,7 +4231,7 @@ CREATE TRIGGER tr_campaign_updated_at
   BEFORE UPDATE ON rpg.campaign
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
--- Papéis na mesa: dm (mestre), player (jogador), assistant (auxiliar).
+-- PapÃ©is na mesa: dm (mestre), player (jogador), assistant (auxiliar).
 CREATE TABLE rpg.campaign_member (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   campaign_id UUID NOT NULL REFERENCES rpg.campaign(id) ON DELETE CASCADE,
@@ -3848,7 +4244,7 @@ CREATE TABLE rpg.campaign_member (
 CREATE INDEX idx_campaign_member_user_id ON rpg.campaign_member(user_id);
 CREATE INDEX idx_campaign_member_campaign_id ON rpg.campaign_member(campaign_id);
 
--- Personagem do jogador vinculado à campanha (N:N — várias campanhas).
+-- Personagem do jogador vinculado Ã  campanha (N:N â€” vÃ¡rias campanhas).
 CREATE TABLE rpg.campaign_character (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   campaign_id UUID NOT NULL REFERENCES rpg.campaign(id) ON DELETE CASCADE,
@@ -3865,7 +4261,7 @@ CREATE INDEX idx_campaign_character_campaign_id ON rpg.campaign_character(campai
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign ownership FKs — auth schema not present';
+    RAISE NOTICE 'Skipping campaign ownership FKs â€” auth schema not present';
     RETURN;
   END IF;
   ALTER TABLE rpg.campaign
@@ -3879,12 +4275,12 @@ BEGIN
     FOREIGN KEY (linked_by) REFERENCES auth.users(id);
 END $$;
 
--- RLS para campanhas (Supabase — requer schema auth)
+-- RLS para campanhas (Supabase â€” requer schema auth)
 
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign RLS — auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping campaign RLS â€” auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -3979,7 +4375,7 @@ BEGIN
       )
     );
 
-  -- Leitura de personagem por membros da campanha (além do dono).
+  -- Leitura de personagem por membros da campanha (alÃ©m do dono).
   DROP POLICY IF EXISTS player_character_campaign_read ON rpg.player_character;
   CREATE POLICY player_character_campaign_read ON rpg.player_character
     FOR SELECT USING (
@@ -3992,7 +4388,7 @@ BEGIN
       )
     );
 
-  -- Escrita por mestre/auxiliar na campanha (dono já coberto por player_character_own).
+  -- Escrita por mestre/auxiliar na campanha (dono jÃ¡ coberto por player_character_own).
   DROP POLICY IF EXISTS player_character_campaign_write ON rpg.player_character;
   CREATE POLICY player_character_campaign_write ON rpg.player_character
     FOR UPDATE USING (
@@ -4034,7 +4430,7 @@ CREATE TRIGGER tr_campaign_encounter_updated_at
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
 
--- Runtime: fichas de mesa além do personagem jogador (criatura, montaria, veículo, companion)
+-- Runtime: fichas de mesa alÃ©m do personagem jogador (criatura, montaria, veÃ­culo, companion)
 
 CREATE TABLE rpg.game_actor (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -4164,7 +4560,7 @@ CREATE INDEX idx_player_character_state_boarded_actor
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character_state RLS — auth schema not present';
+    RAISE NOTICE 'Skipping player_character_state RLS â€” auth schema not present';
     RETURN;
   END IF;
 
@@ -4212,7 +4608,7 @@ CREATE INDEX idx_campaign_encounter_combatant_actor_id
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign_encounter.created_by FK — auth schema not present';
+    RAISE NOTICE 'Skipping campaign_encounter.created_by FK â€” auth schema not present';
     RETURN;
   END IF;
   ALTER TABLE rpg.campaign_encounter
@@ -4220,12 +4616,12 @@ BEGIN
     FOREIGN KEY (created_by) REFERENCES auth.users(id);
 END $$;
 
--- RLS para encontro de campanha (Supabase — requer schema auth)
+-- RLS para encontro de campanha (Supabase â€” requer schema auth)
 
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign encounter RLS — auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping campaign encounter RLS â€” auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -4290,40 +4686,40 @@ BEGIN
     );
 END $$;
 
--- Slots não exclusivos para itens mágicos vestíveis / carregados.
+-- Slots nÃ£o exclusivos para itens mÃ¡gicos vestÃ­veis / carregados.
 
 
 
 
--- Câmara de armas de fogo por personagem (estado de sessão).
+-- CÃ¢mara de armas de fogo por personagem (estado de sessÃ£o).
 
--- Estado de combate do Bárbaro (Fúria / Ataque Imprudente).
-
-
-
--- Encanto de arma preso a um item do inventário (slug do phb_item do encanto).
+-- Estado de combate do BÃ¡rbaro (FÃºria / Ataque Imprudente).
 
 
 
-
--- Soft check: null ou slug de encanto; sem FK (catálogo pode atrasar).
-
--- Trackers de sessão Pack 2: Colégio das Máscaras / Beastborne.
+-- Encanto de arma preso a um item do inventÃ¡rio (slug do phb_item do encanto).
 
 
 
--- Trackers de sessão: Mago dos Mísseis (Escudo / Giga armados para o próximo cast).
+
+-- Soft check: null ou slug de encanto; sem FK (catÃ¡logo pode atrasar).
+
+-- Trackers de sessÃ£o Pack 2: ColÃ©gio das MÃ¡scaras / Beastborne.
 
 
 
--- Arma de Pacto (Bruxo · Pacto da Lâmina): no máximo uma por personagem.
+-- Trackers de sessÃ£o: Mago dos MÃ­sseis (Escudo / Giga armados para o prÃ³ximo cast).
+
+
+
+-- Arma de Pacto (Bruxo Â· Pacto da LÃ¢mina): no mÃ¡ximo uma por personagem.
 
 
 CREATE UNIQUE INDEX uq_player_character_item_one_pact_weapon
   ON rpg.player_character_item (character_id)
   WHERE is_pact_weapon = TRUE;
 
--- Overlay DMG §3.1: cobertura presa à peça base (estilo Valdas charm).
+-- Overlay DMG Â§3.1: cobertura presa Ã  peÃ§a base (estilo Valdas charm).
 
 
 
@@ -4343,14 +4739,14 @@ CREATE UNIQUE INDEX uq_player_character_item_one_pact_weapon
 
 
 
--- Magia vinculada em item único (ex.: Cajado Magificado).
+-- Magia vinculada em item Ãºnico (ex.: Cajado Magificado).
 
 -- Wealth: 5 moedas D&D no personagem (PC / PP prata / PE / PO / PL platina)
 
--- Campanha: players podem optar por não pagar ao pegar item
+-- Campanha: players podem optar por nÃ£o pagar ao pegar item
 
--- Bucket público de avatares (perfil do usuário).
--- Rode no SQL Editor do Supabase se o pipeline de migrations não cobre storage.
+-- Bucket pÃºblico de avatares (perfil do usuÃ¡rio).
+-- Rode no SQL Editor do Supabase se o pipeline de migrations nÃ£o cobre storage.
 
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
@@ -4406,14 +4802,14 @@ CREATE POLICY "avatars_owner_delete"
     AND (storage.foldername(name))[1] = auth.uid()::text
   );
 
--- Props de instância (artefato rolado na 1ª sintonia, senciência copiada, etc.)
+-- Props de instÃ¢ncia (artefato rolado na 1Âª sintonia, senciÃªncia copiada, etc.)
 
 
 COMMENT ON COLUMN rpg.player_character_item.instance_properties IS
-  'Estado por instância: artifactRandom (1ª sintonia), sentience copiada do catálogo, etc.';
+  'Estado por instÃ¢ncia: artifactRandom (1Âª sintonia), sentience copiada do catÃ¡logo, etc.';
 
--- Compartimentos de inventário: item contido em outro (bolsa/saca/cesta).
--- Nullable = mochila raiz (compatível com inventário existente).
+-- Compartimentos de inventÃ¡rio: item contido em outro (bolsa/saca/cesta).
+-- Nullable = mochila raiz (compatÃ­vel com inventÃ¡rio existente).
 
 
 COMMENT ON COLUMN rpg.player_character_item.contained_in_item_slug IS
@@ -4423,14 +4819,14 @@ CREATE INDEX idx_player_character_item_contained_in
   ON rpg.player_character_item (character_id, contained_in_item_slug)
   WHERE contained_in_item_slug IS NOT NULL;
 
--- Forma Estrelada (Círculo das Estrelas): constelação ativa na sessão
+-- Forma Estrelada (CÃ­rculo das Estrelas): constelaÃ§Ã£o ativa na sessÃ£o
 
 
 
 -- RPC de leitura: ficha do jogador em 1 round-trip (JSONB).
 -- Substitui N finds TypeORM em player_character_* + skills do antecedente.
 
--- RPC de leitura: inventário + catálogo de combate em 1 round-trip.
+-- RPC de leitura: inventÃ¡rio + catÃ¡logo de combate em 1 round-trip.
 
 CREATE OR REPLACE FUNCTION rpg.get_character_combat_bundle(
   p_character_id uuid,
@@ -4588,7 +4984,7 @@ AS $$
 $$;
 
 COMMENT ON FUNCTION rpg.get_character_combat_bundle(uuid, text, text) IS
-  'Read model de combate da ficha: inventário + itens + armadura + defesa sem armadura + active slugs.';
+  'Read model de combate da ficha: inventÃ¡rio + itens + armadura + defesa sem armadura + active slugs.';
 
 -- Estende get_character_sheet_bundle: PB + class ability boosts + species.size
 
@@ -4600,7 +4996,7 @@ COMMENT ON FUNCTION rpg.get_character_combat_bundle(uuid, text, text) IS
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping game_actor RLS — auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping game_actor RLS â€” auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -4640,9 +5036,9 @@ BEGIN
     );
 END $$;
 
--- Spawn runtime game_actor a partir de template de criatura ou veículo
+-- Spawn runtime game_actor a partir de template de criatura ou veÃ­culo
 
--- Spawn: copiar ability_scores, initiative, passageiros e descrição de ações
+-- Spawn: copiar ability_scores, initiative, passageiros e descriÃ§Ã£o de aÃ§Ãµes
 
 
 
@@ -4708,7 +5104,7 @@ AS $$
   );
 $$;
 
--- Character Threads — estado na ficha (1 ativo por personagem)
+-- Character Threads â€” estado na ficha (1 ativo por personagem)
 
 CREATE TABLE rpg.player_character_thread (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -4725,7 +5121,7 @@ CREATE TABLE rpg.player_character_thread (
   )
 );
 
--- No máximo um thread ativo por personagem
+-- No mÃ¡ximo um thread ativo por personagem
 CREATE UNIQUE INDEX uq_player_character_thread_one_active
   ON rpg.player_character_thread(character_id)
   WHERE status = 'active';
@@ -4779,11 +5175,11 @@ BEGIN
     );
 EXCEPTION
   WHEN undefined_function THEN
-    -- auth.uid() pode não existir em Postgres local sem Supabase
+    -- auth.uid() pode nÃ£o existir em Postgres local sem Supabase
     NULL;
 END $$;
 
--- Personagem: origem PHB species XOR herança GH + picks modulares
+-- Personagem: origem PHB species XOR heranÃ§a GH + picks modulares
 
 
 
@@ -4814,10 +5210,10 @@ CREATE TABLE rpg.player_character_heritage_config (
 );
 
 COMMENT ON TABLE rpg.player_character_heritage_trait IS
-  'Slots 1–8 de traços modulares GH; slot 9 disponível se speed_trade = yes.';
+  'Slots 1â€“8 de traÃ§os modulares GH; slot 9 disponÃ­vel se speed_trade = yes.';
 
 COMMENT ON TABLE rpg.player_character_heritage_config IS
-  'Opções de customização GH: trocar 1,5 m por 9º traço; tamanho Pequeno/Médio.';
+  'OpÃ§Ãµes de customizaÃ§Ã£o GH: trocar 1,5 m por 9Âº traÃ§o; tamanho Pequeno/MÃ©dio.';
 
 CREATE TABLE rpg.player_character_transformation (
   character_id UUID PRIMARY KEY REFERENCES rpg.player_character(id) ON DELETE CASCADE,
@@ -4834,10 +5230,10 @@ CREATE TABLE rpg.player_character_transformation_choice (
 );
 
 COMMENT ON TABLE rpg.player_character_transformation IS
-  'Transformação GH Cap. 6 ativa na ficha (1:1). Não usar player_character_feat.';
+  'TransformaÃ§Ã£o GH Cap. 6 ativa na ficha (1:1). NÃ£o usar player_character_feat.';
 
 COMMENT ON TABLE rpg.player_character_transformation_choice IS
-  'Escolhas opacas da transformação (boons etc.); validadas por J060 quando existir.';
+  'Escolhas opacas da transformaÃ§Ã£o (boons etc.); validadas por J060 quando existir.';
 
 CREATE OR REPLACE FUNCTION rpg.spawn_game_actor_from_template(
   p_template_slug text,
@@ -4992,13 +5388,13 @@ BEGIN
 END;
 $$;
 
--- Anotações livres da sessão (ficha do personagem)
+-- AnotaÃ§Ãµes livres da sessÃ£o (ficha do personagem)
 
 
 COMMENT ON COLUMN rpg.player_character.session_notes IS
-  'Anotações da sessão (jogador/DM) — texto livre, não confundir com game_actor.notes';
+  'AnotaÃ§Ãµes da sessÃ£o (jogador/DM) â€” texto livre, nÃ£o confundir com game_actor.notes';
 
--- Bundle da ficha: herança GH via player_character_heritage_* + species PHB separados
+-- Bundle da ficha: heranÃ§a GH via player_character_heritage_* + species PHB separados
 
 CREATE OR REPLACE FUNCTION rpg.get_character_sheet_bundle(
   p_character_id uuid,
@@ -5219,4 +5615,4 @@ AS $$
 $$;
 
 COMMENT ON FUNCTION rpg.get_character_sheet_bundle(uuid, text) IS
-  'Read model da ficha: filhos + PB + boosts + origem PHB/herança GH + transformação Cap. 6.';
+  'Read model da ficha: filhos + PB + boosts + origem PHB/heranÃ§a GH + transformaÃ§Ã£o Cap. 6.';

@@ -42,7 +42,7 @@ describe('loadThreadResourceSchedule', () => {
     ]);
 
     expect(query).toHaveBeenCalledWith(
-      expect.stringContaining("owner_kind = 'character_thread'"),
+      expect.stringContaining("e.owner_kind = 'character_thread'"),
       ['char-1', 'cursemarked-greater-sacrifice', expect.any(Array)],
     );
   });

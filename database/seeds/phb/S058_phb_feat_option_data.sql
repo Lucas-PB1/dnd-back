@@ -41,9 +41,9 @@ WHERE f.slug IN (
   'grappler', 'inspiring-leader', 'keen-mind', 'weapon-master',
   'medium-armor-master', 'heavy-armor-master', 'polearm-master',
   'great-weapon-master', 'shield-master', 'sharpshooter', 'piercer',
-  'resilient', 'durable', 'sentinel', 'stealthy', 'slasher',
+  'resilient', 'durable', 'sentinel', 'skulker', 'slasher',
   'telekinetic', 'telepathic', 'shadow-touched', 'fey-touched',
-  'martial-weapon-training', 'mobile'
+  'martial-weapon-training', 'speedy'
 )
 ON CONFLICT (scope, owner_id, option_key) DO NOTHING;
 
@@ -177,7 +177,7 @@ VALUES ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'dur
 ON CONFLICT (scope, owner_id, option_key, value_id) DO NOTHING;
 
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
-VALUES ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'stealthy'), 'abilityIncrease', 'destreza', 'Destreza', 1)
+VALUES ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'skulker'), 'abilityIncrease', 'destreza', 'Destreza', 1)
 ON CONFLICT (scope, owner_id, option_key, value_id) DO NOTHING;
 
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
@@ -187,7 +187,7 @@ CROSS JOIN (VALUES
   ('destreza', 'Destreza', 1),
   ('constituicao', 'Constituição', 2)
 ) AS v(value_id, label, sort_order)
-WHERE f.slug = 'mobile'
+WHERE f.slug = 'speedy'
 ON CONFLICT (scope, owner_id, option_key, value_id) DO NOTHING;
 
 -- --- D004_feat_extra_options.sql ---

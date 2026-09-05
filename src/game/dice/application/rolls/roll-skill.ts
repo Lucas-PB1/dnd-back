@@ -17,6 +17,8 @@ import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
+import { applyInspirationSpend } from './apply-inspiration-spend';
+import type { LoadEffectCatalog } from '@game/effects';
 
 export async function executeRollSkill(input: {
   access: PlayerCharacterAccessService;
@@ -24,6 +26,7 @@ export async function executeRollSkill(input: {
   domain: CharacterDomainService;
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
+  effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
   dto: RollSkillDto;
@@ -112,6 +115,17 @@ export async function executeRollSkill(input: {
     resourceSpender: input.resourceSpender,
     kind: 'skill',
     kept: result.d20.kept[0] ?? 0,
+    notes,
+  });
+  const failed =
+    input.dto.dc != null ? result.total < input.dto.dc : null;
+  await applyInspirationSpend({
+    resourceSpender: input.resourceSpender,
+    sheet: input.sheet,
+    effectCatalog: input.effectCatalog,
+    character,
+    spentInspiration: Boolean(input.dto.spentInspiration),
+    failed,
     notes,
   });
   return {

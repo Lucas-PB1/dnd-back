@@ -1,7 +1,9 @@
-import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-import { abilityModifier } from '@game/shared/domain/ability-scores';
-import { hasStyleOrFeat } from '../feat/has-style-or-feat';
-import { computeManikinArmorPreset } from '../species/manikin-armor';
+import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
+import { abilityModifier } from "@game/shared/domain/ability-scores";
+import type { CatalogEffect } from "@game/effects";
+import { ownedStyleOrFeatSlugs, styleOrFeatNumericBonus } from "@game/effects";
+import { hasStyleOrFeat } from "../feat/has-style-or-feat";
+import { computeManikinArmorPreset } from "../species/manikin-armor";
 
 export type EquippedArmorPiece = {
   itemSlug: string;
@@ -10,10 +12,6 @@ export type EquippedArmorPiece = {
   acBase: number | null;
 };
 
-/**
- * Defesa sem Armadura já resolvida do catálogo (`v_phb_unarmored_defense`).
- * Quais classes/subclasses concedem cada variação vive no banco.
- */
 export type UnarmoredDefenseRow = {
   label: string;
   secondAbility: keyof AbilityScores;
@@ -21,23 +19,27 @@ export type UnarmoredDefenseRow = {
 };
 
 export type ArmorClassContext = {
-  /** Slugs de talentos selecionados (ex.: defense, medium-armor-master). */
   featSlugs?: string[];
-  /** Estilos de luta via opção de subclasse/classe (ex.: defense). */
   fightingStyleSlugs?: string[];
-  /** Defesas sem Armadura aplicáveis, carregadas do catálogo. */
+  featEffects?: readonly CatalogEffect[];
   unarmoredDefenses?: readonly UnarmoredDefenseRow[];
-  /** Bônus de CA de itens mágicos ativos. */
   itemAcBonus?: number;
-  /** Nomes dos itens que contribuíram para itemAcBonus. */
   itemAcBonusNames?: readonly string[];
-  /**
-   * Preset de CA do Manikin (`manikin_armor`). Aplicado só sem armadura de corpo.
-   */
   manikinArmorPresetSlug?: string | null;
 };
 
-const BODY_ARMOR = new Set(['light', 'medium', 'heavy']);
+const BODY_ARMOR = new Set(["light", "medium", "heavy"]);
+
+function defenseAcBonus(context: ArmorClassContext | undefined): number {
+  return styleOrFeatNumericBonus({
+    effects: context?.featEffects,
+    ownedSlugs: ownedStyleOrFeatSlugs(context ?? {}),
+    ownerSlug: "defense",
+    kind: "ac_bonus",
+    proficiencyBonus: 0,
+    legacyFlat: 1,
+  });
+}
 
 function bodyArmorAc(
   piece: EquippedArmorPiece,
@@ -47,11 +49,11 @@ function bodyArmorAc(
   const base = piece.acBase ?? 10;
   const dexMod = abilityModifier(scores.destreza);
   switch (piece.categorySlug) {
-    case 'light':
+    case "light":
       return base + dexMod;
-    case 'medium':
+    case "medium":
       return base + Math.min(dexMod, mediumDexCap);
-    case 'heavy':
+    case "heavy":
       return base;
     default:
       return base;
@@ -82,8 +84,10 @@ export function computeArmorClassFromEquipment(
   equipped: EquippedArmorPiece[],
   context?: ArmorClassContext,
 ): { armorClass: number; armorClassNote: string } {
-  const bodyArmor = equipped.find((piece) => BODY_ARMOR.has(piece.categorySlug));
-  const shield = equipped.find((piece) => piece.categorySlug === 'shield');
+  const bodyArmor = equipped.find((piece) =>
+    BODY_ARMOR.has(piece.categorySlug),
+  );
+  const shield = equipped.find((piece) => piece.categorySlug === "shield");
   const hasShield = Boolean(shield);
   const noteParts: string[] = [];
 
@@ -91,15 +95,15 @@ export function computeArmorClassFromEquipment(
 
   if (bodyArmor) {
     const mediumCap =
-      bodyArmor.categorySlug === 'medium' &&
-      hasStyleOrFeat(context, 'medium-armor-master') &&
+      bodyArmor.categorySlug === "medium" &&
+      hasStyleOrFeat(context, "medium-armor-master") &&
       scores.destreza >= 16
         ? 3
         : 2;
     armorClass = bodyArmorAc(bodyArmor, scores, mediumCap);
     noteParts.push(bodyArmor.itemName);
     if (mediumCap === 3) {
-      noteParts.push('Mestre em Armadura Média');
+      noteParts.push("Mestre em Armadura Média");
     }
   } else {
     const manikin = context?.manikinArmorPresetSlug
@@ -108,9 +112,10 @@ export function computeArmorClassFromEquipment(
     if (manikin) {
       armorClass = manikin.armorClass;
       noteParts.push(manikin.label);
-      if (manikin.countsAsWornArmor && hasStyleOrFeat(context, 'defense')) {
-        armorClass += 1;
-        noteParts.push('Defensivo');
+      const defense = manikin.countsAsWornArmor ? defenseAcBonus(context) : 0;
+      if (defense !== 0) {
+        armorClass += defense;
+        noteParts.push("Defensivo");
       }
     } else {
       const unarmored = pickBestUnarmoredDefense(
@@ -123,7 +128,7 @@ export function computeArmorClassFromEquipment(
         noteParts.push(unarmored.label);
       } else {
         armorClass = 10 + abilityModifier(scores.destreza);
-        noteParts.push('Sem armadura');
+        noteParts.push("Sem armadura");
       }
     }
   }
@@ -133,9 +138,12 @@ export function computeArmorClassFromEquipment(
     noteParts.push(shield.itemName);
   }
 
-  if (bodyArmor && hasStyleOrFeat(context, 'defense')) {
-    armorClass += 1;
-    noteParts.push('Defensivo');
+  if (bodyArmor) {
+    const defense = defenseAcBonus(context);
+    if (defense !== 0) {
+      armorClass += defense;
+      noteParts.push("Defensivo");
+    }
   }
 
   const itemAcBonus = context?.itemAcBonus ?? 0;
@@ -145,17 +153,16 @@ export function computeArmorClassFromEquipment(
     if (itemNames.length > 0) {
       noteParts.push(...itemNames);
     } else {
-      noteParts.push(`itens ${itemAcBonus > 0 ? '+' : ''}${itemAcBonus}`);
+      noteParts.push(`itens ${itemAcBonus > 0 ? "+" : ""}${itemAcBonus}`);
     }
   }
 
   return {
     armorClass,
-    armorClassNote: noteParts.join(' + '),
+    armorClassNote: noteParts.join(" + "),
   };
 }
 
-/** Fallback simples (10 + DES) sem contexto de classe/talento. */
 export function computeUnarmoredArmorClass(scores: AbilityScores): number {
   return 10 + abilityModifier(scores.destreza);
 }

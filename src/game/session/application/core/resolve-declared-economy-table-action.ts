@@ -1,5 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import type { LoadEffectCatalog } from '@game/effects';
+import { executeCatalogEffect } from '@game/effects';
 import type { ClassEconomyActionRecord } from '@game/combat/domain/class-action-ui-catalog';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
@@ -12,12 +14,13 @@ import { assertCharacterLevel } from './table-action-guards';
 export type DeclaredEconomyTableActionDeps = {
   state: CharacterStateRepository;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
+  effectCatalog?: LoadEffectCatalog;
 };
 
 /**
  * Handler mínimo para ações cujo SSOT é `phb_class_economy_action.table_action`:
  * valida nível/subclasse do catálogo, gasta recurso se `alwaysSpendsResource`,
- * devolve nota da descrição; PV temp. quando a feature concede valor fixo calculável.
+ * devolve nota da descrição; PV temp. via `phb_effect` quando seedado.
  */
 export async function resolveDeclaredEconomyTableAction(
   deps: DeclaredEconomyTableActionDeps,
@@ -65,17 +68,41 @@ export async function resolveDeclaredEconomyTableAction(
     action.description?.trim() ||
     action.summary?.trim() ||
     `${action.name}: declare o efeito na mesa.`;
+  let total: number | undefined;
 
-  if (actionSlug === 'brittle-bone-armor') {
+  const effects = deps.effectCatalog
+    ? await deps.effectCatalog.load({
+        actionSlug,
+        triggers: ['on_table_action'],
+      })
+    : [];
+  const effect = effects.find(
+    (row) => row.kind === 'temp_hp' || row.kind === 'heal' || row.kind === 'table_note',
+  );
+
+  if (effect) {
+    const executed = executeCatalogEffect(effect, { level: character.level });
+    if (executed.kind === 'temp_hp') {
+      state = await applyTemporaryHitPoints(
+        deps.state,
+        character,
+        executed.amount,
+      );
+      note = `${note} PV temporários aplicados: ${executed.amount}.`;
+      total = executed.amount;
+    } else if (executed.kind === 'table_note' && executed.note) {
+      note = `${note} ${executed.note}`;
+    }
+  } else if (actionSlug === 'brittle-bone-armor') {
     const tempHp = 2 * character.level;
     state = await applyTemporaryHitPoints(deps.state, character, tempHp);
     note = `${note} PV temporários aplicados: ${tempHp} (2× nível de Mago).`;
-  }
-
-  if (actionSlug === 'marauders-reprisal') {
+    total = tempHp;
+  } else if (actionSlug === 'marauders-reprisal') {
     const tempHp = Math.floor(character.level / 2);
     state = await applyTemporaryHitPoints(deps.state, character, tempHp);
     note = `${note} PV temporários aplicados: ${tempHp} (metade do nível).`;
+    total = tempHp;
   }
 
   if (actionSlug === 'red-renewal') {
@@ -86,6 +113,7 @@ export async function resolveDeclaredEconomyTableAction(
       dice,
     );
     note = `${note} Recuperados ${dice} Dado(s) de Sangromancia. Recupere também ${dice} Dado(s) de Vida gastos.`;
+    total = dice;
   }
 
   return {
@@ -93,15 +121,7 @@ export async function resolveDeclaredEconomyTableAction(
     actionName: action.name,
     resourceSpent: spendAmount > 0,
     note,
-    ...(spendAmount > 0 && actionSlug === 'brittle-bone-armor'
-      ? { total: 2 * character.level }
-      : {}),
-    ...(spendAmount > 0 && actionSlug === 'marauders-reprisal'
-      ? { total: Math.floor(character.level / 2) }
-      : {}),
-    ...(actionSlug === 'red-renewal'
-      ? { total: Math.max(1, Math.floor(character.level / 2)) }
-      : {}),
+    ...(total != null ? { total } : {}),
   };
 }
 

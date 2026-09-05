@@ -20,4 +20,10 @@ export class VPhbHpBonusSource {
 
   @ViewColumn({ name: 'from_level' })
   fromLevel!: number;
+
+  @ViewColumn({ name: 'requires_option_key' })
+  requiresOptionKey!: string | null;
+
+  @ViewColumn({ name: 'requires_option_value' })
+  requiresOptionValue!: string | null;
 }

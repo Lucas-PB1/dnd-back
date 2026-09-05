@@ -1,15 +1,15 @@
-import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
 import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
-} from '../weapon-attack';
-import type { WeaponAttack, WeaponAttackContext } from '../weapon-attack.types';
-import { testScores } from './fixtures';
+} from "../weapon-attack";
+import type { WeaponAttack, WeaponAttackContext } from "../weapon-attack.types";
+import { testScores } from "./fixtures";
 
 export type AttackPick = {
   itemSlug?: string;
-  mode?: WeaponAttack['mode'];
-  role?: WeaponAttack['role'];
+  mode?: WeaponAttack["mode"];
+  role?: WeaponAttack["role"];
 };
 
 export function pickAttack(
@@ -50,10 +50,10 @@ export type AttackExpectation = {
   attackBonus?: number;
   damageBonus?: number;
   damageDice?: string;
-  abilitySlug?: WeaponAttack['abilitySlug'];
-  mode?: WeaponAttack['mode'];
+  abilitySlug?: WeaponAttack["abilitySlug"];
+  mode?: WeaponAttack["mode"];
   proficient?: boolean;
-  role?: WeaponAttack['role'];
+  role?: WeaponAttack["role"];
   omitsAbilityDamage?: boolean;
   greatWeaponFighting?: boolean;
   grazeOnMissDamage?: number;
@@ -146,34 +146,34 @@ export function runWeaponAttackCase({
 
 export function assertSoulknifePsychicBlades(attacks: WeaponAttack[]): void {
   const mainMelee = pickAttack(attacks, {
-    itemSlug: 'psychic-blade',
-    mode: 'melee',
+    itemSlug: "psychic-blade",
+    mode: "melee",
   });
   const mainRanged = pickAttack(attacks, {
-    itemSlug: 'psychic-blade',
-    mode: 'ranged',
+    itemSlug: "psychic-blade",
+    mode: "ranged",
   });
   const bonus = pickAttack(attacks, {
-    itemSlug: 'psychic-blade-bonus',
-    mode: 'melee',
+    itemSlug: "psychic-blade-bonus",
+    mode: "melee",
   });
 
   expect(mainMelee).toMatchObject({
     proficient: true,
-    abilitySlug: 'destreza',
-    damageDice: '1d6',
-    damageType: 'Psíquico',
+    abilitySlug: "destreza",
+    damageDice: "1d6",
+    damageType: "Psíquico",
     sneakAttackEligible: true,
-    masterySlug: 'vex',
+    masterySlug: "vex",
     masteryActive: true,
   });
   expect(mainMelee.attackBonus).toBe(7);
   expect(mainRanged.sneakAttackEligible).toBe(true);
   expect(bonus).toMatchObject({
-    damageDice: '1d4',
-    role: 'light_bonus',
+    damageDice: "1d4",
+    role: "light_bonus",
     sneakAttackEligible: true,
     omitsAbilityDamage: true,
   });
-  expect(bonus.attackNote).toContain('segunda lâmina');
+  expect(bonus.attackNote).toContain("segunda lâmina");
 }

@@ -38,6 +38,7 @@ describe('TableActionsController routes', () => {
         ':id/bard/table-action',
         ':id/cleric/table-action',
         ':id/druid/table-action',
+        ':id/feat/table-action',
         ':id/fighter/table-action',
         ':id/gunslinger/table-action',
         ':id/monk/table-action',

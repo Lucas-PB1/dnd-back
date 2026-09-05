@@ -27,14 +27,14 @@ import { TableActionEndpoint } from './route-decorators';
 /** Fighter / Gunslinger / Rogue / Monk / Paladin / Ranger / Barbarian / Monster Hunter. */
 export function WithMartialTableActions<TBase extends NestMixinCtor>(Base: TBase) {
   abstract class MartialTableActionsHost extends Base {
-    protected abstract readonly fighter: FighterActionsHandler;
-    protected abstract readonly gunslinger: GunslingerActionsHandler;
-    protected abstract readonly rogue: RogueActionsHandler;
-    protected abstract readonly monk: MonkActionsHandler;
-    protected abstract readonly paladin: PaladinActionsHandler;
-    protected abstract readonly ranger: RangerActionsHandler;
-    protected abstract readonly barbarian: BarbarianActionsHandler;
-    protected abstract readonly monsterHunter: MonsterHunterActionsHandler;
+    abstract readonly fighter: FighterActionsHandler;
+    abstract readonly gunslinger: GunslingerActionsHandler;
+    abstract readonly rogue: RogueActionsHandler;
+    abstract readonly monk: MonkActionsHandler;
+    abstract readonly paladin: PaladinActionsHandler;
+    abstract readonly ranger: RangerActionsHandler;
+    abstract readonly barbarian: BarbarianActionsHandler;
+    abstract readonly monsterHunter: MonsterHunterActionsHandler;
 
     @TableActionEndpoint(
       'fighter',

@@ -16,7 +16,7 @@ import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
 } from './roll-weapon-context';
-import { asRollDep } from './roll-damage.spec.helpers';
+import { asRollDep, mockEffectCatalog, mockResourceSpender } from './roll-damage.spec.helpers';
 
 describe('executeRollAttack', () => {
   const base = {
@@ -26,13 +26,8 @@ describe('executeRollAttack', () => {
     weaponAttacks: asRollDep({}),
     permanentItemEffects: asRollDep({}),
     dataSource: asRollDep({}),
-    resourceSpender: {
-      spendClassResource: jest.fn(),
-      consumeSpellSlotLevel: jest.fn(),
-      getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
-      setResourcesUsedEntry: jest.fn(),
-      clearResourcesUsedEntry: jest.fn(),
-    },
+    resourceSpender: mockResourceSpender(),
+    effectCatalog: mockEffectCatalog(),
     userId: 'u1',
     characterId: 'c1',
   };

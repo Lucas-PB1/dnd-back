@@ -26,6 +26,7 @@ import { ResolveSubclassOptionGrantedSpells } from '../spellcasting/application/
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
 import { CampaignService } from '../campaign/application/campaign.service';
 import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
+import { LoadEffectCatalog } from '@game/effects';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -233,13 +234,17 @@ describe('Characters application layer', () => {
           provide: LoadGrantedSpellCatalog,
           useValue: {
             loadMergeCatalog: jest.fn().mockResolvedValue({
-              speciesCatalog: [],
               featFixedSpells: [],
               subclassGrantedSpells: [],
               classGrantedSpells: [],
             }),
-            loadSpeciesCatalog: jest.fn().mockResolvedValue([]),
             loadFeatFixedSpells: jest.fn().mockResolvedValue([]),
+          },
+        },
+        {
+          provide: LoadEffectCatalog,
+          useValue: {
+            load: jest.fn().mockResolvedValue([]),
           },
         },
         {

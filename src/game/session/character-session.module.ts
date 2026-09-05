@@ -9,6 +9,7 @@ import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
 import { SpellcastingModule } from '../spellcasting/spellcasting.module';
+import { EffectsModule } from '../effects/effects.module';
 import { PhbCondition } from './infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from './infrastructure/player-character-state.entity';
 import { CharacterStateRepository } from './infrastructure/character-state.repository';
@@ -36,6 +37,8 @@ import { WarlockActionsHandler } from './application/actions/warlock/warlock-act
 import { DruidActionsHandler } from './application/actions/druid/druid-actions.handler';
 import { WizardActionsHandler } from './application/actions/wizard/wizard-actions.handler';
 import { MonsterHunterActionsHandler } from './application/actions/monster-hunter/monster-hunter-actions.handler';
+import { TransformationActionsHandler } from './application/actions/transformation/transformation-actions.handler';
+import { FeatEconomyActionsHandler } from './application/actions/feat/feat-economy-actions.handler';
 
 @Module({
   imports: [
@@ -49,6 +52,7 @@ import { MonsterHunterActionsHandler } from './application/actions/monster-hunte
     forwardRef(() => CharacterSheetModule),
     CharacterInventoryModule,
     SpellcastingModule,
+    EffectsModule,
     CatalogModule,
     CombatModule,
     forwardRef(() => ActorModule),
@@ -82,6 +86,7 @@ import { MonsterHunterActionsHandler } from './application/actions/monster-hunte
     WizardActionsHandler,
     MonsterHunterActionsHandler,
     TransformationActionsHandler,
+    FeatEconomyActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })

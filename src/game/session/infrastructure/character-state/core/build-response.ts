@@ -5,6 +5,7 @@ import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.enti
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';
@@ -24,6 +25,7 @@ export async function buildCharacterStateResponse(input: {
   dataSource: DataSource;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
 }): Promise<CharacterStateResponseDto> {
   const {
     character,
@@ -35,6 +37,7 @@ export async function buildCharacterStateResponse(input: {
     dataSource,
     sheetRepository,
     grantedSpellCatalog,
+    effectCatalog,
   } = input;
 
   await clampHitDiceToLevel(stateRepo, state, character.level);
@@ -59,6 +62,7 @@ export async function buildCharacterStateResponse(input: {
     sheetRepository,
     grantedSpellCatalog,
     dataSource,
+    effectCatalog,
   );
 
   return {

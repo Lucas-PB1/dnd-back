@@ -10,6 +10,7 @@ export function buildDamageRollResponse(input: {
   modifier: number;
   critical: boolean;
   kept?: number[];
+  alternateRolls?: CharacterRollResponseDto['alternateRolls'];
 }): CharacterRollResponseDto {
   const { attack, dto, acc } = input;
   const labelExtras = [
@@ -27,6 +28,7 @@ export function buildDamageRollResponse(input: {
     dto.colossusSlayer ? ' (Assassino de Colossos)' : '',
     dto.dreadfulStrikes ? ' (Golpes Terríveis)' : '',
     dto.dreadAmbusher ? ' (Golpe Terrível)' : '',
+    dto.savageAttacker ? ' (Atacante Selvagem)' : '',
   ].join('');
 
   return {
@@ -39,5 +41,8 @@ export function buildDamageRollResponse(input: {
     rolls: acc.rolls,
     kept: input.kept,
     note: acc.notes.length > 0 ? acc.notes.join(' · ') : undefined,
+    ...(input.alternateRolls?.length
+      ? { alternateRolls: input.alternateRolls }
+      : {}),
   };
 }

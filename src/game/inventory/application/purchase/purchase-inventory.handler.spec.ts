@@ -3,6 +3,7 @@ import { asDep } from '@common/testing/as-dep';
 
 describe('PurchaseInventoryHandler', () => {
   const character = {
+    id: 'c1',
     abilityScores: { forca: 12 },
     coinCopper: 0,
     coinSilver: 0,
@@ -20,7 +21,8 @@ describe('PurchaseInventoryHandler', () => {
   let getInventory: { execute: jest.Mock };
   let catalogStats: { recordPurchases: jest.Mock };
   let attachCoverage: { attach: jest.Mock };
-  let dataSource: { transaction: jest.Mock };
+  let effectCatalog: { load: jest.Mock };
+  let dataSource: { transaction: jest.Mock; query: jest.Mock };
   let catalogItems: object;
   let handler: PurchaseInventoryHandler;
 
@@ -59,7 +61,11 @@ describe('PurchaseInventoryHandler', () => {
       recordPurchases: jest.fn().mockResolvedValue(undefined),
     };
     attachCoverage = { attach: jest.fn() };
-    dataSource = { transaction: jest.fn() };
+    effectCatalog = { load: jest.fn().mockResolvedValue([]) };
+    dataSource = {
+      transaction: jest.fn(),
+      query: jest.fn().mockResolvedValue([]),
+    };
     catalogItems = {};
     handler = new PurchaseInventoryHandler(
       asDep(access),
@@ -69,6 +75,7 @@ describe('PurchaseInventoryHandler', () => {
       asDep(getInventory),
       asDep(catalogStats),
       asDep(attachCoverage),
+      asDep(effectCatalog),
       asDep(dataSource),
       asDep(catalogItems),
     );

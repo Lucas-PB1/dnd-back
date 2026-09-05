@@ -8,5 +8,6 @@ WHERE l.slug = 'common'
 ON CONFLICT DO NOTHING;
 
 UPDATE rpg.phb_background
-SET language_choice_count = 2
-WHERE language_choice_count <> 2;
+SET language_choice_count = 0
+WHERE language_choice_count <> 0;
+-- Escolhas de idioma = espécie (grant_language ×2 em effects/E007).

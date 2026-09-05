@@ -5,23 +5,62 @@ import {
   GREATER_FREYR_FEAT_SLUG,
   resolveGrantedSpellCastEconomy,
 } from './resolve-granted-spell-cast-economy';
-import type { SpeciesGrantedSpellRow } from './granted-spells/types';
+import type { CatalogEffect } from '@game/effects';
 
-const SPECIES_CATALOG: SpeciesGrantedSpellRow[] = [
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'drow',
-    unlockLevel: 1,
-    spellSlug: 'luzes-dancantes',
-  },
-  {
-    speciesSlug: 'elf',
-    choiceKind: 'elf_lineage',
-    choiceSlug: 'drow',
-    unlockLevel: 3,
-    spellSlug: 'fogo-das-fadas',
-  },
+function speciesSpellEffect(
+  spellSlug: string,
+  unlockLevel: number,
+  economy: 'at_will' | 'once_per_long_rest',
+): CatalogEffect {
+  return {
+    id: `${spellSlug}-${unlockLevel}`,
+    kind: 'grant_spell',
+    ownerKind: 'species',
+    ownerId: '1',
+    ownerSlug: 'elf',
+    trigger: 'on_build',
+    unlockLevel,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: {
+      spellId: '1',
+      spellSlug,
+      optionKey: null,
+      spellLevel: unlockLevel <= 1 ? 0 : 1,
+    },
+    castEconomy: {
+      economy,
+      usesFormula: 'fixed',
+      fixedUses: economy === 'once_per_long_rest' ? 1 : null,
+    },
+    numeric: null,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
+
+const ELF_DROW_EFFECTS = [
+  speciesSpellEffect('luzes-dancantes', 1, 'at_will'),
+  speciesSpellEffect('fogo-das-fadas', 3, 'once_per_long_rest'),
 ];
 
 describe('resolveGrantedSpellCastEconomy', () => {
@@ -72,7 +111,69 @@ describe('resolveGrantedSpellCastEconomy', () => {
     ).toBe('once_per_long_rest');
   });
 
-  it('marks species L1 at_will and L3+ once_per_long_rest', () => {
+  it('prefers phb_effect cast economy when catalog covers the feat option', () => {
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'cure-wounds',
+        source: 'feat',
+        featOptions: [
+          {
+            featSlug: 'magic-initiate',
+            optionKey: 'firstLevelSpell',
+            valueId: 'cure-wounds',
+          },
+        ],
+        featEffects: [
+          {
+            id: '1',
+            kind: 'grant_spell',
+            ownerKind: 'feat',
+            ownerId: '1',
+            ownerSlug: 'magic-initiate',
+            trigger: 'on_build',
+            unlockLevel: 1,
+            sortOrder: 0,
+            minTraitTakes: 1,
+            actionSlug: null,
+            resourceSlug: null,
+            label: null,
+            requiresOptionKey: null,
+            requiresOptionValue: null,
+            spell: {
+              spellId: null,
+              spellSlug: null,
+              optionKey: 'firstLevelSpell',
+              spellLevel: 1,
+            },
+            castEconomy: {
+              economy: 'once_per_long_rest',
+              usesFormula: 'fixed',
+              fixedUses: 1,
+            },
+            numeric: null,
+            note: null,
+            resource: null,
+            combatMod: null,
+            proficiency: null,
+            purchaseDiscount: null,
+            damageDie: null,
+            weapon: null,
+            feat: null,
+            saveAdvantage: null,
+            sense: null,
+            damageType: null,
+            language: null,
+            checkAdvantage: null,
+            reach: null,
+            restQuirk: null,
+            environmentalImmunity: null,
+          },
+        ],
+      }),
+    ).toBe('once_per_long_rest');
+  });
+
+  it('reads species cast economy from phb_effect', () => {
     const choices = [{ choiceKind: 'elf_lineage', choiceSlug: 'drow' }];
     expect(
       resolveGrantedSpellCastEconomy({
@@ -80,7 +181,7 @@ describe('resolveGrantedSpellCastEconomy', () => {
         source: 'species',
         speciesSlug: 'elf',
         speciesChoices: choices,
-        speciesCatalog: SPECIES_CATALOG,
+        speciesEffects: ELF_DROW_EFFECTS,
       }),
     ).toBe('at_will');
     expect(
@@ -89,9 +190,24 @@ describe('resolveGrantedSpellCastEconomy', () => {
         source: 'species',
         speciesSlug: 'elf',
         speciesChoices: choices,
-        speciesCatalog: SPECIES_CATALOG,
+        speciesEffects: ELF_DROW_EFFECTS,
       }),
     ).toBe('once_per_long_rest');
+  });
+
+  it('marks high-elf choice cantrip as at_will without fixed effect', () => {
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'raio-de-fogo',
+        source: 'species',
+        speciesSlug: 'elf',
+        speciesChoices: [
+          { choiceKind: 'elf_lineage', choiceSlug: 'high-elf' },
+          { choiceKind: 'high_elf_cantrip', choiceSlug: 'raio-de-fogo' },
+        ],
+        speciesEffects: [],
+      }),
+    ).toBe('at_will');
   });
 });
 

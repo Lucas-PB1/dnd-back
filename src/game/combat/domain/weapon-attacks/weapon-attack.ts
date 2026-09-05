@@ -3,7 +3,7 @@ export type {
   WeaponAttack,
   WeaponAttackContext,
   WeaponAttackRole,
-} from './weapon-attack.types';
+} from "./weapon-attack.types";
 export {
   abilityShortLabel,
   buildModes,
@@ -21,10 +21,10 @@ export {
   qualifiesForDueling,
   qualifiesForGreatWeaponFighting,
   usesVersatileTwoHanded,
-} from './weapon-attack-predicates';
-export type { DualWieldAnalysis } from '../equipment/dual-wield';
-export { analyzeDualWield } from '../equipment/dual-wield';
+} from "./weapon-attack-predicates";
+export type { DualWieldAnalysis } from "../equipment/dual-wield";
+export { analyzeDualWield } from "../equipment/dual-wield";
 export {
   computeWeaponAttacks,
   heavyWeaponSlugsForSmallSize,
-} from './compute-weapon-attacks';
+} from "./compute-weapon-attacks";

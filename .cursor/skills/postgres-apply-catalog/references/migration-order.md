@@ -1,36 +1,23 @@
 # Ordem das migrations
 
-## Baseline (squash + compactação greenfield — 2026-09)
+## Baseline (squash greenfield)
 
-1. [`database/baseline/001_full_schema.sql`](../../../database/baseline/001_full_schema.sql) — schema `rpg` completo (~241 KiB; 0 `ALTER TABLE` evolutivo top-level; enums no `CREATE TYPE`)
+1. [`database/baseline/001_full_schema.sql`](../../../database/baseline/001_full_schema.sql) — schema `rpg` completo (enums + tabelas + views/funções). Inclui motor `phb_effect`.
 
 Registro: versão `baseline/001_full_schema` em `rpg.schema_migration`.
 
-Histórico granular (239 arquivos): git history pré 2026-09-01. **Não** regerar — editar baseline ou forward.
+**Sem produção:** não há histórico forward a preservar. Mudança de schema → editar o baseline e `npm run db:setup`. Pasta `database/migrations/` fica vazia até surgir necessidade real de forward-only.
 
-## Forward-only
+Histórico granular antigo: git (pré squash).
 
-Novos arquivos em `database/migrations/` — ordem lexicográfica por path:
+## Forward-only (opcional)
 
-1. `010_types/` — enums
-2. `020_tables/T###` — tabelas
-3. `040_functions/`, `050_triggers/`
-4. `060_views/V###`
-5. `070_materialized/`, `080_indexes/`
-6. `090_player/P###` — runtime + RLS
-
-Não há migrations de dados de catálogo — isso fica nos seeds (`database/seeds/`).
-
-## Registro
-
-Tabela `rpg.schema_migration` via `npm run db:migrate` (versão = caminho relativo sem `.sql`).
+Se no futuro precisar de ALTER sem rebasar o baseline, criar arquivos em `database/migrations/` — ordem lexicográfica por path (`010_types/`, `020_tables/`, …).
 
 ## Setup
 
 ```bash
-npm run db:setup   # reset → baseline + forward → seed
+npm run db:setup   # reset → baseline (+ forward se houver) → seed
 ```
 
-Fonte de verdade: `database/baseline/` + `database/migrations/` + `database/seeds/`.
-
-Histórico granular: git history (pré 2026-09-01).
+Fonte de verdade: `database/baseline/` + `database/seeds/` (+ `database/migrations/` se houver).

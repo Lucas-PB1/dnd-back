@@ -15,6 +15,7 @@ import { PurchaseInventoryDto } from '../../dto/purchase-inventory.dto';
 import {
   tryAddCatalogCost,
   tryAddTierCoverageCost,
+  type PurchaseDiscountContext,
 } from './purchase-cost';
 
 export type ResolvedPurchase = {
@@ -33,6 +34,7 @@ export type ResolvedPurchase = {
 export async function resolvePurchaseLines(
   catalogLookup: CatalogLookupService,
   dto: PurchaseInventoryDto,
+  discount?: PurchaseDiscountContext | null,
 ): Promise<ResolvedPurchase> {
   const inventoryLines: ResolvedPurchase['inventoryLines'] = [];
   const coverageAttaches: ResolvedPurchase['coverageAttaches'] = [];
@@ -49,7 +51,11 @@ export async function resolvePurchaseLines(
     const coverage = parseItemCoverage(props);
     const service = isServiceItem(props);
 
-    const priced = tryAddCatalogCost(catalog.cost, quantity, totalCost);
+    const priced = tryAddCatalogCost(catalog.cost, quantity, totalCost, {
+      itemSlug: line.itemSlug,
+      properties: props,
+      discount,
+    });
     totalCost = priced.total;
     if (priced.ok) pricedLineCount += 1;
 
@@ -75,6 +81,8 @@ export async function resolvePurchaseLines(
           line.attachCoverageBonus,
           quantity,
           totalCost,
+          discount,
+          line.itemSlug,
         );
         totalCost = tier.total;
         if (tier.ok) pricedLineCount += 1;
@@ -113,7 +121,11 @@ export async function resolvePurchaseLines(
         coverageSlug: line.attachCoverageSlug,
         bonus: line.attachCoverageBonus,
       });
-      const covPriced = tryAddCatalogCost(covCatalog.cost, quantity, totalCost);
+      const covPriced = tryAddCatalogCost(covCatalog.cost, quantity, totalCost, {
+        itemSlug: line.attachCoverageSlug,
+        properties: covProps,
+        discount,
+      });
       if (covPriced.ok) {
         totalCost = covPriced.total;
         pricedLineCount += 1;
@@ -123,6 +135,8 @@ export async function resolvePurchaseLines(
           line.attachCoverageBonus,
           quantity,
           totalCost,
+          discount,
+          line.attachCoverageSlug,
         );
         totalCost = tier.total;
         if (tier.ok) pricedLineCount += 1;

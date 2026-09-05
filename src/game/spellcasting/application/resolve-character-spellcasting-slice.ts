@@ -2,6 +2,7 @@ import { DataSource, Repository } from 'typeorm';
 import type { AbilityKey } from '@game/build/domain/ability-generation';
 import type { AbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
 import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
+import type { CatalogEffect } from '@game/effects';
 import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
@@ -72,6 +73,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
   proficiencyBonus: number;
   abilityModifiers: AbilityModifiers;
   featSlugs: string[];
+  speciesEffects?: readonly CatalogEffect[];
 }): Promise<MappedSpellcastingSlice> {
   const {
     dataSource,
@@ -85,6 +87,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     proficiencyBonus,
     abilityModifiers,
     featSlugs,
+    speciesEffects,
   } = input;
 
   // Grants só anotam fontes em magias já na ficha — sem spells, zero I/O.
@@ -107,7 +110,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     abilityModifiers,
   });
 
-  const { speciesCatalog, featFixedSpells } = await sheetProfile(
+  const { featFixedSpells } = await sheetProfile(
     'spell.grants',
     () =>
       grantedSpellCatalog.loadMergeCatalog({
@@ -126,7 +129,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     speciesSlug ?? '',
     sheet.speciesChoices,
     level,
-    speciesCatalog,
+    speciesEffects,
   );
   const subclassSpellSlugs = await sheetProfile('spell.subclass', () =>
     loadSubclassSpellSlugs(subclassSpellsRepo, subclassSlug),
@@ -144,7 +147,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     speciesChoices: sheet.speciesChoices,
     featFixedSpells,
     speciesSlug: speciesSlug ?? undefined,
-    speciesCatalog,
+    speciesEffects,
   });
 
   return {

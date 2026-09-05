@@ -12,7 +12,7 @@ export function WithTransformationTableActions<TBase extends NestMixinCtor>(
   Base: TBase,
 ) {
   abstract class TransformationTableActionsHost extends Base {
-    protected abstract readonly transformation: TransformationActionsHandler;
+    abstract readonly transformation: TransformationActionsHandler;
 
     @TableActionEndpoint(
       'transformation',

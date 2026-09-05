@@ -1,4 +1,5 @@
 -- Mandrake (Valdas): recurso Vinhas Enredantes — após V004 (espécie).
+-- Grants: SSOT em effects/E007 (species) / E012 (subclass) / E013 (item) / E00* feats
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, species_id, class_id, min_level)
 VALUES (
@@ -15,22 +16,4 @@ ON CONFLICT (slug) DO UPDATE SET
   species_id = EXCLUDED.species_id,
   min_level = EXCLUDED.min_level;
 
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
-  recover_one_on_short, recover_all_on_short, recover_all_on_long
-)
-SELECT
-  'species'::rpg.resource_owner_kind,
-  sp.id,
-  rd.id,
-  1,
-  'proficiency_bonus'::rpg.resource_max_formula,
-  NULL,
-  FALSE,
-  FALSE,
-  TRUE
-FROM rpg.phb_species sp
-JOIN rpg.phb_resource_definition rd
-  ON rd.species_id = sp.id AND rd.slug = 'entanglingVines'
-WHERE sp.slug = 'mandrake'
-ON CONFLICT DO NOTHING;
+

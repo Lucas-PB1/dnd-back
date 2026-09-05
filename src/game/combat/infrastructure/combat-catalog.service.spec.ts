@@ -22,6 +22,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 1,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
         {
           sourceKind: 'subclass',
@@ -30,6 +32,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 1,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
         {
           sourceKind: 'feat',
@@ -38,6 +42,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 2,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
         {
           sourceKind: 'other',
@@ -46,6 +52,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 1,
           perLevelBonus: 0,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
         {
           sourceKind: 'species',
@@ -54,6 +62,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 1,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
       ]);
 
@@ -76,6 +86,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 1,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
         {
           sourceKind: 'feat',
@@ -84,6 +96,8 @@ describe('CombatCatalogService', () => {
           flatBonus: 0,
           perLevelBonus: 2,
           fromLevel: 1,
+          requiresOptionKey: null,
+          requiresOptionValue: null,
         },
       ]);
       await expect(service.loadHitPointsBonusSources({})).resolves.toEqual([]);
@@ -113,6 +127,7 @@ describe('CombatCatalogService', () => {
         classSlug: 'barbarian',
         subclassSlug: 'monk-way',
       });
+
       expect(unarmoredRepo.find).toHaveBeenCalledWith({
         where: [
           { sourceKind: 'class', sourceSlug: 'barbarian' },
@@ -133,7 +148,7 @@ describe('CombatCatalogService', () => {
       ]);
     });
 
-    it('returns empty without querying when no class/subclass', async () => {
+    it('returns empty without class/subclass', async () => {
       await expect(service.loadUnarmoredDefenses({})).resolves.toEqual([]);
       expect(unarmoredRepo.find).not.toHaveBeenCalled();
     });

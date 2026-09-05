@@ -96,6 +96,12 @@ export function rollDamageParts(
     rng?: Rng;
     /** PHB 2024 GWF: tratar 1 ou 2 como 3. */
     treatOnesAndTwosAsThree?: boolean;
+    /** Elemental Adept: faces 1 viram 2. */
+    treatOnesAsTwos?: boolean;
+    /** Marksman's Luck: virar o menor dado elegível (lados > 4). */
+    flipLowestDie?: boolean;
+    /** Pyromaniac: face máxima gera um dado extra (1×). */
+    explodeOnMax?: boolean;
   } = {},
 ): DamageRollResult {
   const rng = options.rng ?? Math.random;
@@ -103,12 +109,39 @@ export function rollDamageParts(
   const base = diceExpr.replace(/\s+/g, '').replace(/[+-]\d+$/i, '');
   const parsed = parseDiceExpression(base.includes('d') ? base : `1d${base}`);
   const count = critical ? parsed.count * 2 : parsed.count;
-  const rolls = rollDice(count, parsed.sides, rng);
-  const kept = options.treatOnesAndTwosAsThree
-    ? rolls.map((face) => (face <= 2 ? 3 : face))
-    : rolls;
+  let rolls = rollDice(count, parsed.sides, rng);
+  let kept = [...rolls];
+
+  if (options.treatOnesAndTwosAsThree) {
+    kept = kept.map((face) => (face <= 2 ? 3 : face));
+  } else if (options.treatOnesAsTwos) {
+    kept = kept.map((face) => (face === 1 ? 2 : face));
+  }
+
+  if (options.flipLowestDie && parsed.sides > 4 && kept.length > 0) {
+    let lowestIdx = 0;
+    for (let i = 1; i < kept.length; i += 1) {
+      if (kept[i] < kept[lowestIdx]) lowestIdx = i;
+    }
+    const flipped = parsed.sides + 1 - kept[lowestIdx];
+    kept = kept.map((face, i) => (i === lowestIdx ? flipped : face));
+  }
+
+  if (options.explodeOnMax) {
+    const extras: number[] = [];
+    for (const face of kept) {
+      if (face === parsed.sides) {
+        extras.push(rollDie(parsed.sides, rng));
+      }
+    }
+    if (extras.length > 0) {
+      rolls = [...rolls, ...extras];
+      kept = [...kept, ...extras];
+    }
+  }
+
   const diceSum = kept.reduce((a, b) => a + b, 0);
-  const expression = `${count}d${parsed.sides}${formatSigned(modifier)}`;
+  const expression = `${kept.length}d${parsed.sides}${formatSigned(modifier)}`;
   return {
     expression,
     total: diceSum + modifier,
@@ -116,7 +149,7 @@ export function rollDamageParts(
     critical,
     dice: [
       {
-        count,
+        count: kept.length,
         sides: parsed.sides,
         rolls,
         kept,

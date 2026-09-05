@@ -1,5 +1,5 @@
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
-import type { SizeCategory } from '../domain/equipment';
+import type { SizeCategory } from '../../domain/equipment';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
@@ -16,8 +16,12 @@ export type WeaponAttackResolveContext = {
   subclassSlug?: string | null;
   rageActive?: boolean;
   recklessActive?: boolean;
+  /** Briguento / efeitos `damage_die_override`. */
+  unarmedDamageDie?: string | null;
   /** Snapshot compartilhado — evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
+  /** Efeitos de talento (merge propriedades / alcance). */
+  featEffects?: readonly import('@game/effects').CatalogEffect[];
 };
 
 export type CoverageCatalogMeta = {

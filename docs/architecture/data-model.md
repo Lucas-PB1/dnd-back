@@ -2,7 +2,7 @@
 
 Schema PostgreSQL `rpg` — **~81 tabelas base** (65 `phb_*` + runtime + `schema_migration`), views `v_phb_*`, 1 materialized view.
 
-Fonte: [`database/migrations/`](../database/migrations/) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
+Fonte: [`database/baseline/`](../database/baseline/) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
 
 Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
@@ -83,11 +83,12 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_background` + skill / ability_option / language / tool_option / boost_option
 - Packages via `phb_starting_*` com `source='background'`
 
-### 7. Options / resources / modifiers
+### 7. Options / resources / modifiers / effects
 
 - `phb_option_def` / `phb_option_value` — scope unificado
 - `phb_resource_definition` + `phb_resource_grant`
 - `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`)
+- `phb_effect` + satélites — motor de efeitos (ADR [`adr-effect-engine.md`](adr-effect-engine.md); dicionário [`effect-dictionary.md`](effect-dictionary.md)); convívio com grants/modifiers até aposentadoria por lote
 
 ### 8. Combat mechanical catalog
 

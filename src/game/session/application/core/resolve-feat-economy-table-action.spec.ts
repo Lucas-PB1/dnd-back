@@ -50,6 +50,20 @@ const economyActions: ClassEconomyActionRecord[] = [
     requiresOptionKey: 'stage2Boon',
     requiresOptionValue: 'other-boon',
   },
+  {
+    id: 'hybrid-wolf-form-activate',
+    name: 'Hybrid Wolf Form',
+    economy: 'action',
+    featSlug: 'gh-transformation-lycanthrope',
+    minLevel: 1,
+    resourceSlug: undefined,
+    alwaysSpendsResource: false,
+    tableAction: 'gh-transformation-lycanthrope/hybrid-wolf-form',
+    requiresOptionKey: 'stage1Boon',
+    requiresOptionValue: 'hybrid-wolf-form',
+    summary: 'Hybrid Wolf Form',
+    description: 'Declare hybrid wolf.',
+  },
 ];
 
 describe('resolveFeatEconomyTableAction', () => {
@@ -108,5 +122,69 @@ describe('resolveFeatEconomyTableAction', () => {
         transformation,
       ),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('declara Licantropo sem gastar recurso e anexa table_note', async () => {
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          id: '1',
+          kind: 'table_note',
+          ownerKind: 'feat',
+          ownerId: '1',
+          ownerSlug: 'gh-transformation-lycanthrope',
+          trigger: 'on_table_action',
+          unlockLevel: 1,
+          sortOrder: 0,
+          minTraitTakes: 1,
+          actionSlug: 'gh-transformation-lycanthrope/hybrid-wolf-form',
+          resourceSlug: null,
+          label: 'Forma Híbrida — Lobo',
+          requiresOptionKey: null,
+          requiresOptionValue: null,
+          spell: null,
+          castEconomy: null,
+          numeric: null,
+          note: {
+            note: 'Declare forma híbrida de lobo na mesa (1 h × estágio).',
+          },
+          resource: null,
+          combatMod: null,
+          proficiency: null,
+          purchaseDiscount: null,
+          damageDie: null,
+          weapon: null,
+          feat: null,
+          saveAdvantage: null,
+          sense: null,
+          damageType: null,
+          language: null,
+          checkAdvantage: null,
+          reach: null,
+          restQuirk: null,
+          environmentalImmunity: null,
+        },
+      ]),
+    };
+
+    const result = await resolveFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      character,
+      'gh-transformation-lycanthrope',
+      'gh-transformation-lycanthrope/hybrid-wolf-form',
+      {
+        slug: 'gh-transformation-lycanthrope',
+        stage: 1,
+        choices: [{ choiceKind: 'stage1Boon', choiceSlug: 'hybrid-wolf-form' }],
+      },
+    );
+
+    expect(state.useClassResource).not.toHaveBeenCalled();
+    expect(result.resourceSpent).toBe(false);
+    expect(result.note).toContain('Declare forma híbrida de lobo');
   });
 });

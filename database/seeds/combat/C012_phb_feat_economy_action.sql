@@ -34,7 +34,17 @@ INSERT INTO rpg.phb_class_economy_action (
   NULL, NULL, false,
   'Usar Objeto: Kit de Curandeiro + 1 DV do alvo',
   'Ação Usar Objeto (com Kit de Curandeiro): gaste um uso e cuide de uma criatura a até 1,5 m. Ela gasta 1 Dado de Vida; recupera o resultado + seu PB. Cura Garantida: rerole 1s nesses dados.',
-  NULL, NULL, 302, NULL, NULL
+  'healer-combat-medic', NULL, 302, NULL, NULL
+),
+-- Musician
+(
+  'feat-musician-song', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'musician'), NULL,
+  'Canção Inspiradora', 'action'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Canção: Inspiração (você + até PB aliados)',
+  'Após um Descanso Curto ou Longo, você pode tocar uma canção e conceder Inspiração a si e a até PB aliados voluntários a até 9 m.',
+  'musician-song', NULL, 3025, NULL, NULL
 ),
 -- Observant / Keen Mind
 (

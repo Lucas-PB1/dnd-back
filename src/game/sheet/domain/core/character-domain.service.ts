@@ -16,16 +16,19 @@ type HitPointsSources = {
   speciesSlug?: string | null;
   subclassSlug?: string | null;
   featSlugs?: readonly string[];
+  speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
 };
 
 function hitPointsSourcesOf(
   entity: PlayerCharacter,
   featSlugs?: readonly string[],
+  speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[],
 ): HitPointsSources {
   return {
     speciesSlug: entity.speciesSlug,
     subclassSlug: entity.subclassSlug,
     featSlugs,
+    speciesChoices,
   };
 }
 
@@ -64,9 +67,9 @@ export class CharacterDomainService {
     hitPointsSources?: HitPointsSources;
   }): Promise<number> {
     const phbClass = await this.catalogLookup.findClassOrFail(input.classSlug);
-    const bonusSources = await this.combatCatalog.loadHitPointsBonusSources(
-      input.hitPointsSources ?? {},
-    );
+    const bonusSources = await this.combatCatalog.loadHitPointsBonusSources({
+      ...(input.hitPointsSources ?? {}),
+    });
     return calculateHitPointsMax(
       input.level,
       this.classHpProfile(phbClass),

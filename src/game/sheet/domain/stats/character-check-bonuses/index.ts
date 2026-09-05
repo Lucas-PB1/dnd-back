@@ -1,6 +1,4 @@
 export {
-  ALERT_FEAT_SLUG,
-  FIXED_FEAT_SKILL_SLUGS,
   PROF_OR_EXPERTISE_FEAT_OPTION_KEYS,
   SKILL_SPECIES_CHOICE_KINDS,
   type CharacterFeatLike,
@@ -19,19 +17,16 @@ export {
   collectSpeciesSkillSlugs,
 } from './collect-skill-slugs';
 export { skillCheckBonus, skillProficiencyRank } from './compute/skill-check';
-export {
-  collectSaveProficiencyAbilities,
-  hasAlertFeat,
-} from './compute/saves-and-initiative';
+export { collectSaveProficiencyAbilities } from './compute/saves-and-initiative';
 export {
   applyFocusedInitiativeFloor,
   focusedInitiativeTakeCount,
   hasGiantkinStoneAncestry,
   hasInitiativeProficiency,
-  initiativeBonus,
   resolveInitiativeAdvantageContributions,
   resolveInitiativeBonus,
   type InitiativeBonusBreakdown,
   type InitiativeRollContext,
   type InitiativeRollOptions,
 } from '../resolve-initiative-roll';
+export { initiativeBonus } from '../initiative-bonus';

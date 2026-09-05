@@ -1,4 +1,8 @@
 import type { AdvantageMode } from '@game/dice/domain/dice';
+import {
+  hasInitiativePbFromEffects,
+  type CatalogEffect,
+} from '@game/effects';
 import type { AdvantageContribution } from '@game/dice/domain/resolve-net-advantage-mode';
 import {
   advantageModeFromManual,
@@ -11,7 +15,6 @@ import {
   type HeritageTraitPick,
 } from '@game/sheet/domain/heritage/aggregate-trait-takes';
 import type { CharacterFeatLike, SpeciesChoiceLike } from './character-check-bonuses/types';
-import { hasAlertFeat } from './character-check-bonuses/compute/saves-and-initiative';
 
 export const FOCUSED_INITIATIVE_TRAIT_SLUG = 'focused-initiative';
 export const GIANTKIN_STONE_ANCESTRY_KIND = 'giantkinAncestryId';
@@ -26,6 +29,7 @@ export type InitiativeRollContext = {
   subclassSlug: string | null;
   level: number;
   characterFeats: readonly CharacterFeatLike[];
+  featEffects?: readonly CatalogEffect[];
   heritageChoices?: readonly HeritageTraitPick[];
   speciesChoices?: readonly SpeciesChoiceLike[];
 };
@@ -53,10 +57,12 @@ export function focusedInitiativeTakeCount(
 
 export function hasInitiativeProficiency(ctx: {
   characterFeats: readonly CharacterFeatLike[];
+  featEffects?: readonly CatalogEffect[];
   heritageChoices?: readonly HeritageTraitPick[];
 }): boolean {
+  const featSlugs = ctx.characterFeats.map((feat) => feat.featSlug);
   return (
-    hasAlertFeat(ctx.characterFeats) ||
+    hasInitiativePbFromEffects(ctx.featEffects ?? [], featSlugs) ||
     focusedInitiativeTakeCount(ctx.heritageChoices) >= 1
   );
 }
@@ -79,7 +85,12 @@ export function resolveInitiativeBonus(
 
   if (hasInitiativeProficiency(ctx)) {
     total += ctx.proficiencyBonus;
-    if (hasAlertFeat(ctx.characterFeats)) {
+    if (
+      hasInitiativePbFromEffects(
+        ctx.featEffects ?? [],
+        ctx.characterFeats.map((feat) => feat.featSlug),
+      )
+    ) {
       notes.push('Alerta: +PB na Iniciativa');
     }
     if (focusedInitiativeTakeCount(ctx.heritageChoices) >= 1) {
@@ -165,26 +176,3 @@ export function applyFocusedInitiativeFloor(
   };
 }
 
-/** Compat: bônus fixo exibido na ficha (sem d10 situacional). */
-export function initiativeBonus(
-  dexterityModifier: number,
-  proficiencyBonus: number,
-  characterFeats: readonly CharacterFeatLike[] | undefined,
-  extra?: Omit<
-    InitiativeRollContext,
-    'dexterityModifier' | 'proficiencyBonus' | 'characterFeats'
-  >,
-): number {
-  return resolveInitiativeBonus({
-    dexterityModifier,
-    proficiencyBonus,
-    characterFeats: characterFeats ?? [],
-    wisdomModifier: extra?.wisdomModifier ?? 0,
-    intelligenceModifier: extra?.intelligenceModifier ?? 0,
-    classSlug: extra?.classSlug ?? '',
-    subclassSlug: extra?.subclassSlug ?? null,
-    level: extra?.level ?? 0,
-    heritageChoices: extra?.heritageChoices,
-    speciesChoices: extra?.speciesChoices,
-  }).total;
-}

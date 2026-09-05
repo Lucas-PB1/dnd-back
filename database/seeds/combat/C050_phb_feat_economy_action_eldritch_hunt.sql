@@ -13,7 +13,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'divineClarity', NULL, true,
   'Falhou vs Enfeitiçado/Amedrontado → sucesso (1×/DL)',
   'Se falhar numa salvaguarda contra Enfeitiçado ou Amedrontado, escolha sucesso em vez disso. 1× por Descanso Longo.',
-  'spend-resource', NULL, 360, NULL, NULL
+  'feat-faithful-divine-clarity', NULL, 360, NULL, NULL
 ),
 (
   'feat-grizzled-resist', NULL, NULL,
@@ -22,7 +22,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'resistInspiration', NULL, true,
   'Ao ficar Ensanguentado → Inspiração Heróica (1×/DC+DL)',
   'Imediatamente após sofrer dano que o deixa Ensanguentado, ganha Inspiração Heróica. 1× até Descanso Curto ou Longo.',
-  'spend-resource', NULL, 361, NULL, NULL
+  'feat-grizzled-resist', NULL, 361, NULL, NULL
 ),
 (
   'feat-brutalizer-deadly-sequence', NULL, NULL,

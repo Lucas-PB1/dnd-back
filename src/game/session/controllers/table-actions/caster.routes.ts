@@ -22,12 +22,12 @@ import { TableActionEndpoint } from './route-decorators';
 /** Cleric / Bard / Sorcerer / Warlock / Druid / Wizard. */
 export function WithCasterTableActions<TBase extends NestMixinCtor>(Base: TBase) {
   abstract class CasterTableActionsHost extends Base {
-    protected abstract readonly cleric: ClericActionsHandler;
-    protected abstract readonly bard: BardActionsHandler;
-    protected abstract readonly sorcerer: SorcererActionsHandler;
-    protected abstract readonly warlock: WarlockActionsHandler;
-    protected abstract readonly druid: DruidActionsHandler;
-    protected abstract readonly wizard: WizardActionsHandler;
+    abstract readonly cleric: ClericActionsHandler;
+    abstract readonly bard: BardActionsHandler;
+    abstract readonly sorcerer: SorcererActionsHandler;
+    abstract readonly warlock: WarlockActionsHandler;
+    abstract readonly druid: DruidActionsHandler;
+    abstract readonly wizard: WizardActionsHandler;
 
     @TableActionEndpoint(
       'cleric',

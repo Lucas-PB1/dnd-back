@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isFighterClass } from '@game/combat/domain/fighter';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
@@ -43,6 +44,7 @@ export class FighterActionsHandler {
     private readonly domain: CharacterDomainService,
     private readonly sheet: CharacterSheetRepository,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   private deps(): FighterActionDeps {
@@ -147,7 +149,15 @@ export class FighterActionsHandler {
         });
       }
       default:
-        return resolveDeclaredEconomyTableAction(deps, character, slug);
+        return resolveDeclaredEconomyTableAction(
+          {
+            state: deps.state,
+            mechanicalCatalog: deps.mechanicalCatalog,
+            effectCatalog: this.effectCatalog,
+          },
+          character,
+          slug,
+        );
     }
   }
 }

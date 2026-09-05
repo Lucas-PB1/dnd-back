@@ -1,4 +1,5 @@
 -- Variante cultural anã: mesma espécie dwarf, pacotes substitutos (PHB + Northlands).
+-- Grants: SSOT em effects/E007 (species) / E012 (subclass) / E013 (item) / E00* feats
 
 INSERT INTO rpg.phb_option_def (scope, owner_id, option_key, value_type)
 VALUES
@@ -49,20 +50,4 @@ UPDATE rpg.phb_resource_definition
 SET species_id = (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf')
 WHERE slug = 'baugsmidr-sense-magic';
 
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
-  recover_one_on_short, recover_all_on_short, recover_all_on_long
-)
-SELECT
-  'species'::rpg.resource_owner_kind, sp.id, rd.id, 1,
-  'proficiency_bonus'::rpg.resource_max_formula, NULL,
-  FALSE, FALSE, TRUE
-FROM rpg.phb_species sp
-JOIN rpg.phb_resource_definition rd ON rd.slug = 'baugsmidr-sense-magic' AND rd.species_id = sp.id
-WHERE sp.slug = 'dwarf'
-ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
-  max_formula = EXCLUDED.max_formula,
-  fixed_max = EXCLUDED.fixed_max,
-  recover_one_on_short = EXCLUDED.recover_one_on_short,
-  recover_all_on_short = EXCLUDED.recover_all_on_short,
-  recover_all_on_long = EXCLUDED.recover_all_on_long;
+

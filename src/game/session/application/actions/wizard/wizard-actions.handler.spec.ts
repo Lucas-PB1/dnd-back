@@ -30,6 +30,7 @@ describe('WizardActionsHandler', () => {
     asHandlerDep(ctx.state),
     asHandlerDep(ctx.domain),
     asHandlerDep(ctx.mechanicalCatalog),
+    asHandlerDep({ load: jest.fn().mockResolvedValue([]) }),
   );
 
   beforeEach(() => {

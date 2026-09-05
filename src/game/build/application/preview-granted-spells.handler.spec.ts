@@ -5,6 +5,48 @@ import { PreviewGrantedSpellsHandler } from './preview-granted-spells.handler';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { asDep } from '@common/testing/as-dep';
+import type { CatalogEffect } from '@game/effects';
+
+const ELF_DROW_SPELL_EFFECT = {
+  id: '1',
+  kind: 'grant_spell',
+  ownerKind: 'species',
+  ownerId: '1',
+  ownerSlug: 'elf',
+  trigger: 'on_build',
+  unlockLevel: 1,
+  sortOrder: 0,
+  minTraitTakes: 1,
+  actionSlug: null,
+  resourceSlug: null,
+  label: null,
+  requiresOptionKey: 'lineageId',
+  requiresOptionValue: 'drow',
+  spell: {
+    spellId: '1',
+    spellSlug: 'luzes-dancantes',
+    optionKey: null,
+    spellLevel: 0,
+  },
+  castEconomy: null,
+  numeric: null,
+  note: null,
+  resource: null,
+  combatMod: null,
+  proficiency: null,
+  purchaseDiscount: null,
+  damageDie: null,
+  weapon: null,
+  feat: null,
+  saveAdvantage: null,
+  sense: null,
+  damageType: null,
+  language: null,
+  checkAdvantage: null,
+  reach: null,
+  restQuirk: null,
+  environmentalImmunity: null,
+} as CatalogEffect;
 
 describe('PreviewGrantedSpellsHandler', () => {
   const resolveSubclassOptionGrants = {
@@ -20,15 +62,6 @@ describe('PreviewGrantedSpellsHandler', () => {
   it('merges species/feat grants and annotates sources', async () => {
     const catalog: jest.Mocked<Pick<LoadGrantedSpellCatalog, 'loadMergeCatalog'>> = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
-        speciesCatalog: [
-          {
-            speciesSlug: 'elf',
-            choiceKind: 'elf_lineage',
-            choiceSlug: 'drow',
-            unlockLevel: 1,
-            spellSlug: 'luzes-dancantes',
-          },
-        ],
         featFixedSpells: [],
         subclassGrantedSpells: [],
         classGrantedSpells: [],
@@ -37,6 +70,9 @@ describe('PreviewGrantedSpellsHandler', () => {
     const handler = new PreviewGrantedSpellsHandler(
       asDep(catalog),
       asDep(resolveSubclassOptionGrants),
+      asDep({
+        load: jest.fn().mockResolvedValue([ELF_DROW_SPELL_EFFECT]),
+      }),
     );
     const result = await handler.execute({
       speciesSlug: 'elf',
@@ -72,7 +108,6 @@ describe('PreviewGrantedSpellsHandler', () => {
   it('includes class always_prepared grants in grantedOnly', async () => {
     const catalog: jest.Mocked<Pick<LoadGrantedSpellCatalog, 'loadMergeCatalog'>> = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
-        speciesCatalog: [],
         featFixedSpells: [],
         subclassGrantedSpells: [],
         classGrantedSpells: [
@@ -83,6 +118,7 @@ describe('PreviewGrantedSpellsHandler', () => {
     const handler = new PreviewGrantedSpellsHandler(
       asDep(catalog),
       asDep(resolveSubclassOptionGrants),
+      asDep({ load: jest.fn().mockResolvedValue([]) }),
     );
     const result = await handler.execute({
       speciesSlug: 'human',

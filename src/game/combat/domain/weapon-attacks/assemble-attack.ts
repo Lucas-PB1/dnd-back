@@ -1,19 +1,16 @@
-import {
-  formatDamageNote,
-  hasProperty,
-} from './weapon-attack-predicates';
+import { formatDamageNote, hasProperty } from "./weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttack,
   WeaponAttackRole,
-} from './weapon-attack.types';
-import { applyWeaponCharmToAttack } from '../equipment/weapon-charm';
-import { applyCoverageBonusToAttack } from '../equipment/coverage-overlay';
-import type { AbilityPick } from './attack-bonuses';
+} from "./weapon-attack.types";
+import { applyWeaponCharmToAttack } from "../equipment/weapon-charm";
+import { applyCoverageBonusToAttack } from "../equipment/coverage-overlay";
+import type { AbilityPick } from "./attack-bonuses";
 
 export function assembleWeaponAttack(input: {
   piece: EquippedWeaponPiece;
-  mode: 'melee' | 'ranged';
+  mode: "melee" | "ranged";
   ability: AbilityPick;
   proficient: boolean;
   attackBonus: number;
@@ -42,15 +39,14 @@ export function assembleWeaponAttack(input: {
   divineFuryDice: string | null;
   noteExtras: string[];
 }): WeaponAttack {
-  const modeLabel =
-    input.mode === 'ranged' ? 'à distância' : 'corpo a corpo';
-  const attackNoteBase = `${modeLabel}: ${input.attackParts.join(' + ')}`;
+  const modeLabel = input.mode === "ranged" ? "à distância" : "corpo a corpo";
+  const attackNoteBase = `${modeLabel}: ${input.attackParts.join(" + ")}`;
   const attackNote =
     input.noteExtras.length > 0
-      ? `${attackNoteBase} · ${input.noteExtras.join(' · ')}`
+      ? `${attackNoteBase} · ${input.noteExtras.join(" · ")}`
       : attackNoteBase;
   const damageNoteParts = input.greatWeaponFighting
-    ? [...input.damageParts, 'GWF']
+    ? [...input.damageParts, "GWF"]
     : input.damageParts;
   const damageNoteDice = input.overkillExtraDice
     ? `${input.damageDice}+${input.overkillExtraDice}`
@@ -77,7 +73,7 @@ export function assembleWeaponAttack(input: {
     omitsAbilityDamage:
       input.omitAbilityDamage ||
       (input.isFirearm &&
-        input.mode === 'ranged' &&
+        input.mode === "ranged" &&
         input.overkillAbilityDamageBonus === 0),
     greatWeaponFighting: input.greatWeaponFighting,
     masteryActive: input.masteryActive,
@@ -89,15 +85,15 @@ export function assembleWeaponAttack(input: {
     critThreshold: input.critThreshold,
     overkillExtraDice: input.overkillExtraDice,
     reloadCapacity:
-      hasProperty(input.piece, 'reload') && !input.ignoresReload
+      hasProperty(input.piece, "reload") && !input.ignoresReload
         ? (input.piece.reloadCapacity ?? null)
         : null,
-    hasRecoil: hasProperty(input.piece, 'recoil'),
+    hasRecoil: hasProperty(input.piece, "recoil"),
     rageDamageBonus: input.rageBonus,
     brutalStrikeDice: input.brutalDice,
     divineFuryDice: input.divineFuryDice,
     sneakAttackEligible:
-      input.mode === 'ranged' || hasProperty(input.piece, 'finesse'),
+      input.mode === "ranged" || hasProperty(input.piece, "finesse"),
     quickStrikeDice: input.quickStrikeDice,
     ignoresReload: input.ignoresReload,
     martialArtsDie: input.monkMartialArtsDie,

@@ -18,6 +18,7 @@ import { ResolveActivePermanentItemEffects } from '@game/inventory/application/e
 import { LoadCharacterThreadBundleQuery } from '../../application/load-character-thread-bundle.query';
 import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { mapCharacterToDto } from './map-character-to-dto';
+import { LoadEffectCatalog } from '@game/effects';
 
 @Injectable()
 export class CharacterMapper {
@@ -35,6 +36,7 @@ export class CharacterMapper {
     private readonly heritageTraitRepo: Repository<PhbHeritageTrait>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly loadCharacterThread: LoadCharacterThreadBundleQuery,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async toDto(
@@ -54,6 +56,7 @@ export class CharacterMapper {
         heritageTraitRepo: this.heritageTraitRepo,
         grantedSpellCatalog: this.grantedSpellCatalog,
         loadCharacterThread: this.loadCharacterThread,
+        effectCatalog: this.effectCatalog,
       },
       row,
       sheetData,

@@ -13,7 +13,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'eir-vitality-points', NULL, true,
   'AB: gaste 1 Vitalidade → 1d4 PV',
   'Ação Bônus: gaste 1 Ponto de Vitalidade e recupere 1d4 PV. Se estiver Morrendo, gaste 1 para estabilizar (sem ação) — declare na mesa.',
-  'spend-resource', NULL, 400,
+  'feat-eir-vitality-surge', NULL, 400,
   NULL, NULL
 ),
 (
@@ -23,7 +23,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'eir-vitality-points', NULL, true,
   'AB: gaste 1 Vitalidade → 1d4 PV no toque',
   'Ação Bônus: gaste 1 Ponto de Vitalidade; criatura que tocar recupera 1d4 PV. Role 1d4 na mesa.',
-  'spend-resource', NULL, 401,
+  'feat-eir-channel-vitality', NULL, 401,
   NULL, NULL
 )
 ON CONFLICT (action_id) DO UPDATE SET

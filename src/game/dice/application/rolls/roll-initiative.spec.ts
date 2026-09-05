@@ -14,7 +14,10 @@ jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
 
 import { executeRollInitiative } from './roll-initiative';
 import { loadAccessibleCharacter } from './roll-weapon-context';
-import { asRollDep } from './roll-damage.spec.helpers';
+import {
+  asRollDep,
+  mockResourceSpender,
+} from './roll-damage.spec.helpers';
 
 describe('executeRollInitiative', () => {
   const sheetLoad = jest.fn().mockResolvedValue({
@@ -29,13 +32,34 @@ describe('executeRollInitiative', () => {
       getProficiencyBonus: jest.fn().mockResolvedValue(2),
     }),
     dataSource: asRollDep({}),
-    resourceSpender: {
-      spendClassResource: jest.fn(),
-      consumeSpellSlotLevel: jest.fn(),
-      getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
-      setResourcesUsedEntry: jest.fn(),
-      clearResourcesUsedEntry: jest.fn(),
-    },
+    effectCatalog: asRollDep({
+      load: jest.fn().mockResolvedValue([
+        {
+          id: '1',
+          kind: 'initiative_pb',
+          ownerKind: 'feat',
+          ownerId: '1',
+          ownerSlug: 'alert',
+          trigger: 'passive',
+          unlockLevel: 1,
+          sortOrder: 0,
+          minTraitTakes: 1,
+          actionSlug: null,
+          resourceSlug: null,
+          label: null,
+          spell: null,
+          castEconomy: null,
+          numeric: null,
+          note: null,
+          resource: null,
+          combatMod: null,
+          proficiency: null,
+          purchaseDiscount: null,
+          damageDie: null,
+        },
+      ]),
+    }),
+    resourceSpender: mockResourceSpender(),
     userId: 'u1',
     characterId: 'c1',
     dto: {},

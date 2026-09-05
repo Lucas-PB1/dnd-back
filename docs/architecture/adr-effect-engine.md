@@ -1,0 +1,42 @@
+# ADR: motor de efeitos (`phb_effect`)
+
+| Campo | Valor |
+|-------|--------|
+| Status | **Aceito** (Fase 0) |
+| Data | 2026-09-04 |
+| Contexto | Catálogo descreve conteúdo; regras de mesa/build repetidas em handlers TS e heurísticas |
+| Plano | [`../plans/effect-engine.md`](../plans/effect-engine.md) |
+| Dicionário | [`effect-dictionary.md`](effect-dictionary.md) |
+| Read-path (DX) | [`effect-engine-read-path.md`](effect-engine-read-path.md) |
+
+## Contexto
+
+Queremos autorar traços (talento, espécie, classe, item, heritage) como **composição de verbos** tipados: seed declara efeitos; serviços genéricos executam. Migração **incremental** — tabelas e handlers atuais convivem até cada lote fechar DoD.
+
+## Decisão
+
+1. Tabela unificada `rpg.phb_effect` (`kind` + `owner` + `trigger` + portões comuns).
+2. **Satélites tipados** por família de params (`phb_effect_spell`, `phb_effect_cast_economy`, `phb_effect_numeric`, …) — **sem** JSONB como SSOT mecânico.
+3. Dicionário fechado de `kind` (doc vivo); kind novo = satélite + serviço + entrada no dicionário no mesmo PR.
+4. Runtime em `src/game/effects/` (loader + executor por kind).
+5. Irredutíveis (metamagia, wild shape, rage) permanecem em handlers até existir kind honesto.
+
+## Anti-padrões
+
+- JSONB de regra de jogo
+- Kind coringa `custom` / `script`
+- Migrar handler complexo só para “progresso”
+- Endpoint HTTP novo por efeito
+- Front recalcular efeito
+
+## Consequências
+
+**Positivas:** menos `case` por slug; novos traços similares = seed; SSOT de economia de cast/gasto.
+
+**Custos:** convívio dual-read; dicionário é produto contínuo; aposentadoria de `spell_grant` / `resource_grant` / `combat_modifier` só por lote com DoD.
+
+## DoD Fase 0
+
+- [x] Este ADR + dicionário v0 + plano em `docs/plans/`
+- [x] DDL `phb_effect` + satélites piloto (+ kinds previstos nas fases seguintes)
+- [x] Módulo stub `game/effects` com teste de loader

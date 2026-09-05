@@ -20,6 +20,7 @@ import { executeRollSavingThrow } from './rolls/roll-saving-throw';
 import { executeRollSkill } from './rolls/roll-skill';
 import { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { LoadEffectCatalog } from '@game/effects';
 
 @Injectable()
 export class CharacterRollsService {
@@ -31,6 +32,7 @@ export class CharacterRollsService {
     private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     private readonly dataSource: DataSource,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
     @Inject(forwardRef(() => CharacterStateRepository))
     private readonly state: CharacterStateRepository,
   ) {}
@@ -48,6 +50,7 @@ export class CharacterRollsService {
       permanentItemEffects: this.permanentItemEffects,
       dataSource: this.dataSource,
       resourceSpender: this.state,
+      effectCatalog: this.effectCatalog,
       userId,
       characterId,
       dto,
@@ -68,6 +71,7 @@ export class CharacterRollsService {
       dataSource: this.dataSource,
       resourceSpender: this.state,
       mechanicalCatalog: this.mechanicalCatalog,
+      effectCatalog: this.effectCatalog,
       userId,
       characterId,
       dto,
@@ -85,6 +89,7 @@ export class CharacterRollsService {
       domain: this.domain,
       dataSource: this.dataSource,
       resourceSpender: this.state,
+      effectCatalog: this.effectCatalog,
       userId,
       characterId,
       dto,
@@ -103,6 +108,7 @@ export class CharacterRollsService {
       dataSource: this.dataSource,
       permanentItemEffects: this.permanentItemEffects,
       resourceSpender: this.state,
+      effectCatalog: this.effectCatalog,
       userId,
       characterId,
       dto,
@@ -120,6 +126,7 @@ export class CharacterRollsService {
       domain: this.domain,
       dataSource: this.dataSource,
       resourceSpender: this.state,
+      effectCatalog: this.effectCatalog,
       userId,
       characterId,
       dto,

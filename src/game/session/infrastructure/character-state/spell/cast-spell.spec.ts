@@ -81,15 +81,6 @@ describe('applyCastSpell', () => {
     };
     grantedSpellCatalog = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
-        speciesCatalog: [
-          {
-            speciesSlug: 'elf',
-            choiceKind: 'elf_lineage',
-            choiceSlug: 'drow',
-            unlockLevel: 3,
-            spellSlug: 'fogo-das-fadas',
-          },
-        ],
         featFixedSpells: [],
       }),
     };
@@ -102,6 +93,51 @@ describe('applyCastSpell', () => {
     loadActiveItemSlugsMock.mockReset();
     loadActiveItemSlugsMock.mockResolvedValue([]);
   });
+
+  const drowFairyFireEffect = {
+    id: '1',
+    kind: 'grant_spell' as const,
+    ownerKind: 'species' as const,
+    ownerId: '1',
+    ownerSlug: 'elf',
+    trigger: 'on_build' as const,
+    unlockLevel: 3,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: 'lineageId',
+    requiresOptionValue: 'drow',
+    spell: {
+      spellId: '1',
+      spellSlug: 'fogo-das-fadas',
+      optionKey: null,
+      spellLevel: 1,
+    },
+    castEconomy: {
+      economy: 'once_per_long_rest' as const,
+      usesFormula: 'fixed' as const,
+      fixedUses: 1,
+    },
+    numeric: null,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
 
   async function cast(
     dto: {
@@ -126,6 +162,9 @@ describe('applyCastSpell', () => {
       spellLookup: asDep(spellLookup),
       sheetRepository: asDep(sheetRepository),
       grantedSpellCatalog: asDep(grantedSpellCatalog),
+      effectCatalog: asDep({
+        load: jest.fn().mockResolvedValue([drowFairyFireEffect]),
+      }),
       dataSource: asDep(dataSourceOverride ?? { query: jest.fn() }),
       buildResponse,
     });
@@ -289,7 +328,6 @@ describe('applyCastSpell', () => {
       characterSpells: [{ spellSlug: 'alarme', listType: 'prepared' }],
     });
     grantedSpellCatalog.loadMergeCatalog.mockResolvedValue({
-      speciesCatalog: [],
       featFixedSpells: [],
     });
     await expect(
@@ -488,6 +526,7 @@ describe('applyCastSpell', () => {
         spellLookup: asDep(spellLookup),
         sheetRepository: asDep(sheetRepository),
         grantedSpellCatalog: asDep(grantedSpellCatalog),
+        effectCatalog: asDep({ load: jest.fn().mockResolvedValue([]) }),
         dataSource: asDep({
           query: jest.fn().mockResolvedValue(catalogRows),
         }),

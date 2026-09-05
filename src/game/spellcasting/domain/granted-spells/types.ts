@@ -3,6 +3,7 @@ import type {
   FeatOptionDto,
   SpeciesChoiceDto,
 } from '@game/sheet/dto/character-sheet.dto';
+import type { CatalogEffect } from '@game/effects';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 
@@ -47,8 +48,9 @@ export type GrantedSpellMergeContext = {
   previousLevel?: number;
   /** Catálogo de magias fixas de talento (`v_phb_feat_granted_spell`). */
   featFixedSpells?: readonly FeatGrantedSpellRow[];
-  /** Catálogo de magias de espécie (`v_phb_species_granted_spell`). */
-  speciesCatalog?: readonly SpeciesGrantedSpellRow[];
+  /** Efeitos de espécie já gated (`grant_spell` + cast_economy). */
+  speciesEffects?: readonly CatalogEffect[];
+  previousSpeciesEffects?: readonly CatalogEffect[];
   /** Magias always_prepared da subclasse (Finger Guns etc.). */
   subclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
   previousSubclassGrantedSpells?: readonly SubclassGrantedSpellRow[];

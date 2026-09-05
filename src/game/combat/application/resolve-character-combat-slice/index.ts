@@ -7,9 +7,11 @@ import type { ResolveActivePermanentItemEffects } from '@game/inventory/applicat
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../../domain/equipment';
 import { sheetProfile } from '@common/perf/sheet-profile';
+import { unarmedDamageDieFromEffects } from '@game/effects';
 import { assembleMappedCombatSlice } from './assemble-slice';
 import { loadCombatScoresAndEffects } from './load-scores-and-effects';
 import type { MappedCombatSlice } from './types';
+import type { CatalogEffect } from '@game/effects';
 
 export type { MappedCombatSlice } from './types';
 
@@ -30,6 +32,8 @@ export async function resolveCharacterCombatSlice(input: {
   level: number;
   proficiencyBonus: number;
   featSlugs: string[];
+  featEffects?: readonly CatalogEffect[];
+  speciesEffects?: readonly CatalogEffect[];
   fightingStyleSlugs: string[];
   masteredWeaponSlugs: string[];
   sizeCategory: SizeCategory;
@@ -52,6 +56,8 @@ export async function resolveCharacterCombatSlice(input: {
     level,
     proficiencyBonus,
     featSlugs,
+    featEffects,
+    speciesEffects,
     fightingStyleSlugs,
     masteredWeaponSlugs,
     sizeCategory,
@@ -78,6 +84,7 @@ export async function resolveCharacterCombatSlice(input: {
       subclassSlug,
       featSlugs,
       fightingStyleSlugs,
+      featEffects,
       itemAcBonus: itemEffects.acBonus,
       itemAcBonusNames: itemEffects.sourceNames,
       equippedItems,
@@ -105,6 +112,8 @@ export async function resolveCharacterCombatSlice(input: {
         itemAttackBonus: itemEffects.attackBonus,
         itemDamageBonus: itemEffects.damageBonus,
         equippedItems,
+        unarmedDamageDie: unarmedDamageDieFromEffects(featEffects ?? []),
+        featEffects,
       }),
     ),
     sheetProfile('combat.compliance', () =>
@@ -129,11 +138,14 @@ export async function resolveCharacterCombatSlice(input: {
     classSlug,
     subclassSlug,
     level,
+    proficiencyBonus,
     speciesSlug,
     heritageChoices,
     speciesChoices,
     transformation,
     featSlugs,
+    featEffects,
+    speciesEffects,
     fightingStyleSlugs,
     combatScores,
     dataSource,

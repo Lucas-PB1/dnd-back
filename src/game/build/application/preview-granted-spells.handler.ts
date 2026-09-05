@@ -9,6 +9,10 @@ import {
   collectSpeciesGrantedSpellSlugs,
 } from '@game/spellcasting/domain/granted-spells';
 import {
+  loadGatedSpeciesEffects,
+  LoadEffectCatalog,
+} from '@game/effects';
+import {
   PreviewGrantedSpellsDto,
   PreviewGrantedSpellsResponseDto,
 } from '../dto/preview-granted-spells.dto';
@@ -18,6 +22,7 @@ export class PreviewGrantedSpellsHandler {
   constructor(
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async execute(
@@ -27,7 +32,6 @@ export class PreviewGrantedSpellsHandler {
     const characterFeats = dto.characterFeats ?? [];
     const featSlugs = characterFeats.map((f) => f.featSlug);
     const {
-      speciesCatalog,
       featFixedSpells,
       subclassGrantedSpells,
       classGrantedSpells,
@@ -37,6 +41,12 @@ export class PreviewGrantedSpellsHandler {
       subclassSlug: dto.subclassSlug,
       classSlug: dto.classSlug,
       subclassOptions: dto.subclassOptions,
+    });
+    const speciesEffects = await loadGatedSpeciesEffects({
+      effectCatalog: this.effectCatalog,
+      speciesSlug: dto.speciesSlug,
+      speciesChoices: dto.speciesChoices,
+      kinds: ['grant_spell', 'grant_spell_by_level'],
     });
 
     const loreGranted = await this.resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
@@ -51,7 +61,7 @@ export class PreviewGrantedSpellsHandler {
       speciesSlug: dto.speciesSlug,
       speciesChoices: dto.speciesChoices,
       level,
-      speciesCatalog,
+      speciesEffects,
       featFixedSpells,
       subclassGrantedSpells,
       classGrantedSpells,
@@ -67,7 +77,7 @@ export class PreviewGrantedSpellsHandler {
       dto.speciesSlug,
       dto.speciesChoices,
       level,
-      speciesCatalog,
+      speciesEffects,
     );
     const subclassSpellSlugs = collectGrantedSpellSlugsAtLevel(
       level,

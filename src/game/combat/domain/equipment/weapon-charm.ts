@@ -1,18 +1,18 @@
-import { formatSigned } from '../weapon-attacks/weapon-attack-predicates';
+import { formatSigned } from "../weapon-attacks/weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttack,
-} from '../weapon-attacks/weapon-attack.types';
+} from "../weapon-attacks/weapon-attack.types";
 
 export const WEAPON_CHARM_KINDS = [
-  'arrowhead',
-  'blade',
-  'die',
-  'flame',
-  'hook',
-  'spear',
-  'lightning',
-  'quiver',
+  "arrowhead",
+  "blade",
+  "die",
+  "flame",
+  "hook",
+  "spear",
+  "lightning",
+  "quiver",
 ] as const;
 
 export type WeaponCharmKind = (typeof WEAPON_CHARM_KINDS)[number];
@@ -28,29 +28,28 @@ export type WeaponCharm = {
 const KIND_SET = new Set<string>(WEAPON_CHARM_KINDS);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function optionalPositiveInt(value: unknown): number | undefined {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return undefined;
+  if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
   const n = Math.trunc(value);
   return n > 0 ? n : undefined;
 }
 
 function optionalNonEmptyString(value: unknown): string | undefined {
-  if (typeof value !== 'string') return undefined;
+  if (typeof value !== "string") return undefined;
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : undefined;
 }
 
-/** Lê `properties.weaponCharm` do catálogo de um encanto. */
 export function parseWeaponCharm(
   properties: Record<string, unknown> | null | undefined,
 ): WeaponCharm | null {
   if (!isRecord(properties)) return null;
   const raw = properties.weaponCharm;
   if (!isRecord(raw)) return null;
-  const kind = typeof raw.kind === 'string' ? raw.kind : '';
+  const kind = typeof raw.kind === "string" ? raw.kind : "";
   if (!KIND_SET.has(kind)) return null;
 
   const charm: WeaponCharm = { kind: kind as WeaponCharmKind };
@@ -67,25 +66,24 @@ export function parseWeaponCharm(
   return charm;
 }
 
-/** Notas de ficha por kind (efeitos não numéricos). */
 export function charmNotes(kind: WeaponCharmKind): string[] {
   switch (kind) {
-    case 'arrowhead':
-      return ['ignora meia / ¾ cobertura (à distância)'];
-    case 'blade':
+    case "arrowhead":
+      return ["ignora meia / ¾ cobertura (à distância)"];
+    case "blade":
       return [];
-    case 'die':
-      return ['crítico explosivo (máx. +5 dados)'];
-    case 'flame':
-      return ['aplica Queimar (1 min)'];
-    case 'hook':
-      return ['ação bônus: teleporta arma à mão'];
-    case 'spear':
-      return ['carga 4,5 m antes do ataque CdC'];
-    case 'lightning':
+    case "die":
+      return ["crítico explosivo (máx. +5 dados)"];
+    case "flame":
+      return ["aplica Queimar (1 min)"];
+    case "hook":
+      return ["ação bônus: teleporta arma à mão"];
+    case "spear":
+      return ["carga 4,5 m antes do ataque CdC"];
+    case "lightning":
       return [];
-    case 'quiver':
-      return ['ignora Recarga'];
+    case "quiver":
+      return ["ignora Recarga"];
     default: {
       const _exhaustive: never = kind;
       return _exhaustive;
@@ -93,10 +91,6 @@ export function charmNotes(kind: WeaponCharmKind): string[] {
   }
 }
 
-/**
- * Aplica bônus / override do encanto preso a esta peça.
- * Só age quando `piece.weaponCharm` está definido (arma com attachedCharmSlug).
- */
 export function applyWeaponCharmToAttack(
   piece: EquippedWeaponPiece,
   attack: WeaponAttack,
@@ -134,14 +128,14 @@ export function applyWeaponCharmToAttack(
     damageDice = `${damageDice}+${charm.extraDamageDice}`;
     damageNote = `${damageNote} · +${charm.extraDamageDice} encanto`;
   }
-  if (charm.kind === 'quiver') {
+  if (charm.kind === "quiver") {
     reloadCapacity = null;
   }
 
   attackExtras.push(...charmNotes(charm.kind));
   const attackNote =
     attackExtras.length > 0
-      ? `${attack.attackNote} · ${attackExtras.join(' · ')}`
+      ? `${attack.attackNote} · ${attackExtras.join(" · ")}`
       : attack.attackNote;
 
   return {

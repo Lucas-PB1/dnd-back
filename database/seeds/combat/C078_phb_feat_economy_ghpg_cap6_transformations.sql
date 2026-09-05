@@ -569,6 +569,46 @@ Once you use this feature, you can’t use it again until you finish a Long Rest
 
 You can cast this spell as an Action on your turn, or as a Reaction when you would take Bludgeoning, Piercing, or Slashing damage. You cast the spell before taking the damage.',
   'gh-transformation-vampire/mist-form', NULL, 644, NULL, NULL
+),
+(
+  'hybrid-wolf-form-activate', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'), NULL,
+  'Hybrid Wolf Form', 'action'::rpg.action_economy_bucket, 1,
+  NULL, NULL, FALSE,
+  'Hybrid Wolf Form', 'As a Magic action, voluntarily transform into hybrid wolf form (1 hour per Transformation Stage). Strength becomes 18 (if lower), Speed +10 ft, Dash as Bonus Action, Claw/Bite 1d8, no spells. Revert with a Magic action.',
+  'gh-transformation-lycanthrope/hybrid-wolf-form', NULL, 645, 'stage1Boon', 'hybrid-wolf-form'
+),
+(
+  'hybrid-bear-form-activate', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'), NULL,
+  'Hybrid Bear Form', 'action'::rpg.action_economy_bucket, 1,
+  NULL, NULL, FALSE,
+  'Hybrid Bear Form', 'As a Magic action, voluntarily transform into hybrid bear form (1 hour per Transformation Stage). Strength becomes 20 (if lower), Climb Speed, Claw 1d8 + grapple Bonus Action. No spells. Revert with a Magic action.',
+  'gh-transformation-lycanthrope/hybrid-bear-form', NULL, 646, 'stage1Boon', 'hybrid-bear-form'
+),
+(
+  'hybrid-rat-form-activate', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'), NULL,
+  'Hybrid Rat Form', 'action'::rpg.action_economy_bucket, 1,
+  NULL, NULL, FALSE,
+  'Hybrid Rat Form', 'As a Magic action, voluntarily transform into hybrid rat form (1 hour per Transformation Stage). Dexterity becomes 18 (if lower), Hide/Disengage Bonus Action, Claw/Bite 1d6. No spells. Revert with a Magic action.',
+  'gh-transformation-lycanthrope/hybrid-rat-form', NULL, 647, 'stage1Boon', 'hybrid-rat-form'
+),
+(
+  'hunters-focus-activate', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'), NULL,
+  'Hunter''s Focus', 'bonus'::rpg.action_economy_bucket, 2,
+  NULL, NULL, FALSE,
+  'Hunter''s Focus', 'While in hybrid form, as a Bonus Action mark one creature within 60 feet as prey for 1 hour (or until it dies). +1d6 damage on melee hits vs prey; Advantage on Perception/Survival to find it.',
+  'gh-transformation-lycanthrope/hunters-focus', NULL, 648, 'stage2Boon', 'hunters-focus'
+),
+(
+  'kindred-form-activate', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'), NULL,
+  'Kindred Form', 'action'::rpg.action_economy_bucket, 2,
+  NULL, NULL, FALSE,
+  'Kindred Form', 'Transform into your Kindred Form (Polymorph rules): Werebear → Black Bear, Wererat → Giant Rat, Werewolf → Wolf. Equipment falls off. Cannot speak; can communicate with that animal type.',
+  'gh-transformation-lycanthrope/kindred-form', NULL, 649, 'stage2Boon', 'kindred-form'
 )
 ON CONFLICT (action_id) DO UPDATE SET
   feat_id = EXCLUDED.feat_id,

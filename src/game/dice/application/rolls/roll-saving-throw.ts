@@ -25,6 +25,8 @@ import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-c
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
+import { applyInspirationSpend } from './apply-inspiration-spend';
+import type { LoadEffectCatalog } from '@game/effects';
 
 async function loadAbilityPenalties(dataSource: DataSource, characterId: string) {
   if (typeof dataSource?.getRepository !== 'function') {
@@ -52,6 +54,7 @@ export async function executeRollSavingThrow(input: {
   dataSource: DataSource;
   permanentItemEffects: ResolveActivePermanentItemEffects;
   resourceSpender: CharacterResourceSpender;
+  effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
   dto: RollSavingThrowDto;
@@ -162,6 +165,17 @@ export async function executeRollSavingThrow(input: {
     resourceSpender: input.resourceSpender,
     kind: 'save',
     kept: result.d20.kept[0] ?? 0,
+    notes,
+  });
+  const failed =
+    input.dto.dc != null ? result.total < input.dto.dc : null;
+  await applyInspirationSpend({
+    resourceSpender: input.resourceSpender,
+    sheet: input.sheet,
+    effectCatalog: input.effectCatalog,
+    character,
+    spentInspiration: Boolean(input.dto.spentInspiration),
+    failed,
     notes,
   });
   return {

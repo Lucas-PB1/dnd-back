@@ -46,7 +46,11 @@ jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
 import { BadRequestException } from '@nestjs/common';
 import { executeRollSavingThrow } from './roll-saving-throw';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
-import { asRollDep } from './roll-damage.spec.helpers';
+import {
+  asRollDep,
+  mockEffectCatalog,
+  mockResourceSpender,
+} from './roll-damage.spec.helpers';
 
 describe('executeRollSavingThrow', () => {
   const sheet = {
@@ -59,13 +63,7 @@ describe('executeRollSavingThrow', () => {
     }),
   };
 
-  const resourceSpender = {
-    spendClassResource: jest.fn().mockResolvedValue(undefined),
-    consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
-    setResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
-    clearResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
-  };
+  const resourceSpender = mockResourceSpender();
 
   const base = {
     access: asRollDep({}),
@@ -81,6 +79,7 @@ describe('executeRollSavingThrow', () => {
       }),
     }),
     resourceSpender,
+    effectCatalog: mockEffectCatalog(),
     userId: 'user-1',
     characterId: 'fighter-1',
   };

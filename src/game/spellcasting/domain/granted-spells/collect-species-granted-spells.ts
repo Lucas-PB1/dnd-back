@@ -1,5 +1,6 @@
+import type { CatalogEffect } from '@game/effects';
+import { speciesGrantedSpellSlugsFromEffects } from '@game/effects';
 import type { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
-import { SpeciesGrantedSpellRow } from './types';
 
 function choiceSlugOf(
   choices: readonly SpeciesChoiceDto[] | undefined,
@@ -9,44 +10,38 @@ function choiceSlugOf(
 }
 
 /**
- * Slugs de magia concedidos por espécie a partir do catálogo,
- * filtrados por escolhas da ficha e nível.
- * Alto Elfo: `high_elf_cantrip` substitui o truque L1 default do catálogo.
+ * Slugs de magia concedidos por espécie via `phb_effect` `grant_spell`
+ * (já gated por `loadGatedSpeciesEffects`).
+ * Alto Elfo: `high_elf_cantrip` substitui o truque L1 default.
  * Andari: `andari_druid_cantrip` adiciona o truque de Druida escolhido.
  */
 export function collectSpeciesGrantedSpellSlugs(
   speciesSlug: string | undefined,
   speciesChoices: readonly SpeciesChoiceDto[] | undefined,
   level: number,
-  catalogRows: readonly SpeciesGrantedSpellRow[],
+  speciesEffects?: readonly CatalogEffect[],
 ): Set<string> {
   const slugs = new Set<string>();
   if (!speciesSlug) return slugs;
 
-  for (const row of catalogRows) {
-    if (row.speciesSlug !== speciesSlug) continue;
-    if (row.unlockLevel > level) continue;
-
-    if (row.choiceKind == null) {
-      slugs.add(row.spellSlug);
-      continue;
-    }
-
-    const selected = choiceSlugOf(speciesChoices, row.choiceKind);
-    if (selected && selected === row.choiceSlug) {
-      slugs.add(row.spellSlug);
-    }
+  const effects = speciesEffects ?? [];
+  for (const slug of speciesGrantedSpellSlugsFromEffects(effects, level)) {
+    slugs.add(slug);
   }
-
-  applyHighElfCantripOverride(speciesSlug, speciesChoices, catalogRows, slugs);
+  applyHighElfCantripOverrideFromEffects(
+    speciesSlug,
+    speciesChoices,
+    effects,
+    slugs,
+  );
   applyAndariDruidCantrip(speciesSlug, speciesChoices, slugs);
   return slugs;
 }
 
-function applyHighElfCantripOverride(
+function applyHighElfCantripOverrideFromEffects(
   speciesSlug: string,
   speciesChoices: readonly SpeciesChoiceDto[] | undefined,
-  catalogRows: readonly SpeciesGrantedSpellRow[],
+  speciesEffects: readonly CatalogEffect[],
   slugs: Set<string>,
 ): void {
   if (speciesSlug !== 'elf') return;
@@ -54,15 +49,13 @@ function applyHighElfCantripOverride(
   const cantrip = choiceSlugOf(speciesChoices, 'high_elf_cantrip');
   if (!cantrip) return;
 
-  for (const row of catalogRows) {
-    if (
-      row.speciesSlug === 'elf' &&
-      row.choiceKind === 'elf_lineage' &&
-      row.choiceSlug === 'high-elf' &&
-      row.unlockLevel === 1
-    ) {
-      slugs.delete(row.spellSlug);
+  for (const effect of speciesEffects) {
+    if (effect.kind !== 'grant_spell' && effect.kind !== 'grant_spell_by_level') {
+      continue;
     }
+    if (effect.unlockLevel !== 1) continue;
+    const slug = effect.spell?.spellSlug?.trim();
+    if (slug) slugs.delete(slug);
   }
   slugs.add(cantrip);
 }

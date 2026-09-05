@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-02
+**Última revisão:** 2026-09-05 (checklist efeitos+mesa)
 
 ---
 
@@ -14,26 +14,38 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 | Área | Status |
 |------|--------|
 | Ficha / inventário / sessão / campanha / encontro | Pronto |
-| Classes mesa PHB (13) | Pronto |
-| Steinhardt + Northlands (Waves 1–4 + Cap. 5 + veículos) | Pronto — residual opcional em [`northlands-audit.md`](northlands-audit.md) |
-| Itens DMG mesa | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
-| Grim Hollow Cap. 2 mesa + Cap. 1 heranças | Pronto — residual adiado em [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
+| Classes mesa PHB (13) | **Revisão ativa** — pool `E009`; economy/apply no checklist §3 |
+| Steinhardt + Northlands (Waves 1–4 + Cap. 5 + veículos) | **Revisão ativa** — subclass/thread/espécie NL no checklist |
+| Itens DMG mesa | **Revisão ativa** — grants+economy+apply no checklist §8 |
+| Grim Hollow Cap. 2 mesa + Cap. 1 heranças | **Revisão ativa** — subclass/heritage no checklist §4·§6 |
 | Grim Hollow Cap. 4 talentos | Pronto |
-| Grim Hollow Cap. 6 transformações | Pronto — economy tipada API + front mesa |
+| Grim Hollow Cap. 6 transformações | **Revisão ativa** — `E008`/`C078`/`E015` (Licantropo declare + notas Clemência/Cura); residual apply contínuo no checklist §A |
 | Saúde do código (Fases 0–4) | **Pronto** — dívida residual em Adiado |
-| Combate situacional / monstros catálogo | **Adiado** |
+| Motor de efeitos (`phb_effect`) | **Ativo** — categoria + fonte + fase DROP — [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) · [`effect-engine.md`](effect-engine.md) |
+| Combate situacional / monstros catálogo | **No checklist** §M/§P — [`effect-mesa-checklist.md`](effect-mesa-checklist.md) (não mais “só adiado”) |
 
 ---
 
 ## Ativo
 
-_(vazio)_
+- [ ] Efeitos + mesa — **categoria** [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · **fonte** [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) · DROP legado + magias espécie (collect/cast_economy) **feitos**; falta revisão mesa — [`effect-engine.md`](effect-engine.md)
 
 ---
 
 ## Adiado — polish / ops
 
 Só retomar com pedido explícito.
+
+### Motor de efeitos (residual wire / UI)
+
+- [ ] Fase 6 residual UI/cast: bloodied gate, craft spawn
+- [ ] Artesão: craft on rest / spawn item
+- [ ] Atacante Selvagem: enforcement 1×/turno no servidor
+- [ ] Front: UI escolher entre as 2 rolagens de dano (API já devolve `alternateRolls`)
+- [ ] Briguento de Taverna: empurrão / grappled / improvisado além do d4
+- [ ] Transferir inspiração (aliados / mesa)
+- [ ] Attitude NPC (Influenciar Hostil/Indiferente tipado)
+- [ ] Terrain snow / frio extremo tipado fino (Snowrunner, Cold Plunge)
 
 ### Classe / UI
 
@@ -45,11 +57,13 @@ Só retomar com pedido explícito.
 
 ### Combate / campanha
 
-- [ ] Estilos e talentos condicionais (GWF, TWF, Charger, PAM, …)
+- [ ] Estilos e talentos condicionais (GWF piso 3 no DTO, TWF gate, Charger, PAM, …) — seeds FS em `database/seeds/effects/` (`E001`/`E003`/`E004`)
 
 ### Treasure / itens
 
-Detalhe: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
+Leva completa (mágico, propriedades, maestria, economies) → checklist **§8** [`effect-mesa-checklist.md`](effect-mesa-checklist.md). Detalhe regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
+
+Residual fino (se sobrar depois da leva):
 
 - [ ] Cast de item: concentração / componentes / CD override do item
 - [ ] Evento `dawn` real ≠ Descanso Longo (MVP: DL ≈ amanhecer)

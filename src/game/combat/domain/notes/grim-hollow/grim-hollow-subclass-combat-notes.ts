@@ -1,7 +1,7 @@
 /**
  * Passivas / lembretes de subclasses Grim Hollow (Cap. 2).
  * Economia C063–C068 cobre botões Usar; aqui ficam efeitos contínuos e buffs condicionais.
- * HP numérico permanente: `phb_combat_modifier` (ex.: sangromancer C069).
+ * HP numérico permanente: `phb_effect.combat_mod` (ex.: sangromancer E014).
  */
 import {
   GH_CLASS_COMBAT_NOTES,

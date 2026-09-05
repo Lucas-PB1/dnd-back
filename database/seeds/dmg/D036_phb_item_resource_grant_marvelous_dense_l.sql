@@ -2,6 +2,7 @@
 -- Ver docs/source/extracts/dmg/wiring-status.md
 -- Cast/link magia = fase 6 · tabelas/artefatos = lembrete + pools chave
 -- trombeta 7 dias / desejo 30 dias: sem recover automático
+-- Grants: SSOT em effects/E007 (species) / E012 (subclass) / E013 (item) / E00* feats
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES
@@ -102,39 +103,7 @@ ON CONFLICT (slug) DO UPDATE SET
   item_id = EXCLUDED.item_id,
   min_level = EXCLUDED.min_level;
 
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
-  recover_one_on_short, recover_all_on_short, recover_all_on_long
-)
-SELECT
-  'item'::rpg.resource_owner_kind,
-  i.id,
-  rd.id,
-  1,
-  'fixed'::rpg.resource_max_formula,
-  v.fixed_max,
-  FALSE,
-  v.recover_short,
-  v.recover_long
-FROM (VALUES
-  ('amuleto-da-estilha-negra', 'amuletoEstilhaMagiaDesconhecidaUse', 1, FALSE, TRUE),
-  ('bolsa-das-tropelias', 'bolsaTropeliasCharges', 3, FALSE, TRUE),
-  ('chapeu-das-muitas-magias', 'chapeuMuitasMagiasUse', 1, TRUE, TRUE),
-  ('demonomico-de-lggwilv', 'demonomicoCharges', 8, FALSE, TRUE),
-  ('tunica-das-estrelas', 'tunicaEstrelasCharges', 6, FALSE, TRUE),
-  ('trombeta-do-valhalla', 'trombetaValhallaUse', 1, FALSE, FALSE),
-  ('orbes-draconicos', 'orbesDraconicosCharges', 7, FALSE, TRUE),
-  ('varinha-das-maravilhas', 'varinhaMaravilhasCharges', 7, FALSE, TRUE),
-  ('varinha-de-orcus', 'varinhaOrcusCharges', 7, FALSE, TRUE),
-  ('varinha-de-orcus', 'varinhaOrcusConvocarUse', 1, FALSE, TRUE),
-  ('olho-e-mao-de-vecna', 'olhoVecnaCharges', 8, FALSE, TRUE),
-  ('olho-e-mao-de-vecna', 'maoVecnaCharges', 8, FALSE, TRUE),
-  ('olho-e-mao-de-vecna', 'olhoMaoVecnaDesejoUse', 1, FALSE, FALSE)
-) AS v(item_slug, resource_slug, fixed_max, recover_short, recover_long)
-JOIN rpg.phb_item i ON i.slug = v.item_slug
-JOIN rpg.phb_resource_definition rd
-  ON rd.slug = v.resource_slug AND rd.item_id = i.id
-ON CONFLICT DO NOTHING;
+
 
 UPDATE rpg.phb_item
 SET properties = COALESCE(properties, '{}'::jsonb) || '{

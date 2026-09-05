@@ -38,3 +38,19 @@ export function isContainerItem(
   if (properties?.kind === 'container') return true;
   return /^(mochila|saca|cesta|algibeira|bolsa|estojo|aljava)/i.test(itemSlug);
 }
+
+/**
+ * Comida/bebida p/ desconto Brewer (tag `foodDrink` ou heurística de slug).
+ * Poções entram como bebida (decisão Fase 5).
+ */
+export function isFoodDrinkPurchaseItem(
+  itemSlug: string,
+  properties: Record<string, unknown> | null | undefined,
+): boolean {
+  if (properties?.foodDrink === true) return true;
+  if (/^pocao[-_]/i.test(itemSlug) || itemSlug.includes('pocao')) return true;
+  return /^(refeicao-|vinho-|cerveja|pao$|queijo-|agua-|racao|hidromel)/i.test(
+    itemSlug,
+  );
+}
+

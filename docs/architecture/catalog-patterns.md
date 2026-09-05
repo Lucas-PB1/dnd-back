@@ -186,3 +186,11 @@ Implementação das MVs pendentes: DoD no ADR.
 3. A leitura repete JOIN de 3+ migrations? → view `v_phb_*`.
 4. A ficha precisa da regra? → projeção na [lista fechada](adr-read-model-layers.md#decisão-5--fronteira-runtime--catálogo) (MV/view via `infrastructure/queries/`).
 5. Migration já aplicada em prod? → **nova** migration (neste repo: rewrite + `db:setup` enquanto sem produção).
+
+---
+
+## 12. Motor de efeitos (`phb_effect`)
+
+ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Dicionário: [`effect-dictionary.md`](effect-dictionary.md).
+
+Núcleo + satélites tipados (sem JSONB mecânico). Famílias legadas (`spell_grant`, `resource_grant`, `combat_modifier`) convivem até DoD de aposentadoria por lote.

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { EffectsModule } from './effects/effects.module';
 import { CharacterSheetModule } from './sheet/character-sheet.module';
 import { CharacterBuildModule } from './build/character-build.module';
 import { CharacterProgressionModule } from './progression/character-progression.module';
@@ -12,6 +13,7 @@ import { ActorModule } from './actor/actor.module';
 @Module({
   imports: [
     GameSharedModule,
+    EffectsModule,
     CharacterSheetModule,
     CharacterBuildModule,
     CharacterProgressionModule,

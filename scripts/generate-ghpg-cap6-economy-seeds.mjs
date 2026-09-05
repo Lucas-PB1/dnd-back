@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Gera J061 (resources) + C078 (economy) a partir de cap6-economy.json.
+ * Gera J061 (resource defs) + E008 (grant_resource effects) + C078 (economy)
+ * a partir de cap6-economy.json.
  * Uso: node scripts/generate-ghpg-cap6-economy-seeds.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -30,7 +31,6 @@ function mapDbMaxFormula(resource) {
   if (resource.maxFormula === 'proficiency_bonus_plus_stage') {
     return 'proficiency_bonus';
   }
-  // DB exige fixed_max quando max_formula=fixed; estágio → level (resolve com stage como level).
   if (resource.maxFormula === 'fixed' && resource.fixedMax == null) {
     return 'level';
   }
@@ -61,32 +61,53 @@ function buildResourceDefinitionValues() {
     .join(',\n');
 }
 
-function buildResourceGrantBlocks() {
+function buildEffectBlocks() {
   return economy.resources
-    .map((r) => {
+    .map((r, index) => {
       const formula = mapDbMaxFormula(r);
       const fixed = mapDbFixedMax(r);
+      const sortOrder = index + 1;
       return `
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = '${sqlEscape(r.transformationSlug)}'),
+rd AS (
+  SELECT id FROM rpg.phb_resource_definition
+  WHERE slug = '${sqlEscape(r.slug)}'
+    AND feat_id = (SELECT id FROM feat)
+),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_resource'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, ${r.minStage}, ${sortOrder},
+         '${sqlEscape(r.namePt)}'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_resource (
+  effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT
-  'feat'::rpg.resource_owner_kind, f.id, rd.id, ${r.minStage},
-  '${formula}'::rpg.resource_max_formula, ${fixed},
-  FALSE, ${r.recoverAllOnShort ? 'TRUE' : 'FALSE'}, ${r.recoverAllOnLong ? 'TRUE' : 'FALSE'}
-FROM rpg.phb_feat f
-JOIN rpg.phb_resource_definition rd
-  ON rd.slug = '${sqlEscape(r.slug)}' AND rd.feat_id = f.id
-WHERE f.slug = '${sqlEscape(r.transformationSlug)}'
-ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
-  max_formula = EXCLUDED.max_formula,
-  fixed_max = EXCLUDED.fixed_max,
-  recover_one_on_short = EXCLUDED.recover_one_on_short,
-  recover_all_on_short = EXCLUDED.recover_all_on_short,
-  recover_all_on_long = EXCLUDED.recover_all_on_long;`;
+SELECT ins.id, rd.id, '${formula}'::rpg.resource_max_formula, ${fixed},
+       FALSE, ${r.recoverAllOnShort ? 'TRUE' : 'FALSE'}, ${r.recoverAllOnLong ? 'TRUE' : 'FALSE'}
+FROM ins CROSS JOIN rd;`;
     })
     .join('\n');
+}
+
+function buildDeleteMigratedGrants() {
+  const slugs = economy.resources.map((r) => `'${sqlEscape(r.slug)}'`).join(',\n  ');
+  return `
+DELETE FROM rpg.phb_resource_grant rg
+USING rpg.phb_resource_definition rd, rpg.phb_feat f
+WHERE rg.resource_id = rd.id
+  AND rg.owner_kind = 'feat'::rpg.resource_owner_kind
+  AND rg.owner_id = f.id
+  AND rd.slug IN (
+  ${slugs}
+  )
+  AND f.slug LIKE 'gh-transformation-%';
+`;
 }
 
 function buildEconomyValues() {
@@ -118,6 +139,7 @@ function buildEconomyValues() {
 
 const j061 = `-- Recursos de transformação — Grim Hollow Cap. 6 (economy tipada)
 -- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Grants: SSOT em effects/E008_ghpg_transform.sql
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, feat_id, min_level)
 VALUES
@@ -127,7 +149,12 @@ ON CONFLICT (slug) DO UPDATE SET
   scope = EXCLUDED.scope,
   feat_id = EXCLUDED.feat_id,
   min_level = EXCLUDED.min_level;
-${buildResourceGrantBlocks()}
+`;
+
+const e008 = `-- Transformações GH Cap. 6 — grant_resource (SSOT; J061 só defs)
+-- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+${buildEffectBlocks()}
+${buildDeleteMigratedGrants()}
 `;
 
 const c078 = `-- Economy — transformações Grim Hollow Cap. 6
@@ -161,11 +188,15 @@ writeFileSync(
   j061,
 );
 writeFileSync(
+  join(root, 'database/seeds/effects/E008_ghpg_transform.sql'),
+  e008,
+);
+writeFileSync(
   join(root, 'database/seeds/combat/C078_phb_feat_economy_ghpg_cap6_transformations.sql'),
   c078,
 );
 
 console.log(
-  `Wrote J061 (${economy.resources.length} resources) + C078 (${economy.actions.length} actions)`,
+  `Wrote J061 defs + E008 (${economy.resources.length} effects) + C078 (${economy.actions.length} actions)`,
 );
 console.log(`PB+stage slugs (${PB_PLUS_STAGE.size}):`, [...PB_PLUS_STAGE].join(', '));

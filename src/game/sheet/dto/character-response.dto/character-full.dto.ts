@@ -34,6 +34,28 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
   })
   armorClassNote!: string;
 
+  @ApiProperty({
+    example: 2,
+    description:
+      'Soma tipada de ac_bonus de talentos (sticky/gate — aplicar na UI quando toggle ligado)',
+  })
+  featAcBonus!: number;
+
+  @ApiProperty({
+    description: 'Flags de efeitos de talento para UI de roll/cast',
+  })
+  featEffectFlags!: {
+    inspirationRefundOnFail: boolean;
+    damageDieFloor: boolean;
+    damageDieFlip: boolean;
+    damageDieExplode: boolean;
+    improveCritical: boolean;
+    slotElevate: boolean;
+    slotReduce: boolean;
+    wieldTwoHandedOneHand: boolean;
+    versatileOneHandFullDamage: boolean;
+  };
+
   @ApiProperty({ type: [WeaponAttackResponseDto] })
   weaponAttacks!: WeaponAttackResponseDto[];
 
@@ -74,7 +96,7 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
   @ApiProperty({
     example: 0,
     description:
-      'Bônus de deslocamento em metros (itens + Movimento Rápido do Bárbaro)',
+      'Bônus de deslocamento em metros (itens + Movimento Rápido + speed_bonus de feats)',
   })
   itemSpeedBonusMeters!: number;
 

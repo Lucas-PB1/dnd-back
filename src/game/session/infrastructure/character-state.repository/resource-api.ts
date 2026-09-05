@@ -4,7 +4,9 @@ import type { ResourceSessionFacade } from '../character-state/resources/resourc
 import type { CharacterStateRepoPorts } from './build-deps';
 import {
   clearResourcesUsedEntryByCharacterId,
+  getInspiration,
   getResourcesUsedEntry,
+  setInspiration,
   setResourcesUsedEntry,
 } from './session-character-ops';
 
@@ -73,5 +75,13 @@ export abstract class CharacterStateResourceApi {
 
   clearResourcesUsedEntryByCharacterId(characterId: string, key: string) {
     return clearResourcesUsedEntryByCharacterId(this.ports(), characterId, key);
+  }
+
+  getInspiration(character: PlayerCharacter) {
+    return getInspiration(this.ports(), character);
+  }
+
+  setInspiration(character: PlayerCharacter, value: boolean) {
+    return setInspiration(this.ports(), character, value);
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { LoadEffectCatalog } from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
@@ -13,6 +14,7 @@ export class UseClassResourceHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async execute(
@@ -31,11 +33,16 @@ export class UseClassResourceHandler {
       resourceSlug,
       dto.amount ?? 1,
     );
+    const effects = await this.effectCatalog.load({
+      resourceSlug,
+      triggers: ['on_resource_spend'],
+    });
     const origin = await applyOriginResourceSpendEffects({
       state: this.state,
       character,
       resourceSlug,
       currentState: spent.state,
+      effects,
     });
     const thread = await applyThreadResourceSpendSideEffects({
       state: this.state,

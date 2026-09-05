@@ -73,6 +73,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       | 'assertFeatInCatalog'
       | 'findBackgroundOrFail'
       | 'assertLanguageSlug'
+      | 'assertLanguageInCatalog'
     >
   >;
   let speciesTraitChoicesRepo: jest.Mocked<Pick<Repository<VPhbSpeciesTraitChoices>, 'find'>>;
@@ -103,6 +104,10 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         abilityOptionSlugs: [],
       }),
       assertLanguageSlug: jest.fn().mockResolvedValue(undefined),
+      assertLanguageInCatalog: jest.fn().mockImplementation(async (slug: string) => ({
+        slug,
+        isRare: false,
+      })),
     };
     speciesTraitChoicesRepo = {
       find: jest.fn().mockResolvedValue([]),
@@ -250,6 +255,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         {
           ...emptyInput,
           classSkillSlugs: ['athletics', 'perception'],
+          languageSlugs: ['elfico', 'anao'],
           characterFeats: [{ featSlug: 'defense', instanceIndex: 0 }],
           subclassOptions: [{ optionKey: 'fighting_style', valueId: 'archery' }],
         },

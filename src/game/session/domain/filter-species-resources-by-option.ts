@@ -1,4 +1,4 @@
-import { DWARF_CULTURE_KIND } from '@catalog/species/domain/species-culture';
+import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
 
 /**
  * Filtra grants de recurso de espécie pelas mesmas gates `requires_option_*`
@@ -16,29 +16,7 @@ export type SpeciesResourceOptionGate = {
   requiresOptionValue: string | null;
 };
 
-/** option_key do catálogo → choiceKind na ficha (espelha front class-action-economy). */
-const OPTION_KEY_TO_CHOICE_KIND: Record<string, string> = {
-  giantAncestryId: 'giant_ancestry',
-  constructionId: 'geppettin_construction',
-  dragonAncestryId: 'dragon_ancestry',
-  lineageId: 'elf_lineage',
-  gnomeLineageId: 'gnome_lineage',
-  infernalLegacyId: 'infernal_legacy',
-  serviceModelId: 'manikin_service_model',
-  armorPresetId: 'manikin_armor',
-  monstrousLineageId: 'scourgeborne_lineage',
-  madnessId: 'scourgeborne_madness',
-  bearfolkLineageId: 'bearfolk_lineage',
-  naturalAdaptationId: 'beastkin_adaptation',
-  giantkinAncestryId: 'giantkin_ancestry',
-  trollkinAncestryId: 'trollkin_ancestry',
-  seasonId: 'mandrake_season',
-  dwarfCultureId: DWARF_CULTURE_KIND,
-};
-
-export function choiceKindForOptionKey(optionKey: string): string {
-  return OPTION_KEY_TO_CHOICE_KIND[optionKey] ?? optionKey;
-}
+export { choiceKindForOptionKey };
 
 function choiceSlugForOptionKey(
   optionKey: string,

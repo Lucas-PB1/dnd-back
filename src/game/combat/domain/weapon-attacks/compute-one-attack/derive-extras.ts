@@ -4,31 +4,31 @@ import {
   ignoresBlackPowderPistolReload,
   isBlackPowderPistolPiece,
   syndicateQuickStrikeDice,
-} from '../../feat/grim-hollow-cap4-weapon-rules';
+} from "../../feat/grim-hollow-cap4-weapon-rules";
 import {
   brutalStrikeDice as resolveBrutalStrikeDice,
   divineFuryExtraDice,
   hasDivineFury,
-} from '../../barbarian/rage';
-import { resolveAttackCritThreshold } from '../../gunslinger/firearm';
-import { isPsychicBladeItemSlug } from '../../rogue/psychic-blades';
+} from "../../barbarian/rage";
+import { resolveAttackCritThreshold } from "../../gunslinger/firearm";
+import { isPsychicBladeItemSlug } from "../../rogue/psychic-blades";
+import { ownedStyleOrFeatSlugs, styleOrFeatHasKind } from "@game/effects";
 import {
   hasProperty,
-  hasStyleOrFeat,
   qualifiesForGreatWeaponFighting,
   usesVersatileTwoHanded,
-} from '../weapon-attack-predicates';
+} from "../weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
   WeaponAttackRole,
-} from '../weapon-attack.types';
-import type { AbilityPick } from '../attack-bonuses';
-import { collectAttackNoteExtras } from '../attack-notes';
+} from "../weapon-attack.types";
+import type { AbilityPick } from "../attack-bonuses";
+import { collectAttackNoteExtras } from "../attack-notes";
 
 export function deriveAttackExtras(input: {
   piece: EquippedWeaponPiece;
-  mode: 'melee' | 'ranged';
+  mode: "melee" | "ranged";
   context: WeaponAttackContext;
   equippedWeapons: EquippedWeaponPiece[];
   role: WeaponAttackRole;
@@ -41,7 +41,7 @@ export function deriveAttackExtras(input: {
     equippedWeapons,
     Boolean(context.hasShield),
   );
-  const isFirearm = hasProperty(piece, 'firearm');
+  const isFirearm = hasProperty(piece, "firearm");
   const ignoresReload = ignoresBlackPowderPistolReload(
     piece,
     context.featSlugs,
@@ -50,8 +50,12 @@ export function deriveAttackExtras(input: {
     ? syndicateQuickStrikeDice(context.level ?? 1)
     : null;
   const greatWeaponFighting =
-    hasStyleOrFeat(context, 'great-weapon-fighting') &&
-    qualifiesForGreatWeaponFighting(piece, mode, versatile2h);
+    styleOrFeatHasKind({
+      effects: context.featEffects,
+      ownedSlugs: ownedStyleOrFeatSlugs(context),
+      ownerSlug: "great-weapon-fighting",
+      kind: "damage_die_floor",
+    }) && qualifiesForGreatWeaponFighting(piece, mode, versatile2h);
 
   const masterySlug = piece.masterySlug ?? null;
   const masteryName = piece.masteryName ?? null;
@@ -61,12 +65,12 @@ export function deriveAttackExtras(input: {
       isPsychicBladeItemSlug(piece.itemSlug));
   const nickUsesAttackAction =
     masteryActive &&
-    masterySlug === 'nick' &&
-    (role === 'light_bonus' || role === 'dual_bonus');
+    masterySlug === "nick" &&
+    (role === "light_bonus" || role === "dual_bonus");
   const grazeOnMissDamage =
-    masteryActive && masterySlug === 'graze' ? ability.mod : null;
+    masteryActive && masterySlug === "graze" ? ability.mod : null;
   const attackDisadvantage =
-    context.sizeCategory === 'small' && hasProperty(piece, 'heavy');
+    context.sizeCategory === "small" && hasProperty(piece, "heavy");
   const critThreshold = resolveAttackCritThreshold({
     classSlug: context.classSlug,
     subclassSlug: context.subclassSlug,
@@ -74,7 +78,7 @@ export function deriveAttackExtras(input: {
     mode,
   });
   const brutalDice =
-    mode === 'melee' && ability.slug === 'forca'
+    mode === "melee" && ability.slug === "forca"
       ? resolveBrutalStrikeDice(context.level ?? 0)
       : null;
   const divineFuryDice = hasDivineFury({
@@ -105,7 +109,7 @@ export function deriveAttackExtras(input: {
       isFirearm,
       ignoresReload,
       deadeyeNoLongRangePenalty:
-        mode === 'ranged' &&
+        mode === "ranged" &&
         hasBlackPowderPistolExpert(context.featSlugs) &&
         isBlackPowderPistolPiece(piece),
       greatWeaponFighting,

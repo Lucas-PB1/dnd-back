@@ -4,6 +4,7 @@ import {
   CharacterSheetContext,
 } from '../../character-sheet.types';
 import { classLanguageGrant } from '../class-options/class-language-grant';
+import { SPECIES_LANGUAGE_CHOICE_COUNT } from '../../origin/species-language';
 import type { ValidateSheetInputDeps } from './types';
 import { validateClassOptionsInput } from './validate-class-options-input';
 
@@ -90,10 +91,19 @@ export async function validateSheetInput(
   if (input.languageSlugs !== undefined) {
     await deps.equipmentValidator.validateLanguageSlugs(input.languageSlugs);
     if (ctx.backgroundSlug) {
+      const classExtra = classLanguageGrant(ctx.classSlug, ctx.level);
+      const speciesChoice = ctx.speciesSlug
+        ? SPECIES_LANGUAGE_CHOICE_COUNT
+        : 0;
       await deps.backgroundValidator.validateBackgroundLanguages(
         ctx.backgroundSlug,
         input.languageSlugs,
-        { extra: classLanguageGrant(ctx.classSlug, ctx.level) },
+        {
+          extra: {
+            grantedSlugs: classExtra.grantedSlugs,
+            choiceCount: (classExtra.choiceCount ?? 0) + speciesChoice,
+          },
+        },
       );
     }
   }

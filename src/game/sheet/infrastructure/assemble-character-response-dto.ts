@@ -77,6 +77,8 @@ export function assembleCharacterResponseDto(input: {
     /** SSOT: `resolveCharacterCombatSlice` → `ResolveEquippedArmorClass`. */
     armorClass: combat.armorClass,
     armorClassNote: combat.armorClassNote,
+    featAcBonus: combat.featAcBonus,
+    featEffectFlags: combat.featEffectFlags,
     weaponAttacks: combat.weaponAttacks,
     equipmentWarnings: combat.equipmentWarnings,
     cannotCastSpellsInArmor: combat.cannotCastSpellsInArmor,

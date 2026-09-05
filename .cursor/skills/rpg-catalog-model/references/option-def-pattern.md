@@ -17,7 +17,7 @@ Tabela unificada `phb_option_def` / `phb_option_value` com `scope` + `owner_id`.
 
 ## ENUM
 
-`rpg.option_value_type` — compartilhado (`database/migrations/010_types/002_types.sql`).
+`rpg.option_value_type` — compartilhado (`database/baseline/001_full_schema.sql`).
 
 ## Doc canônica
 

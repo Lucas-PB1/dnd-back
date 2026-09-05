@@ -16,6 +16,7 @@ BC Game (modular monolith)
 ├── sheet/            # ficha PHB (CRUD + escolhas persistidas) — CharacterSheetModule
 ├── combat/           # CA / ataques / compliance — CombatModule
 ├── spellcasting/     # grants + CD/ataque mágico — SpellcastingModule
+├── effects/          # motor de efeitos — porta pública `@game/effects` (ver effect-engine-read-path.md)
 ├── build/            # criação: roll abilities
 ├── progression/      # level-up, preview
 ├── inventory/        # mochila + equipado

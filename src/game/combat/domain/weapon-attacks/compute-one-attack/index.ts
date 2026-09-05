@@ -1,27 +1,27 @@
-import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
 import {
   MONK_UNARMED_ITEM_SLUG,
   isMonkClass,
   isMonkWeaponForAttack,
-} from '../../monk/features';
-import { isPsychicBladeItemSlug } from '../../rogue/psychic-blades';
-import { isProficient, pickAbility } from '../weapon-attack-predicates';
+} from "../../monk/features";
+import { isPsychicBladeItemSlug } from "../../rogue/psychic-blades";
+import { isProficient, pickAbility } from "../weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttack,
   WeaponAttackContext,
   WeaponAttackRole,
-} from '../weapon-attack.types';
-import { resolveAttackBonuses, resolveDamageBonuses } from '../attack-bonuses';
-import { assembleWeaponAttack } from '../assemble-attack';
-import { resolveDamageDice } from './damage-dice';
-import { deriveAttackExtras } from './derive-extras';
-import { resolveMonkAbility } from './monk-ability';
+} from "../weapon-attack.types";
+import { resolveAttackBonuses, resolveDamageBonuses } from "../attack-bonuses";
+import { assembleWeaponAttack } from "../assemble-attack";
+import { resolveDamageDice } from "./damage-dice";
+import { deriveAttackExtras } from "./derive-extras";
+import { resolveMonkAbility } from "./monk-ability";
 
 export function computeOneAttack(
   scores: AbilityScores,
   piece: EquippedWeaponPiece,
-  mode: 'melee' | 'ranged',
+  mode: "melee" | "ranged",
   context: WeaponAttackContext,
   equippedWeapons: EquippedWeaponPiece[],
   role: WeaponAttackRole,

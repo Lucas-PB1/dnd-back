@@ -83,7 +83,6 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
 
     const grantedSpellCatalog = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
-        speciesCatalog: [],
         featFixedSpells: [],
       }),
     };
@@ -102,6 +101,7 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
       dataSource: asDep({ query: jest.fn() }),
       sheetRepository: asDep(sheetRepository),
       grantedSpellCatalog: asDep(grantedSpellCatalog),
+      effectCatalog: asDep({ load: jest.fn().mockResolvedValue([]) }),
       spies: { sheetRepository },
     };
   }

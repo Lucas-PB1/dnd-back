@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 import { isWarlockClass } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { LoadEffectCatalog } from '@game/effects';
+import { loadGatedSpeciesEffects } from '@game/effects';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   annotateCharacterSpellSources,
@@ -27,14 +29,31 @@ export async function buildGrantedSpellCastOptions(
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
   dataSource: DataSource,
+  effectCatalog?: LoadEffectCatalog,
 ): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
   const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
-  const { speciesCatalog, featFixedSpells } =
+  const featSlugs = sheet.characterFeats.map((f) => f.featSlug);
+  const { featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: character.speciesSlug ? [character.speciesSlug] : [],
-      featSlugs: sheet.characterFeats.map((f) => f.featSlug),
+      featSlugs,
       classSlug: character.classSlug,
     });
+  const featEffects = effectCatalog
+    ? await effectCatalog.load({
+        ownerKind: 'feat',
+        ownerSlugs: featSlugs,
+        kinds: ['grant_spell', 'free_cast'],
+      })
+    : [];
+  const speciesEffects = effectCatalog
+    ? await loadGatedSpeciesEffects({
+        effectCatalog,
+        speciesSlug: character.speciesSlug,
+        speciesChoices: sheet.speciesChoices,
+        kinds: ['grant_spell', 'grant_spell_by_level', 'free_cast'],
+      })
+    : undefined;
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,
     sheet.characterFeats,
@@ -45,7 +64,7 @@ export async function buildGrantedSpellCastOptions(
         character.speciesSlug,
         sheet.speciesChoices,
         character.level,
-        speciesCatalog,
+        speciesEffects,
       )
     : new Set<string>();
   const annotated = annotateCharacterSpellSources(sheet.characterSpells, {
@@ -64,7 +83,8 @@ export async function buildGrantedSpellCastOptions(
         featFixedSpells,
         speciesSlug: character.speciesSlug ?? undefined,
         speciesChoices: sheet.speciesChoices,
-        speciesCatalog,
+        featEffects,
+        speciesEffects,
       });
       const feat =
         spell.source === 'feat'
@@ -74,11 +94,17 @@ export async function buildGrantedSpellCastOptions(
               featFixedSpells,
             )
           : null;
+      const optionKey =
+        sheet.featOptions.find((o) => o.valueId === spell.spellSlug)
+          ?.optionKey ?? null;
       const maxUses = freeCastMaxUses({
         economy: castEconomy,
         spellSlug: spell.spellSlug,
         featSlug: feat?.featSlug,
+        optionKey,
         proficiencyBonus,
+        featEffects,
+        speciesEffects,
       });
       return {
         spellSlug: spell.spellSlug,

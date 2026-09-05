@@ -1,62 +1,60 @@
-import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-import { abilityModifier } from '@game/shared/domain/ability-scores';
-import { hasStyleOrFeat } from '../feat/has-style-or-feat';
-import { isBlackPowderPistolPiece } from '../feat/grim-hollow-cap4-weapon-rules';
+import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
+import { abilityModifier } from "@game/shared/domain/ability-scores";
+import { hasStyleOrFeat } from "../feat/has-style-or-feat";
+import { isBlackPowderPistolPiece } from "../feat/grim-hollow-cap4-weapon-rules";
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
-} from './weapon-attack.types';
+} from "./weapon-attack.types";
 
-const SIMPLE_PROFICIENCY = 'armas-simples';
-const MARTIAL_PROFICIENCY = 'armas-marciais';
-const ADVANCED_PROFICIENCY = 'armas-avancadas';
-const MARTIAL_LIGHT_PROFICIENCY = 'armas-marciais-leves';
-/** Martial Ranged only (ex.: Gunslinger) — martial + ammunition. */
-const MARTIAL_RANGED_PROFICIENCY = 'armas-marciais-a-distancia';
+const SIMPLE_PROFICIENCY = "armas-simples";
+const MARTIAL_PROFICIENCY = "armas-marciais";
+const ADVANCED_PROFICIENCY = "armas-avancadas";
+const MARTIAL_LIGHT_PROFICIENCY = "armas-marciais-leves";
+const MARTIAL_RANGED_PROFICIENCY = "armas-marciais-a-distancia";
 
-/** Proficiências específicas (seeds S031) → item slug. */
 const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
-  adagas: 'dagger',
-  dardos: 'dart',
-  fundas: 'sling',
-  bordoes: 'quarterstaff',
-  'bestas-leves': 'light-crossbow',
-  'bestas-de-mao': 'hand-crossbow',
-  'espada-longa': 'longsword',
-  rapieira: 'rapier',
-  'espada-curta': 'shortsword',
-  machadinhas: 'handaxe',
+  adagas: "dagger",
+  dardos: "dart",
+  fundas: "sling",
+  bordoes: "quarterstaff",
+  "bestas-leves": "light-crossbow",
+  "bestas-de-mao": "hand-crossbow",
+  "espada-longa": "longsword",
+  rapieira: "rapier",
+  "espada-curta": "shortsword",
+  machadinhas: "handaxe",
 };
 
-export { hasStyleOrFeat } from '../feat/has-style-or-feat';
+export { hasStyleOrFeat } from "../feat/has-style-or-feat";
 
 export function hasProperty(piece: EquippedWeaponPiece, slug: string): boolean {
   return piece.propertySlugs.includes(slug);
 }
 
 export function isAmmunitionWeapon(piece: EquippedWeaponPiece): boolean {
-  return hasProperty(piece, 'ammunition');
+  return hasProperty(piece, "ammunition");
 }
 
 export function isThrownWeapon(piece: EquippedWeaponPiece): boolean {
-  return hasProperty(piece, 'thrown');
+  return hasProperty(piece, "thrown");
 }
 
 export function isTwoHanded(piece: EquippedWeaponPiece): boolean {
-  return hasProperty(piece, 'two-handed');
+  return hasProperty(piece, "two-handed");
 }
 
 export function qualifiesForGreatWeaponFighting(
   piece: EquippedWeaponPiece,
-  mode: 'melee' | 'ranged',
+  mode: "melee" | "ranged",
   versatile2h: boolean,
 ): boolean {
-  if (mode !== 'melee') return false;
+  if (mode !== "melee") return false;
   return isTwoHanded(piece) || versatile2h;
 }
 
 export function isLight(piece: EquippedWeaponPiece): boolean {
-  return hasProperty(piece, 'light');
+  return hasProperty(piece, "light");
 }
 
 export function isMeleeCapable(piece: EquippedWeaponPiece): boolean {
@@ -68,10 +66,10 @@ export function isProficient(
   context: WeaponAttackContext,
 ): boolean {
   const proficiencySlugs = [...context.weaponProficiencySlugs];
-  if (hasStyleOrFeat(context, 'martial-weapon-training')) {
+  if (hasStyleOrFeat(context, "martial-weapon-training")) {
     proficiencySlugs.push(MARTIAL_PROFICIENCY);
   }
-  if (hasStyleOrFeat(context, 'advanced-weapon-proficiency')) {
+  if (hasStyleOrFeat(context, "advanced-weapon-proficiency")) {
     proficiencySlugs.push(ADVANCED_PROFICIENCY);
   }
 
@@ -80,17 +78,17 @@ export function isProficient(
     if (specific && specific === piece.itemSlug) return true;
     if (
       slug === MARTIAL_LIGHT_PROFICIENCY &&
-      piece.category === 'martial' &&
+      piece.category === "martial" &&
       isLight(piece)
     ) {
       return true;
     }
   }
 
-  if (piece.category === 'simple') {
+  if (piece.category === "simple") {
     return proficiencySlugs.includes(SIMPLE_PROFICIENCY);
   }
-  if (piece.category === 'martial') {
+  if (piece.category === "martial") {
     if (proficiencySlugs.includes(MARTIAL_PROFICIENCY)) return true;
     if (
       proficiencySlugs.includes(MARTIAL_RANGED_PROFICIENCY) &&
@@ -99,10 +97,10 @@ export function isProficient(
       return true;
     }
   }
-  if (piece.category === 'advanced') {
+  if (piece.category === "advanced") {
     if (proficiencySlugs.includes(ADVANCED_PROFICIENCY)) return true;
     if (
-      hasStyleOrFeat(context, 'blackpowder-pistol-expert') &&
+      hasStyleOrFeat(context, "blackpowder-pistol-expert") &&
       isBlackPowderPistolPiece(piece)
     ) {
       return true;
@@ -114,23 +112,23 @@ export function isProficient(
 export function pickAbility(
   scores: AbilityScores,
   piece: EquippedWeaponPiece,
-  mode: 'melee' | 'ranged',
-): { slug: 'forca' | 'destreza'; mod: number } {
+  mode: "melee" | "ranged",
+): { slug: "forca" | "destreza"; mod: number } {
   const str = abilityModifier(scores.forca);
   const dex = abilityModifier(scores.destreza);
 
-  if (mode === 'ranged' && !hasProperty(piece, 'finesse')) {
-    return { slug: 'destreza', mod: dex };
+  if (mode === "ranged" && !hasProperty(piece, "finesse")) {
+    return { slug: "destreza", mod: dex };
   }
-  if (hasProperty(piece, 'finesse')) {
+  if (hasProperty(piece, "finesse")) {
     return str >= dex
-      ? { slug: 'forca', mod: str }
-      : { slug: 'destreza', mod: dex };
+      ? { slug: "forca", mod: str }
+      : { slug: "destreza", mod: dex };
   }
-  if (mode === 'ranged') {
-    return { slug: 'destreza', mod: dex };
+  if (mode === "ranged") {
+    return { slug: "destreza", mod: dex };
   }
-  return { slug: 'forca', mod: str };
+  return { slug: "forca", mod: str };
 }
 
 export function formatSigned(value: number): string {
@@ -139,10 +137,10 @@ export function formatSigned(value: number): string {
 
 export function qualifiesForDueling(
   piece: EquippedWeaponPiece,
-  mode: 'melee' | 'ranged',
+  mode: "melee" | "ranged",
   equippedWeapons: EquippedWeaponPiece[],
 ): boolean {
-  if (mode !== 'melee') return false;
+  if (mode !== "melee") return false;
   if (isTwoHanded(piece)) return false;
   if (isAmmunitionWeapon(piece)) return false;
   return equippedWeapons.length === 1;
@@ -150,10 +148,10 @@ export function qualifiesForDueling(
 
 export function buildModes(
   piece: EquippedWeaponPiece,
-): Array<'melee' | 'ranged'> {
-  if (isAmmunitionWeapon(piece)) return ['ranged'];
-  if (isThrownWeapon(piece)) return ['melee', 'ranged'];
-  return ['melee'];
+): Array<"melee" | "ranged"> {
+  if (isAmmunitionWeapon(piece)) return ["ranged"];
+  if (isThrownWeapon(piece)) return ["melee", "ranged"];
+  return ["melee"];
 }
 
 export function usesVersatileTwoHanded(
@@ -161,15 +159,15 @@ export function usesVersatileTwoHanded(
   equippedWeapons: EquippedWeaponPiece[],
   hasShield: boolean,
 ): boolean {
-  if (!hasProperty(piece, 'versatile')) return false;
-  if (piece.equipmentSlot !== 'main_hand') return false;
+  if (!hasProperty(piece, "versatile")) return false;
+  if (piece.equipmentSlot !== "main_hand") return false;
   if (hasShield) return false;
-  if (equippedWeapons.some((w) => w.equipmentSlot === 'off_hand')) return false;
+  if (equippedWeapons.some((w) => w.equipmentSlot === "off_hand")) return false;
   return Boolean(piece.versatileDamage);
 }
 
-export function abilityShortLabel(slug: 'forca' | 'destreza'): string {
-  return slug === 'forca' ? 'FOR' : 'DES';
+export function abilityShortLabel(slug: "forca" | "destreza"): string {
+  return slug === "forca" ? "FOR" : "DES";
 }
 
 export function formatDamageNote(
@@ -178,7 +176,7 @@ export function formatDamageNote(
   damageParts: string[],
 ): string {
   if (damageParts.length > 0) {
-    return `${damageDice} ${formatSigned(damageBonus)} (${damageParts.join(' + ')})`;
+    return `${damageDice} ${formatSigned(damageBonus)} (${damageParts.join(" + ")})`;
   }
-  return `${damageDice}${damageBonus !== 0 ? ` ${formatSigned(damageBonus)}` : ''}`;
+  return `${damageDice}${damageBonus !== 0 ? ` ${formatSigned(damageBonus)}` : ""}`;
 }

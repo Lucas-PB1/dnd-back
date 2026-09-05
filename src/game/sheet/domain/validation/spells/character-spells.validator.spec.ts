@@ -50,7 +50,6 @@ describe('CharacterSpellsValidator', () => {
     };
     grantedSpellCatalog = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
-        speciesCatalog: [],
         featFixedSpells: [],
       }),
     };
@@ -63,6 +62,7 @@ describe('CharacterSpellsValidator', () => {
       {} as Repository<VPhbSubclassPreparedSpell>,
       grantedSpellCatalog as unknown as LoadGrantedSpellCatalog,
       asDep(resolveSubclassOptionGrants),
+      asDep({ load: jest.fn().mockResolvedValue([]) }),
     );
   });
 

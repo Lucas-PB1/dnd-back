@@ -1,4 +1,18 @@
 import type { DataSource } from 'typeorm';
+import type { CatalogEffect } from '@game/effects';
+import {
+  acBonusFromEffects,
+  hasDamageDieExplode,
+  hasDamageDieFlip,
+  hasDamageDieFloor,
+  hasImproveCritical,
+  hasInspirationRefundOnFail,
+  hasSlotElevate,
+  hasSlotReduce,
+  hasVersatileOneHandFullDamage,
+  hasWieldTwoHandedOneHand,
+  speedBonusMetersFromEffects,
+} from '@game/effects';
 import { aggregateClassCombatContributions } from '../../domain/aggregate-class-combat';
 import { featCombatNotes } from '../../domain/feat/combat-notes';
 import { itemCombatNotes } from '../../domain/item/combat-notes';
@@ -39,6 +53,7 @@ export async function assembleMappedCombatSlice(input: {
   classSlug: string;
   subclassSlug: string | null;
   level: number;
+  proficiencyBonus: number;
   speciesSlug?: string | null;
   heritageChoices?: readonly { choiceKind: string; choiceSlug: string }[];
   speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
@@ -48,6 +63,8 @@ export async function assembleMappedCombatSlice(input: {
     choices?: readonly { choiceKind: string; choiceSlug: string }[];
   } | null;
   featSlugs: string[];
+  featEffects?: readonly CatalogEffect[];
+  speciesEffects?: readonly CatalogEffect[];
   fightingStyleSlugs: string[];
   combatScores: AbilityScores;
   dataSource: DataSource;
@@ -61,6 +78,7 @@ export async function assembleMappedCombatSlice(input: {
   const speciesNotes = speciesCombatNotes({
     speciesSlug: input.speciesSlug,
     speciesChoices: input.speciesChoices,
+    speciesEffects: input.speciesEffects,
   });
   const heritageNotes = heritageCombatNotes({
     heritageChoices: input.heritageChoices,
@@ -77,6 +95,7 @@ export async function assembleMappedCombatSlice(input: {
   );
   const featNotes = featCombatNotes({
     featSlugs: [...input.featSlugs, ...input.fightingStyleSlugs],
+    featEffects: input.featEffects,
   });
   const propertiesBySlug = new Map(
     input.bundle.items.map(
@@ -88,15 +107,28 @@ export async function assembleMappedCombatSlice(input: {
     propertiesBySlug,
   });
 
+  const effects = input.featEffects ?? [];
+  const featAcBonus = acBonusFromEffects(
+    effects,
+    input.featSlugs,
+    input.proficiencyBonus,
+  );
+
   return {
     armorClass: input.armor.armorClass,
-    armorClassNote: input.armor.armorClassNote,
+    armorClassNote:
+      featAcBonus > 0
+        ? `${input.armor.armorClassNote}; talentos: ate +${featAcBonus} CA (toggle/gate na UI)`
+        : input.armor.armorClassNote,
+    featAcBonus,
     weaponAttacks: input.weaponAttacks,
     equipmentWarnings: input.compliance.warnings,
     cannotCastSpellsInArmor: input.compliance.cannotCastSpells,
     speedPenaltyMeters: input.compliance.speedPenaltyMeters,
     itemSpeedBonusMeters:
-      input.itemEffects.speedBonusMeters + classCombat.speedBonusMeters,
+      input.itemEffects.speedBonusMeters +
+      classCombat.speedBonusMeters +
+      speedBonusMetersFromEffects(effects, input.featSlugs),
     itemHpBonus: input.itemEffects.hpBonus,
     heritageHpBonus,
     classCombatNotes: [
@@ -113,5 +145,25 @@ export async function assembleMappedCombatSlice(input: {
       level: input.level,
       charismaModifier: abilityModifier(input.combatScores.carisma),
     }),
+    featEffectFlags: {
+      inspirationRefundOnFail: hasInspirationRefundOnFail(
+        effects,
+        input.featSlugs,
+      ),
+      damageDieFloor: hasDamageDieFloor(effects, input.featSlugs),
+      damageDieFlip: hasDamageDieFlip(effects, input.featSlugs),
+      damageDieExplode: hasDamageDieExplode(effects, input.featSlugs),
+      improveCritical: hasImproveCritical(effects, input.featSlugs),
+      slotElevate: hasSlotElevate(effects, input.featSlugs),
+      slotReduce: hasSlotReduce(effects, input.featSlugs),
+      wieldTwoHandedOneHand: hasWieldTwoHandedOneHand(
+        effects,
+        input.featSlugs,
+      ),
+      versatileOneHandFullDamage: hasVersatileOneHandFullDamage(
+        effects,
+        input.featSlugs,
+      ),
+    },
   };
 }

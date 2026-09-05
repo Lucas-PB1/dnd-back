@@ -9,6 +9,10 @@ import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { resolveEldritchGrantedSpellSlugs } from '../eldritch-granted-spells';
+import {
+  loadGatedSpeciesEffects,
+  type LoadEffectCatalog,
+} from '@game/effects';
 
 export async function mergeUpdateCharacterSpells(input: {
   dto: UpdateCharacterDto;
@@ -32,6 +36,7 @@ export async function mergeUpdateCharacterSpells(input: {
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells;
   dataSource: DataSource;
+  effectCatalog?: LoadEffectCatalog;
 }): Promise<void> {
   const {
     dto,
@@ -45,6 +50,7 @@ export async function mergeUpdateCharacterSpells(input: {
     grantedSpellCatalog,
     resolveSubclassOptionGrants,
     dataSource,
+    effectCatalog,
   } = input;
 
   const effectiveSubclassOptions =
@@ -57,7 +63,7 @@ export async function mergeUpdateCharacterSpells(input: {
     ...effectiveCharacterFeats.map((f) => f.featSlug),
     ...sheetSnapshot.characterFeats.map((f) => f.featSlug),
   ];
-  const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
+  const { featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [effective.speciesSlug, previous.speciesSlug].filter(
         (slug): slug is string => Boolean(slug),
@@ -105,6 +111,23 @@ export async function mergeUpdateCharacterSpells(input: {
     previousLoreGranted,
   );
 
+  const [speciesEffects, previousSpeciesEffects] = effectCatalog
+    ? await Promise.all([
+        loadGatedSpeciesEffects({
+          effectCatalog,
+          speciesSlug: effective.speciesSlug,
+          speciesChoices: effectiveSpeciesChoices,
+          kinds: ['grant_spell', 'grant_spell_by_level'],
+        }),
+        loadGatedSpeciesEffects({
+          effectCatalog,
+          speciesSlug: previous.speciesSlug,
+          speciesChoices: sheetSnapshot.speciesChoices,
+          kinds: ['grant_spell', 'grant_spell_by_level'],
+        }),
+      ])
+    : [[], []];
+
   sheetInput.characterSpells = mergeGrantedSpells(
     dto.characterSpells ?? sheetSnapshot.characterSpells,
     {
@@ -118,7 +141,8 @@ export async function mergeUpdateCharacterSpells(input: {
       previousSpeciesSlug: previous.speciesSlug ?? undefined,
       previousSpeciesChoices: sheetSnapshot.speciesChoices,
       previousLevel: previous.level,
-      speciesCatalog,
+      speciesEffects,
+      previousSpeciesEffects,
       featFixedSpells,
       subclassGrantedSpells,
       previousSubclassGrantedSpells,

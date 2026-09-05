@@ -4,25 +4,16 @@ import {
 } from '@game/combat/domain/__fixtures__/mechanical-catalog';
 import type { RollDamageDto } from '@game/dice/dto/character-roll.dto';
 import { executeRollDamage } from '../roll-damage';
-import { asRollDep } from './mocks';
+import { asRollDep, mockEffectCatalog, mockResourceSpender } from './mocks';
 
 export type RollDamageTestContext = {
   base: Omit<Parameters<typeof executeRollDamage>[0], 'dto'>;
-  resourceSpender: {
-    spendClassResource: jest.Mock;
-    consumeSpellSlotLevel: jest.Mock;
-  };
+  resourceSpender: ReturnType<typeof mockResourceSpender>;
   rollDamage: (dto: RollDamageDto) => ReturnType<typeof executeRollDamage>;
 };
 
 export function createRollDamageTestContext(): RollDamageTestContext {
-  const resourceSpender = {
-    spendClassResource: jest.fn().mockResolvedValue(undefined),
-    consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
-    setResourcesUsedEntry: jest.fn(),
-    clearResourcesUsedEntry: jest.fn(),
-  };
+  const resourceSpender = mockResourceSpender();
   const mechanicalCatalog = {
     load: async () => ({
       cunningStrikeEffects: FIXTURE_CUNNING_STRIKE_EFFECTS,
@@ -47,6 +38,7 @@ export function createRollDamageTestContext(): RollDamageTestContext {
     dataSource: asRollDep({}),
     resourceSpender,
     mechanicalCatalog: asRollDep(mechanicalCatalog),
+    effectCatalog: mockEffectCatalog(),
     userId: 'u1',
     characterId: 'c1',
   } as Omit<Parameters<typeof executeRollDamage>[0], 'dto'>;

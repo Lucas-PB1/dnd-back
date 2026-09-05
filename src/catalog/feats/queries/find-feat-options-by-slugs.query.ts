@@ -69,6 +69,7 @@ export class FindFeatOptionsBySlugsQuery {
         spellMaxLevel: def.spellMaxLevel,
         spellSchoolSlugs: def.spellSchoolSlugs,
         spellRitualOnly: def.spellRitualOnly,
+        unlockLevel: def.unlockLevel,
         values: ['catalog', 'ability', 'proficiency'].includes(def.valueType)
           ? (valuesByOwnerKey.get(`${def.ownerId}::${def.optionKey}`) ?? [])
           : [],

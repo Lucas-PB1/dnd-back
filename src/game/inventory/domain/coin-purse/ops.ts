@@ -54,6 +54,18 @@ export function halfCoinPurseValue(purse: CoinPurse): CoinPurse {
   return copperToPurse(Math.floor(purseToCopper(purse) / 2));
 }
 
+/** Desconto percentual na loja — arredonda para baixo em cobre. */
+export function applyPurchaseDiscount(
+  purse: CoinPurse,
+  percentOff: number,
+): CoinPurse {
+  if (!Number.isInteger(percentOff) || percentOff < 1 || percentOff > 99) {
+    throw new Error('percentOff must be an integer 1–99');
+  }
+  const kept = Math.floor((purseToCopper(purse) * (100 - percentOff)) / 100);
+  return copperToPurse(kept);
+}
+
 export function assertCanDebitCoins(
   balance: CoinPurse,
   cost: CoinPurse,

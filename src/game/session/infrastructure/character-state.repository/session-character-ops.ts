@@ -5,6 +5,7 @@ import type { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import type { LoadEffectCatalog } from '@game/effects';
 import type { CharacterStateResponseDto } from '../../dto/core/character-state-response.dto';
 import { buildCharacterStateResponse } from '../character-state/core/build-response';
 import { applyStarryFormState } from '../character-state/druid/starry-form-mutations';
@@ -27,6 +28,7 @@ type BuildResponsePorts = {
   dataSource: DataSource;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   findOrCreate: CharacterStateFindOrCreate;
 };
 
@@ -47,6 +49,7 @@ export async function buildResponseOp(
     dataSource: ports.dataSource,
     sheetRepository: ports.sheetRepository,
     grantedSpellCatalog: ports.grantedSpellCatalog,
+    effectCatalog: ports.effectCatalog,
   });
 }
 
@@ -67,6 +70,24 @@ export async function setResourcesUsedEntry(
 ): Promise<void> {
   const state = await ports.findOrCreate(character.id, character.level);
   state.resourcesUsed = { ...(state.resourcesUsed ?? {}), [key]: value };
+  await ports.stateRepo.save(state);
+}
+
+export async function getInspiration(
+  ports: Pick<SessionCharacterPorts, 'findOrCreate'>,
+  character: PlayerCharacter,
+): Promise<boolean> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  return Boolean(state.inspiration);
+}
+
+export async function setInspiration(
+  ports: Pick<SessionCharacterPorts, 'stateRepo' | 'findOrCreate'>,
+  character: PlayerCharacter,
+  value: boolean,
+): Promise<void> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  state.inspiration = value;
   await ports.stateRepo.save(state);
 }
 

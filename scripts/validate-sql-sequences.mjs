@@ -1,6 +1,7 @@
 /**
  * Valida numeração sequencial sem lacunas/duplicatas em migrations/seeds.
  * Aceita início em 000 (ex.: S000_phb_edition).
+ * Sidecars `NNNb_` (ex.: S010b_, J042b_) são permitidos e fora da sequência.
  * Uso: node scripts/validate-sql-sequences.mjs
  */
 import fs from 'fs';
@@ -17,7 +18,7 @@ function fail(msg) {
 
 /**
  * @param {string} dir relative to repo root
- * @param {string} prefix T|V|P|S|G|C
+ * @param {string} prefix T|V|P|S|G|C|E|…
  * @param {{ allowZero?: boolean }} [opts]
  */
 function checkSeq(dir, prefix, opts = {}) {
@@ -27,10 +28,20 @@ function checkSeq(dir, prefix, opts = {}) {
     return;
   }
 
-  const files = fs
+  const allSql = fs
     .readdirSync(abs)
     .filter((n) => n.endsWith('.sql') && n.startsWith(prefix))
     .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+  const sidecars = [];
+  const files = [];
+  for (const name of allSql) {
+    if (new RegExp(`^${prefix}\\d{3}[a-z]_`).test(name)) {
+      sidecars.push(name);
+      continue;
+    }
+    files.push(name);
+  }
 
   const nums = [];
   for (const name of files) {
@@ -39,13 +50,10 @@ function checkSeq(dir, prefix, opts = {}) {
       fail(`${dir}/${name}: bad name pattern (want ${prefix}NNN_…)`);
       continue;
     }
-    if (/^\d{3}[a-z]_/.test(name.slice(prefix.length))) {
-      fail(`${dir}/${name}: suffix letter in number (use pure sequential)`);
-    }
     nums.push(Number(m[1]));
   }
 
-  if (nums.length === 0) {
+  if (nums.length === 0 && sidecars.length === 0) {
     console.log(`OK ${dir}: 0 file(s)`);
     return;
   }
@@ -55,12 +63,17 @@ function checkSeq(dir, prefix, opts = {}) {
   for (const [n, c] of counts) {
     if (c > 1) {
       const dups = files.filter((f) =>
-        f.startsWith(`${prefix}${String(n).padStart(3, '0')}`),
+        f.startsWith(`${prefix}${String(n).padStart(3, '0')}_`),
       );
       fail(
         `${dir}: duplicate ${prefix}${String(n).padStart(3, '0')} → ${dups.join(', ')}`,
       );
     }
+  }
+
+  if (nums.length === 0) {
+    console.log(`OK ${dir}: 0 sequential + ${sidecars.length} sidecar(s)`);
+    return;
   }
 
   const sorted = [...new Set(nums)].sort((a, b) => a - b);
@@ -88,8 +101,11 @@ function checkSeq(dir, prefix, opts = {}) {
     );
   }
 
+  const sidecarNote = sidecars.length
+    ? ` + ${sidecars.length} sidecar(s)`
+    : '';
   console.log(
-    `OK ${dir}: ${files.length} file(s) (${prefix}${String(start).padStart(3, '0')}–${prefix}${String(end).padStart(3, '0')})`,
+    `OK ${dir}: ${files.length} file(s) (${prefix}${String(start).padStart(3, '0')}–${prefix}${String(end).padStart(3, '0')})${sidecarNote}`,
   );
 }
 
@@ -104,6 +120,7 @@ checkSeq('database/seeds/valdas-player-pack-2', 'P');
 checkSeq('database/seeds/combat', 'C');
 checkSeq('database/seeds/griffons-saddlebag', 'R');
 checkSeq('database/seeds/grim-hollow', 'J');
+checkSeq('database/seeds/effects', 'E');
 
 const stale = [
   'S014' + 'a_',

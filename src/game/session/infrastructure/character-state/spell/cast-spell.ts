@@ -8,6 +8,7 @@ import { PlayerCharacter } from '@game/shared/infrastructure/player-character.en
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   CastSpellDto,
 } from '@game/session/dto/core/session-commands.dto';
@@ -41,6 +42,7 @@ export async function applyCastSpell(input: {
   spellLookup: CharacterSpellLookup;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   dataSource: DataSource;
   buildResponse: BuildResponse;
 }): Promise<{
@@ -61,6 +63,7 @@ export async function applyCastSpell(input: {
     spellLookup,
     sheetRepository,
     grantedSpellCatalog,
+    effectCatalog,
     dataSource,
     buildResponse,
   } = input;
@@ -104,6 +107,7 @@ export async function applyCastSpell(input: {
     catalogLookup,
     sheetRepository,
     grantedSpellCatalog,
+    effectCatalog,
     classSlots,
     subclassSlots,
     spellLevel: spell.level,

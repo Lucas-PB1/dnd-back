@@ -29,6 +29,7 @@ import { LoadCharacterThreadBundleQuery } from '../../application/load-character
 import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { resolveAggregatedHeritageTraits } from '../../domain/heritage/resolve-aggregated-heritage-traits';
 import { resolveSheetMeta } from './resolve-sheet-meta';
+import { loadGatedSpeciesEffects, type LoadEffectCatalog } from '@game/effects';
 
 export type MapCharacterToDtoDeps = {
   dataSource: DataSource;
@@ -42,6 +43,7 @@ export type MapCharacterToDtoDeps = {
   heritageTraitRepo: Repository<PhbHeritageTrait>;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   loadCharacterThread: LoadCharacterThreadBundleQuery;
+  effectCatalog: LoadEffectCatalog;
 };
 
 export async function mapCharacterToDto(
@@ -75,6 +77,19 @@ export async function mapCharacterToDto(
     effectiveAbilityScores.constituicao,
     row.level,
   );
+  const featSlugs = loaded.characterFeats.map((feat) => feat.featSlug);
+  const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
+    loaded.subclassOptions,
+  );
+  const featEffects = await deps.effectCatalog.load({
+    ownerKind: 'feat',
+    ownerSlugs: [...new Set([...featSlugs, ...fightingStyleSlugs])],
+  });
+  const speciesEffects = await loadGatedSpeciesEffects({
+    effectCatalog: deps.effectCatalog,
+    speciesSlug: row.speciesSlug,
+    speciesChoices: loaded.speciesChoices,
+  });
   const derived = computeDerivedStats({
     abilityScores: effectiveAbilityScores,
     proficiencyBonus,
@@ -83,18 +98,15 @@ export async function mapCharacterToDto(
     speciesChoices: loaded.speciesChoices,
     featOptions: loaded.featOptions,
     characterFeats: loaded.characterFeats,
+    featEffects,
     classOptions: loaded.classOptions,
     subclassOptions: loaded.subclassOptions,
     classSlug: row.classSlug,
     level: row.level,
   });
-  const featSlugs = loaded.characterFeats.map((feat) => feat.featSlug);
   const sizeCategory = resolveSizeCategory(
     speciesSize ?? undefined,
     sizeCategoryFromChoices(loaded.speciesChoices),
-  );
-  const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
-    loaded.subclassOptions,
   );
 
   const [combat, spellcasting, thread, aggregatedHeritageTraits] =
@@ -113,6 +125,8 @@ export async function mapCharacterToDto(
           level: row.level,
           proficiencyBonus,
           featSlugs,
+          featEffects,
+          speciesEffects,
           fightingStyleSlugs,
           masteredWeaponSlugs: collectMasteredWeaponSlugs({
             classOptions: loaded.classOptions,
@@ -139,6 +153,7 @@ export async function mapCharacterToDto(
           proficiencyBonus,
           abilityModifiers: derived.abilityModifiers,
           featSlugs,
+          speciesEffects,
         }),
       ),
       sheetProfile('thread', () => deps.loadCharacterThread.execute(row.id)),

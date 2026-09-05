@@ -1,4 +1,4 @@
-Ôªøimport { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
@@ -16,12 +16,13 @@ export type ArmorClassResolveInput = {
   subclassSlug?: string | null;
   featSlugs?: string[];
   fightingStyleSlugs?: string[];
+  featEffects?: readonly import('@game/effects').CatalogEffect[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
-  /** Snapshot compartilhado ‚Äî evita novo `find` no combat slice. */
+  /** Snapshot compartilhado ó evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
   manikinArmorPresetSlug?: string | null;
-  /** Cat√°logo de armadura j√° carregado (combat bundle). */
+  /** Cat·logo de armadura j· carregado (combat bundle). */
   armorCatalogRows?: Array<{
     itemSlug: string;
     itemName: string;
@@ -85,6 +86,7 @@ export class ResolveEquippedArmorClass {
     return computeArmorClassFromEquipment(scores, pieces, {
       featSlugs: context.featSlugs,
       fightingStyleSlugs: context.fightingStyleSlugs,
+      featEffects: context.featEffects,
       unarmoredDefenses,
       itemAcBonus: context.itemAcBonus,
       itemAcBonusNames: context.itemAcBonusNames,

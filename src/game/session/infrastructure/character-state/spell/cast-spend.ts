@@ -7,6 +7,7 @@ import type { EldritchFreeCastResolution } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   CastSpellDto,
 } from '@game/session/dto/core/session-commands.dto';
@@ -59,6 +60,7 @@ export async function resolveCastSpend(input: {
   catalogLookup: CatalogLookupService;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   classSlots: Repository<VClassSpellSlots>;
   subclassSlots: Repository<VSubclassSpellSlots>;
   spellLevel: number;
@@ -97,6 +99,7 @@ export async function resolveCastSpend(input: {
     eldritchFreeCast: input.eldritchFreeCast,
     sheetRepository: input.sheetRepository,
     grantedSpellCatalog: input.grantedSpellCatalog,
+    effectCatalog: input.effectCatalog,
     classSlots: input.classSlots,
     subclassSlots: input.subclassSlots,
     spendFreeCastResource: () =>

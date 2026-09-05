@@ -1,10 +1,10 @@
+import type { CatalogEffect } from '@game/effects';
+
 /** Escolhas de espécie que concedem uma perícia (slug em choiceSlug). */
 export const SKILL_SPECIES_CHOICE_KINDS = new Set([
   'human_skill',
   'elf_keen_senses',
 ]);
-
-export const ALERT_FEAT_SLUG = 'alert';
 
 /** Feats que dão proficiência ou expertise na perícia escolhida. */
 export const PROF_OR_EXPERTISE_FEAT_OPTION_KEYS = new Set([
@@ -13,12 +13,6 @@ export const PROF_OR_EXPERTISE_FEAT_OPTION_KEYS = new Set([
   'wildSkill', // blessing-of-freyr-and-freyja
   'loreSkill', // blessing-of-wotan
 ]);
-
-/** Perícias fixas concedidas pelo feat (sem option_def) — proficiência ou expertise se já tiver. */
-export const FIXED_FEAT_SKILL_SLUGS: Readonly<Record<string, readonly string[]>> =
-  {
-    'blessing-of-loki': ['deception'],
-  };
 
 export type SkillProficiencyRank =
   | 'none'
@@ -57,6 +51,7 @@ export type SkillBonusSources = {
   speciesChoices?: readonly SpeciesChoiceLike[];
   featOptions?: readonly FeatOptionLike[];
   characterFeats?: readonly CharacterFeatLike[];
+  featEffects?: readonly CatalogEffect[];
   classOptions?: readonly ClassOptionLike[];
   subclassOptions?: readonly SubclassOptionLike[];
   classSlug?: string | null;

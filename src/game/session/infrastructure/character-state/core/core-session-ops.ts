@@ -5,6 +5,7 @@ import { CharacterRepository } from '@game/shared/infrastructure/character.repos
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { grantHitDiceOnLevelUp } from '@game/session/domain/hit-dice-rest';
@@ -33,6 +34,7 @@ export type CoreSessionDeps = {
   spellLookup: CharacterSpellLookup;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   dataSource: import('typeorm').DataSource;
   findOrCreate: (characterId: string, level: number) => Promise<PlayerCharacterState>;
   buildResponse: BuildResponse;
@@ -78,6 +80,7 @@ export async function castSpellOp(
     spellLookup: deps.spellLookup,
     sheetRepository: deps.sheetRepository,
     grantedSpellCatalog: deps.grantedSpellCatalog,
+    effectCatalog: deps.effectCatalog,
     dataSource: deps.dataSource,
     buildResponse: deps.buildResponse,
   });

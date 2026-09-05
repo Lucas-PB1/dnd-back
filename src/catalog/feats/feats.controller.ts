@@ -19,6 +19,8 @@ import {
 } from './queries/find-feat-options-by-slugs.query';
 import { FeatResponseDto } from './dto/feat-response.dto';
 import { FeatOptionResponseDto } from './dto/feat-option-response.dto';
+import { FindOwnerEffectsQuery } from '@catalog/effects/queries/find-owner-effects.query';
+import { EffectSummaryResponseDto } from '@catalog/effects/dto/effect-summary-response.dto';
 
 @ApiTags('catalog-feats')
 @Controller('feats')
@@ -29,6 +31,7 @@ export class FeatsController {
     private readonly findFeatOptions: FindFeatOptionsQuery,
     private readonly findFeatsBySlugs: FindFeatsBySlugsQuery,
     private readonly findFeatOptionsBySlugs: FindFeatOptionsBySlugsQuery,
+    private readonly findOwnerEffects: FindOwnerEffectsQuery,
   ) {}
 
   @Get()
@@ -80,5 +83,16 @@ export class FeatsController {
     @Query() query: PaginationQueryDto,
   ): Promise<PaginatedResponseDto<FeatOptionResponseDto>> {
     return this.findFeatOptions.execute(slug, query.cursor, query.limit);
+  }
+
+  @Get(':slug/effects')
+  @ApiOperation({ summary: 'Typed catalog effects for a feat' })
+  @ApiParam({ name: 'slug', example: 'elemental-adept' })
+  @ApiOkResponse({ type: [EffectSummaryResponseDto] })
+  @ApiNotFoundResponse({ description: 'Feat not found' })
+  findEffects(
+    @Param('slug') slug: string,
+  ): Promise<EffectSummaryResponseDto[]> {
+    return this.findOwnerEffects.execute('feat', slug);
   }
 }

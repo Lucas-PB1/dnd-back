@@ -12,6 +12,29 @@ export function asRollDep<T = never>(mock: object): T {
   return asDep<T>(mock);
 }
 
+export function mockResourceSpender(
+  overrides: Record<string, unknown> = {},
+) {
+  return {
+    spendClassResource: jest.fn().mockResolvedValue(undefined),
+    consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
+    getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
+    setResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
+    clearResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
+    getInspiration: jest.fn().mockResolvedValue(false),
+    setInspiration: jest.fn().mockResolvedValue(undefined),
+    ...overrides,
+  };
+}
+
+export function mockEffectCatalog(
+  loadResult: unknown[] = [],
+) {
+  return asRollDep({
+    load: jest.fn().mockResolvedValue(loadResult),
+  });
+}
+
 export const IDLE_COMBAT_FLAGS: DamageCombatFlags = {
   rageActive: false,
   recklessActive: false,
@@ -55,6 +78,7 @@ export function mockEquippedAttack(
   (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
     attack: buildMockAttack(attack),
     combatFlags,
+    featSlugs: [],
   });
 }
 

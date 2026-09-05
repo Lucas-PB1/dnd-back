@@ -5,7 +5,12 @@ import { RecordItemCatalogStatsService } from '@catalog/items/application/record
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
+import {
+  LoadEffectCatalog,
+  purchaseDiscountPercentFromEffects,
+} from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { loadCharacterFeatSlugs } from '@game/session/infrastructure/queries/class-resource-character.queries';
 import {
   coinPurseErrorMessage,
   coinPurseFromColumns,
@@ -31,6 +36,7 @@ export class PurchaseInventoryHandler {
     private readonly getInventory: GetCharacterInventoryQuery,
     private readonly catalogStats: RecordItemCatalogStatsService,
     private readonly attachCoverage: AttachCoverageHandler,
+    private readonly effectCatalog: LoadEffectCatalog,
     private readonly dataSource: DataSource,
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
@@ -56,7 +62,21 @@ export class PurchaseInventoryHandler {
       pay: dto.pay !== false,
     });
 
-    const resolved = await resolvePurchaseLines(this.catalogLookup, dto);
+    const featSlugs = await loadCharacterFeatSlugs(
+      this.dataSource,
+      character.id,
+    );
+    const featEffects = await this.effectCatalog.load({
+      ownerKind: 'feat',
+      ownerSlugs: featSlugs,
+      kinds: ['purchase_discount'],
+    });
+    const discount = purchaseDiscountPercentFromEffects(featEffects);
+    const resolved = await resolvePurchaseLines(
+      this.catalogLookup,
+      dto,
+      discount,
+    );
     let debit: CoinPurse | null = null;
     if (decision.mustPay) {
       if (resolved.needsPrice && resolved.pricedLineCount === 0) {

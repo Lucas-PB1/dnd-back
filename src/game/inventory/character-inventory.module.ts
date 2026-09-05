@@ -5,6 +5,7 @@ import { PhbItem } from '@entities/phb-item.entity';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import { CombatModule } from '../combat/combat.module';
+import { EffectsModule } from '../effects/effects.module';
 import { GameSharedModule } from '../shared/game-shared.module';
 import {
   PlayerCharacterEquipment,
@@ -50,6 +51,7 @@ import { PlayerCharacter } from '../shared/infrastructure/player-character.entit
     GameSharedModule,
     CatalogModule,
     CombatModule,
+    EffectsModule,
   ],
   controllers: [CharacterInventoryController],
   providers: [

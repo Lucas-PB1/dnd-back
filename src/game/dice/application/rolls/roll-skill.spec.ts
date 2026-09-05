@@ -31,7 +31,11 @@ jest.mock('./apply-cursemarked-bracket', () => ({
 }));
 
 import { executeRollSkill } from './roll-skill';
-import { asRollDep } from './roll-damage.spec.helpers';
+import {
+  asRollDep,
+  mockEffectCatalog,
+  mockResourceSpender,
+} from './roll-damage.spec.helpers';
 
 describe('executeRollSkill', () => {
   it('treats a proficient Rogue d20 result below 10 as 10', async () => {
@@ -58,13 +62,8 @@ describe('executeRollSkill', () => {
           },
         ]),
       }),
-      resourceSpender: {
-        spendClassResource: jest.fn(),
-        consumeSpellSlotLevel: jest.fn(),
-        getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
-        setResourcesUsedEntry: jest.fn(),
-        clearResourcesUsedEntry: jest.fn(),
-      },
+      resourceSpender: mockResourceSpender(),
+      effectCatalog: mockEffectCatalog(),
       userId: 'user-1',
       characterId: 'rogue-1',
       dto: { skillSlug: 'stealth' },

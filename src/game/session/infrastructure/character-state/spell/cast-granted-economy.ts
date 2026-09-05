@@ -1,5 +1,6 @@
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { LoadEffectCatalog, loadGatedSpeciesEffects } from '@game/effects';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   annotateCharacterSpellSources,
@@ -19,33 +20,52 @@ export async function resolveSpellCastEconomyForCharacter(
   spellSlug: string,
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
+  effectCatalog?: LoadEffectCatalog,
 ): Promise<CastEconomy> {
   const budget = await resolveGrantedFreeCastBudget(
     character,
     spellSlug,
     sheetRepository,
     grantedSpellCatalog,
+    effectCatalog,
   );
   return budget.economy;
 }
 
-/** Economia + teto de free casts (Greater Freyr = PB). */
+/** Economia + teto de free casts (Greater Freyr = PB; efeitos tipados quando seedados). */
 export async function resolveGrantedFreeCastBudget(
   character: PlayerCharacter,
   spellSlug: string,
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
+  effectCatalog?: LoadEffectCatalog,
 ): Promise<{ economy: CastEconomy; maxUses: number }> {
   const sheet = await sheetRepository.load(
     character.id,
     character.backgroundSlug,
   );
-  const { speciesCatalog, featFixedSpells } =
+  const featSlugs = sheet.characterFeats.map((f) => f.featSlug);
+  const { featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: character.speciesSlug ? [character.speciesSlug] : [],
-      featSlugs: sheet.characterFeats.map((f) => f.featSlug),
+      featSlugs,
       classSlug: character.classSlug,
     });
+  const featEffects = effectCatalog
+    ? await effectCatalog.load({
+        ownerKind: 'feat',
+        ownerSlugs: featSlugs,
+        kinds: ['grant_spell', 'free_cast'],
+      })
+    : [];
+  const speciesEffects = effectCatalog
+    ? await loadGatedSpeciesEffects({
+        effectCatalog,
+        speciesSlug: character.speciesSlug,
+        speciesChoices: sheet.speciesChoices,
+        kinds: ['grant_spell', 'grant_spell_by_level', 'free_cast'],
+      })
+    : undefined;
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,
     sheet.characterFeats,
@@ -56,7 +76,7 @@ export async function resolveGrantedFreeCastBudget(
         character.speciesSlug,
         sheet.speciesChoices,
         character.level,
-        speciesCatalog,
+        speciesEffects,
       )
     : new Set<string>();
   const [annotated] = annotateCharacterSpellSources(
@@ -70,7 +90,8 @@ export async function resolveGrantedFreeCastBudget(
     featFixedSpells,
     speciesSlug: character.speciesSlug ?? undefined,
     speciesChoices: sheet.speciesChoices,
-    speciesCatalog,
+    featEffects,
+    speciesEffects,
   });
   const feat =
     annotated.source === 'feat'
@@ -80,11 +101,16 @@ export async function resolveGrantedFreeCastBudget(
           featFixedSpells,
         )
       : null;
+  const optionKey =
+    sheet.featOptions.find((o) => o.valueId === spellSlug)?.optionKey ?? null;
   const maxUses = freeCastMaxUses({
     economy,
     spellSlug,
     featSlug: feat?.featSlug,
+    optionKey,
     proficiencyBonus: proficiencyBonusForLevel(character.level),
+    featEffects,
+    speciesEffects,
   });
   return { economy, maxUses };
 }

@@ -3,6 +3,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput } from '../character-sheet.types';
 import { assertCreateProgressionPicks } from './class-options/assert-create-progression-picks';
 import { classLanguageGrant } from './class-options/class-language-grant';
+import { SPECIES_LANGUAGE_CHOICE_COUNT } from '../origin/species-language';
 import { CharacterBackgroundValidator } from './background/character-background.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
 import { CharacterClassExtraSkillValidator } from './class-options/character-class-extra-skill.validator';
@@ -126,7 +127,16 @@ export class CharacterCreateRequirementsValidator {
       input.languageSlugs,
       {
         required: true,
-        extra: classLanguageGrant(ctx.classSlug, ctx.level),
+        extra: (() => {
+          const classExtra = classLanguageGrant(ctx.classSlug, ctx.level);
+          const speciesChoice = ctx.speciesSlug
+            ? SPECIES_LANGUAGE_CHOICE_COUNT
+            : 0;
+          return {
+            grantedSlugs: classExtra.grantedSlugs,
+            choiceCount: (classExtra.choiceCount ?? 0) + speciesChoice,
+          };
+        })(),
       },
     );
 

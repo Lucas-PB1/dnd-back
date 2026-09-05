@@ -24,6 +24,8 @@ import {
 import { buildAttackAdvantageContributions } from './build-attack-advantage-contributions';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
+import { applyInspirationSpend } from './apply-inspiration-spend';
+import type { LoadEffectCatalog } from '@game/effects';
 
 function coverNote(level: ReturnType<typeof effectiveCoverForAttack>): string | null {
   if (level === 'half') return 'Cobertura parcial: +2 CA do alvo';
@@ -39,6 +41,7 @@ export async function executeRollAttack(input: {
   permanentItemEffects: ResolveActivePermanentItemEffects;
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
+  effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
   dto: RollAttackDto;
@@ -151,6 +154,21 @@ export async function executeRollAttack(input: {
     const effectiveTargetAc = input.dto.targetAc + targetAcBonus;
     response.effectiveTargetAc = effectiveTargetAc;
     response.hit = result.total >= effectiveTargetAc;
+  }
+
+  const failed =
+    response.hit === undefined ? null : response.hit === false;
+  await applyInspirationSpend({
+    resourceSpender: input.resourceSpender,
+    sheet: input.sheet,
+    effectCatalog: input.effectCatalog,
+    character,
+    spentInspiration: Boolean(input.dto.spentInspiration),
+    failed,
+    notes,
+  });
+  if (notes.length > 0) {
+    response.note = notes.join(' · ');
   }
 
   return response;

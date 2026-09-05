@@ -1,9 +1,9 @@
-import { PSYCHIC_BLADE_BONUS_ITEM_SLUG } from '../rogue/psychic-blades';
-import { hasProperty } from './weapon-attack-predicates';
+import { PSYCHIC_BLADE_BONUS_ITEM_SLUG } from "../rogue/psychic-blades";
+import { hasProperty } from "./weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttackRole,
-} from './weapon-attack.types';
+} from "./weapon-attack.types";
 
 export function collectAttackNoteExtras(input: {
   piece: EquippedWeaponPiece;
@@ -24,54 +24,54 @@ export function collectAttackNoteExtras(input: {
 }): string[] {
   const noteExtras: string[] = [];
   const { piece } = input;
-  if (hasProperty(piece, 'versatile')) {
+  if (hasProperty(piece, "versatile")) {
     noteExtras.push(
-      input.versatile2h ? 'versátil (2 mãos)' : 'versátil (1 mão)',
+      input.versatile2h ? "versátil (2 mãos)" : "versátil (1 mão)",
     );
   }
-  if (input.isFirearm) noteExtras.push('arma de fogo');
-  if (hasProperty(piece, 'recoil')) noteExtras.push('recuo');
+  if (input.isFirearm) noteExtras.push("arma de fogo");
+  if (hasProperty(piece, "recoil")) noteExtras.push("recuo");
   if (input.ignoresReload) {
-    noteExtras.push('Recarga Rápida');
-  } else if (hasProperty(piece, 'reload')) {
+    noteExtras.push("Recarga Rápida");
+  } else if (hasProperty(piece, "reload")) {
     const cap = piece.reloadCapacity;
-    noteExtras.push(cap != null ? `recarga (${cap})` : 'recarga');
+    noteExtras.push(cap != null ? `recarga (${cap})` : "recarga");
   }
   if (input.deadeyeNoLongRangePenalty) {
-    noteExtras.push('Olho de Águia: sem desv. em alcance longo');
+    noteExtras.push("Olho de Águia: sem desv. em alcance longo");
   }
-  if (input.role === 'light_bonus') {
+  if (input.role === "light_bonus") {
     if (piece.itemSlug === PSYCHIC_BLADE_BONUS_ITEM_SLUG) {
-      noteExtras.push('Ação Bônus (segunda lâmina)');
+      noteExtras.push("Ação Bônus (segunda lâmina)");
     } else {
       noteExtras.push(
         input.nickUsesAttackAction
-          ? 'ataque adicional (Ágil · ação Atacar)'
-          : 'ataque adicional (Leve)',
+          ? "ataque adicional (Ágil · ação Atacar)"
+          : "ataque adicional (Leve)",
       );
     }
   }
-  if (input.role === 'dual_bonus') {
-    noteExtras.push('ataque adicional (Ambidestro)');
+  if (input.role === "dual_bonus") {
+    noteExtras.push("ataque adicional (Ambidestro)");
   }
-  if (input.greatWeaponFighting) noteExtras.push('Luta com Armas Grandes');
+  if (input.greatWeaponFighting) noteExtras.push("Luta com Armas Grandes");
   if (input.masteryActive && input.masteryName) {
     noteExtras.push(`Maestria: ${input.masteryName}`);
   }
-  if (input.masteryActive && input.masterySlug === 'scatter') {
-    noteExtras.push('Dispersão: sem desv. a 1,5 m');
+  if (input.masteryActive && input.masterySlug === "scatter") {
+    noteExtras.push("Dispersão: sem desv. a 1,5 m");
   }
-  if (input.masteryActive && input.masterySlug === 'sighted') {
-    noteExtras.push('Mira: sem desv. a longa distância');
+  if (input.masteryActive && input.masterySlug === "sighted") {
+    noteExtras.push("Mira: sem desv. a longa distância");
   }
-  if (input.masteryActive && input.masterySlug === 'automatic') {
-    noteExtras.push('Automática: opção 2 ataques c/ desv.');
+  if (input.masteryActive && input.masterySlug === "automatic") {
+    noteExtras.push("Automática: opção 2 ataques c/ desv.");
   }
-  if (input.masteryActive && input.masterySlug === 'explode') {
-    noteExtras.push('Explosiva: opção esfera 1,5 m');
+  if (input.masteryActive && input.masterySlug === "explode") {
+    noteExtras.push("Explosiva: opção esfera 1,5 m");
   }
   if (input.attackDisadvantage) {
-    noteExtras.push('desvantagem (Pesada / tamanho Pequeno)');
+    noteExtras.push("desvantagem (Pesada / tamanho Pequeno)");
   }
   if (input.critThreshold < 20) {
     noteExtras.push(`crítico ${input.critThreshold}–20`);

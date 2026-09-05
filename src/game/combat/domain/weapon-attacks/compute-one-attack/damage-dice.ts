@@ -1,14 +1,11 @@
-import {
-  martialArtsDie,
-  martialArtsDieFaces,
-} from '../../monk/features';
-import {
-  usesVersatileTwoHanded,
-} from '../weapon-attack-predicates';
+import { martialArtsDie, martialArtsDieFaces } from "../../monk/features";
+import { usesVersatileTwoHanded } from "../weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
-} from '../weapon-attack.types';
+} from "../weapon-attack.types";
+
+const UNARMED_SLUG = "unarmed-strike";
 
 export function resolveDamageDice(input: {
   piece: EquippedWeaponPiece;
@@ -22,12 +19,17 @@ export function resolveDamageDice(input: {
     Boolean(input.context.hasShield),
   );
   let damageDice = versatile2h
-    ? (input.piece.versatileDamage ?? input.piece.damage ?? '1')
-    : (input.piece.damage ?? '1');
+    ? (input.piece.versatileDamage ?? input.piece.damage ?? "1")
+    : (input.piece.damage ?? "1");
+
+  if (input.piece.itemSlug === UNARMED_SLUG && input.context.unarmedDamageDie) {
+    damageDice = input.context.unarmedDamageDie;
+  }
+
   let monkMartialArtsDie: string | null = null;
   if (input.monkEligible) {
     const maFaces = martialArtsDieFaces(input.context.level ?? 1);
-    const weaponFaces = Number(/d(\d+)/i.exec(damageDice)?.[1] ?? '0');
+    const weaponFaces = Number(/d(\d+)/i.exec(damageDice)?.[1] ?? "0");
     if (maFaces > weaponFaces) {
       damageDice = martialArtsDie(input.context.level ?? 1);
     }

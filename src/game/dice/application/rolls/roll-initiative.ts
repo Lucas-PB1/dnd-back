@@ -15,6 +15,7 @@ import type {
   RollInitiativeDto,
 } from '@game/dice/dto/character-roll.dto';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
+import type { LoadEffectCatalog } from '@game/effects';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 
@@ -24,6 +25,7 @@ export async function executeRollInitiative(input: {
   domain: CharacterDomainService;
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
+  effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
   dto: RollInitiativeDto;
@@ -42,6 +44,12 @@ export async function executeRollInitiative(input: {
     character.abilityScores,
   );
   const mods = computeAbilityModifiers(scores);
+  const featSlugs = sheet.characterFeats.map((feat) => feat.featSlug);
+  const featEffects = await input.effectCatalog.load({
+    ownerKind: 'feat',
+    ownerSlugs: featSlugs,
+    kinds: ['initiative_pb'],
+  });
   const rollContext = {
     dexterityModifier: mods.destreza,
     wisdomModifier: mods.sabedoria,
@@ -51,6 +59,7 @@ export async function executeRollInitiative(input: {
     subclassSlug: character.subclassSlug,
     level: character.level,
     characterFeats: sheet.characterFeats,
+    featEffects,
     heritageChoices: sheet.heritageChoices,
     speciesChoices: sheet.speciesChoices,
   };

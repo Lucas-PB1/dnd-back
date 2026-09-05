@@ -3,12 +3,12 @@ import {
   isLight,
   isMeleeCapable,
   isTwoHanded,
-} from '../weapon-attacks/weapon-attack-predicates';
+} from "../weapon-attacks/weapon-attack-predicates";
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
   WeaponAttackRole,
-} from '../weapon-attacks/weapon-attack.types';
+} from "../weapon-attacks/weapon-attack.types";
 
 export type DualWieldAnalysis = {
   bonusRole: WeaponAttackRole | null;
@@ -16,13 +16,12 @@ export type DualWieldAnalysis = {
   dualWieldTwoHandedOffHand: boolean;
 };
 
-/** Analisa main/off para TWF / Dual Wielder. */
 export function analyzeDualWield(
   weapons: EquippedWeaponPiece[],
   context: WeaponAttackContext,
 ): DualWieldAnalysis {
-  const main = weapons.find((w) => w.equipmentSlot === 'main_hand');
-  const off = weapons.find((w) => w.equipmentSlot === 'off_hand');
+  const main = weapons.find((w) => w.equipmentSlot === "main_hand");
+  const off = weapons.find((w) => w.equipmentSlot === "off_hand");
   if (!main || !off) {
     return {
       bonusRole: null,
@@ -45,7 +44,7 @@ export function analyzeDualWield(
 
   if (mainLight && offLight) {
     return {
-      bonusRole: 'light_bonus',
+      bonusRole: "light_bonus",
       dualWieldNeedsFeat: false,
       dualWieldTwoHandedOffHand: false,
     };
@@ -55,10 +54,10 @@ export function analyzeDualWield(
     mainLight &&
     offMeleeOk &&
     !offLight &&
-    hasStyleOrFeat(context, 'dual-wielder')
+    hasStyleOrFeat(context, "dual-wielder")
   ) {
     return {
-      bonusRole: 'dual_bonus',
+      bonusRole: "dual_bonus",
       dualWieldNeedsFeat: false,
       dualWieldTwoHandedOffHand: false,
     };

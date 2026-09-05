@@ -34,6 +34,7 @@ describe('CharacterStateRepository', () => {
       {} as CharacterSpellLookup,
       asDep({}),
       asDep({}),
+      asDep({ load: async () => [] }),
       asDep({
         load: async () => ({
           gunslingerManeuvers: [],

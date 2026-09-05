@@ -27,6 +27,7 @@ describe('UseClassResourceHandler', () => {
   const handler = new UseClassResourceHandler(
     asDep(access),
     asDep(state),
+    asDep({ load: jest.fn().mockResolvedValue([]) }),
   );
 
   beforeEach(() => {

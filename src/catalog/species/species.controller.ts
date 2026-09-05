@@ -13,6 +13,8 @@ import { FindSpeciesBySlugQuery } from './queries/find-species-by-slug.query';
 import { FindSpeciesTraitsQuery } from './queries/find-species-traits.query';
 import { FindSpeciesTraitChoicesQuery } from './queries/find-species-trait-choices.query';
 import { SpeciesResponseDto } from './dto/species-response.dto';
+import { FindOwnerEffectsQuery } from '@catalog/effects/queries/find-owner-effects.query';
+import { EffectSummaryResponseDto } from '@catalog/effects/dto/effect-summary-response.dto';
 
 @ApiTags('catalog-species')
 @Controller('species')
@@ -22,6 +24,7 @@ export class SpeciesController {
     private readonly findSpeciesBySlug: FindSpeciesBySlugQuery,
     private readonly findSpeciesTraits: FindSpeciesTraitsQuery,
     private readonly findSpeciesTraitChoices: FindSpeciesTraitChoicesQuery,
+    private readonly findOwnerEffects: FindOwnerEffectsQuery,
   ) {}
 
   @Get()
@@ -59,6 +62,17 @@ export class SpeciesController {
       query.limit,
       query.editionSlugs,
     );
+  }
+
+  @Get(':slug/effects')
+  @ApiOperation({ summary: 'Typed catalog effects for a species' })
+  @ApiParam({ name: 'slug', example: 'elf' })
+  @ApiOkResponse({ type: [EffectSummaryResponseDto] })
+  @ApiNotFoundResponse({ description: 'Species not found' })
+  findEffects(
+    @Param('slug') slug: string,
+  ): Promise<EffectSummaryResponseDto[]> {
+    return this.findOwnerEffects.execute('species', slug);
   }
 
   @Get(':slug')

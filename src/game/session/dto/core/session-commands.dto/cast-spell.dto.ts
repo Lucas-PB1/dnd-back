@@ -110,6 +110,25 @@ export class CastSpellDto {
   @ValidateNested()
   @Type(() => ArtifactRandomCastDto)
   artifactRandomCast?: ArtifactRandomCastDto;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description:
+      'Flex Caster Elevação: espaços extras do mesmo círculo (além do principal)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  flexElevateExtraSlots?: number;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Flex Caster Redução: conjurar no círculo base e recuperar um espaço de 1º',
+  })
+  @IsOptional()
+  @IsBoolean()
+  flexReduce?: boolean;
 }
 
 export class CastSpellResponseDto {

@@ -5,6 +5,10 @@ import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-gra
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { resolveEldritchGrantedSpellSlugs } from '../eldritch-granted-spells';
+import {
+  loadGatedSpeciesEffects,
+  type LoadEffectCatalog,
+} from '@game/effects';
 
 function unionSpellSlugSets(...sets: ReadonlySet<string>[]): Set<string> {
   const result = new Set<string>();
@@ -21,6 +25,7 @@ export async function mergeCreateCharacterSpells(input: {
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells;
   dataSource: DataSource;
+  effectCatalog?: LoadEffectCatalog;
 }): Promise<void> {
   const {
     dto,
@@ -29,10 +34,11 @@ export async function mergeCreateCharacterSpells(input: {
     grantedSpellCatalog,
     resolveSubclassOptionGrants,
     dataSource,
+    effectCatalog,
   } = input;
 
   const featSlugs = (sheetInput.characterFeats ?? []).map((f) => f.featSlug);
-  const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
+  const { featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: dto.speciesSlug ? [dto.speciesSlug] : [],
       featSlugs,
@@ -40,6 +46,14 @@ export async function mergeCreateCharacterSpells(input: {
       classSlug: dto.classSlug,
       subclassOptions: sheetInput.subclassOptions,
     });
+  const speciesEffects = effectCatalog
+    ? await loadGatedSpeciesEffects({
+        effectCatalog,
+        speciesSlug: dto.speciesSlug,
+        speciesChoices: sheetInput.speciesChoices,
+        kinds: ['grant_spell', 'grant_spell_by_level'],
+      })
+    : [];
   const eldritchGranted = await resolveEldritchGrantedSpellSlugs(
     dataSource,
     sheetInput.classOptions,
@@ -58,7 +72,7 @@ export async function mergeCreateCharacterSpells(input: {
       speciesSlug: dto.speciesSlug ?? undefined,
       speciesChoices: sheetInput.speciesChoices,
       level,
-      speciesCatalog,
+      speciesEffects,
       featFixedSpells,
       subclassGrantedSpells,
       classGrantedSpells,

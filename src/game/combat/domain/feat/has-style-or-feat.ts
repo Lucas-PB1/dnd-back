@@ -1,4 +1,3 @@
-/** Contexto mínimo: talentos e estilos de luta selecionados (slugs de catálogo). */
 export type StyleOrFeatContext = {
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];

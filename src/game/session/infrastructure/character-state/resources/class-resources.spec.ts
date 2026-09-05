@@ -100,7 +100,12 @@ describe('character-state/class-resources', () => {
         if (text.includes('player_character_heritage_trait')) return [];
         if (text.includes('player_character_thread')) return [];
         if (text.includes('phb_class_economy_action')) return [];
-        if (text.includes('phb_resource_grant')) return scheduleRows;
+        if (text.includes('phb_effect') && text.includes("owner_kind = 'class'")) {
+          return scheduleRows;
+        }
+        if (text.includes('phb_effect') && text.includes('grant_resource')) {
+          return [];
+        }
         if (text.includes('phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }
@@ -195,10 +200,18 @@ describe('character-state/class-resources', () => {
             },
           ];
         }
-        if (text.includes('phb_resource_grant') && text.includes('phb_species')) {
+        if (text.includes('phb_effect') && text.includes("owner_kind = 'class'")) {
+          return [];
+        }
+        if (
+          text.includes('phb_effect') &&
+          text.includes("owner_kind = 'species'")
+        ) {
           return speciesSchedule;
         }
-        if (text.includes('phb_resource_grant')) return [];
+        if (text.includes('phb_effect') && text.includes('grant_resource')) {
+          return [];
+        }
         if (text.includes('phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }

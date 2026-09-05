@@ -4,6 +4,7 @@ import { PhbSpecies } from '@entities/phb-species.entity';
 import { PhbSpeciesTrait } from '@entities/phb-species-trait.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
+import { CatalogEffectsModule } from '../effects/effects.module';
 import { SpeciesController } from './species.controller';
 import { SpeciesMapper } from './species.mapper';
 import { FindSpeciesQuery } from './queries/find-species.query';
@@ -15,6 +16,7 @@ import { FindSpeciesTraitChoicesQuery } from './queries/find-species-trait-choic
   imports: [
     TypeOrmModule.forFeature([PhbSpecies, PhbSpeciesTrait, VPhbSpeciesTraitChoices]),
     CatalogLookupModule,
+    CatalogEffectsModule,
   ],
   controllers: [SpeciesController],
   providers: [

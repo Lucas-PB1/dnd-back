@@ -1,4 +1,4 @@
--- Recursos Character Threads (Northlands) — usos 1/DL (MVP mesa)
+-- Recursos Character Threads (Northlands) — defs (grants → effects/E011_thread.sql)
 -- slug do resource = benefit_key do N036 (exceto Grande Sacrifício Cursemarked)
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, thread_slug, min_level)
@@ -33,49 +33,4 @@ ON CONFLICT (slug) DO UPDATE SET
   thread_slug = EXCLUDED.thread_slug,
   min_level = EXCLUDED.min_level;
 
--- Grants: owner_id = phb_character_thread.id
-INSERT INTO rpg.phb_resource_grant (
-  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
-  recover_one_on_short, recover_all_on_short, recover_all_on_long
-)
-SELECT
-  'character_thread'::rpg.resource_owner_kind,
-  t.id,
-  rd.id,
-  1,
-  v.max_formula::rpg.resource_max_formula,
-  v.fixed_max,
-  FALSE,
-  v.recover_all_on_short,
-  v.recover_all_on_long
-FROM (VALUES
-  ('bloodsworn', 'wrath', 'fixed', 1, FALSE, TRUE),
-  ('bloodsworn', 'tenacity', 'fixed', 1, FALSE, TRUE),
-  ('cursemarked', 'cursemarked-greater-sacrifice', 'fixed', 1, FALSE, TRUE),
-  ('explorer', 'traversal-expert', 'fixed', 1, TRUE, TRUE),
-  ('explorer', 'scouts-awareness', 'fixed', 1, FALSE, TRUE),
-  ('explorer', 'wayfarers-steps', 'fixed', 1, FALSE, TRUE),
-  ('fatebound', 'fates-blessing', 'fixed', 1, FALSE, TRUE),
-  ('fatebound', 'strength-of-wyrd', 'proficiency_bonus', NULL, FALSE, TRUE),
-  ('fatebound', 'enduring-wyrd', 'fixed', 1, TRUE, TRUE),
-  ('fatebound', 'doom-delayed', 'fixed', 1, FALSE, TRUE),
-  ('fatebound', 'last-act-of-fate', 'fixed', 1, FALSE, FALSE),
-  ('fatebound', 'glorious-end', 'fixed', 1, FALSE, FALSE),
-  ('herald', 'enthralling-speaker', 'fixed', 1, FALSE, TRUE),
-  ('herald', 'persuasive-words', 'charisma_mod', NULL, FALSE, TRUE),
-  ('legend-hunter', 'reliable-senses', 'fixed', 1, FALSE, TRUE),
-  ('legend-hunter', 'finish-the-fight', 'fixed', 1, FALSE, TRUE),
-  ('sworn-huskarl', 'jarls-authority', 'fixed', 1, FALSE, TRUE),
-  ('sworn-huskarl', 'extreme-loyalty', 'fixed', 1, FALSE, TRUE)
-) AS v(thread_slug, resource_slug, max_formula, fixed_max, recover_all_on_short, recover_all_on_long)
-JOIN rpg.phb_character_thread t ON t.slug = v.thread_slug
-JOIN rpg.phb_resource_definition rd
-  ON rd.slug = v.resource_slug
- AND rd.scope = 'character_thread'::rpg.resource_scope
- AND rd.thread_slug = v.thread_slug
-ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
-  max_formula = EXCLUDED.max_formula,
-  fixed_max = EXCLUDED.fixed_max,
-  recover_one_on_short = EXCLUDED.recover_one_on_short,
-  recover_all_on_short = EXCLUDED.recover_all_on_short,
-  recover_all_on_long = EXCLUDED.recover_all_on_long;
+-- Grants: SSOT em effects/E011_thread.sql

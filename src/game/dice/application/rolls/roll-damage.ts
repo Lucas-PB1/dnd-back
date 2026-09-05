@@ -16,10 +16,16 @@ import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
 } from './roll-weapon-context';
-import { createDamageAccumulator } from './damage/damage-accumulator';
+import { createDamageAccumulator, addDamagePart } from './damage/damage-accumulator';
 import { buildDamageRollResponse } from './damage/damage-response';
 import { noteRageBonus } from './damage/apply-weapon-extras';
 import { DAMAGE_EFFECT_PIPELINE } from './damage/pipeline';
+import {
+  hasDamageDieExplode,
+  hasDamageDieFlip,
+  hasDamageDieFloor,
+  type LoadEffectCatalog,
+} from '@game/effects';
 
 export async function executeRollDamage(input: {
   access: PlayerCharacterAccessService;
@@ -30,6 +36,7 @@ export async function executeRollDamage(input: {
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
+  effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
   dto: RollDamageDto;
@@ -39,7 +46,7 @@ export async function executeRollDamage(input: {
     input.userId,
     input.characterId,
   );
-  const { attack, combatFlags } = await findEquippedWeaponAttack(
+  const { attack, combatFlags, featSlugs } = await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
       domain: input.domain,
@@ -70,16 +77,48 @@ export async function executeRollDamage(input: {
     };
   }
 
-  const base = rollDamageParts(attack.damageDice, attack.damageBonus, {
+  const featEffects = await input.effectCatalog.load({
+    ownerKind: 'feat',
+    ownerSlugs: featSlugs,
+  });
+  const dieOpts = {
     critical: input.dto.critical,
     treatOnesAndTwosAsThree: attack.greatWeaponFighting,
-  });
+    treatOnesAsTwos:
+      hasDamageDieFloor(featEffects, featSlugs) ||
+      Boolean(input.dto.damageDieFloor),
+    flipLowestDie:
+      hasDamageDieFlip(featEffects, featSlugs) &&
+      Boolean(input.dto.damageDieFlip),
+    explodeOnMax:
+      hasDamageDieExplode(featEffects, featSlugs) &&
+      Boolean(input.dto.damageDieExplode),
+  };
+  const base = rollDamageParts(
+    attack.damageDice,
+    attack.damageBonus,
+    dieOpts,
+  );
+  const alternateBase = input.dto.savageAttacker
+    ? rollDamageParts(attack.damageDice, attack.damageBonus, dieOpts)
+    : null;
   const acc = createDamageAccumulator(
     base.total,
     base.expression,
     base.dice[0]?.rolls ?? [],
   );
   noteRageBonus(acc, attack.rageDamageBonus);
+  if (alternateBase) {
+    acc.notes.push(
+      'Atacante Selvagem: escolha entre esta rolagem e alternateRolls[0] (1×/turno).',
+    );
+  }
+  if (input.dto.chargerStrike) {
+    addDamagePart(acc, '1d8', { critical: input.dto.critical });
+    acc.notes.push(
+      'Investida (Charger): +1d8 (desligue o toggle apos o uso).',
+    );
+  }
 
   const mechanical = await input.mechanicalCatalog.load();
   const ctx = {
@@ -103,5 +142,14 @@ export async function executeRollDamage(input: {
     modifier: base.modifier,
     critical: base.critical,
     kept: base.dice[0]?.kept,
+    alternateRolls: alternateBase
+      ? [
+          {
+            expression: alternateBase.expression,
+            total: alternateBase.total,
+            rolls: alternateBase.dice[0]?.rolls ?? [],
+          },
+        ]
+      : undefined,
   });
 }

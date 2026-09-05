@@ -96,6 +96,7 @@ describe('UpdateCharacterHandler', () => {
       asDep(grantedSpellCatalog),
       asDep({ resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()) }),
       asDep({ query: jest.fn() }),
+      asDep({ load: jest.fn().mockResolvedValue([]) }),
     );
   });
 

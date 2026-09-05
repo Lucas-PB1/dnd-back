@@ -5,9 +5,9 @@ import type {
   FeatOptionDto,
   SpeciesChoiceDto,
 } from '@game/sheet/dto/character-sheet.dto';
+import type { CatalogEffect } from '@game/effects';
 import type {
   FeatGrantedSpellRow,
-  SpeciesGrantedSpellRow,
 } from './granted-spells/types';
 import { resolveSpellcastingAbilityForSpell } from './resolve-granted-spellcasting-ability';
 import { resolveGrantedSpellCastEconomy } from './resolve-granted-spell-cast-economy';
@@ -24,7 +24,7 @@ export function enrichSpellsWithSpellcastingStats(
     speciesChoices?: readonly SpeciesChoiceDto[];
     featFixedSpells?: readonly FeatGrantedSpellRow[];
     speciesSlug?: string;
-    speciesCatalog?: readonly SpeciesGrantedSpellRow[];
+    speciesEffects?: readonly CatalogEffect[];
   },
 ): CharacterSpellDto[] {
   return spells.map((spell) => {
@@ -48,7 +48,7 @@ export function enrichSpellsWithSpellcastingStats(
       featFixedSpells: input.featFixedSpells,
       speciesSlug: input.speciesSlug,
       speciesChoices: input.speciesChoices,
-      speciesCatalog: input.speciesCatalog,
+      speciesEffects: input.speciesEffects,
     });
     return {
       ...spell,

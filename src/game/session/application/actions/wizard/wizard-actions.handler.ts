@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import { isWizardClass } from '@game/combat/domain/wizard';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -42,6 +43,7 @@ export class WizardActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   private deps(): WizardActionDeps {
@@ -115,7 +117,11 @@ export class WizardActionsHandler {
         return resolveMissileFlag(deps, character, 'giga', false);
       default:
         return resolveDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          {
+            state: this.state,
+            mechanicalCatalog: this.mechanicalCatalog,
+            effectCatalog: this.effectCatalog,
+          },
           character,
           dto.actionSlug,
         );

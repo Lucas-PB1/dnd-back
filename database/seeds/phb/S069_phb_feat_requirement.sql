@@ -77,9 +77,9 @@ FROM (
     ('sharpshooter', 'destreza'),
     ('sentinel', 'forca'),
     ('sentinel', 'destreza'),
-    ('stealthy', 'destreza'),
-    ('mobile', 'destreza'),
-    ('mobile', 'constituicao')
+    ('skulker', 'destreza'),
+    ('speedy', 'destreza'),
+    ('speedy', 'constituicao')
 ) AS requirement(feat_slug, ability_slug)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
 JOIN rpg.phb_ability ability ON ability.slug = requirement.ability_slug

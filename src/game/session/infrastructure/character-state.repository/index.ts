@@ -10,6 +10,7 @@ import { CharacterRepository } from '@game/shared/infrastructure/character.repos
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   CastSpellDto,
   PatchCharacterStateDto,
@@ -62,6 +63,7 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     private readonly spellLookup: CharacterSpellLookup,
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly dataSource: DataSource,
   ) {
@@ -81,6 +83,7 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
       spellLookup: this.spellLookup,
       sheetRepository: this.sheetRepository,
       grantedSpellCatalog: this.grantedSpellCatalog,
+      effectCatalog: this.effectCatalog,
       mechanicalCatalog: this.mechanicalCatalog,
       dataSource: this.dataSource,
       findOrCreate: (id, level) => this.findOrCreate(id, level),

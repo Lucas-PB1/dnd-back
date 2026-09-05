@@ -30,7 +30,7 @@
 | Capítulo | Doc | Estado |
 |----------|-----|--------|
 | Talentos (Cap. 4) | — | **Pronto** (gunslinger feat + Quick Strike) |
-| Transformações (Cap. 6) | — | **Pronto** (`J061` resources + `C078` economy; mesa tipada) |
+| Transformações (Cap. 6) | [`effect-mesa-checklist.md`](effect-mesa-checklist.md) §A · fonte GH em [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) | Pool `E008`; economy `C078` (+ Licantropo declare); apply tipado `E015` (Clemência/Cura Profana + formas); residual: heal 2d4+mod, bestial-vigor, mutações stateful |
 
 ---
 

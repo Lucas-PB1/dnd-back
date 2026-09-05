@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsIn, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 import type { AdvantageMode } from '../../domain/dice';
 
 export class RollSkillDto {
@@ -22,6 +29,23 @@ export class RollSkillDto {
   @IsOptional()
   @IsBoolean()
   strokeOfLuck?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Gastar inspiração neste teste (IH: reembolsa se falhar)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  spentInspiration?: boolean;
+
+  @ApiPropertyOptional({
+    example: 15,
+    description: 'CD do teste (necessária para detectar falha / IH refund)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  dc?: number;
 }
 
 export class RollSavingThrowDto {
@@ -56,6 +80,23 @@ export class RollSavingThrowDto {
   @IsOptional()
   @IsBoolean()
   strokeOfLuck?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Gastar inspiração nesta salvaguarda (IH: reembolsa se falhar)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  spentInspiration?: boolean;
+
+  @ApiPropertyOptional({
+    example: 15,
+    description: 'CD da salvaguarda (necessária para detectar falha / IH refund)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  dc?: number;
 }
 
 export class RollInitiativeDto {

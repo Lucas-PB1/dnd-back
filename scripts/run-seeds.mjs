@@ -3,8 +3,8 @@
  * Aplica seeds SQL (catálogo PHB + Valdas). Destrutivo se tabelas já tiverem dados — preferir após dev-reset.
  *
  * Ordem de pastas (não lexicográfica pura entre packs):
- *   000_truncate → phb → subclass → valdas → valdas-gunslinger → valdas-player-pack-2
- *   → steinhardt-eldritch-hunt → northlands-heroes → dmg → combat
+ *   000_truncate → phb → … → combat → creatures → effects
+ * `effects/` por último (depende de feats/resources de todos os packs).
  * Gunslinger depende de magias do Player Pack (ex.: finger-guns).
  *
  * Uso:
@@ -36,6 +36,7 @@ const SEED_PACKS = [
   'dmg',
   'combat',
   'creatures',
+  'effects',
 ];
 
 /** @param {string} arg */

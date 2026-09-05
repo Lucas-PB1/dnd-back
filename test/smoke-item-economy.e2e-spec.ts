@@ -78,9 +78,11 @@ describe('smoke item combat economy', () => {
 
     const grants = await db.query<{ slug: string }[]>(
       `SELECT rd.slug
-       FROM rpg.phb_resource_grant g
-       JOIN rpg.phb_resource_definition rd ON rd.id = g.resource_id
-       WHERE g.owner_kind = 'item' AND rd.slug = 'ringBarrelCharges'`,
+       FROM rpg.phb_effect e
+       JOIN rpg.phb_effect_resource er ON er.effect_id = e.id
+       JOIN rpg.phb_resource_definition rd ON rd.id = er.resource_id
+       JOIN rpg.phb_item i ON i.id = e.owner_id AND e.owner_kind = 'item'
+       WHERE e.kind = 'grant_resource' AND rd.slug = 'ringBarrelCharges'`,
     );
     expect(grants.length).toBe(1);
   });

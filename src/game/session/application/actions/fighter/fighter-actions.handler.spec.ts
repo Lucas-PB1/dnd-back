@@ -50,6 +50,7 @@ describe('FighterActionsHandler tabletop actions', () => {
       asHandlerDep(ctx.domain),
       asHandlerDep(ctx.sheet),
       asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep({ load: jest.fn().mockResolvedValue([]) }),
     );
   });
 

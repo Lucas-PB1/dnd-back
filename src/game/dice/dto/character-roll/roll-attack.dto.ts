@@ -129,4 +129,12 @@ export class RollAttackDto {
   @Min(1)
   @Max(40)
   targetAc?: number;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Gastar inspiração neste ataque (IH: reembolsa se errar com targetAc)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  spentInspiration?: boolean;
 }

@@ -12,6 +12,10 @@ import {
 } from '@game/spellcasting/domain/granted-spells';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
+import {
+  loadGatedSpeciesEffects,
+  LoadEffectCatalog,
+} from '@game/effects';
 import { resolveEldritchGrantedSpellSlugs } from '@game/sheet/application/eldritch-granted-spells';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import { validateSpellListAccess } from './validate-spell-list-access';
@@ -34,6 +38,7 @@ export class CharacterSpellsValidator {
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async validateCharacterSpells(
@@ -55,12 +60,18 @@ export class CharacterSpellsValidator {
       ...feats.map((f) => f.featSlug),
       ...(featOptions ?? []).map((o) => o.featSlug),
     ];
-    const { speciesCatalog, featFixedSpells } =
+    const { featFixedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: ctx.speciesSlug ? [ctx.speciesSlug] : [],
         featSlugs,
         classSlug: ctx.classSlug,
       });
+    const speciesEffects = await loadGatedSpeciesEffects({
+      effectCatalog: this.effectCatalog,
+      speciesSlug: ctx.speciesSlug,
+      speciesChoices,
+      kinds: ['grant_spell', 'grant_spell_by_level'],
+    });
 
     const featGranted = collectFeatGrantedSpellSlugs(
       featOptions,
@@ -72,7 +83,7 @@ export class CharacterSpellsValidator {
           ctx.speciesSlug,
           speciesChoices,
           ctx.level,
-          speciesCatalog,
+          speciesEffects,
         )
       : new Set<string>();
     const eldritchGranted = await resolveEldritchGrantedSpellSlugs(

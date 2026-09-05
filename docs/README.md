@@ -36,6 +36,9 @@
 | [`architecture/adr-read-model-layers.md`](architecture/adr-read-model-layers.md) | View vs MV vs RPC JSONB |
 | [`architecture/read-model-inventory.md`](architecture/read-model-inventory.md) | Lista objetiva — tabela / view / MV / RPC |
 | [`architecture/adr-heritage-vs-species.md`](architecture/adr-heritage-vs-species.md) | Heritage GH vs species PHB |
+| [`architecture/adr-effect-engine.md`](architecture/adr-effect-engine.md) | Motor de efeitos (`phb_effect`) |
+| [`architecture/effect-dictionary.md`](architecture/effect-dictionary.md) | Dicionário vivo de `effect_kind` |
+| [`architecture/effect-engine-read-path.md`](architecture/effect-engine-read-path.md) | DX — seed → load → query → DTO (+ exemplos) |
 
 Contrato REST: Swagger em `/api`.
 
@@ -53,8 +56,11 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
+| [`plans/effect-engine.md`](plans/effect-engine.md) | Motor — **fase** DROP / DoD |
+| [`plans/effect-mesa-checklist.md`](plans/effect-mesa-checklist.md) | Checklist — **categoria** (dono/peça) |
+| [`plans/effect-mesa-por-fonte.md`](plans/effect-mesa-por-fonte.md) | Matriz — **fonte** (PHB, GH, NL, DMG…) → categorias |
 | [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
-| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — extração + fase 2 mesa |
+| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — SSOT extração + mesa |
 | [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais |
 
 ### Adiado (polish)

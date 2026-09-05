@@ -68,7 +68,7 @@ VALUES
   ('resilient', 'Resiliente', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('durable', 'Resistente', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('sentinel', 'Sentinela', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
-  ('stealthy', 'Sorrateiro', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('skulker', 'Sorrateiro', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('lucky', 'Sortudo', 'origin', FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('slasher', 'Talhador', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('telekinetic', 'Telecinético', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
@@ -77,7 +77,7 @@ VALUES
   ('fey-touched', 'Tocado pelas Fadas', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('martial-weapon-training', 'Treinamento com Armas Marciais', 'general', FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('tavern-brawler', 'Valentão de Taverna', 'origin', FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
-  ('mobile', 'Velocista', 'general', FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('speedy', 'Velocista', 'general', FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('tough', 'Vigoroso', 'origin', FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217'));
 
 INSERT INTO rpg.phb_feat (slug, name, category, repeatable, prerequisite, source_citation_id)

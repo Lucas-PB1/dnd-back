@@ -8,6 +8,7 @@ import type { CharacterRepository } from '@game/shared/infrastructure/character.
 import type { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import type { LoadEffectCatalog } from '@game/effects';
 import type { CharacterStateResponseDto } from '../../dto/core/character-state-response.dto';
 import type { PhbCondition } from '../phb-condition.entity';
 import type { PlayerCharacterState } from '../player-character-state.entity';
@@ -36,6 +37,7 @@ export type CharacterStateRepoPorts = {
   spellLookup: CharacterSpellLookup;
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  effectCatalog: LoadEffectCatalog;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
   dataSource: DataSource;
   findOrCreate: CharacterStateFindOrCreate;
@@ -53,6 +55,7 @@ export function buildCoreDeps(ports: CharacterStateRepoPorts): CoreSessionDeps {
     spellLookup: ports.spellLookup,
     sheetRepository: ports.sheetRepository,
     grantedSpellCatalog: ports.grantedSpellCatalog,
+    effectCatalog: ports.effectCatalog,
     dataSource: ports.dataSource,
     findOrCreate: ports.findOrCreate,
     buildResponse: ports.buildResponse,
