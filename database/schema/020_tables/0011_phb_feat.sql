@@ -1,0 +1,11 @@
+CREATE TABLE rpg.phb_feat (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  category rpg.feat_category NOT NULL,
+  repeatable BOOLEAN NOT NULL DEFAULT FALSE,
+  prerequisite TEXT,
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

@@ -54,29 +54,31 @@ flowchart LR
 ### Nest → Postgres (Supabase)
 
 - **Produção / Vercel:** transaction pooler, porta **6543**, `?pgbouncer=true` → `DATABASE_URL`
-- **Migrations / seeds:** conexão **direct** porta **5432** → `SUPABASE_DATABASE_URL`
-- **Dev local:** `DATABASE_URL` aponta para Postgres local; API continua local enquanto migrations podem ir também ao Supabase
+- **Migrations / seeds cloud:** conexão **direct** / session pooler **5432** → `SUPABASE_DATABASE_URL`
+- **Dev (iteração catálogo):** `DATABASE_URL` = **Postgres local** (`npm run db:up` → `localhost:5432`). Não apontar `DATABASE_URL` para `*.supabase.co` no dia a dia — os scripts `db:reset` / `db:seed` locais bloqueiam isso.
 - TypeORM: `synchronize: false`, pool `max: 1` em prod serverless, SSL automático se URL contiver `supabase`
 
 ### Scripts de banco (`npm run db:*`)
 
 | Comando | O que faz |
 |---------|-----------|
-| `db:migrate` | Migrations pendentes em `DATABASE_URL` (local) |
-| `db:migrate:supabase` | Migrations pendentes só no Supabase |
-| `db:migrate:all` | Local **e** Supabase (incremental, rastreia `rpg.schema_migration`) |
-| `db:seed` / `db:seed:all` | Seeds PHB + Valdas (após reset ou banco vazio) |
-| `db:reset` | `dev-reset.sql` — **só local** por padrão |
-| `db:reset -- --target=supabase` | Reset Supabase (requer confirmação `CONFIRM_DROP_RPG=yes`) |
-| `db:setup` | reset + migrate + seed local |
-| `db:setup:all` | setup local + migrate + seed no Supabase (primeira carga remota) |
+| `db:up` / `db:down` | Docker Compose Postgres 16 local |
+| `db:migrate` | Schema em `DATABASE_URL` (**local**) |
+| `db:migrate:supabase` | Schema só no cloud (`SUPABASE_DATABASE_URL`) |
+| `db:migrate:all` | Local **e** cloud |
+| `db:seed` | Seeds local; `--from=` resume; `--skip-truncate` |
+| `db:seed:supabase` | Seeds só cloud |
+| `db:reset` | `dev-reset.sql` — **só local** (recusa URL cloud) |
+| `db:reset -- --target=supabase --confirm` | Reset cloud (destrutivo) |
+| `db:setup` | validate + reset + migrate + seed **local** |
+| `db:setup:all` | setup local + wipe/migrate/seed cloud |
 
 ### Nest → Supabase Auth
 
 - Validar JWT do header `Authorization: Bearer <token>`
 - **JWKS** (`SUPABASE_URL/auth/v1/.well-known/jwks.json`) — tokens ES256 do Supabase Auth
-- Rotas catálogo `phb_*`: **públicas** (sem auth)
-- Rotas jogador: `SupabaseAuthGuard` + ownership por `userId` (RLS Postgres opcional / futuro)
+- Rotas catálogo `phb_*`: **públicas na API Nest** (sem auth); acesso DB via **service role** (não PostgREST/anon)
+- Rotas jogador: `SupabaseAuthGuard` + ownership por `userId`; **RLS** em `player_*` / `campaign_*` no schema (condicional a `auth`)
 
 ### Frontend → API
 
@@ -107,9 +109,9 @@ PORT=3000
 
 | Fase | Escopo |
 |------|--------|
-| **Atual** | Catálogo read-only (`GET /classes`, …), sem auth |
-| **Próxima** | Supabase Auth guard, RLS em tabelas de jogador |
-| **Depois** | Repo Next.js consumindo API + login Supabase |
+| **Atual** | Catálogo + Auth Nest + RLS player/campaign no schema |
+| **Próxima** | Endurecer ownership / mesa |
+| **Depois** | Forward migrations se houver prod com dados |
 
 ## Rules / skills derivadas
 

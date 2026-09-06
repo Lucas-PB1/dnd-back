@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Aplica baseline + migrations forward-only pendentes.
+ * Aplica schema declarative (database/schema/**) + migrations forward-only pendentes.
  *
  * Uso:
  *   node scripts/run-migrations.mjs                 # DATABASE_URL
@@ -10,14 +10,15 @@
 import fs from 'fs';
 import path from 'path';
 import { loadEnv, rootDir } from './lib/load-env.mjs';
+import { assertLocalDatabaseUrl } from './lib/assert-local-db.mjs';
 import { createPgClient, maskDatabaseUrl } from './lib/pg-client.mjs';
 import { listSqlFiles, migrationVersion } from './lib/sql-files.mjs';
 
 loadEnv();
 
-const baselineDir = path.join(rootDir, 'database/baseline');
+const schemaDir = path.join(rootDir, 'database/schema');
+const legacyBaselineDir = path.join(rootDir, 'database/baseline');
 const migrationsDir = path.join(rootDir, 'database/migrations');
-const BASELINE_VERSION = 'baseline/001_full_schema';
 
 const BOOTSTRAP_SQL = `
 CREATE SCHEMA IF NOT EXISTS rpg;
@@ -48,6 +49,7 @@ function resolveTargets(target) {
       console.error('DATABASE_URL não definida.');
       process.exit(1);
     }
+    assertLocalDatabaseUrl(url, { label: 'db:migrate local' });
     targets.push({ label: 'local', url });
   }
 
@@ -66,16 +68,23 @@ function resolveTargets(target) {
 }
 
 /**
- * Baseline primeiro; depois forward-only em database/migrations/ (_archive ignorado).
+ * Schema declarative primeiro; depois forward-only em database/migrations/.
  * @returns {{ filePath: string, version: string }[]}
  */
 function collectMigrationFiles() {
   /** @type {{ filePath: string, version: string }[]} */
   const entries = [];
+  const databaseDir = path.join(rootDir, 'database');
 
-  if (fs.existsSync(baselineDir)) {
-    const databaseDir = path.join(rootDir, 'database');
-    for (const filePath of listSqlFiles(baselineDir)) {
+  if (fs.existsSync(schemaDir)) {
+    for (const filePath of listSqlFiles(schemaDir)) {
+      entries.push({
+        filePath,
+        version: migrationVersion(filePath, databaseDir),
+      });
+    }
+  } else if (fs.existsSync(legacyBaselineDir)) {
+    for (const filePath of listSqlFiles(legacyBaselineDir)) {
       entries.push({
         filePath,
         version: migrationVersion(filePath, databaseDir),
@@ -110,16 +119,18 @@ async function getAppliedVersions(client) {
 }
 
 /**
- * Baseline exige schema vazio ou reset — não aplicar sobre migrations granulares antigas.
+ * Schema exige rpg vazio ou reset — não aplicar sobre catálogo antigo sem wipe.
  * @param {import('pg').Client} client
  * @param {Set<string>} applied
  * @param {{ filePath: string, version: string }[]} files
  */
-async function assertBaselineSafe(client, applied, files) {
-  const baselinePending = files.some(
-    ({ version }) => version === BASELINE_VERSION && !applied.has(BASELINE_VERSION),
+async function assertSchemaSafe(client, applied, files) {
+  const schemaPending = files.some(
+    ({ version }) =>
+      (version.startsWith('schema/') || version.startsWith('baseline/')) &&
+      !applied.has(version),
   );
-  if (!baselinePending) return;
+  if (!schemaPending) return;
 
   const catalog = await client.query(`
     SELECT EXISTS (
@@ -130,11 +141,11 @@ async function assertBaselineSafe(client, applied, files) {
   if (!catalog.rows[0]?.has_catalog) return;
 
   console.error(`
-  Baseline pendente, mas o schema rpg já existe.
+  Schema pendente, mas o schema rpg já existe.
 
   Rode reset antes de migrar:
     npm run db:reset                  # local
-    npm run db:setup:all              # local + Supabase (wipe + baseline + seed)
+    npm run db:setup:all              # local + Supabase (wipe + schema + seed)
 
   Ou, só Supabase: CONFIRM_DROP_RPG=yes node scripts/dev-reset.mjs --target=supabase --confirm
 `);
@@ -158,13 +169,9 @@ async function migrateOne(label, url) {
     await client.connect();
   } catch (err) {
     const code = err && typeof err === 'object' && 'code' in err ? err.code : '';
-    const isDirectHost = /db\.[^.]+\.supabase\.co/i.test(
-      maskDatabaseUrl(url),
-    );
+    const isDirectHost = /db\.[^.]+\.supabase\.co/i.test(maskDatabaseUrl(url));
     if (!preferPooler && isDirectHost && code === 'ENOTFOUND') {
-      console.log(
-        '  db.* inacessível (ENOTFOUND); tentando session pooler…',
-      );
+      console.log('  db.* inacessível (ENOTFOUND); tentando session pooler…');
       client = createPgClient(url, { preferPooler: true });
       console.log(`→ ${maskDatabaseUrl(url, { preferPooler: true })}`);
       await client.connect();
@@ -177,7 +184,7 @@ async function migrateOne(label, url) {
     await ensureMigrationTable(client);
     const applied = await getAppliedVersions(client);
     const files = collectMigrationFiles();
-    await assertBaselineSafe(client, applied, files);
+    await assertSchemaSafe(client, applied, files);
     let pending = 0;
 
     for (const { filePath, version } of files) {

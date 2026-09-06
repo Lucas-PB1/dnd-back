@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Gera J061 (resource defs) + E008 (grant_resource effects) + C078 (economy)
+ * Gera resource defs + grant_resource effects + economy Cap.6
  * a partir de cap6-economy.json.
  * Uso: node scripts/generate-ghpg-cap6-economy-seeds.mjs
  */
@@ -95,21 +95,6 @@ FROM ins CROSS JOIN rd;`;
     .join('\n');
 }
 
-function buildDeleteMigratedGrants() {
-  const slugs = economy.resources.map((r) => `'${sqlEscape(r.slug)}'`).join(',\n  ');
-  return `
-DELETE FROM rpg.phb_resource_grant rg
-USING rpg.phb_resource_definition rd, rpg.phb_feat f
-WHERE rg.resource_id = rd.id
-  AND rg.owner_kind = 'feat'::rpg.resource_owner_kind
-  AND rg.owner_id = f.id
-  AND rd.slug IN (
-  ${slugs}
-  )
-  AND f.slug LIKE 'gh-transformation-%';
-`;
-}
-
 function buildEconomyValues() {
   let sort = 600;
   return economy.actions
@@ -137,9 +122,12 @@ function buildEconomyValues() {
     .join(',\n');
 }
 
+const outTransform = join(root, 'database/seeds/transformation/grim-hollow');
+const outEconomy = join(root, 'database/seeds/economy/grim-hollow');
+
 const j061 = `-- Recursos de transformação — Grim Hollow Cap. 6 (economy tipada)
 -- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
--- Grants: SSOT em effects/E008_ghpg_transform.sql
+-- Grants: SSOT em phb_effect.grant-resource.gh-transformations.sql
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, feat_id, min_level)
 VALUES
@@ -151,10 +139,10 @@ ON CONFLICT (slug) DO UPDATE SET
   min_level = EXCLUDED.min_level;
 `;
 
-const e008 = `-- Transformações GH Cap. 6 — grant_resource (SSOT; J061 só defs)
+const e008 = `-- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
+-- Transformações GH Cap. 6 — grant_resource (SSOT; defs em phb_resource_definition.gh-transformations.sql)
 -- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
 ${buildEffectBlocks()}
-${buildDeleteMigratedGrants()}
 `;
 
 const c078 = `-- Economy — transformações Grim Hollow Cap. 6
@@ -184,19 +172,19 @@ ON CONFLICT (action_id) DO UPDATE SET
 `;
 
 writeFileSync(
-  join(root, 'database/seeds/grim-hollow/J061_phb_resource_ghpg_cap6_transformations.sql'),
+  join(outTransform, 'phb_resource_definition.gh-transformations.sql'),
   j061,
 );
 writeFileSync(
-  join(root, 'database/seeds/effects/E008_ghpg_transform.sql'),
+  join(outTransform, 'phb_effect.grant-resource.gh-transformations.sql'),
   e008,
 );
 writeFileSync(
-  join(root, 'database/seeds/combat/C078_phb_feat_economy_ghpg_cap6_transformations.sql'),
+  join(outEconomy, 'phb_class_economy_action.gh-transformations.sql'),
   c078,
 );
 
 console.log(
-  `Wrote J061 defs + E008 (${economy.resources.length} effects) + C078 (${economy.actions.length} actions)`,
+  `Wrote Cap.6 defs + grant_resource (${economy.resources.length}) + economy (${economy.actions.length})`,
 );
 console.log(`PB+stage slugs (${PB_PLUS_STAGE.size}):`, [...PB_PLUS_STAGE].join(', '));

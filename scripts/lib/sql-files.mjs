@@ -24,7 +24,7 @@ export function listSqlFiles(baseDir, pattern = '**/*.sql') {
   }
 
   walk(baseDir);
-  files.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  files.sort();
   return files;
 }
 

@@ -1,0 +1,26 @@
+# Postgres local para iterar schema/seeds (rápido).
+# Uso: npm run db:up   →   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+#
+# Não substitui Auth/Storage do Supabase cloud — só o catálogo `rpg`.
+# Alternativa: `supabase start` (CLI) se preferir stack completa local.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dnd-api-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - dnd_api_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dnd_api_pgdata:

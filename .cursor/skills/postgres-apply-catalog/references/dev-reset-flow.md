@@ -8,13 +8,21 @@ CREATE SCHEMA rpg;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 ```
 
-**Só desenvolvimento.** Apaga todo o schema `rpg`.
+**Só desenvolvimento local** (`DATABASE_URL` = localhost).
 
 ## Quando usar
 
-- Banco local limpo
-- Reaplicar catálogo do zero após mudanças em migrations/seeds
+- Banco local limpo (`npm run db:up` + `npm run db:reset`)
+- Reaplicar catálogo do zero após mudanças em schema/seeds
 
-## Nunca em prod
+## Nunca no loop de debug remoto
 
-Supabase produção: migrations incrementais apenas.
+Se `DATABASE_URL` for Supabase cloud, o script **aborta** (use `SUPABASE_DATABASE_URL` + `--target=supabase --confirm`).
+
+## Cloud (raro)
+
+```bash
+node scripts/dev-reset.mjs --target=supabase --confirm
+```
+
+Apaga o schema `rpg` no projeto remoto.

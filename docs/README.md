@@ -19,6 +19,7 @@
 | [`architecture/architecture.md`](architecture/architecture.md) | Bounded contexts, camadas |
 | [`architecture/infrastructure.md`](architecture/infrastructure.md) | Stack, env, TypeORM |
 | [`architecture/data-model.md`](architecture/data-model.md) | Schema `rpg` / PHB |
+| [`architecture/sql-layout.md`](architecture/sql-layout.md) | Schema declarative + seeds por domínio |
 | [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho, SRP, DRY, testes, barrels |
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |

@@ -1,0 +1,22 @@
+CREATE TABLE rpg.phb_creature_template (
+  slug TEXT PRIMARY KEY,
+  edition_slug TEXT NOT NULL REFERENCES rpg.phb_edition(slug),
+  name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
+  creature_type TEXT NOT NULL,
+  creature_subtype TEXT,
+  size_slug TEXT,
+  challenge_rating TEXT,
+  proficiency_bonus INT CHECK (proficiency_bonus IS NULL OR proficiency_bonus BETWEEN 0 AND 9),
+  armor_class INT,
+  hit_points_avg INT CHECK (hit_points_avg IS NULL OR hit_points_avg >= 0),
+  hit_points_formula TEXT,
+  spellcasting_ability_slug TEXT REFERENCES rpg.phb_ability(slug),
+  spell_save_dc INT CHECK (spell_save_dc IS NULL OR spell_save_dc BETWEEN 1 AND 40),
+  spell_attack_bonus INT CHECK (spell_attack_bonus IS NULL OR spell_attack_bonus BETWEEN -10 AND 30),
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  subtitle TEXT,
+  alignment TEXT,
+  initiative_modifier INT,
+  ability_scores JSONB,
+  image_url TEXT
+);

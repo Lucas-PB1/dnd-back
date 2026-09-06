@@ -1,8 +1,8 @@
 # Modelo de dados — catálogo PHB 2024
 
-Schema PostgreSQL `rpg` — **~81 tabelas base** (65 `phb_*` + runtime + `schema_migration`), views `v_phb_*`, 1 materialized view.
+Schema PostgreSQL `rpg` — **~136 tabelas base** (`phb_*` + runtime + `schema_migration`), views `v_phb_*`, **17** materialized views.
 
-Fonte: [`database/baseline/`](../database/baseline/) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
+Fonte: [`database/schema/`](../database/schema/) · Layout: [`sql-layout.md`](sql-layout.md) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
 
 Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 

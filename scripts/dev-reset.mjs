@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import readline from 'readline/promises';
 import { loadEnv, rootDir } from './lib/load-env.mjs';
+import { assertLocalDatabaseUrl } from './lib/assert-local-db.mjs';
 import { createPgClient, maskDatabaseUrl } from './lib/pg-client.mjs';
 
 loadEnv();
@@ -55,6 +56,7 @@ if (target === 'local') {
     console.error('DATABASE_URL não definida.');
     process.exit(1);
   }
+  assertLocalDatabaseUrl(url, { label: 'db:reset local' });
 } else {
   url = process.env.SUPABASE_DATABASE_URL;
   if (!url) {

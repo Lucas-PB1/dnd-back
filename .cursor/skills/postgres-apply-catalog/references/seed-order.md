@@ -1,35 +1,34 @@
 # Ordem dos seeds
 
-Aplicados por `scripts/run-seeds.mjs` na ordem de **packs** (não lexicográfica pura entre pastas):
+Preferência: [`database/seeds/SEED_ORDER.txt`](../../../database/seeds/SEED_ORDER.txt) (ordem FK-safe dos packs históricos). Gerar: `node scripts/generate-seed-order.mjs`.
+
+**Iteração:** Postgres local (`npm run db:up`). Após falha:
+
+```bash
+npm run db:seed -- --from=domínio/fonte/arquivo.sql --skip-truncate --skip-refresh
+```
+
+Fallback (sem `SEED_ORDER.txt`) em `scripts/run-seeds.mjs`:
 
 1. `000_truncate.sql`
-2. `phb/`
-3. `subclass/`
-4. `valdas/` → `valdas-gunslinger/` → `valdas-player-pack-2/`
-5. `steinhardt-eldritch-hunt/`
-6. `northlands-heroes/`
-7. `griffons-saddlebag/`
-8. `grim-hollow/`
-9. `dmg/`
-10. `combat/`
-11. `creatures/`
-12. **`effects/`** — por último (`phb_effect` de todos os packs; depende de feats/resources)
+2. `catalog/` → `class/` → `subclass/` → `species/` → `feat/`
+3. `transformation/` → `heritage/` → `thread/` → `background/` → `item/` → `spell/`
+4. `economy/` → `creature/`
+5. **`effect/`** — por último
 
-Dentro de cada pack: ordem lexicográfica do path.
+Nome: `{tabela}.{conteudo-slug}.sql` — ver [`docs/architecture/sql-layout.md`](../../../docs/architecture/sql-layout.md).
 
 ## Motor de efeitos
 
-SSOT de dados: `database/seeds/effects/E00*.sql` (… combat_mod E014; Cap.6 table_action E015). Tabelas `phb_resource_grant` / `phb_combat_modifier` **DROP**.
-Schema: baseline (`phb_effect` + satélites).  
-Docs: [`docs/plans/effect-engine.md`](../../../docs/plans/effect-engine.md) · [`docs/architecture/effect-engine-read-path.md`](../../../docs/architecture/effect-engine-read-path.md).
+SSOT: `database/seeds/effect/**` + Cap.6 em `transformation/grim-hollow/` + `economy/grim-hollow/`.  
+Schema: `database/schema/` (`phb_effect` + satélites).
 
 ## Como aplicar
 
 ```bash
-npm run db:setup              # local: reset → migrate → seed
-npm run db:setup:all          # local + Supabase (wipe remoto com --confirm)
+npm run db:setup          # local
 npm run db:seed
-npm run db:seed:supabase
+npm run db:setup:all      # só quando local estiver verde
 ```
 
-Não use scripts avulsos `apply-*` / `reseed-*` — SSOT = `database/seeds/` via `run-seeds.mjs`.
+Não use scripts avulsos `apply-*` / `reseed-*`.
