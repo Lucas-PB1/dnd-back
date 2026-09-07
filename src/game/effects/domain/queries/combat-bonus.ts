@@ -40,49 +40,35 @@ export function hasOwnerEffectKind(
 }
 
 export function styleOrFeatNumericBonus(input: {
-  effects: readonly CatalogEffect[] | undefined;
+  effects: readonly CatalogEffect[];
   ownedSlugs: readonly string[];
   ownerSlug: string;
   kind: EffectKind;
   proficiencyBonus: number;
-  legacyFlat: number;
 }): number {
-  if (input.effects !== undefined) {
-    return (
-      numericBonusFromOwnerEffect(
-        input.effects,
-        input.ownedSlugs,
-        input.ownerSlug,
-        input.kind,
-        input.proficiencyBonus,
-      ) ?? 0
-    );
-  }
-  return input.ownedSlugs.includes(input.ownerSlug) ? input.legacyFlat : 0;
+  return (
+    numericBonusFromOwnerEffect(
+      input.effects,
+      input.ownedSlugs,
+      input.ownerSlug,
+      input.kind,
+      input.proficiencyBonus,
+    ) ?? 0
+  );
 }
 
 export function styleOrFeatHasKind(input: {
-  effects: readonly CatalogEffect[] | undefined;
+  effects: readonly CatalogEffect[];
   ownedSlugs: readonly string[];
   ownerSlug: string;
   kind: EffectKind;
 }): boolean {
-  if (
-    hasOwnerEffectKind(
-      input.effects ?? [],
-      input.ownedSlugs,
-      input.ownerSlug,
-      input.kind,
-    )
-  ) {
-    return true;
-  }
-  const ownerInCatalog = (input.effects ?? []).some(
-    (effect) =>
-      effect.ownerKind === 'feat' && effect.ownerSlug === input.ownerSlug,
+  return hasOwnerEffectKind(
+    input.effects,
+    input.ownedSlugs,
+    input.ownerSlug,
+    input.kind,
   );
-  if (ownerInCatalog) return false;
-  return input.ownedSlugs.includes(input.ownerSlug);
 }
 
 export function ownedStyleOrFeatSlugs(context: {

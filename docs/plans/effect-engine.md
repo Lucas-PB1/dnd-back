@@ -14,7 +14,7 @@ Catálogo orientado a verbos: `phb_effect` + satélites; runtime `@game/effects`
 | **Fonte** (qual livro) | [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) |
 | **Fase** (ordem DROP) | **este arquivo** (§ Aberto / DoD) |
 
-Completar mesa = categoria + fonte; fechar dual-read = fases abaixo.
+Completar mesa = categoria + fonte; fases DROP / dual-read **fechadas** (abaixo).
 
 ## Feito (não reabrir)
 
@@ -33,11 +33,11 @@ Inventários docs-first das fases 5–6b foram **apagados** (política plano con
 
 Checklist por **categoria**: [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · por **fonte**: [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md).
 
-### Fases (ordem técnica DROP)
+### Fases (ordem técnica DROP) — **fechadas**
 
 1. ~~Migrar grants + combat_mod~~ → **feito** (E008–E014); tabelas **DROP** via `E014` + baseline.
-2. No mesmo caminho de cada dono: revisão mesa (economy + apply) — checklist.
-3. ~~Espécie: fallback MV~~ → **feito** (`collectSpeciesGrantedSpellSlugs` só `grant_spell`; Alto Elfo / Andari overrides no TS).
+2. No mesmo caminho de cada dono: revisão mesa (economy + apply) — checklist (aberto por categoria).
+3. ~~Espécie: fallback MV~~ → **feito** (`collectSpeciesGrantedSpellSlugs` só `grant_spell`; escolha Alto Elfo / Andari via `option_key`).
 4. Residual UI fino → [`backlog.md`](backlog.md) Adiado só se não for gap de apply tipado.
 
 ### Feito neste caminho (não reabrir)
@@ -48,24 +48,24 @@ Checklist por **categoria**: [`effect-mesa-checklist.md`](effect-mesa-checklist.
 | DROP-prep 2 | Heritage `E010`; thread `E011`; schedules **effects-only** |
 | DROP-prep 3 | Species/subclass/item schedules **effects-only**; `E012`/`E013` |
 | DROP | `E014` combat_mod residual; views HP/UD/heritage ← efeitos; **DROP** `phb_resource_grant` + `phb_combat_modifier` |
-| Magias espécie | Collect + cast-economy **effects-only**; MV `v_phb_species_granted_spell` legado (não lida no merge) |
+| Magias espécie | Collect + cast-economy **effects-only**; removidos dual-read, MV/view `*_species_granted_spell`, seed species grant legado |
+| Limpeza mole | Heurística cast + Freyr + dual-path runtime + `hasStyleOrFeat` + truques Alto Elfo/Andari tipados → só `phb_effect` / `ownedStyleOrFeatSlugs` |
 
 
 ### DoD do DROP
 
-- ~~100% grants em `phb_effect`~~ · ~~loaders effects-only~~ · ~~views HP/unarmored só efeitos~~ · ~~DROP tabelas~~ · ~~magias espécie collect + cast-economy effects-only~~
-- Specs verdes + item sumido do backlog (mesa residual permanece no checklist)
+- [x] 100% grants em `phb_effect` · loaders effects-only · views HP/unarmored só efeitos · **DROP** tabelas
+- [x] Magias espécie collect + cast-economy effects-only · dual-read / MV espécie removidos
+- [x] Cast economy só via `phb_effect_cast_economy` (sem heurística MI/Freyr)
+- Specs verdes + mesa residual permanece no checklist por categoria
 
 ### Legado que permanece (pontuar)
 
 | Item | Motivo |
 |------|--------|
-| MV/view magias espécie | View ainda no schema; runtime não lê no merge/cast |
-| `hasStyleOrFeat` (posse) | Gates de proficiência |
-| Prefix skill option keys | Fallback até collector 100% efeitos |
-| Heurística cast MI / Freyr | Fallback até `cast_economy` completo |
 | Economy `C0*` incompleta / apply faltando | Checklist mesa |
 | `feat_benefit` prose | Anti-escopo ADR |
+| `resolve-sheet-meta` bundle vs query | Meta P032 incompleta → PB/boosts por query; **não** é motor de efeitos |
 
 ## Anti-escopo
 

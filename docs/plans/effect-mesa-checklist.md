@@ -8,7 +8,7 @@ Os outros eixos (não duplicar listas longas):
 |------|-----|----------|
 | **Categoria** | **este arquivo** | O que falta por dono/peça (SSOT do trabalho) |
 | **Fonte** | [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) | Auditar um livro/pack (PHB, GH, NL…) cruzando as categorias |
-| **Fase** | [`effect-engine.md`](effect-engine.md) | Ordem técnica DROP (grants → loaders → DROP tabelas) |
+| **Fase** | [`effect-engine.md`](effect-engine.md) | Ordem técnica DROP — **fechada** (grants → loaders → DROP tabelas + limpeza dual-read) |
 
 Regra: seed tipado → ficha lê → economy/ação se gasto → **apply** → front. Kind novo = dicionário + read-path + call site.
 
@@ -18,7 +18,11 @@ ADR · dicionário · read-path: [`adr-effect-engine.md`](../architecture/adr-ef
 
 ## Critério “completo” (qualquer §)
 
-efeitos/pool · economy/ações · apply · front · gaps vs regras
+efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras **da mesa**
+
+**Apply de mesa** = o que atualiza estado do PC agora: cura, PV temp., CA tipada, gasto de pool, toggles (fúria, mutação…), slots/inspiração.
+
+**Não** é critério de § completo: dano no alvo, acerto vs CA, saves de combate, condições no inimigo, tabuleiro. Isso vai para [`combat-real-deferred.md`](combat-real-deferred.md) — feature futura, **fora** deste checklist.
 
 ---
 
@@ -26,15 +30,15 @@ efeitos/pool · economy/ações · apply · front · gaps vs regras
 
 | § | Categoria | Âncora | Fazer |
 |---|-----------|--------|--------|
-| **A** | Transformações | `transformation/grim-hollow/` · `economy/grim-hollow/` | **§A fechado** — pool/economy; Licantropo; Clemência; Cura Profana; Bestial Vigor; Mutações Aberrantes stateful |
-| **B** | Classe | `E009` / `C009`–`C010`… | Pool ok; economy/panel; metamagia, invocações, manobras |
-| **C** | Subclass | `E012` + packs / `C004`… | Pool ok; table-action; catálogos; apply |
-| **D** | Espécie | `E007` / `C011`… | Pool ok; magias collect+cast_economy effects-only; economy; apply |
-| **E** | Heritage | `E010` / `C070`–`C072` | Pool ok; revisar economy/smoke; apply; UI |
-| **F** | Thread | `E011` / `N040`–`N041` | Pool ok; Fatebound/Cursemarked; apply + UI |
+| **A** | Transformações | `transformation/grim-hollow/` · `economy/grim-hollow/` | **§A fechado** (mesa) |
+| **B** | Classe | `effect/phb/phb_effect.class.sql` · `economy/phb/` · `class/phb/` | Pool/economy ok; apply **ficha** (Rally/`tempHp`, Proteção Arcana, curas tipadas monge/clérigo/druida/bruxo); residual fino; combate → [`combat-real-deferred.md`](combat-real-deferred.md) |
+| **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
+| **D** | Espécie | `effect/phb/` espécie | Pool ok; economy; apply ficha |
+| **E** | Heritage | heritage seeds | Pool ok; economy/smoke; apply ficha; UI |
+| **F** | Thread | thread seeds | Pool ok; Fatebound/Cursemarked; apply ficha + UI |
 | **G** | Antecedente | `phb_background*` | Packages/skills/tools/idiomas; efeitos se couber |
-| **H** | Item | `E013` · Treasure | Pool ok; mágico · prop. · maestria · cast/charges/dawn |
-| **I** | Feat / boon / estilo | `E001`–`E005` · Cap.4 | Wire + economies feat; residual apply |
+| **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
+| **I** | Feat / boon / estilo | feat effects | Wire + economies; apply ficha; estilo no roll de ataque → lista combate real |
 
 Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar no **§ do concedente**, não como categoria própria.
 
@@ -42,25 +46,25 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 
 | § | Categoria | Fazer |
 |---|-----------|--------|
-| **J** | Montaria | template · board · ações · UI |
-| **K** | Companheiro / animal | tracker · summon/command · UI |
-| **L** | Veículo / barco | bundle · board · métrica · ações · UI |
-| **M** | Monstro / criatura | template · spawn encontro · combate |
+| **J** | Montaria | template · board · ações de ficha/UI |
+| **K** | Companheiro / animal | tracker leve · summon/command; **combate** → [`combat-real-deferred.md`](combat-real-deferred.md) |
+| **L** | Veículo / barco | bundle · board · métrica · ações |
+| **M** | Monstro / criatura | catálogo/template agora; **spawn/combate** → lista combate real |
 
 ## Magia / mesa
 
 | § | Categoria | Fazer |
 |---|-----------|--------|
-| **N** | Magias / cast | slots · concentração · cast item · `cast_economy` |
-| **O** | Condições / duração | estado tipado na mesa |
-| **P** | Campanha / encontro | combatentes · spawn §J–M |
+| **N** | Magias / cast | slots · concentração · cast item (ficha); resolução de dano no alvo → lista combate real |
+| **O** | Condições / duração | declare/nota na mesa; tipagem no alvo → lista combate real |
+| **P** | Campanha / encontro | combatentes leves; combate simulado → lista combate real |
 
 ## Transversal
 
-- [ ] Economies `C0*` — slug a slug **dentro** do § do dono
-- [ ] Efeito sem apply — no PR do §
-- [ ] DROP legado — fases em [`effect-engine.md`](effect-engine.md)
+- [ ] Economies — slug a slug **dentro** do § do dono (**apply ficha**)
+- [ ] Efeito sem apply **de ficha** — no PR do §
+- [x] DROP legado — fases em [`effect-engine.md`](effect-engine.md) (**feito**: tabelas + dual-read + MV espécie)
 
 ## Anti-escopo
 
-Keyword por slug · kind sem dicionário · big-bang fora de categoria + fase
+Keyword por slug · kind sem dicionário · big-bang fora de categoria + fase · **tratar combate real como gap do checklist mesa**

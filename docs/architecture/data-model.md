@@ -1,6 +1,6 @@
 # Modelo de dados — catálogo PHB 2024
 
-Schema PostgreSQL `rpg` — **~136 tabelas base** (`phb_*` + runtime + `schema_migration`), views `v_phb_*`, **17** materialized views.
+Schema PostgreSQL `rpg` — **~136 tabelas base** (`phb_*` + runtime + `schema_migration`), views `v_phb_*`, **16** materialized views.
 
 Fonte: [`database/schema/`](../database/schema/) · Layout: [`sql-layout.md`](sql-layout.md) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
 
@@ -44,7 +44,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_spell_school`, `phb_spell`, `phb_spell_class`
 - `phb_spell_slot_pattern`, `phb_spell_slot_by_level`
 - `phb_spell_source` — metadado de origem (listas/subclass)
-- `phb_spell_grant` — magias concedidas (feat/species/class); views `v_phb_*_granted_spell`
+- `phb_spell_grant` — magias concedidas (feat/class); views `v_phb_feat_granted_spell` / `v_phb_class_granted_spell` — espécie via `phb_effect`
 
 ### 3. Classes
 
@@ -59,7 +59,8 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 - `phb_species`, `phb_species_trait`
 - Escolhas (incl. lineages): `phb_option_def` / `phb_option_value` com `scope='species'`
-- Views: `v_phb_species_trait_choices`, `v_phb_species_granted_spell`
+- Views: `v_phb_species_trait_choices`
+- Magias concedidas de espécie: `phb_effect` (`grant_spell`) via `collectSpeciesGrantedSpellSlugs` — **sem** view/MV `*_species_granted_spell`
 
 **PHB/SRD only** — heranças Grim Hollow usam cluster §4b (não `phb_species`).
 
@@ -70,8 +71,8 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_heritage_traditional` — preset de 8 traços sugeridos por herança
 - Runtime: `player_character.heritage_slug` XOR `species_slug`; picks em `player_character_heritage_trait` (slots 1–9) + `player_character_heritage_config` (speed trade / tamanho)
 - Views: `v_phb_heritage_trait_choices`, `v_phb_heritage_traditional_build`, `v_phb_heritage_passive_modifier`, `v_phb_heritage_economy_action`
-- Mecânica: `phb_combat_modifier.heritage_trait_id`, `phb_class_economy_action.heritage_trait_id` + `min_trait_takes`
-- Seeds: `J037`/`J038` (catálogo), `C070+` (economy/modifiers), `J039` (cleanup legado `gh-*` em species)
+- Mecânica: `phb_effect` (`combat_mod` / resource) + `phb_class_economy_action.heritage_trait_id` + `min_trait_takes`
+- Seeds: `J037`/`J038` (catálogo), `C070+` (economy), effects heritage, `J039` (cleanup legado `gh-*` em species)
 
 ### 5. Equipment
 
@@ -83,12 +84,12 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_background` + skill / ability_option / language / tool_option / boost_option
 - Packages via `phb_starting_*` com `source='background'`
 
-### 7. Options / resources / modifiers / effects
+### 7. Options / resources / effects
 
 - `phb_option_def` / `phb_option_value` — scope unificado
-- `phb_resource_definition` + `phb_resource_grant`
-- `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`)
-- `phb_effect` + satélites — motor de efeitos (ADR [`adr-effect-engine.md`](adr-effect-engine.md); dicionário [`effect-dictionary.md`](effect-dictionary.md)); convívio com grants/modifiers até aposentadoria por lote
+- `phb_resource_definition` — definição de pool; cotas via `phb_effect` (`grant_resource` + `phb_effect_resource`)
+- HP bonus / unarmored defense: `phb_effect` (`combat_mod` + `phb_effect_combat_mod`) → views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`
+- `phb_effect` + satélites — SSOT mecânico (ADR [`adr-effect-engine.md`](adr-effect-engine.md); dicionário [`effect-dictionary.md`](effect-dictionary.md)); tabelas legadas `phb_resource_grant` / `phb_combat_modifier` **DROP**
 
 ### 8. Combat mechanical catalog
 
@@ -130,7 +131,7 @@ Combatente de encontro: `kind IN ('pc','actor')`. Criaturas manuais viram `game_
 Contratos estáveis para a API — skill `phb-query-views`. Política view / MV / RPC: [`adr-read-model-layers.md`](adr-read-model-layers.md).
 
 Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, granted-spells, heritage.  
-**MV (consumo):** `mv_spell_by_class`, `mv_phb_feat`, `mv_phb_background`, `mv_phb_species_trait_choices`, `mv_phb_class_economy_action`, bundles creature/vehicle/thread — inventário [`read-model-inventory.md`](./read-model-inventory.md).
+**MV (consumo):** `mv_spell_by_class`, `mv_phb_feat`, `mv_phb_background`, `mv_phb_species_trait_choices`, `mv_phb_class_economy_action`, `mv_phb_feat_granted_spell`, bundles creature/vehicle/thread — inventário [`read-model-inventory.md`](./read-model-inventory.md).
 
 Ficha do jogador (GET): `rpg.get_character_sheet_bundle` (P030/P032 — filhos + PB + boosts de classe + size da espécie) + `rpg.get_character_combat_bundle` (P031 — inventário/itens/armadura/defesa sem armadura).
 

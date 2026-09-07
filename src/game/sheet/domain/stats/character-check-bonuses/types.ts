@@ -6,14 +6,6 @@ export const SKILL_SPECIES_CHOICE_KINDS = new Set([
   'elf_keen_senses',
 ]);
 
-/** Feats que dão proficiência ou expertise na perícia escolhida. */
-export const PROF_OR_EXPERTISE_FEAT_OPTION_KEYS = new Set([
-  'attentiveSkill', // observant
-  'vastKnowledgeSkill', // keen-mind
-  'wildSkill', // blessing-of-freyr-and-freyja
-  'loreSkill', // blessing-of-wotan
-]);
-
 export type SkillProficiencyRank =
   | 'none'
   | 'jack'

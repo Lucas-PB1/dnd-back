@@ -10,7 +10,6 @@ export {
   formatDamageNote,
   formatSigned,
   hasProperty,
-  hasStyleOrFeat,
   isAmmunitionWeapon,
   isLight,
   isMeleeCapable,

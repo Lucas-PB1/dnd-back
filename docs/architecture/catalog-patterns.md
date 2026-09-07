@@ -35,23 +35,23 @@ Tabelas dedicadas (`phb_elf_lineage`, …) **removidas**. Dados em `phb_option_v
 **DRY de leitura:**
 
 - `v_phb_species_trait_choices`
-- `v_phb_species_granted_spell`
-- Domain consome só as views
+- Magias de espécie: `phb_effect` (`grant_spell`) → `collectSpeciesGrantedSpellSlugs` (sem `v_phb_species_granted_spell`)
+- Domain consome choices via view; grants via effects
 
 `species_choice_kind` permanece estável no TS.
 
 ---
 
-## 3. Magias concedidas (Lote E — DONE)
+## 3. Magias concedidas (Lote E — DONE; espécie via effects)
 
-| Origem | Tabela base | View |
-|--------|-------------|------|
-| Talentos fixos | `phb_spell_grant` (`origin_type=feat`) | `v_phb_feat_granted_spell` |
-| Espécie + linhagem | grant + option_value + traits | `v_phb_species_granted_spell` |
+| Origem | SSOT | Read path |
+|--------|------|-----------|
+| Talentos fixos | `phb_spell_grant` (`origin_type=feat`) / effects | `v_phb_feat_granted_spell` / MV |
+| Espécie + linhagem | `phb_effect` (`grant_spell`) | `collectSpeciesGrantedSpellSlugs` |
 | Classe | `phb_spell_grant` (`origin_type=class`) | `v_phb_class_granted_spell` |
 | Subclasse | `phb_subclass_prepared_spell` | `v_phb_subclass_prepared_spell` |
 
-`phb_spell_source` é **metadado** (listas/origem) — não substitui as views de concessão mecânica.
+`phb_spell_source` é **metadado** (listas/origem) — não substitui as concessões mecânicas.
 
 ---
 
@@ -78,11 +78,11 @@ Views: `v_phb_heritage_trait_choices`, `v_phb_heritage_traditional_build`, `v_ph
 
 Mecânica mesa (sem JSONB genérico):
 
-- `phb_combat_modifier.heritage_trait_id` + `min_trait_takes` (ex.: Robustez → `hp_bonus`)
+- `phb_effect` (`combat_mod` + `phb_effect_combat_mod`) com owner heritage + `min_trait_takes` (ex.: Robustez → `hp_bonus`)
 - `phb_class_economy_action.heritage_trait_id` + `min_trait_takes` (ex.: Sopro Potente)
 - Catálogo unificado: `v_phb_class_economy_action` inclui `heritage_trait_slug`
 
-Seeds: `grim-hollow/J037–J040` (catálogo + runtime), `combat/C070+` (classificador Cap. 1).
+Seeds: `grim-hollow/J037–J040` (catálogo + runtime), `combat/C070+` (classificador Cap. 1), effects heritage.
 
 API: `src/catalog/heritages/`; validação `CharacterHeritageChoicesValidator`; ficha expõe `aggregatedHeritageTraits`.
 
@@ -99,11 +99,11 @@ Runtime: `player_character_equipment.package_id` FK nullable + `package_slug` / 
 
 ---
 
-## 6. Recursos e modifiers (Lote G — DONE)
+## 6. Recursos e modifiers (Lote G — DONE; SSOT effects)
 
-- `phb_resource_definition` — definição
-- `phb_resource_grant` — cotas class/subclass
-- `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source` / `v_phb_unarmored_defense`)
+- `phb_resource_definition` — definição de pool
+- Cotas: `phb_effect` (`grant_resource` + `phb_effect_resource`) — **sem** `phb_resource_grant`
+- HP / unarmored: `phb_effect` (`combat_mod` + `phb_effect_combat_mod`) → views `v_phb_hp_bonus_source` / `v_phb_unarmored_defense` — **sem** `phb_combat_modifier`
 
 ---
 
@@ -182,7 +182,7 @@ Implementação das MVs pendentes: DoD no ADR.
 ## Checklist — nova tabela de catálogo
 
 1. Existe entidade pai clara (`phb_*` + FK)?
-2. Cabe em `option_*`, `starting_*`, `spell_grant`, `class_proficiency`, `resource_grant` ou `combat_modifier`?
+2. Cabe em `option_*`, `starting_*`, `spell_grant`, `class_proficiency`, ou `phb_effect` (+ satélite)?
 3. A leitura repete JOIN de 3+ migrations? → view `v_phb_*`.
 4. A ficha precisa da regra? → projeção na [lista fechada](adr-read-model-layers.md#decisão-5--fronteira-runtime--catálogo) (MV/view via `infrastructure/queries/`).
 5. Migration já aplicada em prod? → **nova** migration (neste repo: rewrite + `db:setup` enquanto sem produção).
@@ -193,4 +193,4 @@ Implementação das MVs pendentes: DoD no ADR.
 
 ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Dicionário: [`effect-dictionary.md`](effect-dictionary.md).
 
-Núcleo + satélites tipados (sem JSONB mecânico). Famílias legadas (`spell_grant`, `resource_grant`, `combat_modifier`) convivem até DoD de aposentadoria por lote.
+Núcleo + satélites tipados (sem JSONB mecânico). SSOT de pools/HP/UD = `phb_effect`; tabelas legadas `resource_grant` / `combat_modifier` **DROP**.

@@ -3,9 +3,7 @@ import { nextFeatInstanceIndex } from '../validation/feats/character-feat';
 import type { CatalogEffect } from '@game/effects';
 import { featSlugsFromEffects } from '@game/effects';
 
-const HUMAN_ORIGIN_FEAT_KIND = 'human_origin_feat';
-
-/** Talentos de origem do traço Versátil — prefer `grant_feat`; fallback choice legado. */
+/** Talentos de origem do traço Versátil — só `grant_feat` do catálogo. */
 export function resolveHumanOriginCharacterFeats(
   speciesSlug: string,
   speciesChoices: SpeciesChoiceDto[] | undefined,
@@ -15,17 +13,9 @@ export function resolveHumanOriginCharacterFeats(
   if (speciesSlug !== 'human' || !speciesChoices?.length) {
     return provided;
   }
+  if (!speciesEffects?.length) return provided;
 
-  const fromEffects =
-    speciesEffects && speciesEffects.length > 0
-      ? featSlugsFromEffects(speciesEffects, speciesChoices)
-      : [];
-  const legacy =
-    fromEffects.length === 0
-      ? speciesChoices.find((choice) => choice.choiceKind === HUMAN_ORIGIN_FEAT_KIND)
-          ?.choiceSlug?.trim()
-      : undefined;
-  const slugs = fromEffects.length > 0 ? fromEffects : legacy ? [legacy] : [];
+  const slugs = featSlugsFromEffects(speciesEffects, speciesChoices);
   if (slugs.length === 0) return provided;
 
   const feats = [...provided];

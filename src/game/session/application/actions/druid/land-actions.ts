@@ -1,6 +1,7 @@
 import { landAidDice } from '@game/combat/domain/druid';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { BadRequestException } from '@nestjs/common';
+import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -21,7 +22,12 @@ export async function resolveLandAid(
   const dice = landAidDice(character.level);
   const damage = rollDamageParts(`${dice}d6`, 0);
   const heal = rollDamageParts(`${dice}d6`, 0);
-  const state = await spendWildShape(deps, character);
+  await spendWildShape(deps, character);
+  const { state, healed } = await applyHealHitPoints(
+    deps.state,
+    character,
+    heal.total,
+  );
 
   return {
     state,
@@ -29,7 +35,7 @@ export async function resolveLandAid(
     expression: `${damage.expression} / ${heal.expression}`,
     total: damage.total,
     resourceSpent: true,
-    note: `Auxílio da Terra: Esfera 3 m a até 18 m. Salvaguarda CON — ${damage.total} Necrótico (${damage.expression}) ou metade. Uma criatura à escolha recupera ${heal.total} PV (${heal.expression}).`,
+    note: `Auxílio da Terra: Esfera 3 m a até 18 m. Salvaguarda CON — ${damage.total} Necrótico (${damage.expression}) ou metade (declare). Uma criatura recupera ${heal.total} PV (${heal.expression}; +${healed} na ficha — ajuste se for aliado).`,
   };
 }
 

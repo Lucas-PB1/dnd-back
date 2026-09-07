@@ -50,6 +50,7 @@ export type TableActionStateMock = jest.Mocked<
     | 'recoverClassResource'
     | 'recoverSpellSlotLevel'
     | 'patch'
+    | 'applyCurrentHitPoints'
   >
 > & {
   consumeSpellSlotLevel: jest.Mock;

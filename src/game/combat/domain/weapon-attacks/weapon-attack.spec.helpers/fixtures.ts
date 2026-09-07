@@ -1,3 +1,4 @@
+import type { CatalogEffect } from "@game/effects";
 import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
 import type { EquippedWeaponPiece } from "../weapon-attack";
 import type { WeaponAttackContext } from "../weapon-attack.types";
@@ -13,6 +14,117 @@ export function testScores(
     sabedoria: 12,
     carisma: 8,
     ...partial,
+  };
+}
+
+function styleEffect(
+  slug: string,
+  kind: CatalogEffect["kind"],
+  numeric: CatalogEffect["numeric"] = null,
+): CatalogEffect {
+  return {
+    id: slug,
+    kind,
+    ownerKind: "feat",
+    ownerId: "1",
+    ownerSlug: slug,
+    trigger: "passive",
+    unlockLevel: 1,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: null,
+    castEconomy: null,
+    numeric,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
+
+/** Efeitos tipados para estilos/talentos usados nos specs de ataque (sem legacyFlat). */
+export function catalogEffectsForOwnedStyles(
+  owned: readonly string[],
+): CatalogEffect[] {
+  const effects: CatalogEffect[] = [];
+  for (const slug of owned) {
+    switch (slug) {
+      case "archery":
+        effects.push(
+          styleEffect("archery", "attack_bonus", {
+            amountFormula: "fixed",
+            flat: 2,
+          }),
+        );
+        break;
+      case "defense":
+        effects.push(
+          styleEffect("defense", "ac_bonus", {
+            amountFormula: "fixed",
+            flat: 1,
+          }),
+        );
+        break;
+      case "dueling":
+      case "thrown-weapon-fighting":
+        effects.push(
+          styleEffect(slug, "damage_bonus", {
+            amountFormula: "fixed",
+            flat: 2,
+          }),
+        );
+        break;
+      case "two-weapon-fighting":
+        effects.push(styleEffect(slug, "light_bonus_ability_mod"));
+        break;
+      case "great-weapon-fighting":
+        effects.push(styleEffect(slug, "damage_die_floor"));
+        break;
+      case "great-weapon-master":
+        effects.push(
+          styleEffect(slug, "damage_bonus", {
+            amountFormula: "proficiency_bonus",
+            flat: null,
+          }),
+        );
+        break;
+      default:
+        break;
+    }
+  }
+  return effects;
+}
+
+export function withOwnedStyleEffects(
+  ctx: WeaponAttackContext,
+): WeaponAttackContext {
+  const owned = [
+    ...(ctx.featSlugs ?? []),
+    ...(ctx.fightingStyleSlugs ?? []),
+  ];
+  return {
+    ...ctx,
+    featEffects: [
+      ...(ctx.featEffects ?? []),
+      ...catalogEffectsForOwnedStyles(owned),
+    ],
   };
 }
 

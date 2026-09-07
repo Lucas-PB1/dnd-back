@@ -1,4 +1,5 @@
 import type { CatalogEffect, EffectCastEconomySatellite } from '../catalog-effect';
+import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
 import type { EffectChoiceRef } from './option-gates';
 
 /** Feat slugs granted by `grant_feat` (ex.: Humano Versátil). */
@@ -250,27 +251,64 @@ function formatResistanceNote(
 export function speciesGrantedSpellSlugsFromEffects(
   effects: readonly CatalogEffect[],
   level: number,
+  choices: readonly EffectChoiceRef[] = [],
 ): string[] {
-  const slugs: string[] = [];
+  const choiceSlugs: string[] = [];
+  let replaceFixedLevel1 = false;
+
   for (const effect of effects) {
     if (effect.kind !== 'grant_spell' && effect.kind !== 'grant_spell_by_level') {
       continue;
     }
     if (effect.unlockLevel > level) continue;
-    const slug = effect.spell?.spellSlug?.trim();
-    if (slug) slugs.push(slug);
+    const optionKey = effect.spell?.optionKey?.trim();
+    if (!optionKey) continue;
+    const choiceKind = choiceKindForOptionKey(optionKey);
+    const slug = choices
+      .find((row) => row.choiceKind === choiceKind)
+      ?.choiceSlug?.trim();
+    if (!slug) continue;
+    choiceSlugs.push(slug);
+    if (optionKey === 'high_elf_cantrip') replaceFixedLevel1 = true;
   }
-  return [...new Set(slugs)];
+
+  const fixedSlugs: string[] = [];
+  for (const effect of effects) {
+    if (effect.kind !== 'grant_spell' && effect.kind !== 'grant_spell_by_level') {
+      continue;
+    }
+    if (effect.unlockLevel > level) continue;
+    if (effect.spell?.optionKey?.trim()) continue;
+    if (replaceFixedLevel1 && effect.unlockLevel === 1) continue;
+    const slug = effect.spell?.spellSlug?.trim();
+    if (slug) fixedSlugs.push(slug);
+  }
+
+  return [...new Set([...fixedSlugs, ...choiceSlugs])];
 }
 
 export function resolveSpeciesSpellCastEconomyFromEffects(input: {
   effects: readonly CatalogEffect[];
   spellSlug: string;
+  choices?: readonly EffectChoiceRef[];
 }): EffectCastEconomySatellite | null {
   for (const effect of input.effects) {
     if (effect.kind !== 'grant_spell' && effect.kind !== 'free_cast') continue;
-    if (effect.spell?.spellSlug !== input.spellSlug) continue;
-    if (effect.castEconomy) return effect.castEconomy;
+    if (!effect.castEconomy) continue;
+
+    const optionKey = effect.spell?.optionKey?.trim();
+    if (optionKey) {
+      const choiceKind = choiceKindForOptionKey(optionKey);
+      const chosen = input.choices?.find(
+        (row) => row.choiceKind === choiceKind,
+      )?.choiceSlug;
+      if (chosen === input.spellSlug) return effect.castEconomy;
+      continue;
+    }
+
+    if (effect.spell?.spellSlug === input.spellSlug) {
+      return effect.castEconomy;
+    }
   }
   return null;
 }

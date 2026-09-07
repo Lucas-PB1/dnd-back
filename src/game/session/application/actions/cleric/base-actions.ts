@@ -4,6 +4,7 @@ import {
 } from '@game/combat/domain/cleric';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   ClericActionDeps,
@@ -25,22 +26,34 @@ export async function resolveDivineSpark(
   const dice = divineSparkDice(character.level);
   const wisdom = abilityModifier(character.abilityScores.sabedoria);
   const result = rollDamageParts(dice, wisdom);
-  const state = await spendChannelDivinity(deps, character);
+  const spent = await spendChannelDivinity(deps, character);
   const saveDc =
     mode === 'damage' ? await spellSaveDc(deps, character) : undefined;
 
+  if (mode === 'heal') {
+    const { state, healed } = await applyHealHitPoints(
+      deps.state,
+      character,
+      result.total,
+    );
+    return {
+      state,
+      actionName: 'Centelha Divina — Cura',
+      expression: result.expression,
+      total: result.total,
+      resourceSpent: true,
+      note: `Centelha Divina: restaure ${result.total} PV (${result.expression}; +${healed} na ficha — ajuste se for aliado).`,
+    };
+  }
+
   return {
-    state,
-    actionName:
-      mode === 'heal' ? 'Centelha Divina — Cura' : 'Centelha Divina — Dano',
+    state: spent,
+    actionName: 'Centelha Divina — Dano',
     expression: result.expression,
     total: result.total,
     resourceSpent: true,
     ...(saveDc != null ? { saveDc } : {}),
-    note:
-      mode === 'heal'
-        ? `Centelha Divina: restaure ${result.total} PV (${result.expression}).`
-        : `Centelha Divina: CD ${saveDc} de CON; ${result.total} Necrótico ou Radiante (${result.expression}), metade no sucesso.`,
+    note: `Centelha Divina: CD ${saveDc} de CON; ${result.total} Necrótico ou Radiante (${result.expression}), metade no sucesso.`,
   };
 }
 
@@ -104,15 +117,20 @@ export async function resolvePreserveLife(
     'Domínio da Vida',
     'Preservar a Vida',
   );
-  const state = await spendChannelDivinity(deps, character);
+  await spendChannelDivinity(deps, character);
   /** PHB: Preservar a Vida = 5 × nível de Clérigo. */
   const PRESERVE_LIFE_HP_PER_LEVEL = 5;
   const total = PRESERVE_LIFE_HP_PER_LEVEL * character.level;
+  const { state, healed } = await applyHealHitPoints(
+    deps.state,
+    character,
+    total,
+  );
   return {
     state,
     actionName: 'Preservar a Vida',
     total,
     resourceSpent: true,
-    note: `Preservar a Vida: distribua até ${total} PV entre criaturas Sangrando a 9 m; nenhuma passa da metade dos PV máximos.`,
+    note: `Preservar a Vida: distribua até ${total} PV entre criaturas Sangrando a 9 m; nenhuma passa da metade dos PV máximos. Pool aplicada na ficha (+${healed}) — ajuste se distribuir.`,
   };
 }

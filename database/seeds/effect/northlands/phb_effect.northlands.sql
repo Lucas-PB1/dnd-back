@@ -1038,6 +1038,42 @@ JOIN rows r ON r.slug = f.slug AND r.label = ins.label
 ORDER BY ins.id
 ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;
 
+-- Greater Freyr: Curar Ferimentos PB×/DL (optionKey sintético bonusSpell = magia fixa)
+WITH feat AS (
+  SELECT id FROM rpg.phb_feat WHERE slug = 'greater-blessing-of-freyr-and-freyja'
+),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_spell'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, 1, 20, 'Magia Curativa'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
+SELECT ins.id, s.id, 'bonusSpell', 1
+FROM ins
+CROSS JOIN rpg.phb_spell s
+WHERE s.slug = 'curar-ferimentos';
+
+WITH feat AS (
+  SELECT id FROM rpg.phb_feat WHERE slug = 'greater-blessing-of-freyr-and-freyja'
+),
+fx AS (
+  SELECT e.id
+  FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat'
+    AND e.kind = 'grant_spell'
+    AND e.label = 'Magia Curativa'
+)
+INSERT INTO rpg.phb_effect_cast_economy (effect_id, economy, uses_formula, fixed_uses)
+SELECT id, 'once_per_long_rest'::rpg.effect_cast_economy,
+       'proficiency_bonus'::rpg.effect_uses_formula, NULL
+FROM fx
+ON CONFLICT DO NOTHING;
+
 -- —— blessing-of-hel: death_save_advantage ——
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-hel'),
 ins AS (

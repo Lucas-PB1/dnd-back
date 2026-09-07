@@ -2,8 +2,6 @@ import { ownedStyleOrFeatSlugs, styleOrFeatNumericBonus } from "@game/effects";
 import { abilityShortLabel } from "./weapon-attack-predicates";
 import type { WeaponAttackContext } from "./weapon-attack.types";
 
-export const STYLE_FLAT_BONUS = 2;
-
 export type AbilityPick = { slug: "forca" | "destreza"; mod: number };
 
 export type AttackBonusResult = {
@@ -38,12 +36,11 @@ export function resolveAttackBonuses(input: {
   }
   if (input.mode === "ranged") {
     const archery = styleOrFeatNumericBonus({
-      effects: input.context.featEffects,
+      effects: input.context.featEffects ?? [],
       ownedSlugs: owned,
       ownerSlug: "archery",
       kind: "attack_bonus",
       proficiencyBonus: input.context.proficiencyBonus,
-      legacyFlat: STYLE_FLAT_BONUS,
     });
     if (archery !== 0) {
       attackBonus += archery;

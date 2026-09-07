@@ -123,15 +123,6 @@ CREATE UNIQUE INDEX idx_mv_phb_feat_granted_spell
 CREATE UNIQUE INDEX idx_mv_phb_class_granted_spell
   ON rpg.mv_phb_class_granted_spell (class_slug, spell_slug, unlock_level);
 
-CREATE UNIQUE INDEX idx_mv_phb_species_granted_spell
-  ON rpg.mv_phb_species_granted_spell (
-    species_slug,
-    unlock_level,
-    spell_slug,
-    choice_kind,
-    choice_slug
-  );
-
 CREATE UNIQUE INDEX idx_mv_phb_heritage_trait_choices
   ON rpg.mv_phb_heritage_trait_choices (heritage_slug, choice_kind, trait_slug);
 

@@ -1,6 +1,7 @@
 import { martialArtsDie } from '@game/combat/domain/monk';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -23,7 +24,12 @@ export async function resolveHandOfHealing(
   assertCharacterLevel(character, 3, 'Monk', 'Mão de Cura');
   const wisdom = abilityModifier(character.abilityScores.sabedoria);
   const heal = rollDamageParts(martialArtsDie(character.level), wisdom);
-  const state = await spendFocus(deps, character, 1);
+  await spendFocus(deps, character, 1);
+  const { state, healed } = await applyHealHitPoints(
+    deps.state,
+    character,
+    heal.total,
+  );
   const touch =
     character.level >= 6
       ? ' Também pode encerrar Atordoado, Cego, Envenenado, Paralisado ou Surdo no alvo (Toque de Médico).'
@@ -35,7 +41,7 @@ export async function resolveHandOfHealing(
     roll: heal.dice[0]?.rolls[0],
     total: heal.total,
     resourceSpent: true,
-    note: `Mão de Cura: Usar Magia, gaste 1 Foco — cure ${heal.total} PV (${heal.expression}). Na Torrente, pode substituir 1 ataque desarmado por esta cura sem gastar Foco da cura.${touch}`,
+    note: `Mão de Cura: Usar Magia, gaste 1 Foco — cure ${heal.total} PV (${heal.expression}; +${healed} na ficha — ajuste se for aliado). Na Torrente, pode substituir 1 ataque desarmado por esta cura sem gastar Foco da cura.${touch}`,
   };
 }
 

@@ -141,6 +141,7 @@ describe('DruidActionsHandler', () => {
     );
     expect(result.note).toContain('Auxílio da Terra');
     expect(result.expression).toMatch(/d6/);
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
   it('resolves Natural Recovery slot for Circle of the Land', async () => {

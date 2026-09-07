@@ -422,10 +422,38 @@ ins AS (
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   CASE sort_order
-    WHEN 1 THEN '1 magia Sangromancia preparada; free 1/DL (grant_spell+option wire depois).'
+    WHEN 1 THEN '1 magia Sangromancia preparada; free 1/DL (cast_economy tipado).'
     ELSE 'Pool 2d12 no lugar de DV em magias Sangromancia; recupera no DL (UI escolher pool ou DV).'
   END
 FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'sangromantic-initiate'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_spell'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, 1, 12, 'Magia de Sangue'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
+SELECT id, 'bloodMagicSpell', 1 FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'sangromantic-initiate'),
+fx AS (
+  SELECT e.id
+  FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat'
+    AND e.kind = 'grant_spell'
+    AND e.label = 'Magia de Sangue'
+)
+INSERT INTO rpg.phb_effect_cast_economy (effect_id, economy, uses_formula, fixed_uses)
+SELECT id, 'once_per_long_rest'::rpg.effect_cast_economy,
+       'fixed'::rpg.effect_uses_formula, 1
+FROM fx
+ON CONFLICT DO NOTHING;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'shadowsteel-adept'),
 ins AS (

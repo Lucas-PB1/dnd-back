@@ -599,6 +599,31 @@ INSERT INTO rpg.phb_effect_cast_economy (effect_id, economy, uses_formula, fixed
 SELECT fx.id, s.economy, 'fixed'::rpg.effect_uses_formula, s.fixed_uses
 FROM fx JOIN spells s ON s.sort_order = fx.sort_order;
 
+-- Alto Elfo: truque de escolha (substitui prestidigitação L1 quando escolhido)
+WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label,
+    requires_option_key, requires_option_value
+  )
+  SELECT 'grant_spell'::rpg.effect_kind, 'species'::rpg.effect_owner_kind, species.id,
+         'on_build'::rpg.effect_trigger, 1, 29, 'Alto Elfo — Truque escolhido',
+         'lineageId', 'high-elf'
+  FROM species RETURNING id
+)
+INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
+SELECT id, NULL, 'high_elf_cantrip', 0 FROM ins;
+
+WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN species ON species.id = e.owner_id
+  WHERE e.owner_kind = 'species' AND e.kind = 'grant_spell' AND e.sort_order = 29
+)
+INSERT INTO rpg.phb_effect_cast_economy (effect_id, economy, uses_formula, fixed_uses)
+SELECT id, 'at_will'::rpg.effect_cast_economy, 'fixed'::rpg.effect_uses_formula, NULL
+FROM fx;
+
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Gnomo
 -- ═══════════════════════════════════════════════════════════════════════════
@@ -1288,7 +1313,7 @@ ins AS (
   FROM species RETURNING id
 )
 INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT id, NULL, 'druidCantrip', 0 FROM ins;
+SELECT id, NULL, 'andari_druid_cantrip', 0 FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'bearfolk'),
 fx AS (

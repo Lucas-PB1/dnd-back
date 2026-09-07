@@ -12,7 +12,6 @@ Código **fora** de `src/game/effects/` importa só:
 import {
   LoadEffectCatalog,
   executeCatalogEffect,
-  catalogEffectsToResourceGrants,
   styleOrFeatNumericBonus,
   // …
 } from '@game/effects';
@@ -28,7 +27,7 @@ Política: intenção e fluxo deste motor vivem **neste doc** (+ dicionário/ADR
 | Load | `LoadEffectCatalog` | Rows → `CatalogEffect[]` |
 | Query | `@game/effects` (`domain/queries/`) | Perguntas tipadas (CA, dano, perícia…) |
 | Execute | `executeCatalogEffect` | Só kinds allowlisted (heal, temp_hp, …) |
-| Dual-read | `catalogEffectsTo*` | Bridge para shapes legados (HP/resource) até DROP |
+| Schedule | SQL effects-only | Pools / HP / UD via `phb_effect` + satélites (sem dual-read) |
 
 Queries agrupadas por pergunta humana:
 
@@ -68,7 +67,7 @@ seed SQL  →  LoadEffectCatalog.execute(...)  →  CatalogEffect[]
 **Runtime**
 
 1. `LoadEffectCatalog` com `ownerKind: 'feat'`, slugs dos feats do PC.
-2. Dual-read: `catalogEffectsToResourceGrants` → entra no schedule de recursos da ficha/mesa (`feat-resource-schedule.queries`).
+2. Schedule effects-only (`feat-resource-schedule.queries`) lê `grant_resource` / `phb_effect_resource`.
 3. Na ficha: pool **Pontos de Sorte** (máx = PB). Gasto = botão economy / use-resource (não é query tipada de combate).
 
 **Resposta rápida:** Lucky → 1 efeito `grant_resource` → resource panel da ficha; sem bônus de ataque/CA.
@@ -98,8 +97,8 @@ Inventário vivo dos kinds **com wire tipado**. Kinds só-seed/`combat_note` fic
 
 | Kind | Satélite | Função / bridge | Call sites típicos |
 |------|----------|-----------------|-------------------|
-| `grant_resource` | `phb_effect_resource` | feat/class schedule SQL direto; `catalogEffectsToResourceGrants` residual | schedule feat/class (effects-only); subclass/item ainda grant |
-| `combat_mod` | `phb_effect_combat_mod` | `catalogEffectsToCombatMods` | HP / unarmored (dual-read) |
+| `grant_resource` | `phb_effect_resource` | schedule SQL effects-only | feat/class/subclass/item/species resources |
+| `combat_mod` | `phb_effect_combat_mod` | views HP/UD + loaders | HP max / unarmored defense |
 | `grant_proficiency` / `grant_all_skill_proficiencies` / `grant_expertise` | `phb_effect_proficiency` | `fixedSkillSlugsFromEffects`, `expertiseSkillSlugsFromEffects`, `proficiencyOptionKeysFromEffects` | `collect-skill-slugs` |
 | `initiative_pb` | — | `hasInitiativePbFromEffects` | `resolve-initiative-roll` |
 | `purchase_discount` | `phb_effect_purchase_discount` | `purchaseDiscountPercentFromEffects` | purchase handler |
@@ -128,7 +127,7 @@ Inventário vivo dos kinds **com wire tipado**. Kinds só-seed/`combat_note` fic
 | `environmental_immunity` | `phb_effect_environmental_immunity` | satélite | hazards |
 | `grant_inspiration` (`on_rest_long`) | note opcional | long rest SQL | `applyLongRestState` |
 | `combat_note` species | `phb_effect_note` | `combatNotesFromOwnerEffects` | assemble combat slice |
-| `grant_resource` species | `phb_effect_resource` | `loadSpeciesResourceSchedule` dual-read | session resources |
+| `grant_resource` species | `phb_effect_resource` | `loadSpeciesResourceSchedule` | session resources |
 | `combat_mod` species | `phb_effect_combat_mod` | `loadHitPointsBonusSources` + gates | HP max |
 
 Semântica completa: [`effect-dictionary.md`](effect-dictionary.md).

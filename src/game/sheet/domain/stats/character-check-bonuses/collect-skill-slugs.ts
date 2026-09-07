@@ -3,11 +3,11 @@ import { collectSubclassBonusSkillSlugs } from '../../validation/class-options/s
 import {
   expertiseSkillSlugsFromEffects,
   fixedSkillSlugsFromEffects,
+  isChoiceSkillOptionKey,
   proficiencyOptionKeysFromEffects,
 } from '@game/effects';
 import type { CatalogEffect } from '@game/effects';
 import {
-  PROF_OR_EXPERTISE_FEAT_OPTION_KEYS,
   SKILL_SPECIES_CHOICE_KINDS,
   type CharacterFeatLike,
   type ClassOptionLike,
@@ -16,13 +16,23 @@ import {
   type SpeciesChoiceLike,
 } from './types';
 
-/** @deprecated Prefira efeitos `grant_proficiency` do catálogo. */
-function isFeatSkillProficiencyOptionKey(optionKey: string): boolean {
-  return (
-    optionKey === 'newSkill' ||
-    optionKey.startsWith('proficiency') ||
-    optionKey === 'expertiseSkill' ||
-    PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(optionKey)
+function choiceSkillOptionKeysForFeat(
+  featEffects: readonly CatalogEffect[] | undefined,
+  featSlug: string,
+): string[] {
+  return proficiencyOptionKeysFromEffects({
+    effects: featEffects ?? [],
+    featSlug,
+    proficiencyKind: 'skill',
+  }).filter(isChoiceSkillOptionKey);
+}
+
+function isProfOrExpertiseChoiceOption(
+  option: FeatOptionLike,
+  featEffects: readonly CatalogEffect[] | undefined,
+): boolean {
+  return choiceSkillOptionKeysForFeat(featEffects, option.featSlug).includes(
+    option.optionKey,
   );
 }
 
@@ -60,9 +70,7 @@ export function collectFeatSkillOptionSlugs(
         featSlug: option.featSlug,
         proficiencyKind: 'skill',
       });
-      return effectKeys.length
-        ? effectKeys.includes(option.optionKey)
-        : isFeatSkillProficiencyOptionKey(option.optionKey);
+      return effectKeys.includes(option.optionKey);
     })
     .map((option) => option.valueId)
     .filter(Boolean);
@@ -90,10 +98,10 @@ export function collectClassExpertiseSkillSlugs(
     .map((option) => option.valueId);
 }
 
-/** Proficiências “base” (sem expertise condicional de Observant/Keen Mind / Loki). */
+/** Proficiências “base” (sem expertise condicional Observant/Keen Mind / similar). */
 function collectPriorProficientSkillSlugs(input: SkillBonusSources): string[] {
   const featOptions = (input.featOptions ?? []).filter(
-    (option) => !PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey),
+    (option) => !isProfOrExpertiseChoiceOption(option, input.featEffects),
   );
   return [
     ...new Set([
@@ -124,7 +132,7 @@ export function collectExpertiseSkillSlugs(
       result.add(option.valueId);
     }
     if (
-      PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey) &&
+      isProfOrExpertiseChoiceOption(option, input.featEffects) &&
       option.valueId &&
       prior.has(option.valueId)
     ) {
@@ -153,7 +161,7 @@ export function collectProficientSkillSlugs(
     ...collectPriorProficientSkillSlugs(input),
     ...collectFeatSkillOptionSlugs(
       (input.featOptions ?? []).filter((option) =>
-        PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey),
+        isProfOrExpertiseChoiceOption(option, input.featEffects),
       ),
       input.featEffects,
     ),

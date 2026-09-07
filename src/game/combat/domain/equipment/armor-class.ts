@@ -2,7 +2,6 @@ import type { AbilityScores } from "@game/shared/infrastructure/player-character
 import { abilityModifier } from "@game/shared/domain/ability-scores";
 import type { CatalogEffect } from "@game/effects";
 import { ownedStyleOrFeatSlugs, styleOrFeatNumericBonus } from "@game/effects";
-import { hasStyleOrFeat } from "../feat/has-style-or-feat";
 import { computeManikinArmorPreset } from "../species/manikin-armor";
 
 export type EquippedArmorPiece = {
@@ -32,12 +31,11 @@ const BODY_ARMOR = new Set(["light", "medium", "heavy"]);
 
 function defenseAcBonus(context: ArmorClassContext | undefined): number {
   return styleOrFeatNumericBonus({
-    effects: context?.featEffects,
+    effects: context?.featEffects ?? [],
     ownedSlugs: ownedStyleOrFeatSlugs(context ?? {}),
     ownerSlug: "defense",
     kind: "ac_bonus",
     proficiencyBonus: 0,
-    legacyFlat: 1,
   });
 }
 
@@ -96,7 +94,7 @@ export function computeArmorClassFromEquipment(
   if (bodyArmor) {
     const mediumCap =
       bodyArmor.categorySlug === "medium" &&
-      hasStyleOrFeat(context, "medium-armor-master") &&
+      ownedStyleOrFeatSlugs(context ?? {}).includes("medium-armor-master") &&
       scores.destreza >= 16
         ? 3
         : 2;

@@ -62,6 +62,7 @@ describe('MonkActionsHandler', () => {
     });
     expect(result.expression).toMatch(/1d8\+3/);
     expect(result.note).toContain('cure');
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
   it('heals with Wholeness of Body using the subclass pool', async () => {
@@ -78,6 +79,7 @@ describe('MonkActionsHandler', () => {
       1,
     );
     expect(result.note).toContain('Integridade Corporal');
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
   it('spends 2 Focus on Elemental Blast at level 6+', async () => {

@@ -25,6 +25,44 @@ describe('character-check-bonuses expertise sources', () => {
   });
 
   it('Observant grants proficiency or expertise if already proficient', () => {
+    const observantEffect = {
+      id: '1',
+      kind: 'grant_proficiency' as const,
+      ownerKind: 'feat' as const,
+      ownerId: '1',
+      ownerSlug: 'observant',
+      trigger: 'on_build' as const,
+      unlockLevel: 1,
+      sortOrder: 0,
+      minTraitTakes: 1,
+      actionSlug: null,
+      resourceSlug: null,
+      label: null,
+      requiresOptionKey: null,
+      requiresOptionValue: null,
+      spell: null,
+      castEconomy: null,
+      numeric: null,
+      note: null,
+      resource: null,
+      combatMod: null,
+      proficiency: {
+        optionKey: 'attentiveSkill',
+        proficiencyKind: 'skill' as const,
+      },
+      purchaseDiscount: null,
+      damageDie: null,
+      weapon: null,
+      feat: null,
+      saveAdvantage: null,
+      sense: null,
+      damageType: null,
+      language: null,
+      checkAdvantage: null,
+      reach: null,
+      restQuirk: null,
+      environmentalImmunity: null,
+    };
     const withoutPrior = {
       classSkillSlugs: [] as string[],
       backgroundSkillSlugs: [] as string[],
@@ -35,6 +73,7 @@ describe('character-check-bonuses expertise sources', () => {
           valueId: 'perception',
         },
       ],
+      featEffects: [observantEffect],
     };
     expect(skillProficiencyRank('perception', withoutPrior)).toBe('proficient');
     expect(collectProficientSkillSlugs(withoutPrior)).toContain('perception');
@@ -49,6 +88,7 @@ describe('character-check-bonuses expertise sources', () => {
           valueId: 'perception',
         },
       ],
+      featEffects: [observantEffect],
     };
     expect(skillProficiencyRank('perception', withPrior)).toBe('expertise');
   });

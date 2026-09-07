@@ -62,20 +62,7 @@ describe('queries/combat-bonus', () => {
     ).toBe(2);
   });
 
-  it('falls back to legacy flat only when catalog not loaded', () => {
-    expect(
-      styleOrFeatNumericBonus({
-        effects: undefined,
-        ownedSlugs: ['dueling'],
-        ownerSlug: 'dueling',
-        kind: 'damage_bonus',
-        proficiencyBonus: 3,
-        legacyFlat: 2,
-      }),
-    ).toBe(2);
-  });
-
-  it('does not use legacy flat when catalog loaded without matching effect', () => {
+  it('reads numeric bonus only from catalog effects', () => {
     expect(
       styleOrFeatNumericBonus({
         effects: [],
@@ -83,9 +70,23 @@ describe('queries/combat-bonus', () => {
         ownerSlug: 'dueling',
         kind: 'damage_bonus',
         proficiencyBonus: 3,
-        legacyFlat: 2,
       }),
     ).toBe(0);
+    expect(
+      styleOrFeatNumericBonus({
+        effects: [
+          effect({
+            kind: 'damage_bonus',
+            ownerSlug: 'dueling',
+            numeric: { amountFormula: 'fixed', flat: 2 },
+          }),
+        ],
+        ownedSlugs: ['dueling'],
+        ownerSlug: 'dueling',
+        kind: 'damage_bonus',
+        proficiencyBonus: 3,
+      }),
+    ).toBe(2);
   });
 
   it('detects light_bonus_ability_mod for TWF', () => {

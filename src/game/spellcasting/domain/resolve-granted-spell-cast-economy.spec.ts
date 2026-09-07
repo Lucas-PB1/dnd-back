@@ -2,7 +2,6 @@ import {
   consumeGrantedFreeCast,
   freeCastMaxUses,
   freeCastsRemaining,
-  GREATER_FREYR_FEAT_SLUG,
   resolveGrantedSpellCastEconomy,
 } from './resolve-granted-spell-cast-economy';
 import type { CatalogEffect } from '@game/effects';
@@ -58,6 +57,111 @@ function speciesSpellEffect(
   };
 }
 
+function featSpellEffect(input: {
+  featSlug: string;
+  optionKey: string;
+  economy: 'at_will' | 'once_per_long_rest';
+  usesFormula?: 'fixed' | 'proficiency_bonus';
+  fixedUses?: number | null;
+}): CatalogEffect {
+  return {
+    id: `${input.featSlug}-${input.optionKey}`,
+    kind: 'grant_spell',
+    ownerKind: 'feat',
+    ownerId: '1',
+    ownerSlug: input.featSlug,
+    trigger: 'on_build',
+    unlockLevel: 1,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: {
+      spellId: '1',
+      spellSlug: null,
+      optionKey: input.optionKey,
+      spellLevel: 1,
+    },
+    castEconomy: {
+      economy: input.economy,
+      usesFormula: input.usesFormula ?? 'fixed',
+      fixedUses:
+        input.fixedUses !== undefined
+          ? input.fixedUses
+          : input.economy === 'once_per_long_rest'
+            ? 1
+            : null,
+    },
+    numeric: null,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
+
+function speciesChoiceSpellEffect(optionKey: string): CatalogEffect {
+  return {
+    id: `choice-${optionKey}`,
+    kind: 'grant_spell',
+    ownerKind: 'species',
+    ownerId: '1',
+    ownerSlug: 'elf',
+    trigger: 'on_build',
+    unlockLevel: 1,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: null,
+    label: null,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: {
+      spellId: null,
+      spellSlug: null,
+      optionKey,
+      spellLevel: 0,
+    },
+    castEconomy: {
+      economy: 'at_will',
+      usesFormula: 'fixed',
+      fixedUses: null,
+    },
+    numeric: null,
+    note: null,
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
+
 const ELF_DROW_EFFECTS = [
   speciesSpellEffect('luzes-dancantes', 1, 'at_will'),
   speciesSpellEffect('fogo-das-fadas', 3, 'once_per_long_rest'),
@@ -73,13 +177,21 @@ describe('resolveGrantedSpellCastEconomy', () => {
     ).toBe('slot_only');
   });
 
-  it('marks feat cantrips at_will and first-level once_per_long_rest', () => {
+  it('reads feat cast economy from phb_effect', () => {
     expect(
       resolveGrantedSpellCastEconomy({
         spellSlug: 'fire-bolt',
         source: 'feat',
         featOptions: [
           { featSlug: 'magic-initiate', optionKey: 'cantrip1', valueId: 'fire-bolt' },
+        ],
+        featEffects: [
+          featSpellEffect({
+            featSlug: 'magic-initiate',
+            optionKey: 'cantrip1',
+            economy: 'at_will',
+            fixedUses: null,
+          }),
         ],
       }),
     ).toBe('at_will');
@@ -94,6 +206,13 @@ describe('resolveGrantedSpellCastEconomy', () => {
             valueId: 'cure-wounds',
           },
         ],
+        featEffects: [
+          featSpellEffect({
+            featSlug: 'magic-initiate',
+            optionKey: 'firstLevelSpell',
+            economy: 'once_per_long_rest',
+          }),
+        ],
       }),
     ).toBe('once_per_long_rest');
     expect(
@@ -107,11 +226,18 @@ describe('resolveGrantedSpellCastEconomy', () => {
             valueId: 'sangue-vital',
           },
         ],
+        featEffects: [
+          featSpellEffect({
+            featSlug: 'sangromantic-initiate',
+            optionKey: 'bloodMagicSpell',
+            economy: 'once_per_long_rest',
+          }),
+        ],
       }),
     ).toBe('once_per_long_rest');
   });
 
-  it('prefers phb_effect cast economy when catalog covers the feat option', () => {
+  it('defaults feat to slot_only without cast_economy effect', () => {
     expect(
       resolveGrantedSpellCastEconomy({
         spellSlug: 'cure-wounds',
@@ -123,54 +249,9 @@ describe('resolveGrantedSpellCastEconomy', () => {
             valueId: 'cure-wounds',
           },
         ],
-        featEffects: [
-          {
-            id: '1',
-            kind: 'grant_spell',
-            ownerKind: 'feat',
-            ownerId: '1',
-            ownerSlug: 'magic-initiate',
-            trigger: 'on_build',
-            unlockLevel: 1,
-            sortOrder: 0,
-            minTraitTakes: 1,
-            actionSlug: null,
-            resourceSlug: null,
-            label: null,
-            requiresOptionKey: null,
-            requiresOptionValue: null,
-            spell: {
-              spellId: null,
-              spellSlug: null,
-              optionKey: 'firstLevelSpell',
-              spellLevel: 1,
-            },
-            castEconomy: {
-              economy: 'once_per_long_rest',
-              usesFormula: 'fixed',
-              fixedUses: 1,
-            },
-            numeric: null,
-            note: null,
-            resource: null,
-            combatMod: null,
-            proficiency: null,
-            purchaseDiscount: null,
-            damageDie: null,
-            weapon: null,
-            feat: null,
-            saveAdvantage: null,
-            sense: null,
-            damageType: null,
-            language: null,
-            checkAdvantage: null,
-            reach: null,
-            restQuirk: null,
-            environmentalImmunity: null,
-          },
-        ],
+        featEffects: [],
       }),
-    ).toBe('once_per_long_rest');
+    ).toBe('slot_only');
   });
 
   it('reads species cast economy from phb_effect', () => {
@@ -195,7 +276,7 @@ describe('resolveGrantedSpellCastEconomy', () => {
     ).toBe('once_per_long_rest');
   });
 
-  it('marks high-elf choice cantrip as at_will without fixed effect', () => {
+  it('marks high-elf choice cantrip as at_will from grant_spell option_key', () => {
     expect(
       resolveGrantedSpellCastEconomy({
         spellSlug: 'raio-de-fogo',
@@ -205,7 +286,7 @@ describe('resolveGrantedSpellCastEconomy', () => {
           { choiceKind: 'elf_lineage', choiceSlug: 'high-elf' },
           { choiceKind: 'high_elf_cantrip', choiceSlug: 'raio-de-fogo' },
         ],
-        speciesEffects: [],
+        speciesEffects: [speciesChoiceSpellEffect('high_elf_cantrip')],
       }),
     ).toBe('at_will');
   });
@@ -220,13 +301,23 @@ describe('freeCast helpers', () => {
     expect(consumeGrantedFreeCast({ x: 0 }, 'x')).toEqual({ x: 1 });
   });
 
-  it('uses PB max for Greater Freyr Curar Ferimentos', () => {
+  it('uses PB max from cast_economy uses_formula', () => {
     expect(
       freeCastMaxUses({
         economy: 'once_per_long_rest',
         spellSlug: 'curar-ferimentos',
-        featSlug: GREATER_FREYR_FEAT_SLUG,
+        featSlug: 'greater-blessing-of-freyr-and-freyja',
+        optionKey: 'bonusSpell',
         proficiencyBonus: 3,
+        featEffects: [
+          featSpellEffect({
+            featSlug: 'greater-blessing-of-freyr-and-freyja',
+            optionKey: 'bonusSpell',
+            economy: 'once_per_long_rest',
+            usesFormula: 'proficiency_bonus',
+            fixedUses: null,
+          }),
+        ],
       }),
     ).toBe(3);
     expect(
@@ -242,7 +333,15 @@ describe('freeCast helpers', () => {
         economy: 'once_per_long_rest',
         spellSlug: 'curar-ferimentos',
         featSlug: 'magic-initiate',
+        optionKey: 'firstLevelSpell',
         proficiencyBonus: 3,
+        featEffects: [
+          featSpellEffect({
+            featSlug: 'magic-initiate',
+            optionKey: 'firstLevelSpell',
+            economy: 'once_per_long_rest',
+          }),
+        ],
       }),
     ).toBe(1);
   });

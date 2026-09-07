@@ -51,7 +51,7 @@ export function deriveAttackExtras(input: {
     : null;
   const greatWeaponFighting =
     styleOrFeatHasKind({
-      effects: context.featEffects,
+      effects: context.featEffects ?? [],
       ownedSlugs: ownedStyleOrFeatSlugs(context),
       ownerSlug: "great-weapon-fighting",
       kind: "damage_die_floor",

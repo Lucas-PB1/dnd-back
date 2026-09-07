@@ -3,6 +3,8 @@
 **Status:** histórico dos lotes A–G (**DONE** 2026-08-07). Redesign: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) (**Aceito**).  
 Baseline atual: [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql).
 
+> **Nota (pós-DROP efeitos):** `phb_resource_grant` / `phb_combat_modifier` e `v_`/`mv_phb_species_granted_spell` foram removidos do schema vivo — SSOT atual = `phb_effect` + satélites. Linhas abaixo descrevem o consolidação A–G, não o estado atual.
+
 Uso: referência ao portar ou auditar equivalências — **não** é checklist aberto.
 
 Legenda da coluna **Ação**:

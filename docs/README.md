@@ -51,7 +51,8 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
-| [`plans/backlog.md`](plans/backlog.md) | **SSOT** — aberto + adiado |
+| [`plans/backlog.md`](plans/backlog.md) | **SSOT mesa** — aberto + polish adiado |
+| [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | **Feature futura** — combate PC×alvo (fora do backlog mesa) |
 
 ### Ativo (detalhe)
 
@@ -63,6 +64,12 @@ Contrato REST: Swagger em `/api`.
 | [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
 | [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — SSOT extração + mesa |
 | [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais |
+
+### Feature futura (não polish)
+
+| Doc | Para quê |
+|------|----------|
+| [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | Combate real — dano/alvo/saves/encontro; **não** priorizar no ciclo mesa |
 
 ### Adiado (polish)
 

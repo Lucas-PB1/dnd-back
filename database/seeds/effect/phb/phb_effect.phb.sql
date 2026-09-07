@@ -230,6 +230,53 @@ INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
 SELECT id, 'proficiency' || sort_order, 'skill'::rpg.effect_proficiency_kind
 FROM ins;
 
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'observant'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_proficiency'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, 1, 1, 'Observador Atento'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
+SELECT id, 'attentiveSkill', 'skill'::rpg.effect_proficiency_kind FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'keen-mind'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_proficiency'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, 1, 1, 'Conhecimento Vasto'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
+SELECT id, 'vastKnowledgeSkill', 'skill'::rpg.effect_proficiency_kind FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'skill-expert'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT v.kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_build'::rpg.effect_trigger, 1, v.sort_order, v.label
+  FROM feat
+  CROSS JOIN (
+    VALUES
+      ('grant_proficiency'::rpg.effect_kind, 1, 'Proficiência em Perícia'),
+      ('grant_expertise'::rpg.effect_kind, 2, 'Especialização')
+  ) AS v(kind, sort_order, label)
+  RETURNING id, sort_order
+)
+INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
+SELECT id,
+  CASE sort_order WHEN 1 THEN 'newSkill' ELSE 'expertiseSkill' END,
+  'skill'::rpg.effect_proficiency_kind
+FROM ins;
+
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'),
 ins AS (
   INSERT INTO rpg.phb_effect (

@@ -21,13 +21,15 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 - Seeds `database/seeds/combat/C009`–`C010` (SSOT) e `C014` (recursos mago)
 - Review de “está no padrão mesa?”
 
-## Critério (mesa, não VTT)
+## Critério (mesa, não VTT / não combate simulado)
 
-**Faz:** rolagem + modificadores; gastar recurso quando a ação consome; nota clara para mesa; toggle na UI.
+**Faz (apply):** o que **movimenta a ficha** — gastar recurso; cura / PV temp.; CA tipada; toggles (fúria, mutação…); slots; nota clara; UI.
 
-**Não faz:** tabuleiro, iniciativa de todos, “1×/turno” no servidor, persistir posição/alvo/condições de duração.
+**Não faz:** tabuleiro; iniciativa de todos; “1×/turno” no servidor; posição/alvo; **dano no inimigo**; saves de combate; personagem × criatura.
 
-**Feito (mínimo):** economia + painel + handler + recurso quando gasta. Front: skill irmã.
+Isso último → [`docs/plans/combat-real-deferred.md`](../../../docs/plans/combat-real-deferred.md) (feature futura, **não** backlog mesa).
+
+**Feito (mínimo):** economia + painel + handler + recurso quando gasta + apply de ficha quando couber. Front: skill irmã.
 
 ## PV temporários (`tempHp`)
 
@@ -52,7 +54,7 @@ Não deixar só “jogue na mesa” quando o valor já pode ser rolado/calculado
 
 1. Domain `src/game/combat/domain/<class>/` — `features.ts` (`isXClass`, fórmulas, `*CombatNotes`) + extras tipados se houver
 2. Handler fatiado em `session/application/actions/<class>/` + facade `*-actions.handler.ts` + `…/table-action`
-3. `phb_resource_definition` + `phb_resource_grant` (classe e/ou subclasse)
+3. `phb_resource_definition` + `phb_effect` (`grant_resource`) (classe e/ou subclasse)
 4. Linhas `phb_class_economy_action` com `resource_slug` nos pools + `table_action` quando Usar dispara efeito
 5. Linhas `phb_class_panel_action` com `subclass_id` correto (nunca NULL se for de subclasse) — painel ≠ contador `remaining/max` da Economia
 6. **PV temp.:** se a feature concede, aplicar `tempHp` (não só nota) — ver seção acima

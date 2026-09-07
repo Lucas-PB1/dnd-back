@@ -59,7 +59,7 @@ View-mãe (definição; **não** ler na API):
 
 ---
 
-## 4. Materialized views (consumo API — **17**)
+## 4. Materialized views (consumo API — **16**)
 
 | MV | View-mãe |
 |----|----------|
@@ -78,7 +78,6 @@ View-mãe (definição; **não** ler na API):
 | `mv_phb_class_ability_boost` | `v_phb_class_ability_boost` |
 | `mv_phb_feat_granted_spell` | `v_phb_feat_granted_spell` |
 | `mv_phb_class_granted_spell` | `v_phb_class_granted_spell` |
-| `mv_phb_species_granted_spell` | `v_phb_species_granted_spell` |
 | `mv_phb_heritage_trait_choices` | `v_phb_heritage_trait_choices` |
 
 Refresh: `REFRESH … CONCURRENTLY` no fim de `db:seed`.
@@ -99,5 +98,5 @@ Refresh: `REFRESH … CONCURRENTLY` no fim de `db:seed`.
 |------|------|
 | Views VALUES | 4 |
 | Views join (API) | ~18 |
-| MV | **17** |
+| MV | **16** |
 | RPC | 3 |

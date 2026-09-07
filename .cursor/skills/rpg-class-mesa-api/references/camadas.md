@@ -25,8 +25,8 @@ Legado: `fighter-session.controller.ts` (rotas dedicadas) — não expandir.
 ## 3. Recursos
 
 - Defs: `phb_resource_definition` (scope `class` / `subclass`)
-- Grants: `phb_resource_grant`
-- Seeds comuns: `phb/S068_*` (classe), `subclass/S002`–`S003` (subclasse)
+- Grants: `phb_effect` (`grant_resource` + `phb_effect_resource`)
+- Seeds comuns: effects class/subclass + defs `phb/S068_*` (classe), `subclass/S002`–`S003` (subclasse)
 - Gaps de recurso não gerados: `combat/C014_wizard_subclass_resources.sql`
 
 ## 4. Economia e painel

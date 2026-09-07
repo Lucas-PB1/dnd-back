@@ -16,7 +16,7 @@ Grim Hollow Cap. 1 trata **herança** como identidade racial com **8 traços mod
 - Escolhas modulares: kinds `heritage_trait_1..9`, `heritage_speed_trade`, `heritage_size` (não enum `gh_heritage_*` em species).
 - Build tradicional = rows em `phb_heritage_traditional` + flag `is_traditional` na view de choices; não é mecânica separada.
 - Repetição / tier: agregação por `trait_slug` + `take_count`; benefício ativo via `benefit_base` (1×) e `benefit_improved` (2×+).
-- Mecânica de mesa: seeds tipados em `phb_combat_modifier` / `phb_class_economy_action` com `heritage_trait_id`, **sem** JSONB genérico de efeitos.
+- Mecânica de mesa: seeds tipados em `phb_effect` (`combat_mod` / resource) + `phb_class_economy_action` com `heritage_trait_id`, **sem** JSONB genérico de efeitos.
 
 ## Consequências
 

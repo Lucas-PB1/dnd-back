@@ -1,6 +1,6 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
 -- Item resources — grant_resource (SSOT; grants removidos dos packs DMG/Valda/…)
--- 145 efeitos gerados de phb_resource_grant
+-- 145 efeitos (histórico: migrados de grant de recurso)
 
 WITH owner AS (SELECT id FROM rpg.phb_item WHERE slug = 'adaga-peconhenta'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'adagaPeconhentaVenenoUse'),

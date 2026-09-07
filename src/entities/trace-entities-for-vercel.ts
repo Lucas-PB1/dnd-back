@@ -52,7 +52,6 @@ import './views/v-phb-class.entity';
 import './views/v-phb-feat-granted-spell.entity';
 import './views/v-phb-feat.entity';
 import './views/v-phb-hp-bonus-source.entity';
-import './views/v-phb-species-granted-spell.entity';
 import './views/v-phb-creature-template-bundle.entity';
 import './views/v-phb-vehicle-template-bundle.entity';
 import './views/v-phb-species-trait-choices.entity';

@@ -1,5 +1,4 @@
 export {
-  PROF_OR_EXPERTISE_FEAT_OPTION_KEYS,
   SKILL_SPECIES_CHOICE_KINDS,
   type CharacterFeatLike,
   type ClassOptionLike,

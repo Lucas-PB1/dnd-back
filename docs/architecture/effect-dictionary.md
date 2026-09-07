@@ -51,20 +51,18 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Trigger típico:** `on_cast`
 - Preferir economy no próprio `grant_spell` quando for o mesmo traço.
 
-### `grant_resource` (Fase 3 — dual-read)
+### `grant_resource`
 
 - **Semântica:** concede pool (`resource_definition`) com fórmula de máximo/recuperação.
 - **Satélite:** `phb_effect_resource`
-- **Convívio:** `phb_resource_grant` permanece até DoD de aposentadoria
-- **Dual-read:** `catalogEffectsToResourceGrants` em `game/effects/domain/dual-read-legacy-grants.ts`
+- **SSOT:** `phb_effect` + satélite; schedules SQL **effects-only** (sem `phb_resource_grant`)
 - **Não cobre:** gasto com efeito colateral (usar `temp_hp`/`heal` com `on_resource_spend`)
 
-### `combat_mod` (Fase 3 — dual-read)
+### `combat_mod`
 
 - **Semântica:** bônus de PV / defesa sem armadura.
 - **Satélite:** `phb_effect_combat_mod`
-- **Convívio:** `phb_combat_modifier` permanece até DoD
-- **Dual-read:** `catalogEffectsToCombatMods`
+- **SSOT:** `phb_effect` + satélite; views HP/UD/heritage leem só efeitos (sem `phb_combat_modifier`)
 - **Cap. 6:** Bestial Vigor (`gh-transformation-lycanthrope`, gate `stage3Boon=bestial-vigor`) — `hp_bonus` +1/nível via `loadTransformationHitPointsBonus`
 
 ### `temp_hp` (Fase 2)
@@ -340,4 +338,4 @@ Metamagia, forma selvagem, toggle de fúria, fluxos com UI especial — handler 
 1. Três ocorrências da mesma regra → candidato a kind.
 2. Kind sem serviço + linha no read-path (kind→consumidor) no mesmo PR → bloqueia merge.
 3. Preferir reuso / `combat_note` quando couber; kinds de espécie OK com trio schema+entity+docs (ver read-path).
-4. Aposentar tabela legada só com views/seeds/código sem dual-read e item removido do backlog.
+4. Tabelas legadas `phb_resource_grant` / `phb_combat_modifier` já **DROP** — novo grant/mod só via `phb_effect` + satélite.

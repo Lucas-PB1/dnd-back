@@ -56,6 +56,7 @@ describe('fighter tabletop actions', () => {
       expect(parry.effectValue).toBe(12);
       expect(rally.expression).toBe('1d10+1');
       expect(rally.effectValue).toBe(8);
+      expect(rally.note).toContain('PV temporários');
     });
 
     it('uses Relentless d8 without spending superiority at level 15', () => {

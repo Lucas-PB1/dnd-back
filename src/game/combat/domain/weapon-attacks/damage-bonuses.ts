@@ -17,10 +17,9 @@ import type {
   WeaponAttackContext,
   WeaponAttackRole,
 } from "./weapon-attack.types";
-import {
-  STYLE_FLAT_BONUS,
-  type AbilityPick,
-  type DamageBonusResult,
+import type {
+  AbilityPick,
+  DamageBonusResult,
 } from "./attack-bonuses";
 
 export function resolveDamageBonuses(input: {
@@ -36,7 +35,7 @@ export function resolveDamageBonuses(input: {
   const isBonusAttack =
     input.role === "light_bonus" || input.role === "dual_bonus";
   const hasTwf = styleOrFeatHasKind({
-    effects: input.context.featEffects,
+    effects: input.context.featEffects ?? [],
     ownedSlugs: owned,
     ownerSlug: "two-weapon-fighting",
     kind: "light_bonus_ability_mod",
@@ -79,12 +78,11 @@ export function resolveDamageBonuses(input: {
 
   if (qualifiesForDueling(input.piece, input.mode, input.equippedWeapons)) {
     const dueling = styleOrFeatNumericBonus({
-      effects: input.context.featEffects,
+      effects: input.context.featEffects ?? [],
       ownedSlugs: owned,
       ownerSlug: "dueling",
       kind: "damage_bonus",
       proficiencyBonus: input.context.proficiencyBonus,
-      legacyFlat: STYLE_FLAT_BONUS,
     });
     if (dueling !== 0) {
       damageBonus += dueling;
@@ -93,12 +91,11 @@ export function resolveDamageBonuses(input: {
   }
   if (input.mode === "ranged" && isThrownWeapon(input.piece)) {
     const thrown = styleOrFeatNumericBonus({
-      effects: input.context.featEffects,
+      effects: input.context.featEffects ?? [],
       ownedSlugs: owned,
       ownerSlug: "thrown-weapon-fighting",
       kind: "damage_bonus",
       proficiencyBonus: input.context.proficiencyBonus,
-      legacyFlat: STYLE_FLAT_BONUS,
     });
     if (thrown !== 0) {
       damageBonus += thrown;
@@ -107,12 +104,11 @@ export function resolveDamageBonuses(input: {
   }
   if (hasProperty(input.piece, "heavy")) {
     const gwm = styleOrFeatNumericBonus({
-      effects: input.context.featEffects,
+      effects: input.context.featEffects ?? [],
       ownedSlugs: owned,
       ownerSlug: "great-weapon-master",
       kind: "damage_bonus",
       proficiencyBonus: input.context.proficiencyBonus,
-      legacyFlat: input.context.proficiencyBonus,
     });
     if (gwm !== 0) {
       damageBonus += gwm;

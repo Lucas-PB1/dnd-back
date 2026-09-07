@@ -76,6 +76,12 @@ export function createTableActionHandlerTestContext(options?: {
       ...stateResponse,
       ...dto,
     }));
+    state.applyCurrentHitPoints.mockImplementation(
+      async (character, hitPointsCurrent) => {
+        character.hitPointsCurrent = hitPointsCurrent;
+        return { ...stateResponse };
+      },
+    );
     domain.getProficiencyBonus.mockResolvedValue(proficiencyBonus);
     access.findAccessibleOrFail.mockResolvedValue(defaultCharacter as PlayerCharacter);
     mechanicalCatalog.load.mockResolvedValue(catalogLoad);

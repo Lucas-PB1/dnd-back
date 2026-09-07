@@ -26,6 +26,8 @@ export function createTestCharacter(
     userId: 'user-1',
     subclassSlug: null,
     level: 5,
+    hitPointsCurrent: 20,
+    hitPointsMax: 40,
     abilityScores: createTestAbilityScores(),
     ...overrides,
   };

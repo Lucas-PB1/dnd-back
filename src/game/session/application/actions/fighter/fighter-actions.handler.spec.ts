@@ -82,6 +82,22 @@ describe('FighterActionsHandler tabletop actions', () => {
     expect(result.expression).toBe('1d8');
   });
 
+  it('applies temporary HP for Rally on this PC', async () => {
+    ctx.sheet.load.mockResolvedValue({
+      subclassOptions: [{ optionKey: 'maneuver1', valueId: 'rally' }],
+    } as CharacterSheetData);
+
+    const result = await handler.useTableAction('user', fighter.id, {
+      actionSlug: 'use-maneuver',
+      maneuverSlug: 'rally',
+    });
+
+    expect(ctx.state.patch).toHaveBeenCalled();
+    expect(result.actionName).toBe('Reunir');
+    expect(result.note).toContain('PV temp. aplicados neste PC');
+    expect(result.total).toBeGreaterThan(0);
+  });
+
   it('spends Psi Energy for Protective Field', async () => {
     const psiWarrior = { ...fighter, subclassSlug: 'psi-warrior', level: 7 };
     ctx.mockCharacter({ ...fighter, subclassSlug: 'psi-warrior', level: 7 });

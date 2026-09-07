@@ -190,7 +190,6 @@ async function seedOne(label, url, opts) {
         'mv_phb_class_ability_boost',
         'mv_phb_feat_granted_spell',
         'mv_phb_class_granted_spell',
-        'mv_phb_species_granted_spell',
         'mv_phb_heritage_trait_choices',
       ];
       for (const name of materializedViews) {

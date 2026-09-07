@@ -37,6 +37,12 @@ export function createTableActionStateMock(
       ...stateResponse,
       ...dto,
     })),
+    applyCurrentHitPoints: jest
+      .fn()
+      .mockImplementation(async (character, hitPointsCurrent) => {
+        character.hitPointsCurrent = hitPointsCurrent;
+        return { ...stateResponse };
+      }),
     setStarryForm: jest.fn().mockImplementation(async (_c, input) => ({
       ...stateResponse,
       starryFormActive: input.active,

@@ -1,6 +1,51 @@
 import { applyOriginResourceSpendEffects } from './apply-origin-resource-spend-effects';
 import { proficiencyBonusForLevel } from '@game/session/domain/proficiency-bonus-for-level';
 import { asDep } from '@common/testing/as-dep';
+import type { CatalogEffect } from '@game/effects';
+
+function spendEffect(input: {
+  kind: 'temp_hp' | 'heal';
+  resourceSlug: string;
+  amountFormula: NonNullable<CatalogEffect['numeric']>['amountFormula'];
+  note: string;
+  label: string;
+}): CatalogEffect {
+  return {
+    id: input.resourceSlug,
+    kind: input.kind,
+    ownerKind: 'species',
+    ownerId: '1',
+    ownerSlug: 'test',
+    trigger: 'on_resource_spend',
+    unlockLevel: 1,
+    sortOrder: 0,
+    minTraitTakes: 1,
+    actionSlug: null,
+    resourceSlug: input.resourceSlug,
+    label: input.label,
+    requiresOptionKey: null,
+    requiresOptionValue: null,
+    spell: null,
+    castEconomy: null,
+    numeric: { amountFormula: input.amountFormula, flat: null },
+    note: { note: input.note },
+    resource: null,
+    combatMod: null,
+    proficiency: null,
+    purchaseDiscount: null,
+    damageDie: null,
+    weapon: null,
+    feat: null,
+    saveAdvantage: null,
+    sense: null,
+    damageType: null,
+    language: null,
+    checkAdvantage: null,
+    reach: null,
+    restQuirk: null,
+    environmentalImmunity: null,
+  };
+}
 
 describe('applyOriginResourceSpendEffects', () => {
   const stateResponse = {
@@ -31,16 +76,20 @@ describe('applyOriginResourceSpendEffects', () => {
   });
 
   it('applies 2× PB temp HP for werekin shift aspect', async () => {
-    const character = {
-      id: 'pc-1',
-      speciesSlug: 'werekin',
-      level: 5,
-    };
     const result = await applyOriginResourceSpendEffects({
       state: asDep(state),
-      character: asDep(character),
+      character: asDep({ id: 'pc-1', speciesSlug: 'werekin', level: 5 }),
       resourceSlug: 'werekin-shift-aspect',
       currentState: asDep(stateResponse),
+      effects: [
+        spendEffect({
+          kind: 'temp_hp',
+          resourceSlug: 'werekin-shift-aspect',
+          amountFormula: 'proficiency_bonus_times_2',
+          label: 'Mudar Aspecto — Força Bestial',
+          note: 'Mudar Aspecto — Força Bestial: PV temp. (2× PB).',
+        }),
+      ],
     });
     expect(state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -56,6 +105,15 @@ describe('applyOriginResourceSpendEffects', () => {
       character: asDep({ id: 'pc-1', speciesSlug: 'orc', level: 5 }),
       resourceSlug: 'adrenalineSurge',
       currentState: asDep(stateResponse),
+      effects: [
+        spendEffect({
+          kind: 'temp_hp',
+          resourceSlug: 'adrenalineSurge',
+          amountFormula: 'proficiency_bonus',
+          label: 'Pico de Adrenalina',
+          note: 'Pico de Adrenalina: PV temp. (PB) aplicados na ficha.',
+        }),
+      ],
     });
     expect(state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -65,17 +123,21 @@ describe('applyOriginResourceSpendEffects', () => {
   });
 
   it('rolls PB d6 temp HP for focused edge', async () => {
-    let n = 0;
-    const rng = () => {
-      n += 1;
-      return 0;
-    };
     const result = await applyOriginResourceSpendEffects({
       state: asDep(state),
       character: asDep({ id: 'pc-1', speciesSlug: 'human', level: 5 }),
       resourceSlug: 'gh-focused-edge',
       currentState: asDep(stateResponse),
-      rng,
+      rng: () => 0,
+      effects: [
+        spendEffect({
+          kind: 'temp_hp',
+          resourceSlug: 'gh-focused-edge',
+          amountFormula: 'dice_pb_d6',
+          label: 'Fio Concentrado',
+          note: 'Fio Concentrado: PV temp. (PBd6) aplicados na ficha.',
+        }),
+      ],
     });
     expect(state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -104,6 +166,15 @@ describe('applyOriginResourceSpendEffects', () => {
       resourceSlug: 'healingHands',
       currentState: asDep(stateResponse),
       rng: () => 0,
+      effects: [
+        spendEffect({
+          kind: 'heal',
+          resourceSlug: 'healingHands',
+          amountFormula: 'dice_pb_d4',
+          label: 'Mãos Curativas',
+          note: 'Mãos Curativas: PV curados (PBd4).',
+        }),
+      ],
     });
     expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -119,6 +190,15 @@ describe('applyOriginResourceSpendEffects', () => {
       character: asDep({ id: 'pc-1', speciesSlug: 'human', level: 9 }),
       resourceSlug: 'enduring-wyrd',
       currentState: asDep(stateResponse),
+      effects: [
+        spendEffect({
+          kind: 'temp_hp',
+          resourceSlug: 'enduring-wyrd',
+          amountFormula: 'proficiency_bonus',
+          label: 'Wyrd Duradouro',
+          note: 'Wyrd Duradouro: PV temp. (PB) aplicados na ficha.',
+        }),
+      ],
     });
     expect(state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -137,6 +217,7 @@ describe('applyOriginResourceSpendEffects', () => {
       }),
       resourceSlug: 'bearfolk-apex-predator',
       currentState: asDep(stateResponse),
+      effects: [],
     });
     expect(state.patch).not.toHaveBeenCalled();
     expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();

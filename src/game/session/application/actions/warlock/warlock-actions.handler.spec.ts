@@ -111,6 +111,7 @@ describe('WarlockActionsHandler', () => {
     );
     expect(result.expression).toBe('2d6');
     expect(result.note).toContain('Luz Medicinal');
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
   it('rejects Dark One’s Luck when resource spend fails', async () => {

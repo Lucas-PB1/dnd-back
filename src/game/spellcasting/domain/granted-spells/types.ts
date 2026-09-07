@@ -7,15 +7,6 @@ import type { CatalogEffect } from '@game/effects';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 
-/** Linha do catálogo `v_phb_species_granted_spell`. */
-export type SpeciesGrantedSpellRow = {
-  speciesSlug: string;
-  choiceKind: string | null;
-  choiceSlug: string | null;
-  unlockLevel: number;
-  spellSlug: string;
-};
-
 /** Linha do catálogo `v_phb_feat_granted_spell`. */
 export type FeatGrantedSpellRow = {
   featSlug: string;

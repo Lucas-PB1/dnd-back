@@ -8,6 +8,7 @@ import type {
   TableActionResponseDto,
   UseBattleMasterManeuverDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
+import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function listBattleMasterManeuversAction(
@@ -103,6 +104,17 @@ export async function useBattleMasterManeuverAction(
       dieRoll,
       useRelentless: dto.useRelentless,
     });
+
+    let note = result.note;
+    if (result.maneuver.slug === 'rally' && result.effectValue > 0) {
+      state = await applyTemporaryHitPoints(
+        deps.state,
+        character,
+        result.effectValue,
+      );
+      note = `${result.note} PV temp. aplicados neste PC (${result.effectValue}). Aliado: ajuste na mesa.`;
+    }
+
     return {
       state,
       actionName: result.maneuver.name,
@@ -111,7 +123,7 @@ export async function useBattleMasterManeuverAction(
       total: result.effectValue,
       saveDc: result.saveDc,
       resourceSpent: result.resourceSpent,
-      note: result.note,
+      note,
     };
   } catch (error) {
     throw new BadRequestException(

@@ -64,6 +64,16 @@ describe('character-check-bonuses', () => {
           valueId: 'arcana',
         },
       ],
+      featEffects: [
+        featEffect({
+          ownerSlug: 'skill-expert',
+          proficiency: { optionKey: 'newSkill', proficiencyKind: 'skill' },
+        }),
+        featEffect({
+          ownerSlug: 'skilled',
+          proficiency: { optionKey: 'proficiency1', proficiencyKind: 'skill' },
+        }),
+      ],
     });
     expect(slugs.sort()).toEqual([
       'arcana',

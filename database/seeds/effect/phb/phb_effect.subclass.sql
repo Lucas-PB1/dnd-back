@@ -1,6 +1,6 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
 -- Subclass resources — grant_resource (SSOT; grants removidos dos packs)
--- 148 efeitos gerados de phb_resource_grant
+-- 148 efeitos (histórico: migrados de grant de recurso)
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'aberrant'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'warp-implosion'),

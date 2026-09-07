@@ -1,5 +1,6 @@
 import { abjurerArcaneWardHp } from '@game/combat/domain/wizard';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -18,13 +19,14 @@ export async function resolveArcaneWard(
   assertCharacterLevel(character, 3, 'Mago', 'Proteção Arcana');
   const intMod = abilityModifier(character.abilityScores.inteligencia);
   const hp = abjurerArcaneWardHp(character.level, intMod);
+  const state = await applyTemporaryHitPoints(deps.state, character, hp);
 
   return {
-    state: await deps.state.buildResponse(character),
+    state,
     actionName: 'Proteção Arcana',
     resourceSpent: false,
     total: hp,
-    note: `Proteção Arcana: barreira mágica com ${hp} PV temporários ativa. Absorve dano sofrido e recarrega ao conjurar magias de Abjuração.`,
+    note: `Proteção Arcana: barreira com ${hp} PV aplicados na ficha como PV temp. Absorve dano e recarrega ao conjurar Abjuração — ajuste se a Proteção for menor que o tempHp atual.`,
   };
 }
 

@@ -4,7 +4,7 @@ import {
   type EquippedWeaponPiece,
 } from "../weapon-attack";
 import type { WeaponAttack, WeaponAttackContext } from "../weapon-attack.types";
-import { testScores } from "./fixtures";
+import { testScores, withOwnedStyleEffects } from "./fixtures";
 
 export type AttackPick = {
   itemSlug?: string;
@@ -33,7 +33,11 @@ export function runAttacks(
   ctx: WeaponAttackContext,
   scores: Partial<AbilityScores> = {},
 ): WeaponAttack[] {
-  return computeWeaponAttacks(testScores(scores), [...pieces], ctx);
+  return computeWeaponAttacks(
+    testScores(scores),
+    [...pieces],
+    withOwnedStyleEffects(ctx),
+  );
 }
 
 export function oneAttack(

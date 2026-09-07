@@ -17,36 +17,6 @@ import { resolveFeatSlugForGrantedSpell } from './resolve-granted-spellcasting-a
 
 export type CastEconomy = 'at_will' | 'once_per_long_rest' | 'slot_only';
 
-/** Greater Blessing of Freyr and Freyja — Curar Ferimentos free casts = PB / DL. */
-export const GREATER_FREYR_FEAT_SLUG = 'greater-blessing-of-freyr-and-freyja';
-export const CURAR_FERIMENTOS_SPELL_SLUG = 'curar-ferimentos';
-
-function isSpeciesChoiceCantrip(input: {
-  spellSlug: string;
-  speciesSlug?: string;
-  speciesChoices?: readonly SpeciesChoiceDto[];
-}): boolean {
-  if (input.speciesSlug === 'elf') {
-    const lineage = input.speciesChoices?.find(
-      (c) => c.choiceKind === 'elf_lineage',
-    )?.choiceSlug;
-    const cantrip = input.speciesChoices?.find(
-      (c) => c.choiceKind === 'high_elf_cantrip',
-    )?.choiceSlug;
-    if (lineage === 'high-elf' && cantrip === input.spellSlug) return true;
-  }
-  if (input.speciesSlug === 'bearfolk') {
-    const lineage = input.speciesChoices?.find(
-      (c) => c.choiceKind === 'bearfolk_lineage',
-    )?.choiceSlug;
-    const cantrip = input.speciesChoices?.find(
-      (c) => c.choiceKind === 'andari_druid_cantrip',
-    )?.choiceSlug;
-    if (lineage === 'andari' && cantrip === input.spellSlug) return true;
-  }
-  return false;
-}
-
 function featOptionKeyForSpell(
   spellSlug: string,
   featOptions: readonly FeatOptionDto[] | undefined,
@@ -82,8 +52,7 @@ function featSlugForSpell(
 
 /**
  * Economia de conjuração para magias concedidas (domain rules PHB 2024).
- * Espécie: `phb_effect` cast_economy (+ truques de escolha Alto Elfo/Andari).
- * Feat: preferência efeitos; fallback heurística por optionKey.
+ * Espécie/feat: só `phb_effect` cast_economy (incl. truques de escolha tipados).
  */
 export function resolveGrantedSpellCastEconomy(input: {
   spellSlug: string;
@@ -120,15 +89,6 @@ export function resolveGrantedSpellCastEconomy(input: {
       });
       if (fromEffect) return fromEffect;
     }
-    // @deprecated Preferir phb_effect cast_economy quando o optionKey está coberto.
-    if (key === 'cantrip1' || key === 'cantrip2') return 'at_will';
-    if (
-      key === 'firstLevelSpell' ||
-      key === 'bonusSpell' ||
-      key === 'bloodMagicSpell'
-    ) {
-      return 'once_per_long_rest';
-    }
     if (key?.startsWith('ritualSpell')) return 'slot_only';
     return 'slot_only';
   }
@@ -138,10 +98,10 @@ export function resolveGrantedSpellCastEconomy(input: {
       const fromEffect = resolveSpeciesSpellCastEconomyFromEffects({
         effects: input.speciesEffects,
         spellSlug: input.spellSlug,
+        choices: input.speciesChoices,
       });
       if (fromEffect) return fromEffect.economy;
     }
-    if (isSpeciesChoiceCantrip(input)) return 'at_will';
     return 'slot_only';
   }
 
@@ -172,6 +132,7 @@ export function freeCastMaxUses(input: {
     const sat = resolveSpeciesSpellCastEconomyFromEffects({
       effects: input.speciesEffects,
       spellSlug: input.spellSlug,
+      choices: undefined,
     });
     if (sat) {
       return resolveCastMaxUses({
@@ -181,12 +142,6 @@ export function freeCastMaxUses(input: {
         proficiencyBonus: input.proficiencyBonus ?? 1,
       });
     }
-  }
-  if (
-    input.featSlug === GREATER_FREYR_FEAT_SLUG &&
-    input.spellSlug === CURAR_FERIMENTOS_SPELL_SLUG
-  ) {
-    return Math.max(1, input.proficiencyBonus ?? 1);
   }
   return 1;
 }

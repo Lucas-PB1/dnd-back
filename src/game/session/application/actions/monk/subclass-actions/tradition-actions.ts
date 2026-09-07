@@ -1,6 +1,7 @@
 import { martialArtsDie, martialArtsDieFaces } from '@game/combat/domain/monk';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -41,15 +42,20 @@ export async function resolveWholenessOfBody(
     abilityModifier(character.abilityScores.sabedoria),
   );
   const heal = rollDamageParts(martialArtsDie(character.level), wisdom);
-  const spent = await spendResource(deps, character, WHOLENESS_SLUG, 1);
+  await spendResource(deps, character, WHOLENESS_SLUG, 1);
+  const { state, healed } = await applyHealHitPoints(
+    deps.state,
+    character,
+    heal.total,
+  );
   return {
-    state: spent,
+    state,
     actionName: 'Integridade Corporal',
     expression: heal.expression,
     roll: heal.dice[0]?.rolls[0],
     total: heal.total,
     resourceSpent: true,
-    note: `Integridade Corporal: Ação Bônus — recupere ${heal.total} PV (${heal.expression}). Usos = mod. de Sabedoria (mín. 1)/DL.`,
+    note: `Integridade Corporal: Ação Bônus — recupere ${heal.total} PV (${heal.expression}; +${healed} na ficha). Usos = mod. de Sabedoria (mín. 1)/DL.`,
   };
 }
 

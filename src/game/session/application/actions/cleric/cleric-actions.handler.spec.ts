@@ -52,6 +52,16 @@ describe('ClericActionsHandler', () => {
     expect(result.saveDc).toBe(15);
   });
 
+  it('applies Divine Spark heal to the sheet', async () => {
+    const result = await handler.useTableAction('user-1', 'cleric-1', {
+      actionSlug: 'divine-spark-heal',
+    });
+
+    expect(result.expression).toMatch(/^2d8\+4$/);
+    expect(result.note).toContain('Centelha Divina');
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
+  });
+
   it('adds Sear Undead damage at level 5+', async () => {
     const result = await handler.useTableAction('user-1', 'cleric-1', {
       actionSlug: 'turn-undead',
@@ -80,6 +90,7 @@ describe('ClericActionsHandler', () => {
 
     expect(result.total).toBe(45);
     expect(result.note).toContain('metade dos PV máximos');
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
   it('spends War Priest uses from the subclass resource', async () => {

@@ -22,7 +22,7 @@ describe('WizardActionsHandler', () => {
     }),
   });
   const ctx = createTableActionHandlerTestContext({
-    stateResponse: { classResources: [] },
+    stateResponse: { classResources: [], tempHp: 0 },
     defaultCharacter: wizard,
   });
   const handler = new WizardActionsHandler(
@@ -56,6 +56,10 @@ describe('WizardActionsHandler', () => {
 
     expect(result.total).toBe(14); // 2 * 5 + 4
     expect(result.note).toContain('Proteção Arcana');
+    expect(ctx.state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'wiz-1' }),
+      expect.objectContaining({ tempHp: 14 }),
+    );
   });
 
   it('requires level 6 for Sculpt Spells', async () => {

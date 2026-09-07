@@ -1,6 +1,6 @@
 import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
 import { abilityModifier } from "@game/shared/domain/ability-scores";
-import { hasStyleOrFeat } from "../feat/has-style-or-feat";
+import { ownedStyleOrFeatSlugs } from "@game/effects";
 import { isBlackPowderPistolPiece } from "../feat/grim-hollow-cap4-weapon-rules";
 import type {
   EquippedWeaponPiece,
@@ -25,8 +25,6 @@ const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
   "espada-curta": "shortsword",
   machadinhas: "handaxe",
 };
-
-export { hasStyleOrFeat } from "../feat/has-style-or-feat";
 
 export function hasProperty(piece: EquippedWeaponPiece, slug: string): boolean {
   return piece.propertySlugs.includes(slug);
@@ -66,10 +64,11 @@ export function isProficient(
   context: WeaponAttackContext,
 ): boolean {
   const proficiencySlugs = [...context.weaponProficiencySlugs];
-  if (hasStyleOrFeat(context, "martial-weapon-training")) {
+  const owned = ownedStyleOrFeatSlugs(context);
+  if (owned.includes("martial-weapon-training")) {
     proficiencySlugs.push(MARTIAL_PROFICIENCY);
   }
-  if (hasStyleOrFeat(context, "advanced-weapon-proficiency")) {
+  if (owned.includes("advanced-weapon-proficiency")) {
     proficiencySlugs.push(ADVANCED_PROFICIENCY);
   }
 
@@ -100,7 +99,7 @@ export function isProficient(
   if (piece.category === "advanced") {
     if (proficiencySlugs.includes(ADVANCED_PROFICIENCY)) return true;
     if (
-      hasStyleOrFeat(context, "blackpowder-pistol-expert") &&
+      owned.includes("blackpowder-pistol-expert") &&
       isBlackPowderPistolPiece(piece)
     ) {
       return true;

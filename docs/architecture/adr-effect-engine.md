@@ -11,7 +11,7 @@
 
 ## Contexto
 
-Queremos autorar traços (talento, espécie, classe, item, heritage) como **composição de verbos** tipados: seed declara efeitos; serviços genéricos executam. Migração **incremental** — tabelas e handlers atuais convivem até cada lote fechar DoD.
+Queremos autorar traços (talento, espécie, classe, item, heritage) como **composição de verbos** tipados: seed declara efeitos; serviços genéricos executam. Migração incremental **concluída** para grants/combat_mod (DROP + limpeza dual-read); handlers irredutíveis e residual de mesa seguem por checklist.
 
 ## Decisão
 
@@ -33,7 +33,7 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 
 **Positivas:** menos `case` por slug; novos traços similares = seed; SSOT de economia de cast/gasto.
 
-**Custos:** convívio dual-read; dicionário é produto contínuo; aposentadoria de `spell_grant` / `resource_grant` / `combat_modifier` só por lote com DoD.
+**Custos:** dicionário é produto contínuo; residual de mesa por categoria. Convívio dual-read / tabelas `phb_resource_grant` + `phb_combat_modifier` — **fechado** (DROP feito; limpeza mole dual-read + MV espécie feita).
 
 ## DoD Fase 0
 

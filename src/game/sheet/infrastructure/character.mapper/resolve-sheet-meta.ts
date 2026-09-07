@@ -6,7 +6,7 @@ import { CharacterSheetData } from '../../domain/character-sheet.types';
 import { loadClassAbilityBoosts } from '../load-class-ability-boosts';
 import { sheetProfile } from '@common/perf/sheet-profile';
 
-/** Prefere meta do P032; fallback para queries legadas se o bundle ainda não trouxer. */
+/** Prefere meta do P032; fallback só se o bundle vier incompleto (não é dual-path de efeitos). */
 export async function resolveSheetMeta(
   domain: CharacterDomainService,
   dataSource: DataSource,

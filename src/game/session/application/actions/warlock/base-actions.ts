@@ -7,6 +7,7 @@ import {
 } from '@game/combat/domain/warlock';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -56,10 +57,11 @@ export async function resolveHealingLight(
   }
   const result = rollDamageParts(`${spent}d6`, 0);
 
-  const { state } = await deps.state.useClassResource(
+  await deps.state.useClassResource(character, 'healing-light', spent);
+  const { state, healed } = await applyHealHitPoints(
+    deps.state,
     character,
-    'healing-light',
-    spent,
+    result.total,
   );
 
   return {
@@ -68,7 +70,7 @@ export async function resolveHealingLight(
     expression: result.expression,
     total: result.total,
     resourceSpent: true,
-    note: `Luz Medicinal: Ação Bônus gasta ${spent}d6 da reserva e restaura ${result.total} PV (${result.expression}) a uma criatura visível a até 18 m.`,
+    note: `Luz Medicinal: Ação Bônus gasta ${spent}d6 da reserva e restaura ${result.total} PV (${result.expression}; +${healed} na ficha — ajuste se for aliado) a uma criatura visível a até 18 m.`,
   };
 }
 

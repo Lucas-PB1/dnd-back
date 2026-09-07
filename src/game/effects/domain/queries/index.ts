@@ -2,6 +2,7 @@
 export {
   expertiseSkillSlugsFromEffects,
   fixedSkillSlugsFromEffects,
+  isChoiceSkillOptionKey,
   PHB_SKILL_SLUGS,
   proficiencyOptionKeysFromEffects,
 } from './skills';

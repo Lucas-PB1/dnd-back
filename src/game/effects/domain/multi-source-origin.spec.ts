@@ -7,7 +7,6 @@ import {
   scaledDamageDiceFromEffects,
 } from './queries/combat-bonus';
 import type { CatalogEffect } from './catalog-effect';
-import { catalogEffectsToCombatMods } from './dual-read-legacy-grants';
 import { featCombatNotes } from '@game/combat/domain/feat/combat-notes';
 
 function noteEffect(
@@ -126,7 +125,7 @@ describe('Fase 5 multi-fonte — effect queries', () => {
     ).toEqual([]);
   });
 
-  it('dual-reads syndicate combat_mod +1 HP / level', () => {
+  it('exposes syndicate combat_mod +1 HP / level on CatalogEffect', () => {
     const effects: CatalogEffect[] = [
       {
         ...noteEffect('resolutionofthe-syndicate', 'combat_mod', ''),
@@ -141,10 +140,8 @@ describe('Fase 5 multi-fonte — effect queries', () => {
         },
       },
     ];
-    const mods = catalogEffectsToCombatMods(effects);
-    expect(mods).toHaveLength(1);
-    expect(mods[0]?.perLevelBonus).toBe(1);
-    expect(mods[0]?.ownerSlug).toBe('resolutionofthe-syndicate');
+    expect(effects[0]?.combatMod?.perLevelBonus).toBe(1);
+    expect(effects[0]?.ownerSlug).toBe('resolutionofthe-syndicate');
   });
 
   it('does not treat multi-fonte notes as savage reroll', () => {

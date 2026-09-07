@@ -1,9 +1,9 @@
 import {
-  hasStyleOrFeat,
   isLight,
   isMeleeCapable,
   isTwoHanded,
 } from "../weapon-attacks/weapon-attack-predicates";
+import { ownedStyleOrFeatSlugs } from "@game/effects";
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
@@ -54,7 +54,7 @@ export function analyzeDualWield(
     mainLight &&
     offMeleeOk &&
     !offLight &&
-    hasStyleOrFeat(context, "dual-wielder")
+    ownedStyleOrFeatSlugs(context).includes("dual-wielder")
   ) {
     return {
       bonusRole: "dual_bonus",

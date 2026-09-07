@@ -105,7 +105,9 @@ function buildManeuverNote(
 ): string {
   const prefix = `${name}: ${relentless ? 'Implacável d8' : 'Dado de Superioridade'} = ${value}.`;
   if (slug === 'parry') return `${prefix} Reduza ${value} do dano.`;
-  if (slug === 'rally') return `${prefix} Conceda ${value} PV temporários.`;
+  if (slug === 'rally') {
+    return `${prefix} Conceda ${value} PV temporários (aplicados neste PC; aliado = ajuste na mesa).`;
+  }
   if (slug === 'precision-attack') {
     return `${prefix} Some ${value} à jogada de ataque que errou.`;
   }

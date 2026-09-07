@@ -66,7 +66,7 @@ SSOT:
 |--------|-----------|
 | Texto / raridade / attune | `rpg.phb_item` (`D010`) + `properties` |
 | Passivo numérico | `properties.permanentEffects` |
-| Pool (cargas / 1× amanhecer) | `phb_resource_definition` (scope `item`) + `phb_resource_grant` |
+| Pool (cargas / 1× amanhecer) | `phb_resource_definition` (scope `item`) + `phb_effect` (`grant_resource`) |
 | Cada habilidade na aba Ações | `phb_class_economy_action` com **`item_id`** (XOR owner) |
 | Ativo na ficha | equipado + (sem attune **ou** `attuned`) |
 
@@ -75,7 +75,7 @@ Fluxo (igual Valdas):
 ```
 D010 (item)
   ├─ permanentEffects  → resolve no inventário / rolls
-  ├─ resource def+grant → state.classResources (slug do item)
+  ├─ resource def + grant_resource (phb_effect) → state.classResources (slug do item)
   └─ N rows economy    → GET /combat-mechanical-catalog
                               → aba Ações (filtro activeItemSlugs)
                               → Usar = spend-resource | lembrete
@@ -259,7 +259,7 @@ mesa_complete: false
 
 1. Catálogo `D010` com texto e flags de attune.
 2. Passivos numéricos em `permanentEffects` (se houver).
-3. Todo pool com definition + grant.
+3. Todo pool com definition + `grant_resource` em `phb_effect`.
 4. Toda habilidade distinta com row economy (`action_id` estável `item-<slug>-<ability>`).
 5. `summary`/`description` jogáveis (não só o nome).
 6. Na ficha: item equipado/sintonizado → aparece na aba Ações; Usar/± funcionam quando aplicável.

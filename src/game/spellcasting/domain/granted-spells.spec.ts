@@ -59,6 +59,28 @@ function grantSpellEffect(
   };
 }
 
+function grantChoiceSpellEffect(
+  ownerSlug: string,
+  optionKey: string,
+  unlockLevel = 1,
+): CatalogEffect {
+  return {
+    ...grantSpellEffect(ownerSlug, `${optionKey}-placeholder`, unlockLevel),
+    id: `${ownerSlug}-${optionKey}`,
+    spell: {
+      spellId: null,
+      spellSlug: null,
+      optionKey,
+      spellLevel: 0,
+    },
+    castEconomy: {
+      economy: 'at_will',
+      usesFormula: 'fixed',
+      fixedUses: null,
+    },
+  };
+}
+
 /** Efeitos já gated (como `loadGatedSpeciesEffects` devolveria). */
 const AASIMAR_EFFECTS = [grantSpellEffect('aasimar', 'luz', 1)];
 const TIEFLING_INFERNAL_EFFECTS = [
@@ -75,7 +97,9 @@ const ELF_DROW_EFFECTS = [
 const ELF_HIGH_EFFECTS = [
   grantSpellEffect('elf', 'prestidigitacao-arcana', 1),
   grantSpellEffect('elf', 'detectar-magia', 3),
+  grantChoiceSpellEffect('elf', 'high_elf_cantrip'),
 ];
+const ANDARI_EFFECTS = [grantChoiceSpellEffect('bearfolk', 'andari_druid_cantrip')];
 const GNOME_FOREST_EFFECTS = [
   grantSpellEffect('gnome', 'ilusao-menor', 1),
   grantSpellEffect('gnome', 'falar-com-animais', 1),
@@ -298,7 +322,7 @@ describe('granted-spells', () => {
         'bearfolk',
         [{ choiceKind: 'bearfolk_lineage', choiceSlug: 'andari' }],
         1,
-        [],
+        ANDARI_EFFECTS,
       );
       expect([...without]).toEqual([]);
 
@@ -309,7 +333,7 @@ describe('granted-spells', () => {
           { choiceKind: 'andari_druid_cantrip', choiceSlug: 'druidismo' },
         ],
         1,
-        [],
+        ANDARI_EFFECTS,
       );
       expect([...withCantrip]).toEqual(['druidismo']);
     });

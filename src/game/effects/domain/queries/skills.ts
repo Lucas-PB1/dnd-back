@@ -3,7 +3,7 @@ import type {
   EffectProficiencySatellite,
 } from '../catalog-effect';
 
-function isChoiceSkillOptionKey(optionKey: string): boolean {
+export function isChoiceSkillOptionKey(optionKey: string): boolean {
   if (optionKey === 'newSkill' || optionKey === 'expertiseSkill') return true;
   if (optionKey.startsWith('proficiency') || optionKey.startsWith('skill')) {
     return true;
