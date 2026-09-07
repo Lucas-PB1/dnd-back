@@ -1,23 +1,50 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
--- Cap. 6 — table_action tipados (apply/nota) além dos grant_resource em E008.
+-- Cap. 6 — table_action tipados (apply/nota).
 -- Não regenerado pelo generate-ghpg-cap6-economy-seeds.mjs.
 
-WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-seraph'),
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-aberrant-horror'),
 ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
   SELECT 'table_note'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
          'on_table_action'::rpg.effect_trigger,
-         'gh-transformation-seraph/divine-clemency', 2, 1,
-         'Clemência Divina'
+         'gh-transformation-aberrant-horror/aberrant-mutation', 1, 1,
+         'Mutação Aberrante'
   FROM feat
   RETURNING id
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Reação: Palavra Curativa (nível 1) no aliado a até 9 m — 2d4 + atributo de conjuração. Ajuste os PV do alvo na mesa.'
+  'Envie mutationSlug: chitinous-shell | eldritch-limbs | slimy-form. Omitir encerra sem gastar uso. Duração 1 min (declare).'
 FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-seraph'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'heal'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_table_action'::rpg.effect_trigger,
+         'gh-transformation-seraph/divine-clemency', 2, 1,
+         'Clemência Divina'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'dice_2d4_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-seraph'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat'
+    AND e.action_slug = 'gh-transformation-seraph/divine-clemency'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Reação: Palavra Curativa (nível 1) — 2d4 + atributo de conjuração (maior entre INT/SAB/CAR).'
+FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lich'),
 ins AS (
@@ -31,10 +58,20 @@ ins AS (
   FROM feat
   RETURNING id
 )
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lich'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat'
+    AND e.action_slug = 'gh-transformation-lich/unholy-healing'
+)
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Enquanto o vaso de alma estiver carregado: no início de cada turno por 1 minuto, recupera 10 PV. Declare na mesa (duração tipada ainda não modelada).'
-FROM ins;
+  'Enquanto o vaso de alma estiver carregado: no início de cada turno por 1 minuto, recupera 10 PV. O vaso não perde a carga. Ajuste PV na ficha a cada turno (duração ainda não automatizada).'
+FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lycanthrope'),
 ins AS (

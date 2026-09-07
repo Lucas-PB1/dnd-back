@@ -64,6 +64,15 @@ export function resolveEffectAmount(input: {
         faces: 4,
       };
     }
+    case 'dice_2d4_plus_flat': {
+      const bonus = input.flat ?? 0;
+      const rolled = rollDamageParts('2d4', bonus, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 4,
+      };
+    }
     case 'proficiency_bonus_plus_cha':
       
       return { amount: pb + (input.flat ?? 0) };

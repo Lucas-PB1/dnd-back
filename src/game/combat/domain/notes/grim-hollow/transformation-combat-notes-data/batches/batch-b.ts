@@ -181,7 +181,8 @@ export const NOTES_LYCANTHROPE: Record<string, Cap6BoonCombatNote> = {
   },
   "bestial-vigor": {
     "namePt": "Bestial Vigor",
-    "economy": []
+    "economy": [],
+    "notePt": "+nível em PV máx. (+1/nível). Em forma híbrida: 5 PV temp. no início de cada turno (declare na mesa)."
   },
   "shapeshifters-savagery": {
     "namePt": "Shapeshifter’s Savagery",

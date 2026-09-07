@@ -8,12 +8,15 @@ import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-s
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { CharacterTransformationSnapshot } from '@game/session/infrastructure/queries/transformation-character.queries';
 import { applyFeatEconomyExecutedEffect } from './apply-feat-economy-executed-effect';
+import {
+  applyAberrantMutationAfterSpend,
+  resolveAberrantMutationSidePath,
+} from './apply-aberrant-mutation-table-action';
 
 export type FeatEconomyTableActionDeps = {
   state: CharacterStateRepository;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
   effectCatalog?: LoadEffectCatalog;
-  /** Faces do DV da classe; se omitido, usa 8. */
   hitDieFaces?: number;
 };
 
@@ -23,6 +26,7 @@ export async function resolveFeatEconomyTableAction(
   featSlug: string,
   actionSlug: string,
   transformation?: CharacterTransformationSnapshot | null,
+  options?: { mutationSlug?: string | null },
 ): Promise<TableActionResponseDto> {
   const catalog = await deps.mechanicalCatalog.load();
   const action = findFeatEconomyAction(
@@ -35,6 +39,16 @@ export async function resolveFeatEconomyTableAction(
   }
   assertTransformationAllows(action, transformation);
 
+  const mutationPath = await resolveAberrantMutationSidePath({
+    state: deps.state,
+    character,
+    action,
+    mutationSlug: options?.mutationSlug,
+  });
+  if (mutationPath.handled && mutationPath.response) {
+    return mutationPath.response;
+  }
+
   const spendAmount = resolveSpendAmount(action);
   let state =
     spendAmount > 0 && action.resourceSlug
@@ -46,6 +60,15 @@ export async function resolveFeatEconomyTableAction(
           )
         ).state
       : await deps.state.buildResponse(character);
+
+  if (mutationPath.activateSlug) {
+    return applyAberrantMutationAfterSpend({
+      state: deps.state,
+      character,
+      actionName: action.name,
+      mutationSlug: mutationPath.activateSlug,
+    });
+  }
 
   let note =
     action.description?.trim() ||

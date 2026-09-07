@@ -50,4 +50,17 @@ describe('transformationCombatNotes', () => {
     expect(notes.some((n) => /Punição Infernal|Infernal Smite/i.test(n))).toBe(true);
     expect(notes.some((n) => /Alma Corruptora|Fiendish Soul/i.test(n))).toBe(true);
   });
+
+  it('describes Bestial Vigor with HP and hybrid temp HP', () => {
+    const notes = transformationCombatNotes({
+      slug: 'gh-transformation-lycanthrope',
+      stage: 3,
+      choices: [
+        { choiceKind: 'stage1Boon', choiceSlug: 'hybrid-wolf-form' },
+        { choiceKind: 'stage3Boon', choiceSlug: 'bestial-vigor' },
+      ],
+    });
+    expect(notes.some((n) => /Bestial Vigor/i.test(n))).toBe(true);
+    expect(notes.some((n) => /5 PV temp/i.test(n))).toBe(true);
+  });
 });

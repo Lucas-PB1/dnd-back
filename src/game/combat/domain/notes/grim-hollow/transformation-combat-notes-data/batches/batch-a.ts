@@ -10,7 +10,8 @@ export const NOTES_ABERRANT_HORROR: Record<string, Cap6BoonCombatNote> = {
     "economy": [
       "bonus",
       "action"
-    ]
+    ],
+    "notePt": "Casca Quitinosa / Membros Eldritch / Forma Viscosa — toggle stateful (mutationSlug); 1 min declare."
   },
   "efficient-killer": {
     "namePt": "Efficient Killer",

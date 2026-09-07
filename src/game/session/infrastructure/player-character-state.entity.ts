@@ -78,6 +78,10 @@ export class PlayerCharacterState {
   @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
   stellarConstellation!: string | null;
 
+  /** Mutação Aberrante ativa (Cap. 6). */
+  @Column({ name: 'aberrant_mutation_active', type: 'text', nullable: true })
+  aberrantMutationActive!: string | null;
+
   /** Veículo/montaria em que o PC está a bordo (game_actor). */
   @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
   boardedActorId!: string | null;

@@ -26,7 +26,7 @@ efeitos/pool · economy/ações · apply · front · gaps vs regras
 
 | § | Categoria | Âncora | Fazer |
 |---|-----------|--------|--------|
-| **A** | Transformações | `E008`/`E015` / `C078` | Pool ok; Licantropo declare; Clemência/Cura Profana tipados; residual apply contínuo |
+| **A** | Transformações | `transformation/grim-hollow/` · `economy/grim-hollow/` | **§A fechado** — pool/economy; Licantropo; Clemência; Cura Profana; Bestial Vigor; Mutações Aberrantes stateful |
 | **B** | Classe | `E009` / `C009`–`C010`… | Pool ok; economy/panel; metamagia, invocações, manobras |
 | **C** | Subclass | `E012` + packs / `C004`… | Pool ok; table-action; catálogos; apply |
 | **D** | Espécie | `E007` / `C011`… | Pool ok; magias collect+cast_economy effects-only; economy; apply |

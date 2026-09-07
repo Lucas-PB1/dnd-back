@@ -9,5 +9,6 @@ CREATE TYPE rpg.effect_amount_formula AS ENUM (
   'dice_pb_d6',
   'dice_hit_die_plus_pb',
   'proficiency_bonus_plus_cha',
-  'dice_1d4'
+  'dice_1d4',
+  'dice_2d4_plus_flat'
 );

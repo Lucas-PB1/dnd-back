@@ -78,6 +78,7 @@ describe('CharacterStateRepository', () => {
         gigaMissileArmed: false,
         starryFormActive: false,
         stellarConstellation: null,
+        aberrantMutationActive: null,
         boardedActorId: null,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
@@ -149,6 +150,7 @@ describe('CharacterStateRepository', () => {
         gigaMissileArmed: false,
         starryFormActive: false,
         stellarConstellation: null,
+        aberrantMutationActive: null,
         boardedActorId: null,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);

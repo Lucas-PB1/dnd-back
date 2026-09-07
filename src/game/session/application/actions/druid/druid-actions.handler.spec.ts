@@ -26,6 +26,7 @@ describe('DruidActionsHandler', () => {
     stateResponse: {
       starryFormActive: false,
       stellarConstellation: null,
+      aberrantMutationActive: null,
     },
     defaultCharacter: druid,
   });

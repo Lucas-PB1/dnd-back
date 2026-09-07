@@ -139,6 +139,14 @@ export class CharacterStateResponseDto {
   stellarConstellation!: string | null;
 
   @ApiPropertyOptional({
+    example: 'chitinous-shell',
+    nullable: true,
+    description:
+      'Mutação Aberrante ativa (chitinous-shell | eldritch-limbs | slimy-form)',
+  })
+  aberrantMutationActive!: string | null;
+
+  @ApiPropertyOptional({
     example: null,
     nullable: true,
     description: 'game_actor (veículo/montaria) em que o PC está a bordo',

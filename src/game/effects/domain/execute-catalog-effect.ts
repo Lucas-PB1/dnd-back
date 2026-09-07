@@ -19,6 +19,9 @@ export type EffectExecution =
   | {
       kind: 'table_note';
       note: string;
+      /** Valor tipado para declare (ex.: PV/turno), sem apply na ficha. */
+      amount?: number;
+      expression?: string;
     }
   | {
       kind: 'grant_inspiration';
@@ -36,19 +39,50 @@ const EXECUTABLE_KINDS = new Set<EffectKind>([
   'grant_inspiration',
 ]);
 
-function tableNoteFromEffect(effect: CatalogEffect): EffectExecution {
+function tableNoteFromEffect(
+  effect: CatalogEffect,
+  context: {
+    level: number;
+    rng?: Rng;
+    hitDieFaces?: number;
+    flatOverride?: number;
+  },
+): EffectExecution {
+  const note = effect.note?.note?.trim() || effect.label || 'Declare na mesa.';
+  if (!effect.numeric) {
+    return { kind: 'table_note', note };
+  }
+  const flat =
+    context.flatOverride !== undefined
+      ? context.flatOverride
+      : (effect.numeric.flat ?? null);
+  const resolved = resolveEffectAmount({
+    amountFormula: effect.numeric.amountFormula,
+    flat,
+    level: context.level,
+    rng: context.rng,
+    hitDieFaces: context.hitDieFaces,
+  });
   return {
     kind: 'table_note',
-    note: effect.note?.note?.trim() || effect.label || 'Declare na mesa.',
+    note,
+    amount: resolved.amount,
+    expression: resolved.expression,
   };
 }
 
 export function executeCatalogEffect(
   effect: CatalogEffect,
-  context: { level: number; rng?: Rng; hitDieFaces?: number },
+  context: {
+    level: number;
+    rng?: Rng;
+    hitDieFaces?: number;
+    /** Sobrescreve `numeric.flat` (ex.: mod de conjuração). */
+    flatOverride?: number;
+  },
 ): EffectExecution {
   if (!EXECUTABLE_KINDS.has(effect.kind)) {
-    return tableNoteFromEffect(effect);
+    return tableNoteFromEffect(effect, context);
   }
 
   if (effect.kind === 'grant_inspiration') {
@@ -61,11 +95,16 @@ export function executeCatalogEffect(
     };
   }
 
+  const flat =
+    context.flatOverride !== undefined
+      ? context.flatOverride
+      : (effect.numeric?.flat ?? null);
+
   if (effect.kind === 'spend_resource') {
     const amount = effect.numeric
       ? resolveEffectAmount({
           amountFormula: effect.numeric.amountFormula,
-          flat: effect.numeric.flat,
+          flat,
           level: context.level,
           rng: context.rng,
           hitDieFaces: context.hitDieFaces,
@@ -85,7 +124,7 @@ export function executeCatalogEffect(
   }
   const resolved = resolveEffectAmount({
     amountFormula: effect.numeric.amountFormula,
-    flat: effect.numeric.flat,
+    flat,
     level: context.level,
     rng: context.rng,
     hitDieFaces: context.hitDieFaces,

@@ -17,6 +17,7 @@ export type MappedCombatSlice = {
   itemSpeedBonusMeters: number;
   itemHpBonus: number;
   heritageHpBonus: number;
+  transformationHpBonus: number;
   classCombatNotes: string[];
   attacksPerAction: number;
   savingThrowAuraBonus: number;

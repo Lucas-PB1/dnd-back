@@ -93,6 +93,7 @@ export async function buildCharacterStateResponse(input: {
     gigaMissileArmed: state.gigaMissileArmed ?? false,
     starryFormActive: state.starryFormActive ?? false,
     stellarConstellation: state.stellarConstellation ?? null,
+    aberrantMutationActive: state.aberrantMutationActive ?? null,
     boardedActorId: state.boardedActorId ?? null,
   };
 }

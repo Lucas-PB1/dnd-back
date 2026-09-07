@@ -65,6 +65,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Satélite:** `phb_effect_combat_mod`
 - **Convívio:** `phb_combat_modifier` permanece até DoD
 - **Dual-read:** `catalogEffectsToCombatMods`
+- **Cap. 6:** Bestial Vigor (`gh-transformation-lycanthrope`, gate `stage3Boon=bestial-vigor`) — `hp_bonus` +1/nível via `loadTransformationHitPointsBonus`
 
 ### `temp_hp` (Fase 2)
 
@@ -78,7 +79,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** cura PV na ficha.
 - **Satélite:** `phb_effect_numeric` (+ note)
 - **Trigger:** `on_resource_spend` / `on_table_action`
-- **Fórmula lote origem:** `dice_hit_die_plus_pb` (1 DV do PC + PB) — Médico de Combate
+- **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`)
 
 ### `spend_resource` (Fase 2)
 
@@ -90,7 +91,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 ### `table_note` (Fase 2)
 
 - **Semântica:** só nota para a mesa (declare efeito).
-- **Satélite:** `phb_effect_note`
+- **Satélite:** `phb_effect_note`; opcional `phb_effect_numeric` quando o declare tem valor tipado (ex.: 10 PV/turno da Cura Profana) — devolve `total` sem apply na ficha
 - **Trigger:** `on_table_action`
 
 ### `combat_note` (lote origem)

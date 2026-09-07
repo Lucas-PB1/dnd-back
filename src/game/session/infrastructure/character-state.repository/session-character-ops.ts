@@ -9,6 +9,8 @@ import type { LoadEffectCatalog } from '@game/effects';
 import type { CharacterStateResponseDto } from '../../dto/core/character-state-response.dto';
 import { buildCharacterStateResponse } from '../character-state/core/build-response';
 import { applyStarryFormState } from '../character-state/druid/starry-form-mutations';
+import { applyAberrantMutationState } from '../character-state/transformation/aberrant-mutation-mutations';
+import type { AberrantMutationSlug } from '@game/session/domain/transformation/aberrant-mutation';
 import type { PlayerCharacterState } from '../player-character-state.entity';
 import type {
   CharacterStateFindOrCreate,
@@ -153,6 +155,21 @@ export async function setStarryFormOp(
     state,
     active: input.active,
     constellation: input.constellation,
+    stateRepo: ports.stateRepo,
+    buildResponse: ports.buildResponse,
+  });
+}
+
+export async function setAberrantMutationOp(
+  ports: SessionCharacterPorts,
+  character: PlayerCharacter,
+  mutationSlug: AberrantMutationSlug | null,
+): Promise<CharacterStateResponseDto> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  return applyAberrantMutationState({
+    character,
+    state,
+    mutationSlug,
     stateRepo: ports.stateRepo,
     buildResponse: ports.buildResponse,
   });

@@ -62,6 +62,7 @@ describe('rest', () => {
     gigaMissileArmed: false,
     starryFormActive: false,
     stellarConstellation: null,
+    aberrantMutationActive: null,
     boardedActorId: null,
   } as PlayerCharacterState;
 

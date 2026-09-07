@@ -19,7 +19,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 | Itens DMG mesa | **Revisão ativa** — grants+economy+apply no checklist §8 |
 | Grim Hollow Cap. 2 mesa + Cap. 1 heranças | **Revisão ativa** — subclass/heritage no checklist §4·§6 |
 | Grim Hollow Cap. 4 talentos | Pronto |
-| Grim Hollow Cap. 6 transformações | **Revisão ativa** — `E008`/`C078`/`E015` (Licantropo declare + notas Clemência/Cura); residual apply contínuo no checklist §A |
+| Grim Hollow Cap. 6 transformações | **§A fechado** — Clemência / Cura Profana / Bestial Vigor / Mutações Aberrantes; revisão residual só se gap de mesa |
 | Saúde do código (Fases 0–4) | **Pronto** — dívida residual em Adiado |
 | Motor de efeitos (`phb_effect`) | **Ativo** — categoria + fonte + fase DROP — [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) · [`effect-engine.md`](effect-engine.md) |
 | Combate situacional / monstros catálogo | **No checklist** §M/§P — [`effect-mesa-checklist.md`](effect-mesa-checklist.md) (não mais “só adiado”) |

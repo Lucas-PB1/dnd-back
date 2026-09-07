@@ -1,5 +1,6 @@
 import type { CatalogEffect } from '@game/effects';
 import { executeCatalogEffect } from '@game/effects';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -13,6 +14,17 @@ type ApplyFeatEconomyEffectResult = {
   expression?: string;
 };
 
+/** Maior mod entre INT/SAB/CAR — proxy de atributo de conjuração na mesa. */
+export function spellcastingAbilityModifier(
+  scores: PlayerCharacter['abilityScores'],
+): number {
+  return Math.max(
+    abilityModifier(scores.inteligencia),
+    abilityModifier(scores.sabedoria),
+    abilityModifier(scores.carisma),
+  );
+}
+
 /** Aplica heal / temp_hp / inspiration / note tipados no resultado da table-action. */
 export async function applyFeatEconomyExecutedEffect(input: {
   state: CharacterStateRepository;
@@ -22,9 +34,18 @@ export async function applyFeatEconomyExecutedEffect(input: {
   hitDieFaces: number;
   currentState: TableActionResponseDto['state'];
 }): Promise<ApplyFeatEconomyEffectResult> {
+  const needsCastingFlat =
+    input.effect.numeric?.amountFormula === 'dice_2d4_plus_flat';
   const executed = executeCatalogEffect(input.effect, {
     level: input.character.level,
     hitDieFaces: input.hitDieFaces,
+    ...(needsCastingFlat
+      ? {
+          flatOverride: spellcastingAbilityModifier(
+            input.character.abilityScores,
+          ),
+        }
+      : {}),
   });
   let note = input.baseNote;
   let state = input.currentState;
@@ -43,7 +64,7 @@ export async function applyFeatEconomyExecutedEffect(input: {
     note = [
       note,
       executed.note,
-      `Cura aplicada: ${executed.amount}${executed.expression ? ` (${executed.expression})` : ''}.`,
+      `Cura aplicada neste PC: ${executed.amount}${executed.expression ? ` (${executed.expression})` : ''}. Aliado: ajuste PV na mesa.`,
     ]
       .filter(Boolean)
       .join(' ');
@@ -63,6 +84,11 @@ export async function applyFeatEconomyExecutedEffect(input: {
     note = [note, executed.note].filter(Boolean).join(' ');
   } else if (executed.kind === 'table_note' && executed.note) {
     note = `${note} ${executed.note}`;
+    if (executed.amount != null) {
+      total = executed.amount;
+      expression = executed.expression;
+      note = `${note} Valor tipado: ${executed.amount} PV/turno (ajuste na ficha a cada turno; duração na mesa).`;
+    }
   }
 
   return { state, note, total, expression };

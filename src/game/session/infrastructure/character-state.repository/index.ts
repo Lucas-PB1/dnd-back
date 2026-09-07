@@ -39,9 +39,11 @@ import { CharacterStateResourceApi } from './resource-api';
 import {
   applyCurrentHitPointsOp,
   buildResponseOp,
+  setAberrantMutationOp,
   setMissileMageArmedFlagsOp,
   setStarryFormOp,
 } from './session-character-ops';
+import type { AberrantMutationSlug } from '@game/session/domain/transformation/aberrant-mutation';
 
 @Injectable()
 export class CharacterStateRepository extends CharacterStateResourceApi {
@@ -155,6 +157,13 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     },
   ) {
     return setStarryFormOp(this.ports(), character, input);
+  }
+
+  setAberrantMutation(
+    character: PlayerCharacter,
+    mutationSlug: AberrantMutationSlug | null,
+  ) {
+    return setAberrantMutationOp(this.ports(), character, mutationSlug);
   }
 
   syncHitDiceOnLevelChange(

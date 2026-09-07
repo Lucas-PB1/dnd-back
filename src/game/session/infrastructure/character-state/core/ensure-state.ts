@@ -30,6 +30,7 @@ export async function findOrCreateCharacterState(
       gigaMissileArmed: false,
       starryFormActive: false,
       stellarConstellation: null,
+      aberrantMutationActive: null,
       boardedActorId: null,
     });
     await stateRepo.save(row);
@@ -66,6 +67,9 @@ export async function findOrCreateCharacterState(
   }
   if (row.stellarConstellation === undefined) {
     row.stellarConstellation = null;
+  }
+  if (row.aberrantMutationActive === undefined) {
+    row.aberrantMutationActive = null;
   }
   return row;
 }

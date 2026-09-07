@@ -49,6 +49,7 @@ export function assembleCharacterResponseDto(input: {
         : row.hitPointsMax +
           combat.itemHpBonus +
           combat.heritageHpBonus +
+          combat.transformationHpBonus +
           input.classHpBonus,
     hitPointsCurrent: row.hitPointsCurrent,
     proficiencyBonus: input.proficiencyBonus,

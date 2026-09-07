@@ -22,6 +22,7 @@ import {
   loadHeritageHitPointsBonus,
 } from '../../domain/heritage/heritage-combat-notes';
 import { transformationCombatNotes } from '../../domain/notes/grim-hollow/transformation-combat-notes';
+import { loadTransformationHitPointsBonus } from '../../domain/notes/grim-hollow/load-transformation-hit-points-bonus';
 import { paladinSavingThrowAuraBonus } from '../../domain/paladin';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { sheetProfile } from '@common/perf/sheet-profile';
@@ -93,6 +94,13 @@ export async function assembleMappedCombatSlice(input: {
       input.level,
     ),
   );
+  const transformationHpBonus = await sheetProfile('combat.transformationHp', () =>
+    loadTransformationHitPointsBonus(
+      input.dataSource,
+      input.transformation ?? null,
+      input.level,
+    ),
+  );
   const featNotes = featCombatNotes({
     featSlugs: [...input.featSlugs, ...input.fightingStyleSlugs],
     featEffects: input.featEffects,
@@ -131,6 +139,7 @@ export async function assembleMappedCombatSlice(input: {
       speedBonusMetersFromEffects(effects, input.featSlugs),
     itemHpBonus: input.itemEffects.hpBonus,
     heritageHpBonus,
+    transformationHpBonus,
     classCombatNotes: [
       ...speciesNotes,
       ...heritageNotes,

@@ -49,6 +49,7 @@ export class TransformationActionsHandler {
       transformation.slug,
       dto.actionSlug,
       transformation,
+      { mutationSlug: dto.mutationSlug },
     );
   }
 }

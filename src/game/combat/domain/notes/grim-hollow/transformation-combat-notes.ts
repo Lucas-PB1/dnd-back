@@ -47,9 +47,14 @@ export function transformationCombatNotes(
     const tags = meta.economy
       .map((tag) => CAP6_ECONOMY_LABEL_PT[tag] ?? tag)
       .filter(Boolean);
-    notes.push(
-      tags.length > 0 ? `${name} (${tags.join(' · ')}).` : `${name}.`,
-    );
+    const detail = meta.notePt?.trim();
+    if (tags.length > 0) {
+      notes.push(`${name} (${tags.join(' · ')}).`);
+    } else if (detail) {
+      notes.push(`${name}: ${detail}`);
+    } else {
+      notes.push(`${name}.`);
+    }
   }
   return notes;
 }

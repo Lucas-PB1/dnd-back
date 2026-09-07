@@ -64,6 +64,45 @@ const economyActions: ClassEconomyActionRecord[] = [
     summary: 'Hybrid Wolf Form',
     description: 'Declare hybrid wolf.',
   },
+  {
+    id: 'divine-clemency-activate',
+    name: 'Clemência Divina',
+    economy: 'reaction',
+    featSlug: 'gh-transformation-seraph',
+    minLevel: 2,
+    resourceSlug: 'divine-clemency-uses',
+    alwaysSpendsResource: true,
+    tableAction: 'gh-transformation-seraph/divine-clemency',
+    requiresOptionKey: 'stage2Boon',
+    requiresOptionValue: 'divine-clemency',
+    summary: 'Clemência Divina',
+    description: 'Palavra Curativa.',
+  },
+  {
+    id: 'unholy-healing-activate',
+    name: 'Cura Profana',
+    economy: 'action',
+    featSlug: 'gh-transformation-lich',
+    minLevel: 3,
+    resourceSlug: 'unholy-healing-uses',
+    alwaysSpendsResource: true,
+    tableAction: 'gh-transformation-lich/unholy-healing',
+    requiresOptionKey: 'stage3Boon',
+    requiresOptionValue: 'unholy-healing',
+    summary: 'Cura Profana',
+    description: 'Regeneração do vaso.',
+  },
+  {
+    id: 'aberrant-mutation-activate',
+    name: 'Mutação Aberrante',
+    economy: 'bonus',
+    featSlug: 'gh-transformation-aberrant-horror',
+    minLevel: 1,
+    resourceSlug: 'aberrant-mutation-uses',
+    alwaysSpendsResource: true,
+    tableAction: 'gh-transformation-aberrant-horror/aberrant-mutation',
+    summary: 'Mutação Aberrante',
+  },
 ];
 
 describe('resolveFeatEconomyTableAction', () => {
@@ -75,6 +114,14 @@ describe('resolveFeatEconomyTableAction', () => {
       state: { resources: [] },
     })),
     buildResponse: jest.fn(async () => ({ resources: [] })),
+    applyCurrentHitPoints: jest.fn(async () => ({
+      resources: [],
+      hitPointsCurrent: 12,
+    })),
+    setAberrantMutation: jest.fn(async (_c, slug) => ({
+      resources: [],
+      aberrantMutationActive: slug,
+    })),
   };
 
   beforeEach(() => {
@@ -186,5 +233,225 @@ describe('resolveFeatEconomyTableAction', () => {
     expect(state.useClassResource).not.toHaveBeenCalled();
     expect(result.resourceSpent).toBe(false);
     expect(result.note).toContain('Declare forma híbrida de lobo');
+  });
+
+  it('cura Clemência Divina com 2d4 + mod de conjuração', async () => {
+    const seraph = {
+      id: 'c-seraph',
+      level: 5,
+      hitPointsCurrent: 10,
+      hitPointsMax: 40,
+      abilityScores: {
+        forca: 10,
+        destreza: 10,
+        constituicao: 10,
+        inteligencia: 10,
+        sabedoria: 14,
+        carisma: 16,
+      },
+    } as PlayerCharacter;
+
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          id: '1',
+          kind: 'heal',
+          ownerKind: 'feat',
+          ownerId: '1',
+          ownerSlug: 'gh-transformation-seraph',
+          trigger: 'on_table_action',
+          unlockLevel: 2,
+          sortOrder: 0,
+          minTraitTakes: 1,
+          actionSlug: 'gh-transformation-seraph/divine-clemency',
+          resourceSlug: null,
+          label: 'Clemência Divina',
+          requiresOptionKey: null,
+          requiresOptionValue: null,
+          spell: null,
+          castEconomy: null,
+          numeric: {
+            amountFormula: 'dice_2d4_plus_flat',
+            flat: null,
+          },
+          note: {
+            note: 'Reação: Palavra Curativa (nível 1) — 2d4 + atributo de conjuração.',
+          },
+          resource: null,
+          combatMod: null,
+          proficiency: null,
+          purchaseDiscount: null,
+          damageDie: null,
+          weapon: null,
+          feat: null,
+          saveAdvantage: null,
+          sense: null,
+          damageType: null,
+          language: null,
+          checkAdvantage: null,
+          reach: null,
+          restQuirk: null,
+          environmentalImmunity: null,
+        },
+      ]),
+    };
+
+    const result = await resolveFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      seraph,
+      'gh-transformation-seraph',
+      'gh-transformation-seraph/divine-clemency',
+      {
+        slug: 'gh-transformation-seraph',
+        stage: 2,
+        choices: [
+          { choiceKind: 'stage2Boon', choiceSlug: 'divine-clemency' },
+        ],
+      },
+    );
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      seraph,
+      'divine-clemency-uses',
+      1,
+    );
+    expect(state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.total).toBeGreaterThanOrEqual(2 + 3);
+    expect(result.total).toBeLessThanOrEqual(8 + 3);
+    expect(result.note).toContain('Cura aplicada neste PC');
+    expect(result.expression).toContain('d4');
+  });
+
+  it('Cura Profana declara 10 PV/turno tipados sem aplicar cura', async () => {
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          id: '1',
+          kind: 'table_note',
+          ownerKind: 'feat',
+          ownerId: '1',
+          ownerSlug: 'gh-transformation-lich',
+          trigger: 'on_table_action',
+          unlockLevel: 3,
+          sortOrder: 0,
+          minTraitTakes: 1,
+          actionSlug: 'gh-transformation-lich/unholy-healing',
+          resourceSlug: null,
+          label: 'Cura Profana',
+          requiresOptionKey: null,
+          requiresOptionValue: null,
+          spell: null,
+          castEconomy: null,
+          numeric: { amountFormula: 'fixed', flat: 10 },
+          note: {
+            note: 'No início de cada turno por 1 minuto, recupera 10 PV.',
+          },
+          resource: null,
+          combatMod: null,
+          proficiency: null,
+          purchaseDiscount: null,
+          damageDie: null,
+          weapon: null,
+          feat: null,
+          saveAdvantage: null,
+          sense: null,
+          damageType: null,
+          language: null,
+          checkAdvantage: null,
+          reach: null,
+          restQuirk: null,
+          environmentalImmunity: null,
+        },
+      ]),
+    };
+
+    const lich = { id: 'c-lich', level: 10 } as PlayerCharacter;
+    const result = await resolveFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      lich,
+      'gh-transformation-lich',
+      'gh-transformation-lich/unholy-healing',
+      {
+        slug: 'gh-transformation-lich',
+        stage: 3,
+        choices: [
+          { choiceKind: 'stage3Boon', choiceSlug: 'unholy-healing' },
+        ],
+      },
+    );
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      lich,
+      'unholy-healing-uses',
+      1,
+    );
+    expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();
+    expect(result.total).toBe(10);
+    expect(result.note).toContain('10 PV');
+    expect(result.note).toContain('Valor tipado');
+  });
+
+  it('ativa Mutação Aberrante com mutationSlug e gasta uso', async () => {
+    const horror = { id: 'c-horror', level: 5 } as PlayerCharacter;
+    const result = await resolveFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+      },
+      horror,
+      'gh-transformation-aberrant-horror',
+      'gh-transformation-aberrant-horror/aberrant-mutation',
+      {
+        slug: 'gh-transformation-aberrant-horror',
+        stage: 1,
+        choices: [],
+      },
+      { mutationSlug: 'chitinous-shell' },
+    );
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      horror,
+      'aberrant-mutation-uses',
+      1,
+    );
+    expect(state.setAberrantMutation).toHaveBeenCalledWith(
+      horror,
+      'chitinous-shell',
+    );
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toContain('Casca Quitinosa');
+    expect(result.state.aberrantMutationActive).toBe('chitinous-shell');
+  });
+
+  it('encerra Mutação Aberrante sem gastar uso', async () => {
+    const horror = { id: 'c-horror', level: 5 } as PlayerCharacter;
+    const result = await resolveFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+      },
+      horror,
+      'gh-transformation-aberrant-horror',
+      'gh-transformation-aberrant-horror/aberrant-mutation',
+      {
+        slug: 'gh-transformation-aberrant-horror',
+        stage: 1,
+        choices: [],
+      },
+      { mutationSlug: null },
+    );
+
+    expect(state.useClassResource).not.toHaveBeenCalled();
+    expect(state.setAberrantMutation).toHaveBeenCalledWith(horror, null);
+    expect(result.resourceSpent).toBe(false);
+    expect(result.note).toContain('encerrada');
   });
 });

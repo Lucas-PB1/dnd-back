@@ -60,6 +60,8 @@ const EXACT_MAP = {
   'E014_combat_mod.sql': 'effect/phb/phb_effect.combat-mod.sql',
   'E015_ghpg_transform_table_action.sql':
     'transformation/grim-hollow/phb_effect.table-note.gh-transformations.sql',
+  'E016_ghpg_transform_combat_mod.sql':
+    'transformation/grim-hollow/phb_effect.combat-mod.gh-transformations.sql',
   'J019_phb_feat_ghpg_transformations.sql':
     'transformation/grim-hollow/phb_feat.gh-transformations.sql',
   'J060_phb_feat_option_ghpg_transformations.sql':

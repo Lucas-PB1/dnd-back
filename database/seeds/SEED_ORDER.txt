@@ -436,4 +436,5 @@ effect/northlands/phb_effect.thread.sql
 effect/phb/phb_effect.subclass.sql
 effect/dmg/phb_effect.item.sql
 effect/phb/phb_effect.combat-mod.sql
+transformation/grim-hollow/phb_effect.combat-mod.gh-transformations.sql
 transformation/grim-hollow/phb_effect.table-note.gh-transformations.sql
