@@ -155,7 +155,7 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Inspiração ligada neste PC. Conceda Inspiração a até PB aliados voluntários (declare na mesa).'
+  'Inspiração ligada neste PC. Aliados: POST …/state/transfer-inspiration (até PB voluntários a 9 m).'
 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'musician'),
@@ -319,16 +319,17 @@ FROM ins;
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'),
 ins AS (
   INSERT INTO rpg.phb_effect (
-    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
   SELECT 'table_note'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
-         'passive'::rpg.effect_trigger, 1, 5, 'Artesão — Fabricação'
+         'on_table_action'::rpg.effect_trigger, 'artisan-craft', 1, 5,
+         'Artesão — Fabricação'
   FROM feat
   RETURNING id
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Fabricação rápida no descanso: declare na mesa (craft on rest fora do motor neste lote).'
+  'Fabricação Rápida: item na mochila até o próximo Descanso Longo (table-action artisan-craft + itemSlug).'
 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'savage-attacker'),

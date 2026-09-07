@@ -2,10 +2,10 @@
 
 | Campo | Valor |
 |-------|--------|
-| Status | **Aceito** (Fase 0) |
+| Status | **Aceito** — DROP legado fechado |
 | Data | 2026-09-04 |
 | Contexto | Catálogo descreve conteúdo; regras de mesa/build repetidas em handlers TS e heurísticas |
-| Plano | [`../plans/effect-engine.md`](../plans/effect-engine.md) |
+| Residual mesa | [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) · [`../plans/backlog.md`](../plans/backlog.md) |
 | Dicionário | [`effect-dictionary.md`](effect-dictionary.md) |
 | Read-path (DX) | [`effect-engine-read-path.md`](effect-engine-read-path.md) |
 
@@ -37,6 +37,7 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 
 ## DoD Fase 0
 
-- [x] Este ADR + dicionário v0 + plano em `docs/plans/`
+- [x] Este ADR + dicionário v0
 - [x] DDL `phb_effect` + satélites piloto (+ kinds previstos nas fases seguintes)
 - [x] Módulo stub `game/effects` com teste de loader
+- [x] DROP `phb_resource_grant` / `phb_combat_modifier` + limpeza dual-read / MV espécie

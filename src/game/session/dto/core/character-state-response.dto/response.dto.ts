@@ -152,4 +152,11 @@ export class CharacterStateResponseDto {
     description: 'game_actor (veículo/montaria) em que o PC está a bordo',
   })
   boardedActorId!: string | null;
+
+  @ApiProperty({
+    example: ['snow_ice'],
+    description:
+      'Circunstâncias ativas na mesa (snow_ice | in_water | extreme_cold)',
+  })
+  mesaCircumstances!: string[];
 }

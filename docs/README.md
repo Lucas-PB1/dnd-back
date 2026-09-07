@@ -58,12 +58,8 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
-| [`plans/effect-engine.md`](plans/effect-engine.md) | Motor — **fase** DROP / DoD |
 | [`plans/effect-mesa-checklist.md`](plans/effect-mesa-checklist.md) | Checklist — **categoria** (dono/peça) |
 | [`plans/effect-mesa-por-fonte.md`](plans/effect-mesa-por-fonte.md) | Matriz — **fonte** (PHB, GH, NL, DMG…) → categorias |
-| [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
-| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — SSOT extração + mesa |
-| [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais |
 
 ### Feature futura (não polish)
 
@@ -77,6 +73,12 @@ Contrato REST: Swagger em `/api`.
 |------|----------|
 | [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Modal Escudo/Giga no cast de Mísseis |
 | [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Companheiro Primal na mesa |
+
+### Referência (extract / SSOT, mesa feito)
+
+| Doc | Para quê |
+|------|----------|
+| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads NL — extração + status mesa (MVP feito) |
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 

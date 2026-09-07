@@ -15,3 +15,4 @@ export {
   CastSpellDto,
   CastSpellResponseDto,
 } from './cast-spell.dto';
+export { TransferInspirationDto } from './transfer-inspiration.dto';

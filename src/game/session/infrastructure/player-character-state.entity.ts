@@ -85,4 +85,8 @@ export class PlayerCharacterState {
   /** Veículo/montaria em que o PC está a bordo (game_actor). */
   @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
   boardedActorId!: string | null;
+
+  /** Circunstâncias de mesa: snow_ice | in_water | extreme_cold. */
+  @Column({ name: 'mesa_circumstances', type: 'text', array: true, default: [] })
+  mesaCircumstances!: string[];
 }

@@ -7,17 +7,29 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { CharacterTransformationSnapshot } from '@game/session/infrastructure/queries/transformation-character.queries';
+import type { DataSource, Repository } from 'typeorm';
+import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { applyFeatEconomyExecutedEffect } from './apply-feat-economy-executed-effect';
 import {
   applyAberrantMutationAfterSpend,
   resolveAberrantMutationSidePath,
 } from './apply-aberrant-mutation-table-action';
+import {
+  applyArtisanCraftTableAction,
+  isArtisanCraftAction,
+} from './apply-artisan-craft-table-action';
+import {
+  applyMesaCircumstanceToggle,
+  isMesaCircumstanceToggleAction,
+} from './apply-mesa-circumstance-toggle';
 
 export type FeatEconomyTableActionDeps = {
   state: CharacterStateRepository;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
   effectCatalog?: LoadEffectCatalog;
   hitDieFaces?: number;
+  items?: Repository<PlayerCharacterItem>;
+  dataSource?: DataSource;
 };
 
 export async function resolveFeatEconomyTableAction(
@@ -26,7 +38,11 @@ export async function resolveFeatEconomyTableAction(
   featSlug: string,
   actionSlug: string,
   transformation?: CharacterTransformationSnapshot | null,
-  options?: { mutationSlug?: string | null },
+  options?: {
+    mutationSlug?: string | null;
+    itemSlug?: string;
+    enabled?: boolean;
+  },
 ): Promise<TableActionResponseDto> {
   const catalog = await deps.mechanicalCatalog.load();
   const action = findFeatEconomyAction(
@@ -38,6 +54,32 @@ export async function resolveFeatEconomyTableAction(
     throw new BadRequestException(`Ação de mesa desconhecida: ${actionSlug}`);
   }
   assertTransformationAllows(action, transformation);
+
+  if (isArtisanCraftAction(featSlug, actionSlug)) {
+    if (!deps.items || !deps.dataSource) {
+      throw new BadRequestException('Inventário indisponível para Fabricação Rápida');
+    }
+    return applyArtisanCraftTableAction({
+      deps: {
+        state: deps.state,
+        items: deps.items,
+        dataSource: deps.dataSource,
+      },
+      character,
+      actionName: action.name,
+      itemSlug: options?.itemSlug,
+    });
+  }
+
+  if (isMesaCircumstanceToggleAction(featSlug, actionSlug)) {
+    return applyMesaCircumstanceToggle({
+      state: deps.state,
+      character,
+      actionSlug,
+      actionName: action.name,
+      enabled: options?.enabled,
+    });
+  }
 
   const mutationPath = await resolveAberrantMutationSidePath({
     state: deps.state,

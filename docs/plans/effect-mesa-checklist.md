@@ -8,7 +8,7 @@ Os outros eixos (não duplicar listas longas):
 |------|-----|----------|
 | **Categoria** | **este arquivo** | O que falta por dono/peça (SSOT do trabalho) |
 | **Fonte** | [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md) | Auditar um livro/pack (PHB, GH, NL…) cruzando as categorias |
-| **Fase** | [`effect-engine.md`](effect-engine.md) | Ordem técnica DROP — **fechada** (grants → loaders → DROP tabelas + limpeza dual-read) |
+| **Fase** | [`adr-effect-engine.md`](../architecture/adr-effect-engine.md) | DROP legado **fechado** (grants → loaders → DROP tabelas + limpeza dual-read) |
 
 Regra: seed tipado → ficha lê → economy/ação se gasto → **apply** → front. Kind novo = dicionário + read-path + call site.
 
@@ -63,7 +63,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 
 - [ ] Economies — slug a slug **dentro** do § do dono (**apply ficha**)
 - [ ] Efeito sem apply **de ficha** — no PR do §
-- [x] DROP legado — fases em [`effect-engine.md`](effect-engine.md) (**feito**: tabelas + dual-read + MV espécie)
 
 ## Anti-escopo
 

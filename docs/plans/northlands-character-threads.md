@@ -5,15 +5,16 @@ Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no rep
 
 ## Status de implementação
 
+Mesa threads **MVP feito** (catálogo, ficha, economy 1/DL, Fatebound, Cursemarked brackets). Residual fino → [`backlog.md`](backlog.md) Adiado.
+
 | Fatia | Status |
 |-------|--------|
-| Catálogo (`phb_character_thread*`, `N036`, `GET /character-threads`) | **feito** |
-| Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | **feito** |
-| UI Traços + step opcional no create wizard | **feito** |
-| Economy mesa 1/DL (resources + `spend-resource`, `N040`/`N041`) | **MVP feito** — pools no estado de sessão; Usar na UI quando o front filtrar `threadSlug` |
-| Fatebound — Ruína Adiada (`doom-delayed` → estável a 0 PV) | **feito** (Usar / spend-resource) |
-| Fatebound — Último Ato / Fim Glorioso (`last-act-of-fate` / `glorious-end`) | **feito** (Usar / spend-resource; morte permanente e Adv 24h = mesa) |
-| Runtime Cursemarked (brackets d20 + anti-overlap) | **MVP feito** — note no roll + lock em `resourcesUsed`; clear no next-turn / DL; efeitos mecânicos = mesa |
+| Catálogo (`phb_character_thread*`, `N036`, `GET /character-threads`) | feito |
+| Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | feito |
+| UI Traços + step opcional no create wizard | feito |
+| Economy mesa 1/DL (resources + `spend-resource`, `N040`/`N041`) | MVP feito |
+| Fatebound — Ruína Adiada / Último Ato / Fim Glorioso | feito |
+| Runtime Cursemarked (brackets d20 + anti-overlap) | MVP feito |
 
 Modelo: 1 thread `active` por personagem; completar mantém benefícios; abandonar limpa milestones.
 

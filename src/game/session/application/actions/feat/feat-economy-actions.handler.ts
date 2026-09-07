@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { LoadEffectCatalog } from '@game/effects';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { parseHitDieLabel } from '@game/sheet/domain/stats/hit-points.calc';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -11,6 +13,8 @@ import { resolveFeatEconomyTableAction } from '../../core/resolve-feat-economy-t
 export type UseFeatTableActionDto = {
   featSlug: string;
   actionSlug: string;
+  itemSlug?: string;
+  enabled?: boolean;
 };
 
 @Injectable()
@@ -21,6 +25,8 @@ export class FeatEconomyActionsHandler {
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly effectCatalog: LoadEffectCatalog,
     private readonly dataSource: DataSource,
+    @InjectRepository(PlayerCharacterItem)
+    private readonly items: Repository<PlayerCharacterItem>,
   ) {}
 
   async useTableAction(
@@ -46,11 +52,14 @@ export class FeatEconomyActionsHandler {
         mechanicalCatalog: this.mechanicalCatalog,
         effectCatalog: this.effectCatalog,
         hitDieFaces,
+        items: this.items,
+        dataSource: this.dataSource,
       },
       character,
       dto.featSlug,
       dto.actionSlug,
       null,
+      { itemSlug: dto.itemSlug, enabled: dto.enabled },
     );
   }
 

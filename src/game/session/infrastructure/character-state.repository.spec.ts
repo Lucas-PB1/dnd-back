@@ -80,6 +80,7 @@ describe('CharacterStateRepository', () => {
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,
+        mesaCircumstances: [],
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -152,6 +153,7 @@ describe('CharacterStateRepository', () => {
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,
+        mesaCircumstances: [],
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 

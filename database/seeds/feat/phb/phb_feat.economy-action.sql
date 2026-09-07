@@ -43,8 +43,46 @@ INSERT INTO rpg.phb_class_economy_action (
   'Canção Inspiradora', 'action'::rpg.action_economy_bucket, 1,
   NULL, NULL, false,
   'Canção: Inspiração (você + até PB aliados)',
-  'Após um Descanso Curto ou Longo, você pode tocar uma canção e conceder Inspiração a si e a até PB aliados voluntários a até 9 m.',
+  'Após um Descanso Curto ou Longo, você pode tocar uma canção e conceder Inspiração a si e a até PB aliados voluntários a até 9 m. Aliados: use POST …/state/transfer-inspiration (ou declare).',
   'musician-song', NULL, 3025, NULL, NULL
+),
+-- Artisan
+(
+  'feat-artisan-craft', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'), NULL,
+  'Fabricação Rápida', 'free'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Após DL: fabricar 1 item da tabela (até próximo DL)',
+  'Quando completa um Descanso Longo, fabrique uma peça da tabela Fabricação Rápida se tiver proficiência com a ferramenta associada. O item se desfaz no próximo Descanso Longo. Body: itemSlug.',
+  'artisan-craft', NULL, 3026, NULL, NULL
+),
+-- Snowrunner / Cold Plunge (Northlands — toggles de circunstância na ficha)
+(
+  'feat-snowrunner-snow-ice', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'snowrunner'), NULL,
+  'Neve / gelo (mesa)', 'free'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Toggle: circunstância snow_ice na ficha',
+  'Liga/desliga a circunstância neve/gelo na ficha (vantagem de equilíbrio/sobrevivência — declare no teste).',
+  'snowrunner-toggle-snow-ice', NULL, 3027, NULL, NULL
+),
+(
+  'feat-cold-plunge-in-water', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'cold-plunge-training'), NULL,
+  'Na água (mesa)', 'free'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Toggle: circunstância in_water na ficha',
+  'Liga/desliga "na água" na ficha (Treino em Água Fria / Mergulho Ártico).',
+  'cold-plunge-toggle-in-water', NULL, 3028, NULL, NULL
+),
+(
+  'feat-cold-plunge-extreme-cold', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'cold-plunge-training'), NULL,
+  'Frio extremo (mesa)', 'free'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Toggle: circunstância extreme_cold na ficha',
+  'Liga/desliga frio extremo na ficha (vantagem tipada enquanto in_water + extreme_cold).',
+  'cold-plunge-toggle-extreme-cold', NULL, 3029, NULL, NULL
 ),
 -- Observant / Keen Mind
 (

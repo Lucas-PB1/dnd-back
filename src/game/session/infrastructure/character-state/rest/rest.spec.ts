@@ -64,6 +64,7 @@ describe('rest', () => {
     stellarConstellation: null,
     aberrantMutationActive: null,
     boardedActorId: null,
+    mesaCircumstances: [],
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

@@ -39,6 +39,9 @@ import { WizardActionsHandler } from './application/actions/wizard/wizard-action
 import { MonsterHunterActionsHandler } from './application/actions/monster-hunter/monster-hunter-actions.handler';
 import { TransformationActionsHandler } from './application/actions/transformation/transformation-actions.handler';
 import { FeatEconomyActionsHandler } from './application/actions/feat/feat-economy-actions.handler';
+import { TransferInspirationHandler } from './application/core/transfer-inspiration.handler';
+import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
+import { CampaignCharacter } from '../campaign/infrastructure/campaign-character.entity';
 
 @Module({
   imports: [
@@ -47,6 +50,8 @@ import { FeatEconomyActionsHandler } from './application/actions/feat/feat-econo
       PhbCondition,
       VClassSpellSlots,
       VSubclassSpellSlots,
+      PlayerCharacterItem,
+      CampaignCharacter,
     ]),
     GameSharedModule,
     forwardRef(() => CharacterSheetModule),
@@ -87,6 +92,7 @@ import { FeatEconomyActionsHandler } from './application/actions/feat/feat-econo
     MonsterHunterActionsHandler,
     TransformationActionsHandler,
     FeatEconomyActionsHandler,
+    TransferInspirationHandler,
   ],
   exports: [CharacterStateRepository],
 })

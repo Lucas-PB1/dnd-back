@@ -22,7 +22,9 @@ CREATE TABLE rpg.player_character_state (
   stellar_constellation TEXT NULL,
   /** Mutação Aberrante ativa (Cap. 6): chitinous-shell | eldritch-limbs | slimy-form. */
   aberrant_mutation_active TEXT NULL,
-  boarded_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL
+  boarded_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,
+  /** Circunstâncias de mesa (snow_ice | in_water | extreme_cold) — toggles de ficha. */
+  mesa_circumstances TEXT[] NOT NULL DEFAULT '{}'
 );
 
 CREATE INDEX idx_player_character_state_concentration

@@ -1,5 +1,5 @@
 -- phb_effect — Northlands (origem bênçãos/mundanos, general, FS)
--- Plano: docs/plans/effect-engine.md
+-- ADR: docs/architecture/adr-effect-engine.md · residual: docs/plans/effect-mesa-checklist.md
 
 -- >>> from northlands-heroes/N040_phb_effect_feat_origin_nl_blessings.sql
 -- Fase 5: efeitos origin Northlands — bênçãos (10)
@@ -906,11 +906,23 @@ ins AS (
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   CASE sort_order
-    WHEN 1 THEN 'Circunstância: enquanto na água — vantagem vs frio extremo e Atletismo (natação).'
-    ELSE 'Mergulho Ártico: da terra para a água no turno — deslocamento normal na água (nota).'
+    WHEN 1 THEN 'Enquanto mesaCircumstances inclui in_water: vantagem vs frio extremo e Atletismo (natação). Toggle: cold-plunge-toggle-in-water / extreme-cold.'
+    ELSE 'Mergulho Ártico: da terra para a água no turno — deslocamento normal na água (ative in_water na ficha).'
   END
 FROM ins
 ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'cold-plunge-training')
+INSERT INTO rpg.phb_effect_check_advantage (effect_id, skill_slug, circumstance_tag, ability_slug)
+SELECT e.id, 'athletics', 'in_water', NULL
+FROM rpg.phb_effect e
+JOIN feat ON feat.id = e.owner_id
+WHERE e.owner_kind = 'feat'
+  AND e.kind = 'check_advantage'
+  AND e.label = 'Treino em Água Fria'
+ON CONFLICT (effect_id) DO UPDATE SET
+  skill_slug = EXCLUDED.skill_slug,
+  circumstance_tag = EXCLUDED.circumstance_tag;
 
 -- sea-wolf
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'sea-wolf'),
@@ -954,8 +966,8 @@ ins AS (
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   CASE sort_order
-    WHEN 1 THEN 'Vantagem em equilíbrio em superfícies escorregadias/neve (nota — sem terreno tipado).'
-    ELSE 'Vantagem em Sobrevivência em terreno nevado/gelado (nota).'
+    WHEN 1 THEN 'Com mesaCircumstances snow_ice: vantagem em equilíbrio em superfícies escorregadias/neve. Toggle: snowrunner-toggle-snow-ice.'
+    ELSE 'Com mesaCircumstances snow_ice: vantagem em Sobrevivência em terreno nevado/gelado.'
   END
 FROM ins
 ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;

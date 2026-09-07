@@ -27,12 +27,14 @@ import { CastSpellHandler } from '../application/core/cast-spell.handler';
 import { RestHandler } from '../application/core/rest.handler';
 import { UseClassResourceHandler } from '../application/core/use-class-resource.handler';
 import { RecoverClassResourceHandler } from '../application/core/recover-class-resource.handler';
+import { TransferInspirationHandler } from '../application/core/transfer-inspiration.handler';
 import {
   CastSpellDto,
   CastSpellResponseDto,
   PatchCharacterStateDto,
   RestDto,
   RestResponseDto,
+  TransferInspirationDto,
   UseClassResourceDto,
   UseClassResourceResponseDto,
 } from '../dto/core/session-commands.dto';
@@ -53,6 +55,7 @@ export class CharacterSessionController {
     private readonly rest: RestHandler,
     private readonly useResource: UseClassResourceHandler,
     private readonly recoverResource: RecoverClassResourceHandler,
+    private readonly transferInspiration: TransferInspirationHandler,
   ) {}
 
   @Get(':id/state')
@@ -76,6 +79,21 @@ export class CharacterSessionController {
     @Body() dto: PatchCharacterStateDto,
   ): Promise<CharacterStateResponseDto> {
     return this.patchState.execute(user.id, id, dto);
+  }
+
+  @Post(':id/state/transfer-inspiration')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Transferir Inspiração Heroica para um aliado (mesmo dono ou campanha)',
+  })
+  @ApiOkResponse({ description: 'sourceState + targetState + note' })
+  @ApiNotFoundResponse()
+  transferCharacterInspiration(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: TransferInspirationDto,
+  ) {
+    return this.transferInspiration.execute(user.id, id, dto);
   }
 
   @Post(':id/spells/cast')

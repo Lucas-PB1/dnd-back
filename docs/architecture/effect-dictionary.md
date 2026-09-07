@@ -2,7 +2,7 @@
 
 SSOT semântico dos `rpg.effect_kind`. Kind novo → satélite + serviço TS + linha neste arquivo no mesmo PR.
 
-ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Plano: [`../plans/effect-engine.md`](../plans/effect-engine.md) · **Read-path / kind→consumidor:** [`effect-engine-read-path.md`](effect-engine-read-path.md)
+ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Residual mesa: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) · **Read-path / kind→consumidor:** [`effect-engine-read-path.md`](effect-engine-read-path.md)
 
 ## Freeze (DX)
 
@@ -23,7 +23,7 @@ Triggers: `passive` · `on_build` · `on_table_action` · `on_resource_spend` ·
 
 ## Padrões Fase 5
 
-Origens multi-fonte (Steinhardt / Grim Hollow Cap. 4 / Northlands). Seeds: `database/seeds/effects/E002`–`E004`. Plano vivo: [`../plans/effect-engine.md`](../plans/effect-engine.md).
+Origens multi-fonte (Steinhardt / Grim Hollow Cap. 4 / Northlands). Seeds: `database/seeds/effects/E002`–`E004`. Residual: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md).
 
 | Padrão | Quando | Como |
 |--------|--------|------|

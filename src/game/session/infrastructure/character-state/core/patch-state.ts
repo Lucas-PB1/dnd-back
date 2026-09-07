@@ -4,6 +4,10 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { clampDeathSaveCount } from '@game/session/domain/death-saves';
 import {
+  isMesaCircumstanceTag,
+  normalizeMesaCircumstances,
+} from '@game/session/domain/mesa-circumstances';
+import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';
 import {
@@ -62,6 +66,17 @@ export async function applyPatchState(input: {
   }
   if (dto.inspiration !== undefined) {
     state.inspiration = dto.inspiration;
+  }
+  if (dto.mesaCircumstances !== undefined) {
+    const invalid = dto.mesaCircumstances.filter(
+      (tag) => !isMesaCircumstanceTag(tag.trim()),
+    );
+    if (invalid.length > 0) {
+      throw new BadRequestException(
+        `Circunstância de mesa inválida: ${invalid.join(', ')}`,
+      );
+    }
+    state.mesaCircumstances = normalizeMesaCircumstances(dto.mesaCircumstances);
   }
 
   await stateRepo.save(state);

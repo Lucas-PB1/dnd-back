@@ -95,5 +95,6 @@ export async function buildCharacterStateResponse(input: {
     stellarConstellation: state.stellarConstellation ?? null,
     aberrantMutationActive: state.aberrantMutationActive ?? null,
     boardedActorId: state.boardedActorId ?? null,
+    mesaCircumstances: state.mesaCircumstances ?? [],
   };
 }

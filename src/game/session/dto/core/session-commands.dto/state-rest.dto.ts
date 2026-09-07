@@ -47,6 +47,16 @@ export class PatchCharacterStateDto {
   @IsOptional()
   @IsBoolean()
   inspiration?: boolean;
+
+  @ApiPropertyOptional({
+    example: ['snow_ice', 'in_water'],
+    description:
+      'Circunstâncias de mesa (snow_ice | in_water | extreme_cold). Substitui a lista inteira.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  mesaCircumstances?: string[];
 }
 
 export class RestDto {

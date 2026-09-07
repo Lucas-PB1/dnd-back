@@ -23,6 +23,7 @@ import { PlayerCharacterState } from '@game/session/infrastructure/player-charac
 import { isWarlockClass } from '@game/combat/domain/warlock';
 import { mapArtifactSpellSpendFlags } from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
+import { dissolveArtisanCraftedItems } from '@game/session/domain/dissolve-artisan-crafted';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
@@ -91,6 +92,11 @@ export async function applyLongRestState(input: {
 
   await stateRepo.save(state);
 
+  const craftNotes = await dissolveArtisanCraftedOnLongRest(
+    dataSource,
+    character.id,
+  );
+
   await recoverArtifactRandomSpellUses(dataSource, character.id);
 
   if (character.hitPointsMax !== null) {
@@ -101,8 +107,38 @@ export async function applyLongRestState(input: {
   return {
     type: 'long',
     state: await buildResponse(character, state),
-    notes: recovery.notes.length > 0 ? recovery.notes : undefined,
+    notes: mergeRestNotes(recovery.notes, craftNotes),
   };
+}
+
+async function dissolveArtisanCraftedOnLongRest(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<string[]> {
+  if (typeof dataSource?.getRepository !== 'function') return [];
+  const items = dataSource.getRepository(PlayerCharacterItem);
+  const rows = await items.find({ where: { characterId } });
+  const { keep, removedNotes } = dissolveArtisanCraftedItems(rows);
+  const keepBySlug = new Map(keep.map((row) => [row.itemSlug, row]));
+  for (const row of rows) {
+    const next = keepBySlug.get(row.itemSlug);
+    if (!next) {
+      await items.remove(row);
+      continue;
+    }
+    row.quantity = next.quantity;
+    row.instanceProperties = next.instanceProperties;
+    await items.save(row);
+  }
+  return removedNotes;
+}
+
+function mergeRestNotes(
+  recovery: string[],
+  craft: string[],
+): string[] | undefined {
+  const notes = [...recovery, ...craft];
+  return notes.length > 0 ? notes : undefined;
 }
 
 async function recoverArtifactRandomSpellUses(
