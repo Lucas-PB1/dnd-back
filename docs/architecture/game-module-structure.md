@@ -23,7 +23,8 @@ BC Game (modular monolith)
 ├── session/          # slots, condições, concentração
 ├── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
 ├── actor/            # fichas de mesa (criatura, montaria, navio, companion) — GameActorModule
-└── campaign/         # mesa + encontro (PCs enriquecidos + actors linkados; visão jogador)
+├── campaign/         # mesa + encontro (PCs enriquecidos + actors linkados; visão jogador)
+└── duel/             # lobby 1v1 PvP (duas contas; combate = fase posterior / combat-real)
 ```
 
 Ownership combat/spellcasting: módulos Nest `combat/` e `spellcasting/` (use cases em `application/`).
@@ -138,6 +139,7 @@ flowchart TB
   actor --> dice
   campaign --> shared
   campaign --> actor
+  duel --> shared
 ```
 
 | De | Para | Permitido |
@@ -145,6 +147,7 @@ flowchart TB
 | `sheet` | `shared`, `catalog`, `combat`, `spellcasting` | sim |
 | `actor` | `shared`, `catalog`, `dice` | sim |
 | `campaign` | `shared`, `actor` | sim |
+| `duel` | `shared` | sim |
 | `combat` | `shared`, `catalog`, `inventory` (entity) | sim |
 | `spellcasting` | `catalog` (views); DTO/tipos type-only de sheet | sim |
 | `spellcasting` | `sheet` Nest providers / infra | **não** |
@@ -169,6 +172,7 @@ Todos os controllers usam `@Controller('characters')`:
 | **session** | `GET/PATCH /characters/:id/state`, `POST .../spells/cast`, `POST .../rest` |
 | **dice** | `POST /characters/:id/rolls/{attack,damage,skill,saving-throw,initiative}` |
 | **actor** | `GET/POST/PATCH/DELETE /actors`, `GET /actors/:id`, `POST /actors/spawn-from-template`, `GET/PATCH /actors/:id/state`, `POST /actors/:id/rolls/attack` |
+| **duel** | `GET/POST /duels`, `POST /duels/join`, `GET /duels/:id`, `POST /duels/:id/{ready,attack,cast,conditions,forfeit}` |
 
 ## O que fica onde
 
@@ -184,6 +188,7 @@ Todos os controllers usam `@Controller('characters')`:
 | Level-up | coluna `level` em `player_character` | progression |
 | Inventário | `player_character_item` | inventory |
 | Mesa ao vivo | `player_character_state` (7C) | session |
+| Duelo 1v1 (lobby) | `duel`, `duel_member` | duel |
 
 ## Catalog BC (referência)
 
@@ -202,5 +207,6 @@ Já está dividido — **12 módulos** (`classes/`, `spells/`, …). Game deve e
 - [x] `game/spellcasting` — M2 (`SpellcastingModule`; grants fora de sheet)
 - [x] `game/actor` — agregado `game_actor` (CRUD + state + spawn template)
 - [x] `campaign` — combatentes `kind=actor` + FK `actor_id`
+- [x] `game/duel` — lobby F1 (create/join/list; combate = F3)
 
-**Última revisão:** 2026-08-26 — módulo `game/actor` + combatentes linkados a `game_actor`
+**Última revisão:** 2026-09-08 — módulo `game/duel` (lobby PvP)

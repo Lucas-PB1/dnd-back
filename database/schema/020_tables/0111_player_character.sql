@@ -26,6 +26,7 @@ CREATE TABLE rpg.player_character (
   coin_platinum INTEGER NOT NULL DEFAULT 0 CHECK (coin_platinum >= 0),
   heritage_slug TEXT NULL REFERENCES rpg.phb_heritage(slug),
   session_notes TEXT NOT NULL DEFAULT '',
+  portrait_url TEXT,
   CONSTRAINT player_character_hp_current_lte_max CHECK (
     hit_points_current IS NULL
     OR hit_points_max IS NULL

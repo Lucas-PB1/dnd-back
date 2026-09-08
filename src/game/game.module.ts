@@ -9,6 +9,7 @@ import { CharacterDiceModule } from './dice/character-dice.module';
 import { GameSharedModule } from './shared/game-shared.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { ActorModule } from './actor/actor.module';
+import { DuelModule } from './duel/duel.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ActorModule } from './actor/actor.module';
     CharacterDiceModule,
     CampaignModule,
     ActorModule,
+    DuelModule,
   ],
 })
 export class GameModule {}

@@ -95,6 +95,7 @@ describe('Characters application layer', () => {
     coinGold: 0,
     coinPlatinum: 0,
     sessionNotes: '',
+    portraitUrl: null,
     createdAt: new Date(),
     updatedAt: new Date(),
   };

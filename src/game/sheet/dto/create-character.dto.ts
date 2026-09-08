@@ -136,4 +136,13 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @IsOptional()
   @IsString()
   backgroundToolItemSlug?: string;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'URL pública do retrato (upload no bucket avatars)',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  portraitUrl?: string | null;
 }

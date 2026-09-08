@@ -7,6 +7,10 @@ Enquanto isso **não** existir, a mesa só movimenta o que a **ficha / estado do
 SSOT mesa ativo: [`backlog.md`](backlog.md) · [`effect-mesa-checklist.md`](effect-mesa-checklist.md)  
 Skill: `rpg-class-mesa-api` (critério mesa ≠ VTT / combate simulado).
 
+Consumidor futuro (lobby PvP, não inventa motor à parte): [`pvp-1v1-duel.md`](pvp-1v1-duel.md) — F3 do duelo 1v1.
+
+**Nota 2026-09-08:** o duelo ganhou um **MVP** (ataque com arma vs CA + `applyCurrentHitPoints`, depois PV temp. no pipeline) e **retrato** de PC. Magias tipadas e condições no turno do duelo ainda estão nesta lista / F4 do [`pvp-1v1-duel.md`](pvp-1v1-duel.md). **Mapa/distância/voo ficam fora do x1 por decisão de produto.** **Escuridão mágica** no x1: conjurável como efeito de arena; visão normal e Visão no Escuro **não** atravessam (só exceções tipadas, ex. Visão do Diabo) — ver BEA do duelo.
+
 ---
 
 ## Fronteira
@@ -44,6 +48,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 ### Condições / duração / alvo
 
 - [ ] Condições e duração tipadas no alvo (Véu Psíquico, Rasgar Mente, Teia, Veneno, …) além de declare
+- [ ] Escuridão mágica (área/arena): fortemente obscurecido; **não** atravessada por visão normal nem Visão no Escuro; exceções tipadas (ex. Visão do Diabo) — no x1 sem mapa = efeito de arena ([`pvp-1v1-duel.md`](pvp-1v1-duel.md))
 - [ ] Empurrão / grappled / improvisado (Briguento de Taverna e similares)
 - [ ] Attitude NPC tipado (Influenciar) se depender de combate social tipado fino
 - [ ] Proteção Arcana: pool própria (≠ PV temp.), recarga por espaço, Proteção Projetada no aliado
@@ -61,3 +66,4 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 1. Achou gap que **exige alvo/dano/save de combate** → **só aqui**, não em [`backlog.md`](backlog.md).
 2. Achou gap de **ficha** (cura, temp HP, CA, pool) → checklist mesa / backlog ativo.
 3. Não misturar com “Adiado — polish” (UI, modal, editorial).
+4. Lobby / match 1v1 entre contas → [`pvp-1v1-duel.md`](pvp-1v1-duel.md); combate do duelo **espera** itens desta lista (não duplicar motor no slice `duel`).

@@ -52,6 +52,7 @@ export function assembleCharacterResponseDto(input: {
           combat.transformationHpBonus +
           input.classHpBonus,
     hitPointsCurrent: row.hitPointsCurrent,
+    portraitUrl: row.portraitUrl ?? null,
     proficiencyBonus: input.proficiencyBonus,
     classSkillSlugs: loaded.classSkillSlugs,
     speciesChoices: loaded.speciesChoices,

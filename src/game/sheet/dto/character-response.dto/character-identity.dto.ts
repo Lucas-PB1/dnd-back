@@ -57,6 +57,12 @@ export class CharacterIdentityResponseDto {
   @ApiPropertyOptional()
   hitPointsCurrent!: number | null;
 
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'URL pública do retrato do personagem (Supabase storage)',
+  })
+  portraitUrl!: string | null;
+
   @ApiProperty({ example: 2, description: 'Proficiency bonus from PHB character level table' })
   proficiencyBonus!: number;
 

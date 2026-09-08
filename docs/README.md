@@ -53,6 +53,7 @@ Contrato REST: Swagger em `/api`.
 |------|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **SSOT mesa** — aberto + polish adiado |
 | [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | **Feature futura** — combate PC×alvo (fora do backlog mesa) |
+| [`plans/pvp-1v1-duel.md`](plans/pvp-1v1-duel.md) | Duelo 1v1 — F0–F4 jogável (armas, magias tipadas, arena); expansões no combate real |
 
 ### Ativo (detalhe)
 
@@ -66,6 +67,7 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |------|----------|
 | [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | Combate real — dano/alvo/saves/encontro; **não** priorizar no ciclo mesa |
+| [`plans/pvp-1v1-duel.md`](plans/pvp-1v1-duel.md) | Duelo 1v1 PvP — F0–F4 (cast, condições, escuridão mágica); mais tipados no combate real |
 
 ### Adiado (polish)
 

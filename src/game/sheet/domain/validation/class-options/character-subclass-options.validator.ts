@@ -63,7 +63,8 @@ export class CharacterSubclassOptionsValidator {
     options: CharacterSheetInput['subclassOptions'],
     ctx?: Pick<CharacterSheetContext, 'classSlug' | 'level'>,
   ): Promise<void> {
-    if (!options) return;
+    // `[]` é injetado no resync de level-up; não é escolha de opções.
+    if (!options?.length) return;
 
     if (!subclassSlug) {
       throw new BadRequestException('Subclass must be set before choosing subclass options');

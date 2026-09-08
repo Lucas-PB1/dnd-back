@@ -89,6 +89,9 @@ export class PlayerCharacter {
   @Column({ name: 'session_notes', type: 'text', default: '' })
   sessionNotes!: string;
 
+  @Column({ name: 'portrait_url', type: 'text', nullable: true })
+  portraitUrl!: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

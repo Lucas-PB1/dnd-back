@@ -76,6 +76,7 @@ export class CharacterMapper {
       backgroundSlug: row.backgroundSlug,
       subclassSlug: row.subclassSlug,
       subclassName: row.subclassSlug,
+      portraitUrl: row.portraitUrl ?? null,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
       campaigns: [],
