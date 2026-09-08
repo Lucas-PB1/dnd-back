@@ -79,28 +79,29 @@ export async function addInventoryItemRow(
     where: { characterId, itemSlug },
   });
 
-  if (existing) {
-    if (existing.location === 'equipped') {
-      throw new BadRequestException(
-        'Item is equipped; unequip before adding more quantity',
-      );
-    }
-    existing.quantity += delta;
-    await items.save(existing);
-    return inventoryItemToDto(catalogItems, existing);
+  if (existing?.location === 'equipped') {
+    throw new BadRequestException(
+      'Item is equipped; unequip before adding more quantity',
+    );
   }
 
-  const row = items.create({
-    characterId,
-    itemSlug,
-    quantity: delta,
-    location: 'backpack',
-    equipmentSlot: null,
-    attuned: false,
-    isPactWeapon: false,
-    attachedCharmSlug: null,
-  });
-  await items.save(row);
+  // Upsert atômico: evita 500 por PK duplicada em POSTs concorrentes.
+  await items.manager.query(
+    `INSERT INTO rpg.player_character_item (
+       character_id, item_slug, quantity, location
+     ) VALUES ($1, $2, $3, 'backpack')
+     ON CONFLICT (character_id, item_slug) DO UPDATE
+       SET quantity = rpg.player_character_item.quantity + EXCLUDED.quantity
+     WHERE rpg.player_character_item.location <> 'equipped'`,
+    [characterId, itemSlug, delta],
+  );
+
+  const row = await items.findOne({ where: { characterId, itemSlug } });
+  if (!row || row.location === 'equipped') {
+    throw new BadRequestException(
+      'Item is equipped; unequip before adding more quantity',
+    );
+  }
   return inventoryItemToDto(catalogItems, row);
 }
 
