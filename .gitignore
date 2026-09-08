@@ -26,3 +26,5 @@ docs/source/_assets/
 docs/source/new/
 docs/source/**/*_files/
 docs/source/**/*.html
+
+tmp-vercel-logs.txt
