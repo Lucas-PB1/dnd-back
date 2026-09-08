@@ -40,6 +40,15 @@ export function resolveFormulaMax(
     return psiEnergyDiceCount(level);
   }
   const ability = abilityModFromFormula(row.maxFormula, mods);
-  if (ability != null) return Math.max(1, ability);
+  if (ability != null) {
+    // Sabujo de Sangue: pool = 1 + CON (mín. 1). Enum só tem constitution_mod.
+    if (
+      row.resourceSlug === 'blood-strike' &&
+      row.maxFormula === 'constitution_mod'
+    ) {
+      return Math.max(1, ability + 1);
+    }
+    return Math.max(1, ability);
+  }
   return row.fixedMax ?? 0;
 }

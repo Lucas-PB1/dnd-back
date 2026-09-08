@@ -101,6 +101,29 @@ describe('class-resources', () => {
     expect(bardic?.max).toBe(1);
   });
 
+  it('blood-strike pool is 1 + CON (min 1)', () => {
+    const rows: ClassResourceScheduleRow[] = [
+      {
+        resourceSlug: 'blood-strike',
+        resourceName: 'Golpe de Sangue',
+        unlockLevel: 3,
+        maxFormula: 'constitution_mod',
+        fixedMax: null,
+        recoverOneOnShort: false,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+        recoverOnLongDice: null,
+      },
+    ];
+    const [pool] = resolveClassResourceMaxima({
+      rows,
+      level: 3,
+      proficiencyBonus: 2,
+      abilityModifiers: { ...mods, constituicao: 2 },
+    });
+    expect(pool?.max).toBe(3);
+  });
+
   it('resolves second wind from fixed table (PHB 2024)', () => {
     const rows: ClassResourceScheduleRow[] = [
       {

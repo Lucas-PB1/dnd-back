@@ -25,8 +25,9 @@ describe('FindBackgroundLanguagesQuery', () => {
     expect(result.data).toEqual([{ slug: 'common' }]);
   });
 
-  it('throws when background has no fixed languages', async () => {
+  it('returns empty list when background has no fixed languages', async () => {
     languagesRepo.find.mockResolvedValue([]);
-    await expect(query.execute('acolyte')).rejects.toThrow(/no fixed languages/i);
+    const result = await query.execute('gh-syndicate-smuggler');
+    expect(result.data).toEqual([]);
   });
 });

@@ -133,6 +133,6 @@ VALUES
 ((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-scion-of-the-thaumaturge' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-cartografo'), NULL, NULL, 1, 4),
 ((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-syndicate-smuggler' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'bau'), NULL, NULL, 1, 1),
 ((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-syndicate-smuggler' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pergaminho'), NULL, NULL, 1, 2),
-((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-syndicate-smuggler' AND p.slug = 'a'), NULL, 'Costume', NULL, 1, 3),
+((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-syndicate-smuggler' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-fantasia'), 'Costume', NULL, 1, 3),
 ((SELECT p.id FROM rpg.phb_starting_package p JOIN rpg.phb_background b ON b.id = p.owner_id WHERE p.source = 'background' AND b.slug = 'gh-syndicate-smuggler' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-falsificacao'), 'Forgery Kit', NULL, 1, 4)
 ON CONFLICT DO NOTHING;

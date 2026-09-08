@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundLanguage } from '@entities/views/v-phb-background-language.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { requireNonEmpty } from '@common/require-found';
 import {
   PaginatedResponseDto,
   paginateByKeys,
@@ -30,10 +29,6 @@ export class FindBackgroundLanguagesQuery {
       where: { backgroundSlug },
       order: { languageName: 'ASC', languageSlug: 'ASC' },
     });
-    requireNonEmpty(
-      rows,
-      `Background '${backgroundSlug}' has no fixed languages`,
-    );
     return paginateByKeys(
       rows.map((row) => this.mapper.toLanguageDto(row)),
       {

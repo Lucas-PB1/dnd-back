@@ -65,7 +65,8 @@ ON CONFLICT (slug) DO UPDATE SET
   subclass_id = EXCLUDED.subclass_id,
   min_level = EXCLUDED.min_level;
 
--- Blood Strike: regras = 1 + CON; enum mais próximo = constitution_mod (mín. 1 no runtime)
+-- Blood Strike: regras = 1 + CON; seed usa constitution_mod;
+-- runtime em resource-max-formulas.ts aplica +1 para resourceSlug blood-strike.
 
 
 -- Torturer: 6 técnicas × 2 usos = pool compartilhado 12 (SSOT aproximado; 1 gasto = 1 uso de técnica)
