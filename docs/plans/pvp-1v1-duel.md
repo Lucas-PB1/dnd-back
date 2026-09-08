@@ -17,6 +17,7 @@ SSOT combate amplo: [`combat-real-deferred.md`](combat-real-deferred.md)
 | Condições no turno | |
 | Magias tipadas (subset) + cast genérico (nota) | |
 | Escuridão mágica como efeito de arena | Tratar darkvision como se atravessasse |
+| **Espectador** via link `/duels/:id` (conta logada, só leitura) | Assistir sem login |
 
 Regra de arena: sempre no alcance útil. Escuridão mágica **não** é resolvida por Visão no Escuro — só exceções tipadas (Visão do Diabo).
 
@@ -28,6 +29,7 @@ Regra de arena: sempre no alcance útil. Escuridão mágica **não** é resolvid
 |------|----------|
 | F0–F3 | Lobby, ready, iniciativa, armas, PV, retrato, temp HP |
 | **F4** | `POST .../cast`, `POST .../conditions`, `arena_effects`, gates de ação/visão |
+| **Espectador** | `GET /duels/:id` para qualquer conta autenticada → `viewerRole: spectator` |
 
 ### Magias tipadas (F4)
 

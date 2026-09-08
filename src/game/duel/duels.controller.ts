@@ -68,7 +68,10 @@ export class DuelsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get duel lobby/combat detail' })
+  @ApiOperation({
+    summary:
+      'Get duel lobby/combat detail (member = participant; other accounts = spectator via link)',
+  })
   @ApiOkResponse({ type: DuelDetailDto })
   getOne(
     @CurrentUser() user: AuthUser,

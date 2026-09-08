@@ -233,6 +233,13 @@ export class DuelSummaryDto {
 }
 
 export class DuelDetailDto extends DuelSummaryDto {
+  @ApiProperty({
+    enum: ['participant', 'spectator'],
+    description:
+      'participant = combate; spectator = só leitura via link do duelo',
+  })
+  viewerRole!: 'participant' | 'spectator';
+
   @ApiProperty({ type: [DuelMemberDto] })
   members!: DuelMemberDto[];
 

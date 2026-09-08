@@ -47,6 +47,7 @@ export class DuelService {
     duel: Duel,
     members: DuelMember[],
     userId: string,
+    viewerRole: 'participant' | 'spectator' = 'participant',
   ): Promise<DuelDetailDto> {
     const map = await this.charactersMap(members);
     const {
@@ -65,6 +66,7 @@ export class DuelService {
       members,
       charactersById: map,
       viewerUserId: userId,
+      viewerRole,
       armorByCharacterId,
       vitalsByCharacterId,
       myWeapons,
@@ -98,8 +100,11 @@ export class DuelService {
   }
 
   async getDetail(userId: string, duelId: string): Promise<DuelDetailDto> {
-    const { duel, members } = await this.repo.getForMember(userId, duelId);
-    return this.toDetail(duel, members, userId);
+    const { duel, members, viewerRole } = await this.repo.getForViewer(
+      userId,
+      duelId,
+    );
+    return this.toDetail(duel, members, userId, viewerRole);
   }
 
   async setReady(

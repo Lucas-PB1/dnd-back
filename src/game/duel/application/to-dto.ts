@@ -116,6 +116,7 @@ export function toDetailDto(input: {
   members: DuelMember[];
   charactersById: Map<string, PlayerCharacter>;
   viewerUserId: string;
+  viewerRole: 'participant' | 'spectator';
   armorByCharacterId: Map<string, number>;
   vitalsByCharacterId: Map<string, { tempHp: number; conditions: string[] }>;
   myWeapons: DuelWeaponOptionDto[];
@@ -127,6 +128,7 @@ export function toDetailDto(input: {
     members,
     charactersById,
     viewerUserId,
+    viewerRole,
     armorByCharacterId,
     vitalsByCharacterId,
   } = input;
@@ -137,6 +139,7 @@ export function toDetailDto(input: {
 
   return {
     ...toSummaryDto(duel, members, charactersById, viewerUserId),
+    viewerRole,
     members: members.map((member) =>
       toMemberDto(member, charactersById.get(member.characterId)),
     ),
@@ -154,14 +157,16 @@ export function toDetailDto(input: {
     turnCharacterId: duel.turnCharacterId,
     round: duel.round,
     myTurn:
+      viewerRole === 'participant' &&
       duel.status === 'active' &&
       mine != null &&
       duel.turnCharacterId === mine.characterId,
-    myWeapons: input.myWeapons,
-    mySpells: input.mySpells,
+    myWeapons: viewerRole === 'participant' ? input.myWeapons : [],
+    mySpells: viewerRole === 'participant' ? input.mySpells : [],
     arenaEffects: (duel.arenaEffects ?? []) as DuelDetailDto['arenaEffects'],
     arenaEffectSourceCharacterId: duel.arenaEffectSourceCharacterId,
-    seesInMagicalDarkness: input.seesInMagicalDarkness,
+    seesInMagicalDarkness:
+      viewerRole === 'participant' ? input.seesInMagicalDarkness : false,
     combatLog,
   };
 }

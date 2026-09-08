@@ -153,6 +153,30 @@ export class DuelRepository {
       throw new ForbiddenException('You are not a member of this duel');
     }
 
+    return this.getById(duelId);
+  }
+
+  /** Participante ou espectador autenticado (qualquer um com o id do duelo). */
+  async getForViewer(
+    userId: string,
+    duelId: string,
+  ): Promise<{
+    duel: Duel;
+    members: DuelMember[];
+    viewerRole: 'participant' | 'spectator';
+  }> {
+    const { duel, members } = await this.getById(duelId);
+    const isMember = members.some((m) => m.userId === userId);
+    return {
+      duel,
+      members,
+      viewerRole: isMember ? 'participant' : 'spectator',
+    };
+  }
+
+  async getById(
+    duelId: string,
+  ): Promise<{ duel: Duel; members: DuelMember[] }> {
     const duel = await this.duels.findOne({ where: { id: duelId } });
     if (!duel) {
       throw new NotFoundException(`Duel '${duelId}' not found`);
