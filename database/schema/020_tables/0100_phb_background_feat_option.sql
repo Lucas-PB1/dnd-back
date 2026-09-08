@@ -7,4 +7,4 @@ CREATE TABLE rpg.phb_background_feat_option (
 CREATE INDEX idx_phb_background_feat_option_feat
   ON rpg.phb_background_feat_option (feat_id);
 
--- CatÃ¡logo read-only: templates de criatura (stat blocks)
+-- Catálogo read-only: templates de criatura (stat blocks)

@@ -61,6 +61,34 @@ export class LevelUpWeaponMasterySlotDto {
   unlockLevel!: number;
 }
 
+export class LevelUpSubclassOptionSlotDto {
+  @ApiProperty({ example: 'holyRevelationCantrip1' })
+  optionKey!: string;
+
+  @ApiProperty({ example: 'Revelações Santas — Truque 1' })
+  label!: string;
+
+  @ApiProperty({ example: 13 })
+  unlockLevel!: number;
+}
+
+export class LevelUpFeatureUnlockDto {
+  @ApiProperty({ example: 'Evasão' })
+  name!: string;
+
+  @ApiProperty({ example: 'Quando você é alvo de…' })
+  description!: string;
+
+  @ApiProperty({ example: 7 })
+  level!: number;
+
+  @ApiProperty({ enum: ['class', 'subclass'], example: 'class' })
+  source!: 'class' | 'subclass';
+
+  @ApiPropertyOptional({ example: 'holyRevelationCantrip1' })
+  optionKey?: string | null;
+}
+
 export class LevelUpPreviewDto {
   @ApiProperty({ example: 1 })
   currentLevel!: number;
@@ -89,8 +117,33 @@ export class LevelUpPreviewDto {
   @ApiProperty({ example: false })
   isAsiOrFeatLevel!: boolean;
 
-  @ApiProperty({ type: [LevelUpSpellOptionDto] })
+  @ApiProperty({
+    type: [LevelUpFeatureUnlockDto],
+    description:
+      'Características de classe/subclasse que desbloqueiam neste nível (com ou sem escolha)',
+  })
+  newFeatures!: LevelUpFeatureUnlockDto[];
+
+  @ApiProperty({
+    type: [LevelUpSpellOptionDto],
+    description:
+      'Magias da lista de classe/subclasse com spellcasting real (escolher na aba Magias)',
+  })
   newSpellOptions!: LevelUpSpellOptionDto[];
+
+  @ApiProperty({
+    type: [LevelUpSpellOptionDto],
+    description:
+      'Magias always-prepared da subclasse desbloqueadas neste nível (não são escolha na aba Magias)',
+  })
+  newAlwaysPreparedSpells!: LevelUpSpellOptionDto[];
+
+  @ApiProperty({
+    type: [LevelUpSubclassOptionSlotDto],
+    description:
+      'Novas opções de subclasse neste nível (ex.: truques de Revelações Santas)',
+  })
+  newSubclassOptionSlots!: LevelUpSubclassOptionSlotDto[];
 
   @ApiProperty({
     type: [LevelUpClassExpertiseSlotDto],

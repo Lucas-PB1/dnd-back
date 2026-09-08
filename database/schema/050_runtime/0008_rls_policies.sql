@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign encounter RLS â€” auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping campaign encounter RLS — auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -66,40 +66,40 @@ BEGIN
     );
 END $$;
 
--- Slots nÃ£o exclusivos para itens mÃ¡gicos vestÃ­veis / carregados.
+-- Slots não exclusivos para itens mágicos vestíveis / carregados.
 
 
 
 
--- CÃ¢mara de armas de fogo por personagem (estado de sessÃ£o).
+-- Câmara de armas de fogo por personagem (estado de sessão).
 
--- Estado de combate do BÃ¡rbaro (FÃºria / Ataque Imprudente).
-
-
-
--- Encanto de arma preso a um item do inventÃ¡rio (slug do phb_item do encanto).
+-- Estado de combate do Bárbaro (Fúria / Ataque Imprudente).
 
 
 
-
--- Soft check: null ou slug de encanto; sem FK (catÃ¡logo pode atrasar).
-
--- Trackers de sessÃ£o Pack 2: ColÃ©gio das MÃ¡scaras / Beastborne.
+-- Encanto de arma preso a um item do inventário (slug do phb_item do encanto).
 
 
 
--- Trackers de sessÃ£o: Mago dos MÃ­sseis (Escudo / Giga armados para o prÃ³ximo cast).
+
+-- Soft check: null ou slug de encanto; sem FK (catálogo pode atrasar).
+
+-- Trackers de sessão Pack 2: Colégio das Máscaras / Beastborne.
 
 
 
--- Arma de Pacto (Bruxo Â· Pacto da LÃ¢mina): no mÃ¡ximo uma por personagem.
+-- Trackers de sessão: Mago dos Mísseis (Escudo / Giga armados para o próximo cast).
+
+
+
+-- Arma de Pacto (Bruxo · Pacto da Lâmina): no máximo uma por personagem.
 
 
 CREATE UNIQUE INDEX uq_player_character_item_one_pact_weapon
   ON rpg.player_character_item (character_id)
   WHERE is_pact_weapon = TRUE;
 
--- Overlay DMG Â§3.1: cobertura presa Ã  peÃ§a base (estilo Valdas charm).
+-- Overlay DMG §3.1: cobertura presa à peça base (estilo Valdas charm).
 
 
 
@@ -119,14 +119,14 @@ CREATE UNIQUE INDEX uq_player_character_item_one_pact_weapon
 
 
 
--- Magia vinculada em item Ãºnico (ex.: Cajado Magificado).
+-- Magia vinculada em item único (ex.: Cajado Magificado).
 
 -- Wealth: 5 moedas D&D no personagem (PC / PP prata / PE / PO / PL platina)
 
--- Campanha: players podem optar por nÃ£o pagar ao pegar item
+-- Campanha: players podem optar por não pagar ao pegar item
 
--- Bucket pÃºblico de avatares (perfil do usuÃ¡rio).
--- Rode no SQL Editor do Supabase se o pipeline de migrations nÃ£o cobre storage.
+-- Bucket público de avatares (perfil do usuário).
+-- Rode no SQL Editor do Supabase se o pipeline de migrations não cobre storage.
 
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
@@ -182,14 +182,14 @@ CREATE POLICY "avatars_owner_delete"
     AND (storage.foldername(name))[1] = auth.uid()::text
   );
 
--- Props de instÃ¢ncia (artefato rolado na 1Âª sintonia, senciÃªncia copiada, etc.)
+-- Props de instância (artefato rolado na 1ª sintonia, senciência copiada, etc.)
 
 
 COMMENT ON COLUMN rpg.player_character_item.instance_properties IS
-  'Estado por instÃ¢ncia: artifactRandom (1Âª sintonia), sentience copiada do catÃ¡logo, etc.';
+  'Estado por instância: artifactRandom (1ª sintonia), sentience copiada do catálogo, etc.';
 
--- Compartimentos de inventÃ¡rio: item contido em outro (bolsa/saca/cesta).
--- Nullable = mochila raiz (compatÃ­vel com inventÃ¡rio existente).
+-- Compartimentos de inventário: item contido em outro (bolsa/saca/cesta).
+-- Nullable = mochila raiz (compatível com inventário existente).
 
 
 COMMENT ON COLUMN rpg.player_character_item.contained_in_item_slug IS
@@ -199,11 +199,11 @@ CREATE INDEX idx_player_character_item_contained_in
   ON rpg.player_character_item (character_id, contained_in_item_slug)
   WHERE contained_in_item_slug IS NOT NULL;
 
--- Forma Estrelada (CÃ­rculo das Estrelas): constelaÃ§Ã£o ativa na sessÃ£o
+-- Forma Estrelada (Círculo das Estrelas): constelação ativa na sessão
 
 
 
 -- RPC de leitura: ficha do jogador em 1 round-trip (JSONB).
 -- Substitui N finds TypeORM em player_character_* + skills do antecedente.
 
--- RPC de leitura: inventÃ¡rio + catÃ¡logo de combate em 1 round-trip.
+-- RPC de leitura: inventário + catálogo de combate em 1 round-trip.

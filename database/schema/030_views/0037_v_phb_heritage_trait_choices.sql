@@ -6,8 +6,8 @@ SELECT
   regexp_replace(t.name, '\.$', '', 'g') AS trait_name,
   ('[' || CASE t.category
     WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'ExploraÃ§Ã£o'
-    ELSE 'InterpretaÃ§Ã£o'
+    WHEN 'exploration' THEN 'Exploração'
+    ELSE 'Interpretação'
   END || '] ' || regexp_replace(t.name, '\.$', '', 'g')) AS label,
   t.benefit_base,
   t.benefit_improved,
@@ -41,8 +41,8 @@ SELECT
   regexp_replace(t.name, '\.$', '', 'g'),
   ('[' || CASE t.category
     WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'ExploraÃ§Ã£o'
-    ELSE 'InterpretaÃ§Ã£o'
+    WHEN 'exploration' THEN 'Exploração'
+    ELSE 'Interpretação'
   END || '] ' || regexp_replace(t.name, '\.$', '', 'g')),
   t.benefit_base,
   t.benefit_improved,
@@ -78,8 +78,8 @@ SELECT
   910000 + v.sort_order
 FROM rpg.phb_heritage h
 JOIN (VALUES
-  (1, 'no', 'NÃ£o', 'MantÃ©m o deslocamento base da heranÃ§a.'),
-  (2, 'yes', 'Sim', 'Reduz 1,5 m de deslocamento; escolha o 9Âº traÃ§o modular.')
+  (1, 'no', 'Não', 'Mantém o deslocamento base da herança.'),
+  (2, 'yes', 'Sim', 'Reduz 1,5 m de deslocamento; escolha o 9º traço modular.')
 ) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
 WHERE h.allows_speed_trade
 
@@ -98,8 +98,8 @@ SELECT
 FROM rpg.phb_heritage h
 JOIN (VALUES
   (1, 'small', 'Pequeno', 'Tamanho Pequeno.'),
-  (2, 'medium', 'MÃ©dio', 'Tamanho MÃ©dio.')
+  (2, 'medium', 'Médio', 'Tamanho Médio.')
 ) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
 WHERE h.allows_size_choice;
 
--- v_phb_class_economy_action inclui aÃ§Ãµes de traÃ§os de heranÃ§a GH
+-- v_phb_class_economy_action inclui ações de traços de herança GH

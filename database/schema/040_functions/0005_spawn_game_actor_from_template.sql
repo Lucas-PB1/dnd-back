@@ -151,10 +151,10 @@ BEGIN
 END;
 $$;
 
--- AnotaÃ§Ãµes livres da sessÃ£o (ficha do personagem)
+-- Anotações livres da sessão (ficha do personagem)
 
 
 COMMENT ON COLUMN rpg.player_character.session_notes IS
-  'AnotaÃ§Ãµes da sessÃ£o (jogador/DM) â€” texto livre, nÃ£o confundir com game_actor.notes';
+  'Anotações da sessão (jogador/DM) — texto livre, não confundir com game_actor.notes';
 
--- Bundle da ficha: heranÃ§a GH via player_character_heritage_* + species PHB separados
+-- Bundle da ficha: herança GH via player_character_heritage_* + species PHB separados

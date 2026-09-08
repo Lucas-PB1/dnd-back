@@ -29,5 +29,5 @@ GROUP BY
   sp.prepared_spells,
   list_c.slug;
 
--- Adiciona prÃ©-requisitos estruturados Ã  view de talentos.
--- Aumentos de atributo por classe/nÃ­vel com a classe normalizada (slug).
+-- Adiciona pré-requisitos estruturados à view de talentos.
+-- Aumentos de atributo por classe/nível com a classe normalizada (slug).

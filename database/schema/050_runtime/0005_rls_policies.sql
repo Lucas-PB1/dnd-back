@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign RLS â€” auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping campaign RLS — auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -96,7 +96,7 @@ BEGIN
       )
     );
 
-  -- Leitura de personagem por membros da campanha (alÃ©m do dono).
+  -- Leitura de personagem por membros da campanha (além do dono).
   DROP POLICY IF EXISTS player_character_campaign_read ON rpg.player_character;
   CREATE POLICY player_character_campaign_read ON rpg.player_character
     FOR SELECT USING (
@@ -109,7 +109,7 @@ BEGIN
       )
     );
 
-  -- Escrita por mestre/auxiliar na campanha (dono jÃ¡ coberto por player_character_own).
+  -- Escrita por mestre/auxiliar na campanha (dono já coberto por player_character_own).
   DROP POLICY IF EXISTS player_character_campaign_write ON rpg.player_character;
   CREATE POLICY player_character_campaign_write ON rpg.player_character
     FOR UPDATE USING (

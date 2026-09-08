@@ -5,6 +5,6 @@ CREATE TABLE rpg.phb_feat_requirement_ability (
   PRIMARY KEY (feat_id, ability_id)
 );
 
--- Aumentos de atributo concedidos por capacidade de classe em um nÃ­vel fixo
--- (ex.: BÃ¡rbaro "CampeÃ£o Primitivo" e Monge "Corpo e Mente" no nÃ­vel 20),
--- que elevam atributos acima do teto normal de 20 atÃ© um teto prÃ³prio.
+-- Aumentos de atributo concedidos por capacidade de classe em um nível fixo
+-- (ex.: Bárbaro "Campeão Primitivo" e Monge "Corpo e Mente" no nível 20),
+-- que elevam atributos acima do teto normal de 20 até um teto próprio.

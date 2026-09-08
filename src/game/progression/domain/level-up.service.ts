@@ -2,18 +2,22 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { loadSubclassOptionSlotsNewAtLevel } from '@game/sheet/infrastructure/queries/class-option.queries';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';
 import { classExpertiseSlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
 import { classWeaponMasterySlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import {
+  loadClassFeaturesAtLevel,
   loadClassWeaponMasteryProgression,
   loadMaxSpellLevelForCharacter,
+  loadSubclassFeaturesAtLevel,
   loadSubclassSpellListClassSlug,
   loadSubclassUnlockLevel,
 } from '../infrastructure/queries/level-up-catalog.queries';
@@ -68,7 +72,27 @@ export class LevelUpService {
     const subclassRequired =
       nextLevel >= subclassUnlockLevel && !character.subclassSlug;
 
-    const newSpellOptions = await this.findNewSpellOptions(character, nextLevel);
+    const [
+      newSpellOptions,
+      newAlwaysPreparedSpells,
+      newSubclassOptionSlots,
+      classFeatures,
+      subclassFeatures,
+    ] = await Promise.all([
+      this.findNewSpellOptions(character, nextLevel),
+      this.findAlwaysPreparedSpellsNewAtLevel(character, nextLevel),
+      this.findNewSubclassOptionSlots(character, nextLevel),
+      loadClassFeaturesAtLevel(
+        this.dataSource,
+        character.classSlug,
+        nextLevel,
+      ),
+      loadSubclassFeaturesAtLevel(
+        this.dataSource,
+        character.subclassSlug,
+        nextLevel,
+      ),
+    ]);
     const masteryProgression = await loadClassWeaponMasteryProgression(
       this.dataSource,
       character.classSlug,
@@ -84,7 +108,10 @@ export class LevelUpService {
       subclassRequired,
       subclassUnlockLevel,
       isAsiOrFeatLevel: isAsiOrFeatLevel(character.classSlug, nextLevel),
+      newFeatures: [...classFeatures, ...subclassFeatures],
       newSpellOptions,
+      newAlwaysPreparedSpells,
+      newSubclassOptionSlots,
       newClassExpertiseSlots: classExpertiseSlotsNewAtLevel(
         character.classSlug,
         nextLevel,
@@ -96,6 +123,10 @@ export class LevelUpService {
     };
   }
 
+  /**
+   * Lista de magias para conjuradores reais (slots de classe/subclasse).
+   * Não inclui always-prepared de subclasse sem spellcasting (ex.: Lâmina do Esplendor).
+   */
   private async findNewSpellOptions(
     character: PlayerCharacter,
     nextLevel: number,
@@ -110,7 +141,9 @@ export class LevelUpService {
       nextLevel,
       character.subclassSlug,
     );
-    const options: LevelUpPreviewDto['newSpellOptions'] = [];
+    if (maxSpellLevel <= 0 && !spellListClassSlug) {
+      return [];
+    }
 
     const listSlug = spellListClassSlug ?? character.classSlug;
     const classSpells = await this.classSpellsRepo.find({
@@ -118,6 +151,7 @@ export class LevelUpService {
       order: { spellLevel: 'ASC', spellName: 'ASC' },
     });
 
+    const options: LevelUpPreviewDto['newSpellOptions'] = [];
     for (const row of classSpells) {
       if (row.spellLevel <= maxSpellLevel) {
         options.push({
@@ -128,26 +162,53 @@ export class LevelUpService {
       }
     }
 
-    if (character.subclassSlug) {
-      const subclassSpells = await this.subclassSpellsRepo.find({
-        where: { subclassSlug: character.subclassSlug },
-      });
-      for (const row of subclassSpells) {
-        if (row.unlockLevel <= nextLevel) {
-          options.push({
-            spellSlug: row.spellSlug,
-            spellName: row.spellName,
-            spellLevel: 0,
-          });
-        }
-      }
-    }
-
     const seen = new Set<string>();
     return options.filter((opt) => {
       if (seen.has(opt.spellSlug)) return false;
       seen.add(opt.spellSlug);
       return true;
     });
+  }
+
+  /** Magias always-prepared que desbloqueiam exatamente neste nível. */
+  private async findAlwaysPreparedSpellsNewAtLevel(
+    character: PlayerCharacter,
+    nextLevel: number,
+  ): Promise<LevelUpPreviewDto['newAlwaysPreparedSpells']> {
+    if (!character.subclassSlug) return [];
+
+    const subclassSpells = await this.subclassSpellsRepo.find({
+      where: { subclassSlug: character.subclassSlug },
+    });
+    return subclassSpells
+      .filter((row) => row.unlockLevel === nextLevel)
+      .map((row) => ({
+        spellSlug: row.spellSlug,
+        spellName: row.spellName,
+        spellLevel: 0,
+      }));
+  }
+
+  private async findNewSubclassOptionSlots(
+    character: PlayerCharacter,
+    nextLevel: number,
+  ): Promise<LevelUpPreviewDto['newSubclassOptionSlots']> {
+    if (!character.subclassSlug) return [];
+
+    const subclass = await this.dataSource
+      .getRepository(PhbSubclassRef)
+      .findOne({ where: { slug: character.subclassSlug }, select: ['id'] });
+    if (!subclass) return [];
+
+    const slots = await loadSubclassOptionSlotsNewAtLevel(
+      this.dataSource,
+      subclass.id,
+      nextLevel,
+    );
+    return slots.map((slot) => ({
+      optionKey: slot.optionKey,
+      label: slot.label,
+      unlockLevel: slot.unlockLevel,
+    }));
   }
 }

@@ -18,4 +18,4 @@ CREATE INDEX idx_phb_heritage_trait_category ON rpg.phb_heritage_trait(category)
 CREATE INDEX idx_phb_heritage_trait_anchor ON rpg.phb_heritage_trait(anchor_id);
 
 COMMENT ON TABLE rpg.phb_heritage_trait IS
-  'TraÃ§os modulares GH â€” pool global; repetiÃ§Ã£o aplica benefit_improved conforme max_takes/take_mode.';
+  'Traços modulares GH — pool global; repetição aplica benefit_improved conforme max_takes/take_mode.';

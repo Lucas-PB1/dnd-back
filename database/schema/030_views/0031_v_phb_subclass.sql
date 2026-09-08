@@ -17,4 +17,4 @@ LEFT JOIN rpg.phb_source_citation cit ON cit.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = cit.edition_id
 LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id;
 
--- v_phb_armor: edition_slug e image_url para compÃªndio (ex. escudos GH)
+-- v_phb_armor: edition_slug e image_url para compêndio (ex. escudos GH)

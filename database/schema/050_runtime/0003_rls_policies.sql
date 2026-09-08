@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character_item RLS â€” auth schema not present';
+    RAISE NOTICE 'Skipping player_character_item RLS — auth schema not present';
     RETURN;
   END IF;
 
@@ -14,4 +14,4 @@ BEGIN
     );
 END $$;
 
--- Estado de mesa (slots gastos, concentraÃ§Ã£o, condiÃ§Ãµes, HP temporÃ¡rio)
+-- Estado de mesa (slots gastos, concentração, condições, HP temporário)

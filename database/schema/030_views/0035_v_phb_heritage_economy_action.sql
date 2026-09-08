@@ -20,4 +20,4 @@ JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id
 WHERE a.heritage_trait_id IS NOT NULL;
 
 
--- Escolhas de linhagem/ancestralidade por espÃ©cie
+-- Escolhas de linhagem/ancestralidade por espécie

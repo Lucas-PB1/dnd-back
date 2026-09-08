@@ -1,11 +1,11 @@
--- Baseline schema `rpg` â€” greenfield DDL (schema + runtime)
+-- Baseline schema `rpg` — greenfield DDL (schema + runtime)
 
--- Schema rpg + extensÃ£o pg_trgm
+-- Schema rpg + extensão pg_trgm
 
 CREATE SCHEMA IF NOT EXISTS rpg;
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- ENUMs do catÃ¡logo PHB (baseline canÃ´nico)
+-- ENUMs do catálogo PHB (baseline canônico)
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;

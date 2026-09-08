@@ -24,6 +24,7 @@ export function enrichSpellsWithSpellcastingStats(
     speciesChoices?: readonly SpeciesChoiceDto[];
     featFixedSpells?: readonly FeatGrantedSpellRow[];
     speciesSlug?: string;
+    subclassSlug?: string | null;
     speciesEffects?: readonly CatalogEffect[];
   },
 ): CharacterSpellDto[] {
@@ -44,6 +45,7 @@ export function enrichSpellsWithSpellcastingStats(
     const castEconomy = resolveGrantedSpellCastEconomy({
       spellSlug: spell.spellSlug,
       source: spell.source,
+      subclassSlug: input.subclassSlug,
       featOptions: input.featOptions,
       featFixedSpells: input.featFixedSpells,
       speciesSlug: input.speciesSlug,

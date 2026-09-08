@@ -60,4 +60,4 @@ AS $$
   );
 $$;
 
--- Character Threads â€” estado na ficha (1 ativo por personagem)
+-- Character Threads — estado na ficha (1 ativo por personagem)

@@ -11,8 +11,8 @@ CREATE INDEX idx_phb_heritage_traditional_heritage
   ON rpg.phb_heritage_traditional(heritage_id, sort_order);
 
 COMMENT ON TABLE rpg.phb_heritage_traditional IS
-  'Preset recomendado por heranÃ§a (3+3+2 combate/exploraÃ§Ã£o/interpretaÃ§Ã£o) â€” atalho no wizard.';
+  'Preset recomendado por herança (3+3+2 combate/exploração/interpretação) — atalho no wizard.';
 
 
 
--- FunÃ§Ã£o de auditoria updated_at
+-- Função de auditoria updated_at

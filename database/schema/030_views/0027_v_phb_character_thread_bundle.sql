@@ -45,4 +45,4 @@ SELECT
   ), '[]'::jsonb) AS milestones
 FROM rpg.phb_character_thread t;
 
--- Views: expÃµe image_url nos bundles de criatura/veÃ­culo
+-- Views: expõe image_url nos bundles de criatura/veículo

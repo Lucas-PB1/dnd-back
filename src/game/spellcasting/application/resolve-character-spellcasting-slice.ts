@@ -147,6 +147,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     speciesChoices: sheet.speciesChoices,
     featFixedSpells,
     speciesSlug: speciesSlug ?? undefined,
+    subclassSlug,
     speciesEffects,
   });
 

@@ -22,4 +22,4 @@ CREATE TABLE rpg.phb_resource_definition (
   )
 );
 
--- owner_id = subclass_id | species_id | feat_id conforme scope (sem FK polimÃ³rfica)
+-- owner_id = subclass_id | species_id | feat_id conforme scope (sem FK polimórfica)

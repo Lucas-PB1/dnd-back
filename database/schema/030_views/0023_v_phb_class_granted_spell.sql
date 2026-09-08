@@ -10,4 +10,4 @@ JOIN rpg.phb_spell s ON s.id = g.spell_id
 WHERE g.origin_type = 'class'::rpg.spell_grant_origin;
 
 
--- Inclui machadinhas (handaxe) nas labels de proficiÃªncia de arma.
+-- Inclui machadinhas (handaxe) nas labels de proficiência de arma.

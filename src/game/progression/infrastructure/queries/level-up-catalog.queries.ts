@@ -1,4 +1,6 @@
 import { DataSource } from 'typeorm';
+import { PhbClassFeature } from '@entities/phb-class-feature.entity';
+import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
 import {
   loadWeaponMasteryProgression,
   resolveSubclassUnlockLevel,
@@ -8,6 +10,14 @@ import {
   maxSpellLevelForCharacter,
 } from '@game/sheet/infrastructure/queries/spell-progression.queries';
 import type { ClassProgressionMasteryRow } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
+
+export type LevelUpFeatureUnlockRow = {
+  name: string;
+  description: string;
+  level: number;
+  source: 'class' | 'subclass';
+  optionKey?: string | null;
+};
 
 export async function loadClassWeaponMasteryProgression(
   dataSource: DataSource,
@@ -38,4 +48,43 @@ export async function loadMaxSpellLevelForCharacter(
   subclassSlug: string | null,
 ): Promise<number> {
   return maxSpellLevelForCharacter(dataSource, classSlug, level, subclassSlug);
+}
+
+/** Características de classe que desbloqueiam exatamente neste nível. */
+export async function loadClassFeaturesAtLevel(
+  dataSource: DataSource,
+  classSlug: string,
+  level: number,
+): Promise<LevelUpFeatureUnlockRow[]> {
+  const rows = await dataSource.getRepository(PhbClassFeature).find({
+    where: { klass: { slug: classSlug }, level },
+    relations: ['klass'],
+    order: { name: 'ASC' },
+  });
+  return rows.map((row) => ({
+    name: row.name,
+    description: row.description,
+    level: row.level,
+    source: 'class' as const,
+  }));
+}
+
+/** Características de subclasse que desbloqueiam exatamente neste nível. */
+export async function loadSubclassFeaturesAtLevel(
+  dataSource: DataSource,
+  subclassSlug: string | null,
+  level: number,
+): Promise<LevelUpFeatureUnlockRow[]> {
+  if (!subclassSlug) return [];
+  const rows = await dataSource.getRepository(VPhbSubclassMechanics).find({
+    where: { subclassSlug, featureLevel: level },
+    order: { featureName: 'ASC' },
+  });
+  return rows.map((row) => ({
+    name: row.featureName,
+    description: row.featureDescription,
+    level: row.featureLevel,
+    source: 'subclass' as const,
+    optionKey: row.optionKey,
+  }));
 }

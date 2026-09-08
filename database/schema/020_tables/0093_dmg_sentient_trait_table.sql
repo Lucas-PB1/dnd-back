@@ -25,6 +25,6 @@ CREATE INDEX idx_dmg_sentient_trait_table_roll
   ON rpg.dmg_sentient_trait_table (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_sentient_trait_table IS
-  'Faixas de rolagem para gerar alinhamento/comunicaÃ§Ã£o/sentidos/propÃ³sito/attrs de item senciente.';
+  'Faixas de rolagem para gerar alinhamento/comunicação/sentidos/propósito/attrs de item senciente.';
 
--- Contadores de catÃ¡logo (view/purchase) â€” nÃ£o polui phb_item (seed-owned).
+-- Contadores de catálogo (view/purchase) — não polui phb_item (seed-owned).

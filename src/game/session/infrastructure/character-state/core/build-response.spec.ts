@@ -84,6 +84,8 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
     const grantedSpellCatalog = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
         featFixedSpells: [],
+        subclassGrantedSpells: [],
+        classGrantedSpells: [],
       }),
     };
 

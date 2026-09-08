@@ -53,13 +53,13 @@ background/phb/phb_background.all.sql
 background/phb/phb_background.flavor.sql
 background/phb/phb_background_ability_option.all.sql
 background/phb/phb_background_boost_option.all.sql
-background/phb/phb_background_language.all.sql
 background/phb/phb_background_skill.all.sql
 background/phb/phb_background_tool_option.all.sql
 background/steinhardt/phb_background.all.sql
 background/steinhardt/phb_background.starting.sql
 background/steinhardt/phb_background_ability_option.all.sql
 background/steinhardt/phb_background_skill.all.sql
+background/phb/phb_background_language.all.sql
 catalog/dmg/phb_edition.base.sql
 catalog/griffons-saddlebag/phb_edition.base.sql
 catalog/grim-hollow/phb_edition.base.sql
@@ -214,6 +214,7 @@ effect/phb/phb_effect.species.sql
 effect/phb/phb_effect.subclass.sql
 effect/steinhardt/phb_effect.steinhardt.sql
 effect/valdas/phb_effect.valdas.sql
+effect/valdas/phb_effect.spellblade-cantrips.sql
 feat/grim-hollow/phb_feat.advanced-weapon.sql
 feat/grim-hollow/phb_feat.gh-cap4.sql
 feat/grim-hollow/phb_feat_option.sangromantic-initiate.sql
@@ -251,6 +252,7 @@ feat/valdas/phb_feat_benefit.all.03.sql
 feat/valdas/phb_feat_benefit.all.sql
 feat/valdas/phb_feat_option.all.02.sql
 feat/valdas/phb_feat_option.all.sql
+feat/valdas/phb_feat_option.spellblade.sql
 feat/valdas/phb_feat_requirement.all.02.sql
 feat/valdas/phb_feat_requirement.all.03.sql
 feat/valdas/phb_feat_requirement.all.sql

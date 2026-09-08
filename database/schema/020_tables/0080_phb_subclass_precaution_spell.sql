@@ -7,4 +7,4 @@ CREATE TABLE rpg.phb_subclass_precaution_spell (
 CREATE INDEX idx_subclass_precaution_spell_subclass ON rpg.phb_subclass_precaution_spell(subclass_id);
 CREATE INDEX idx_subclass_precaution_spell_spell ON rpg.phb_subclass_precaution_spell(spell_id);
 
--- PrÃ©-requisitos estruturados de talentos.
+-- Pré-requisitos estruturados de talentos.

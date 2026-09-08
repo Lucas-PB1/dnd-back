@@ -7,7 +7,7 @@ CREATE TABLE rpg.player_character_transformation_choice (
 );
 
 COMMENT ON TABLE rpg.player_character_transformation IS
-  'TransformaÃ§Ã£o GH Cap. 6 ativa na ficha (1:1). NÃ£o usar player_character_feat.';
+  'Transformação GH Cap. 6 ativa na ficha (1:1). Não usar player_character_feat.';
 
 COMMENT ON TABLE rpg.player_character_transformation_choice IS
-  'Escolhas opacas da transformaÃ§Ã£o (boons etc.); validadas por J060 quando existir.';
+  'Escolhas opacas da transformação (boons etc.); validadas por J060 quando existir.';

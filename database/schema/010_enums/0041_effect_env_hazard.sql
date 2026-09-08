@@ -5,4 +5,4 @@ CREATE TYPE rpg.effect_env_hazard AS ENUM (
   'snow_blindness'
 );
 
--- Grim Hollow â€” tipos de heranÃ§a e traÃ§os modulares
+-- Grim Hollow — tipos de herança e traços modulares

@@ -76,9 +76,12 @@ describe('FindWeaponsQuery', () => {
     });
   });
 
-  it('skips search and category filters when absent', async () => {
+  it('always excludes class-granted weapons; skips search/category when absent', async () => {
     await query.execute();
 
-    expect(qb.andWhere).not.toHaveBeenCalled();
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      expect.stringContaining("grantedBySubclass"),
+    );
+    expect(qb.andWhere).toHaveBeenCalledTimes(1);
   });
 });

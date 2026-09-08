@@ -79,6 +79,7 @@ export function assembleCharacterResponseDto(input: {
     armorClass: combat.armorClass,
     armorClassNote: combat.armorClassNote,
     featAcBonus: combat.featAcBonus,
+    featAcBonusSources: [...combat.featAcBonusSources],
     featEffectFlags: combat.featEffectFlags,
     weaponAttacks: combat.weaponAttacks,
     equipmentWarnings: combat.equipmentWarnings,

@@ -13,4 +13,4 @@ CREATE TABLE rpg.phb_vehicle_template_action (
 CREATE INDEX idx_phb_vehicle_template_action_slug
   ON rpg.phb_vehicle_template_action(template_slug);
 
--- Stat blocks completos: atributos, descriÃ§Ã£o de aÃ§Ãµes, veÃ­culos Northlands
+-- Stat blocks completos: atributos, descrição de ações, veículos Northlands

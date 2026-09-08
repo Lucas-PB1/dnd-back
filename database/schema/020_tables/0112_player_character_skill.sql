@@ -7,4 +7,4 @@ CREATE TABLE rpg.player_character_skill (
 CREATE INDEX idx_player_character_skill_character
   ON rpg.player_character_skill(character_id);
 
--- ExtensÃµes da ficha: espÃ©cie, subclasse, feats, magias, equipamento, idiomas
+-- Extensões da ficha: espécie, subclasse, feats, magias, equipamento, idiomas

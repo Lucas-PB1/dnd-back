@@ -9,5 +9,5 @@ CREATE TABLE rpg.phb_class_ability_boost (
   UNIQUE (class_id, ability_slug, from_level)
 );
 
--- Permite elegibilidade de maestria sÃ³ para armas Ã  distÃ¢ncia (Pistoleiro Valdas).
+-- Permite elegibilidade de maestria só para armas à distância (Pistoleiro Valdas).
 -- Gunslinger (Valdas) maneuvers catalog

@@ -25,4 +25,4 @@ JOIN rpg.phb_subclass sc ON sc.id = e.owner_id
 WHERE e.kind = 'combat_mod' AND e.owner_kind = 'subclass'
   AND cm.mod_kind = 'unarmored_defense';
 
--- EspaÃ§os de magia + cotas por nÃ­vel de personagem (subclasse conjuradora)
+-- Espaços de magia + cotas por nível de personagem (subclasse conjuradora)

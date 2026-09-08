@@ -5,4 +5,4 @@ CREATE TYPE rpg.panel_action_section AS ENUM (
   'channel'
 );
 
--- Runtime game_actor: tipos de ficha e conjuraÃ§Ã£o inata
+-- Runtime game_actor: tipos de ficha e conjuração inata

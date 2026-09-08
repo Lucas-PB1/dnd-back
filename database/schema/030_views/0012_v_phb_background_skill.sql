@@ -9,9 +9,9 @@ JOIN rpg.phb_skill s ON s.id = bs.skill_id
 ORDER BY b.slug, s.slug;
 
 
--- Enriquece v_phb_background com talento de origem e proficiÃªncia em ferramenta
+-- Enriquece v_phb_background com talento de origem e proficiência em ferramenta
 
--- OpÃ§Ãµes de ferramenta quando o antecedente exige escolha (tool_proficiency_kind = choice)
+-- Opções de ferramenta quando o antecedente exige escolha (tool_proficiency_kind = choice)
 
 -- Recria a view para incluir feature_description (CREATE OR REPLACE
--- nÃ£o permite inserir coluna no meio da lista existente).
+-- não permite inserir coluna no meio da lista existente).

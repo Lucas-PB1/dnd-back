@@ -6,6 +6,8 @@ export type MappedCombatSlice = {
   armorClassNote: string;
   /** Soma tipada de `ac_bonus` (sticky/gate — front aplica com toggle). */
   featAcBonus: number;
+  /** Fontes do bônus sticky de CA (slug + valor) para a UI nomear o talento. */
+  featAcBonusSources: readonly { featSlug: string; bonus: number }[];
   weaponAttacks: Awaited<ReturnType<ResolveEquippedWeaponAttacks['resolve']>>;
   equipmentWarnings: Awaited<
     ReturnType<ResolveEquipmentCompliance['resolve']>

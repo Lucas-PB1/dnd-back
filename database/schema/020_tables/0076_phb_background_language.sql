@@ -4,4 +4,4 @@ CREATE TABLE rpg.phb_background_language (
   PRIMARY KEY (background_id, language_id)
 );
 
--- ConjuraÃ§Ã£o por subclasse (Spellslinger etc.)
+-- Conjuração por subclasse (Spellslinger etc.)

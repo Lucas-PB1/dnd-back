@@ -20,9 +20,9 @@ CREATE TABLE rpg.phb_heritage (
 CREATE INDEX idx_phb_heritage_category ON rpg.phb_heritage(category);
 
 COMMENT ON TABLE rpg.phb_heritage IS
-  'HeranÃ§as Grim Hollow â€” identidade racial (AnÃ£o, Elfo, â€¦) com 8 traÃ§os modulares do pool global.';
+  'Heranças Grim Hollow — identidade racial (Anão, Elfo, …) com 8 traços modulares do pool global.';
 
 COMMENT ON COLUMN rpg.phb_heritage.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/heritages/dwarf.png).';
+  'Caminho público da ilustração (ex. /catalog/heritages/dwarf.png).';
 
--- Grim Hollow â€” pool global de traÃ§os modulares (~107)
+-- Grim Hollow — pool global de traços modulares (~107)

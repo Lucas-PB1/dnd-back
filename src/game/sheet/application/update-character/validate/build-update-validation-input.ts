@@ -35,10 +35,17 @@ export function buildUpdateValidationInput(input: {
     effectiveHeritageChoices,
   } = input;
 
-  const needsProficiencyContext = sheetInput.classOptions !== undefined;
+  const patchHasClassOptions = sheetInput.classOptions !== undefined;
+  const injectClassOptions =
+    shouldResyncSpells && sheetInput.classOptions === undefined;
+  /** Expertise/mastery precisam das perícias da ficha mesmo quando classOptions vêm do snapshot (só level↑). */
+  const needsProficiencyContext = patchHasClassOptions || injectClassOptions;
+
   const injectFeatOptions =
     (shouldResyncSpells || needsProficiencyContext) &&
     sheetInput.featOptions === undefined;
+  const injectSubclassOptions =
+    shouldResyncSpells && sheetInput.subclassOptions === undefined;
   const injectHeritageChoices =
     (shouldResyncSpells || needsProficiencyContext) &&
     sheetInput.heritageChoices === undefined &&
@@ -47,8 +54,6 @@ export function buildUpdateValidationInput(input: {
     (shouldResyncSpells || needsProficiencyContext) &&
     sheetInput.speciesChoices === undefined &&
     effective.speciesSlug;
-  const injectClassOptions =
-    shouldResyncSpells && sheetInput.classOptions === undefined;
 
   return {
     ...sheetInput,
@@ -59,6 +64,9 @@ export function buildUpdateValidationInput(input: {
       ? { characterSpells: sheetSnapshot.characterSpells }
       : {}),
     ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
+    ...(injectSubclassOptions
+      ? { subclassOptions: sheetSnapshot.subclassOptions }
+      : {}),
     ...(injectSpeciesChoices
       ? { speciesChoices: effectiveSpeciesChoices }
       : {}),

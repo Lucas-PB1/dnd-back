@@ -14,4 +14,4 @@ JOIN rpg.phb_effect_combat_mod cm ON cm.effect_id = e.id
 JOIN rpg.phb_heritage_trait ht ON ht.id = e.owner_id
 WHERE e.kind = 'combat_mod' AND e.owner_kind = 'heritage';
 
--- AÃ§Ãµes de economia (Usar) ligadas a traÃ§os de heranÃ§a
+-- Ações de economia (Usar) ligadas a traços de herança

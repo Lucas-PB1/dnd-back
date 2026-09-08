@@ -9,12 +9,14 @@ import { LevelUpDto } from '../dto/level-up.dto';
 import { CharacterResponseDto } from '@game/sheet/dto/character-response.dto';
 import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 import { DataSource } from 'typeorm';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { isAsiOrFeatLevel } from '../domain/asi-feat-levels';
 import {
   applyLevelUpAsiBoost,
   resolveLevelUpAsiFromDto,
 } from '../domain/level-up-asi';
 import { loadClassWeaponMasteryProgression } from '../infrastructure/queries/level-up-catalog.queries';
+import { loadSubclassOptionSlotsNewAtLevel } from '@game/sheet/infrastructure/queries/class-option.queries';
 
 @Injectable()
 export class LevelUpHandler {
@@ -86,6 +88,38 @@ export class LevelUpHandler {
       classOptions = merged;
     }
 
+    let subclassOptions = dto.subclassOptions;
+    const subclassSlug = dto.subclassSlug ?? character.subclassSlug;
+    if (subclassSlug) {
+      const subclass = await this.dataSource
+        .getRepository(PhbSubclassRef)
+        .findOne({ where: { slug: subclassSlug }, select: ['id'] });
+      if (subclass) {
+        const newSubclassSlots = await loadSubclassOptionSlotsNewAtLevel(
+          this.dataSource,
+          subclass.id,
+          nextLevel,
+        );
+        if (newSubclassSlots.length > 0) {
+          const sheet = await this.sheetRepository.load(character.id);
+          const merged = subclassOptions ?? sheet.subclassOptions;
+          const missing = newSubclassSlots.filter(
+            (slot) =>
+              !merged.some(
+                (option) =>
+                  option.optionKey === slot.optionKey && option.valueId,
+              ),
+          );
+          if (missing.length > 0) {
+            throw new BadRequestException(
+              `Level ${nextLevel} unlocks subclass choices: ${missing.map((slot) => slot.optionKey).join(', ')}`,
+            );
+          }
+          subclassOptions = merged;
+        }
+      }
+    }
+
     const asiInput = resolveLevelUpAsiFromDto(dto);
     if (asiInput && !isAsiOrFeatLevel(character.classSlug, nextLevel)) {
       throw new BadRequestException(
@@ -98,7 +132,7 @@ export class LevelUpHandler {
       subclassSlug: dto.subclassSlug,
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
-      subclassOptions: dto.subclassOptions,
+      subclassOptions,
       classOptions,
       characterFeats: dto.characterFeats,
       featOptions: dto.featOptions,

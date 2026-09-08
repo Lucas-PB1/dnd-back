@@ -1,4 +1,5 @@
--- Seed rpg.phb_background_language — Comum fixo em todos os antecedentes PHB
+-- Seed rpg.phb_background_language — Comum fixo em TODOS os antecedentes
+-- (PHB + GH + Northlands + Steinhardt…). Rodar DEPOIS de todos os packs de background.
 
 INSERT INTO rpg.phb_background_language (background_id, language_id)
 SELECT b.id, l.id
@@ -10,4 +11,4 @@ ON CONFLICT DO NOTHING;
 UPDATE rpg.phb_background
 SET language_choice_count = 0
 WHERE language_choice_count <> 0;
--- Escolhas de idioma = espécie (grant_language ×2 em effects/E007).
+-- Escolhas de idioma = espécie (grant_language ×2 em effects/E007) + extras de classe.

@@ -216,7 +216,6 @@ ins AS (
          1, v.sort_order, v.label
   FROM feat CROSS JOIN (
     VALUES
-      ('combat_note'::rpg.effect_kind, 1, 'Truques de lâmina'),
       ('spellcasting_ability'::rpg.effect_kind, 2, 'Atributo de conjuração'),
       ('combat_note'::rpg.effect_kind, 3, 'Canalizado')
   ) AS v(kind, sort_order, label)
@@ -225,8 +224,7 @@ ins AS (
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   CASE sort_order
-    WHEN 1 THEN '×2 truques de lâmina escolhidos (grant_spell+option wire depois).'
-    WHEN 2 THEN 'Atributo de conjuração = escolha do talento (Int/Sab/Cha).'
+    WHEN 2 THEN 'Atributo de conjuração = escolha do talento (option castingAbility).'
     ELSE 'Offer toggle sticky: +mod Int|Sab|Cha no ataque; pool ×PB/DL (Canalizado).'
   END
 FROM ins;

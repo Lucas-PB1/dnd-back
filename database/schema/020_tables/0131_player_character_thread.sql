@@ -13,7 +13,7 @@ CREATE TABLE rpg.player_character_thread (
   )
 );
 
--- No mÃ¡ximo um thread ativo por personagem
+-- No máximo um thread ativo por personagem
 CREATE UNIQUE INDEX uq_player_character_thread_one_active
   ON rpg.player_character_thread(character_id)
   WHERE status = 'active';

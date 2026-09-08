@@ -17,6 +17,6 @@ FROM rpg.phb_armor a
 JOIN rpg.phb_item i ON i.id = a.item_id
 JOIN rpg.phb_armor_category c ON c.id = a.category_id;
 
--- Pool global, slots modulares, speed trade e tamanho por heranÃ§a GH
+-- Pool global, slots modulares, speed trade e tamanho por herança GH
 
--- Build tradicional sugerido (8 traÃ§os por heranÃ§a)
+-- Build tradicional sugerido (8 traços por herança)

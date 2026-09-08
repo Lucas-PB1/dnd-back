@@ -2,6 +2,7 @@ import type { DataSource } from 'typeorm';
 import type { CatalogEffect } from '@game/effects';
 import {
   acBonusFromEffects,
+  acBonusSourcesFromEffects,
   hasDamageDieExplode,
   hasDamageDieFlip,
   hasDamageDieFloor,
@@ -116,6 +117,11 @@ export async function assembleMappedCombatSlice(input: {
   });
 
   const effects = input.featEffects ?? [];
+  const featAcBonusSources = acBonusSourcesFromEffects(
+    effects,
+    input.featSlugs,
+    input.proficiencyBonus,
+  );
   const featAcBonus = acBonusFromEffects(
     effects,
     input.featSlugs,
@@ -124,11 +130,9 @@ export async function assembleMappedCombatSlice(input: {
 
   return {
     armorClass: input.armor.armorClass,
-    armorClassNote:
-      featAcBonus > 0
-        ? `${input.armor.armorClassNote}; talentos: ate +${featAcBonus} CA (toggle/gate na UI)`
-        : input.armor.armorClassNote,
+    armorClassNote: input.armor.armorClassNote,
     featAcBonus,
+    featAcBonusSources,
     weaponAttacks: input.weaponAttacks,
     equipmentWarnings: input.compliance.warnings,
     cannotCastSpellsInArmor: input.compliance.cannotCastSpells,

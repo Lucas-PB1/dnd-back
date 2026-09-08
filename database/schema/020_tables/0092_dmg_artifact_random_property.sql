@@ -24,6 +24,6 @@ CREATE INDEX idx_dmg_artifact_random_property_roll
   ON rpg.dmg_artifact_random_property (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_artifact_random_property IS
-  'Faixas 1d100 de propriedades aleatÃ³rias de artefato (benÃ©fica/prejudicial Ã— menor/maior).';
+  'Faixas 1d100 de propriedades aleatórias de artefato (benéfica/prejudicial × menor/maior).';
 
--- Tabelas de geraÃ§Ã£o de item senciente (DMG Treasure â€” Sentient Magic Items).
+-- Tabelas de geração de item senciente (DMG Treasure — Sentient Magic Items).

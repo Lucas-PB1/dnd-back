@@ -16,4 +16,4 @@ FROM rpg.phb_subclass_feature sf
 JOIN rpg.phb_subclass s ON s.id = sf.subclass_id
 JOIN rpg.phb_class c ON c.id = s.class_id;
 
--- View canÃ´nica rpg.v_phb_class (flavor + mastery eligibility)
+-- View canônica rpg.v_phb_class (flavor + mastery eligibility)

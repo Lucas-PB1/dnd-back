@@ -24,4 +24,4 @@ CREATE TABLE rpg.phb_eldritch_invocation (
 CREATE INDEX idx_phb_eldritch_invocation_min_level
   ON rpg.phb_eldritch_invocation(min_level);
 
--- CatÃ¡logo de Metamagia (Feiticeiro PHB 2024)
+-- Catálogo de Metamagia (Feiticeiro PHB 2024)

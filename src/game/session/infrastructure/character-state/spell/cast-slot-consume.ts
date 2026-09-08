@@ -121,6 +121,16 @@ export async function consumeNonItemCastCost(input: {
   } else if (masteryFree) {
     usedSpellMastery = true;
   } else if (spellLevel > 0) {
+    const grantedBudget = await resolveGrantedFreeCastBudget(
+      character,
+      dto.spellSlug,
+      sheetRepository,
+      grantedSpellCatalog,
+      effectCatalog,
+    );
+    if (grantedBudget.economy === 'at_will') {
+      // Revelações Santas / grants à vontade — sem espaço.
+    } else {
     const maxSlots = await loadMaxSlots(
       classSlots,
       subclassSlots,
@@ -169,6 +179,7 @@ export async function consumeNonItemCastCost(input: {
         }
         recoverSpellSlot(state, 1);
       }
+    }
     }
   }
 

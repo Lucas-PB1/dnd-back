@@ -19,10 +19,8 @@ VALUES
   ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'weapon'::rpg.class_proficiency_kind, 'armas-simples'),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'weapon'::rpg.class_proficiency_kind, 'armas-marciais'),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'armas-simples'),
-  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'bestas-de-mao'),
-  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'espada-longa'),
-  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'rapieira'),
-  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'espada-curta'),
+  -- PHB 2024: Simple + Martial with Finesse or Light (não a lista 2014)
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'weapon'::rpg.class_proficiency_kind, 'armas-marciais-acuidade-ou-leves'),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'weapon'::rpg.class_proficiency_kind, 'adagas'),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'weapon'::rpg.class_proficiency_kind, 'dardos'),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'weapon'::rpg.class_proficiency_kind, 'fundas'),

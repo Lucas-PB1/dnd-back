@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping campaign ownership FKs â€” auth schema not present';
+    RAISE NOTICE 'Skipping campaign ownership FKs — auth schema not present';
     RETURN;
   END IF;
   ALTER TABLE rpg.campaign
@@ -15,4 +15,4 @@ BEGIN
     FOREIGN KEY (linked_by) REFERENCES auth.users(id);
 END $$;
 
--- RLS para campanhas (Supabase â€” requer schema auth)
+-- RLS para campanhas (Supabase — requer schema auth)

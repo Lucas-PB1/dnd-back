@@ -10,6 +10,6 @@ JOIN rpg.phb_class_skill_pool p ON p.class_id = c.id
 JOIN rpg.phb_skill s ON s.id = p.skill_id
 ORDER BY c.slug, s.slug;
 
--- OpÃ§Ãµes de truque para Alto Elfo (lista de cantrips de Mago).
--- Kind opcional: nÃ£o entra nos requiredKinds da validaÃ§Ã£o padrÃ£o;
+-- Opções de truque para Alto Elfo (lista de cantrips de Mago).
+-- Kind opcional: não entra nos requiredKinds da validação padrão;
 -- validado no application quando presente.

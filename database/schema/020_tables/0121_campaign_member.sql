@@ -10,4 +10,4 @@ CREATE TABLE rpg.campaign_member (
 CREATE INDEX idx_campaign_member_user_id ON rpg.campaign_member(user_id);
 CREATE INDEX idx_campaign_member_campaign_id ON rpg.campaign_member(campaign_id);
 
--- Personagem do jogador vinculado Ã  campanha (N:N â€” vÃ¡rias campanhas).
+-- Personagem do jogador vinculado à campanha (N:N — várias campanhas).

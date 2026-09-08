@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping game_actor RLS â€” auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping game_actor RLS — auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -41,6 +41,6 @@ BEGIN
     );
 END $$;
 
--- Spawn runtime game_actor a partir de template de criatura ou veÃ­culo
+-- Spawn runtime game_actor a partir de template de criatura ou veículo
 
--- Spawn: copiar ability_scores, initiative, passageiros e descriÃ§Ã£o de aÃ§Ãµes
+-- Spawn: copiar ability_scores, initiative, passageiros e descrição de ações

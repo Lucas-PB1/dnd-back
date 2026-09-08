@@ -23,16 +23,22 @@ export class SpellsController {
   @ApiOperation({ summary: 'List PHB spells (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated spell list' })
   findAll(@Query() query: SpellsQueryDto) {
-    return this.findSpells.execute(
-      query.cursor,
-      query.limit,
-      query.q,
-      query.level,
-      query.school,
-      query.editionSlugs,
-      query.fields,
-      query.sangromancy,
-    );
+    return this.findSpells.execute({
+      cursor: query.cursor,
+      limit: query.limit,
+      q: query.q,
+      level: query.level,
+      school: query.school,
+      editionSlugs: query.editionSlugs,
+      fields: query.fields,
+      sangromancy: query.sangromancy,
+      ritual: query.ritual,
+      concentration: query.concentration,
+      roll: query.roll,
+      castingTime: query.castingTime,
+      saveAbility: query.saveAbility,
+      rangeKind: query.rangeKind,
+    });
   }
 
   @Get(':slug')

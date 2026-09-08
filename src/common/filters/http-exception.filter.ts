@@ -46,7 +46,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
     } else if (isPlayerCharacterUserFkError(exception)) {
       statusCode = HttpStatus.UNAUTHORIZED;
       message =
-        'Sessão inválida: usuário não encontrado. Faça login novamente.';
+        process.env.NODE_ENV === 'development'
+          ? 'Sessão inválida: usuário não encontrado. Faça login novamente. (dev: JWT e DATABASE_URL em projetos diferentes — use o mesmo Supabase local em SUPABASE_URL e NEXT_PUBLIC_SUPABASE_*)'
+          : 'Sessão inválida: usuário não encontrado. Faça login novamente.';
       error = 'Unauthorized';
       this.logger.warn(
         exception instanceof Error ? exception.message : String(exception),

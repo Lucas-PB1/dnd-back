@@ -18,6 +18,7 @@ export {
 
 export {
   acBonusFromEffects,
+  acBonusSourcesFromEffects,
   grantedWeaponPropertySlugsFromEffects,
   hasDamageDieExplode,
   hasDamageDieFlip,
@@ -30,6 +31,7 @@ export {
   hasWieldTwoHandedOneHand,
   overrideWeaponRangeFtFromEffects,
 } from './combat-flags';
+export type { FeatAcBonusSource } from './combat-flags';
 
 export {
   flatDamageBonusFromEffects,

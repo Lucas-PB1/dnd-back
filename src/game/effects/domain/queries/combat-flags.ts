@@ -2,6 +2,7 @@ import type { CatalogEffect } from '../catalog-effect';
 import {
   hasOwnedFeatKind,
   ownedFeatEffects,
+  resolveNumericAmount,
   sumOwnedFeatNumericBonus,
 } from './shared';
 
@@ -16,6 +17,34 @@ export function acBonusFromEffects(
     'ac_bonus',
     proficiencyBonus,
   );
+}
+
+export type FeatAcBonusSource = {
+  featSlug: string;
+  bonus: number;
+};
+
+/** Fontes tipadas de `ac_bonus` por talento (para a UI nomear o toggle). */
+export function acBonusSourcesFromEffects(
+  effects: readonly CatalogEffect[],
+  featSlugs: readonly string[],
+  proficiencyBonus: number,
+): FeatAcBonusSource[] {
+  const bySlug = new Map<string, number>();
+  for (const effect of ownedFeatEffects(effects, featSlugs)) {
+    if (effect.kind !== 'ac_bonus' || !effect.numeric || !effect.ownerSlug) {
+      continue;
+    }
+    const amount = resolveNumericAmount(effect.numeric, proficiencyBonus);
+    if (amount === 0) continue;
+    bySlug.set(
+      effect.ownerSlug,
+      (bySlug.get(effect.ownerSlug) ?? 0) + amount,
+    );
+  }
+  return [...bySlug.entries()]
+    .map(([featSlug, bonus]) => ({ featSlug, bonus }))
+    .sort((a, b) => a.featSlug.localeCompare(b.featSlug));
 }
 
 export function grantedWeaponPropertySlugsFromEffects(

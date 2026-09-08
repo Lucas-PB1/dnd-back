@@ -9,6 +9,11 @@ import {
   paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { sangromancyDescriptionSqlPattern } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
+import {
+  applySpellListExtraFilters,
+  type SpellCastingTimeKind,
+  type SpellRangeKind,
+} from '../domain/spell-list-extra-filters';
 import { SpellResponseDto } from '../dto/spell-response.dto';
 import { SpellSummaryResponseDto } from '../dto/spell-summary-response.dto';
 import { SpellsMapper } from '../spells.mapper';
@@ -17,6 +22,23 @@ const SPELL_CURSOR_KEYS = [
   { expr: 'spell.level', name: 'level' },
   { expr: 'spell.slug', name: 'slug' },
 ] as const;
+
+export type FindSpellsFilters = {
+  cursor?: string;
+  limit?: number;
+  q?: string;
+  level?: number;
+  school?: string;
+  editionSlugs?: string[];
+  fields?: 'summary';
+  sangromancy?: boolean;
+  ritual?: boolean;
+  concentration?: boolean;
+  roll?: 'attack' | 'save';
+  castingTime?: SpellCastingTimeKind;
+  saveAbility?: string;
+  rangeKind?: SpellRangeKind;
+};
 
 @Injectable()
 export class FindSpellsQuery {
@@ -27,14 +49,7 @@ export class FindSpellsQuery {
   ) {}
 
   async execute(
-    cursor?: string,
-    limit = 20,
-    q?: string,
-    level?: number,
-    school?: string,
-    editionSlugs?: string[],
-    fields?: 'summary',
-    sangromancy?: boolean,
+    filters: FindSpellsFilters = {},
   ): Promise<
     PaginatedResponseDto<SpellResponseDto | SpellSummaryResponseDto>
   > {
@@ -43,7 +58,7 @@ export class FindSpellsQuery {
       .orderBy('spell.level', 'ASC')
       .addOrderBy('spell.slug', 'ASC');
 
-    if (fields === 'summary') {
+    if (filters.fields === 'summary') {
       qb.select([
         'spell.slug',
         'spell.name',
@@ -51,39 +66,58 @@ export class FindSpellsQuery {
         'spell.schoolSlug',
         'spell.schoolName',
         'spell.ritual',
+        'spell.concentration',
+        'spell.castingTime',
+        'spell.range',
+        'spell.levelLabel',
+        'spell.editionSlug',
+        'spell.requiresAttackRoll',
+        'spell.saveAbilitySlug',
       ]);
     }
 
-    applyIlikeSearch(qb, [
-      'spell.name',
-      'spell.slug',
-      'spell.schoolName',
-      'spell.levelLabel',
-    ], q);
+    applyIlikeSearch(
+      qb,
+      ['spell.name', 'spell.slug', 'spell.schoolName', 'spell.levelLabel'],
+      filters.q,
+    );
 
-    if (level !== undefined && level !== null && !Number.isNaN(level)) {
-      qb.andWhere('spell.level = :level', { level });
+    if (
+      filters.level !== undefined &&
+      filters.level !== null &&
+      !Number.isNaN(filters.level)
+    ) {
+      qb.andWhere('spell.level = :level', { level: filters.level });
     }
 
-    const schoolSlug = school?.trim();
+    const schoolSlug = filters.school?.trim();
     if (schoolSlug) {
       qb.andWhere('spell.schoolSlug = :schoolSlug', { schoolSlug });
     }
-    if (sangromancy) {
+    if (filters.sangromancy) {
       qb.andWhere('spell.description LIKE :sangromancyTag', {
         sangromancyTag: sangromancyDescriptionSqlPattern(),
       });
     }
-    applyEditionSlugFilter(qb, 'spell.editionSlug', editionSlugs);
+
+    applySpellListExtraFilters(qb, {
+      ritual: filters.ritual,
+      concentration: filters.concentration,
+      roll: filters.roll,
+      castingTime: filters.castingTime,
+      saveAbility: filters.saveAbility,
+      rangeKind: filters.rangeKind,
+    });
+    applyEditionSlugFilter(qb, 'spell.editionSlug', filters.editionSlugs);
 
     const { rows, meta } = await paginateQbCursor(qb, {
-      cursor,
-      limit,
+      cursor: filters.cursor,
+      limit: filters.limit ?? 20,
       keys: SPELL_CURSOR_KEYS,
       encodeRow: (row) => ({ level: Number(row.level), slug: row.slug }),
     });
     const data =
-      fields === 'summary'
+      filters.fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))
         : rows.map((row) => this.mapper.toDto(row));
     return { data, meta };

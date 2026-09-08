@@ -14,4 +14,4 @@ CREATE INDEX idx_campaign_invite_code ON rpg.campaign(invite_code);
 
 
 
--- PapÃ©is na mesa: dm (mestre), player (jogador), assistant (auxiliar).
+-- Papéis na mesa: dm (mestre), player (jogador), assistant (auxiliar).

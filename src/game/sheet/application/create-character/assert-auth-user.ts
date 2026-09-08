@@ -4,6 +4,9 @@ import { DataSource, QueryFailedError } from 'typeorm';
 export const AUTH_USER_MISSING_MESSAGE =
   'Sessão inválida: usuário não encontrado. Faça login novamente.';
 
+const AUTH_USER_MISSING_DEV_HINT =
+  ' (dev: JWT e DATABASE_URL em projetos diferentes — use o mesmo Supabase local em SUPABASE_URL e NEXT_PUBLIC_SUPABASE_*)';
+
 export async function assertAuthUserExists(
   dataSource: DataSource,
   userId: string,
@@ -14,7 +17,11 @@ export async function assertAuthUserExists(
       [userId],
     );
     if (!Array.isArray(rows) || rows.length === 0) {
-      throw new UnauthorizedException(AUTH_USER_MISSING_MESSAGE);
+      const message =
+        process.env.NODE_ENV === 'development'
+          ? `${AUTH_USER_MISSING_MESSAGE}${AUTH_USER_MISSING_DEV_HINT}`
+          : AUTH_USER_MISSING_MESSAGE;
+      throw new UnauthorizedException(message);
     }
   } catch (error) {
     if (error instanceof UnauthorizedException) throw error;

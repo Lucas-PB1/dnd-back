@@ -86,6 +86,7 @@ export async function resolveGrantedFreeCastBudget(
   const economy = resolveGrantedSpellCastEconomy({
     spellSlug,
     source: annotated.source,
+    subclassSlug: character.subclassSlug,
     featOptions: sheet.featOptions,
     featFixedSpells,
     speciesSlug: character.speciesSlug ?? undefined,

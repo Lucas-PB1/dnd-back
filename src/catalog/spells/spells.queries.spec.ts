@@ -75,7 +75,7 @@ describe('Spells queries', () => {
 
   it('findAll returns paginated data', async () => {
     repo.createQueryBuilder.mockReturnValue(asDep(mockQb([sample], 1)));
-    const result = await findSpells.execute(undefined, 20);
+    const result = await findSpells.execute({ limit: 20 });
     expect(result.data[0].slug).toBe('alarme');
     expect(result.meta.hasMore).toBe(false);
     expect(result.meta.nextCursor).toBeNull();
@@ -85,30 +85,32 @@ describe('Spells queries', () => {
   it('findAll with fields=summary omits description', async () => {
     const qb = mockQb([sample], 1);
     repo.createQueryBuilder.mockReturnValue(asDep(qb));
-    const result = await findSpells.execute(
-      undefined,
-      20,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      'summary',
-    );
+    const result = await findSpells.execute({
+      limit: 20,
+      fields: 'summary',
+    });
     expect(qb.select).toHaveBeenCalled();
     expect(result.data[0]).toEqual({
       slug: 'alarme',
       name: 'Alarme',
       level: 1,
+      levelLabel: '1º Círculo',
       schoolSlug: 'abjuracao',
       schoolName: 'Abjuração',
+      castingTime: '1 minuto ou Ritual',
+      range: '9 metros',
       ritual: true,
+      concentration: false,
+      editionSlug: 'phb-2024-pt',
+      saveAbilitySlug: null,
+      requiresAttackRoll: false,
     });
   });
 
   it('findAll applies search filter', async () => {
     const qb = mockQb([sample], 1);
     repo.createQueryBuilder.mockReturnValue(asDep(qb));
-    await findSpells.execute(undefined, 20, 'alarme');
+    await findSpells.execute({ limit: 20, q: 'alarme' });
     expect(qb.andWhere).toHaveBeenCalled();
   });
 

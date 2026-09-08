@@ -33,11 +33,13 @@ export async function buildGrantedSpellCastOptions(
 ): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
   const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
   const featSlugs = sheet.characterFeats.map((f) => f.featSlug);
-  const { featFixedSpells } =
+  const { featFixedSpells, subclassGrantedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: character.speciesSlug ? [character.speciesSlug] : [],
       featSlugs,
       classSlug: character.classSlug,
+      subclassSlug: character.subclassSlug,
+      subclassOptions: undefined,
     });
   const featEffects = effectCatalog
     ? await effectCatalog.load({
@@ -67,56 +69,67 @@ export async function buildGrantedSpellCastOptions(
         speciesEffects,
       )
     : new Set<string>();
+  const subclassSpellSlugs = new Set(
+    subclassGrantedSpells.map((row) => row.spellSlug),
+  );
   const annotated = annotateCharacterSpellSources(sheet.characterSpells, {
     featGrantedSlugs,
     speciesGrantedSlugs,
+    subclassSpellSlugs,
   });
 
   const proficiencyBonus = proficiencyBonusForLevel(character.level);
-  const options: GrantedSpellCastOption[] = annotated
-    .filter((spell) => spell.source === 'feat' || spell.source === 'species')
-    .map((spell) => {
-      const castEconomy = resolveGrantedSpellCastEconomy({
-        spellSlug: spell.spellSlug,
-        source: spell.source,
-        featOptions: sheet.featOptions,
-        featFixedSpells,
-        speciesSlug: character.speciesSlug ?? undefined,
-        speciesChoices: sheet.speciesChoices,
-        featEffects,
-        speciesEffects,
-      });
-      const feat =
-        spell.source === 'feat'
-          ? resolveFeatSlugForGrantedSpell(
-              spell.spellSlug,
-              sheet.featOptions,
-              featFixedSpells,
-            )
-          : null;
-      const optionKey =
-        sheet.featOptions.find((o) => o.valueId === spell.spellSlug)
-          ?.optionKey ?? null;
-      const maxUses = freeCastMaxUses({
-        economy: castEconomy,
-        spellSlug: spell.spellSlug,
-        featSlug: feat?.featSlug,
-        optionKey,
-        proficiencyBonus,
-        featEffects,
-        speciesEffects,
-      });
-      return {
-        spellSlug: spell.spellSlug,
-        castEconomy,
-        freeCastsRemaining: freeCastsRemaining(
-          castEconomy,
-          spell.spellSlug,
-          grantedSpellUses,
-          maxUses,
-        ),
-      };
+  const options: GrantedSpellCastOption[] = [];
+  for (const spell of annotated) {
+    const castEconomy = resolveGrantedSpellCastEconomy({
+      spellSlug: spell.spellSlug,
+      source: spell.source,
+      subclassSlug: character.subclassSlug,
+      featOptions: sheet.featOptions,
+      featFixedSpells,
+      speciesSlug: character.speciesSlug ?? undefined,
+      speciesChoices: sheet.speciesChoices,
+      featEffects,
+      speciesEffects,
     });
+    const include =
+      spell.source === 'feat' ||
+      spell.source === 'species' ||
+      castEconomy === 'at_will' ||
+      castEconomy === 'once_per_long_rest';
+    if (!include) continue;
+
+    const feat =
+      spell.source === 'feat'
+        ? resolveFeatSlugForGrantedSpell(
+            spell.spellSlug,
+            sheet.featOptions,
+            featFixedSpells,
+          )
+        : null;
+    const optionKey =
+      sheet.featOptions.find((o) => o.valueId === spell.spellSlug)
+        ?.optionKey ?? null;
+    const maxUses = freeCastMaxUses({
+      economy: castEconomy,
+      spellSlug: spell.spellSlug,
+      featSlug: feat?.featSlug,
+      optionKey,
+      proficiencyBonus,
+      featEffects,
+      speciesEffects,
+    });
+    options.push({
+      spellSlug: spell.spellSlug,
+      castEconomy,
+      freeCastsRemaining: freeCastsRemaining(
+        castEconomy,
+        spell.spellSlug,
+        grantedSpellUses,
+        maxUses,
+      ),
+    });
+  }
 
   if (!isWarlockClass(character.classSlug)) {
     return options;

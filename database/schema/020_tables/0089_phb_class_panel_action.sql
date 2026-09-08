@@ -16,7 +16,7 @@ CREATE TABLE rpg.phb_class_panel_action (
 CREATE INDEX idx_class_panel_action_class ON rpg.phb_class_panel_action(class_id);
 CREATE INDEX idx_class_panel_action_subclass ON rpg.phb_class_panel_action(subclass_id);
 
--- Economy actions: class XOR species; filtro opcional por escolha de espÃ©cie.
+-- Economy actions: class XOR species; filtro opcional por escolha de espécie.
 
 
 
@@ -75,4 +75,4 @@ CREATE UNIQUE INDEX uq_resource_item
 CREATE INDEX idx_class_economy_action_item
   ON rpg.phb_class_economy_action(item_id);
 
--- Tipos + tabela de InvocaÃ§Ãµes MÃ­sticas (Bruxo PHB 2024)
+-- Tipos + tabela de Invocações Místicas (Bruxo PHB 2024)

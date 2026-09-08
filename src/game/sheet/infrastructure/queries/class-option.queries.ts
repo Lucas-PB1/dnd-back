@@ -70,6 +70,30 @@ export async function loadSubclassOptionKeysAtLevel(
   return rows.map((row) => row.optionKey);
 }
 
+export type SubclassOptionSlotRow = {
+  optionKey: string;
+  label: string;
+  unlockLevel: number;
+};
+
+/** Opções de subclasse que desbloqueiam exatamente neste nível. */
+export async function loadSubclassOptionSlotsNewAtLevel(
+  dataSource: DataSource,
+  subclassId: string,
+  level: number,
+): Promise<SubclassOptionSlotRow[]> {
+  const rows = await dataSource.getRepository(PhbOptionDef).find({
+    where: { scope: 'subclass', ownerId: subclassId, unlockLevel: level },
+    select: ['optionKey', 'label', 'unlockLevel'],
+    order: { sortOrder: 'ASC', optionKey: 'ASC' },
+  });
+  return rows.map((row) => ({
+    optionKey: row.optionKey,
+    label: row.label?.trim() || row.optionKey,
+    unlockLevel: row.unlockLevel ?? level,
+  }));
+}
+
 export async function subclassOptionValueType(
   dataSource: DataSource,
   subclassId: string,

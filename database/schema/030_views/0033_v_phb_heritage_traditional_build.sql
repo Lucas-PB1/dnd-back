@@ -17,4 +17,4 @@ JOIN rpg.phb_heritage h ON h.id = trt.heritage_id
 JOIN rpg.phb_heritage_trait tr ON tr.id = trt.trait_id
 ORDER BY h.slug, trt.sort_order;
 
--- Passivos de combate/ficha ligados a traÃ§os de heranÃ§a
+-- Passivos de combate/ficha ligados a traços de herança

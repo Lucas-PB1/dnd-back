@@ -16,11 +16,11 @@ CREATE INDEX idx_phb_metamagic_sort
 -- Recover 1dN ao Descanso Longo (amanhecer) para pools de cargas de item.
 
 
--- Fase 6: liga economy action â†’ magia do catÃ¡logo (cast de item).
+-- Fase 6: liga economy action → magia do catálogo (cast de item).
 
 
 CREATE INDEX idx_class_economy_action_spell
   ON rpg.phb_class_economy_action(spell_slug)
   WHERE spell_slug IS NOT NULL;
 
--- Tabelas 1d100 de propriedades aleatÃ³rias de Artefato (DMG Treasure).
+-- Tabelas 1d100 de propriedades aleatórias de Artefato (DMG Treasure).

@@ -36,11 +36,11 @@ BEGIN
     );
 EXCEPTION
   WHEN undefined_function THEN
-    -- auth.uid() pode nÃ£o existir em Postgres local sem Supabase
+    -- auth.uid() pode não existir em Postgres local sem Supabase
     NULL;
 END $$;
 
--- Personagem: origem PHB species XOR heranÃ§a GH + picks modulares
+-- Personagem: origem PHB species XOR herança GH + picks modulares
 
 
 

@@ -22,4 +22,4 @@ CREATE UNIQUE INDEX uq_campaign_one_active_encounter
 
 
 
--- Runtime: fichas de mesa alÃ©m do personagem jogador (criatura, montaria, veÃ­culo, companion)
+-- Runtime: fichas de mesa além do personagem jogador (criatura, montaria, veículo, companion)

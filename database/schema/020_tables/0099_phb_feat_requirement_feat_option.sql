@@ -9,4 +9,4 @@ CREATE TABLE rpg.phb_feat_requirement_feat_option (
 CREATE INDEX idx_phb_feat_requirement_feat_option_required
   ON rpg.phb_feat_requirement_feat_option (required_feat_id);
 
--- OpÃ§Ãµes de talento de origem quando o antecedente nÃ£o tem feat_id fixo.
+-- Opções de talento de origem quando o antecedente não tem feat_id fixo.

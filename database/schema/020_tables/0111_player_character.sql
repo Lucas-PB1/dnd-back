@@ -41,4 +41,4 @@ CREATE INDEX idx_player_character_user_id ON rpg.player_character(user_id);
 
 
 
--- Invariante: subclass_slug pertence Ã  class_slug (CHECK com subquery nÃ£o Ã© permitido)
+-- Invariante: subclass_slug pertence à class_slug (CHECK com subquery não é permitido)

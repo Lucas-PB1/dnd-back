@@ -4,6 +4,7 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import * as levelUpCatalog from '../infrastructure/queries/level-up-catalog.queries';
+import * as classOptionQueries from '@game/sheet/infrastructure/queries/class-option.queries';
 import { asDep } from '@common/testing/as-dep';
 
 type Repo = { findOne: jest.Mock; find: jest.Mock };
@@ -75,6 +76,12 @@ describe('LevelUpService', () => {
     jest
       .spyOn(levelUpCatalog, 'loadMaxSpellLevelForCharacter')
       .mockResolvedValue(1);
+    jest
+      .spyOn(levelUpCatalog, 'loadClassFeaturesAtLevel')
+      .mockResolvedValue([]);
+    jest
+      .spyOn(levelUpCatalog, 'loadSubclassFeaturesAtLevel')
+      .mockResolvedValue([]);
 
     service = new LevelUpService(
       asDep(dataSource),
@@ -110,6 +117,7 @@ describe('LevelUpService', () => {
       { spellSlug: 'magic-missile', spellName: 'Míssil Mágico', spellLevel: 1 },
       { spellSlug: 'fireball', spellName: 'Bola de Fogo', spellLevel: 3 },
     ]);
+    subclassSpellsRepo.find.mockResolvedValue([]);
 
     const preview = await service.buildPreview(pc);
 
@@ -127,6 +135,71 @@ describe('LevelUpService', () => {
     expect(preview.newSpellOptions.map((s) => s.spellSlug)).toEqual([
       'fire-bolt',
       'magic-missile',
+    ]);
+    expect(preview.newAlwaysPreparedSpells).toEqual([]);
+    expect(preview.newSubclassOptionSlots).toEqual([]);
+    expect(preview.newFeatures).toEqual([]);
+  });
+
+  it('does not treat subclass always-prepared as choosable spells', async () => {
+    const pc = character({
+      level: 12,
+      classSlug: 'rogue',
+      subclassSlug: 'blade-of-radiance',
+    });
+    sheetRepository.load.mockResolvedValue(asDep({ characterFeats: [] }));
+    domain.calculateHitPointsMaxForCharacter
+      .mockResolvedValueOnce(123)
+      .mockResolvedValueOnce(133);
+    levelsRepo.findOne
+      .mockResolvedValueOnce({ proficiencyBonus: 4 })
+      .mockResolvedValueOnce({ proficiencyBonus: 5 });
+    jest
+      .spyOn(levelUpCatalog, 'loadMaxSpellLevelForCharacter')
+      .mockResolvedValue(0);
+    jest
+      .spyOn(levelUpCatalog, 'loadSubclassSpellListClassSlug')
+      .mockResolvedValue(null);
+    subclassSpellsRepo.find.mockResolvedValue([
+      {
+        spellSlug: 'heroismo',
+        spellName: 'Heroísmo',
+        unlockLevel: 13,
+      },
+      {
+        spellSlug: 'escudo-da-fe',
+        spellName: 'Escudo da Fé',
+        unlockLevel: 13,
+      },
+    ]);
+    dataSource.getRepository = jest.fn().mockReturnValue({
+      findOne: jest.fn().mockResolvedValue({ id: 'sub1' }),
+    });
+    jest
+      .spyOn(classOptionQueries, 'loadSubclassOptionSlotsNewAtLevel')
+      .mockResolvedValue([
+        {
+          optionKey: 'holyRevelationCantrip1',
+          label: 'Truque 1',
+          unlockLevel: 13,
+        },
+        {
+          optionKey: 'holyRevelationCantrip2',
+          label: 'Truque 2',
+          unlockLevel: 13,
+        },
+      ]);
+
+    const preview = await service.buildPreview(pc);
+
+    expect(preview.newSpellOptions).toEqual([]);
+    expect(preview.newAlwaysPreparedSpells.map((s) => s.spellSlug)).toEqual([
+      'heroismo',
+      'escudo-da-fe',
+    ]);
+    expect(preview.newSubclassOptionSlots.map((s) => s.optionKey)).toEqual([
+      'holyRevelationCantrip1',
+      'holyRevelationCantrip2',
     ]);
   });
 });

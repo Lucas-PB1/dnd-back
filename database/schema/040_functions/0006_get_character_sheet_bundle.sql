@@ -217,4 +217,4 @@ AS $$
 $$;
 
 COMMENT ON FUNCTION rpg.get_character_sheet_bundle(uuid, text) IS
-  'Read model da ficha: filhos + PB + boosts + origem PHB/heranÃ§a GH + transformaÃ§Ã£o Cap. 6.';
+  'Read model da ficha: filhos + PB + boosts + origem PHB/herança GH + transformação Cap. 6.';

@@ -10,4 +10,4 @@ CREATE INDEX idx_phb_feat_requirement_skill_skill
 CREATE INDEX idx_phb_feat_requirement_species_species
   ON rpg.phb_feat_requirement_species (species_id);
 
--- ProficiÃªncia de arma exigida + opÃ§Ã£o de talento prÃ©-requisito (ex.: Adepto Elemental / tipo).
+-- Proficiência de arma exigida + opção de talento pré-requisito (ex.: Adepto Elemental / tipo).

@@ -154,7 +154,7 @@ AS $$
 $$;
 
 COMMENT ON FUNCTION rpg.get_character_combat_bundle(uuid, text, text) IS
-  'Read model de combate da ficha: inventÃ¡rio + itens + armadura + defesa sem armadura + active slugs.';
+  'Read model de combate da ficha: inventário + itens + armadura + defesa sem armadura + active slugs.';
 
 -- Estende get_character_sheet_bundle: PB + class ability boosts + species.size
 

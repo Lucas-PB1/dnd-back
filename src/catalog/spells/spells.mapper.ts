@@ -10,9 +10,16 @@ export class SpellsMapper {
       slug: row.slug,
       name: row.name,
       level: row.level,
+      levelLabel: row.levelLabel ?? null,
       schoolSlug: row.schoolSlug,
       schoolName: row.schoolName,
+      castingTime: row.castingTime ?? null,
+      range: row.range ?? null,
       ritual: Boolean(row.ritual),
+      concentration: Boolean(row.concentration),
+      editionSlug: row.editionSlug ?? null,
+      saveAbilitySlug: row.saveAbilitySlug ?? null,
+      requiresAttackRoll: Boolean(row.requiresAttackRoll),
     };
   }
 

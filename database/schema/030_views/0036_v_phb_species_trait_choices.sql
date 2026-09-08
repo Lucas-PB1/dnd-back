@@ -281,7 +281,7 @@ FROM rpg.phb_species_trait t
 JOIN rpg.phb_species sp ON sp.id = t.species_id
 JOIN (
   VALUES
-    ('medium', 'MÃ©dio'),
+    ('medium', 'Médio'),
     ('small', 'Pequeno')
 ) AS sz(slug, name)
   ON t.choice_kind IN (
@@ -362,7 +362,7 @@ JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.ow
   AND t.choice_kind = 'trollkin_ancestry'::rpg.species_choice_kind
 
 UNION ALL
--- Feathren ancestria aviÃ¡ria (option_key = 'feathrenAvianAncestryId')
+-- Feathren ancestria aviária (option_key = 'feathrenAvianAncestryId')
 SELECT
   sp.slug,
   t.name,
@@ -397,7 +397,7 @@ JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.ow
   AND t.choice_kind = 'feathren_feline_ancestry'::rpg.species_choice_kind
 LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
 UNION ALL
--- Variante cultural anÃ£ (option_key = 'dwarfCultureId')
+-- Variante cultural anã (option_key = 'dwarfCultureId')
 SELECT
   sp.slug,
   t.name,
@@ -428,10 +428,10 @@ SELECT
   NULL::text AS edition_slug
 FROM rpg.v_phb_high_elf_cantrip_options o
 UNION ALL
--- Truque de Druida Andari (DÃ¡diva da Natureza; exigido se bearfolk_lineage = andari)
+-- Truque de Druida Andari (Dádiva da Natureza; exigido se bearfolk_lineage = andari)
 SELECT
   'bearfolk'::text AS species_slug,
-  'DÃ¡diva da Natureza'::text AS trait_name,
+  'Dádiva da Natureza'::text AS trait_name,
   'andari_druid_cantrip'::rpg.species_choice_kind AS choice_kind,
   o.choice_slug,
   o.choice_name,
@@ -444,4 +444,4 @@ FROM rpg.v_phb_andari_druid_cantrip_options o;
 
 
 
--- Escolhas modulares de traÃ§o por heranÃ§a GH
+-- Escolhas modulares de traço por herança GH

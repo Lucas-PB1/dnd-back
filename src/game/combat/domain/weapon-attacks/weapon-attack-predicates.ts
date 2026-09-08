@@ -12,6 +12,9 @@ const MARTIAL_PROFICIENCY = "armas-marciais";
 const ADVANCED_PROFICIENCY = "armas-avancadas";
 const MARTIAL_LIGHT_PROFICIENCY = "armas-marciais-leves";
 const MARTIAL_RANGED_PROFICIENCY = "armas-marciais-a-distancia";
+/** PHB 2024 Ladino: marciais com Acuidade ou Leve. */
+const MARTIAL_FINESSE_OR_LIGHT_PROFICIENCY =
+  "armas-marciais-acuidade-ou-leves";
 
 const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
   adagas: "dagger",
@@ -79,6 +82,13 @@ export function isProficient(
       slug === MARTIAL_LIGHT_PROFICIENCY &&
       piece.category === "martial" &&
       isLight(piece)
+    ) {
+      return true;
+    }
+    if (
+      slug === MARTIAL_FINESSE_OR_LIGHT_PROFICIENCY &&
+      piece.category === "martial" &&
+      (hasProperty(piece, "finesse") || isLight(piece))
     ) {
       return true;
     }

@@ -9,7 +9,7 @@ CREATE TABLE rpg.phb_vehicle_template_trait (
 CREATE INDEX idx_phb_vehicle_template_trait_slug
   ON rpg.phb_vehicle_template_trait(template_slug);
 
--- IlustraÃ§Ãµes de catÃ¡logo (montarias, criaturas, veÃ­culos, itens da loja)
+-- Ilustrações de catálogo (montarias, criaturas, veículos, itens da loja)
 
 
 
@@ -18,24 +18,24 @@ CREATE INDEX idx_phb_vehicle_template_trait_slug
 
 
 COMMENT ON COLUMN rpg.phb_creature_template.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/mounts/camelo.png no front).';
+  'Caminho público da ilustração (ex. /catalog/mounts/camelo.png no front).';
 
 COMMENT ON COLUMN rpg.phb_vehicle_template.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o no front.';
+  'Caminho público da ilustração no front.';
 
 COMMENT ON COLUMN rpg.phb_item.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o no front (loja/compÃªndio).';
+  'Caminho público da ilustração no front (loja/compêndio).';
 
--- IlustraÃ§Ãµes de espÃ©cies e subclasses no compÃªndio
+-- Ilustrações de espécies e subclasses no compêndio
 
 
 
 
 
 COMMENT ON COLUMN rpg.phb_species.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/species/feathren.png).';
+  'Caminho público da ilustração (ex. /catalog/species/feathren.png).';
 
 COMMENT ON COLUMN rpg.phb_subclass.image_url IS
-  'Caminho pÃºblico da ilustraÃ§Ã£o (ex. /catalog/subclasses/path-of-the-glacier.png).';
+  'Caminho público da ilustração (ex. /catalog/subclasses/path-of-the-glacier.png).';
 
--- Grim Hollow â€” build tradicional sugerido por heranÃ§a (preset 8 traÃ§os)
+-- Grim Hollow — build tradicional sugerido por herança (preset 8 traços)

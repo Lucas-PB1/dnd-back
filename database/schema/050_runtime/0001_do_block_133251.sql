@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character.user_id FK â€” auth schema not present';
+    RAISE NOTICE 'Skipping player_character.user_id FK — auth schema not present';
     RETURN;
   END IF;
   ALTER TABLE rpg.player_character
@@ -9,4 +9,4 @@ BEGIN
     FOREIGN KEY (user_id) REFERENCES auth.users(id);
 END $$;
 
--- PerÃ­cias escolhidas da pool da classe (PHB skill choice)
+-- Perícias escolhidas da pool da classe (PHB skill choice)

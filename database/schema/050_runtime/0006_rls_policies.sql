@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player_character_state RLS â€” auth schema not present';
+    RAISE NOTICE 'Skipping player_character_state RLS — auth schema not present';
     RETURN;
   END IF;
 

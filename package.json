@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npx nest build && npx tsc-alias -p tsconfig.json",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "node scripts/clean-dist-shadows.mjs && nest start --watch",
     "start:prod": "node dist/main",
     "vercel:dev": "vercel dev --listen 3000",
     "vercel:smoke": "node scripts/vercel-local-smoke.mjs",

@@ -177,6 +177,30 @@ describe('resolveGrantedSpellCastEconomy', () => {
     ).toBe('slot_only');
   });
 
+  it('marks Blade of Radiance holy revelations as at_will', () => {
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'heroismo',
+        source: 'subclass',
+        subclassSlug: 'blade-of-radiance',
+      }),
+    ).toBe('at_will');
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'escudo-da-fe',
+        source: 'class',
+        subclassSlug: 'blade-of-radiance',
+      }),
+    ).toBe('at_will');
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'heroismo',
+        source: 'subclass',
+        subclassSlug: 'arcane-trickster',
+      }),
+    ).toBe('slot_only');
+  });
+
   it('reads feat cast economy from phb_effect', () => {
     expect(
       resolveGrantedSpellCastEconomy({

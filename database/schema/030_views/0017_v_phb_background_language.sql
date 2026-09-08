@@ -9,5 +9,5 @@ JOIN rpg.phb_background_language bl ON bl.background_id = b.id
 JOIN rpg.phb_language l ON l.id = bl.language_id
 ORDER BY b.slug, l.slug;
 
--- View unificada: magias concedidas por espÃ©cie (fixas + linhagem/legado)
--- Magias fixas de talento (alÃ©m de featOptions)
+-- View unificada: magias concedidas por espécie (fixas + linhagem/legado)
+-- Magias fixas de talento (além de featOptions)

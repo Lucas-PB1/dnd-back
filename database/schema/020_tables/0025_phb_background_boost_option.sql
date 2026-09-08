@@ -4,4 +4,4 @@ CREATE TABLE rpg.phb_background_boost_option (
   label TEXT NOT NULL
 );
 
--- Character Threads (Northlands) â€” catÃ¡logo (antes de resource_definition para FK)
+-- Character Threads (Northlands) — catálogo (antes de resource_definition para FK)

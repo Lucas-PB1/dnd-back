@@ -9,6 +9,7 @@ import {
   resolveFeatFreeCastMaxUsesFromEffects,
   resolveSpeciesSpellCastEconomyFromEffects,
 } from '@game/effects';
+import { isBladeHolyRevelationAtWillSpell } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
 import type {
   CharacterSpellSource,
   FeatGrantedSpellRow,
@@ -53,10 +54,12 @@ function featSlugForSpell(
 /**
  * Economia de conjuração para magias concedidas (domain rules PHB 2024).
  * Espécie/feat: só `phb_effect` cast_economy (incl. truques de escolha tipados).
+ * Subclasse: slot_only, exceto Revelações Santas (Lâmina do Esplendor) → at_will.
  */
 export function resolveGrantedSpellCastEconomy(input: {
   spellSlug: string;
   source?: CharacterSpellSource;
+  subclassSlug?: string | null;
   featOptions?: readonly FeatOptionDto[];
   featFixedSpells?: readonly FeatGrantedSpellRow[];
   speciesSlug?: string;
@@ -65,6 +68,12 @@ export function resolveGrantedSpellCastEconomy(input: {
   speciesEffects?: readonly CatalogEffect[];
 }): CastEconomy {
   const source = input.source ?? 'class';
+
+  // Revelações Santas: à vontade mesmo se a fonte vier anotada como class
+  // (ex.: cast path sem subclassSpellSlugs).
+  if (isBladeHolyRevelationAtWillSpell(input.subclassSlug, input.spellSlug)) {
+    return 'at_will';
+  }
 
   if (source === 'class' || source === 'subclass') {
     return 'slot_only';

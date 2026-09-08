@@ -8,4 +8,4 @@ CREATE TABLE rpg.phb_feat_requirement_feat (
 CREATE INDEX idx_phb_feat_requirement_feat_required
   ON rpg.phb_feat_requirement_feat (required_feat_id);
 
--- PrÃ©-requisitos adicionais de talentos: perÃ­cia, espÃ©cie (OR) e Maestria em Arma.
+-- Pré-requisitos adicionais de talentos: perícia, espécie (OR) e Maestria em Arma.

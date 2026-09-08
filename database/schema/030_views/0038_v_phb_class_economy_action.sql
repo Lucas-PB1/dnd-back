@@ -31,4 +31,4 @@ LEFT JOIN rpg.phb_feat f ON f.id = a.feat_id
 LEFT JOIN rpg.phb_item i ON i.id = a.item_id
 LEFT JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id;
 
--- Materialized views (catÃ¡logo estÃ¡tico â€” refresh pÃ³s-seed)
+-- Materialized views (catálogo estático — refresh pós-seed)

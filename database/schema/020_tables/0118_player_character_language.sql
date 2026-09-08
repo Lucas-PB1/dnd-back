@@ -19,4 +19,4 @@ CREATE INDEX idx_player_character_equipment_character
 CREATE INDEX idx_player_character_language_character
   ON rpg.player_character_language(character_id);
 
--- RLS para tabelas de jogador (Supabase â€” requer schema auth)
+-- RLS para tabelas de jogador (Supabase — requer schema auth)

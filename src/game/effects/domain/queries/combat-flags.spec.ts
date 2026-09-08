@@ -1,6 +1,7 @@
 import type { CatalogEffect } from '../catalog-effect';
 import {
   acBonusFromEffects,
+  acBonusSourcesFromEffects,
   grantedWeaponPropertySlugsFromEffects,
   hasInspirationRefundOnFail,
   overrideWeaponRangeFtFromEffects,
@@ -63,6 +64,16 @@ describe('queries/combat-flags', () => {
     expect(
       acBonusFromEffects(effects, ['iron-hero', 'defensive-duelist'], 3),
     ).toBe(5);
+    expect(
+      acBonusSourcesFromEffects(
+        effects,
+        ['iron-hero', 'defensive-duelist'],
+        3,
+      ),
+    ).toEqual([
+      { featSlug: 'defensive-duelist', bonus: 3 },
+      { featSlug: 'iron-hero', bonus: 2 },
+    ]);
   });
 
   it('reads grant_weapon_property from weapon satellite', () => {

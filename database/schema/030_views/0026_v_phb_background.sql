@@ -62,6 +62,6 @@ GROUP BY
 
 -- Magias concedidas por ancestria Giantkin (Nuvem / Tempestade)
 
--- Views: bundle de template de criatura / veÃ­culo (catÃ¡logo read-only)
+-- Views: bundle de template de criatura / veículo (catálogo read-only)
 
--- Bundle de catÃ¡logo: thread + goals + milestones + benefits
+-- Bundle de catálogo: thread + goals + milestones + benefits

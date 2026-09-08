@@ -14,6 +14,26 @@ export const BLADE_HOLY_CANTRIP_KEYS = new Set([
   'holyRevelationCantrip2',
 ]);
 
+/**
+ * Magias always-prepared de Revelações Santas (Lâmina do Esplendor):
+ * à vontade, só em si, sem espaço (texto da feature).
+ */
+export const BLADE_HOLY_REVELATION_SPELL_SLUGS = new Set([
+  'heroismo',
+  'protecao-contra-o-bem-e-o-mal',
+  'escudo-da-fe',
+]);
+
+export function isBladeHolyRevelationAtWillSpell(
+  subclassSlug: string | null | undefined,
+  spellSlug: string,
+): boolean {
+  return (
+    subclassSlug === 'blade-of-radiance' &&
+    BLADE_HOLY_REVELATION_SPELL_SLUGS.has(spellSlug)
+  );
+}
+
 /** Chaves de magia always_prepared vindas de picks de subclasse. */
 export const SUBCLASS_GRANTED_SPELL_OPTION_KEYS = new Set([
   ...LORE_MAGICAL_DISCOVERY_KEYS,

@@ -7,4 +7,4 @@ CREATE TABLE rpg.phb_background_tool_option (
 CREATE INDEX idx_phb_background_tool_option_item
   ON rpg.phb_background_tool_option(item_id);
 
--- Magias concedidas por talento ou espÃ©cie (unificado; linhagens via option_value + traits)
+-- Magias concedidas por talento ou espécie (unificado; linhagens via option_value + traits)

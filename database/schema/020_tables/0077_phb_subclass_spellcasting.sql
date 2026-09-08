@@ -12,4 +12,4 @@ CREATE TABLE rpg.phb_subclass_spellcasting (
 CREATE INDEX idx_subclass_spellcasting_list
   ON rpg.phb_subclass_spellcasting(spell_list_class_id);
 
--- Cotas de truques / magias preparadas por nÃ­vel (subclasse conjuradora)
+-- Cotas de truques / magias preparadas por nível (subclasse conjuradora)

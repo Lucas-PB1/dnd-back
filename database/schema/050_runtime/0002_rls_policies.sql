@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
-    RAISE NOTICE 'Skipping player RLS â€” auth schema not present (local Postgres)';
+    RAISE NOTICE 'Skipping player RLS — auth schema not present (local Postgres)';
     RETURN;
   END IF;
 
@@ -61,4 +61,4 @@ BEGIN
     );
 END $$;
 
--- InventÃ¡rio do personagem (mochila + equipado)
+-- Inventário do personagem (mochila + equipado)

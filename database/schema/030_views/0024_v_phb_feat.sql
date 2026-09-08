@@ -88,5 +88,5 @@ LEFT JOIN LATERAL (
   WHERE benefit.feat_id = feat.id
 ) benefits ON TRUE;
 
--- OpÃ§Ãµes de truque para Andari (lista de cantrips de Druida).
--- Kind opcional na validaÃ§Ã£o padrÃ£o; exigido quando bearfolk_lineage = andari.
+-- Opções de truque para Andari (lista de cantrips de Druida).
+-- Kind opcional na validação padrão; exigido quando bearfolk_lineage = andari.

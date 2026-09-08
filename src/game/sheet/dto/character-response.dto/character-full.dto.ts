@@ -42,6 +42,19 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
   featAcBonus!: number;
 
   @ApiProperty({
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        featSlug: { type: 'string', example: 'defensive-duelist' },
+        bonus: { type: 'number', example: 6 },
+      },
+    },
+    description: 'Quais talentos compõem featAcBonus (para a UI mostrar o nome)',
+  })
+  featAcBonusSources!: { featSlug: string; bonus: number }[];
+
+  @ApiProperty({
     description: 'Flags de efeitos de talento para UI de roll/cast',
   })
   featEffectFlags!: {

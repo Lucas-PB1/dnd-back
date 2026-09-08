@@ -90,6 +90,32 @@ export const PROFICIENCY_CASES: WeaponAttackCase[] = [
     expect: { proficient: true },
   },
   {
+    label: "grants martial finesse/light from armas-marciais-acuidade-ou-leves",
+    pieces: [shortsword("main_hand")],
+    ctx: {
+      ...PB2,
+      weaponProficiencySlugs: [
+        "armas-simples",
+        "armas-marciais-acuidade-ou-leves",
+      ],
+    },
+    scores: DEX16,
+    pick: { mode: "melee" },
+    expect: { proficient: true },
+  },
+  {
+    label: "denies longsword from armas-marciais-acuidade-ou-leves",
+    pieces: [longsword()],
+    ctx: {
+      ...PB2,
+      weaponProficiencySlugs: [
+        "armas-simples",
+        "armas-marciais-acuidade-ou-leves",
+      ],
+    },
+    expect: { proficient: false },
+  },
+  {
     label: "grants advanced proficiency from feat",
     pieces: [catchpole()],
     ctx: {
