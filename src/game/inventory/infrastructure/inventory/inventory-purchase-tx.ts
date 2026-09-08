@@ -18,7 +18,7 @@ import { addInventoryItemRow } from './inventory-coin-tx';
 import { inventoryItemToDto } from './inventory-item-mappers';
 import { findInventoryItemOrFail } from './inventory-item-ops';
 
-/** Compra multi-linha: um débito + vários upserts na mesma TX. */
+/** Compra multi-linha: débito (se houver) + upserts atômicos. */
 export async function purchaseInventoryLines(input: {
   dataSource: DataSource;
   catalogItems: Repository<PhbItem>;
@@ -27,10 +27,10 @@ export async function purchaseInventoryLines(input: {
   debit: CoinPurse | null;
 }): Promise<InventoryItemResponseDto[]> {
   const { dataSource, catalogItems, characterId, lines, debit } = input;
-  return dataSource.transaction(async (manager) => {
-    const characters = manager.getRepository(PlayerCharacter);
-    const items = manager.getRepository(PlayerCharacterItem);
-    if (debit) {
+
+  if (debit) {
+    await dataSource.transaction(async (manager) => {
+      const characters = manager.getRepository(PlayerCharacter);
       const character = await characters.findOne({
         where: { id: characterId },
         lock: { mode: 'pessimistic_write' },
@@ -44,21 +44,25 @@ export async function purchaseInventoryLines(input: {
       );
       applyCoinPurseToColumns(character, next);
       await characters.save(character);
-    }
-    const results: InventoryItemResponseDto[] = [];
-    for (const line of lines) {
-      results.push(
-        await addInventoryItemRow(
-          items,
-          catalogItems,
-          characterId,
-          line.itemSlug,
-          line.quantity,
-        ),
-      );
-    }
-    return results;
-  });
+    });
+  }
+
+  // Upserts fora da TX de moedas: cada INSERT…ON CONFLICT é atômico e
+  // não depende de hold de conexão (PgBouncer transaction pooler).
+  const items = dataSource.getRepository(PlayerCharacterItem);
+  const results: InventoryItemResponseDto[] = [];
+  for (const line of lines) {
+    results.push(
+      await addInventoryItemRow(
+        items,
+        catalogItems,
+        characterId,
+        line.itemSlug,
+        line.quantity,
+      ),
+    );
+  }
+  return results;
 }
 
 /** Ajusta qty com débito (↑) ou crédito (↓) atômico. */

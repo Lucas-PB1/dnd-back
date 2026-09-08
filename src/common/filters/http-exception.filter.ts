@@ -53,6 +53,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
       this.logger.warn(
         exception instanceof Error ? exception.message : String(exception),
       );
+    } else if (isUniqueViolation(exception)) {
+      statusCode = HttpStatus.CONFLICT;
+      message = 'Operação conflitante — tente de novo.';
+      error = 'Conflict';
+      this.logger.warn(
+        exception instanceof Error ? exception.message : String(exception),
+      );
     } else if (exception instanceof Error) {
       const isProd = process.env.NODE_ENV === 'production';
       this.logger.error(
@@ -76,4 +83,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
 function isPlayerCharacterUserFkError(exception: unknown): boolean {
   if (!(exception instanceof Error)) return false;
   return exception.message.includes('player_character_user_id_fkey');
+}
+
+function isUniqueViolation(exception: unknown): boolean {
+  if (!exception || typeof exception !== 'object') return false;
+  const code =
+    'code' in exception && typeof exception.code === 'string'
+      ? exception.code
+      : null;
+  if (code === '23505') return true;
+  return (
+    exception instanceof Error &&
+    /duplicate key value violates unique constraint/i.test(exception.message)
+  );
 }

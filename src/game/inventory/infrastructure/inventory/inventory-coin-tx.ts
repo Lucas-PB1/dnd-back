@@ -85,24 +85,41 @@ export async function addInventoryItemRow(
     );
   }
 
-  // Upsert atômico: evita 500 por PK duplicada em POSTs concorrentes.
-  await items.manager.query(
+  // Upsert em um único statement (compatível com PgBouncer transaction mode).
+  // Evita TX TypeORM + findOne em outra conexão do pool.
+  const returned = (await items.query(
     `INSERT INTO rpg.player_character_item (
        character_id, item_slug, quantity, location
      ) VALUES ($1, $2, $3, 'backpack')
      ON CONFLICT (character_id, item_slug) DO UPDATE
        SET quantity = rpg.player_character_item.quantity + EXCLUDED.quantity
-     WHERE rpg.player_character_item.location <> 'equipped'`,
+     WHERE rpg.player_character_item.location <> 'equipped'
+     RETURNING
+       character_id AS "characterId",
+       item_slug AS "itemSlug",
+       quantity,
+       location,
+       equipment_slot AS "equipmentSlot",
+       attuned,
+       attached_charm_slug AS "attachedCharmSlug",
+       is_pact_weapon AS "isPactWeapon",
+       attached_coverage_slug AS "attachedCoverageSlug",
+       attached_coverage_bonus AS "attachedCoverageBonus",
+       attached_coverage_attuned AS "attachedCoverageAttuned",
+       attached_coverage_spell_slug AS "attachedCoverageSpellSlug",
+       bound_spell_slug AS "boundSpellSlug",
+       instance_properties AS "instanceProperties",
+       contained_in_item_slug AS "containedInItemSlug"`,
     [characterId, itemSlug, delta],
-  );
+  )) as PlayerCharacterItem[];
 
-  const row = await items.findOne({ where: { characterId, itemSlug } });
-  if (!row || row.location === 'equipped') {
+  if (!returned?.length) {
     throw new BadRequestException(
       'Item is equipped; unequip before adding more quantity',
     );
   }
-  return inventoryItemToDto(catalogItems, row);
+
+  return inventoryItemToDto(catalogItems, returned[0]);
 }
 
 export async function addInventoryItemWithDebit(input: {
@@ -115,9 +132,8 @@ export async function addInventoryItemWithDebit(input: {
 }): Promise<InventoryItemResponseDto> {
   const { dataSource, catalogItems, characterId, itemSlug, delta, debit } =
     input;
-  return dataSource.transaction(async (manager) => {
+  await dataSource.transaction(async (manager) => {
     const characters = manager.getRepository(PlayerCharacter);
-    const items = manager.getRepository(PlayerCharacterItem);
     const character = await characters.findOne({
       where: { id: characterId },
       lock: { mode: 'pessimistic_write' },
@@ -128,14 +144,14 @@ export async function addInventoryItemWithDebit(input: {
     const next = debitCoinsWithExchange(coinPurseFromColumns(character), debit);
     applyCoinPurseToColumns(character, next);
     await characters.save(character);
-    return addInventoryItemRow(
-      items,
-      catalogItems,
-      characterId,
-      itemSlug,
-      delta,
-    );
   });
+  return addInventoryItemRow(
+    dataSource.getRepository(PlayerCharacterItem),
+    catalogItems,
+    characterId,
+    itemSlug,
+    delta,
+  );
 }
 
 export async function removeInventoryItemWithCredit(input: {
