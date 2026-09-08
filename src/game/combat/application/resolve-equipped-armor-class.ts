@@ -19,10 +19,10 @@ export type ArmorClassResolveInput = {
   featEffects?: readonly import('@game/effects').CatalogEffect[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
-  /** Snapshot compartilhado — evita novo `find` no combat slice. */
+  /** Snapshot compartilhado - evita novo find no combat slice. */
   equippedItems?: PlayerCharacterItem[];
   manikinArmorPresetSlug?: string | null;
-  /** Catálogo de armadura já carregado (combat bundle). */
+  /** Catalogo de armadura ja carregado (combat bundle). */
   armorCatalogRows?: Array<{
     itemSlug: string;
     itemName: string;
