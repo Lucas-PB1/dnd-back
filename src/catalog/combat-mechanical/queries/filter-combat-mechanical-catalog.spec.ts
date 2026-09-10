@@ -10,6 +10,9 @@ function sampleCatalog(): CombatMechanicalCatalogResponseDto {
       asDep({ slug: 'poison', subclassSlug: 'thief' }),
       asDep({ slug: 'trip' }),
     ],
+    strikeOptions: [
+      asDep({ slug: 'hunting-strike', subclassSlug: 'blood-hound' }),
+    ],
     tableActions: [
       asDep({ subclassSlug: 'psi-warrior', slug: 'telekinetic' }),
       asDep({ subclassSlug: 'battle-master', slug: 'maneuver' }),

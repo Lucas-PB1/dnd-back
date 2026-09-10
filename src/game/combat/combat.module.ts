@@ -9,6 +9,7 @@ import { PhbGunslingerManeuver } from '@entities/phb-gunslinger-maneuver.entity'
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbPersonaMask } from '@entities/phb-persona-mask.entity';
 import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
+import { PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbClassRef } from '@entities/phb-class-ref.entity';
@@ -22,6 +23,7 @@ import { VPhbUnarmoredDefense } from '@entities/views/v-phb-unarmored-defense.en
 import { ResolveActivePermanentItemEffects } from '../inventory/application/effects/resolve-active-permanent-item-effects';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { EffectsModule } from '../effects/effects.module';
 import { LoadCombatMechanicalCatalog } from './application/load-combat-mechanical-catalog';
 import { ResolveEquippedArmorClass } from './application/resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './application/resolve-equipped-weapon-attacks';
@@ -51,8 +53,10 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       PhbSubclassPrecautionSpell,
       VPhbClassEconomyAction,
       PhbClassPanelAction,
+      PhbOptionValue,
     ]),
     GameSharedModule,
+    EffectsModule,
   ],
   providers: [
     CombatCatalogService,

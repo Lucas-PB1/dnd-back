@@ -11,5 +11,9 @@ CREATE TYPE rpg.effect_trigger AS ENUM (
   'on_rest_short',
   'on_rest_long',
   'on_death_save',
-  'on_critical_hit'
+  'on_critical_hit',
+  'on_hit',
+  'on_miss',
+  'on_option_use',
+  'on_save_fail'
 );

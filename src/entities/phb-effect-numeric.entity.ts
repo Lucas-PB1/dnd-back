@@ -13,7 +13,9 @@ export type EffectAmountFormula =
   | 'dice_hit_die_plus_pb'
   | 'dice_1d4'
   | 'dice_2d4_plus_flat'
-  | 'proficiency_bonus_plus_cha';
+  | 'proficiency_bonus_plus_cha'
+  | 'attack_ability_mod'
+  | 'eight_plus_mod_plus_pb';
 
 @Entity({ schema: 'rpg', name: 'phb_effect_numeric' })
 export class PhbEffectNumeric {

@@ -93,16 +93,6 @@ export async function resolveDeclaredEconomyTableAction(
     } else if (executed.kind === 'table_note' && executed.note) {
       note = `${note} ${executed.note}`;
     }
-  } else if (actionSlug === 'brittle-bone-armor') {
-    const tempHp = 2 * character.level;
-    state = await applyTemporaryHitPoints(deps.state, character, tempHp);
-    note = `${note} PV temporários aplicados: ${tempHp} (2× nível de Mago).`;
-    total = tempHp;
-  } else if (actionSlug === 'marauders-reprisal') {
-    const tempHp = Math.floor(character.level / 2);
-    state = await applyTemporaryHitPoints(deps.state, character, tempHp);
-    note = `${note} PV temporários aplicados: ${tempHp} (metade do nível).`;
-    total = tempHp;
   }
 
   if (actionSlug === 'red-renewal') {

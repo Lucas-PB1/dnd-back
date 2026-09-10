@@ -1,6 +1,8 @@
 # Docs — dnd-api
 
-Índice único da documentação. **Não** criar Markdown solto fora destas pastas (rule `docs-hub`).
+Índice da documentação da API. Crie Markdown só nestas pastas.
+
+Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer docs).
 
 ## Pastas
 
@@ -82,16 +84,9 @@ Contrato REST: Swagger em `/api`.
 |------|----------|
 | [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads NL — extração + status mesa (MVP feito) |
 
-Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
-
 ## Ops
 
 - Deploy → [`deploy/DEPLOY.md`](deploy/DEPLOY.md)
 - Latência hot paths → [`deploy/measure-latency.md`](deploy/measure-latency.md)
 - Catálogo / extracts → [`source/README.md`](source/README.md)
 - Glossário → [`glossary/README.md`](glossary/README.md)
-
-## Cursor (agente)
-
-Rules locais: `architecture` · `api-contract` · `phb-data` · `read-model-layers` · `file-size` · `refactor-triggers` · `typescript-quality` · `dry-quality` · `docs-hub` · `class-mesa`  
-Skills locais: `dnd-glossary-pt` · `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog` · `rpg-class-mesa-api` · `audit-code-health` · `split-large-module` · `unify-game-stats`

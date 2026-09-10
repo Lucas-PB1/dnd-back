@@ -46,6 +46,10 @@ const ELF_DROW_SPELL_EFFECT = {
   reach: null,
   restQuirk: null,
   environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
 } as CatalogEffect;
 
 describe('PreviewGrantedSpellsHandler', () => {

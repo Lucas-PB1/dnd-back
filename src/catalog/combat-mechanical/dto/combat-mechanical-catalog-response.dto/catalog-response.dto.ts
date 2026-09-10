@@ -6,6 +6,7 @@ import {
   GunslingerManeuverDto,
   PersonaMaskDto,
   PrecautionSpellDto,
+  StrikeOptionDto,
   SubclassTableActionDto,
 } from './maneuvers-effects.dto';
 import { ClassEconomyActionDto, ClassPanelActionDto } from './economy-panel.dto';
@@ -20,6 +21,9 @@ export class CombatMechanicalCatalogResponseDto {
 
   @ApiProperty({ type: [CunningStrikeEffectDto] })
   cunningStrikeEffects!: CunningStrikeEffectDto[];
+
+  @ApiProperty({ type: [StrikeOptionDto] })
+  strikeOptions!: StrikeOptionDto[];
 
   @ApiProperty({ type: [SubclassTableActionDto] })
   tableActions!: SubclassTableActionDto[];

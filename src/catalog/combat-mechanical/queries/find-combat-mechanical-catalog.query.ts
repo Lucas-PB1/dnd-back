@@ -29,6 +29,7 @@ export class FindCombatMechanicalCatalogQuery {
         subclassSlug: effect.subclassSlug,
         note: effect.note,
       })),
+      strikeOptions: catalog.strikeOptions,
       tableActions: catalog.tableActions,
       personaMasks: catalog.personaMasks,
       beastborneAspectBenefits: catalog.beastborneAspectBenefits,

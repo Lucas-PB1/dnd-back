@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { useBloodStrikeAction } from './blood-hound-actions';
 import type { FighterActionDeps } from './fighter-action-deps';
+import { BLOOD_HOUND_STRIKE_OPTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog/strike-options.fixtures';
 
 describe('useBloodStrikeAction', () => {
   const character = {
@@ -66,6 +67,7 @@ describe('useBloodStrikeAction', () => {
               name: 'Golpe de Sangue',
             },
           ],
+          strikeOptions: BLOOD_HOUND_STRIKE_OPTIONS,
         }),
       },
     } as unknown as FighterActionDeps;

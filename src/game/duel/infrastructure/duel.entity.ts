@@ -33,6 +33,9 @@ export class Duel {
   @Column({ type: 'int', default: 1 })
   round!: number;
 
+  @Column({ name: 'turn_attacks_remaining', type: 'int', nullable: true })
+  turnAttacksRemaining!: number | null;
+
   @Column({ name: 'combat_log', type: 'jsonb', default: [] })
   combatLog!: DuelCombatLogEntry[];
 

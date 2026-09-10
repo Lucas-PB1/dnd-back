@@ -54,6 +54,10 @@ function speciesSpellEffect(
     reach: null,
     restQuirk: null,
     environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
   };
 }
 
@@ -112,6 +116,10 @@ function featSpellEffect(input: {
     reach: null,
     restQuirk: null,
     environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
   };
 }
 
@@ -159,6 +167,10 @@ function speciesChoiceSpellEffect(optionKey: string): CatalogEffect {
     reach: null,
     restQuirk: null,
     environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
   };
 }
 

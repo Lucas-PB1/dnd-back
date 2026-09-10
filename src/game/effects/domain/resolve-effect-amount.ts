@@ -74,8 +74,12 @@ export function resolveEffectAmount(input: {
       };
     }
     case 'proficiency_bonus_plus_cha':
-      
       return { amount: pb + (input.flat ?? 0) };
+    case 'attack_ability_mod':
+      // flat carrega o mod do atributo do ataque quando o caller resolve.
+      return { amount: input.flat ?? 0 };
+    case 'eight_plus_mod_plus_pb':
+      return { amount: 8 + (input.flat ?? 0) + pb };
     default: {
       const _exhaustive: never = input.amountFormula;
       return _exhaustive;

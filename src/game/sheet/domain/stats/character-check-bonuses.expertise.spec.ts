@@ -62,6 +62,10 @@ describe('character-check-bonuses expertise sources', () => {
       reach: null,
       restQuirk: null,
       environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
     };
     const withoutPrior = {
       classSkillSlugs: [] as string[],

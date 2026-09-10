@@ -96,5 +96,15 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'reach_bonus',
   'rest_quirk',
   'environmental_immunity',
-  'speed_set'
+  'speed_set',
+  'attack_disadvantage',
+  'apply_condition',
+  'forced_movement',
+  'feature_save',
+  'ability_mod_damage',
+  'self_damage',
+  'extra_damage_dice',
+  'replace_attack_with_save',
+  'ignore_target_armor',
+  'add_arena_effect'
 );

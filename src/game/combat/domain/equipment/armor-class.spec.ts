@@ -200,6 +200,10 @@ describe("armor-class", () => {
           reach: null,
           restQuirk: null,
           environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
         },
       ],
     });
@@ -245,6 +249,10 @@ describe("armor-class", () => {
           reach: null,
           restQuirk: null,
           environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
         },
       ],
     });

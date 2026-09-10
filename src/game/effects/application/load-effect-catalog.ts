@@ -5,6 +5,8 @@ import { PhbEffect } from '@entities/phb-effect.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
 import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import type { CatalogEffect, EffectOwnerKind } from '../domain/catalog-effect';
 import { mapPhbEffectToCatalog } from '../infrastructure/map-phb-effect';
 
@@ -29,6 +31,10 @@ export class LoadEffectCatalog {
     private readonly species: Repository<PhbSpecies>,
     @InjectRepository(PhbSpellRef)
     private readonly spells: Repository<PhbSpellRef>,
+    @InjectRepository(PhbWeaponMastery)
+    private readonly weaponMasteries: Repository<PhbWeaponMastery>,
+    @InjectRepository(PhbSubclassRef)
+    private readonly subclasses: Repository<PhbSubclassRef>,
   ) {}
 
   async load(filter: LoadEffectsFilter = {}): Promise<CatalogEffect[]> {
@@ -56,6 +62,10 @@ export class LoadEffectCatalog {
       .leftJoinAndSelect('e.reach', 'reach')
       .leftJoinAndSelect('e.restQuirk', 'restQuirk')
       .leftJoinAndSelect('e.environmentalImmunity', 'environmentalImmunity')
+      .leftJoinAndSelect('e.condition', 'condition')
+      .leftJoinAndSelect('e.save', 'save')
+      .leftJoinAndSelect('e.forcedMovement', 'forcedMovement')
+      .leftJoinAndSelect('e.dice', 'dice')
       .orderBy('e.sort_order', 'ASC')
       .addOrderBy('e.id', 'ASC');
 
@@ -133,6 +143,18 @@ export class LoadEffectCatalog {
       });
       return species.map((row) => row.id);
     }
+    if (filter.ownerKind === 'weapon_mastery') {
+      const rows = await this.weaponMasteries.find({
+        where: { slug: In(filter.ownerSlugs) },
+      });
+      return rows.map((row) => row.id);
+    }
+    if (filter.ownerKind === 'subclass') {
+      const rows = await this.subclasses.find({
+        where: { slug: In(filter.ownerSlugs) },
+      });
+      return rows.map((row) => row.id);
+    }
 
     return [];
   }
@@ -151,6 +173,18 @@ export class LoadEffectCatalog {
         rows.filter((r) => r.ownerKind === 'species').map((r) => r.ownerId),
       ),
     ];
+    const masteryIds = [
+      ...new Set(
+        rows
+          .filter((r) => r.ownerKind === 'weapon_mastery')
+          .map((r) => r.ownerId),
+      ),
+    ];
+    const subclassIds = [
+      ...new Set(
+        rows.filter((r) => r.ownerKind === 'subclass').map((r) => r.ownerId),
+      ),
+    ];
     if (featIds.length) {
       const feats = await this.feats.find({ where: { id: In(featIds) } });
       for (const feat of feats) {
@@ -163,6 +197,22 @@ export class LoadEffectCatalog {
       });
       for (const row of species) {
         map.set(`species:${row.id}`, row.slug);
+      }
+    }
+    if (masteryIds.length) {
+      const masteries = await this.weaponMasteries.find({
+        where: { id: In(masteryIds) },
+      });
+      for (const row of masteries) {
+        map.set(`weapon_mastery:${row.id}`, row.slug);
+      }
+    }
+    if (subclassIds.length) {
+      const subclasses = await this.subclasses.find({
+        where: { id: In(subclassIds) },
+      });
+      for (const row of subclasses) {
+        map.set(`subclass:${row.id}`, row.slug);
       }
     }
     return map;

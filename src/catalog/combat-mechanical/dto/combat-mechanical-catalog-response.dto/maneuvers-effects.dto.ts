@@ -82,6 +82,71 @@ export class BattleMasterManeuverDto {
   addsToAttack!: boolean;
 }
 
+export class StrikeOptionDto {
+  @ApiProperty({ example: 'hunting-strike' })
+  slug!: string;
+
+  @ApiProperty({ example: 'Golpe da Caça' })
+  name!: string;
+
+  @ApiPropertyOptional({ example: 'blood-hound' })
+  subclassSlug?: string;
+
+  @ApiPropertyOptional({ example: 'blood-strike' })
+  resourceSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'blood-strike' })
+  tableAction?: string | null;
+
+  @ApiPropertyOptional({ example: '1d4' })
+  costDice?: string | null;
+
+  @ApiProperty({ example: '1d6' })
+  extraDice!: string;
+
+  @ApiProperty({ example: '3d6' })
+  extraDiceL18!: string;
+
+  @ApiPropertyOptional({ example: 'slashing' })
+  damageType?: string | null;
+
+  @ApiPropertyOptional({ example: 'constituicao' })
+  saveAbility?: string | null;
+
+  @ApiPropertyOptional()
+  onFailCondition?: string | null;
+
+  @ApiPropertyOptional()
+  onFailPendingKind?: string | null;
+
+  @ApiPropertyOptional()
+  onHitPendingKind?: string | null;
+
+  @ApiProperty()
+  replacesAttackWithSave!: boolean;
+
+  @ApiPropertyOptional()
+  secondaryDice?: string | null;
+
+  @ApiPropertyOptional()
+  secondaryDiceL18?: string | null;
+
+  @ApiProperty()
+  ignoreTargetArmor!: boolean;
+
+  @ApiProperty()
+  ignoreDamageResistance!: boolean;
+
+  @ApiProperty()
+  addsArenaEffect!: boolean;
+
+  @ApiPropertyOptional()
+  arenaEffectSlug?: string | null;
+
+  @ApiProperty()
+  noteOnly!: boolean;
+}
+
 export class SubclassTableActionDto {
   @ApiProperty()
   subclassSlug!: string;

@@ -53,6 +53,7 @@ export async function executeRollDamage(input: {
       weaponAttacks: input.weaponAttacks,
       permanentItemEffects: input.permanentItemEffects,
       dataSource: input.dataSource,
+      effectCatalog: input.effectCatalog,
     },
     character,
     input.dto.itemSlug,

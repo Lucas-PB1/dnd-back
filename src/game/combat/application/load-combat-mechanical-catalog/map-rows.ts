@@ -11,6 +11,7 @@ import type { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy
 import type { BattleMasterManeuver } from '../../domain/fighter';
 import type { ManeuverEffectKind } from '../../domain/gunslinger';
 import type { CunningStrikeEffect } from '../../domain/rogue/types';
+import type { StrikeOption } from '../../domain/strike-option';
 import { mapEconomyActions, mapPanelActions } from './map-ui-actions';
 import type { CombatMechanicalCatalog } from './types';
 
@@ -18,6 +19,7 @@ export type CombatMechanicalCatalogRows = {
   gunslingerRows: PhbGunslingerManeuver[];
   battleMasterRows: PhbBattleMasterManeuver[];
   cunningRows: PhbCunningStrikeEffect[];
+  strikeOptions: StrikeOption[];
   tableActionRows: PhbSubclassTableAction[];
   personaRows: PhbPersonaMask[];
   beastborneRows: PhbBeastborneAspectBenefit[];
@@ -34,6 +36,7 @@ export function mapCombatMechanicalCatalog(
     gunslingerRows,
     battleMasterRows,
     cunningRows,
+    strikeOptions,
     tableActionRows,
     personaRows,
     beastborneRows,
@@ -77,6 +80,7 @@ export function mapCombatMechanicalCatalog(
           : undefined,
       note: row.note,
     })),
+    strikeOptions,
     tableActions: tableActionRows.map((row) => ({
       subclassSlug: row.subclass.slug,
       slug: row.slug,

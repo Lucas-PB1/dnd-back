@@ -1,0 +1,3 @@
+-- DROPPED — strike packages vivem em phb_effect (+ option_value labels).
+-- Ver: seeds/effect/steinhardt/phb_effect.blood-strike-options.sql
+-- Drop: schema/025_alters/0146_drop_phb_strike_option.sql

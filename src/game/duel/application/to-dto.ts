@@ -1,8 +1,10 @@
 import type {
+  DuelBloodStrikePanelDto,
   DuelCharacterSummaryDto,
   DuelCombatLogEntryDto,
   DuelCombatantDto,
   DuelDetailDto,
+  DuelFighterPanelDto,
   DuelMemberDto,
   DuelSummaryDto,
   DuelWeaponOptionDto,
@@ -55,10 +57,15 @@ export function toCombatantDto(
   member: DuelMember,
   character: PlayerCharacter | undefined,
   armorClass: number,
-  vitals: { tempHp: number; conditions: string[] },
+  vitals: {
+    tempHp: number;
+    conditions: string[];
+    hitPointsCurrent?: number;
+    hitPointsMax?: number;
+  },
 ): DuelCombatantDto {
   const summary = toCharacterSummary(character, member.characterId);
-  const hp = hitPointsOf(character);
+  const sheetHp = hitPointsOf(character);
   return {
     userId: member.userId,
     characterId: summary.characterId,
@@ -68,8 +75,8 @@ export function toCombatantDto(
     speciesSlug: summary.speciesSlug,
     ready: member.ready,
     initiative: member.initiative,
-    hitPointsCurrent: hp.current,
-    hitPointsMax: hp.max,
+    hitPointsCurrent: vitals.hitPointsCurrent ?? sheetHp.current,
+    hitPointsMax: vitals.hitPointsMax ?? sheetHp.max,
     armorClass,
     portraitUrl: character?.portraitUrl ?? null,
     tempHp: vitals.tempHp,
@@ -118,9 +125,19 @@ export function toDetailDto(input: {
   viewerUserId: string;
   viewerRole: 'participant' | 'spectator';
   armorByCharacterId: Map<string, number>;
-  vitalsByCharacterId: Map<string, { tempHp: number; conditions: string[] }>;
+  vitalsByCharacterId: Map<
+    string,
+    {
+      tempHp: number;
+      conditions: string[];
+      hitPointsCurrent?: number;
+      hitPointsMax?: number;
+    }
+  >;
   myWeapons: DuelWeaponOptionDto[];
   mySpells: { spellSlug: string; listType: string }[];
+  bloodStrike: DuelBloodStrikePanelDto | null;
+  fighter: DuelFighterPanelDto | null;
   seesInMagicalDarkness: boolean;
 }): DuelDetailDto {
   const {
@@ -163,6 +180,10 @@ export function toDetailDto(input: {
       duel.turnCharacterId === mine.characterId,
     myWeapons: viewerRole === 'participant' ? input.myWeapons : [],
     mySpells: viewerRole === 'participant' ? input.mySpells : [],
+    bloodStrike:
+      viewerRole === 'participant' ? input.bloodStrike : null,
+    fighter: viewerRole === 'participant' ? input.fighter : null,
+    turnAttacksRemaining: duel.turnAttacksRemaining,
     arenaEffects: (duel.arenaEffects ?? []) as DuelDetailDto['arenaEffects'],
     arenaEffectSourceCharacterId: duel.arenaEffectSourceCharacterId,
     seesInMagicalDarkness:

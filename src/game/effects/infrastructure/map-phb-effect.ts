@@ -147,5 +147,32 @@ export function mapPhbEffectToCatalog(
           hazardSlug: row.environmentalImmunity.hazardSlug,
         }
       : null,
+    condition: row.condition
+      ? {
+          conditionSlug: row.condition.conditionSlug,
+          pendingKind: row.condition.pendingKind,
+        }
+      : null,
+    save: row.save
+      ? {
+          saveAbility: row.save.saveAbility,
+          dcAbility: row.save.dcAbility,
+          dcFormula: row.save.dcFormula,
+        }
+      : null,
+    forcedMovement: row.forcedMovement
+      ? {
+          distanceM: row.forcedMovement.distanceM,
+          maxTargetSize: row.forcedMovement.maxTargetSize,
+        }
+      : null,
+    dice: row.dice
+      ? {
+          die: row.dice.die,
+          dieAtLevel: row.dice.dieAtLevel,
+          atLevel: row.dice.atLevel,
+          damageTypeSlug: row.dice.damageTypeSlug,
+        }
+      : null,
   };
 }

@@ -84,6 +84,16 @@ export function filterCombatMechanicalCatalog(
       )
     : [];
 
+  const strikeOptions = catalog.strikeOptions.filter((option) => {
+    if (subclassSlug) {
+      return !option.subclassSlug || option.subclassSlug === subclassSlug;
+    }
+    if (classSlug && classSlug !== FIGHTER_CLASS) {
+      return false;
+    }
+    return true;
+  });
+
   const tableActions = subclassSlug
     ? catalog.tableActions.filter(
         (action) => action.subclassSlug === subclassSlug,
@@ -103,6 +113,7 @@ export function filterCombatMechanicalCatalog(
       ? catalog.battleMasterManeuvers
       : [],
     cunningStrikeEffects,
+    strikeOptions,
     tableActions,
     personaMasks: includePersonaMasks ? catalog.personaMasks : [],
     beastborneAspectBenefits: includeBeastborne

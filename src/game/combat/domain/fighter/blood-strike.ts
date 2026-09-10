@@ -1,37 +1,39 @@
 /**
- * Golpes de Sangue (Blood Hound) — custos e rótulos.
- * Espelha H003 / H007 (value_id das opções); não lista subclassSlug.
+ * Sabujo de Sangue (Blood Hound) — constantes e gates de produto.
+ * Defs tipadas: phb_effect (strikeOption) + option_value. Motor: strike-option /
+ * spendStrikeSelfCost / resolveStrikeHitPackage / pending-combat-effect.
  */
 
-export const BLOOD_STRIKE_COST_DICE: Readonly<Record<string, string>> = {
-  'bewitching-strike': '1d8',
-  'bloodboil-strike': '1d6',
-  'bloodshard-strike': '1d8',
-  'constraining-strike': '1d8',
-  'exiling-strike': '1d10',
-  'hunting-strike': '1d4',
-  'shadowblood-strike': '1d6',
-  'thunderblood-strike': '1d4',
-  'withering-strike': '1d6',
-};
-
-export const BLOOD_STRIKE_LABELS: Readonly<Record<string, string>> = {
-  'bewitching-strike': 'Golpe Enfeitiçante',
-  'bloodboil-strike': 'Golpe Ferver-Sangue',
-  'bloodshard-strike': 'Golpe Estilhaço-Sangue',
-  'constraining-strike': 'Golpe Constritor',
-  'exiling-strike': 'Golpe do Exílio',
-  'hunting-strike': 'Golpe da Caça',
-  'shadowblood-strike': 'Golpe Sangue-Sombra',
-  'thunderblood-strike': 'Golpe Sangue-Trovão',
-  'withering-strike': 'Golpe Definhante',
-};
-
 export const BLOOD_STRIKE_RESOURCE_SLUG = 'blood-strike';
+export const BLOOD_HOUND_SUBCLASS_SLUG = 'blood-hound';
+export const BLOOD_STRIKE_TABLE_ACTION = 'blood-strike';
+
+/** Pending kinds (seed `on_*_pending_kind`). */
+export const BLOOD_CONDITION_WITHERING = 'blood-withering';
+export const BLOOD_CONDITION_CONSTRAIN = 'blood-constrain';
+export const BLOOD_CONDITION_EXILE = 'blood-exile';
+
+export type BloodArmamentDamageType = 'acid' | 'necrotic' | 'poison';
 
 /** Sangue da Criação (L10): rerrolar custo e ficar com o menor. */
 export function canTakeLowerBloodCost(level: number): boolean {
   return level >= 10;
+}
+
+export function canUseBloodArmament(level: number): boolean {
+  return level >= 7;
+}
+
+export function canUseBloodExplosion(level: number): boolean {
+  return level >= 7;
+}
+
+export function canBloodSymphonyHeal(level: number): boolean {
+  return level >= 15;
+}
+
+export function canBloodSymphonyRefund(level: number): boolean {
+  return level >= 15;
 }
 
 /** Sinfonia de Sangue (L15): cura = mod. CON (mín. 1) ao usar golpe. */
@@ -39,10 +41,8 @@ export function bloodSymphonyHealAmount(constitutionModifier: number): number {
   return Math.max(1, constitutionModifier);
 }
 
-export function bloodStrikeCostDice(optionSlug: string): string | null {
-  return BLOOD_STRIKE_COST_DICE[optionSlug] ?? null;
-}
-
-export function bloodStrikeLabel(optionSlug: string): string {
-  return BLOOD_STRIKE_LABELS[optionSlug] ?? optionSlug;
+export function isBloodHoundSubclass(
+  subclassSlug: string | null | undefined,
+): boolean {
+  return subclassSlug === BLOOD_HOUND_SUBCLASS_SLUG;
 }

@@ -55,11 +55,14 @@ export class DuelService {
       vitalsByCharacterId,
       myWeapons,
       mySpells,
+      bloodStrike,
+      fighter,
       seesInMagicalDarkness,
     } = await this.snapshot.buildMaps({
       members,
       charactersById: map,
       viewerUserId: userId,
+      duel,
     });
     return toDetailDto({
       duel,
@@ -71,6 +74,8 @@ export class DuelService {
       vitalsByCharacterId,
       myWeapons,
       mySpells,
+      bloodStrike,
+      fighter,
       seesInMagicalDarkness,
     });
   }
@@ -153,6 +158,22 @@ export class DuelService {
 
   async forfeit(userId: string, duelId: string): Promise<DuelDetailDto> {
     const { duel, members } = await this.combat.forfeit(userId, duelId);
+    return this.toDetail(duel, members, userId);
+  }
+
+  async useSecondWind(
+    userId: string,
+    duelId: string,
+  ): Promise<DuelDetailDto> {
+    const { duel, members } = await this.combat.useSecondWind(userId, duelId);
+    return this.toDetail(duel, members, userId);
+  }
+
+  async useActionSurge(
+    userId: string,
+    duelId: string,
+  ): Promise<DuelDetailDto> {
+    const { duel, members } = await this.combat.useActionSurge(userId, duelId);
     return this.toDetail(duel, members, userId);
   }
 }

@@ -25,6 +25,21 @@ export class DuelMember {
   @Column({ type: 'int', nullable: true })
   initiative!: number | null;
 
+  @Column({ name: 'hit_points_current', type: 'int', nullable: true })
+  hitPointsCurrent!: number | null;
+
+  @Column({ name: 'hit_points_max', type: 'int', nullable: true })
+  hitPointsMax!: number | null;
+
+  @Column({ name: 'temp_hp', type: 'int', default: 0 })
+  tempHp!: number;
+
+  @Column({ type: 'text', array: true, default: '{}' })
+  conditions!: string[];
+
+  @Column({ name: 'speed_penalty_m', type: 'int', default: 0 })
+  speedPenaltyM!: number;
+
   @CreateDateColumn({ name: 'joined_at' })
   joinedAt!: Date;
 }

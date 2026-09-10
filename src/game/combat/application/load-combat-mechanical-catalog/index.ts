@@ -7,10 +7,18 @@ import { PhbClassPanelAction } from '@entities/phb-class-panel-action.entity';
 import { PhbCunningStrikeEffect } from '@entities/phb-cunning-strike-effect.entity';
 import { PhbDungeoneerSlayerType } from '@entities/phb-dungeoneer-slayer-type.entity';
 import { PhbGunslingerManeuver } from '@entities/phb-gunslinger-maneuver.entity';
+import { PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbPersonaMask } from '@entities/phb-persona-mask.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbSubclassTableAction } from '@entities/phb-subclass-table-action.entity';
 import { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
+import { LoadEffectCatalog } from '@game/effects';
+import { BLOOD_HOUND_SUBCLASS_SLUG } from '../../domain/fighter';
+import {
+  STRIKE_OPTION_REQUIRES_KEY,
+  buildStrikeOptionsFromEffects,
+} from '../../domain/build-strike-options-from-effects';
 import { mapCombatMechanicalCatalog } from './map-rows';
 import type { CombatMechanicalCatalog } from './types';
 
@@ -49,6 +57,11 @@ export class LoadCombatMechanicalCatalog {
     private readonly economyRepo: Repository<VPhbClassEconomyAction>,
     @InjectRepository(PhbClassPanelAction)
     private readonly panelRepo: Repository<PhbClassPanelAction>,
+    @InjectRepository(PhbOptionValue)
+    private readonly optionValueRepo: Repository<PhbOptionValue>,
+    @InjectRepository(PhbSubclassRef)
+    private readonly subclassRepo: Repository<PhbSubclassRef>,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async load(): Promise<CombatMechanicalCatalog> {
@@ -95,6 +108,7 @@ export class LoadCombatMechanicalCatalog {
       precautionRows,
       economyRows,
       panelRows,
+      strikeOptions,
     ] = await Promise.all([
       this.gunslingerRepo.find({ relations: ['subclass'] }),
       this.battleMasterRepo.find(),
@@ -112,12 +126,14 @@ export class LoadCombatMechanicalCatalog {
         relations: ['klass', 'subclass'],
         order: { sortOrder: 'ASC' },
       }),
+      this.loadStrikeOptions(),
     ]);
 
     return mapCombatMechanicalCatalog({
       gunslingerRows,
       battleMasterRows,
       cunningRows,
+      strikeOptions,
       tableActionRows,
       personaRows,
       beastborneRows,
@@ -126,5 +142,35 @@ export class LoadCombatMechanicalCatalog {
       economyRows,
       panelRows,
     });
+  }
+
+  private async loadStrikeOptions() {
+    const effects = await this.effectCatalog.load({
+      ownerKind: 'subclass',
+      ownerSlugs: [BLOOD_HOUND_SUBCLASS_SLUG],
+    });
+    const strikeEffects = effects.filter(
+      (e) => e.requiresOptionKey === STRIKE_OPTION_REQUIRES_KEY,
+    );
+    const labels = await this.loadStrikeOptionLabels();
+    return buildStrikeOptionsFromEffects({
+      effects: strikeEffects,
+      optionLabels: labels,
+    });
+  }
+
+  private async loadStrikeOptionLabels(): Promise<Map<string, string>> {
+    const subclass = await this.subclassRepo.findOne({
+      where: { slug: BLOOD_HOUND_SUBCLASS_SLUG },
+    });
+    if (!subclass) return new Map();
+    const rows = await this.optionValueRepo.find({
+      where: {
+        scope: 'subclass',
+        ownerId: subclass.id,
+        optionKey: 'bloodStrike1',
+      },
+    });
+    return new Map(rows.map((row) => [row.valueId, row.label]));
   }
 }

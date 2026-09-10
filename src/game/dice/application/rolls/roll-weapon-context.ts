@@ -19,6 +19,7 @@ import {
   loadWeaponCombatFlags,
   type WeaponCombatFlags,
 } from '@game/session/infrastructure/queries/character-combat-flags.queries';
+import type { LoadEffectCatalog } from '@game/effects';
 
 export type { WeaponCombatFlags } from '@game/session/infrastructure/queries/character-combat-flags.queries';
 
@@ -37,6 +38,7 @@ export async function findEquippedWeaponAttack(
     weaponAttacks: ResolveEquippedWeaponAttacks;
     permanentItemEffects?: ResolveActivePermanentItemEffects;
     dataSource?: DataSource;
+    effectCatalog?: LoadEffectCatalog;
   },
   character: RollWeaponCharacter,
   itemSlug: string,
@@ -48,6 +50,12 @@ export async function findEquippedWeaponAttack(
   const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
     sheet.subclassOptions,
   );
+  const featEffects = deps.effectCatalog
+    ? await deps.effectCatalog.load({
+        ownerKind: 'feat',
+        ownerSlugs: featSlugs,
+      })
+    : undefined;
   const itemEffects = deps.permanentItemEffects
     ? await deps.permanentItemEffects.resolve(character.id)
     : null;
@@ -86,6 +94,7 @@ export async function findEquippedWeaponAttack(
     proficiencyBonus: pb,
     featSlugs,
     fightingStyleSlugs,
+    featEffects,
     masteredWeaponSlugs: collectMasteredWeaponSlugs({
       classOptions: sheet.classOptions,
       featOptions: sheet.featOptions,

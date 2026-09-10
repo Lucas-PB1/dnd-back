@@ -5,6 +5,7 @@ import { CombatModule } from '../combat/combat.module';
 import { CharacterDiceModule } from '../dice/character-dice.module';
 import { CharacterSessionModule } from '../session/character-session.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
+import { EffectsModule } from '../effects/effects.module';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 import { Duel } from './infrastructure/duel.entity';
 import { DuelMember } from './infrastructure/duel-member.entity';
@@ -18,6 +19,7 @@ import { DuelsController } from './duels.controller';
   imports: [
     GameSharedModule,
     CombatModule,
+    EffectsModule,
     forwardRef(() => CharacterDiceModule),
     forwardRef(() => CharacterSessionModule),
     forwardRef(() => CharacterSheetModule),

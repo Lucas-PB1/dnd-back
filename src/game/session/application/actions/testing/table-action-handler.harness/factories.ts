@@ -40,6 +40,7 @@ export function createEmptyMechanicalCatalogLoad(
     gunslingerManeuvers: [],
     battleMasterManeuvers: [],
     cunningStrikeEffects: [],
+    strikeOptions: [],
     tableActions: [],
     personaMasks: [],
     personaMaskSlugs: [],

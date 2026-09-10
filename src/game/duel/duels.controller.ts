@@ -139,4 +139,26 @@ export class DuelsController {
   ): Promise<DuelDetailDto> {
     return this.duels.forfeit(user.id, id);
   }
+
+  @Post(':id/second-wind')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Use Second Wind (Fighter) on your turn' })
+  @ApiOkResponse({ type: DuelDetailDto })
+  secondWind(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<DuelDetailDto> {
+    return this.duels.useSecondWind(user.id, id);
+  }
+
+  @Post(':id/action-surge')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Use Action Surge (Fighter) on your turn' })
+  @ApiOkResponse({ type: DuelDetailDto })
+  actionSurge(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<DuelDetailDto> {
+    return this.duels.useActionSurge(user.id, id);
+  }
 }

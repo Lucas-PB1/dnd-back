@@ -5,5 +5,6 @@ CREATE TYPE rpg.effect_owner_kind AS ENUM (
   'feat',
   'item',
   'heritage',
-  'character_thread'
+  'character_thread',
+  'weapon_mastery'
 );

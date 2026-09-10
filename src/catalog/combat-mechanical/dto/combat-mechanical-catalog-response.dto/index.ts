@@ -4,6 +4,7 @@ export {
   PrecautionSpellDto,
   GunslingerManeuverDto,
   BattleMasterManeuverDto,
+  StrikeOptionDto,
   SubclassTableActionDto,
   BeastborneAspectBenefitDto,
 } from './maneuvers-effects.dto';

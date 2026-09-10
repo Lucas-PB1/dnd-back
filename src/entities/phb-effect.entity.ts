@@ -5,6 +5,10 @@ import { PhbEffectCombatMod } from './phb-effect-combat-mod.entity';
 import { PhbEffectDamageDie } from './phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from './phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from './phb-effect-environmental-immunity.entity';
+import { PhbEffectCondition } from './phb-effect-condition.entity';
+import { PhbEffectSave } from './phb-effect-save.entity';
+import { PhbEffectForcedMovement } from './phb-effect-forced-movement.entity';
+import { PhbEffectDice } from './phb-effect-dice.entity';
 import { PhbEffectFeat } from './phb-effect-feat.entity';
 import { PhbEffectLanguage } from './phb-effect-language.entity';
 import { PhbEffectNote } from './phb-effect-note.entity';
@@ -117,7 +121,17 @@ export type EffectKind =
   | 'reach_bonus'
   | 'rest_quirk'
   | 'environmental_immunity'
-  | 'speed_set';
+  | 'speed_set'
+  | 'attack_disadvantage'
+  | 'apply_condition'
+  | 'forced_movement'
+  | 'feature_save'
+  | 'ability_mod_damage'
+  | 'self_damage'
+  | 'extra_damage_dice'
+  | 'replace_attack_with_save'
+  | 'ignore_target_armor'
+  | 'add_arena_effect';
 
 export type EffectOwnerKind =
   | 'class'
@@ -126,7 +140,8 @@ export type EffectOwnerKind =
   | 'feat'
   | 'item'
   | 'heritage'
-  | 'character_thread';
+  | 'character_thread'
+  | 'weapon_mastery';
 
 export type EffectTrigger =
   | 'passive'
@@ -141,7 +156,11 @@ export type EffectTrigger =
   | 'on_rest_short'
   | 'on_rest_long'
   | 'on_death_save'
-  | 'on_critical_hit';
+  | 'on_critical_hit'
+  | 'on_hit'
+  | 'on_miss'
+  | 'on_option_use'
+  | 'on_save_fail';
 
 @Entity({ schema: 'rpg', name: 'phb_effect' })
 export class PhbEffect {
@@ -246,4 +265,18 @@ export class PhbEffect {
     eager: true,
   })
   environmentalImmunity?: PhbEffectEnvironmentalImmunity | null;
+
+  @OneToOne(() => PhbEffectCondition, (row) => row.effect, { eager: true })
+  condition?: PhbEffectCondition | null;
+
+  @OneToOne(() => PhbEffectSave, (row) => row.effect, { eager: true })
+  save?: PhbEffectSave | null;
+
+  @OneToOne(() => PhbEffectForcedMovement, (row) => row.effect, {
+    eager: true,
+  })
+  forcedMovement?: PhbEffectForcedMovement | null;
+
+  @OneToOne(() => PhbEffectDice, (row) => row.effect, { eager: true })
+  dice?: PhbEffectDice | null;
 }

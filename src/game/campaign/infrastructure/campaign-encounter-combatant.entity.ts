@@ -30,4 +30,16 @@ export class CampaignEncounterCombatant {
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive!: boolean;
+
+  @Column({ name: 'hit_points_current', type: 'int', nullable: true })
+  hitPointsCurrent!: number | null;
+
+  @Column({ name: 'hit_points_max', type: 'int', nullable: true })
+  hitPointsMax!: number | null;
+
+  @Column({ name: 'temp_hp', type: 'int', default: 0 })
+  tempHp!: number;
+
+  @Column({ type: 'text', array: true, default: '{}' })
+  conditions!: string[];
 }

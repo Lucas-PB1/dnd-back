@@ -1,6 +1,9 @@
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { isBloodHoundSubclass } from '@game/combat/domain/fighter';
 import { hitPointsOf } from '../application/to-dto';
+import type { DuelMember } from '../infrastructure/duel-member.entity';
+import { applyDamageToMemberVitals } from './duel-member-vitals';
 
 export type AppliedDuelDamage = {
   damageTotal: number;
@@ -11,13 +14,44 @@ export type AppliedDuelDamage = {
   tempHpAfter: number;
 };
 
-/** Consome PV temp. antes dos PV atuais (5e). */
+function applyPoisonResist(
+  damage: number,
+  target: PlayerCharacter,
+  damageType?: string | null,
+): number {
+  let damageTotal = Math.max(0, damage);
+  if (
+    damageType === 'poison' &&
+    isBloodHoundSubclass(target.subclassSlug)
+  ) {
+    damageTotal = Math.floor(damageTotal / 2);
+  }
+  return damageTotal;
+}
+
+/** Consome PV temp. antes dos PV atuais (5e). Prefere vitals do combatente. */
 export async function applyDuelDamageToTarget(input: {
-  state: CharacterStateRepository;
+  state?: CharacterStateRepository;
+  member?: DuelMember;
   target: PlayerCharacter;
   damage: number;
+  /** Tipo de dano (Armamento / golpe); Anatomia: resist. Veneno no Sabujo. */
+  damageType?: string | null;
 }): Promise<AppliedDuelDamage> {
-  const damageTotal = Math.max(0, input.damage);
+  const damageTotal = applyPoisonResist(
+    input.damage,
+    input.target,
+    input.damageType,
+  );
+
+  if (input.member != null && input.member.hitPointsCurrent != null) {
+    return applyDamageToMemberVitals(input.member, damageTotal);
+  }
+
+  if (!input.state) {
+    throw new Error('applyDuelDamageToTarget requires state or member vitals');
+  }
+
   const stateBefore = await input.state.buildResponse(input.target);
   const tempHpBefore = stateBefore.tempHp ?? 0;
   const absorbedByTempHp = Math.min(tempHpBefore, damageTotal);
@@ -32,6 +66,7 @@ export async function applyDuelDamageToTarget(input: {
   const hitPointsAfter = Math.max(0, hitPointsBefore - remaining);
   if (remaining > 0 || hitPointsAfter !== hitPointsBefore) {
     await input.state.applyCurrentHitPoints(input.target, hitPointsAfter);
+    input.target.hitPointsCurrent = hitPointsAfter;
   }
 
   return {

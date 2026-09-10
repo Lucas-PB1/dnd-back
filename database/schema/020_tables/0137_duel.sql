@@ -7,6 +7,10 @@ CREATE TABLE rpg.duel (
   created_by UUID NOT NULL,
   turn_character_id UUID REFERENCES rpg.player_character(id) ON DELETE SET NULL,
   round INT NOT NULL DEFAULT 1 CHECK (round >= 1),
+  /** Ataques restantes na ação Atacar do turno atual (Extra Attack / Nick / Surto). */
+  turn_attacks_remaining INT NULL CHECK (
+    turn_attacks_remaining IS NULL OR turn_attacks_remaining >= 0
+  ),
   combat_log JSONB NOT NULL DEFAULT '[]'::jsonb,
   arena_effects TEXT[] NOT NULL DEFAULT '{}',
   arena_effect_source_character_id UUID REFERENCES rpg.player_character(id) ON DELETE SET NULL,

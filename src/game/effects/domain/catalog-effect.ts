@@ -130,6 +130,13 @@ export type EffectEnvironmentalImmunitySatellite = {
   hazardSlug: string;
 };
 
+export type EffectDiceSatellite = {
+  die: string;
+  dieAtLevel: string | null;
+  atLevel: number | null;
+  damageTypeSlug: string | null;
+};
+
 export type CatalogEffect = {
   id: string;
   kind: EffectKind;
@@ -164,4 +171,15 @@ export type CatalogEffect = {
   reach: EffectReachSatellite | null;
   restQuirk: EffectRestQuirkSatellite | null;
   environmentalImmunity: EffectEnvironmentalImmunitySatellite | null;
+  condition: { conditionSlug: string | null; pendingKind: string | null } | null;
+  save: {
+    saveAbility: string;
+    dcAbility: string | null;
+    dcFormula: string;
+  } | null;
+  forcedMovement: {
+    distanceM: number;
+    maxTargetSize: string | null;
+  } | null;
+  dice: EffectDiceSatellite | null;
 };

@@ -1,19 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import {
-  BLOOD_STRIKE_RESOURCE_SLUG,
-  bloodStrikeCostDice,
-  bloodStrikeLabel,
-  bloodSymphonyHealAmount,
-  canTakeLowerBloodCost,
-} from '@game/combat/domain/fighter';
-import { rollExpression } from '@game/dice/domain/dice';
-import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+  formatStrikeSelfCostNote,
+  spendStrikeSelfCost,
+} from '@game/combat/application/strike/spend-strike-self-cost';
+import { BLOOD_STRIKE_TABLE_ACTION } from '@game/combat/domain/fighter';
+import { findStrikeOptionForTableAction } from '@game/combat/domain/strike-option';
 import { BLOOD_STRIKE_OPTION_KEY_RE } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
 import { applyCurrentHitPoints } from '@game/session/application/core/apply-current-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
-import type {
-  TableActionResponseDto,
-} from '@game/session/dto/fighter/fighter-session.dto';
+import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export type BloodStrikeDto = {
@@ -39,7 +34,7 @@ export async function useBloodStrikeAction(
   const economy = catalog.economyActions.find(
     (row) =>
       row.classSlug === character.classSlug &&
-      row.tableAction === 'blood-strike' &&
+      row.tableAction === BLOOD_STRIKE_TABLE_ACTION &&
       row.itemSlug == null &&
       row.featSlug == null,
   );
@@ -47,8 +42,12 @@ export async function useBloodStrikeAction(
     throw new BadRequestException('Golpe de Sangue não disponível');
   }
 
-  const costDice = bloodStrikeCostDice(dto.optionSlug);
-  if (!costDice) {
+  const option = findStrikeOptionForTableAction(
+    catalog.strikeOptions,
+    dto.optionSlug,
+    BLOOD_STRIKE_TABLE_ACTION,
+  );
+  if (!option?.costDice) {
     throw new BadRequestException(
       `Opção de Golpe de Sangue desconhecida: ${dto.optionSlug}`,
     );
@@ -66,56 +65,40 @@ export async function useBloodStrikeAction(
     );
   }
 
-  if (
-    character.hitPointsCurrent == null ||
-    character.hitPointsMax == null
-  ) {
-    throw new BadRequestException('Pontos de Vida do personagem não definidos');
-  }
-
-  await deps.state.useClassResource(
-    character,
-    BLOOD_STRIKE_RESOURCE_SLUG,
-    1,
-  );
-
-  const first = rollExpression(costDice);
-  let costTotal = first.total;
-  let expression = first.expression;
-
-  if (dto.takeLowerBloodCost) {
-    if (!canTakeLowerBloodCost(character.level)) {
-      throw new BadRequestException(
-        'Rerrolar o Custo de Sangue exige nível 10+ (Sangue da Criação)',
-      );
-    }
-    const second = rollExpression(costDice);
-    costTotal = Math.min(first.total, second.total);
-    expression = `${costDice} (menor de ${first.total}/${second.total})`;
-  }
-
-  let hp = character.hitPointsCurrent - costTotal;
-  const notes: string[] = [
-    `${bloodStrikeLabel(dto.optionSlug)}: Custo de Sangue ${expression} = ${costTotal} Necrótico (não reduzível). Aplique o efeito do golpe na mesa.`,
-  ];
-
-  if (character.level >= 15) {
-    const heal = bloodSymphonyHealAmount(
-      abilityModifier(character.abilityScores.constituicao),
+  let state: Awaited<ReturnType<typeof applyCurrentHitPoints>> | undefined;
+  let spent;
+  try {
+    spent = await spendStrikeSelfCost({
+      character,
+      option,
+      takeLowerCost: dto.takeLowerBloodCost,
+      ports: {
+        useClassResource: async (slug, amount) => {
+          await deps.state.useClassResource(character, slug, amount);
+        },
+        applyCurrentHitPoints: async (hitPointsCurrent) => {
+          character.hitPointsCurrent = hitPointsCurrent;
+          state = await applyCurrentHitPoints(
+            deps.state,
+            character,
+            hitPointsCurrent,
+          );
+        },
+      },
+    });
+  } catch (error) {
+    throw new BadRequestException(
+      error instanceof Error ? error.message : 'Golpe de Sangue inválido',
     );
-    hp += heal;
-    notes.push(`Sinfonia de Sangue: +${heal} PV`);
   }
-
-  const state = await applyCurrentHitPoints(deps.state, character, hp);
 
   return {
-    state,
-    actionName: bloodStrikeLabel(dto.optionSlug),
-    expression,
-    roll: costTotal,
-    total: costTotal,
+    state: state!,
+    actionName: option.name,
+    expression: spent.expression,
+    roll: spent.costTotal,
+    total: spent.costTotal,
     resourceSpent: true,
-    note: notes.join(' · '),
+    note: formatStrikeSelfCostNote(spent, 'table'),
   };
 }

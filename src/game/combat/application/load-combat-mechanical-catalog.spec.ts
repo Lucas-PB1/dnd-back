@@ -1,5 +1,5 @@
-import { LoadCombatMechanicalCatalog } from './load-combat-mechanical-catalog';
 import { asDep } from '@common/testing/as-dep';
+import { LoadCombatMechanicalCatalog } from './load-combat-mechanical-catalog';
 
 function emptyFindRepo() {
   return { find: jest.fn().mockResolvedValue([]) };
@@ -17,6 +17,13 @@ describe('LoadCombatMechanicalCatalog cache', () => {
     const precautionRepo = emptyFindRepo();
     const economyRepo = emptyFindRepo();
     const panelRepo = emptyFindRepo();
+    const optionValueRepo = emptyFindRepo();
+    const subclassRepo = {
+      findOne: jest.fn().mockResolvedValue(null),
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([]),
+    };
 
     const service = new LoadCombatMechanicalCatalog(
       asDep(gunslingerRepo),
@@ -29,6 +36,9 @@ describe('LoadCombatMechanicalCatalog cache', () => {
       asDep(precautionRepo),
       asDep(economyRepo),
       asDep(panelRepo),
+      asDep(optionValueRepo),
+      asDep(subclassRepo),
+      asDep(effectCatalog),
     );
 
     return {
@@ -36,16 +46,19 @@ describe('LoadCombatMechanicalCatalog cache', () => {
       gunslingerRepo,
       economyRepo,
       panelRepo,
+      effectCatalog,
     };
   }
 
   it('hits DB once for concurrent and sequential loads within TTL', async () => {
-    const { service, gunslingerRepo, economyRepo } = createService();
+    const { service, gunslingerRepo, economyRepo, effectCatalog } =
+      createService();
 
     const [a, b] = await Promise.all([service.load(), service.load()]);
     expect(a).toBe(b);
     expect(gunslingerRepo.find).toHaveBeenCalledTimes(1);
     expect(economyRepo.find).toHaveBeenCalledTimes(1);
+    expect(effectCatalog.load).toHaveBeenCalledTimes(1);
 
     await service.load();
     expect(gunslingerRepo.find).toHaveBeenCalledTimes(1);

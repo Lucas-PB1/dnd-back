@@ -123,8 +123,23 @@ describe('resolveDeclaredEconomyTableAction', () => {
   });
 
   it('applies temp HP for brittle-bone-armor', async () => {
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'temp_hp',
+          trigger: 'on_table_action',
+          actionSlug: 'brittle-bone-armor',
+          numeric: { amountFormula: 'level_times_2', flat: null },
+          note: null,
+        },
+      ]),
+    };
     const result = await resolveDeclaredEconomyTableAction(
-      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
       asDep(osteo),
       'brittle-bone-armor',
     );
@@ -148,8 +163,23 @@ describe('resolveDeclaredEconomyTableAction', () => {
       subclassSlug: 'viking',
       level: 15,
     };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'temp_hp',
+          trigger: 'on_table_action',
+          actionSlug: 'marauders-reprisal',
+          numeric: { amountFormula: 'level_div_2', flat: null },
+          note: null,
+        },
+      ]),
+    };
     const result = await resolveDeclaredEconomyTableAction(
-      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
       asDep(viking),
       'marauders-reprisal',
     );

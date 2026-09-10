@@ -424,6 +424,7 @@ creature/phb/phb_mounts.all.sql
 creature/phb/phb_mount.images.02.sql
 effect/phb/phb_effect.phb.sql
 effect/steinhardt/phb_effect.steinhardt.sql
+effect/steinhardt/phb_effect.blood-strike-options.sql
 effect/grim-hollow/phb_effect.grim-hollow.sql
 effect/northlands/phb_effect.northlands.sql
 effect/valdas/phb_effect.valdas.sql

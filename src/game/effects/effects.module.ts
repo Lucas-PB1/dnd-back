@@ -7,7 +7,12 @@ import { PhbEffectCombatMod } from '@entities/phb-effect-combat-mod.entity';
 import { PhbEffectDamageDie } from '@entities/phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from '@entities/phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from '@entities/phb-effect-environmental-immunity.entity';
+import { PhbEffectCondition } from '@entities/phb-effect-condition.entity';
+import { PhbEffectSave } from '@entities/phb-effect-save.entity';
+import { PhbEffectForcedMovement } from '@entities/phb-effect-forced-movement.entity';
+import { PhbEffectDice } from '@entities/phb-effect-dice.entity';
 import { PhbEffectFeat } from '@entities/phb-effect-feat.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbEffectLanguage } from '@entities/phb-effect-language.entity';
 import { PhbEffectNote } from '@entities/phb-effect-note.entity';
 import { PhbEffectNumeric } from '@entities/phb-effect-numeric.entity';
@@ -23,6 +28,7 @@ import { PhbEffectWeapon } from '@entities/phb-effect-weapon.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 import { PhbSpecies } from '@entities/phb-species.entity';
 import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
 import { LoadEffectCatalog } from './application/load-effect-catalog';
 
 @Module({
@@ -48,9 +54,15 @@ import { LoadEffectCatalog } from './application/load-effect-catalog';
       PhbEffectReach,
       PhbEffectRestQuirk,
       PhbEffectEnvironmentalImmunity,
+      PhbEffectCondition,
+      PhbEffectSave,
+      PhbEffectForcedMovement,
+      PhbEffectDice,
       PhbFeatRef,
       PhbSpecies,
       PhbSpellRef,
+      PhbWeaponMastery,
+      PhbSubclassRef,
     ]),
   ],
   providers: [LoadEffectCatalog],

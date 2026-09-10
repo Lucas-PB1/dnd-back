@@ -42,6 +42,10 @@ function baseEffect(
     reach: null,
     restQuirk: null,
     environmentalImmunity: null,
+    condition: null,
+    save: null,
+    forcedMovement: null,
+    dice: null,
     ...overrides,
   };
 }

@@ -11,6 +11,7 @@ SSOT: [`adr-read-model-layers.md`](./adr-read-model-layers.md).
 - `phb_dungeoneer_slayer_type`
 - `phb_gunslinger_maneuver`
 - `phb_cunning_strike_effect`
+- `phb_effect` (+ `option_value` labels) — strike packages (ex.: Sabujo)
 - `phb_subclass_table_action`
 - `phb_persona_mask`
 - `phb_class_panel_action`
