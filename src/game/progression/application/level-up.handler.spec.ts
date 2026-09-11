@@ -81,22 +81,31 @@ describe('LevelUpHandler', () => {
     Pick<CharacterStateRepository, 'syncHitDiceOnLevelChange'>
   >;
   let sheetRepository: jest.Mocked<Pick<CharacterSheetRepository, 'load'>>;
+  let dataSource: { getRepository: jest.Mock };
   let handler: LevelUpHandler;
 
   beforeEach(() => {
     jest.spyOn(levelUpCatalog, 'loadClassWeaponMasteryProgression').mockResolvedValue(
       fighterProgression,
     );
+    jest
+      .spyOn(levelUpCatalog, 'loadAsiOrFeatLevels')
+      .mockResolvedValue([4, 8, 12, 16, 19]);
     repository = { findAccessibleOrFail: jest.fn() };
     updateCharacter = { execute: jest.fn() };
     characterState = { syncHitDiceOnLevelChange: jest.fn() };
     sheetRepository = { load: jest.fn() };
+    dataSource = {
+      getRepository: jest.fn().mockReturnValue({
+        findOne: jest.fn().mockResolvedValue(null),
+      }),
+    };
     handler = new LevelUpHandler(
       asDep(repository),
       asDep(updateCharacter),
       asDep(characterState),
       asDep(sheetRepository),
-      asDep({}),
+      asDep(dataSource),
     );
   });
 
@@ -148,7 +157,7 @@ describe('LevelUpHandler', () => {
     );
 
     repository.findAccessibleOrFail.mockResolvedValue(
-      character({ classSlug: 'wizard', level: 2 }),
+      character({ classSlug: 'wizard', level: 2, subclassSlug: null }),
     );
     await expect(
       handler.execute('u1', 'ch1', {

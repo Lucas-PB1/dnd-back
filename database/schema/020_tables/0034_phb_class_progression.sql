@@ -6,5 +6,6 @@ CREATE TABLE rpg.phb_class_progression (
   prepared_spells INTEGER CHECK (prepared_spells >= 0),
   channel_divinity INTEGER CHECK (channel_divinity >= 0),
   weapon_mastery INTEGER CHECK (weapon_mastery IS NULL OR weapon_mastery >= 0),
+  asi_or_feat BOOLEAN NOT NULL DEFAULT false,
   PRIMARY KEY (class_id, level)
 );

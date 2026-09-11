@@ -24,3 +24,10 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Seed: `database/seeds/class/phb/phb_class.fighting-style-unlock.sql` (após monster-hunter no `SEED_ORDER`).
 - Game: `resolveFightingStyleUnlockLevel` + predicado puro `classHasFightingStylePick(unlock, level)` — sem Record de slugs.
 - Docs: [sql-first-audit.md](/sql-first-audit.md); waves-plan atualizado.
+
+## 2026-09-11 — Onda 2: asi_or_feat em progression
+
+- Schema: `database/schema/020_tables/0034_phb_class_progression.sql` (+ `asi_or_feat`).
+- Migration forward: `database/migrations/20260911_phb_class_progression_asi_or_feat.sql`.
+- Seed: `database/seeds/class/phb/phb_class_progression.asi-or-feat.sql` (base 4/8/12/16/19; fighter +6/14; rogue +10).
+- Game: `loadAsiOrFeatLevels` + predicados puros sem Record de slugs; level-up preview/handler async.

@@ -27,4 +27,7 @@ export class PhbClassProgression {
 
   @Column({ name: 'weapon_mastery', type: 'int', nullable: true })
   weaponMastery!: number | null;
+
+  @Column({ name: 'asi_or_feat', type: 'boolean', default: false })
+  asiOrFeat!: boolean;
 }

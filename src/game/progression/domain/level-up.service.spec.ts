@@ -65,6 +65,9 @@ describe('LevelUpService', () => {
       .spyOn(levelUpCatalog, 'loadSubclassUnlockLevel')
       .mockResolvedValue(3);
     jest
+      .spyOn(levelUpCatalog, 'loadAsiOrFeatLevels')
+      .mockResolvedValue([4, 8, 12, 16, 19]);
+    jest
       .spyOn(levelUpCatalog, 'loadClassWeaponMasteryProgression')
       .mockResolvedValue([
         { level: 1, weaponMastery: null },

@@ -15,12 +15,12 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Achado | Destino SQL | Status |
 | --- | --- | --- |
 | Desbloqueio Estilo de Luta por classe | `rpg.phb_class.fighting_style_unlock_level` + seed + `resolveFightingStyleUnlockLevel` | **migrado** |
+| ASI / feat levels por classe | `rpg.phb_class_progression.asi_or_feat` + seed + `loadAsiOrFeatLevels` | **migrado** |
 
 ## Dívida (próximos candidatos)
 
 | Prioridade | Achado | Arquivo(s) tipicos | Casa SQL sugerida |
 | --- | --- | --- | --- |
-| alta | ASI / feat levels por classe | `progression/domain/asi-feat-levels.ts` | `phb_class_progression` / coluna dedicada |
 | alta | Expertise slots / níveis | validators class-expertise | progression / option_def |
 | média | Companion profiles (slug→config) | `companion/domain/companion-profiles.ts` | tabela companion / effects |
 | média | Manikin AC / ancestry damage maps | `combat/domain/species/*` | effects (`ac_*`, damage type) |

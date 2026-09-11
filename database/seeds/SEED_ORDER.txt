@@ -263,6 +263,7 @@ class/grim-hollow/phb_class.monster-hunter.sql
 class/phb/phb_class.fighting-style-unlock.sql
 class/grim-hollow/phb_class.monster-hunter-proficiency.sql
 class/grim-hollow/phb_class.monster-hunter-progression.sql
+class/phb/phb_class_progression.asi-or-feat.sql
 class/grim-hollow/phb_class.monster-hunter-feature.sql
 subclass/grim-hollow/phb_subclass.all.sql
 subclass/grim-hollow/phb_subclass_feature.all.sql

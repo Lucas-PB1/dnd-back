@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { PhbClassFeature } from '@entities/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
 import {
   loadWeaponMasteryProgression,
@@ -24,6 +25,19 @@ export async function loadClassWeaponMasteryProgression(
   classSlug: string,
 ): Promise<ClassProgressionMasteryRow[]> {
   return loadWeaponMasteryProgression(dataSource, classSlug);
+}
+
+/** Níveis com ASI/talento para a classe (`phb_class_progression.asi_or_feat`). */
+export async function loadAsiOrFeatLevels(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<number[]> {
+  const rows = await dataSource.getRepository(PhbClassProgression).find({
+    where: { klass: { slug: classSlug }, asiOrFeat: true },
+    order: { level: 'ASC' },
+    select: ['level'],
+  });
+  return rows.map((row) => row.level);
 }
 
 export async function loadSubclassUnlockLevel(

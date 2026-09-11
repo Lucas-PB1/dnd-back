@@ -14,6 +14,7 @@ import { isAsiOrFeatLevel } from './asi-feat-levels';
 import { classExpertiseSlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
 import { classWeaponMasterySlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import {
+  loadAsiOrFeatLevels,
   loadClassFeaturesAtLevel,
   loadClassWeaponMasteryProgression,
   loadMaxSpellLevelForCharacter,
@@ -78,6 +79,8 @@ export class LevelUpService {
       newSubclassOptionSlots,
       classFeatures,
       subclassFeatures,
+      masteryProgression,
+      asiFeatLevels,
     ] = await Promise.all([
       this.findNewSpellOptions(character, nextLevel),
       this.findAlwaysPreparedSpellsNewAtLevel(character, nextLevel),
@@ -92,11 +95,9 @@ export class LevelUpService {
         character.subclassSlug,
         nextLevel,
       ),
+      loadClassWeaponMasteryProgression(this.dataSource, character.classSlug),
+      loadAsiOrFeatLevels(this.dataSource, character.classSlug),
     ]);
-    const masteryProgression = await loadClassWeaponMasteryProgression(
-      this.dataSource,
-      character.classSlug,
-    );
 
     return {
       currentLevel: character.level,
@@ -107,7 +108,7 @@ export class LevelUpService {
       estimatedHitPointsMax,
       subclassRequired,
       subclassUnlockLevel,
-      isAsiOrFeatLevel: isAsiOrFeatLevel(character.classSlug, nextLevel),
+      isAsiOrFeatLevel: isAsiOrFeatLevel(asiFeatLevels, nextLevel),
       newFeatures: [...classFeatures, ...subclassFeatures],
       newSpellOptions,
       newAlwaysPreparedSpells,

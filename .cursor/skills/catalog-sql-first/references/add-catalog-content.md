@@ -20,12 +20,12 @@
 2. Grants via `phb_spell_grant` / effects — não duplicar em TS
 3. Itens class-granted: `properties.grantedBy*` + helpers em `@catalog/game-port`
 
-## Classe — meta (ex.: nível de Estilo de Luta)
+## Classe — meta (ex.: nível de Estilo de Luta / ASI)
 
-1. Preferir coluna em `phb_class` (nullable) + seed `UPDATE` a `Record` de slugs em Game
+1. Preferir coluna em `phb_class` ou flag em `phb_class_progression` + seed `UPDATE` a `Record` de slugs em Game
 2. Migration forward se o DB já existir
-3. Entity `PhbClassRef` + query em `class-meta.queries.ts`
-4. Predicado puro no domain; validator só resolve do catálogo
+3. Entity alinhada + query (`class-meta.queries.ts` / `level-up-catalog.queries.ts`)
+4. Predicado puro no domain; validator/handler só resolve do catálogo
 
 ## Depois do SQL
 

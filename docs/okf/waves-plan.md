@@ -31,7 +31,8 @@ timestamp: 2026-09-11
 | Skill `catalog-sql-first` + checklist | feito |
 | Auditar `src/game/**` por slugs/level gates mágicos | feito — [sql-first-audit.md](/sql-first-audit.md) |
 | Migrar 1 caso piloto (fighting style unlock) | feito — coluna + seed + query + validator |
-| Próximos hardcodes (ASI, expertise, …) | pendente — ver audit |
+| Migrar ASI / feat levels | feito — `asi_or_feat` em progression + `loadAsiOrFeatLevels` |
+| Próximos hardcodes (expertise, …) | pendente — ver audit |
 | Reforçar `@catalog/game-port` se novos helpers | sob demanda |
 
 **Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.

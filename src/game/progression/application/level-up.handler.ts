@@ -15,7 +15,10 @@ import {
   applyLevelUpAsiBoost,
   resolveLevelUpAsiFromDto,
 } from '../domain/level-up-asi';
-import { loadClassWeaponMasteryProgression } from '../infrastructure/queries/level-up-catalog.queries';
+import {
+  loadAsiOrFeatLevels,
+  loadClassWeaponMasteryProgression,
+} from '../infrastructure/queries/level-up-catalog.queries';
 import { loadSubclassOptionSlotsNewAtLevel } from '@game/sheet/infrastructure/queries/class-option.queries';
 
 @Injectable()
@@ -121,10 +124,16 @@ export class LevelUpHandler {
     }
 
     const asiInput = resolveLevelUpAsiFromDto(dto);
-    if (asiInput && !isAsiOrFeatLevel(character.classSlug, nextLevel)) {
-      throw new BadRequestException(
-        `Level ${nextLevel} is not an ASI/feat level for class '${character.classSlug}'`,
+    if (asiInput) {
+      const asiFeatLevels = await loadAsiOrFeatLevels(
+        this.dataSource,
+        character.classSlug,
       );
+      if (!isAsiOrFeatLevel(asiFeatLevels, nextLevel)) {
+        throw new BadRequestException(
+          `Level ${nextLevel} is not an ASI/feat level for class '${character.classSlug}'`,
+        );
+      }
     }
 
     const patch: UpdateCharacterDto = {
