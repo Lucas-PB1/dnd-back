@@ -69,6 +69,19 @@ export type EffectExecution =
       note: string | null;
     }
   | {
+      kind: 'check_boost';
+      resourceSlug: string;
+      note: string | null;
+    }
+  | {
+      kind: 'catalog_maneuver';
+      note: string | null;
+    }
+  | {
+      kind: 'strike_self_cost';
+      note: string | null;
+    }
+  | {
       kind: 'unsupported';
       effectKind: EffectKind;
     };
@@ -86,12 +99,16 @@ const EXECUTABLE_KINDS = new Set<EffectKind>([
   'feature_dc',
   'heal_from_dice_pool',
   'grant_inspiration',
+  'check_boost',
+  'catalog_maneuver',
+  'strike_self_cost',
 ]);
 
 export type ExecuteCatalogEffectContext = {
   level: number;
   rng?: Rng;
   hitDieFaces?: number;
+  scheduleDieFaces?: number;
   flatOverride?: number;
   rageBonus?: number;
   rageActive?: boolean;
@@ -117,6 +134,7 @@ function tableNoteFromEffect(
     level: context.level,
     rng: context.rng,
     hitDieFaces: context.hitDieFaces,
+    scheduleDieFaces: context.scheduleDieFaces,
     rageBonus: context.rageBonus,
     rageActive: context.rageActive,
   });
@@ -143,6 +161,28 @@ export function executeCatalogEffect(
         effect.note?.note?.trim() ||
         effect.label ||
         'Inspiração concedida (declare aliados na mesa).',
+    };
+  }
+
+  if (effect.kind === 'check_boost') {
+    return {
+      kind: 'check_boost',
+      resourceSlug: effect.resourceSlug ?? '',
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'catalog_maneuver') {
+    return {
+      kind: 'catalog_maneuver',
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'strike_self_cost') {
+    return {
+      kind: 'strike_self_cost',
+      note: effect.note?.note ?? null,
     };
   }
 
@@ -252,6 +292,21 @@ export function executeCatalogEffect(
   }
 
   if (effect.kind === 'table_roll') {
+    if (effect.numeric?.amountFormula === 'schedule_die_plus_flat') {
+      const resolved = resolveEffectAmount({
+        amountFormula: 'schedule_die_plus_flat',
+        flat,
+        level: context.level,
+        rng: context.rng,
+        scheduleDieFaces: context.scheduleDieFaces,
+      });
+      return {
+        kind: 'table_roll',
+        amount: resolved.amount,
+        expression: resolved.expression ?? `1d${context.scheduleDieFaces ?? 6}`,
+        note: effect.note?.note ?? null,
+      };
+    }
     if (effect.numeric?.amountFormula === 'rage_bonus_d6') {
       const resolved = resolveEffectAmount({
         amountFormula: 'rage_bonus_d6',
@@ -320,6 +375,7 @@ export function executeCatalogEffect(
     level: context.level,
     rng: context.rng,
     hitDieFaces: context.hitDieFaces,
+    scheduleDieFaces: context.scheduleDieFaces,
     rageBonus: context.rageBonus,
     rageActive: context.rageActive,
   });

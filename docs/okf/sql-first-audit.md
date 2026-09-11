@@ -70,6 +70,8 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Piloto bárbaro (fechado):** handler sem `switch` — só `applyDeclaredEconomyTableAction` + kinds genéricos (`toggle_combat_flag`, `table_roll`, `feature_dc`, `heal_from_dice_pool`, `sync_companion`, `companion_command`, `recover_resource*`). Seed `phb_effect.barbarian-mesa.sql`.
 
+**Onda guerreiro (fechada):** handler POST = só `applyDeclaredEconomyTableAction` (kinds tipados inclusos). Economy BM: **um** botão `use-maneuver` (sem rows `fighter-bm-*` lembrete). GET `listBattleMasterManeuvers` = picker read-model, não switch de apply. Seed `phb_effect.fighter-mesa.sql`.
+
 ### Gates `has*` vs schedule (dívida média)
 
 `phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).

@@ -77,7 +77,30 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** cura PV na ficha.
 - **Satélite:** `phb_effect_numeric` (+ note)
 - **Trigger:** `on_resource_spend` / `on_table_action`
-- **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`)
+- **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`); `dice_1d10_plus_level` (Recuperar Fôlego); `schedule_die_plus_flat` (Campo Protetor — faces do schedule + flatOverride INT)
+- **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy
+
+### `check_boost`
+
+- **Semântica:** rola 1d10 e gasta o pool só se `checkTotal`+`dc` virarem sucesso (sem contexto: gasta sempre).
+- **Campos:** `resource_slug` no efeito
+- **Trigger:** `on_table_action`
+- **Options:** `checkTotal`, `dc`
+- **Apply:** `applyCheckBoostTableAction` (Mente Tática)
+
+### `catalog_maneuver`
+
+- **Semântica:** manobra de catálogo (BM): dado de superioridade / Implacável, CD, Rally→`temp_hp`.
+- **Trigger:** `on_table_action`
+- **Options:** `maneuverSlug`, `useRelentless`
+- **Apply:** `applyCatalogManeuverTableAction`
+
+### `strike_self_cost`
+
+- **Semântica:** golpe tipado com custo em HP (Blood Hound).
+- **Trigger:** `on_table_action`
+- **Options:** `optionSlug`, `takeLowerBloodCost`
+- **Apply:** `applyStrikeSelfCostTableAction`
 
 ### `spend_resource` (Fase 2)
 

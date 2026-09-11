@@ -14,6 +14,8 @@ export function resolveEffectAmount(input: {
   level: number;
   rng?: Rng;
   hitDieFaces?: number;
+  /** Faces do dado vindo de schedule (psi / superioridade). */
+  scheduleDieFaces?: number;
   /** Bônus de dano da Fúria (schedule). */
   rageBonus?: number;
   rageActive?: boolean;
@@ -66,6 +68,25 @@ export function resolveEffectAmount(input: {
         amount: rolled.total,
         expression: rolled.expression,
         faces: 4,
+      };
+    }
+    case 'dice_1d10_plus_level': {
+      const level = Math.max(1, input.level);
+      const rolled = rollDamageParts('1d10', level, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 10,
+      };
+    }
+    case 'schedule_die_plus_flat': {
+      const faces = Math.max(2, input.scheduleDieFaces ?? 6);
+      const bonus = input.flat ?? 0;
+      const rolled = rollDamageParts(`1d${faces}`, bonus, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces,
       };
     }
     case 'dice_2d4_plus_flat': {

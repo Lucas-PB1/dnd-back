@@ -12,6 +12,15 @@ describe('applyDeclaredEconomyTableAction', () => {
       ...stateResponse,
       ...dto,
     })),
+    applyCurrentHitPoints: jest
+      .fn()
+      .mockImplementation(async (character, hitPointsCurrent) => {
+        character.hitPointsCurrent = hitPointsCurrent;
+        return {
+          ...stateResponse,
+          hitPointsCurrent,
+        };
+      }),
   };
 
   const economyActions = [
@@ -89,6 +98,28 @@ describe('applyDeclaredEconomyTableAction', () => {
       description:
         'Sem ação: gaste 1 uso de Fúria para restaurar Presença Intimidante.',
     },
+    {
+      id: 'fighter-second-wind',
+      name: 'Recuperar Fôlego',
+      economy: 'bonus' as const,
+      classSlug: 'fighter',
+      minLevel: 1,
+      resourceSlug: 'secondWind',
+      alwaysSpendsResource: true,
+      tableAction: 'second-wind',
+      description: 'Cura 1d10 + nível.',
+    },
+    {
+      id: 'fighter-action-surge',
+      name: 'Surto de Ação',
+      economy: 'action' as const,
+      classSlug: 'fighter',
+      minLevel: 2,
+      resourceSlug: 'actionSurge',
+      alwaysSpendsResource: true,
+      tableAction: 'action-surge',
+      description: 'Ação adicional.',
+    },
   ];
 
   const mechanicalCatalog = {
@@ -118,6 +149,15 @@ describe('applyDeclaredEconomyTableAction', () => {
       ...stateResponse,
       ...dto,
     }));
+    state.applyCurrentHitPoints.mockImplementation(
+      async (character, hitPointsCurrent) => {
+        character.hitPointsCurrent = hitPointsCurrent;
+        return {
+          ...stateResponse,
+          hitPointsCurrent,
+        };
+      },
+    );
   });
 
   it('spends spendAmount from economy catalog', async () => {
@@ -325,5 +365,101 @@ describe('applyDeclaredEconomyTableAction', () => {
     );
     expect(result.resourceSpent).toBe(true);
     expect(result.note).toContain('Presença Intimidante');
+  });
+
+  it('applies heal for second-wind (1d10+level)', async () => {
+    const fighter = {
+      id: 'fighter-sw',
+      classSlug: 'fighter',
+      subclassSlug: 'champion',
+      level: 5,
+      hitPointsCurrent: 20,
+      hitPointsMax: 50,
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'heal',
+          trigger: 'on_table_action',
+          actionSlug: 'second-wind',
+          unlockLevel: 1,
+          ownerKind: 'class',
+          ownerSlug: 'fighter',
+          numeric: { amountFormula: 'dice_1d10_plus_level', flat: null },
+          note: null,
+        },
+        {
+          kind: 'table_note',
+          trigger: 'on_table_action',
+          actionSlug: 'second-wind',
+          unlockLevel: 5,
+          ownerKind: 'class',
+          ownerSlug: 'fighter',
+          note: {
+            note: 'Ajuste Tático: mova-se até metade do Deslocamento sem provocar AO.',
+          },
+        },
+      ]),
+    };
+    const result = await applyDeclaredEconomyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
+      asDep(fighter),
+      'second-wind',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'fighter-sw' }),
+      'secondWind',
+      1,
+    );
+    expect(state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.total).toBeGreaterThan(0);
+    expect(result.expression).toContain('d10');
+    expect(result.note).toContain('Ajuste Tático');
+  });
+
+  it('skips subclass table_note when owner does not match', async () => {
+    const fighter = {
+      id: 'fighter-surge',
+      classSlug: 'fighter',
+      subclassSlug: 'champion',
+      level: 15,
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'table_note',
+          trigger: 'on_table_action',
+          actionSlug: 'action-surge',
+          unlockLevel: 2,
+          ownerKind: 'class',
+          ownerSlug: 'fighter',
+          note: { note: 'Surto de Ação: ação adicional.' },
+        },
+        {
+          kind: 'table_note',
+          trigger: 'on_table_action',
+          actionSlug: 'action-surge',
+          unlockLevel: 15,
+          ownerKind: 'subclass',
+          ownerSlug: 'eldritch-knight',
+          note: { note: 'Investida Mística: teleporte até 9 m.' },
+        },
+      ]),
+    };
+    const result = await applyDeclaredEconomyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
+      asDep(fighter),
+      'action-surge',
+    );
+    expect(result.note).toContain('Surto de Ação');
+    expect(result.note).not.toContain('Investida Mística');
   });
 });

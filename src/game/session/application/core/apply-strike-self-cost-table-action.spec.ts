@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
-import { useBloodStrikeAction } from './blood-hound-actions';
-import type { FighterActionDeps } from './fighter-action-deps';
 import { BLOOD_HOUND_STRIKE_OPTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog/strike-options.fixtures';
+import { applyStrikeSelfCostTableAction } from './apply-strike-self-cost-table-action';
+import { asDep } from '@common/testing/as-dep';
 
-describe('useBloodStrikeAction', () => {
+describe('applyStrikeSelfCostTableAction', () => {
   const character = {
     id: 'char-1',
     level: 15,
@@ -21,18 +21,11 @@ describe('useBloodStrikeAction', () => {
     },
   };
 
-  function makeDeps(overrides?: {
-    optionValueId?: string;
-    level?: number;
-  }): FighterActionDeps {
+  function makeDeps(overrides?: { optionValueId?: string; level?: number }) {
     const level = overrides?.level ?? character.level;
+    const pc = { ...character, level };
     return {
-      access: {
-        findAccessibleOrFail: jest.fn().mockResolvedValue({
-          ...character,
-          level,
-        }),
-      },
+      character: pc,
       state: {
         useClassResource: jest.fn().mockResolvedValue({
           state: { resources: [] },
@@ -44,7 +37,6 @@ describe('useBloodStrikeAction', () => {
             resources: [],
           })),
       },
-      domain: {} as FighterActionDeps['domain'],
       sheet: {
         load: jest.fn().mockResolvedValue({
           subclassOptions: [
@@ -81,14 +73,18 @@ describe('useBloodStrikeAction', () => {
           ]),
         }),
       },
-    } as unknown as FighterActionDeps;
+    };
   }
 
   it('spends resource, applies necrotic cost and L15 heal', async () => {
     const deps = makeDeps();
-    const rngSpy = jest.spyOn(Math, 'random').mockReturnValue(0); // roll 1
+    const rngSpy = jest.spyOn(Math, 'random').mockReturnValue(0);
 
-    const result = await useBloodStrikeAction(deps, 'user', 'char-1', {
+    const result = await applyStrikeSelfCostTableAction({
+      state: asDep(deps.state),
+      sheet: asDep(deps.sheet),
+      mechanicalCatalog: asDep(deps.mechanicalCatalog),
+      character: asDep(deps.character),
       optionSlug: 'hunting-strike',
     });
 
@@ -99,7 +95,6 @@ describe('useBloodStrikeAction', () => {
       'blood-strike',
       1,
     );
-    // cost 1 (1d4 min) then +3 CON heal → 40 - 1 + 3 = 42
     expect(deps.state.applyCurrentHitPoints).toHaveBeenCalledWith(
       expect.anything(),
       42,
@@ -112,7 +107,11 @@ describe('useBloodStrikeAction', () => {
   it('rejects unknown option', async () => {
     const deps = makeDeps();
     await expect(
-      useBloodStrikeAction(deps, 'user', 'char-1', {
+      applyStrikeSelfCostTableAction({
+        state: asDep(deps.state),
+        sheet: asDep(deps.sheet),
+        mechanicalCatalog: asDep(deps.mechanicalCatalog),
+        character: asDep(deps.character),
         optionSlug: 'not-a-strike',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
@@ -121,7 +120,11 @@ describe('useBloodStrikeAction', () => {
   it('rejects option the character does not know', async () => {
     const deps = makeDeps({ optionValueId: 'hunting-strike' });
     await expect(
-      useBloodStrikeAction(deps, 'user', 'char-1', {
+      applyStrikeSelfCostTableAction({
+        state: asDep(deps.state),
+        sheet: asDep(deps.sheet),
+        mechanicalCatalog: asDep(deps.mechanicalCatalog),
+        character: asDep(deps.character),
         optionSlug: 'exiling-strike',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);

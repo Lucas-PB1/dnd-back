@@ -144,3 +144,20 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Runners: `applyDeclaredEconomyTableAction` / `applyFeatEconomyTableAction` (arquivos `apply-*-economy-table-action.ts`).
 - Helpers de kind: `applyCompanionSummon` / `applyCompanionCommand`.
 - Pasta vazia `barbarian/subclass-actions` removida; dívida por slug continua só nas outras classes.
+
+## 2026-09-11 — Onda guerreiro (mesa parcial)
+
+- Fórmula `dice_1d10_plus_level`; wire `heal` no apply declarado; filtro unlock/subclass em effects.
+- Seed `phb_effect.fighter-mesa.sql`; `alwaysSpends` em second-wind / action-surge.
+- Fora do switch: `second-wind`, `action-surge`, `psi:mental-guard`. Dívida: mind / manobra / precaução / blood / psi free-paid.
+
+## 2026-09-11 — Guerreiro switch zero (dívida tipada)
+
+- Kinds: `check_boost`, `catalog_maneuver`, `strike_self_cost`; fórmula `schedule_die_plus_flat`.
+- Apply: free_resource + `usePsiDie`; options tipadas; `spellSlug` precaução.
+- `FighterActionsHandler` só access + apply (+ GET manobras). Resolvers tipados mortos removidos.
+
+## 2026-09-11 — BM alinhado ao bárbaro (UI)
+
+- Removidos lembretes `fighter-bm-*` (table_action NULL); fica só `use-maneuver` + GET picker.
+- Apply BM continua no kind `catalog_maneuver` (paralelo a companion/toggle do bárbaro).

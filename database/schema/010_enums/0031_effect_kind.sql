@@ -113,5 +113,8 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'sync_companion',
   'companion_command',
   'table_roll',
-  'recover_resource_to_max'
+  'recover_resource_to_max',
+  'check_boost',
+  'catalog_maneuver',
+  'strike_self_cost'
 );

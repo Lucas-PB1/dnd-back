@@ -3,6 +3,7 @@ import {
   formatStrikeSelfCostNote,
   spendStrikeSelfCost,
 } from '@game/combat/application/strike/spend-strike-self-cost';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import {
   BLOOD_GATE_LOWER_COST,
   BLOOD_GATE_SYMPHONY,
@@ -10,31 +11,30 @@ import {
 } from '@game/combat/domain/fighter';
 import { findStrikeOptionForTableAction } from '@game/combat/domain/strike-option';
 import { BLOOD_STRIKE_OPTION_KEY_RE } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
-import { applyCurrentHitPoints } from '@game/session/application/core/apply-current-hit-points';
-import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
-import type { FighterActionDeps } from './fighter-action-deps';
+import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { applyCurrentHitPoints } from './apply-current-hit-points';
+import { assertCharacterLevel } from './table-action-guards';
 
-export type BloodStrikeDto = {
+export async function applyStrikeSelfCostTableAction(input: {
+  state: CharacterStateRepository;
+  sheet: CharacterSheetRepository;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
+  character: PlayerCharacter;
   optionSlug: string;
-  /** Sangue da Criação (L10+): rerrola e fica com o menor custo. */
   takeLowerBloodCost?: boolean;
-};
-
-export async function useBloodStrikeAction(
-  deps: FighterActionDeps,
-  userId: string,
-  characterId: string,
-  dto: BloodStrikeDto,
-): Promise<TableActionResponseDto> {
-  const character = await deps.access.findAccessibleOrFail(
-    userId,
-    characterId,
-    'write',
-  );
+}): Promise<TableActionResponseDto> {
+  const { character } = input;
   assertCharacterLevel(character, 3, 'Guerreiro', 'Golpe de Sangue');
+  if (!input.optionSlug) {
+    throw new BadRequestException(
+      'optionSlug é obrigatório (opção de Golpe de Sangue)',
+    );
+  }
 
-  const catalog = await deps.mechanicalCatalog.load();
+  const catalog = await input.mechanicalCatalog.load();
   const economy = catalog.economyActions.find(
     (row) =>
       row.classSlug === character.classSlug &&
@@ -48,20 +48,20 @@ export async function useBloodStrikeAction(
 
   const option = findStrikeOptionForTableAction(
     catalog.strikeOptions,
-    dto.optionSlug,
+    input.optionSlug,
     BLOOD_STRIKE_TABLE_ACTION,
   );
   if (!option?.costDice) {
     throw new BadRequestException(
-      `Opção de Golpe de Sangue desconhecida: ${dto.optionSlug}`,
+      `Opção de Golpe de Sangue desconhecida: ${input.optionSlug}`,
     );
   }
 
-  const sheet = await deps.sheet.load(character.id);
+  const sheet = await input.sheet.load(character.id);
   const known = (sheet.subclassOptions ?? []).some(
     (opt) =>
       BLOOD_STRIKE_OPTION_KEY_RE.test(opt.optionKey) &&
-      opt.valueId === dto.optionSlug,
+      opt.valueId === input.optionSlug,
   );
   if (!known) {
     throw new BadRequestException(
@@ -78,17 +78,17 @@ export async function useBloodStrikeAction(
     spent = await spendStrikeSelfCost({
       character,
       option,
-      takeLowerCost: dto.takeLowerBloodCost,
+      takeLowerCost: input.takeLowerBloodCost,
       lowerCostUnlockLevel: gates.get(BLOOD_GATE_LOWER_COST) ?? null,
       symphonyUnlockLevel: gates.get(BLOOD_GATE_SYMPHONY) ?? null,
       ports: {
         useClassResource: async (slug, amount) => {
-          await deps.state.useClassResource(character, slug, amount);
+          await input.state.useClassResource(character, slug, amount);
         },
         applyCurrentHitPoints: async (hitPointsCurrent) => {
           character.hitPointsCurrent = hitPointsCurrent;
           state = await applyCurrentHitPoints(
-            deps.state,
+            input.state,
             character,
             hitPointsCurrent,
           );

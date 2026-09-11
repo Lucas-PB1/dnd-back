@@ -1,5 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isFighterClass } from '@game/combat/domain/fighter';
+import {
+  isFighterClass,
+  listBattleMasterManeuvers,
+} from '@game/combat/domain/fighter';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { LoadEffectCatalog } from '@game/effects';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
@@ -7,34 +10,10 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type {
-  ActionSurgeResponseDto,
-  SecondWindResponseDto,
-  TableActionResponseDto,
-  TacticalMindDto,
-  TacticalMindResponseDto,
-  UseBattleMasterManeuverDto,
-  UseDungeonPrecautionDto,
-  UsePsiWarriorActionDto,
-} from '@game/session/dto/fighter/fighter-session.dto';
-import type {
   UseFighterTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
-import type { FighterActionDeps } from './fighter-action-deps';
-import {
-  useActionSurgeAction,
-  useSecondWindAction,
-  useTacticalMindAction,
-} from './core-actions';
-import {
-  listBattleMasterManeuversAction,
-  useBattleMasterManeuverAction,
-} from './battle-master-actions';
-import { useDungeonPrecautionAction } from './dungeoneer-actions';
-import { usePsiWarriorAction } from './psi-warrior-actions';
-import { useBloodStrikeAction } from './blood-hound-actions';
+import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-
-const PSI_PREFIX = 'psi:';
 
 @Injectable()
 export class FighterActionsHandler {
@@ -47,18 +26,34 @@ export class FighterActionsHandler {
     private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
-  private deps(): FighterActionDeps {
-    return {
-      access: this.access,
-      state: this.state,
-      domain: this.domain,
-      sheet: this.sheet,
-      mechanicalCatalog: this.mechanicalCatalog,
-    };
-  }
-
-  listBattleMasterManeuvers(userId: string, characterId: string) {
-    return listBattleMasterManeuversAction(this.deps(), userId, characterId);
+  /** Read-model: picker do botão `use-maneuver` (não é apply). */
+  async listBattleMasterManeuvers(userId: string, characterId: string) {
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'read',
+    );
+    if (
+      character.classSlug !== 'fighter' ||
+      character.subclassSlug !== 'battle-master' ||
+      character.level < 3
+    ) {
+      return [];
+    }
+    const catalog = await this.mechanicalCatalog.load();
+    const maneuvers = listBattleMasterManeuvers(catalog.battleMasterManeuvers);
+    const sheet = await this.sheet.load(
+      character.id,
+      character.backgroundSlug,
+    );
+    const selected = new Set(
+      sheet.subclassOptions
+        .filter((option) => option.optionKey.startsWith('maneuver'))
+        .map((option) => option.valueId),
+    );
+    return selected.size === 0
+      ? maneuvers
+      : maneuvers.filter((maneuver) => selected.has(maneuver.slug));
   }
 
   async useTableAction(
@@ -75,129 +70,27 @@ export class FighterActionsHandler {
       throw new BadRequestException('Fighter action is not available');
     }
 
-    const deps = this.deps();
-    const slug = dto.actionSlug;
-
-    if (slug.startsWith(PSI_PREFIX)) {
-      const psiSlug = slug.slice(PSI_PREFIX.length) as UsePsiWarriorActionDto['actionSlug'];
-      return usePsiWarriorAction(deps, userId, characterId, {
-        actionSlug: psiSlug,
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+        sheet: this.sheet,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+      },
+      character,
+      dto.actionSlug,
+      {
+        userId,
+        checkTotal: dto.checkTotal,
+        dc: dto.dc,
         usePsiDie: dto.usePsiDie,
-      });
-    }
-
-    switch (slug) {
-      case 'second-wind': {
-        const result = await useSecondWindAction(deps, userId, characterId);
-        return mapSecondWind(result);
-      }
-      case 'action-surge': {
-        const result = await useActionSurgeAction(deps, userId, characterId);
-        return mapActionSurge(result);
-      }
-      case 'tactical-mind': {
-        const mindDto: TacticalMindDto = {
-          checkTotal: dto.checkTotal,
-          dc: dto.dc,
-        };
-        const result = await useTacticalMindAction(
-          deps,
-          userId,
-          characterId,
-          mindDto,
-        );
-        return mapTacticalMind(result);
-      }
-      case 'use-maneuver': {
-        if (!dto.maneuverSlug) {
-          throw new BadRequestException('maneuverSlug é obrigatório');
-        }
-        const maneuverDto: UseBattleMasterManeuverDto = {
-          maneuverSlug: dto.maneuverSlug,
-          useRelentless: dto.useRelentless,
-        };
-        return useBattleMasterManeuverAction(
-          deps,
-          userId,
-          characterId,
-          maneuverDto,
-        );
-      }
-      case 'dungeon-precaution': {
-        if (!dto.spellSlug) {
-          throw new BadRequestException('spellSlug é obrigatório');
-        }
-        const precautionDto: UseDungeonPrecautionDto = {
-          spellSlug: dto.spellSlug,
-        };
-        return useDungeonPrecautionAction(
-          deps,
-          userId,
-          characterId,
-          precautionDto,
-        );
-      }
-      case 'blood-strike': {
-        if (!dto.optionSlug) {
-          throw new BadRequestException(
-            'optionSlug é obrigatório (opção de Golpe de Sangue)',
-          );
-        }
-        return useBloodStrikeAction(deps, userId, characterId, {
-          optionSlug: dto.optionSlug,
-          takeLowerBloodCost: dto.takeLowerBloodCost,
-        });
-      }
-      default:
-        return applyDeclaredEconomyTableAction(
-          {
-            state: deps.state,
-            mechanicalCatalog: deps.mechanicalCatalog,
-            effectCatalog: this.effectCatalog,
-          },
-          character,
-          slug,
-        );
-    }
+        maneuverSlug: dto.maneuverSlug,
+        useRelentless: dto.useRelentless,
+        spellSlug: dto.spellSlug,
+        optionSlug: dto.optionSlug,
+        takeLowerBloodCost: dto.takeLowerBloodCost,
+      },
+    );
   }
-}
-
-function mapSecondWind(result: SecondWindResponseDto): TableActionResponseDto {
-  const note =
-    result.note != null && result.note.length > 0
-      ? `Recuperar Fôlego: ${result.expression} → +${result.healAmount} PV · ${result.note}`
-      : `Recuperar Fôlego: ${result.expression} → +${result.healAmount} PV`;
-  return {
-    state: result.state,
-    actionName: 'Recuperar Fôlego',
-    expression: result.expression,
-    total: result.healAmount,
-    resourceSpent: true,
-    note,
-  };
-}
-
-function mapActionSurge(
-  result: ActionSurgeResponseDto,
-): TableActionResponseDto {
-  return {
-    state: result.state,
-    actionName: 'Surto de Ação',
-    resourceSpent: true,
-    note: result.note,
-  };
-}
-
-function mapTacticalMind(
-  result: TacticalMindResponseDto,
-): TableActionResponseDto {
-  return {
-    state: result.state,
-    actionName: 'Mente Tática',
-    expression: result.expression,
-    roll: result.roll,
-    total: result.newTotal,
-    resourceSpent: result.resourceSpent,
-    note: result.note,
-  };
 }

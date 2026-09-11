@@ -71,17 +71,30 @@ describe('resolveEffectAmount', () => {
     expect(rolled.faces).toBe(10);
   });
 
-  it('rolls 2d4 plus flat for divine clemency formula', () => {
+  it('rolls 1d10 plus level for second wind formula', () => {
     const rng = () => 0;
     const rolled = resolveEffectAmount({
-      amountFormula: 'dice_2d4_plus_flat',
-      flat: 3,
+      amountFormula: 'dice_1d10_plus_level',
+      flat: null,
       level: 5,
       rng,
     });
-    expect(rolled.amount).toBe(1 + 1 + 3);
-    expect(rolled.faces).toBe(4);
-    expect(rolled.expression).toContain('d4');
+    expect(rolled.amount).toBe(1 + 5);
+    expect(rolled.faces).toBe(10);
+    expect(rolled.expression).toContain('d10');
+  });
+
+  it('rolls schedule die plus flat', () => {
+    const rng = () => 0;
+    const rolled = resolveEffectAmount({
+      amountFormula: 'schedule_die_plus_flat',
+      flat: 3,
+      level: 5,
+      scheduleDieFaces: 8,
+      rng,
+    });
+    expect(rolled.amount).toBe(1 + 3);
+    expect(rolled.faces).toBe(8);
   });
 });
 

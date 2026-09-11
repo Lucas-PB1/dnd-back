@@ -16,5 +16,7 @@ CREATE TYPE rpg.effect_amount_formula AS ENUM (
   'rage_bonus',
   'rage_bonus_d6',
   'half_level_if_rage',
-  'ability_mod'
+  'ability_mod',
+  'dice_1d10_plus_level',
+  'schedule_die_plus_flat'
 );
