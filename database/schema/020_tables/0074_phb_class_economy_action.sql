@@ -13,6 +13,9 @@ CREATE TABLE rpg.phb_class_economy_action (
   description             TEXT NULL,
   table_action            TEXT NULL,
   spend_amount            INT NULL CHECK (spend_amount IS NULL OR spend_amount >= 1),
+  -- Após gastar `resource_slug`, recupera outro pool (ex.: Fúria → presença).
+  recover_resource_slug   TEXT NULL,
+  recover_amount          INT NULL CHECK (recover_amount IS NULL OR recover_amount >= 1),
   sort_order              INT NOT NULL DEFAULT 0,
   species_id BIGINT NULL REFERENCES rpg.phb_species(id) ON DELETE CASCADE,
   requires_option_key TEXT NULL,

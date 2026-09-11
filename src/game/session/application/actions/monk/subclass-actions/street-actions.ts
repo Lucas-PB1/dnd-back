@@ -137,22 +137,3 @@ export async function resolveKnockout(
     note: `K.O.: 1×/turno no acerto desarmado — +${damage.total} Energético (${damage.expression}). Se o alvo ficar com ≤100 PV após o ataque, Inconsciente 10 min. 1×/Descanso Curto ou Longo (ou recupere com Gambito: 5 Foco).`,
   };
 }
-
-export async function resolveRecoverKnockout(
-  deps: MonkActionDeps,
-  character: PlayerCharacter,
-): Promise<MonkTableActionResult> {
-  assertStreet(character, 'K.O.', 17);
-  await spendFocus(deps, character, 5);
-  const state = await deps.state.recoverClassResource(
-    character,
-    STREET_KNOCKOUT_SLUG,
-    1,
-  );
-  return {
-    state,
-    actionName: 'Recuperar K.O.',
-    resourceSpent: true,
-    note: 'Recuperar K.O.: gaste 5 Foco para recuperar 1 uso de K.O. (sem ação).',
-  };
-}

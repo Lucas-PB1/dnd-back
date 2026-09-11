@@ -31,7 +31,6 @@ import {
   resolveImprovedShadowStep,
   resolveKnockout,
   resolveOpenHandTechnique,
-  resolveRecoverKnockout,
   resolveShadowArts,
   resolveShadowStep,
   resolveStreetCombo,
@@ -39,6 +38,7 @@ import {
   resolveVibratingPalm,
   resolveWholenessOfBody,
 } from './subclass-actions';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 
 @Injectable()
 export class MonkActionsHandler {
@@ -119,11 +119,11 @@ export class MonkActionsHandler {
         return resolveAirDash(deps, character);
       case 'knockout':
         return resolveKnockout(deps, character);
-      case 'recover-knockout':
-        return resolveRecoverKnockout(deps, character);
       default:
-        throw new BadRequestException(
-          `Ação de Monge desconhecida: ${dto.actionSlug as string}`,
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
         );
     }
   }

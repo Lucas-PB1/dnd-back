@@ -23,5 +23,4 @@ export {
   resolveUppercut,
   resolveAirDash,
   resolveKnockout,
-  resolveRecoverKnockout,
 } from './street-actions';

@@ -35,19 +35,10 @@ import {
   resolveFrenzy,
   resolveICastFist,
   resolveIntimidatingPresence,
-  resolveMagicMissileThrows,
-  resolveRageOfTheGods,
-  resolveRestoreIntimidatingPresence,
-  resolveRestoreZealousPresence,
-  resolveRetaliation,
   resolveRevitalizingStrength,
-  resolveShieldBlock,
-  resolveTraverseTheTree,
   resolveUndeniableMagicRage,
   resolveWildHeartEagle,
-  resolveZealousPresence,
   resolveShapeOfTheWild,
-  resolveShapeOfTheWildRageRecover,
 } from './subclass-actions';
 
 @Injectable()
@@ -107,26 +98,14 @@ export class BarbarianActionsHandler {
         return resolveWildHeartEagle(deps, character);
       case 'fanatical-focus':
         return resolveFanaticalFocus(deps, character);
-      case 'retaliation':
-        return resolveRetaliation(deps, character);
       case 'intimidating-presence':
         return resolveIntimidatingPresence(deps, character);
-      case 'restore-intimidating-presence':
-        return resolveRestoreIntimidatingPresence(deps, character);
       case 'champion-of-the-gods':
         return resolveChampionOfTheGods(deps, character, dto.diceCount);
-      case 'zealous-presence':
-        return resolveZealousPresence(deps, character);
-      case 'restore-zealous-presence':
-        return resolveRestoreZealousPresence(deps, character);
-      case 'rage-of-the-gods':
-        return resolveRageOfTheGods(deps, character);
       case 'revitalizing-strength':
         return resolveRevitalizingStrength(deps, character);
       case 'branches-of-the-tree':
         return resolveBranchesOfTheTree(deps, character);
-      case 'traverse-the-tree':
-        return resolveTraverseTheTree(deps, character);
       case 'undeniable-magic-rage':
         return resolveUndeniableMagicRage(deps, character);
       case 'cantrip-mage-hand':
@@ -137,10 +116,6 @@ export class BarbarianActionsHandler {
         return resolveCantripSureStrike(deps, character);
       case 'burning-hands-slap':
         return resolveBurningHandsSlap(deps, character);
-      case 'magic-missile-throws':
-        return resolveMagicMissileThrows(deps, character);
-      case 'shield-block':
-        return resolveShieldBlock(deps, character);
       case 'i-cast-fist':
         return resolveICastFist(deps, character);
       case 'primal-companion-summon':
@@ -179,9 +154,10 @@ export class BarbarianActionsHandler {
           userId,
           character,
         );
-      case 'shape-of-the-wild-rage-recover':
-        return resolveShapeOfTheWildRageRecover(deps, character);
       default:
+        // Inclui retaliation, zealous-presence, rage-of-the-gods,
+        // traverse-the-tree, magic-missile-throws, shield-block,
+        // restore-*-presence, shape-of-the-wild-rage-recover (só economy).
         return resolveDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
           character,

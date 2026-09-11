@@ -99,34 +99,6 @@ export async function resolveBurningHandsSlap(
   };
 }
 
-export async function resolveMagicMissileThrows(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, MUSCLE_WIZARD_SLUG, MUSCLE_WIZARD_LABEL);
-  assertCharacterLevel(character, 6, 'Bárbaro', 'Mísseis Mágicos');
-  return {
-    state: await deps.state.buildResponse(character),
-    actionName: '“Magia” — Mísseis Mágicos',
-    resourceSpent: false,
-    note: 'Mísseis Mágicos (1×/DL enquanto Fúria): ação — 3 ataques à distância com arma de arremesso FOR; Vantagem (nunca erra). Marque o uso.',
-  };
-}
-
-export async function resolveShieldBlock(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, MUSCLE_WIZARD_SLUG, MUSCLE_WIZARD_LABEL);
-  assertCharacterLevel(character, 6, 'Bárbaro', 'Escudo');
-  return {
-    state: await deps.state.buildResponse(character),
-    actionName: '“Magia” — Escudo',
-    resourceSpent: false,
-    note: `Escudo (1×/DL enquanto Fúria): Reação ao ser atingido — +CA do Escudo; se ainda acertar, reduza o dano em ${character.level}. Marque o uso.`,
-  };
-}
-
 export async function resolveICastFist(
   deps: BarbarianActionDeps,
   character: PlayerCharacter,

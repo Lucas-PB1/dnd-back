@@ -11,7 +11,6 @@ import type {
 import { spendPoints } from '../../sorcerer-action-deps';
 
 export const TIDES_OF_CHAOS_RESOURCE = 'tides-of-chaos';
-export const RESTORE_BALANCE_RESOURCE = 'restore-balance';
 
 export async function resolveTidesOfChaos(
   deps: SorcererActionDeps,
@@ -67,21 +66,5 @@ export async function resolveBastionOfLaw(
     resourceSpent: true,
     total: cost,
     note: `Bastião da Lei: gastou ${cost} Pontos de Feitiçaria → ${cost}d8 de proteção a uma criatura a até 9 m (reduz dano até Descanso Longo ou novo uso).`,
-  };
-}
-
-export async function resolveRestoreBalance(
-  deps: SorcererActionDeps,
-  character: PlayerCharacter,
-): Promise<SorcererTableActionResult> {
-  assertCharacterSubclass(character, 'clockwork', 'Feitiçaria Mecânica');
-  assertCharacterLevel(character, 3, 'Feiticeiro', 'Restaurar Equilíbrio');
-  await deps.state.useClassResource(character, RESTORE_BALANCE_RESOURCE, 1);
-
-  return {
-    state: await deps.state.buildResponse(character),
-    actionName: 'Restaurar Equilíbrio',
-    resourceSpent: true,
-    note: 'Restaurar Equilíbrio: Reação — o Teste de D20 escolhido não é afetado por Vantagem nem Desvantagem.',
   };
 }

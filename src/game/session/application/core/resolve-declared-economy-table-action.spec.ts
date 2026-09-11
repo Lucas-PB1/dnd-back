@@ -76,6 +76,20 @@ describe('resolveDeclaredEconomyTableAction', () => {
       description:
         'Após DC: recupera metade do nível em Dados de Vida e Sangromancia.',
     },
+    {
+      id: 'barbarian-restore-intimidating-presence',
+      name: 'Restaurar Presença Intimidante',
+      economy: 'free' as const,
+      classSlug: 'barbarian',
+      minLevel: 14,
+      subclassSlug: 'berserker',
+      resourceSlug: 'rage',
+      alwaysSpendsResource: true,
+      recoverResourceSlug: 'intimidating-presence',
+      recoverAmount: 1,
+      tableAction: 'restore-intimidating-presence',
+      description: 'Restaurou Presença Intimidante gastando 1 uso de Fúria.',
+    },
   ];
 
   const mechanicalCatalog = {
@@ -250,5 +264,31 @@ describe('resolveDeclaredEconomyTableAction', () => {
     );
     expect(result.total).toBe(7);
     expect(result.note).toContain('7 Dado(s) de Sangromancia');
+  });
+
+  it('recovers catalog pool after spend (recoverResourceSlug)', async () => {
+    const berserker = {
+      id: 'barb-restore',
+      classSlug: 'barbarian',
+      subclassSlug: 'berserker',
+      level: 14,
+    };
+    const result = await resolveDeclaredEconomyTableAction(
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(berserker),
+      'restore-intimidating-presence',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'barb-restore' }),
+      'rage',
+      1,
+    );
+    expect(state.recoverClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'barb-restore' }),
+      'intimidating-presence',
+      1,
+    );
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toContain('Presença Intimidante');
   });
 });

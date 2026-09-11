@@ -16,9 +16,6 @@ import type {
 } from '../barbarian-action-deps';
 import {
   DIVINE_FURY_DICE,
-  RAGE_OF_THE_GODS,
-  RAGE_RESOURCE,
-  ZEALOUS_PRESENCE,
 } from '../barbarian-action-deps';
 
 export async function resolveFanaticalFocus(
@@ -77,59 +74,5 @@ export async function resolveChampionOfTheGods(
     total: result.total,
     resourceSpent: true,
     note: `Campeão dos Deuses: Ação Bônus — recupere ${result.total} PV (${result.expression}). Aplique na ficha.`,
-  };
-}
-
-export async function resolveZealousPresence(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'zealot', 'Fanático');
-  assertCharacterLevel(character, 10, 'Bárbaro', 'Presença Zelosa');
-  const state = (
-    await deps.state.useClassResource(character, ZEALOUS_PRESENCE, 1)
-  ).state;
-  return {
-    state,
-    actionName: 'Presença Zelosa',
-    resourceSpent: true,
-    note: 'Presença Zelosa: Ação Bônus — até 10 aliados a 18 m têm Vantagem em ataques e salvaguardas até o início do seu próximo turno. Restaure gastando 1 Fúria.',
-  };
-}
-
-export async function resolveRestoreZealousPresence(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'zealot', 'Fanático');
-  assertCharacterLevel(character, 10, 'Bárbaro', 'Presença Zelosa');
-  await deps.state.useClassResource(character, RAGE_RESOURCE, 1);
-  const state = await deps.state.recoverClassResource(
-    character,
-    ZEALOUS_PRESENCE,
-    1,
-  );
-  return {
-    state,
-    actionName: 'Restaurar Presença Zelosa',
-    resourceSpent: true,
-    note: 'Restaurou Presença Zelosa gastando 1 uso de Fúria.',
-  };
-}
-
-export async function resolveRageOfTheGods(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'zealot', 'Fanático');
-  assertCharacterLevel(character, 14, 'Bárbaro', 'Fúria dos Deuses');
-  const state = (
-    await deps.state.useClassResource(character, RAGE_OF_THE_GODS, 1)
-  ).state;
-  return {
-    state,
-    actionName: 'Fúria dos Deuses',
-    resourceSpent: true,
-    note: `Fúria dos Deuses: ao ativar Fúria, forma divina 1 min — Resistência Necrótico/Psíquico/Radiante; Voo; Reação gasta Fúria para manter aliado a 9 m com ${character.level} PV.`,
   };
 }

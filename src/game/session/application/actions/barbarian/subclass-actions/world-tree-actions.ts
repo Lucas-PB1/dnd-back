@@ -57,17 +57,3 @@ export async function resolveBranchesOfTheTree(
     note: `Ramos da Árvore: Reação (Fúria) — criatura a 9 m, CD ${saveDc} de FOR ou teleporta a 1,5 m de você; Deslocamento 0 até o fim do turno dela.`,
   };
 }
-
-export async function resolveTraverseTheTree(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'world-tree', 'Árvore do Mundo');
-  assertCharacterLevel(character, 14, 'Bárbaro', 'Percorrer a Árvore');
-  return {
-    state: await deps.state.buildResponse(character),
-    actionName: 'Percorrer a Árvore',
-    resourceSpent: false,
-    note: 'Percorrer a Árvore: teleporte até 18 m (ao entrar em Fúria ou AB enquanto ativa). 1×/Fúria: até 45 m e leve até 6 aliados a 3 m.',
-  };
-}

@@ -68,6 +68,10 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda sugerida:** 1 classe piloto (bárbaro ou fighter) — inventariar cases vs rows em `phb_class_economy_action`; remover do switch o que já tem row equivalente; expandir `executeCatalogEffect` só se faltar kind. Não misturar com schedules/gates.
 
+**Piloto bárbaro (parcial):** removidos do switch (caem no `default` economy): `retaliation`, `zealous-presence`, `rage-of-the-gods`, `traverse-the-tree`, `magic-missile-throws`, `shield-block`, `restore-intimidating-presence`, `restore-zealous-presence`, `shape-of-the-wild-rage-recover`. Funções TS mortas apagadas. Restante do switch = custom (toggle/roll/CD/DTO/companion).
+
+**Spend→recover:** colunas `recover_resource_slug` / `recover_amount` em `phb_class_economy_action`; resolver genérico em `resolveDeclaredEconomyTableAction`. Também: monge `recover-knockout` (5 Foco→K.O.), feiticeiro `restore-balance` (só spend+nota). Monge `default` agora usa economy (antes throw).
+
 ### Gates `has*` vs schedule (dívida média)
 
 `phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).

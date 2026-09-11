@@ -113,3 +113,15 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 
 - Documentado em audit § Gates: schedule = nível→`value_num`; `has*` = unlock booleano → `phb_subclass_feature_gate` / gate de classe.
 - Não misturar com schedule; TS ok até a onda de gates.
+
+## 2026-09-11 — Piloto mesa: bárbaro → economy
+
+- Removidos 6 cases note/spend-only do switch (`retaliation`, `zealous-presence`, `rage-of-the-gods`, `traverse-the-tree`, `magic-missile-throws`, `shield-block`).
+- Handlers TS mortos apagados; specs cobrem rota economy.
+
+## 2026-09-11 — Economy spend→recover + mais cases fora do switch
+
+- Schema/migration: `recover_resource_slug` + `recover_amount` em `phb_class_economy_action` (view/MV/entity).
+- `resolveDeclaredEconomyTableAction` recupera pool após spend.
+- Fora do switch: bárbaro restores (intimidating/zealous/shape-of-the-wild); monge `recover-knockout`; feiticeiro `restore-balance`.
+- Monge `default` → economy (antes BadRequest).

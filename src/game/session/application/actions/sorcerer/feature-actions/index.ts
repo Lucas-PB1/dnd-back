@@ -5,11 +5,9 @@ export {
 } from './class-features';
 export {
   TIDES_OF_CHAOS_RESOURCE,
-  RESTORE_BALANCE_RESOURCE,
   resolveTidesOfChaos,
   resolveBendLuck,
   resolveBastionOfLaw,
-  resolveRestoreBalance,
 } from './subclass/wild-clockwork-actions';
 export {
   DRAGON_WINGS_RESOURCE,

@@ -29,7 +29,6 @@ import {
   resolveHeroicSoul,
   resolveInnateSorcery,
   resolveMysticalManeuver,
-  resolveRestoreBalance,
   resolveSorcerousRestoration,
   resolveTidesOfChaos,
   resolveWarpImplosion,
@@ -153,8 +152,6 @@ export class SorcererActionsHandler {
         return resolveTidesOfChaos(deps, character);
       case 'bastion-of-law':
         return resolveBastionOfLaw(deps, character, dto.pointsSpent);
-      case 'restore-balance':
-        return resolveRestoreBalance(deps, character);
       case 'dragon-wings':
         return resolveDragonWings(deps, character);
       case 'bend-luck':

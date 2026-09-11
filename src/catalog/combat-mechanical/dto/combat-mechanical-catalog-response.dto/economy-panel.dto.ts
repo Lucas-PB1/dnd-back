@@ -62,6 +62,15 @@ export class ClassEconomyActionDto {
   spendAmount?: number;
 
   @ApiPropertyOptional({
+    example: 'intimidating-presence',
+    description: 'Pool a recuperar após o gasto de resourceSlug',
+  })
+  recoverResourceSlug?: string;
+
+  @ApiPropertyOptional({ example: 1 })
+  recoverAmount?: number;
+
+  @ApiPropertyOptional({
     example: 'misseis-magicos',
     description: 'Magia do catálogo vinculada a esta action (cast de item)',
   })

@@ -95,6 +95,16 @@ export async function resolveDeclaredEconomyTableAction(
     }
   }
 
+  if (action.recoverResourceSlug) {
+    const recoverAmount = action.recoverAmount ?? 1;
+    state = await deps.state.recoverClassResource(
+      character,
+      action.recoverResourceSlug,
+      recoverAmount,
+    );
+    total = total ?? recoverAmount;
+  }
+
   if (actionSlug === 'red-renewal') {
     const dice = Math.max(1, Math.floor(character.level / 2));
     state = await deps.state.recoverClassResource(

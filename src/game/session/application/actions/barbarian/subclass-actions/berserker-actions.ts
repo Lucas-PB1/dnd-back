@@ -12,7 +12,6 @@ import type {
 } from '../barbarian-action-deps';
 import {
   INTIMIDATING_PRESENCE,
-  RAGE_RESOURCE,
 } from '../barbarian-action-deps';
 import { strengthSaveDc } from './strength-save-dc';
 
@@ -40,20 +39,6 @@ export async function resolveFrenzy(
   };
 }
 
-export async function resolveRetaliation(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'berserker', 'Berserker');
-  assertCharacterLevel(character, 10, 'Bárbaro', 'Retaliação');
-  return {
-    state: await deps.state.buildResponse(character),
-    actionName: 'Retaliação',
-    resourceSpent: false,
-    note: 'Retaliação: Reação ao sofrer dano de criatura a 1,5 m — faça um ataque corpo a corpo (arma ou Desarmado).',
-  };
-}
-
 export async function resolveIntimidatingPresence(
   deps: BarbarianActionDeps,
   character: PlayerCharacter,
@@ -70,25 +55,5 @@ export async function resolveIntimidatingPresence(
     saveDc,
     resourceSpent: true,
     note: `Presença Intimidante: Ação Bônus — criaturas escolhidas em Emanação 9 m, CD ${saveDc} de SAB ou Amedrontadas 1 min. Restaure o uso gastando 1 Fúria (mesa: Usar Restaurar).`,
-  };
-}
-
-export async function resolveRestoreIntimidatingPresence(
-  deps: BarbarianActionDeps,
-  character: PlayerCharacter,
-): Promise<BarbarianTableActionResult> {
-  assertCharacterSubclass(character, 'berserker', 'Berserker');
-  assertCharacterLevel(character, 14, 'Bárbaro', 'Presença Intimidante');
-  await deps.state.useClassResource(character, RAGE_RESOURCE, 1);
-  const state = await deps.state.recoverClassResource(
-    character,
-    INTIMIDATING_PRESENCE,
-    1,
-  );
-  return {
-    state,
-    actionName: 'Restaurar Presença Intimidante',
-    resourceSpent: true,
-    note: 'Restaurou Presença Intimidante gastando 1 uso de Fúria.',
   };
 }

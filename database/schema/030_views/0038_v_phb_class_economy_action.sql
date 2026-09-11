@@ -18,6 +18,8 @@ SELECT
   a.description,
   a.table_action,
   a.spend_amount,
+  a.recover_resource_slug,
+  a.recover_amount,
   a.spell_slug,
   a.sort_order,
   a.requires_option_key,
