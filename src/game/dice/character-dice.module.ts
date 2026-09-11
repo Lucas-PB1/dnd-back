@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
@@ -9,16 +9,16 @@ import { CharacterRollsService } from './application/character-rolls.service';
 
 /**
  * Combat (ataques equipados) vem de CombatModule.
- * Sheet permanece para CharacterDomainService + CharacterSheetRepository (perícias/ST/etc.).
- * Session exporta CharacterStateRepository para gasto unificado de recursos/slots nas rolls.
- * forwardRef evita ciclo Sheet → Campaign → Dice → Session → Sheet.
+ * Sheet: CharacterDomainService + CharacterSheetRepository.
+ * Session: CharacterStateRepository para gasto unificado de recursos/slots.
+ * Ciclo Sheet→Campaign→Dice→Session→Sheet quebrado: Sheet usa Shared para refs.
  */
 @Module({
   imports: [
     GameSharedModule,
     CombatModule,
-    forwardRef(() => CharacterSheetModule),
-    forwardRef(() => CharacterSessionModule),
+    CharacterSheetModule,
+    CharacterSessionModule,
     EffectsModule,
   ],
   controllers: [CharacterDiceController],

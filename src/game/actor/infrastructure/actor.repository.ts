@@ -10,11 +10,7 @@ import {
   CampaignCharacterAccessService,
   CharacterAccessMode,
 } from '@game/campaign/infrastructure/campaign-character-access.service';
-import {
-  CampaignMember,
-  CampaignRole,
-} from '@game/campaign/infrastructure/campaign-member.entity';
-import { CampaignRepository } from '@game/campaign/infrastructure/campaign.repository';
+import { CampaignRole } from '@game/campaign/infrastructure/campaign-member.entity';
 
 export type ActorAccessMode = 'read' | 'write' | 'own';
 
@@ -25,7 +21,6 @@ export class ActorRepository {
   constructor(
     @InjectRepository(GameActor)
     private readonly repo: Repository<GameActor>,
-    private readonly campaigns: CampaignRepository,
     private readonly characterAccess: CampaignCharacterAccessService,
   ) {}
 
@@ -85,14 +80,10 @@ export class ActorRepository {
     campaignId: string,
     mode: ActorAccessMode,
   ): Promise<boolean> {
-    let member: CampaignMember;
-    try {
-      member = await this.campaigns.requireMember(campaignId, userId);
-    } catch {
-      return false;
-    }
+    const role = await this.characterAccess.findMemberRole(campaignId, userId);
+    if (!role) return false;
     if (mode === 'read') return true;
-    return WRITE_ROLES.includes(member.role);
+    return WRITE_ROLES.includes(role);
   }
 
   create(data: Partial<GameActor>): GameActor {

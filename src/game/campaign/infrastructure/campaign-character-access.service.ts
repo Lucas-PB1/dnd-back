@@ -7,6 +7,10 @@ import {
   CampaignMember,
   CampaignRole,
 } from '@game/campaign/infrastructure/campaign-member.entity';
+import {
+  listCampaignRefsByCharacterIds as listRefs,
+  type CampaignRefsByCharacterId,
+} from './campaign.repository/campaign-character-links';
 
 export type CharacterAccessMode = 'read' | 'write' | 'own';
 
@@ -53,6 +57,25 @@ export class CampaignCharacterAccessService {
       where: { campaignId, userId },
     });
     return row?.role ?? null;
+  }
+
+  /**
+   * Campanhas vinculadas aos personagens (skip payment + papel do viewer).
+   * Porta Shared — Sheet não precisa importar CampaignModule.
+   */
+  listCampaignRefsByCharacterIds(
+    characterIds: string[],
+    userId: string,
+  ): Promise<CampaignRefsByCharacterId> {
+    return listRefs(
+      {
+        links: this.links,
+        campaigns: this.campaigns,
+        members: this.members,
+      },
+      characterIds,
+      userId,
+    );
   }
 
   /**

@@ -1,10 +1,9 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
 import { CatalogModule } from '@catalog/catalog.module';
-import { CampaignModule } from '../campaign/campaign.module';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { PhbCondition } from '../session/infrastructure/phb-condition.entity';
@@ -45,7 +44,6 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
 @Module({
   imports: [
     GameSharedModule,
-    forwardRef(() => CampaignModule),
     CatalogModule,
     TypeOrmModule.forFeature([
       GameActor,

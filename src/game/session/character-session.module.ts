@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '@catalog/catalog.module';
 import { CombatModule } from '../combat/combat.module';
@@ -54,13 +54,13 @@ import { CampaignCharacter } from '../campaign/infrastructure/campaign-character
       CampaignCharacter,
     ]),
     GameSharedModule,
-    forwardRef(() => CharacterSheetModule),
+    CharacterSheetModule,
     CharacterInventoryModule,
     SpellcastingModule,
     EffectsModule,
     CatalogModule,
     CombatModule,
-    forwardRef(() => ActorModule),
+    ActorModule,
   ],
   controllers: [
     CharacterSessionController,

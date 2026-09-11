@@ -1,4 +1,4 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
@@ -33,7 +33,6 @@ export class CharacterRollsService {
     private readonly dataSource: DataSource,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly effectCatalog: LoadEffectCatalog,
-    @Inject(forwardRef(() => CharacterStateRepository))
     private readonly state: CharacterStateRepository,
   ) {}
 

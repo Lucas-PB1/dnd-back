@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CharacterSummaryResponseDto } from '../dto/character-response.dto';
-import { CampaignService } from '@game/campaign/application/campaign.service';
+import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 
 type CatalogLabelRow = {
   kind: 'class' | 'species' | 'heritage' | 'subclass';
@@ -17,7 +17,7 @@ export class ListCharactersQuery {
   constructor(
     private readonly repository: CharacterRepository,
     private readonly mapper: CharacterMapper,
-    private readonly campaigns: CampaignService,
+    private readonly campaignAccess: CampaignCharacterAccessService,
     @InjectDataSource() private readonly dataSource: DataSource,
   ) {}
 
@@ -25,7 +25,7 @@ export class ListCharactersQuery {
     const rows = await this.repository.findAllByUser(userId);
     const dtos = this.mapper.toSummaryList(rows);
     await this.attachCatalogNames(dtos);
-    const refs = await this.campaigns.listCampaignRefsByCharacterIds(
+    const refs = await this.campaignAccess.listCampaignRefsByCharacterIds(
       dtos.map((d) => d.id),
       userId,
     );

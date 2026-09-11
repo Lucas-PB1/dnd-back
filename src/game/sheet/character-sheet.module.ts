@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '@catalog/catalog.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
@@ -70,7 +70,6 @@ import { UpdateCharacterNotesHandler } from './application/update-character-note
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
 import { CharacterThreadCommands } from './application/character-thread.commands';
-import { CampaignModule } from '../campaign/campaign.module';
 import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 
@@ -107,7 +106,6 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
     GameSharedModule,
     CatalogModule,
     CharacterInventoryModule,
-    forwardRef(() => CampaignModule),
     CombatModule,
     SpellcastingModule,
     EffectsModule,

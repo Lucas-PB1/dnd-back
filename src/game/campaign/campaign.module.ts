@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterDiceModule } from '../dice/character-dice.module';
@@ -29,9 +29,9 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
   imports: [
     GameSharedModule,
     CombatModule,
-    forwardRef(() => CharacterDiceModule),
-    forwardRef(() => CharacterSessionModule),
-    forwardRef(() => ActorModule),
+    CharacterDiceModule,
+    CharacterSessionModule,
+    ActorModule,
     TypeOrmModule.forFeature([
       Campaign,
       CampaignMember,

@@ -24,7 +24,6 @@ import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '../spellcasting/application/resolve-subclass-option-granted-spells';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
-import { CampaignService } from '../campaign/application/campaign.service';
 import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
 import { LoadEffectCatalog } from '@game/effects';
 
@@ -260,11 +259,8 @@ describe('Characters application layer', () => {
         },
         {
           provide: CampaignCharacterAccessService,
-          useValue: { hasAccess: jest.fn().mockResolvedValue(false) },
-        },
-        {
-          provide: CampaignService,
           useValue: {
+            hasAccess: jest.fn().mockResolvedValue(false),
             listCampaignRefsByCharacterIds: jest
               .fn()
               .mockResolvedValue(new Map()),

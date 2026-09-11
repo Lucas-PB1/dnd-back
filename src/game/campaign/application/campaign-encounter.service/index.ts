@@ -1,4 +1,4 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
@@ -41,7 +41,6 @@ export class CampaignEncounterService {
     private readonly actors: Repository<GameActor>,
     @InjectRepository(PhbCreatureTemplate)
     private readonly creatureTemplates: Repository<PhbCreatureTemplate>,
-    @Inject(forwardRef(() => CharacterStateRepository))
     private readonly characterState: CharacterStateRepository,
   ) {}
 

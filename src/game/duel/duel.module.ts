@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
@@ -20,9 +20,9 @@ import { DuelsController } from './duels.controller';
     GameSharedModule,
     CombatModule,
     EffectsModule,
-    forwardRef(() => CharacterDiceModule),
-    forwardRef(() => CharacterSessionModule),
-    forwardRef(() => CharacterSheetModule),
+    CharacterDiceModule,
+    CharacterSessionModule,
+    CharacterSheetModule,
     TypeOrmModule.forFeature([Duel, DuelMember, PlayerCharacter]),
   ],
   controllers: [DuelsController],
