@@ -113,7 +113,11 @@ export class CharacterCreateRequirementsValidator {
       await this.classOptionsValidator.validateClassFeatureOptions(ctx, provided);
     }
 
-    if (classHasFightingStylePick(ctx.classSlug, ctx.level)) {
+    const fightingStyleUnlock =
+      await this.classOptionsValidator.resolveFightingStyleUnlockLevel(
+        ctx.classSlug,
+      );
+    if (classHasFightingStylePick(fightingStyleUnlock, ctx.level)) {
       const hasFightingStyleFeat = await this.hasFightingStyleFeat(createFeats);
       if (!hasFightingStyleFeat) {
         throw new BadRequestException(

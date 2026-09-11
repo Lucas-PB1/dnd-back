@@ -25,6 +25,14 @@ BC Game (modular monolith)
 ├── actor/            # fichas de mesa (criatura, montaria, navio, companion) — GameActorModule
 ├── campaign/         # mesa + encontro (PCs enriquecidos + actors linkados; visão jogador)
 └── duel/             # lobby 1v1 PvP (duas contas; combate = fase posterior / combat-real)
+
+### `companion/` (domain library — sem Nest module)
+
+Helpers de companheiro (Beast Master / profiles + command slugs). **Vivo:** importado por
+`actor/application/sync-character-companion.handler.ts` e
+`session/application/actions/shared/companion-table-actions.ts`.
+
+Não é legado morto. Evolução futura: mover para `actor/domain/companion/` ou módulo Nest se ganhar providers.
 ```
 
 Ownership combat/spellcasting: módulos Nest `combat/` e `spellcasting/` (use cases em `application/`).

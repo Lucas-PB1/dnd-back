@@ -1,0 +1,18 @@
+---
+description: Limites de tamanho de arquivo (produção TypeScript)
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Tamanho de arquivo
+
+Alinhado a `docs/architecture/code-standards.md`.
+
+| Faixa | Linhas | Ação |
+| --- | --- | --- |
+| OK | ≤ 150 | Seguir |
+| Soft | 151–200 | Extrair ao editar |
+| Hard | > 200 | Split antes de crescer |
+| Crítico | ≥ 400 | Dívida — extrair ou registrar no backlog |
+
+Exceções: specs densas; SQL seeds/migrations; DTOs Swagger preferir split > 250.

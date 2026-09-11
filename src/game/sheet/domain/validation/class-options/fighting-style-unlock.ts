@@ -1,22 +1,7 @@
-/** Nível em que a classe ganha Estilo de Luta (PHB 2024). */
-const FIGHTING_STYLE_UNLOCK_LEVEL: Readonly<Record<string, number>> = {
-  fighter: 1,
-  paladin: 2,
-  ranger: 2,
-  gunslinger: 1,
-  'monster-hunter': 2,
-};
-
-export function fightingStyleUnlockLevel(
-  classSlug: string | null | undefined,
-): number | null {
-  return FIGHTING_STYLE_UNLOCK_LEVEL[classSlug ?? ''] ?? null;
-}
-
+/** Predicado puro: nível atual ≥ unlock do catálogo (null = classe sem Estilo de Luta). */
 export function classHasFightingStylePick(
-  classSlug: string | null | undefined,
+  unlockLevel: number | null | undefined,
   level: number,
 ): boolean {
-  const unlock = fightingStyleUnlockLevel(classSlug);
-  return unlock != null && level >= unlock;
+  return unlockLevel != null && level >= unlockLevel;
 }

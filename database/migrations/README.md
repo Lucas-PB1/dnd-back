@@ -13,6 +13,7 @@ Arquivos atuais:
 | Arquivo | Mudança |
 | --- | --- |
 | `20260908_player_character_state_mesa_circumstances.sql` | `ALTER` em estado de mesa (`mesa_circumstances`) |
+| `20260911_phb_class_fighting_style_unlock_level.sql` | Coluna `fighting_style_unlock_level` + UPDATE classes PHB/Valdas/GH |
 
 ## Quando usar forward vs editar schema/
 

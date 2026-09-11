@@ -1,0 +1,62 @@
+---
+type: Playbook
+title: Plano em ondas — preparação dnd-api
+description: Convenções → SQL-first → legado morto; ordem e critérios de pronto.
+tags: [roadmap, sql-first, legacy]
+timestamp: 2026-09-11
+---
+
+## Onda 1 — Convenções (feita)
+
+**Meta:** o agente (e humanos) saberem *onde* criar cada arquivo.
+
+| Entrega | Status |
+| --- | --- |
+| Rule `game-folder-conventions.mdc` | feito |
+| Rule `catalog-sql-first.mdc` | feito |
+| OKF inventory + module-map | feito |
+| Command `/legado` | feito |
+| Atualizar `SKILLS-ROUTING.md` + `docs/README.md` | feito nesta onda |
+| Rule `file-size.mdc` (ou corrigir citação) | feito |
+| Primeira varredura `/legado` → `companion/` | feito (vivo) |
+
+**Pronto quando:** criar feature nova sem inventar pasta `utils/`; checklist da rule aplicado.
+
+## Onda 2 — SQL-first (dados mandam)
+
+**Meta:** nova raça/traço/feat = schema+seed+view; zero lista hardcoded em Game.
+
+| Entrega | Status |
+| --- | --- |
+| Skill `catalog-sql-first` + checklist | feito |
+| Auditar `src/game/**` por slugs/level gates mágicos | feito — [sql-first-audit.md](/sql-first-audit.md) |
+| Migrar 1 caso piloto (fighting style unlock) | feito — coluna + seed + query + validator |
+| Próximos hardcodes (ASI, expertise, …) | pendente — ver audit |
+| Reforçar `@catalog/game-port` se novos helpers | sob demanda |
+
+**Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.
+
+## Onda 3 — Legado morto
+
+**Meta:** pasta a pasta, evidência de imports, remoção segura.
+
+| Entrega | Status |
+| --- | --- |
+| Primeira pasta: `src/game/companion/` | feito — vivo (domain library) |
+| Próxima pasta suspeita | pendente — pastas leaf gordas / generated |
+| Log em `docs/okf/log.md` | contínuo |
+| PRs pequenos (1 pasta / 1 concern) | — |
+
+**Pronto quando:** sem pastas Game sem módulo (exceto domain libraries documentadas).
+
+## Fora de ordem (não bloquear)
+
+- `noUncheckedIndexedAccess`
+- Reduzir tamanho `session/` / `combat/domain` (já parcialmente fatiado)
+- Events para residual Session↔Actor (opcional)
+
+## Relacionados
+
+- [Inventário](/cursor-inventory.md)
+- [Mapa](/module-map.md)
+- Command: `.cursor/commands/legado.md`

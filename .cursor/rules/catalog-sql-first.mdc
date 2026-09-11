@@ -1,0 +1,20 @@
+---
+description: >-
+  Catálogo SQL-first: novas raças/traços/feats/itens vivem no Postgres
+  (schema+seed+view), não em if/switch TypeScript.
+globs:
+  - database/**/*
+  - src/catalog/**/*
+  - src/entities/**/*
+alwaysApply: false
+---
+
+# Catalog — SQL-first
+
+- SSOT do DDL: `database/schema/` (não inventar coluna só na entity)
+- Dado de referência: `database/seeds/<domínio>/`
+- Leitura API: view/`@ViewEntity` + Query fina — sem reimplementar regra na API
+- Runtime da ficha consome slugs/effects; **não** hardcodar lista de raças/traços no TS
+- Nova espécie/traço/feat/item: migration ou edit schema + seed + view/contrato → TypeORM alinhado
+- Porta Game: `@catalog/game-port` / `CatalogLookupService` — não `@catalog/*/domain` profundo
+- Detalhe operacional: skill `.cursor/skills/catalog-sql-first/SKILL.md`

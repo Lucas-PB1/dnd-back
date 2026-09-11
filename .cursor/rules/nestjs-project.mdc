@@ -15,3 +15,5 @@ alwaysApply: false
 - DTOs na borda HTTP com class-validator; entity TypeORM ≠ DTO
 - Swagger atualizado quando o contrato público mudar
 - Preferir migrations/SQL versionados a `synchronize: true` em ambientes não-efêmeros
+- Pastas Game: ver rule `game-folder-conventions.mdc` + `docs/architecture/game-module-structure.md`
+- Catálogo novo: SQL-first (`catalog-sql-first`) — não hardcodar PHB em Game

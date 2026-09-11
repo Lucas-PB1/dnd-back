@@ -13,6 +13,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`source/`](source/) | Fontes regeneráveis do catálogo (DMG, GH, Northlands, …) |
 | [`glossary/`](glossary/) | Glossário EN→PT (JSON) |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
+| [`okf/`](okf/) | Knowledge bundle (mapa módulos, inventário Cursor, ondas) |
 
 ## Arquitetura
 

@@ -12,6 +12,9 @@ export class PhbClassRef {
   @Column({ name: 'subclass_unlock_level', type: 'int', default: 3 })
   subclassUnlockLevel!: number;
 
+  @Column({ name: 'fighting_style_unlock_level', type: 'int', nullable: true })
+  fightingStyleUnlockLevel!: number | null;
+
   @Column({ name: 'weapon_mastery_eligibility', type: 'text', nullable: true })
   weaponMasteryEligibility!: string | null;
 }

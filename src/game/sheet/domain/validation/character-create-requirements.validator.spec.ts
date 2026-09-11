@@ -27,6 +27,7 @@ describe('CharacterCreateRequirementsValidator', () => {
       | 'validateSpeciesChoices'
       | 'validateOriginChoices'
       | 'resolveSubclassUnlockLevel'
+      | 'resolveFightingStyleUnlockLevel'
       | 'loadSubclassOptionKeysAtLevel'
       | 'validateSubclassOptions'
       | 'validateFightingStyleSelections'
@@ -67,6 +68,7 @@ describe('CharacterCreateRequirementsValidator', () => {
       validateSpeciesChoices: jest.fn().mockResolvedValue(undefined),
       validateOriginChoices: jest.fn().mockResolvedValue(undefined),
       resolveSubclassUnlockLevel: jest.fn().mockResolvedValue(3),
+      resolveFightingStyleUnlockLevel: jest.fn().mockResolvedValue(null),
       loadSubclassOptionKeysAtLevel: jest.fn().mockResolvedValue([]),
       validateSubclassOptions: jest.fn().mockResolvedValue(undefined),
       validateFightingStyleSelections: jest.fn().mockResolvedValue(undefined),
@@ -214,6 +216,7 @@ describe('CharacterCreateRequirementsValidator', () => {
 
   it('requires fighting style for paladin at level 2', async () => {
     catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
+    classOptionsValidator.resolveFightingStyleUnlockLevel.mockResolvedValue(2);
     await expect(
       validator.validateCreateRequiredFields(
         {},

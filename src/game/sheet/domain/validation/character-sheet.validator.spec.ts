@@ -5,6 +5,7 @@ jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => 
 }));
 jest.mock('@game/sheet/infrastructure/queries/class-meta.queries', () => ({
   resolveSubclassUnlockLevel: jest.fn().mockResolvedValue(3),
+  resolveFightingStyleUnlockLevel: jest.fn().mockResolvedValue(null),
   loadWeaponMasteryProgression: jest.fn().mockResolvedValue([]),
   loadWeaponMasteryEligibility: jest.fn().mockResolvedValue('any'),
 }));

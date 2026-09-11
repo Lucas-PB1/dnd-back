@@ -1,0 +1,57 @@
+---
+description: >-
+  Convenções rígidas de pastas/arquivos no BC Game (DDD tático Nest).
+  O que pode existir em cada camada e como nomear.
+globs: src/game/**/*
+alwaysApply: false
+---
+
+# Game — convenções de pasta
+
+Complementa `docs/architecture/game-module-structure.md` e `code-standards.md`.
+
+## Layout canônico de submódulo
+
+```
+<submodulo>/
+  <nome>.module.ts
+  application/          # handlers, queries, facades Nest (orquestração)
+  domain/               # regras D&D puras (funções/VOs) — sem Nest DI
+  infrastructure/       # entities, repos, mappers, queries TypeORM
+  dto/                  # contratos HTTP (+ index ou subpastas por família)
+  controllers/          # opcional; ou *.controller.ts na raiz do submódulo
+```
+
+**Não criar** pastas soltas (`helpers/`, `utils/`, `lib/`, `misc/`) — colocar no concern certo ou em `shared/`.
+
+## O que vai em cada arquivo
+
+| Tipo | Onde | Nome típico |
+| --- | --- | --- |
+| Use-case Nest | `application/` | `*.handler.ts`, `*.query.ts`, `*.service.ts` (facade fina) |
+| Split de service gordo | `application/<nome>.service/` | `index.ts` + funções `*Deps` (padrão encounter/duel) |
+| Regra D&D | `domain/` | verbo/substantivo (`apply-…`, `resolve-…`, `*-vitals.ts`) |
+| Persistência | `infrastructure/` | `*.entity.ts`, `*.repository.ts`, `*.mapper.ts` |
+| HTTP | `dto/` + controller | `*.dto.ts` — entity ≠ DTO |
+| Teste | ao lado do SUT | `*.spec.ts` |
+| Fixture de teste | `@common/testing/` ou `__fixtures__/` do domínio | sem duplicar factories |
+
+## Limites
+
+- Arquivo produção: preferir ≤150 linhas; hard >200 → split antes de crescer
+- Pasta leaf com >~15 arquivos de produção → subpastas por concern (ex.: `session/application/actions/<classe>/`)
+- Barrel público: só `index.ts` na pasta (nunca `*.barrel.ts`)
+
+## Dependências
+
+- `catalog` ↛ `game`
+- `game` → catálogo só via `@catalog/catalog-lookup.service`, `@catalog/catalog.module` ou `@catalog/game-port`
+- Cross-submódulo Game: preferir exports do `*.module.ts` / porta Shared — não importar `domain/` interno alheio sem necessidade
+
+## Checklist ao criar arquivo novo
+
+1. Qual submódulo (agregado)? Se não couber, é `shared/` ou BC Catalog.
+2. Camada correta (application / domain / infrastructure / dto)?
+3. Nome espelha responsabilidade única?
+4. Precisa de teste ao lado?
+5. Se for regra de catálogo PHB (raça, traço, feat…): preferir SQL (`database/`) — ver skill `catalog-sql-first`.

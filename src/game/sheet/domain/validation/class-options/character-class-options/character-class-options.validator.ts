@@ -21,6 +21,7 @@ import { CharacterMetamagicValidator } from '../character-metamagic.validator';
 import { CharacterClassFeatureOptionsValidator } from '../character-class-feature-options.validator';
 import type { ClassProgressionMasteryRow } from '../class-weapon-mastery-slots';
 import { loadClassFightingStyleSlugs } from '@game/sheet/infrastructure/queries/feat-option.queries';
+import { resolveFightingStyleUnlockLevel } from '@game/sheet/infrastructure/queries/class-meta.queries';
 import { validateFightingStyleSelections } from './validate-fighting-styles';
 import {
   validateHeritageChoices,
@@ -81,6 +82,12 @@ export class CharacterClassOptionsValidator {
 
   async resolveSubclassUnlockLevel(classSlug: string): Promise<number> {
     return this.subclassOptionsValidator.resolveSubclassUnlockLevel(classSlug);
+  }
+
+  async resolveFightingStyleUnlockLevel(
+    classSlug: string,
+  ): Promise<number | null> {
+    return resolveFightingStyleUnlockLevel(this.dataSource, classSlug);
   }
 
   async loadSubclassOptionKeysAtLevel(

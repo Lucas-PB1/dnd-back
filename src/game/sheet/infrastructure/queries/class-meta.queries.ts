@@ -15,6 +15,18 @@ export async function resolveSubclassUnlockLevel(
   return row?.subclassUnlockLevel ?? 3;
 }
 
+/** Nível do catálogo em que a classe exige Estilo de Luta; null = não exige. */
+export async function resolveFightingStyleUnlockLevel(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<number | null> {
+  const row = await dataSource.getRepository(PhbClassRef).findOne({
+    where: { slug: classSlug },
+    select: ['fightingStyleUnlockLevel'],
+  });
+  return row?.fightingStyleUnlockLevel ?? null;
+}
+
 export async function loadWeaponMasteryProgression(
   dataSource: DataSource,
   classSlug: string,

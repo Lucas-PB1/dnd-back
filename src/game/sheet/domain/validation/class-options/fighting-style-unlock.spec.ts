@@ -1,20 +1,11 @@
-import {
-  classHasFightingStylePick,
-  fightingStyleUnlockLevel,
-} from './fighting-style-unlock';
+import { classHasFightingStylePick } from './fighting-style-unlock';
 
 describe('fighting-style-unlock', () => {
-  it('unlocks fighter at 1, paladin and ranger at 2', () => {
-    expect(fightingStyleUnlockLevel('fighter')).toBe(1);
-    expect(fightingStyleUnlockLevel('paladin')).toBe(2);
-    expect(fightingStyleUnlockLevel('ranger')).toBe(2);
-    expect(fightingStyleUnlockLevel('gunslinger')).toBe(1);
-    expect(fightingStyleUnlockLevel('monster-hunter')).toBe(2);
-    expect(fightingStyleUnlockLevel('cleric')).toBeNull();
-    expect(classHasFightingStylePick('fighter', 1)).toBe(true);
-    expect(classHasFightingStylePick('gunslinger', 1)).toBe(true);
-    expect(classHasFightingStylePick('paladin', 1)).toBe(false);
-    expect(classHasFightingStylePick('paladin', 2)).toBe(true);
-    expect(classHasFightingStylePick('ranger', 2)).toBe(true);
+  it('compares character level to catalog unlock', () => {
+    expect(classHasFightingStylePick(1, 1)).toBe(true);
+    expect(classHasFightingStylePick(2, 1)).toBe(false);
+    expect(classHasFightingStylePick(2, 2)).toBe(true);
+    expect(classHasFightingStylePick(null, 20)).toBe(false);
+    expect(classHasFightingStylePick(undefined, 1)).toBe(false);
   });
 });

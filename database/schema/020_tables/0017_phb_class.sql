@@ -13,6 +13,9 @@ CREATE TABLE rpg.phb_class (
   hp_minimum_gain_per_level INTEGER CHECK (hp_minimum_gain_per_level >= 1),
   hp_constitution_mod_applies BOOLEAN NOT NULL DEFAULT TRUE,
   subclass_unlock_level INTEGER NOT NULL DEFAULT 3 CHECK (subclass_unlock_level >= 1),
+  fighting_style_unlock_level INTEGER CHECK (
+    fighting_style_unlock_level IS NULL OR fighting_style_unlock_level >= 1
+  ),
   subclass_label TEXT,
   skill_choice_count INTEGER CHECK (skill_choice_count >= 1),
   skill_choice_from TEXT CHECK (skill_choice_from IN ('any')),

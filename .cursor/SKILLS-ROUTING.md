@@ -16,11 +16,24 @@ Complementa `~/.cursor/SKILLS-ROUTING.md`.
 | `typescript` | Tipos, DTOs, handlers (linguagem — **não** substituída por `nestjs`) |
 | `typeorm` | Entities, repositories, QueryBuilder |
 | `postgresql-sql` | Migrations/seeds SQL (SQL — **não** substituída por `typeorm`) |
+| `catalog-sql-first` | Nova raça/traço/feat/item — projeto (`.cursor/skills/`) |
 | `domain-driven-design` | Bounded contexts, agregados |
 | `testing` | Jest + `@nestjs/testing` |
+| `okf` | Bundles em `docs/okf/` |
 
 > Pares complementares: `typescript`+`nestjs`, `postgresql-sql`+`typeorm`. Manter ambos no merge.
 
-## Rule do projeto
+## Rules do projeto
 
-- `.cursor/rules/nestjs-project.mdc` — editável e versionável neste repo
+| Rule | Glob / uso |
+| --- | --- |
+| `nestjs-project.mdc` | Nest geral |
+| `game-folder-conventions.mdc` | `src/game/**` — onde criar arquivos |
+| `catalog-sql-first.mdc` | `database/**`, `src/catalog/**` |
+| `file-size.mdc` | limites de linhas |
+
+## Commands do projeto
+
+| Command | Uso |
+| --- | --- |
+| `/legado` | Varredura de código morto pasta a pasta |

@@ -260,6 +260,7 @@ background/phb/phb_background_language.all.sql
 species/grim-hollow/phb_species.heritage-playable.sql
 catalog/grim-hollow/phb_edition.citation-cap2.sql
 class/grim-hollow/phb_class.monster-hunter.sql
+class/phb/phb_class.fighting-style-unlock.sql
 class/grim-hollow/phb_class.monster-hunter-proficiency.sql
 class/grim-hollow/phb_class.monster-hunter-progression.sql
 class/grim-hollow/phb_class.monster-hunter-feature.sql
