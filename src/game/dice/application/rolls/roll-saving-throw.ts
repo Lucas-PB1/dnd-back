@@ -1,7 +1,20 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { isFighterClass } from '@game/combat/domain/fighter';
+import {
+  hasIndomitable,
+  isFighterClass,
+} from '@game/combat/domain/fighter';
+import {
+  hasDiamondSoul,
+  hasEvasion as hasMonkEvasion,
+  isMonkClass,
+} from '@game/combat/domain/monk';
 import { paladinSavingThrowAuraBonus } from '@game/combat/domain/paladin';
+import {
+  hasEvasion as hasRogueEvasion,
+  hasSlipperyMind,
+  isRogueClass,
+} from '@game/combat/domain/rogue';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { collectSaveProficiencyAbilities } from '@game/sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
@@ -80,11 +93,14 @@ export async function executeRollSavingThrow(input: {
       sheet.featOptions,
     ),
   );
-  if (character.classSlug === 'rogue' && character.level >= 15) {
+  if (
+    isRogueClass(character.classSlug) &&
+    hasSlipperyMind(character.level)
+  ) {
     saveProficiencies.add('sabedoria');
     saveProficiencies.add('carisma');
   }
-  if (character.classSlug === 'monk' && character.level >= 14) {
+  if (isMonkClass(character.classSlug) && hasDiamondSoul(character.level)) {
     for (const slug of Object.keys(ABILITY_LABELS) as AbilityKey[]) {
       saveProficiencies.add(slug);
     }
@@ -130,7 +146,10 @@ export async function executeRollSavingThrow(input: {
   }
 
   if (input.dto.indomitable) {
-    if (!isFighterClass(character.classSlug) || character.level < 9) {
+    if (
+      !isFighterClass(character.classSlug) ||
+      !hasIndomitable(character.level)
+    ) {
       throw new BadRequestException('Indomitable requires Fighter level 9+');
     }
     await input.resourceSpender.spendClassResource(
@@ -151,8 +170,10 @@ export async function executeRollSavingThrow(input: {
     notes,
   });
   if (
-    (character.classSlug === 'rogue' || character.classSlug === 'monk') &&
-    character.level >= 7 &&
+    ((isRogueClass(character.classSlug) &&
+      hasRogueEvasion(character.level)) ||
+      (isMonkClass(character.classSlug) &&
+        hasMonkEvasion(character.level))) &&
     ability === 'destreza'
   ) {
     notes.push(

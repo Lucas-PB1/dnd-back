@@ -160,3 +160,16 @@ export function hasTacticalShift(level: number): boolean {
 export function hasTacticalMind(level: number): boolean {
   return level >= 2;
 }
+
+/** Indomável (Guerreiro 9+). */
+export function hasIndomitable(level: number): boolean {
+  return level >= 9;
+}
+
+/** Chute na Porta (Dungeonera 3+). */
+export function hasDoorKick(
+  subclassSlug: string | null | undefined,
+  level: number,
+): boolean {
+  return subclassSlug === 'dungeoneer' && level >= 3;
+}

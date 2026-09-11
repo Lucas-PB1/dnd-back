@@ -45,6 +45,16 @@ export function hasSlipperyMind(level: number): boolean {
   return level >= 15;
 }
 
+/** Evasão (Ladino 7+): salvaguarda de Destreza que reduz dano à metade. */
+export function hasEvasion(level: number): boolean {
+  return level >= 7;
+}
+
+/** Assassino 9+: Mira Firme sem zerar Deslocamento (Mira Móvel). */
+export function hasAssassinMobileAim(level: number): boolean {
+  return level >= 9;
+}
+
 /** Soulknife usa a mesma progressão de dados psiônicos do Psi Warrior. */
 export function soulknifePsiDiceSchedule(
   level: number,

@@ -9,7 +9,13 @@ import type { WeaponCombatFlags } from './roll-weapon-context';
 import {
   ignoresRangedRangePenalties,
 } from '@game/dice/domain/attack-cover';
+import {
+  hasDoorKick,
+  hasStudiedAttacks,
+  isFighterClass,
+} from '@game/combat/domain/fighter';
 import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
+import { hasAssassinMobileAim } from '@game/combat/domain/rogue';
 
 type AttackRollContext = {
   dto: RollAttackDto;
@@ -69,24 +75,20 @@ export function buildAttackAdvantageContributions(
   }
   if (
     ctx.dto.studiedAttack &&
-    ctx.classSlug === 'fighter' &&
-    ctx.level >= 13
+    isFighterClass(ctx.classSlug) &&
+    hasStudiedAttacks(ctx.level)
   ) {
     contributions.push('advantage');
     notes.push('Ataques Estudados: vantagem contra o mesmo alvo');
   }
-  if (
-    ctx.dto.doorKick &&
-    ctx.subclassSlug === 'dungeoneer' &&
-    ctx.level >= 3
-  ) {
+  if (ctx.dto.doorKick && hasDoorKick(ctx.subclassSlug, ctx.level)) {
     contributions.push('advantage');
     notes.push('Chute na Porta: vantagem na primeira rodada');
   }
   if (ctx.dto.steadyAim) {
     contributions.push('advantage');
     notes.push(
-      ctx.subclassSlug === 'assassin' && ctx.level >= 9
+      ctx.subclassSlug === 'assassin' && hasAssassinMobileAim(ctx.level)
         ? 'Mira Móvel: Mira Firme concede vantagem sem reduzir o Deslocamento'
         : 'Mira Firme: vantagem; Deslocamento 0 até o fim do turno',
     );

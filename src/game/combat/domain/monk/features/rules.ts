@@ -24,6 +24,16 @@ export function isMonkClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'monk';
 }
 
+/** Evasão (Monge 7+). */
+export function hasEvasion(level: number): boolean {
+  return level >= 7;
+}
+
+/** Alma de Diamante (Monge 14+): proficiência em todas as salvaguardas. */
+export function hasDiamondSoul(level: number): boolean {
+  return level >= 14;
+}
+
 export function martialArtsDieFaces(
   level: number,
   bands: readonly FeatureScheduleBand[],

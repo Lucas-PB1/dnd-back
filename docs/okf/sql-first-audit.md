@@ -34,12 +34,20 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| alta | Handlers de mesa com `switch (actionSlug)` por classe | `phb_class_economy_action` + `applyDeclaredEconomyTableAction` (+ effects `on_table_action`) |
 | média | Gates booleanos (`hasAuraOfProtection`, `hasSlipperyMind`, `hasTacticalMind`…) | `phb_subclass_feature_gate` / feature_gate de classe |
 | média | Schedules menores restantes (divine strike, masks, portent…) | mesmo `phb_class_feature_schedule` |
 | baixa | Transformation Cap.6 / heritage notes | outro SSOT (já separado) |
 | — | Fórmulas com mod/estado (`rageActive`, CD, smite por slot, magical cunning ceil) | **manter TS** |
 | — | Channel Divinity / Focus (ki) / Wild Shape usos | já em progression / grant_resource — **não** duplicar |
+| — | Handlers mesa `switch (actionSlug)` | **fechado** (todas as classes → economy) |
+
+### Faxina P0 (2026-09-11) — mortos + wire dice
+
+- Removidos resolvers mortos Psi/Soulknife (`combat/domain/*/table-actions` só BM+dungeoneer).
+- Removidos DTOs órfãos (`UsePsiWarrior*`, `UseBattleMasterManeuverDto`, Second Wind/Tactical Mind DTOs de session).
+- Removida cadeia session `applySecondWind` / `applyActionSurge` / `applyTacticalMind` (duel mantém os próprios).
+- Removido `divineSparkDice` (SSOT = fórmula effect).
+- Dice: `roll-saving-throw` / `build-attack-advantage` passam pelos helpers `has*` (Slippery Mind, Diamond Soul, Evasion, Studied Attacks, Door Kick, Indomitable, Assassin mobile aim).
 
 ### Escopo notes (fechado)
 

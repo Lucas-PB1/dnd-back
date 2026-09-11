@@ -11,9 +11,6 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
-  TableActionResponseDto,
-} from '@game/session/dto/fighter/fighter-session.dto';
-import {
   UseGunslingerTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import {

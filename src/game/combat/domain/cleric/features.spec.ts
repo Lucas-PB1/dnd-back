@@ -1,6 +1,5 @@
 import {
   destroyUndeadDice,
-  divineSparkDice,
   divineStrikeDice,
   isClericClass,
 } from './features';
@@ -10,13 +9,6 @@ describe('cleric-features', () => {
     expect(isClericClass('cleric')).toBe(true);
     expect(isClericClass('paladin')).toBe(false);
     expect(isClericClass(null)).toBe(false);
-  });
-
-  it('scales Divine Spark at the class thresholds', () => {
-    expect(divineSparkDice(2)).toBe('1d8');
-    expect(divineSparkDice(7)).toBe('2d8');
-    expect(divineSparkDice(13)).toBe('3d8');
-    expect(divineSparkDice(18)).toBe('4d8');
   });
 
   it('uses at least one die for Sear Undead', () => {

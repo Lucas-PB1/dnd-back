@@ -18,4 +18,6 @@ export {
   hasTacticalMaster,
   hasTacticalShift,
   hasTacticalMind,
+  hasIndomitable,
+  hasDoorKick,
 } from './rules';

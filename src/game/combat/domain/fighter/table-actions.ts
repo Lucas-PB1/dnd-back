@@ -7,27 +7,8 @@ import {
   findPrecautionSpell,
   type PrecautionSpell,
 } from './dungeoneer-catalog';
-import {
-  psiEnergyDieFaces,
-  superiorityDieFaces,
-} from './features';
+import { superiorityDieFaces } from './features';
 import type { FeatureScheduleBand } from '../feature-schedule';
-import {
-  findSubclassTableAction,
-  type SubclassTableAction,
-} from '../catalog/subclass-table-action';
-
-export const PSI_WARRIOR_ACTION_SLUGS = [
-  'protective-field',
-  'telekinetic-movement',
-  'psychic-leap',
-  'mental-guard',
-  'energy-bulwark',
-  'telekinetic-master',
-] as const;
-
-export type PsiWarriorActionSlug =
-  (typeof PSI_WARRIOR_ACTION_SLUGS)[number];
 
 type BattleMasterRollInput = {
   catalog: readonly BattleMasterManeuver[];
@@ -114,79 +95,6 @@ function buildManeuverNote(
     return `${prefix} Some ${value} à jogada de ataque que errou.`;
   }
   return `${prefix} CD ${saveDc}, quando aplicável. ${description}`;
-}
-
-export function resolvePsiWarriorTableAction(input: {
-  catalog: readonly SubclassTableAction[];
-  actionSlug: PsiWarriorActionSlug;
-  level: number;
-  intelligenceModifier: number;
-  dieRoll?: number;
-  usePsiDie?: boolean;
-  bands: readonly FeatureScheduleBand[];
-}) {
-  const action = findSubclassTableAction(
-    input.catalog,
-    'psi-warrior',
-    input.actionSlug,
-  );
-  if (!action) {
-    throw new Error(`Unknown Psi Warrior action '${input.actionSlug}'`);
-  }
-  if (input.level < action.unlockLevel) {
-    throw new Error(
-      `${action.name} requires Fighter level ${action.unlockLevel}+`,
-    );
-  }
-
-  const dieFaces = psiEnergyDieFaces(input.level, input.bands);
-  const spendsPsi = action.alwaysSpendsPool || Boolean(input.usePsiDie);
-  if (spendsPsi && dieFaces == null) {
-    throw new Error('Psi Energy Die is not available');
-  }
-
-  const roll = action.rollsPoolDie ? input.dieRoll : undefined;
-  const total =
-    roll == null ? undefined : Math.max(0, roll + input.intelligenceModifier);
-  return {
-    actionName: action.name,
-    unlockLevel: action.unlockLevel,
-    resourceSlug: spendsPsi
-      ? 'psi-energy-dice'
-      : action.freeResourceSlug,
-    dieFaces,
-    expression:
-      roll == null
-        ? undefined
-        : `1d${dieFaces}${input.intelligenceModifier >= 0 ? '+' : ''}${input.intelligenceModifier}`,
-    roll,
-    total,
-    saveDc: undefined,
-    note: buildPsiActionNote(input.actionSlug, action.name, total),
-  };
-}
-
-function buildPsiActionNote(
-  slug: PsiWarriorActionSlug,
-  name: string,
-  total?: number,
-): string {
-  if (slug === 'protective-field') {
-    return `${name}: reduza ${total ?? 0} do dano recebido (Reação).`;
-  }
-  if (slug === 'telekinetic-movement') {
-    return `${name}: mova o objeto solto ou criatura voluntária conforme a característica.`;
-  }
-  if (slug === 'psychic-leap') {
-    return `${name}: Deslocamento de Voo igual ao dobro do seu Deslocamento até o fim do turno.`;
-  }
-  if (slug === 'mental-guard') {
-    return `${name}: encerre em você todos os efeitos que causam Amedrontado ou Enfeitiçado.`;
-  }
-  if (slug === 'energy-bulwark') {
-    return `${name}: conceda Cobertura Parcial por 1 minuto a até o modificador de INT em criaturas (mínimo 1).`;
-  }
-  return `${name}: conjure Telecinese sem espaço/componentes; INT é o atributo de conjuração.`;
 }
 
 export function findDungeoneerPrecautionSpell(

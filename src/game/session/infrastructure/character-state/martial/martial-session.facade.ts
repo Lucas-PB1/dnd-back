@@ -1,10 +1,5 @@
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
-  ActionSurgeResponseDto,
-  SecondWindResponseDto,
-  TacticalMindResponseDto,
-} from '@game/session/dto/fighter/fighter-session.dto';
-import type {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';
 import type {
@@ -20,10 +15,7 @@ import {
   setPersonaMasksOp,
   toggleRageOp,
   toggleRecklessOp,
-  useActionSurgeOp,
   useManeuverOp,
-  useSecondWindOp,
-  useTacticalMindOp,
 } from './index';
 
 /** Agrupa ops marciais; deps via factory (buildResponse do repository). */
@@ -89,25 +81,5 @@ export class MartialSessionFacade {
     character: PlayerCharacter,
   ): Promise<CharacterStateResponseDto> {
     return recoverAllRageOp(this.getDeps(), character);
-  }
-
-  useSecondWind(
-    character: PlayerCharacter,
-  ): Promise<SecondWindResponseDto> {
-    return useSecondWindOp(this.getDeps(), character);
-  }
-
-  useTacticalMind(
-    character: PlayerCharacter,
-    checkTotal?: number,
-    dc?: number,
-  ): Promise<TacticalMindResponseDto> {
-    return useTacticalMindOp(this.getDeps(), character, checkTotal, dc);
-  }
-
-  useActionSurge(
-    character: PlayerCharacter,
-  ): Promise<ActionSurgeResponseDto> {
-    return useActionSurgeOp(this.getDeps(), character);
   }
 }

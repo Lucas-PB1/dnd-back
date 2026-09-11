@@ -12,8 +12,3 @@ export {
   setPersonaMasksOp,
   setBestialAspectLevelOp,
 } from './barbarian-ops';
-export {
-  useSecondWindOp,
-  useTacticalMindOp,
-  useActionSurgeOp,
-} from './fighter-ops';

@@ -1,17 +1,14 @@
 import {
   FIXTURE_BATTLE_MASTER_MANEUVERS,
   FIXTURE_DUNGEONEER_PRECAUTION_SPELLS,
-  FIXTURE_PSI_ACTIONS,
 } from '../__fixtures__/mechanical-catalog';
 import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 import {
   findDungeoneerPrecautionSpell,
   resolveBattleMasterTableRoll,
-  resolvePsiWarriorTableAction,
 } from './table-actions';
 
 const BM_BANDS = fixtureSchedulesFor('fighter', 'battle-master');
-const PSI_BANDS = fixtureSchedulesFor('fighter', 'psi-warrior');
 
 describe('fighter tabletop actions', () => {
   describe('Battle Master', () => {
@@ -98,57 +95,6 @@ describe('fighter tabletop actions', () => {
           dieRoll: 4,
           useRelentless: true,
           bands: BM_BANDS,
-        }),
-      ).toThrow(/level 15/);
-    });
-  });
-
-  describe('Psi Warrior', () => {
-    it('rolls Protective Field with Intelligence and spends Psi', () => {
-      const result = resolvePsiWarriorTableAction({
-        catalog: FIXTURE_PSI_ACTIONS,
-        actionSlug: 'protective-field',
-        level: 5,
-        intelligenceModifier: 3,
-        dieRoll: 5,
-        bands: PSI_BANDS,
-      });
-
-      expect(result.expression).toBe('1d8+3');
-      expect(result.total).toBe(8);
-      expect(result.resourceSlug).toBe('psi-energy-dice');
-      expect(result.note).toContain('reduza 8');
-    });
-
-    it('uses free feature resource or Psi die when repeating', () => {
-      const free = resolvePsiWarriorTableAction({
-        catalog: FIXTURE_PSI_ACTIONS,
-        actionSlug: 'psychic-leap',
-        level: 7,
-        intelligenceModifier: 3,
-        bands: PSI_BANDS,
-      });
-      const repeated = resolvePsiWarriorTableAction({
-        catalog: FIXTURE_PSI_ACTIONS,
-        actionSlug: 'psychic-leap',
-        level: 7,
-        intelligenceModifier: 3,
-        usePsiDie: true,
-        bands: PSI_BANDS,
-      });
-
-      expect(free.resourceSlug).toBe('psychic-leap');
-      expect(repeated.resourceSlug).toBe('psi-energy-dice');
-    });
-
-    it('rejects actions below their unlock level', () => {
-      expect(() =>
-        resolvePsiWarriorTableAction({
-          catalog: FIXTURE_PSI_ACTIONS,
-          actionSlug: 'energy-bulwark',
-          level: 14,
-          intelligenceModifier: 3,
-          bands: PSI_BANDS,
         }),
       ).toThrow(/level 15/);
     });

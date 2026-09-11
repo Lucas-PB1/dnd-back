@@ -215,3 +215,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Pastas: `effect/`, `class/`, `subclass-feature/`, `species/`, `heritage/`, `equipment/`, `spell/`, `feat/`, `companion/`, `template/`, `reference/` (+ `views/` mantida).
 - Imports `@entities/<domínio>/<arquivo>` e relativos `../entities/<domínio>/…`; barrels `index.ts` por pasta; `trace-entities-for-vercel.ts` atualizado.
 - Sem mudança de schema SQL — só layout TypeORM/TS.
+
+## 2026-09-11 — Faxina P0 pós-mesa (mortos + wire dice)
+
+- Delete: resolvers Psi/Soulknife; DTOs session órfãos; cadeia `applySecondWind`/`ActionSurge`/`TacticalMind` (session); `divineSparkDice`; pastas vazias `sorcerer/feature-actions`.
+- Dice usa helpers `has*` (evasion, slippery mind, diamond soul, studied attacks, door kick, indomitable, assassin mobile aim) em vez de `level >= N` inline.
+- Duel Second Wind / Action Surge **intactos** (implementação própria).

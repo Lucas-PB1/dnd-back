@@ -9,6 +9,8 @@ export {
   sneakAttackDieFaces,
   sneakAttackDiceExpression,
   hasSlipperyMind,
+  hasEvasion,
+  hasAssassinMobileAim,
   soulknifePsiDiceSchedule,
 } from './sneak-attack';
 export {
@@ -17,7 +19,6 @@ export {
   availableCunningStrikeEffects,
   validateCunningStrikeSelection,
 } from './cunning-strike';
-export * from './table-actions';
 export {
   PSYCHIC_BLADE_ITEM_SLUG,
   PSYCHIC_BLADE_BONUS_ITEM_SLUG,

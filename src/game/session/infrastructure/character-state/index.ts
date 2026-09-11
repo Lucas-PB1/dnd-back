@@ -16,6 +16,3 @@ export {
   applyToggleReckless,
   applyRecoverAllRage,
 } from './martial/barbarian-mutations';
-export { applySecondWind } from './martial/fighter/second-wind';
-export { applyTacticalMind } from './martial/fighter/tactical-mind';
-export { applyActionSurge } from './martial/fighter/action-surge';
