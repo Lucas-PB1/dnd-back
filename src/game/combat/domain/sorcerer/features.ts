@@ -25,13 +25,3 @@ export function sorceryPointCostToCreateSlot(slotLevel: number): number {
       throw new Error(`Slot level ${slotLevel} cannot be created with Sorcery Points`);
   }
 }
-
-export function sorcererCombatNotes(input: {
-  classSlug?: string | null;
-  subclassSlug?: string | null;
-  level?: number;
-}): string[] {
-  if (!isSorcererClass(input.classSlug)) return [];
-  // Notas estáticas → `phb_level_combat_note` (class/subclass).
-  return [];
-}

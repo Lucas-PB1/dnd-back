@@ -2,7 +2,6 @@ import {
   isSorcererClass,
   sorceryPointCostToCreateSlot,
   sorceryPointsMax,
-  sorcererCombatNotes,
 } from './features';
 
 describe('sorcerer-features', () => {
@@ -25,16 +24,5 @@ describe('sorcerer-features', () => {
     expect(sorceryPointCostToCreateSlot(4)).toBe(6);
     expect(sorceryPointCostToCreateSlot(5)).toBe(7);
     expect(() => sorceryPointCostToCreateSlot(6)).toThrow();
-  });
-
-  it('combat notes migrated to catalog (local function is empty)', () => {
-    expect(sorcererCombatNotes({ classSlug: 'sorcerer', level: 5 })).toEqual([]);
-    expect(
-      sorcererCombatNotes({
-        classSlug: 'sorcerer',
-        subclassSlug: 'draconic',
-        level: 3,
-      }),
-    ).toEqual([]);
   });
 });

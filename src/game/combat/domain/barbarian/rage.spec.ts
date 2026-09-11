@@ -89,15 +89,23 @@ describe('barbarian-rage', () => {
     expect(isBarbarianClass('gunslinger')).toBe(false);
   });
 
-  it('subclass combat notes live in catalog (local add is no-op)', () => {
-    const notes = barbarianCombatNotes({
-      classSlug: 'barbarian',
-      subclassSlug: 'berserker',
-      level: 14,
-    });
-    expect(notes.some((n) => n.includes('Frenesi'))).toBe(false);
-    expect(notes.some((n) => /Fúria/i.test(n) || /Instintos/i.test(n))).toBe(
-      true,
-    );
+  it('emits only dynamic notes (rage/reckless/brutal)', () => {
+    expect(
+      barbarianCombatNotes({
+        classSlug: 'barbarian',
+        subclassSlug: 'berserker',
+        level: 14,
+      }),
+    ).toEqual([
+      'Golpe Brutal: no acerto com Imprudente, pode abrir mão da Vantagem e causar +1d10 (efeitos de empurrar etc. na mesa)',
+    ]);
+    expect(
+      barbarianCombatNotes({
+        classSlug: 'barbarian',
+        level: 5,
+        rageActive: true,
+        recklessActive: true,
+      }).some((n) => n.startsWith('Fúria ativa')),
+    ).toBe(true);
   });
 });

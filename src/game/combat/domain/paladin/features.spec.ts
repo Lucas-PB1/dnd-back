@@ -96,20 +96,24 @@ describe('paladin-features', () => {
       expect(paladinCombatNotes({ classSlug: 'fighter', level: 6 })).toEqual([]);
     });
 
-    it('lists core notes by level', () => {
+    it('emits only dynamic aura note from L6', () => {
+      expect(paladinCombatNotes({ classSlug: 'paladin', level: 5 })).toEqual([]);
       const notes = paladinCombatNotes({ classSlug: 'paladin', level: 11 });
-      expect(notes.join(' ')).toContain('Mãos Consagradas');
-      expect(notes.join(' ')).toContain('Destruição Divina');
-      expect(notes.join(' ')).toContain('Aura de Proteção');
-      expect(notes.join(' ')).toContain('Golpes Radiantes');
+      expect(notes).toEqual([
+        'Aura de Proteção (3 m): você e aliados somam o mod. de Carisma às salvaguardas',
+      ]);
+      expect(
+        paladinCombatNotes({ classSlug: 'paladin', level: 18 })[0],
+      ).toContain('9 m');
     });
 
-    it('subclass notes live in catalog (local add is no-op)', () => {
+    it('does not emit subclass catalog notes locally', () => {
       const notes = paladinCombatNotes({
         classSlug: 'paladin',
         subclassSlug: 'vengeance',
         level: 3,
       });
+      expect(notes).toEqual([]);
       expect(notes.join(' ')).not.toContain('Voto de Inimizade');
     });
   });

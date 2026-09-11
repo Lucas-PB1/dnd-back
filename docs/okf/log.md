@@ -70,3 +70,8 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - +165 literais (fighter/rogue/ranger/warlock/wizard/cleric/bard/druid).
 - Funções *CombatNotes* só emitem templates dinâmicos (`${}`, schedules, ternários).
 - Total `phb_level_combat_note` local ≈ 356 linhas.
+
+## 2026-09-11 — Onda 2: class notes bárbaro/monge/paladino
+
+- +26 literais de classe em `phb_level_combat_note.barb-monk-paladin-class.sql`.
+- TS só dinâmico: Fúria/Imprudente/Golpe Brutal; Artes Marciais + movimento; Aura de Proteção (m).

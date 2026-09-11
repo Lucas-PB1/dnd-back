@@ -27,11 +27,9 @@ import {
 } from './ranger';
 import { clericCombatNotes } from './cleric';
 import { bardCombatNotes } from './bard';
-import { sorcererCombatNotes } from './sorcerer';
 import { warlockCombatNotes } from './warlock';
 import { druidCombatNotes } from './druid';
 import { wizardCombatNotes } from './wizard';
-import { gunslingerCombatNotes } from './gunslinger';
 import { filterLevelCombatNotes } from './notes/level-combat-notes';
 import type { LevelCombatNoteRow } from '../infrastructure/level-combat-note.queries';
 
@@ -68,11 +66,9 @@ export function aggregateClassCombatContributions(
     ...rangerCombatNotes({ classSlug, subclassSlug, level }),
     ...clericCombatNotes({ classSlug, subclassSlug, level }),
     ...bardCombatNotes({ classSlug, subclassSlug, level }),
-    ...sorcererCombatNotes({ classSlug, subclassSlug, level }),
     ...warlockCombatNotes({ classSlug, subclassSlug, level }),
     ...druidCombatNotes({ classSlug, subclassSlug, level }),
     ...wizardCombatNotes({ classSlug, subclassSlug, level }),
-    ...gunslingerCombatNotes({ classSlug, subclassSlug, level }),
     ...filterLevelCombatNotes(levelCombatNotes, 'subclass', subclassSlug, level),
     ...filterLevelCombatNotes(levelCombatNotes, 'class', classSlug, level),
   ];

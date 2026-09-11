@@ -59,14 +59,17 @@ describe('monk-features', () => {
     ).toBe(false);
   });
 
-  it('describes core notes; subclass notes live in catalog', () => {
+  it('emits only dynamic monk notes (die and speed)', () => {
     const notes = monkCombatNotes({
       classSlug: 'monk',
       subclassSlug: 'mercy',
       level: 5,
     });
+    expect(notes).toHaveLength(2);
     expect(notes[0]).toContain('Artes Marciais');
-    expect(notes.some((note) => note.includes('Golpe Atordoante'))).toBe(true);
+    expect(notes[0]).toContain('1d8');
+    expect(notes[1]).toMatch(/Movimento sem Armadura: \+\d+ m/);
+    expect(notes.some((note) => note.includes('Golpe Atordoante'))).toBe(false);
     expect(notes.some((note) => note.includes('Mão de Cura'))).toBe(false);
   });
 
