@@ -1,5 +1,9 @@
 /**
  * Smoke: catálogo feat economy + personagem com Lucky (se existir).
+ *
+ * Pré-req: DATABASE_URL + catálogo aplicado — ver `test/README.md`.
+ * Sem personagem com Lucky: o caso de resource é skipped (warn).
+ *
  * Uso: npx jest --config ./test/jest-e2e.config.js --runInBand smoke-feat-economy
  */
 import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';

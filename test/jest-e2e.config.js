@@ -1,4 +1,9 @@
-/** @type {import('jest').Config} */
+/**
+ * E2E Jest — requer DATABASE_URL + catálogo (schema/seeds).
+ * Detalhes: ./README.md
+ *
+ * @type {import('jest').Config}
+ */
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',

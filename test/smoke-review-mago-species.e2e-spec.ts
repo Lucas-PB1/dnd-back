@@ -1,5 +1,9 @@
 /**
  * Smoke: Review · Mago (anão) tem stonecunning + economy species.
+ *
+ * Pré-req: DATABASE_URL + catálogo aplicado — ver `test/README.md`.
+ * Sem personagem Review·Mago adequado: casos podem ser skipped.
+ *
  * Uso: npx jest --config ./test/jest-e2e.config.js --runInBand smoke-review-mago-species
  */
 import { Test, TestingModule } from '@nestjs/testing';

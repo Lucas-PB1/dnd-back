@@ -62,8 +62,10 @@ npm install
 npm run start:dev          # desenvolvimento local
 npm run vercel:dev         # simula runtime Vercel
 npm test                   # unit tests
-npm run test:e2e           # E2E (requer DATABASE_URL + catálogo aplicado)
+npm run test:e2e           # E2E (ver test/README.md — DATABASE_URL + catálogo)
 ```
+
+TypeScript: `"strict": true` em `tsconfig.json`. Próximo passo opcional: `noUncheckedIndexedAccess` (~98 erros restantes).
 
 Swagger (dev): **http://localhost:3000/api**
 

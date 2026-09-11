@@ -1,5 +1,9 @@
 /**
  * Smoke: catálogo item economy + personagem com anel ativo (se existir).
+ *
+ * Pré-req: DATABASE_URL + catálogo aplicado — ver `test/README.md`.
+ * Sem personagem/item adequado: o caso é skipped (warn).
+ *
  * Uso: npx jest --config ./test/jest-e2e.config.js --runInBand smoke-item-economy
  */
 import { Test, TestingModule } from '@nestjs/testing';

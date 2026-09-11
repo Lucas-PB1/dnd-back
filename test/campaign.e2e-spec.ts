@@ -1,3 +1,7 @@
+/**
+ * E2E: campanhas + encontros (MVP).
+ * Pré-req: DATABASE_URL + catálogo aplicado — ver `test/README.md`.
+ */
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';

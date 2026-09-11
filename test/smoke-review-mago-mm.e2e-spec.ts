@@ -1,5 +1,8 @@
 /**
  * Smoke: conjura Mísseis gratuitos no Review · Mago.
+ *
+ * Pré-req: DATABASE_URL + catálogo aplicado — ver `test/README.md`.
+ *
  * Uso: npx jest --config ./test/jest-e2e.config.js --runInBand smoke-review-mago-mm
  */
 import { Test, TestingModule } from '@nestjs/testing';
