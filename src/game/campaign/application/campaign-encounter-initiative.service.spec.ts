@@ -41,6 +41,10 @@ const cb = (o: Partial<CampaignEncounterCombatant>): CampaignEncounterCombatant 
   initiativeModifier: 2,
   sortOrder: 0,
   isActive: true,
+  hitPointsCurrent: null,
+  hitPointsMax: null,
+  tempHp: 0,
+  conditions: [],
   ...o,
 });
 

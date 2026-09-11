@@ -49,6 +49,10 @@ function combatant(
     initiativeModifier: null,
     sortOrder: 0,
     isActive: true,
+    hitPointsCurrent: null,
+    hitPointsMax: null,
+    tempHp: 0,
+    conditions: [],
     ...overrides,
   };
 }
