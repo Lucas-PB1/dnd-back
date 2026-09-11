@@ -27,4 +27,6 @@ export type CombatMechanicalCatalog = {
   precautionSpells: PrecautionSpell[];
   economyActions: ClassEconomyActionRecord[];
   panelActions: ClassPanelActionRecord[];
+  /** gate_key → unlock_level, por subclass slug. */
+  featureGatesBySubclassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
 };

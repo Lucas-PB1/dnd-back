@@ -161,6 +161,7 @@ feat/valdas/phb_feat_requirement.all.03.sql
 feat/valdas/phb_feat_option.spellblade.sql
 catalog/steinhardt/phb_edition.base.sql
 subclass/steinhardt/phb_subclass.all.sql
+class/steinhardt/phb_subclass.feature-gate.blood-hound.sql
 subclass/steinhardt/phb_subclass_feature.all.sql
 spell/steinhardt/phb_spell.all.sql
 subclass/steinhardt/phb_subclass_prepared_spell.all.sql
@@ -424,6 +425,9 @@ creature/phb/seed.primal-companion-earth.sql
 creature/phb/phb_vehicles.all.sql
 creature/phb/seed.primal-companion-templates.sql
 creature/phb/phb_companion_profile.all.sql
+creature/phb/phb_companion_command.all.sql
+catalog/phb/phb_initiative_rule.all.sql
+notes/grim-hollow/phb_level_combat_note.grim-hollow.sql
 creature/phb/seed.nwb-longships.sql
 creature/phb/seed.nwb-bestiary.sql
 creature/phb/phb_mounts.all.sql

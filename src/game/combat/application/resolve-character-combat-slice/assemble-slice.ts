@@ -29,6 +29,7 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { sheetProfile } from '@common/perf/sheet-profile';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { CharacterCombatBundle } from '../../infrastructure/load-character-combat-bundle';
+import type { LevelCombatNoteRow } from '../../infrastructure/level-combat-note.queries';
 import type { MappedCombatSlice } from './types';
 
 type ArmorResult = {
@@ -72,11 +73,13 @@ export async function assembleMappedCombatSlice(input: {
   dataSource: DataSource;
   bundle: Pick<CharacterCombatBundle, 'items' | 'activeItemSlugs'>;
   optionDamageTypes?: ReadonlyMap<string, string>;
+  levelCombatNotes?: readonly LevelCombatNoteRow[];
 }): Promise<MappedCombatSlice> {
   const classCombat = aggregateClassCombatContributions({
     classSlug: input.classSlug,
     subclassSlug: input.subclassSlug,
     level: input.level,
+    levelCombatNotes: input.levelCombatNotes,
   });
   const speciesNotes = speciesCombatNotes({
     speciesSlug: input.speciesSlug,

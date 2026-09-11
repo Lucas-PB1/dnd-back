@@ -2,6 +2,10 @@
 -- Lote C: updated for phb_option_def/value unificado
 
 TRUNCATE TABLE
+  rpg.phb_level_combat_note,
+  rpg.phb_initiative_rule,
+  rpg.phb_subclass_feature_gate,
+  rpg.phb_companion_command,
   rpg.phb_companion_template_map,
   rpg.phb_companion_profile,
   rpg.phb_species_armor_preset,

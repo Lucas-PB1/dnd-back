@@ -68,6 +68,17 @@ describe('useBloodStrikeAction', () => {
             },
           ],
           strikeOptions: BLOOD_HOUND_STRIKE_OPTIONS,
+          featureGatesBySubclassSlug: new Map([
+            [
+              'blood-hound',
+              new Map([
+                ['blood-armament', 7],
+                ['blood-explosion', 7],
+                ['blood-lower-cost', 10],
+                ['blood-symphony', 15],
+              ]),
+            ],
+          ]),
         }),
       },
     } as unknown as FighterActionDeps;

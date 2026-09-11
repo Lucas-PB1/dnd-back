@@ -19,6 +19,7 @@ Arquivos atuais:
 | `20260911_phb_class_jack_of_all_trades_level.sql` | Coluna `jack_of_all_trades_level` (Bardo = 2) |
 | `20260911_phb_companion_profile.sql` | Tabelas + seed de perfil/template de companheiro |
 | `20260911_phb_species_armor_preset_and_damage_type.sql` | Presets CA Manikin + `damage_type` EN em ancestry/legacy |
+| `20260911_phb_initiative_gates_notes_companion.sql` | Initiative rules, bloodhound gates, companion commands, GH level combat notes |
 
 ## Quando usar forward vs editar schema/
 

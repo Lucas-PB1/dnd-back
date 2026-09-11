@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PhbBattleMasterManeuver } from '@entities/phb-battle-master-maneuver.entity';
 import { PhbBeastborneAspectBenefit } from '@entities/phb-beastborne-aspect-benefit.entity';
 import { PhbClassPanelAction } from '@entities/phb-class-panel-action.entity';
@@ -62,6 +62,7 @@ export class LoadCombatMechanicalCatalog {
     @InjectRepository(PhbSubclassRef)
     private readonly subclassRepo: Repository<PhbSubclassRef>,
     private readonly effectCatalog: LoadEffectCatalog,
+    private readonly dataSource: DataSource,
   ) {}
 
   async load(): Promise<CombatMechanicalCatalog> {
@@ -109,6 +110,7 @@ export class LoadCombatMechanicalCatalog {
       economyRows,
       panelRows,
       strikeOptions,
+      featureGatesBySubclassSlug,
     ] = await Promise.all([
       this.gunslingerRepo.find({ relations: ['subclass'] }),
       this.battleMasterRepo.find(),
@@ -127,6 +129,7 @@ export class LoadCombatMechanicalCatalog {
         order: { sortOrder: 'ASC' },
       }),
       this.loadStrikeOptions(),
+      this.loadFeatureGates(),
     ]);
 
     return mapCombatMechanicalCatalog({
@@ -141,7 +144,31 @@ export class LoadCombatMechanicalCatalog {
       precautionRows,
       economyRows,
       panelRows,
+      featureGatesBySubclassSlug,
     });
+  }
+
+  private async loadFeatureGates(): Promise<
+    ReadonlyMap<string, ReadonlyMap<string, number>>
+  > {
+    const raw: { slug: string; gate_key: string; unlock_level: number }[] =
+      await this.dataSource.query(
+        `
+        SELECT s.slug, g.gate_key, g.unlock_level
+        FROM rpg.phb_subclass_feature_gate g
+        JOIN rpg.phb_subclass s ON s.id = g.subclass_id
+        `,
+      );
+    const bySubclass = new Map<string, Map<string, number>>();
+    for (const row of raw) {
+      let gates = bySubclass.get(row.slug);
+      if (!gates) {
+        gates = new Map();
+        bySubclass.set(row.slug, gates);
+      }
+      gates.set(row.gate_key, Number(row.unlock_level));
+    }
+    return bySubclass;
   }
 
   private async loadStrikeOptions() {

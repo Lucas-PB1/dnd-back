@@ -36,7 +36,8 @@ timestamp: 2026-09-11
 | Migrar Jack of All Trades | feito — `jack_of_all_trades_level` |
 | Migrar companion profiles | feito — `phb_companion_profile` + template map |
 | Migrar Manikin AC / ancestry | feito — armor preset + damage_type EN |
-| Próximos hardcodes (initiative, …) | pendente — ver audit |
+| Migrar initiative / bloodhound / companion labels / GH notes | feito — tabelas + seeds + predicados |
+| Próximos hardcodes (PHB notes, …) | pendente — ver audit |
 | Reforçar `@catalog/game-port` se novos helpers | sob demanda |
 
 **Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.

@@ -30,13 +30,15 @@ export type SpendStrikeSelfCostNoteStyle = 'table' | 'duel';
 
 /**
  * Gasta 1 uso do `resource_slug` da strike option + custo em si.
- * Cura L15 (Sinfonia) só se `applySymphonyHeal` e gate de produto.
+ * Cura Sinfonia só se `applySymphonyHeal` e gate de produto (unlock do catálogo).
  */
 export async function spendStrikeSelfCost(input: {
   character: PlayerCharacter;
   option: StrikeOption;
   takeLowerCost?: boolean;
   takeLowerMinLevel?: number;
+  lowerCostUnlockLevel?: number | null;
+  symphonyUnlockLevel?: number | null;
   ports: SpendStrikeSelfCostPorts;
   /** Override resource (default: option.resourceSlug — obrigatório no catálogo). */
   resourceSlug?: string;
@@ -55,10 +57,9 @@ export async function spendStrikeSelfCost(input: {
   if (character.hitPointsCurrent == null || character.hitPointsMax == null) {
     throw new Error('Pontos de Vida do personagem não definidos');
   }
-  if (
-    input.takeLowerCost &&
-    !canTakeLowerBloodCost(character.level)
-  ) {
+  const lowerUnlock =
+    input.lowerCostUnlockLevel ?? input.takeLowerMinLevel ?? null;
+  if (input.takeLowerCost && !canTakeLowerBloodCost(character.level, lowerUnlock)) {
     throw new Error(
       'Rerrolar o Custo de Sangue exige nível 10+ (Sangue da Criação)',
     );
@@ -69,7 +70,7 @@ export async function spendStrikeSelfCost(input: {
   const cost = rollStrikeSelfCost({
     costDice,
     takeLower: Boolean(input.takeLowerCost),
-    takeLowerMinLevel: input.takeLowerMinLevel ?? 10,
+    takeLowerMinLevel: lowerUnlock ?? 10,
     level: character.level,
     rng: input.rng,
   });
@@ -77,7 +78,8 @@ export async function spendStrikeSelfCost(input: {
   let hitPointsAfter = character.hitPointsCurrent - cost.costTotal;
   let heal = 0;
   const symphony =
-    input.applySymphonyHeal !== false && canBloodSymphonyHeal(character.level);
+    input.applySymphonyHeal !== false &&
+    canBloodSymphonyHeal(character.level, input.symphonyUnlockLevel);
   if (symphony) {
     heal = bloodSymphonyHealAmount(
       abilityModifier(character.abilityScores.constituicao),

@@ -8,17 +8,26 @@ import {
   advantageModeFromManual,
   resolveNetAdvantageMode,
 } from '@game/dice/domain/resolve-net-advantage-mode';
-import { isRangerClass } from '@game/combat/domain/ranger';
 import {
   aggregateTraitTakes,
   collectHeritageTraitPicks,
   type HeritageTraitPick,
 } from '@game/sheet/domain/heritage/aggregate-trait-takes';
 import type { CharacterFeatLike, SpeciesChoiceLike } from './character-check-bonuses/types';
+import type { InitiativeRuleRow } from '../../infrastructure/initiative-rule.queries';
 
 export const FOCUSED_INITIATIVE_TRAIT_SLUG = 'focused-initiative';
 export const GIANTKIN_STONE_ANCESTRY_KIND = 'giantkinAncestryId';
 export const GIANTKIN_STONE_ANCESTRY_SLUG = 'stone';
+
+const ABILITY_MOD_LABEL_PT: Record<string, string> = {
+  forca: 'mod. de Força',
+  destreza: 'mod. de Destreza',
+  constituicao: 'mod. de Constituição',
+  inteligencia: 'mod. de Inteligência',
+  sabedoria: 'mod. de Sabedoria',
+  carisma: 'mod. de Carisma',
+};
 
 export type InitiativeRollContext = {
   dexterityModifier: number;
@@ -32,6 +41,8 @@ export type InitiativeRollContext = {
   featEffects?: readonly CatalogEffect[];
   heritageChoices?: readonly HeritageTraitPick[];
   speciesChoices?: readonly SpeciesChoiceLike[];
+  /** Regras de iniciativa do catálogo (classe/subclasse). */
+  initiativeRules?: readonly InitiativeRuleRow[];
 };
 
 export type InitiativeRollOptions = {
@@ -77,6 +88,32 @@ export function hasGiantkinStoneAncestry(
   );
 }
 
+function abilityModifierForSlug(
+  ctx: InitiativeRollContext,
+  abilitySlug: string,
+): number {
+  switch (abilitySlug) {
+    case 'sabedoria':
+      return ctx.wisdomModifier;
+    case 'inteligencia':
+      return ctx.intelligenceModifier;
+    case 'destreza':
+      return ctx.dexterityModifier;
+    default:
+      return 0;
+  }
+}
+
+function ruleMatchesOwner(
+  rule: InitiativeRuleRow,
+  ctx: InitiativeRollContext,
+): boolean {
+  if (rule.ownerKind === 'class') {
+    return rule.ownerSlug === ctx.classSlug;
+  }
+  return rule.ownerSlug === ctx.subclassSlug;
+}
+
 export function resolveInitiativeBonus(
   ctx: InitiativeRollContext,
 ): InitiativeBonusBreakdown {
@@ -98,22 +135,16 @@ export function resolveInitiativeBonus(
     }
   }
 
-  if (
-    isRangerClass(ctx.classSlug) &&
-    ctx.subclassSlug === 'gloom-stalker' &&
-    ctx.level >= 3
-  ) {
-    total += ctx.wisdomModifier;
-    notes.push(
-      `Emboscador das Sombras: +${ctx.wisdomModifier} (mod. de Sabedoria)`,
-    );
-  }
-
-  if (ctx.subclassSlug === 'trapper-guild' && ctx.level >= 7) {
-    total += ctx.intelligenceModifier;
-    notes.push(
-      `Vantagem do Emboscador: +${ctx.intelligenceModifier} (mod. de Inteligência)`,
-    );
+  for (const rule of ctx.initiativeRules ?? []) {
+    if (rule.ruleKind !== 'ability_bonus') continue;
+    if (!ruleMatchesOwner(rule, ctx)) continue;
+    if (ctx.level < rule.unlockLevel) continue;
+    if (!rule.abilitySlug) continue;
+    const mod = abilityModifierForSlug(ctx, rule.abilitySlug);
+    total += mod;
+    const abilityLabel =
+      ABILITY_MOD_LABEL_PT[rule.abilitySlug] ?? `mod. de ${rule.abilitySlug}`;
+    notes.push(`${rule.label}: +${mod} (${abilityLabel})`);
   }
 
   return { total, notes };
@@ -128,26 +159,14 @@ export function resolveInitiativeAdvantageContributions(
   ];
   const notes: string[] = [];
 
-  if (ctx.classSlug === 'barbarian' && ctx.level >= 7) {
+  for (const rule of ctx.initiativeRules ?? []) {
+    if (rule.ruleKind !== 'advantage') continue;
+    if (!ruleMatchesOwner(rule, ctx)) continue;
+    if (ctx.level < rule.unlockLevel) continue;
     contributions.push('advantage');
-    notes.push('Instintos Primitivos: vantagem na Iniciativa');
+    notes.push(rule.label);
   }
-  if (ctx.subclassSlug === 'champion' && ctx.level >= 3) {
-    contributions.push('advantage');
-    notes.push('Atleta Extraordinário: vantagem na Iniciativa');
-  }
-  if (ctx.subclassSlug === 'assassin' && ctx.level >= 3) {
-    contributions.push('advantage');
-    notes.push('Assassinar: vantagem na Iniciativa');
-  }
-  if (ctx.subclassSlug === 'nightwatcher' && ctx.level >= 3) {
-    contributions.push('advantage');
-    notes.push('Sempre Vigilante: vantagem na Iniciativa');
-  }
-  if (ctx.subclassSlug === 'highway-rider' && ctx.level >= 3) {
-    contributions.push('advantage');
-    notes.push('Gatilho Rápido: vantagem na Iniciativa');
-  }
+
   if (
     options.stonePulse &&
     hasGiantkinStoneAncestry(ctx.speciesChoices)
@@ -175,4 +194,3 @@ export function applyFocusedInitiativeFloor(
       : undefined,
   };
 }
-

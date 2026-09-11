@@ -27,6 +27,10 @@ export type CombatMechanicalCatalogRows = {
   precautionRows: PhbSubclassPrecautionSpell[];
   economyRows: VPhbClassEconomyAction[];
   panelRows: PhbClassPanelAction[];
+  featureGatesBySubclassSlug: ReadonlyMap<
+    string,
+    ReadonlyMap<string, number>
+  >;
 };
 
 export function mapCombatMechanicalCatalog(
@@ -44,6 +48,7 @@ export function mapCombatMechanicalCatalog(
     precautionRows,
     economyRows,
     panelRows,
+    featureGatesBySubclassSlug,
   } = rows;
 
   return {
@@ -111,5 +116,6 @@ export function mapCombatMechanicalCatalog(
     })),
     economyActions: mapEconomyActions(economyRows),
     panelActions: mapPanelActions(economyRows, panelRows),
+    featureGatesBySubclassSlug,
   };
 }

@@ -3,7 +3,11 @@ import {
   formatStrikeSelfCostNote,
   spendStrikeSelfCost,
 } from '@game/combat/application/strike/spend-strike-self-cost';
-import { BLOOD_STRIKE_TABLE_ACTION } from '@game/combat/domain/fighter';
+import {
+  BLOOD_GATE_LOWER_COST,
+  BLOOD_GATE_SYMPHONY,
+  BLOOD_STRIKE_TABLE_ACTION,
+} from '@game/combat/domain/fighter';
 import { findStrikeOptionForTableAction } from '@game/combat/domain/strike-option';
 import { BLOOD_STRIKE_OPTION_KEY_RE } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
 import { applyCurrentHitPoints } from '@game/session/application/core/apply-current-hit-points';
@@ -68,10 +72,15 @@ export async function useBloodStrikeAction(
   let state: Awaited<ReturnType<typeof applyCurrentHitPoints>> | undefined;
   let spent;
   try {
+    const gates =
+      catalog.featureGatesBySubclassSlug.get(character.subclassSlug ?? '') ??
+      new Map();
     spent = await spendStrikeSelfCost({
       character,
       option,
       takeLowerCost: dto.takeLowerBloodCost,
+      lowerCostUnlockLevel: gates.get(BLOOD_GATE_LOWER_COST) ?? null,
+      symphonyUnlockLevel: gates.get(BLOOD_GATE_SYMPHONY) ?? null,
       ports: {
         useClassResource: async (slug, amount) => {
           await deps.state.useClassResource(character, slug, amount);

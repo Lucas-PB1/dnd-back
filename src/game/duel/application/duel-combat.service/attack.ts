@@ -9,6 +9,10 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
   BLOOD_CONDITION_CONSTRAIN,
   BLOOD_CONDITION_WITHERING,
+  BLOOD_GATE_ARMAMENT,
+  BLOOD_GATE_EXPLOSION,
+  BLOOD_GATE_LOWER_COST,
+  BLOOD_GATE_SYMPHONY,
   canUseBloodArmament,
   canUseBloodExplosion,
   hasStudiedAttacks,
@@ -89,6 +93,7 @@ function turnDeps(deps: AttackDeps): TurnDeps {
     repo: deps.repo,
     state: deps.state,
     snapshot: deps.snapshot,
+    mechanicalCatalog: deps.mechanicalCatalog,
   };
 }
 
@@ -203,10 +208,17 @@ export async function attack(
       input.bloodStrike.optionSlug,
     );
     try {
+      const catalog = await deps.mechanicalCatalog.load();
+      const gates =
+        catalog.featureGatesBySubclassSlug.get(
+          attackerPc.subclassSlug ?? '',
+        ) ?? new Map();
       const spent = await spendStrikeSelfCost({
         character: attackerPc,
         option: strikeOption,
         takeLowerCost: input.bloodStrike.takeLowerBloodCost,
+        lowerCostUnlockLevel: gates.get(BLOOD_GATE_LOWER_COST) ?? null,
+        symphonyUnlockLevel: gates.get(BLOOD_GATE_SYMPHONY) ?? null,
         ports: {
           useClassResource: async (slug, amount) => {
             await deps.state.useClassResource(attackerPc, slug, amount);
@@ -237,9 +249,16 @@ export async function attack(
   }
 
   if (input.damageTypeOverride) {
+    const catalog = await deps.mechanicalCatalog.load();
+    const gates =
+      catalog.featureGatesBySubclassSlug.get(attackerPc.subclassSlug ?? '') ??
+      new Map();
     if (
       !isBloodHoundSubclass(attackerPc.subclassSlug) ||
-      !canUseBloodArmament(attackerPc.level)
+      !canUseBloodArmament(
+        attackerPc.level,
+        gates.get(BLOOD_GATE_ARMAMENT),
+      )
     ) {
       throw new BadRequestException(
         'Armamento de Sangue exige Sabujo de Sangue nível 7+',
@@ -248,9 +267,16 @@ export async function attack(
   }
 
   if (input.bloodExplosionOnMiss) {
+    const catalog = await deps.mechanicalCatalog.load();
+    const gates =
+      catalog.featureGatesBySubclassSlug.get(attackerPc.subclassSlug ?? '') ??
+      new Map();
     if (
       !isBloodHoundSubclass(attackerPc.subclassSlug) ||
-      !canUseBloodExplosion(attackerPc.level)
+      !canUseBloodExplosion(
+        attackerPc.level,
+        gates.get(BLOOD_GATE_EXPLOSION),
+      )
     ) {
       throw new BadRequestException(
         'Explosão de Sangue exige Sabujo de Sangue nível 7+',

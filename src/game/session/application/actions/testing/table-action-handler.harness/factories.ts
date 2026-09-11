@@ -49,6 +49,7 @@ export function createEmptyMechanicalCatalogLoad(
     precautionSpells: [],
     economyActions: [],
     panelActions: [],
+    featureGatesBySubclassSlug: new Map(),
     ...overrides,
   };
 }

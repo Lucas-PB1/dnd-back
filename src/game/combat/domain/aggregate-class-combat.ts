@@ -37,6 +37,7 @@ import {
   grimHollowSubclassCombatNotes,
   northlandsSubclassCombatNotes,
 } from './notes';
+import type { LevelCombatNoteRow } from '../infrastructure/level-combat-note.queries';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -48,6 +49,8 @@ type ClassCombatInput = {
   classSlug: string;
   subclassSlug: string | null;
   level: number;
+  /** Notas de combate por nível do catálogo (GH etc.). */
+  levelCombatNotes?: readonly LevelCombatNoteRow[];
 };
 
 /**
@@ -58,7 +61,7 @@ type ClassCombatInput = {
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,
 ): ClassCombatContribution {
-  const { classSlug, subclassSlug, level } = input;
+  const { classSlug, subclassSlug, level, levelCombatNotes } = input;
 
   const notes = [
     ...barbarianCombatNotes({ classSlug, subclassSlug, level }),
@@ -75,8 +78,16 @@ export function aggregateClassCombatContributions(
     ...wizardCombatNotes({ classSlug, subclassSlug, level }),
     ...gunslingerCombatNotes({ classSlug, subclassSlug, level }),
     ...northlandsSubclassCombatNotes({ subclassSlug, level }),
-    ...grimHollowSubclassCombatNotes({ subclassSlug, level }),
-    ...grimHollowClassCombatNotes({ classSlug, level }),
+    ...grimHollowSubclassCombatNotes({
+      subclassSlug,
+      level,
+      catalogNotes: levelCombatNotes,
+    }),
+    ...grimHollowClassCombatNotes({
+      classSlug,
+      level,
+      catalogNotes: levelCombatNotes,
+    }),
   ];
 
   const speedBonusMeters =

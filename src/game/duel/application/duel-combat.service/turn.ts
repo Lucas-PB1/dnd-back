@@ -1,5 +1,6 @@
 import {
   BLOOD_CONDITION_EXILE,
+  BLOOD_GATE_SYMPHONY,
   BLOOD_STRIKE_RESOURCE_SLUG,
   canBloodSymphonyRefund,
 } from '@game/combat/domain/fighter';
@@ -22,6 +23,7 @@ export type TurnDeps = {
   repo: DuelRepository;
   state: CharacterStateRepository;
   snapshot: DuelCombatSnapshot;
+  mechanicalCatalog?: import('@game/combat/application/load-combat-mechanical-catalog').LoadCombatMechanicalCatalog;
 };
 
 function conditionsDeps(deps: TurnDeps): ConditionsDeps {
@@ -48,23 +50,33 @@ export async function afterDamage(
   await deps.repo.saveMembers(input.members);
 
   if (input.hitPointsAfter <= 0) {
-    if (
-      input.bloodStrikeDamaged &&
-      input.attackerPc &&
-      canBloodSymphonyRefund(input.attackerPc.level)
-    ) {
-      try {
-        await deps.state.recoverClassResource(
-          input.attackerPc,
-          BLOOD_STRIKE_RESOURCE_SLUG,
-          1,
-        );
-        log = appendCombatLog(
-          log,
-          `${input.attackerName}: Sinfonia de Sangue — recupera 1 Golpe de Sangue.`,
-        );
-      } catch {
-        // pool já cheia — ignora
+    if (input.bloodStrikeDamaged && input.attackerPc) {
+      const gates = deps.mechanicalCatalog
+        ? (
+            await deps.mechanicalCatalog.load()
+          ).featureGatesBySubclassSlug.get(
+            input.attackerPc.subclassSlug ?? '',
+          )
+        : undefined;
+      if (
+        canBloodSymphonyRefund(
+          input.attackerPc.level,
+          gates?.get(BLOOD_GATE_SYMPHONY),
+        )
+      ) {
+        try {
+          await deps.state.recoverClassResource(
+            input.attackerPc,
+            BLOOD_STRIKE_RESOURCE_SLUG,
+            1,
+          );
+          log = appendCombatLog(
+            log,
+            `${input.attackerName}: Sinfonia de Sangue — recupera 1 Golpe de Sangue.`,
+          );
+        } catch {
+          // pool já cheia — ignora
+        }
       }
     }
     log = appendCombatLog(

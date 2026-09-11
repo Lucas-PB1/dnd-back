@@ -42,6 +42,7 @@ describe('spendStrikeSelfCost', () => {
       option: hunting,
       ports: { useClassResource, applyCurrentHitPoints },
       rng: () => 0,
+      symphonyUnlockLevel: 15,
     });
 
     expect(useClassResource).toHaveBeenCalledWith('blood-strike', 1);
@@ -64,6 +65,7 @@ describe('spendStrikeSelfCost', () => {
         applyCurrentHitPoints,
       },
       rng: () => 0,
+      symphonyUnlockLevel: 15,
     });
 
     expect(result.heal).toBe(2);
@@ -79,6 +81,7 @@ describe('spendStrikeSelfCost', () => {
         character: baseCharacter({ level: 9 }),
         option: hunting,
         takeLowerCost: true,
+        lowerCostUnlockLevel: 10,
         ports: {
           useClassResource: async () => undefined,
           applyCurrentHitPoints: async () => undefined,

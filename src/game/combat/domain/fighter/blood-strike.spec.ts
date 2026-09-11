@@ -15,15 +15,16 @@ describe('blood-strike product gates', () => {
     expect(bloodSymphonyHealAmount(-1)).toBe(1);
   });
 
-  it('gates L7 / L10 / L15', () => {
-    expect(canUseBloodArmament(6)).toBe(false);
-    expect(canUseBloodArmament(7)).toBe(true);
-    expect(canUseBloodExplosion(7)).toBe(true);
-    expect(canTakeLowerBloodCost(9)).toBe(false);
-    expect(canTakeLowerBloodCost(10)).toBe(true);
-    expect(canBloodSymphonyHeal(14)).toBe(false);
-    expect(canBloodSymphonyHeal(15)).toBe(true);
-    expect(canBloodSymphonyRefund(15)).toBe(true);
+  it('gates from catalog unlock levels', () => {
+    expect(canUseBloodArmament(6, 7)).toBe(false);
+    expect(canUseBloodArmament(7, 7)).toBe(true);
+    expect(canUseBloodExplosion(7, 7)).toBe(true);
+    expect(canTakeLowerBloodCost(9, 10)).toBe(false);
+    expect(canTakeLowerBloodCost(10, 10)).toBe(true);
+    expect(canBloodSymphonyHeal(14, 15)).toBe(false);
+    expect(canBloodSymphonyHeal(15, 15)).toBe(true);
+    expect(canBloodSymphonyRefund(15, 15)).toBe(true);
+    expect(canUseBloodArmament(20, null)).toBe(false);
   });
 
   it('identifies Sabujo subclass', () => {

@@ -12,6 +12,8 @@ import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
 import { PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbSpecies } from '@entities/phb-species.entity';
 import { PhbSpeciesArmorPreset } from '@entities/phb-species-armor-preset.entity';
+import { PhbSubclassFeatureGate } from '@entities/phb-subclass-feature-gate.entity';
+import { PhbLevelCombatNote } from '@entities/phb-level-combat-note.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbClassRef } from '@entities/phb-class-ref.entity';
@@ -58,6 +60,8 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       PhbOptionValue,
       PhbSpecies,
       PhbSpeciesArmorPreset,
+      PhbSubclassFeatureGate,
+      PhbLevelCombatNote,
     ]),
     GameSharedModule,
     EffectsModule,

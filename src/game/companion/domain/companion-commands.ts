@@ -8,12 +8,10 @@ export const COMPANION_COMMAND_SLUGS = [
 
 export type CompanionCommandSlug = (typeof COMPANION_COMMAND_SLUGS)[number];
 
-export const COMPANION_COMMAND_LABELS: Record<CompanionCommandSlug, string> = {
-  strike: 'Golpe da Fera',
-  help: 'Ajudar',
-  dash: 'Correr',
-  disengage: 'Desengajar',
-  dodge: 'Esquivar',
+export type CompanionCommandCatalogRow = {
+  slug: string;
+  labelPt: string;
+  noteKind: 'strike' | 'bonus_action';
 };
 
 export function isCompanionCommandSlug(
@@ -24,11 +22,14 @@ export function isCompanionCommandSlug(
 
 export function formatCompanionCommandNote(
   command: CompanionCommandSlug,
+  catalog: ReadonlyMap<string, CompanionCommandCatalogRow>,
   variantLabel?: string | null,
 ): string {
-  const label = COMPANION_COMMAND_LABELS[command];
+  const row = catalog.get(command);
+  const label = row?.labelPt ?? command;
+  const noteKind = row?.noteKind ?? (command === 'strike' ? 'strike' : 'bonus_action');
   const prefix = variantLabel ? `Companheiro (${variantLabel})` : 'Companheiro';
-  if (command === 'strike') {
+  if (noteKind === 'strike') {
     return `${prefix}: ${label} — sacrifique um ataque na ação Atacar ou use Ação Bônus para comandar (mesa).`;
   }
   return `${prefix}: Ação Bônus — ${label}.`;

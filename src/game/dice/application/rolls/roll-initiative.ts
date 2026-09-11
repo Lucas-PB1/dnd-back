@@ -16,6 +16,7 @@ import type {
 } from '@game/dice/dto/character-roll.dto';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import type { LoadEffectCatalog } from '@game/effects';
+import { loadInitiativeRules } from '@game/sheet/infrastructure/initiative-rule.queries';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 
@@ -50,6 +51,11 @@ export async function executeRollInitiative(input: {
     ownerSlugs: featSlugs,
     kinds: ['initiative_pb'],
   });
+  const initiativeRules = await loadInitiativeRules(
+    input.dataSource,
+    character.classSlug,
+    character.subclassSlug,
+  );
   const rollContext = {
     dexterityModifier: mods.destreza,
     wisdomModifier: mods.sabedoria,
@@ -62,6 +68,7 @@ export async function executeRollInitiative(input: {
     featEffects,
     heritageChoices: sheet.heritageChoices,
     speciesChoices: sheet.speciesChoices,
+    initiativeRules,
   };
 
   const { total: modifier, notes: bonusNotes } =

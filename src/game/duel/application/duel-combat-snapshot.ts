@@ -3,6 +3,10 @@ import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-comba
 import { ResolveEquippedArmorClass } from '@game/combat/application/resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import {
+  BLOOD_GATE_ARMAMENT,
+  BLOOD_GATE_EXPLOSION,
+  BLOOD_GATE_LOWER_COST,
+  BLOOD_GATE_SYMPHONY,
   BLOOD_STRIKE_RESOURCE_SLUG,
   BLOOD_STRIKE_TABLE_ACTION,
   attacksPerAction,
@@ -242,15 +246,27 @@ export class DuelCombatSnapshot {
       }));
 
     const conMod = abilityModifier(character.abilityScores.constituicao);
+    const gates =
+      catalog.featureGatesBySubclassSlug.get(character.subclassSlug ?? '') ??
+      new Map();
     return {
       available: options.length > 0 && (resource?.remaining ?? 0) > 0,
       remaining: resource?.remaining ?? 0,
       max: resource?.max ?? 0,
       saveDc: strikeSaveDc(conMod, proficiencyBonus),
       options,
-      canTakeLowerCost: canTakeLowerBloodCost(character.level),
-      canArmament: canUseBloodArmament(character.level),
-      canExplosion: canUseBloodExplosion(character.level),
+      canTakeLowerCost: canTakeLowerBloodCost(
+        character.level,
+        gates.get(BLOOD_GATE_LOWER_COST),
+      ),
+      canArmament: canUseBloodArmament(
+        character.level,
+        gates.get(BLOOD_GATE_ARMAMENT),
+      ),
+      canExplosion: canUseBloodExplosion(
+        character.level,
+        gates.get(BLOOD_GATE_EXPLOSION),
+      ),
     };
   }
 

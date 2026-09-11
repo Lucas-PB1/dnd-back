@@ -6,6 +6,7 @@ import {
   PhbCompanionProfile,
   PhbCompanionTemplateMap,
 } from '@entities/phb-companion-profile.entity';
+import { PhbCompanionCommand } from '@entities/phb-companion-command.entity';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
 import { CatalogModule } from '@catalog/catalog.module';
@@ -64,6 +65,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
       PhbCreatureTemplate,
       PhbCompanionProfile,
       PhbCompanionTemplateMap,
+      PhbCompanionCommand,
       PhbSubclassRef,
     ]),
   ],

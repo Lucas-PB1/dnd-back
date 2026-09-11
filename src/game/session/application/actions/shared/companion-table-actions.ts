@@ -9,6 +9,7 @@ import {
   isCompanionCommandSlug,
 } from '@game/companion/domain/companion-commands';
 import { resolveCompanionConfig } from '@game/companion/domain/companion-profiles';
+import { loadCompanionCommands } from '@game/companion/infrastructure/companion-command.queries';
 import {
   loadCompanionProfileBySubclass,
   loadCompanionTemplateMaps,
@@ -89,11 +90,16 @@ export async function resolveCompanionCommand(
     maps,
     sheet.subclassOptions,
   );
+  const commands = await loadCompanionCommands(deps.dataSource);
 
   return {
     state: await deps.state.buildResponse(character),
     actionName,
     resourceSpent: false,
-    note: formatCompanionCommandNote(command, config?.variantLabel),
+    note: formatCompanionCommandNote(
+      command,
+      commands,
+      config?.variantLabel,
+    ),
   };
 }

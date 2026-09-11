@@ -50,3 +50,11 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Tabela `phb_species_armor_preset` (fórmulas CA Manikin).
 - `option_value.damage_type` normalizado para slug EN (dragonborn + tiefling).
 - Game: `computeSpeciesArmorPreset` + `loadSpeciesOptionDamageTypes`; sem Records de ancestry.
+
+## 2026-09-11 — Onda 2: initiative / bloodhound / companion / GH notes
+
+- `phb_initiative_rule` — bônus de atributo e vantagem de iniciativa.
+- `phb_subclass_feature_gate` — gates L7/L10/L15 do Sabujo.
+- `phb_companion_command` — labels PT dos comandos de mesa.
+- `phb_level_combat_note` — notas GH Cap.2 por nível.
+- Game: predicados puros + load no mechanical catalog / combat slice / roll initiative.

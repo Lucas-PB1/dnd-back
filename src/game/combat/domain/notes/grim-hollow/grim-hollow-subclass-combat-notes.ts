@@ -1,34 +1,49 @@
 /**
  * Passivas / lembretes de subclasses Grim Hollow (Cap. 2).
- * Economia C063–C068 cobre botões Usar; aqui ficam efeitos contínuos e buffs condicionais.
- * HP numérico permanente: `phb_effect.combat_mod` (ex.: sangromancer E014).
+ * SSOT: `rpg.phb_level_combat_note`. Economia C063–C068 cobre botões Usar.
  */
-import {
-  GH_CLASS_COMBAT_NOTES,
-  GH_SUBCLASS_COMBAT_NOTES,
-} from './grim-hollow-subclass-combat-notes-data';
+import type { LevelCombatNoteRow } from '../../../infrastructure/level-combat-note.queries';
+
+export function filterLevelCombatNotes(
+  rows: readonly LevelCombatNoteRow[],
+  ownerKind: 'class' | 'subclass',
+  ownerSlug: string | null | undefined,
+  level: number,
+): string[] {
+  if (!ownerSlug) return [];
+  return rows
+    .filter(
+      (row) =>
+        row.ownerKind === ownerKind &&
+        row.ownerSlug === ownerSlug &&
+        level >= row.unlockLevel,
+    )
+    .map((row) => row.note);
+}
 
 export function grimHollowSubclassCombatNotes(input: {
   subclassSlug?: string | null;
   level?: number;
+  catalogNotes?: readonly LevelCombatNoteRow[];
 }): string[] {
-  const slug = input.subclassSlug;
-  if (!slug) return [];
-  const level = input.level ?? 1;
-  const entries = GH_SUBCLASS_COMBAT_NOTES[slug];
-  if (!entries?.length) return [];
-  return entries.filter((e) => level >= e.minLevel).map((e) => e.text);
+  return filterLevelCombatNotes(
+    input.catalogNotes ?? [],
+    'subclass',
+    input.subclassSlug,
+    input.level ?? 1,
+  );
 }
 
 /** Passivas de classe GH (não subclasse). */
 export function grimHollowClassCombatNotes(input: {
   classSlug?: string | null;
   level?: number;
+  catalogNotes?: readonly LevelCombatNoteRow[];
 }): string[] {
-  const slug = input.classSlug;
-  if (!slug) return [];
-  const level = input.level ?? 1;
-  const entries = GH_CLASS_COMBAT_NOTES[slug];
-  if (!entries?.length) return [];
-  return entries.filter((e) => level >= e.minLevel).map((e) => e.text);
+  return filterLevelCombatNotes(
+    input.catalogNotes ?? [],
+    'class',
+    input.classSlug,
+    input.level ?? 1,
+  );
 }

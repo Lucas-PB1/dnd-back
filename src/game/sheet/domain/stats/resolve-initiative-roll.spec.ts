@@ -7,8 +7,50 @@ import {
   resolveInitiativeAdvantageContributions,
   resolveInitiativeBonus,
 } from './resolve-initiative-roll';
+import type { InitiativeRuleRow } from '../../infrastructure/initiative-rule.queries';
+
+const CATALOG_RULES: InitiativeRuleRow[] = [
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'gloom-stalker',
+    unlockLevel: 3,
+    ruleKind: 'ability_bonus',
+    abilitySlug: 'sabedoria',
+    label: 'Emboscador das Sombras',
+  },
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'trapper-guild',
+    unlockLevel: 7,
+    ruleKind: 'ability_bonus',
+    abilitySlug: 'inteligencia',
+    label: 'Vantagem do Emboscador',
+  },
+  {
+    ownerKind: 'class',
+    ownerSlug: 'barbarian',
+    unlockLevel: 7,
+    ruleKind: 'advantage',
+    abilitySlug: null,
+    label: 'Instintos Primitivos: vantagem na Iniciativa',
+  },
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'champion',
+    unlockLevel: 3,
+    ruleKind: 'advantage',
+    abilitySlug: null,
+    label: 'Atleta Extraordinário: vantagem na Iniciativa',
+  },
+];
 
 describe('resolveInitiativeRoll', () => {
+  const alertEffect = {
+    kind: 'initiative_pb',
+    ownerKind: 'feat',
+    ownerSlug: 'alert',
+  } as const;
+
   const base = {
     dexterityModifier: 3,
     wisdomModifier: 2,
@@ -18,6 +60,7 @@ describe('resolveInitiativeRoll', () => {
     subclassSlug: null as string | null,
     level: 5,
     characterFeats: [] as { featSlug: string }[],
+    initiativeRules: CATALOG_RULES,
   };
 
   it('adds PB once for alert or focused initiative', () => {
@@ -26,6 +69,7 @@ describe('resolveInitiativeRoll', () => {
       resolveInitiativeBonus({
         ...base,
         characterFeats: [{ featSlug: 'alert' }],
+        featEffects: [alertEffect as never],
       }).total,
     ).toBe(5);
     expect(
@@ -40,6 +84,7 @@ describe('resolveInitiativeRoll', () => {
       resolveInitiativeBonus({
         ...base,
         characterFeats: [{ featSlug: 'alert' }],
+        featEffects: [alertEffect as never],
         heritageChoices: [
           { choiceKind: 'heritage_trait_1', choiceSlug: FOCUSED_INITIATIVE_TRAIT_SLUG },
         ],
@@ -106,9 +151,12 @@ describe('resolveInitiativeRoll', () => {
   });
 
   it('detects initiative proficiency helpers', () => {
-    expect(hasInitiativeProficiency({ characterFeats: [{ featSlug: 'alert' }] })).toBe(
-      true,
-    );
+    expect(
+      hasInitiativeProficiency({
+        characterFeats: [{ featSlug: 'alert' }],
+        featEffects: [alertEffect as never],
+      }),
+    ).toBe(true);
     expect(
       focusedInitiativeTakeCount([
         { choiceKind: 'heritage_trait_1', choiceSlug: FOCUSED_INITIATIVE_TRAIT_SLUG },

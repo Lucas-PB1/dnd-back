@@ -7,6 +7,7 @@ import {
   loadSpeciesArmorPresets,
   loadSpeciesOptionDamageTypes,
 } from '../../infrastructure/species-catalog.queries';
+import { loadLevelCombatNotes } from '../../infrastructure/level-combat-note.queries';
 import { ResolveEquippedArmorClass } from '../resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from '../resolve-equipment-compliance';
@@ -161,6 +162,11 @@ export async function resolveCharacterCombatSlice(input: {
     optionDamageTypes: await loadSpeciesOptionDamageTypes(
       dataSource,
       speciesSlug,
+    ),
+    levelCombatNotes: await loadLevelCombatNotes(
+      dataSource,
+      classSlug,
+      subclassSlug,
     ),
   });
 }
