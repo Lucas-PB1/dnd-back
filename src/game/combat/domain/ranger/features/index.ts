@@ -12,5 +12,3 @@ export {
   rangerAttacksPerAction,
   rangerSpeedBonusMeters,
 } from './rules';
-
-export { rangerCombatNotes } from './combat-notes';

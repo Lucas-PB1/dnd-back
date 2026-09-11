@@ -19,5 +19,3 @@ export {
   hasTacticalShift,
   hasTacticalMind,
 } from './rules';
-
-export { fighterCombatNotes } from './combat-notes';

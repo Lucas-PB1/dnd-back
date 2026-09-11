@@ -1,5 +1,4 @@
 import {
-  clericCombatNotes,
   destroyUndeadDice,
   divineSparkDice,
   divineStrikeDice,
@@ -29,22 +28,5 @@ describe('cleric-features', () => {
     expect(divineStrikeDice(6)).toBeNull();
     expect(divineStrikeDice(7)).toBe('1d8');
     expect(divineStrikeDice(14)).toBe('2d8');
-  });
-
-  it('keeps dynamic cleric notes; static subclass notes live in catalog', () => {
-    const notes = clericCombatNotes({
-      classSlug: 'cleric',
-      subclassSlug: 'war',
-      level: 6,
-    }).join(' ');
-
-    expect(notes).toContain('Canalizar Divindade');
-    expect(notes).not.toContain('Fulminar Mortos-Vivos');
-    expect(notes).not.toContain('Sacerdote da Guerra');
-    expect(notes).not.toContain('Intervenção Divina');
-  });
-
-  it('returns no notes for another class', () => {
-    expect(clericCombatNotes({ classSlug: 'wizard', level: 20 })).toEqual([]);
   });
 });

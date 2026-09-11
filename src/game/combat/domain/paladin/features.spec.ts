@@ -5,7 +5,6 @@ import {
   hasAuraOfProtection,
   isPaladinClass,
   paladinAttacksPerAction,
-  paladinCombatNotes,
   paladinSavingThrowAuraBonus,
   radiantStrikesDie,
 } from './features';
@@ -89,32 +88,5 @@ describe('paladin-features', () => {
   it('grants Extra Attack at level 5', () => {
     expect(paladinAttacksPerAction(4)).toBe(1);
     expect(paladinAttacksPerAction(5)).toBe(2);
-  });
-
-  describe('paladinCombatNotes', () => {
-    it('returns nothing for non-paladins', () => {
-      expect(paladinCombatNotes({ classSlug: 'fighter', level: 6 })).toEqual([]);
-    });
-
-    it('emits only dynamic aura note from L6', () => {
-      expect(paladinCombatNotes({ classSlug: 'paladin', level: 5 })).toEqual([]);
-      const notes = paladinCombatNotes({ classSlug: 'paladin', level: 11 });
-      expect(notes).toEqual([
-        'Aura de Proteção (3 m): você e aliados somam o mod. de Carisma às salvaguardas',
-      ]);
-      expect(
-        paladinCombatNotes({ classSlug: 'paladin', level: 18 })[0],
-      ).toContain('9 m');
-    });
-
-    it('does not emit subclass catalog notes locally', () => {
-      const notes = paladinCombatNotes({
-        classSlug: 'paladin',
-        subclassSlug: 'vengeance',
-        level: 3,
-      });
-      expect(notes).toEqual([]);
-      expect(notes.join(' ')).not.toContain('Voto de Inimizade');
-    });
   });
 });

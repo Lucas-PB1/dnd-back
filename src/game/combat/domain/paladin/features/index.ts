@@ -11,5 +11,3 @@ export {
   auraRangeMeters,
   paladinAttacksPerAction,
 } from './rules';
-
-export { paladinCombatNotes } from './combat-notes';

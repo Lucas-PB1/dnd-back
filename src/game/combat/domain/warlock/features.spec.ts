@@ -2,7 +2,6 @@ import {
   healingLightDiceMax,
   isWarlockClass,
   magicalCunningSlotRecoveryCount,
-  warlockCombatNotes,
   warlockInvocationLimit,
   warlockPactSlotCount,
   warlockPactSlotLevel,
@@ -53,35 +52,5 @@ describe('warlock-features', () => {
   it('computes celestial healing light dice max pool', () => {
     expect(healingLightDiceMax(3)).toBe(4);
     expect(healingLightDiceMax(10)).toBe(11);
-  });
-
-  it('keeps dynamic warlock notes; static patron notes live in catalog', () => {
-    const notes = warlockCombatNotes({ classSlug: 'warlock', level: 5 });
-    expect(notes.some((n) => n.includes('Magia de Pacto'))).toBe(true);
-    expect(notes.some((n) => n.includes('Astúcia Mágica'))).toBe(true);
-
-    const celestialNotes = warlockCombatNotes({
-      classSlug: 'warlock',
-      subclassSlug: 'celestial',
-      level: 3,
-    });
-    expect(celestialNotes.some((n) => n.includes('Luz Medicinal'))).toBe(true);
-
-    const archfeyNotes = warlockCombatNotes({
-      classSlug: 'warlock',
-      subclassSlug: 'archfey',
-      level: 14,
-    });
-    expect(archfeyNotes.some((n) => n.includes('Passo Nebuloso'))).toBe(true);
-    expect(archfeyNotes.some((n) => n.includes('Magia Sedutora'))).toBe(false);
-
-    const fiendNotes = warlockCombatNotes({
-      classSlug: 'warlock',
-      subclassSlug: 'fiend',
-      level: 3,
-    });
-    expect(fiendNotes.some((n) => n.includes('Bênção do Tenebroso'))).toBe(
-      false,
-    );
   });
 });

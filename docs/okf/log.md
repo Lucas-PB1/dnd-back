@@ -74,4 +74,10 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 ## 2026-09-11 — Onda 2: class notes bárbaro/monge/paladino
 
 - +26 literais de classe em `phb_level_combat_note.barb-monk-paladin-class.sql`.
-- TS só dinâmico: Fúria/Imprudente/Golpe Brutal; Artes Marciais + movimento; Aura de Proteção (m).
+- Depois: ex-templates dinâmicos viraram literais (+5); removidos `*CombatNotes` BMP.
+- Números vivos ficam no motor (ataque, velocidade, `savingThrowAuraBonus`); Fúria ativa não vira nota.
+
+## 2026-09-11 — Onda 2: remaining dynamic notes → static
+
+- +25 literais (`remaining-dynamic-as-static`); aggregate só usa `filterLevelCombatNotes`.
+- Removidos *CombatNotes* de fighter/rogue/ranger/cleric/bard/warlock/druid/wizard.

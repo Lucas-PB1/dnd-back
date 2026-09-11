@@ -1,6 +1,5 @@
 import {
   appliesRageDamageBonus,
-  barbarianCombatNotes,
   brutalStrikeDice,
   divineFuryExtraDice,
   fastMovementBonusMeters,
@@ -87,25 +86,5 @@ describe('barbarian-rage', () => {
   it('recognizes barbarian slug', () => {
     expect(isBarbarianClass('barbarian')).toBe(true);
     expect(isBarbarianClass('gunslinger')).toBe(false);
-  });
-
-  it('emits only dynamic notes (rage/reckless/brutal)', () => {
-    expect(
-      barbarianCombatNotes({
-        classSlug: 'barbarian',
-        subclassSlug: 'berserker',
-        level: 14,
-      }),
-    ).toEqual([
-      'Golpe Brutal: no acerto com Imprudente, pode abrir mão da Vantagem e causar +1d10 (efeitos de empurrar etc. na mesa)',
-    ]);
-    expect(
-      barbarianCombatNotes({
-        classSlug: 'barbarian',
-        level: 5,
-        rageActive: true,
-        recklessActive: true,
-      }).some((n) => n.startsWith('Fúria ativa')),
-    ).toBe(true);
   });
 });

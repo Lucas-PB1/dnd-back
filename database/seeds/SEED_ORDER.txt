@@ -433,6 +433,7 @@ notes/northlands/phb_level_combat_note.northlands.sql
 notes/phb/phb_level_combat_note.static-packs.sql
 notes/phb/phb_level_combat_note.remaining-static.sql
 notes/phb/phb_level_combat_note.barb-monk-paladin-class.sql
+notes/phb/phb_level_combat_note.remaining-dynamic-as-static.sql
 creature/phb/seed.nwb-longships.sql
 creature/phb/seed.nwb-bestiary.sql
 creature/phb/phb_mounts.all.sql

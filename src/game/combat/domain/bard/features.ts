@@ -18,21 +18,3 @@ export function bardicInspirationMaxUses(charismaScore: number): number {
 export function bardicInspirationRestRecovery(level: number): 'short' | 'long' {
   return level >= 5 ? 'short' : 'long';
 }
-
-/** Notas dinâmicas. Estáticas → `phb_level_combat_note`. */
-export function bardCombatNotes(input: {
-  classSlug?: string | null;
-  subclassSlug?: string | null;
-  level?: number;
-}): string[] {
-  if (!isBardClass(input.classSlug)) return [];
-
-  const level = input.level ?? 1;
-  const die = bardicInspirationDie(level);
-  const recovery =
-    bardicInspirationRestRecovery(level) === 'short' ? 'Curto/Longo' : 'Longo';
-
-  return [
-    `Inspiração de Bardo (${die}): Ação Bônus para conceder a uma criatura a até 18 m; recarrega em Descanso ${recovery}.`,
-  ];
-}

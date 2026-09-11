@@ -23,6 +23,8 @@ Arquivos atuais:
 | `20260911_phb_level_notes_northlands_phb_damage_type.sql` | Northlands + packs PHB estáticos em level notes; `phb_damage_type` labels PT |
 | `20260911_phb_level_combat_note_remaining_static.sql` | Literais estáticos restantes (fighter/rogue/ranger/warlock/wizard/cleric/bard/druid) |
 | `20260911_phb_level_combat_note_barb_monk_paladin_class.sql` | Notas de classe estáticas bárbaro/monge/paladino |
+| `20260911_phb_level_combat_note_bmp_no_dynamic.sql` | Ex-templates dinâmicos BMP → literais (schedule no texto) |
+| `20260911_phb_level_combat_note_remaining_dynamic_as_static.sql` | Ex-templates restantes (fighter/rogue/…/wizard) → literais |
 
 ## Quando usar forward vs editar schema/
 

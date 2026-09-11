@@ -4,7 +4,6 @@
 import {
   attacksPerAction,
   championCritThreshold,
-  fighterCombatNotes,
   indomitableMaxUses,
   isFighterClass,
   psiEnergyDiceCount,
@@ -71,16 +70,8 @@ describe('fighter-features', () => {
     ).toBe(20);
   });
 
-  it('emits combat notes for fighter', () => {
+  it('recognizes fighter class', () => {
     expect(isFighterClass('fighter')).toBe(true);
-    const notes = fighterCombatNotes({
-      classSlug: 'fighter',
-      subclassSlug: 'champion',
-      level: 15,
-    });
-    expect(notes.some((note) => note.includes('Ataques por ação: 3'))).toBe(
-      true,
-    );
-    expect(notes.some((note) => note.includes('crítico 18–20'))).toBe(true);
+    expect(isFighterClass('rogue')).toBe(false);
   });
 });

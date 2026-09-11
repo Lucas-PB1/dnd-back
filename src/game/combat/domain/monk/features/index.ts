@@ -11,5 +11,3 @@ export {
   isMonkWeaponForAttack,
   monkAttacksPerAction,
 } from './rules';
-
-export { monkCombatNotes } from './combat-notes';

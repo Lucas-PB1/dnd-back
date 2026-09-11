@@ -3,7 +3,6 @@ import {
   arcaneRecoveryMaxSlotLevels,
   isWizardClass,
   portentDiceCount,
-  wizardCombatNotes,
 } from './features';
 
 describe('wizard-features', () => {
@@ -27,24 +26,5 @@ describe('wizard-features', () => {
   it('computes portent dice count', () => {
     expect(portentDiceCount(3)).toBe(2);
     expect(portentDiceCount(14)).toBe(3);
-  });
-
-  it('keeps dynamic wizard notes; static subclass notes live in catalog', () => {
-    const notes = wizardCombatNotes({ classSlug: 'wizard', level: 5 });
-    expect(notes.some((n) => n.includes('Recuperação Arcana'))).toBe(true);
-
-    const abjurerNotes = wizardCombatNotes({
-      classSlug: 'wizard',
-      subclassSlug: 'abjurer',
-      level: 3,
-    });
-    expect(abjurerNotes.some((n) => n.includes('Proteção Arcana'))).toBe(false);
-
-    const divinerNotes = wizardCombatNotes({
-      classSlug: 'wizard',
-      subclassSlug: 'diviner',
-      level: 3,
-    });
-    expect(divinerNotes.some((n) => n.includes('Presságio'))).toBe(true);
   });
 });

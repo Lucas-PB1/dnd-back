@@ -2,7 +2,6 @@ import {
   bardicInspirationDie,
   bardicInspirationMaxUses,
   bardicInspirationRestRecovery,
-  bardCombatNotes,
   isBardClass,
 } from './features';
 
@@ -25,9 +24,9 @@ describe('bard-features', () => {
   });
 
   it('computes max inspiration uses based on charisma score (min 1)', () => {
-    expect(bardicInspirationMaxUses(16)).toBe(3); // mod +3
-    expect(bardicInspirationMaxUses(20)).toBe(5); // mod +5
-    expect(bardicInspirationMaxUses(8)).toBe(1);  // mod -1 -> min 1
+    expect(bardicInspirationMaxUses(16)).toBe(3);
+    expect(bardicInspirationMaxUses(20)).toBe(5);
+    expect(bardicInspirationMaxUses(8)).toBe(1);
   });
 
   it('computes rest recovery rule (short vs long rest)', () => {
@@ -35,22 +34,5 @@ describe('bard-features', () => {
     expect(bardicInspirationRestRecovery(4)).toBe('long');
     expect(bardicInspirationRestRecovery(5)).toBe('short');
     expect(bardicInspirationRestRecovery(10)).toBe('short');
-  });
-
-  it('keeps dynamic bard inspiration note; static notes live in catalog', () => {
-    const baseNotes = bardCombatNotes({ classSlug: 'bard', level: 5 });
-    expect(baseNotes.some((n) => n.includes('Inspiração de Bardo (d8)'))).toBe(
-      true,
-    );
-    expect(baseNotes.some((n) => n.includes('Fonte de Inspiração'))).toBe(false);
-
-    const loreNotes = bardCombatNotes({
-      classSlug: 'bard',
-      subclassSlug: 'lore',
-      level: 3,
-    });
-    expect(loreNotes.some((n) => n.includes('Palavras de Interrupção'))).toBe(
-      false,
-    );
   });
 });

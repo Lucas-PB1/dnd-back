@@ -4,7 +4,6 @@ import {
   availableCunningStrikeEffects,
   cunningStrikeSaveDc,
   hasSlipperyMind,
-  rogueCombatNotes,
   sneakAttackDiceCount,
   sneakAttackDiceExpression,
   soulknifePsiDiceSchedule,
@@ -148,41 +147,5 @@ describe('rogue features', () => {
   it('unlocks Slippery Mind at level 15', () => {
     expect(hasSlipperyMind(14)).toBe(false);
     expect(hasSlipperyMind(15)).toBe(true);
-  });
-
-  it.each([
-    ['soulknife', 'Adaga Espiritual'],
-    ['assassin', null],
-    ['thief', null],
-    ['arcane-trickster', null],
-    ['arachnoid-stalker', null],
-  ])(
-    'keeps sneak attack (+ dynamic soulknife); static subclass notes in catalog (%s)',
-    (subclassSlug, expectedDynamic) => {
-      const notes = rogueCombatNotes({
-        classSlug: 'rogue',
-        subclassSlug,
-        level: 17,
-      });
-
-      expect(notes.some((note) => note.includes('Ataque Furtivo: 9d6'))).toBe(
-        true,
-      );
-      if (expectedDynamic) {
-        expect(notes.some((note) => note.includes(expectedDynamic))).toBe(true);
-      } else {
-        expect(notes).toHaveLength(1);
-      }
-    },
-  );
-
-  it('does not emit Rogue notes for another class', () => {
-    expect(
-      rogueCombatNotes({
-        classSlug: 'fighter',
-        subclassSlug: 'soulknife',
-        level: 17,
-      }),
-    ).toEqual([]);
   });
 });

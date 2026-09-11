@@ -17,7 +17,6 @@ export {
   availableCunningStrikeEffects,
   validateCunningStrikeSelection,
 } from './cunning-strike';
-export { rogueCombatNotes } from './combat-notes';
 export * from './table-actions';
 export {
   PSYCHIC_BLADE_ITEM_SLUG,

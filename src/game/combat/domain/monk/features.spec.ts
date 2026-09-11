@@ -3,7 +3,6 @@ import {
   martialArtsDie,
   martialArtsDieFaces,
   monkAttacksPerAction,
-  monkCombatNotes,
   monkFocusSaveDc,
   unarmoredMovementBonusMeters,
 } from './features';
@@ -57,23 +56,5 @@ describe('monk-features', () => {
     expect(
       isMonkWeaponForAttack(piece({ category: 'martial' }), 'melee'),
     ).toBe(false);
-  });
-
-  it('emits only dynamic monk notes (die and speed)', () => {
-    const notes = monkCombatNotes({
-      classSlug: 'monk',
-      subclassSlug: 'mercy',
-      level: 5,
-    });
-    expect(notes).toHaveLength(2);
-    expect(notes[0]).toContain('Artes Marciais');
-    expect(notes[0]).toContain('1d8');
-    expect(notes[1]).toMatch(/Movimento sem Armadura: \+\d+ m/);
-    expect(notes.some((note) => note.includes('Golpe Atordoante'))).toBe(false);
-    expect(notes.some((note) => note.includes('Mão de Cura'))).toBe(false);
-  });
-
-  it('returns no notes for non-monks', () => {
-    expect(monkCombatNotes({ classSlug: 'rogue', level: 5 })).toEqual([]);
   });
 });

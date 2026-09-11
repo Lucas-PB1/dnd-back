@@ -4,7 +4,6 @@ import {
   moonWildShapeTempHp,
   starryFormDice,
   wildShapeMaxUses,
-  druidCombatNotes,
 } from './features';
 
 describe('druid-features', () => {
@@ -31,26 +30,5 @@ describe('druid-features', () => {
     expect(landAidDice(14)).toBe(4);
     expect(starryFormDice(3)).toBe('1d8');
     expect(starryFormDice(10)).toBe('2d8');
-  });
-
-  it('keeps dynamic druid notes; static notes live in catalog', () => {
-    const notes = druidCombatNotes({ classSlug: 'druid', level: 5 });
-    expect(notes.some((n) => n.includes('Forma Selvagem'))).toBe(true);
-    expect(notes.some((n) => n.includes('Ressurgimento Selvagem'))).toBe(false);
-
-    const moonNotes = druidCombatNotes({
-      classSlug: 'druid',
-      subclassSlug: 'moon',
-      level: 3,
-    });
-    expect(moonNotes.some((n) => n.includes('Círculo da Lua'))).toBe(true);
-
-    const landNotes = druidCombatNotes({
-      classSlug: 'druid',
-      subclassSlug: 'land',
-      level: 6,
-    });
-    expect(landNotes.some((n) => n.includes('Auxílio da Terra'))).toBe(true);
-    expect(landNotes.some((n) => n.includes('Recuperação Natural'))).toBe(false);
   });
 });

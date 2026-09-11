@@ -27,5 +27,3 @@ export {
   abjurerArcaneWardHp,
   portentDiceCount,
 } from './rules';
-
-export { wizardCombatNotes } from './combat-notes';

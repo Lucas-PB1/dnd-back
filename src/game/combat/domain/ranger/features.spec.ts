@@ -5,7 +5,6 @@ import {
   hasPreciseHunter,
   isRangerClass,
   rangerAttacksPerAction,
-  rangerCombatNotes,
   rangerSpeedBonusMeters,
 } from './features';
 
@@ -36,16 +35,5 @@ describe('ranger-features', () => {
     expect(rangerSpeedBonusMeters({ classSlug: 'fighter', level: 6 })).toBe(0);
     expect(hasPreciseHunter(16)).toBe(false);
     expect(hasPreciseHunter(17)).toBe(true);
-  });
-
-  it('keeps dynamic gloom-stalker note; static core notes live in catalog', () => {
-    const notes = rangerCombatNotes({
-      classSlug: 'ranger',
-      subclassSlug: 'gloom-stalker',
-      level: 11,
-    });
-    expect(notes.join(' ')).toContain('Emboscador das Sombras');
-    expect(notes.join(' ')).not.toContain('Inimigo Favorito');
-    expect(notes.join(' ')).not.toContain('Torrente do Vigilante');
   });
 });

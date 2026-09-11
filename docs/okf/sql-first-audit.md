@@ -24,13 +24,14 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Notes GH / Northlands / packs PHB estáticos | `phb_level_combat_note` | **migrado** |
 | Labels PT de tipo de dano | `phb_damage_type` | **migrado** |
 | Notes PHB restantes (literais) | `phb_level_combat_note.remaining-static` | **migrado** |
-| Notes classe bárbaro/monge/paladino | `phb_level_combat_note.barb-monk-paladin-class` | **migrado** |
+| Notes classe bárbaro/monge/paladino | `phb_level_combat_note.barb-monk-paladin-class` | **migrado** (sem templates TS) |
+| Notes dinâmicas restantes (fighter…wizard) | `phb_level_combat_note.remaining-dynamic-as-static` | **migrado** |
 
 ## Dívida restante
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| baixa | Templates dinâmicos (`${die}`, slots, rageActive, aura m) | manter predicado TS (já o caso) |
+| baixa | Transformation Cap.6 / heritage notes | outro SSOT (já separado) |
 
 ## Padrão do piloto (repetir)
 

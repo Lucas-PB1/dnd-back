@@ -23,5 +23,3 @@ export {
   CLAIRVOYANT_COMBATANT_RESOURCE,
   healingLightDiceMax,
 } from './rules';
-
-export { warlockCombatNotes } from './combat-notes';
