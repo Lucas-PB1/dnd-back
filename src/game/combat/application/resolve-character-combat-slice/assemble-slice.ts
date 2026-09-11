@@ -71,6 +71,7 @@ export async function assembleMappedCombatSlice(input: {
   combatScores: AbilityScores;
   dataSource: DataSource;
   bundle: Pick<CharacterCombatBundle, 'items' | 'activeItemSlugs'>;
+  optionDamageTypes?: ReadonlyMap<string, string>;
 }): Promise<MappedCombatSlice> {
   const classCombat = aggregateClassCombatContributions({
     classSlug: input.classSlug,
@@ -81,6 +82,7 @@ export async function assembleMappedCombatSlice(input: {
     speciesSlug: input.speciesSlug,
     speciesChoices: input.speciesChoices,
     speciesEffects: input.speciesEffects,
+    optionDamageTypes: input.optionDamageTypes,
   });
   const heritageNotes = heritageCombatNotes({
     heritageChoices: input.heritageChoices,

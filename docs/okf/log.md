@@ -44,3 +44,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Jack: coluna `jack_of_all_trades_level` + seed bard=2; mapper passa unlock para `computeDerivedStats`.
 - Companion: `phb_companion_profile` + `phb_companion_template_map` (JSONB option_matches → template/label).
 - Game: queries async; `resolveCompanionConfig(profile, maps, options)` puro.
+
+## 2026-09-11 — Onda 2: Manikin AC + ancestry damage
+
+- Tabela `phb_species_armor_preset` (fórmulas CA Manikin).
+- `option_value.damage_type` normalizado para slug EN (dragonborn + tiefling).
+- Game: `computeSpeciesArmorPreset` + `loadSpeciesOptionDamageTypes`; sem Records de ancestry.

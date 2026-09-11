@@ -145,6 +145,7 @@ const NOTE_KINDS = new Set<CatalogEffect['kind']>([
   'damage_bonus',
 ]);
 
+/** Rótulos PT para display — i18n, não regra de catálogo. */
 const DAMAGE_TYPE_PT: Record<string, string> = {
   fire: 'Ígneo',
   cold: 'Gélido',
@@ -156,38 +157,20 @@ const DAMAGE_TYPE_PT: Record<string, string> = {
   thunder: 'Trovejante',
 };
 
-const DRAGON_ANCESTRY_DAMAGE: Record<string, string> = {
-  blue: 'lightning',
-  black: 'acid',
-  white: 'cold',
-  gold: 'fire',
-  bronze: 'lightning',
-  silver: 'cold',
-  copper: 'acid',
-  green: 'poison',
-  brass: 'fire',
-  red: 'fire',
-};
-
-const TIEFLING_LEGACY_DAMAGE: Record<string, string> = {
-  abyssal: 'poison',
-  chthonic: 'necrotic',
-  infernal: 'fire',
-};
-
 /**
  * Passivas de espécie a partir do catálogo de efeitos (SSOT).
- * Prefer note satélite; senão label; resistência por option resolve o tipo.
+ * Prefer note satélite; senão label; resistência por option resolve o tipo via catálogo.
  */
 export function speciesPassiveNotesFromEffects(
   effects: readonly CatalogEffect[],
   choices: readonly EffectChoiceRef[] = [],
+  optionDamageTypes?: ReadonlyMap<string, string>,
 ): string[] {
   const notes: string[] = [];
   const seen = new Set<string>();
   for (const effect of effects) {
     if (!NOTE_KINDS.has(effect.kind)) continue;
-    const text = formatSpeciesPassiveNote(effect, choices);
+    const text = formatSpeciesPassiveNote(effect, choices, optionDamageTypes);
     if (!text || seen.has(text)) continue;
     seen.add(text);
     notes.push(text);
@@ -198,12 +181,13 @@ export function speciesPassiveNotesFromEffects(
 function formatSpeciesPassiveNote(
   effect: CatalogEffect,
   choices: readonly EffectChoiceRef[],
+  optionDamageTypes?: ReadonlyMap<string, string>,
 ): string | null {
   const fromNote = effect.note?.note?.trim();
   if (fromNote) return fromNote;
 
   if (effect.kind === 'damage_resistance') {
-    const enriched = formatResistanceNote(effect, choices);
+    const enriched = formatResistanceNote(effect, choices, optionDamageTypes);
     if (enriched) return enriched;
   }
 
@@ -214,6 +198,7 @@ function formatSpeciesPassiveNote(
 function formatResistanceNote(
   effect: CatalogEffect,
   choices: readonly EffectChoiceRef[],
+  optionDamageTypes?: ReadonlyMap<string, string>,
 ): string | null {
   const fixed = effect.damageType?.damageTypeSlug;
   if (fixed) {
@@ -232,18 +217,15 @@ function formatResistanceNote(
   const value = choices.find((c) => c.choiceKind === choiceKind)?.choiceSlug;
   if (!value) return effect.label?.trim() || null;
 
-  const typeSlug =
-    optionKey === 'dragonAncestryId'
-      ? DRAGON_ANCESTRY_DAMAGE[value]
-      : optionKey === 'infernalLegacyId'
-        ? TIEFLING_LEGACY_DAMAGE[value]
-        : undefined;
+  const typeSlug = optionDamageTypes?.get(`${optionKey}:${value}`);
   if (!typeSlug) return effect.label?.trim() || null;
   const pt = DAMAGE_TYPE_PT[typeSlug] ?? typeSlug;
   const suffix =
     optionKey === 'dragonAncestryId'
       ? ' (Herança Dracônica)'
-      : ' (Legado Ínfero)';
+      : optionKey === 'infernalLegacyId'
+        ? ' (Legado Ínfero)'
+        : '';
   return `Resistência a dano ${pt}${suffix}.`;
 }
 

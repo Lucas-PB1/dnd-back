@@ -72,7 +72,17 @@ describe("armor-class", () => {
 
   it("applies Manikin infiltrator preset when unarmored", () => {
     const result = computeArmorClassFromEquipment(scores, [], {
-      manikinArmorPresetSlug: "infiltrator",
+      speciesArmorPreset: {
+        presetSlug: "infiltrator",
+        label: "Manikin (Infiltrador)",
+        baseAc: 11,
+        abilityASlug: "destreza",
+        abilityACap: null,
+        abilityBSlug: null,
+        abilityBCap: null,
+        pickMode: "single",
+        countsAsWornArmor: false,
+      },
     });
     expect(result.armorClass).toBe(13);
     expect(result.armorClassNote).toContain("Infiltrador");
@@ -80,7 +90,17 @@ describe("armor-class", () => {
 
   it("ignores Manikin preset when wearing body armor", () => {
     const result = computeArmorClassFromEquipment(scores, [leather], {
-      manikinArmorPresetSlug: "tormentor",
+      speciesArmorPreset: {
+        presetSlug: "tormentor",
+        label: "Manikin (Tormentador)",
+        baseAc: 16,
+        abilityASlug: "forca",
+        abilityACap: 2,
+        abilityBSlug: null,
+        abilityBCap: null,
+        pickMode: "single",
+        countsAsWornArmor: true,
+      },
     });
     expect(result.armorClass).toBe(13);
   });

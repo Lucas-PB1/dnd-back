@@ -19,15 +19,16 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Expertise slots / níveis | `phb_option_def` (`expertiseSkill*`) + whitelist wizard em `option_value` | **migrado** |
 | Jack of All Trades (bard≥2) | `phb_class.jack_of_all_trades_level` + `resolveJackOfAllTradesLevel` | **migrado** |
 | Companion profiles (slug→config) | `phb_companion_profile` + `phb_companion_template_map` | **migrado** |
+| Manikin AC / ancestry damage maps | `phb_species_armor_preset` + `option_value.damage_type` (slug EN) | **migrado** |
 
 ## Dívida (próximos candidatos)
 
 | Prioridade | Achado | Arquivo(s) tipicos | Casa SQL sugerida |
 | --- | --- | --- | --- |
-| média | Manikin AC / ancestry damage maps | `combat/domain/species/*` | effects (`ac_*`, damage type) |
 | média | Initiative gates / bloodhound etc. | duel / combat notes | effects / subclass features |
 | baixa | Notes de combate por nível | textos em TS | `combat_note` effect / catalog text |
 | baixa | Companion command labels | `companion-commands.ts` | catalog / i18n |
+| baixa | `DAMAGE_TYPE_PT` display map | `effects/.../species.ts` | i18n / damage_type catalog |
 
 Detalhe da auditoria completa ficou no transcript da sessão; este concept é o índice vivo.
 

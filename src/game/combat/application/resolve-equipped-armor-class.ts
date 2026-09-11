@@ -9,6 +9,7 @@ import {
   type EquippedArmorPiece,
   type UnarmoredDefenseRow,
 } from '../domain/equipment';
+import type { SpeciesArmorPresetRow } from '../domain/species/manikin-armor';
 import { CombatCatalogService } from '../infrastructure/combat-catalog.service';
 
 export type ArmorClassResolveInput = {
@@ -21,7 +22,7 @@ export type ArmorClassResolveInput = {
   itemAcBonusNames?: readonly string[];
   /** Snapshot compartilhado - evita novo find no combat slice. */
   equippedItems?: PlayerCharacterItem[];
-  manikinArmorPresetSlug?: string | null;
+  speciesArmorPreset?: SpeciesArmorPresetRow | null;
   /** Catalogo de armadura ja carregado (combat bundle). */
   armorCatalogRows?: Array<{
     itemSlug: string;
@@ -90,7 +91,7 @@ export class ResolveEquippedArmorClass {
       unarmoredDefenses,
       itemAcBonus: context.itemAcBonus,
       itemAcBonusNames: context.itemAcBonusNames,
-      manikinArmorPresetSlug: context.manikinArmorPresetSlug,
+      speciesArmorPreset: context.speciesArmorPreset,
     });
   }
 }

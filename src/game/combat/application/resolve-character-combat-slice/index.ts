@@ -1,5 +1,12 @@
 import { DataSource } from 'typeorm';
-import { manikinArmorPresetFromChoices } from '../../domain/species/manikin-armor';
+import {
+  armorPresetSlugFromChoices,
+  findArmorPreset,
+} from '../../domain/species/manikin-armor';
+import {
+  loadSpeciesArmorPresets,
+  loadSpeciesOptionDamageTypes,
+} from '../../infrastructure/species-catalog.queries';
 import { ResolveEquippedArmorClass } from '../resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from '../resolve-equipment-compliance';
@@ -78,6 +85,10 @@ export async function resolveCharacterCombatSlice(input: {
       permanentItemEffects,
     });
 
+  const armorPresets = await loadSpeciesArmorPresets(dataSource, speciesSlug);
+  const presetSlug = armorPresetSlugFromChoices(armorPresets, speciesChoices);
+  const speciesArmorPreset = findArmorPreset(armorPresets, presetSlug);
+
   const armor = await sheetProfile('combat.armor', () =>
     equippedArmorClass.resolve(characterId, combatScores, {
       classSlug,
@@ -90,10 +101,7 @@ export async function resolveCharacterCombatSlice(input: {
       equippedItems,
       armorCatalogRows: bundle.armor,
       unarmoredDefenses: bundle.unarmoredDefenses,
-      manikinArmorPresetSlug: manikinArmorPresetFromChoices(
-        speciesSlug,
-        speciesChoices,
-      ),
+      speciesArmorPreset,
     }),
   );
   const [weaponAttacks, compliance] = await Promise.all([
@@ -150,5 +158,9 @@ export async function resolveCharacterCombatSlice(input: {
     combatScores,
     dataSource,
     bundle,
+    optionDamageTypes: await loadSpeciesOptionDamageTypes(
+      dataSource,
+      speciesSlug,
+    ),
   });
 }

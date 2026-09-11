@@ -72,6 +72,7 @@ describe('speciesCombatNotes', () => {
           damageType: { damageTypeSlug: null, optionKey: 'dragonAncestryId' },
         }),
       ],
+      optionDamageTypes: new Map([['dragonAncestryId:red', 'fire']]),
     });
     expect(notes.some((n) => /Ígneo/i.test(n))).toBe(true);
   });

@@ -177,6 +177,7 @@ background/steinhardt/phb_background.starting.sql
 species/steinhardt/phb_species.all.sql
 species/steinhardt/phb_species_trait.all.sql
 species/steinhardt/phb_species.option.sql
+species/steinhardt/phb_species.armor-preset.sql
 item/steinhardt/phb_weapon_property.all.sql
 item/steinhardt/phb_mundane.weapon.sql
 item/steinhardt/phb_magic.item.sql

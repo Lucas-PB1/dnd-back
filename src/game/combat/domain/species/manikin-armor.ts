@@ -1,63 +1,79 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from '@game/shared/domain/ability-scores';
 
-export type ManikinArmorPresetSlug =
-  | 'infiltrator'
-  | 'sentinel'
-  | 'tormentor';
-
-export type ManikinArmorPresetResult = {
-  armorClass: number;
+export type SpeciesArmorPresetRow = {
+  presetSlug: string;
   label: string;
-  /** Sentinel/Tormentor: conta como armadura média/pesada (estilo Defensivo). */
+  baseAc: number;
+  abilityASlug: string;
+  abilityACap: number | null;
+  abilityBSlug: string | null;
+  abilityBCap: number | null;
+  pickMode: 'single' | 'max_of';
   countsAsWornArmor: boolean;
 };
 
-/**
- * CA do Manikin via `manikin_armor` (armorPresetId).
- * Só aplica se não houver armadura de corpo vestida.
- */
-export function computeManikinArmorPreset(
-  scores: AbilityScores,
-  presetSlug: string,
-): ManikinArmorPresetResult | null {
-  const dex = abilityModifier(scores.destreza);
-  const str = abilityModifier(scores.forca);
+export type SpeciesArmorPresetResult = {
+  armorClass: number;
+  label: string;
+  /** Conta como armadura vestida (estilo Defensivo). */
+  countsAsWornArmor: boolean;
+};
 
-  switch (presetSlug as ManikinArmorPresetSlug) {
-    case 'infiltrator':
-      return {
-        armorClass: 11 + dex,
-        label: 'Manikin (Infiltrador)',
-        countsAsWornArmor: false,
-      };
-    case 'sentinel': {
-      const withDex = 13 + Math.min(dex, 2);
-      const withStr = 13 + Math.min(str, 3);
-      return {
-        armorClass: Math.max(withDex, withStr),
-        label: 'Manikin (Sentinela)',
-        countsAsWornArmor: true,
-      };
-    }
-    case 'tormentor':
-      return {
-        armorClass: 16 + Math.min(str, 2),
-        label: 'Manikin (Tormentador)',
-        countsAsWornArmor: true,
-      };
-    default:
-      return null;
+/** CA a partir de preset do catálogo (`phb_species_armor_preset`). */
+export function computeSpeciesArmorPreset(
+  scores: AbilityScores,
+  preset: SpeciesArmorPresetRow,
+): SpeciesArmorPresetResult {
+  const withA =
+    preset.baseAc +
+    cappedAbilityMod(scores, preset.abilityASlug, preset.abilityACap);
+  if (preset.pickMode === 'max_of' && preset.abilityBSlug) {
+    const withB =
+      preset.baseAc +
+      cappedAbilityMod(scores, preset.abilityBSlug, preset.abilityBCap);
+    return {
+      armorClass: Math.max(withA, withB),
+      label: preset.label,
+      countsAsWornArmor: preset.countsAsWornArmor,
+    };
   }
+  return {
+    armorClass: withA,
+    label: preset.label,
+    countsAsWornArmor: preset.countsAsWornArmor,
+  };
 }
 
-export function manikinArmorPresetFromChoices(
-  speciesSlug: string | null | undefined,
-  speciesChoices: readonly { choiceKind: string; choiceSlug: string }[] | undefined,
+/** Escolha cujo valueId existe nos presets da espécie. */
+export function armorPresetSlugFromChoices(
+  presets: readonly SpeciesArmorPresetRow[],
+  speciesChoices:
+    | readonly { choiceKind: string; choiceSlug: string }[]
+    | undefined,
 ): string | null {
-  if (speciesSlug !== 'manikin' || !speciesChoices?.length) return null;
+  if (!presets.length || !speciesChoices?.length) return null;
+  const known = new Set(presets.map((p) => p.presetSlug));
   return (
-    speciesChoices.find((c) => c.choiceKind === 'manikin_armor')?.choiceSlug ??
-    null
+    speciesChoices.find((c) => known.has(c.choiceSlug))?.choiceSlug ?? null
   );
+}
+
+export function findArmorPreset(
+  presets: readonly SpeciesArmorPresetRow[],
+  presetSlug: string | null | undefined,
+): SpeciesArmorPresetRow | null {
+  if (!presetSlug) return null;
+  return presets.find((p) => p.presetSlug === presetSlug) ?? null;
+}
+
+function cappedAbilityMod(
+  scores: AbilityScores,
+  abilitySlug: string,
+  cap: number | null,
+): number {
+  const score = scores[abilitySlug as keyof AbilityScores];
+  if (typeof score !== 'number') return 0;
+  const mod = abilityModifier(score);
+  return cap == null ? mod : Math.min(mod, cap);
 }

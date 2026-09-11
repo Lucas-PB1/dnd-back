@@ -32,36 +32,40 @@ ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET
   spell_level3_id = EXCLUDED.spell_level3_id,
   spell_level5_id = EXCLUDED.spell_level5_id;
 
--- Infernal legacies (level1_benefit + spells L1/L3/L5)
-INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, level1_benefit, spell_level1_id, spell_level3_id, spell_level5_id)
+-- Infernal legacies (level1_benefit + spells L1/L3/L5 + damage_type slug EN)
+INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, level1_benefit, spell_level1_id, spell_level3_id, spell_level5_id, damage_type)
 VALUES
   (
     'species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'abyssal', 'Abissal',
     'Você tem Resistência a dano Venenoso. Você também conhece o truque Rajada de Veneno.',
     (SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'),
     (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-nauseante'),
-    (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa')
+    (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'),
+    'poison'
   ),
   (
     'species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'chthonic', 'Ctônico',
     'Você tem Resistência a dano Necrótico. Você também conhece o truque Toque Necrótico.',
     (SELECT id FROM rpg.phb_spell WHERE slug = 'toque-necrotico'),
     (SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'),
-    (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-do-enfraquecimento')
+    (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-do-enfraquecimento'),
+    'necrotic'
   ),
   (
     'species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'infernal', 'Infernal',
     'Você tem Resistência a dano Ígneo. Você também conhece o truque Raio de Fogo.',
     (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-fogo'),
     (SELECT id FROM rpg.phb_spell WHERE slug = 'repreensao-diabolica'),
-    (SELECT id FROM rpg.phb_spell WHERE slug = 'escuridao')
+    (SELECT id FROM rpg.phb_spell WHERE slug = 'escuridao'),
+    'fire'
   )
 ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET
   label = EXCLUDED.label,
   level1_benefit = EXCLUDED.level1_benefit,
   spell_level1_id = EXCLUDED.spell_level1_id,
   spell_level3_id = EXCLUDED.spell_level3_id,
-  spell_level5_id = EXCLUDED.spell_level5_id;
+  spell_level5_id = EXCLUDED.spell_level5_id,
+  damage_type = EXCLUDED.damage_type;
 
 -- Gnome lineages (level1_benefit + spell_1 + spell_2)
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, level1_benefit, spell_1_id, spell_2_id)
@@ -84,19 +88,19 @@ ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET
   spell_1_id = EXCLUDED.spell_1_id,
   spell_2_id = EXCLUDED.spell_2_id;
 
--- Dragon ancestry (damage_type)
+-- Dragon ancestry (damage_type = slug EN mecânico)
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, damage_type)
 VALUES
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'blue', 'Azul', 'Elétrico'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'black', 'Negro', 'Ácido'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'white', 'Branco', 'Gélido'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'gold', 'Ouro', 'Ígneo'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'bronze', 'Bronze', 'Elétrico'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'silver', 'Prata', 'Gélido'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'copper', 'Cobre', 'Ácido'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'green', 'Verde', 'Venenoso'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'brass', 'Latão', 'Ígneo'),
-  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'red', 'Vermelho', 'Ígneo')
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'blue', 'Azul', 'lightning'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'black', 'Negro', 'acid'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'white', 'Branco', 'cold'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'gold', 'Ouro', 'fire'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'bronze', 'Bronze', 'lightning'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'silver', 'Prata', 'cold'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'copper', 'Cobre', 'acid'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'green', 'Verde', 'poison'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'brass', 'Latão', 'fire'),
+  ('species'::rpg.option_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'red', 'Vermelho', 'fire')
 ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET
   label = EXCLUDED.label,
   damage_type = EXCLUDED.damage_type;

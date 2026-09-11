@@ -10,6 +10,8 @@ import { PhbItem } from '@entities/phb-item.entity';
 import { PhbPersonaMask } from '@entities/phb-persona-mask.entity';
 import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
 import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbSpeciesArmorPreset } from '@entities/phb-species-armor-preset.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbClassRef } from '@entities/phb-class-ref.entity';
@@ -54,6 +56,8 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       VPhbClassEconomyAction,
       PhbClassPanelAction,
       PhbOptionValue,
+      PhbSpecies,
+      PhbSpeciesArmorPreset,
     ]),
     GameSharedModule,
     EffectsModule,

@@ -2,7 +2,10 @@ import type { AbilityScores } from "@game/shared/infrastructure/player-character
 import { abilityModifier } from "@game/shared/domain/ability-scores";
 import type { CatalogEffect } from "@game/effects";
 import { ownedStyleOrFeatSlugs, styleOrFeatNumericBonus } from "@game/effects";
-import { computeManikinArmorPreset } from "../species/manikin-armor";
+import {
+  computeSpeciesArmorPreset,
+  type SpeciesArmorPresetRow,
+} from "../species/manikin-armor";
 
 export type EquippedArmorPiece = {
   itemSlug: string;
@@ -24,7 +27,8 @@ export type ArmorClassContext = {
   unarmoredDefenses?: readonly UnarmoredDefenseRow[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
-  manikinArmorPresetSlug?: string | null;
+  /** Preset de CA de espécie (ex.: Manikin) do catálogo. */
+  speciesArmorPreset?: SpeciesArmorPresetRow | null;
 };
 
 const BODY_ARMOR = new Set(["light", "medium", "heavy"]);
@@ -104,13 +108,15 @@ export function computeArmorClassFromEquipment(
       noteParts.push("Mestre em Armadura Média");
     }
   } else {
-    const manikin = context?.manikinArmorPresetSlug
-      ? computeManikinArmorPreset(scores, context.manikinArmorPresetSlug)
+    const speciesPreset = context?.speciesArmorPreset
+      ? computeSpeciesArmorPreset(scores, context.speciesArmorPreset)
       : null;
-    if (manikin) {
-      armorClass = manikin.armorClass;
-      noteParts.push(manikin.label);
-      const defense = manikin.countsAsWornArmor ? defenseAcBonus(context) : 0;
+    if (speciesPreset) {
+      armorClass = speciesPreset.armorClass;
+      noteParts.push(speciesPreset.label);
+      const defense = speciesPreset.countsAsWornArmor
+        ? defenseAcBonus(context)
+        : 0;
       if (defense !== 0) {
         armorClass += defense;
         noteParts.push("Defensivo");
