@@ -26,7 +26,13 @@ export type EffectAmountFormula =
   | 'dice_divine_spark_plus_flat'
   | 'ability_mod_d8'
   | 'dice_2d6_plus_flat'
-  | 'dice_2d10_plus_level';
+  | 'dice_2d10_plus_level'
+  | 'dice_2d8_plus_level'
+  | 'schedule_die_double_plus_flat'
+  | 'dice_2d_schedule'
+  | 'dice_3d_schedule'
+  | 'pact_slots_recovery_count'
+  | 'portent_d20_count';
 
 @Entity({ schema: 'rpg', name: 'phb_effect_numeric' })
 export class PhbEffectNumeric {

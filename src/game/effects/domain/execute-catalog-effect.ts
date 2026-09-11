@@ -82,6 +82,26 @@ export type EffectExecution =
       note: string | null;
     }
   | {
+      kind: 'set_tracker';
+      note: string | null;
+    }
+  | {
+      kind: 'start_concentration';
+      spellSlug: string;
+      note: string | null;
+    }
+  | {
+      kind: 'survive_at_zero';
+      amount: number;
+      note: string | null;
+    }
+  | {
+      kind: 'recover_spell_slot';
+      slotLevel: number;
+      count: number;
+      note: string | null;
+    }
+  | {
       kind: 'unsupported';
       effectKind: EffectKind;
     };
@@ -102,6 +122,10 @@ const EXECUTABLE_KINDS = new Set<EffectKind>([
   'check_boost',
   'catalog_maneuver',
   'strike_self_cost',
+  'set_tracker',
+  'start_concentration',
+  'survive_at_zero',
+  'recover_spell_slot',
 ]);
 
 export type ExecuteCatalogEffectContext = {
@@ -112,8 +136,10 @@ export type ExecuteCatalogEffectContext = {
   flatOverride?: number;
   rageBonus?: number;
   rageActive?: boolean;
-  /** Contagem de dados (Campeão dos Deuses). */
+  /** Contagem de dados (Campeão dos Deuses / Luz Medicinal). */
   diceCount?: number;
+  pactSlotLevel?: number;
+  pactSlotsRecoveryCount?: number;
 };
 
 function tableNoteFromEffect(
@@ -182,6 +208,52 @@ export function executeCatalogEffect(
   if (effect.kind === 'strike_self_cost') {
     return {
       kind: 'strike_self_cost',
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'set_tracker') {
+    return {
+      kind: 'set_tracker',
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'start_concentration') {
+    return {
+      kind: 'start_concentration',
+      spellSlug: effect.spell?.spellSlug ?? '',
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'survive_at_zero') {
+    const amount = 1 + 3 * context.level;
+    return {
+      kind: 'survive_at_zero',
+      amount,
+      note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.kind === 'recover_spell_slot') {
+    const slotLevel =
+      effect.spell?.spellLevel ??
+      (effect.spell?.optionKey === 'pact_slot_level'
+        ? (context.pactSlotLevel ?? 1)
+        : 1);
+    const count = effect.numeric
+      ? resolveEffectAmount({
+          amountFormula: effect.numeric.amountFormula,
+          flat: effect.numeric.flat,
+          level: context.level,
+          pactSlotsRecoveryCount: context.pactSlotsRecoveryCount,
+        }).amount
+      : 1;
+    return {
+      kind: 'recover_spell_slot',
+      slotLevel,
+      count: Math.max(1, count),
       note: effect.note?.note ?? null,
     };
   }
@@ -322,6 +394,20 @@ export function executeCatalogEffect(
         note: effect.note?.note ?? null,
       };
     }
+    if (effect.numeric?.amountFormula === 'portent_d20_count') {
+      const resolved = resolveEffectAmount({
+        amountFormula: 'portent_d20_count',
+        flat: null,
+        level: context.level,
+        rng: context.rng,
+      });
+      return {
+        kind: 'table_roll',
+        amount: resolved.amount,
+        expression: resolved.expression ?? String(resolved.amount),
+        note: effect.note?.note ?? null,
+      };
+    }
     if (effect.numeric?.amountFormula === 'rage_bonus') {
       const resolved = resolveEffectAmount({
         amountFormula: 'rage_bonus',
@@ -333,6 +419,24 @@ export function executeCatalogEffect(
         kind: 'table_roll',
         amount: resolved.amount,
         expression: String(resolved.amount),
+        note: effect.note?.note ?? null,
+      };
+    }
+    if (
+      effect.numeric?.amountFormula === 'dice_2d_schedule' ||
+      effect.numeric?.amountFormula === 'dice_3d_schedule'
+    ) {
+      const resolved = resolveEffectAmount({
+        amountFormula: effect.numeric.amountFormula,
+        flat: null,
+        level: context.level,
+        rng: context.rng,
+        scheduleDieFaces: context.scheduleDieFaces,
+      });
+      return {
+        kind: 'table_roll',
+        amount: resolved.amount,
+        expression: resolved.expression ?? String(resolved.amount),
         note: effect.note?.note ?? null,
       };
     }
@@ -382,6 +486,18 @@ export function executeCatalogEffect(
       amount: rolled.total,
       expression: rolled.expression,
       note: effect.note?.note ?? null,
+    };
+  }
+
+  if (effect.dice?.die) {
+    const rolled = rollDamageParts(effect.dice.die, flat ?? 0, {
+      rng: context.rng,
+    });
+    return {
+      kind: effect.kind as 'temp_hp' | 'heal',
+      amount: rolled.total,
+      note: effect.note?.note ?? null,
+      expression: rolled.expression,
     };
   }
 

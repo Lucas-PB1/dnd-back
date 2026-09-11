@@ -19,6 +19,8 @@ export function resolveEffectAmount(input: {
   /** Bônus de dano da Fúria (schedule). */
   rageBonus?: number;
   rageActive?: boolean;
+  /** Astúcia Mágica: quantidade de slots de Pacto a recuperar. */
+  pactSlotsRecoveryCount?: number;
 }): ResolvedAmount {
   const pb = proficiencyBonusForLevel(input.level);
   const rng = input.rng ?? Math.random;
@@ -34,7 +36,7 @@ export function resolveEffectAmount(input: {
     case 'level':
       return { amount: input.level };
     case 'level_times_2':
-      return { amount: 2 * input.level };
+      return { amount: 2 * input.level + (input.flat ?? 0) };
     case 'level_div_2':
       return { amount: Math.max(1, Math.floor(input.level / 2)) };
     case 'dice_pb_d4': {
@@ -122,7 +124,7 @@ export function resolveEffectAmount(input: {
           : 0,
       };
     case 'level_times_5':
-      return { amount: 5 * input.level };
+      return { amount: 5 * input.level + (input.flat ?? 0) };
     case 'dice_divine_spark_plus_flat': {
       const level = input.level;
       const die =
@@ -157,6 +159,58 @@ export function resolveEffectAmount(input: {
         amount: rolled.total,
         expression: rolled.expression,
         faces: 10,
+      };
+    }
+    case 'dice_2d8_plus_level': {
+      const rolled = rollDamageParts('2d8', input.level, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 8,
+      };
+    }
+    case 'schedule_die_double_plus_flat': {
+      const faces = Math.max(2, input.scheduleDieFaces ?? 6);
+      const bonus = input.flat ?? 0;
+      const rolled = rollDamageParts(`2d${faces}`, bonus, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces,
+      };
+    }
+    case 'dice_2d_schedule': {
+      const faces = Math.max(2, input.scheduleDieFaces ?? 6);
+      const rolled = rollDamageParts(`2d${faces}`, 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces,
+      };
+    }
+    case 'dice_3d_schedule': {
+      const faces = Math.max(2, input.scheduleDieFaces ?? 6);
+      const rolled = rollDamageParts(`3d${faces}`, 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces,
+      };
+    }
+    case 'pact_slots_recovery_count':
+      return {
+        amount: Math.max(1, input.pactSlotsRecoveryCount ?? 1),
+      };
+    case 'portent_d20_count': {
+      const count = input.level >= 14 ? 3 : 2;
+      const rolls = Array.from(
+        { length: count },
+        () => 1 + Math.floor(rng() * 20),
+      );
+      return {
+        amount: rolls[0] ?? 1,
+        expression: rolls.join(', '),
+        faces: 20,
       };
     }
     default: {

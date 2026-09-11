@@ -116,5 +116,7 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'recover_resource_to_max',
   'check_boost',
   'catalog_maneuver',
-  'strike_self_cost'
+  'strike_self_cost',
+  'set_tracker',
+  'start_concentration'
 );

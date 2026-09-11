@@ -162,3 +162,21 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Seed `phb_effect.cleric-mesa.sql`; fórmulas `level_times_5`, `dice_divine_spark_plus_flat`, `ability_mod_d8`, `dice_2d6_plus_flat`, `dice_2d10_plus_level`.
 - Apply: castingMod (WIS/CHA/INT) para flatOverride de casters; `{saveDc}` em table_roll; table_roll com fórmula completa sem dice.
 - `ClericActionsHandler` só `applyDeclaredEconomyTableAction`. Resolvers base/subclass removidos.
+
+## 2026-09-11 — Paladino e Bardo mesa fechados (switch zero)
+
+- Seeds `phb_effect.paladin-mesa.sql`, `phb_effect.bard-mesa.sql`; economy `cure-poison`, `set-persona-masks`.
+- Apply: `amount` override (Mãos Consagradas/heal); `schedule_die_*` com faces BI; kind `set_tracker` (máscaras); wire `survive_at_zero`; gate `equipped_persona_mask`.
+- Handlers POST = só `applyDeclaredEconomyTableAction`. Resolvers paladino/bardo removidos.
+
+## 2026-09-11 — Patrulheiro e Monge mesa fechados (switch zero)
+
+- Seeds `phb_effect.ranger-mesa.sql`, `phb_effect.monk-mesa.sql`; economy fixes (`alwaysSpends` foco/usos).
+- Apply: `start_concentration`, `spend_resource`, `dice_2d/3d_schedule`, faces MA no schedule; `set_tracker` → Aspecto Bestial; `feral-howl` pós-roll.
+- Handlers POST = só `applyDeclaredEconomyTableAction` (+ companion deps patrulheiro). Resolvers ranger/monk removidos.
+
+## 2026-09-11 — Bruxo e Mago mesa fechados (switch mínimo)
+
+- Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`; wire `recover_spell_slot`; fórmulas `pact_slots_recovery_count`, `portent_d20_count`.
+- Apply: pact slot schedule (Astúcia Mágica); cura em `healing-light`; ward INT mín. 1.
+- Outliers: `invoke-pact-weapon` (inventário); arm/disarm mísseis (`setMissileMageArmedFlags`).

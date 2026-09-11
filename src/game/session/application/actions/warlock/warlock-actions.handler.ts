@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isWarlockClass } from '@game/combat/domain/warlock';
+import { LoadEffectCatalog } from '@game/effects';
 import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert/assert-can-bind-pact-weapon.service';
 import { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
-import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
@@ -13,42 +13,18 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import type { WarlockActionDeps } from './warlock-action-deps';
-import {
-  resolveDarkOnesOwnLuck,
-  resolveHealingLight,
-  resolveMagicalCunning,
-} from './base-actions';
-import {
-  resolveAwakenedMind,
-  resolveBeguilingDefenses,
-  resolveClairvoyantCombatant,
-  resolveFeyStepEffect,
-  resolveFiendishResilience,
-  resolveHurlThroughHell,
-  resolveSearingVengeance,
-} from './patron-actions';
-import { resolveInvokePactWeapon } from './pact-blade-actions';
+import { applyInvokePactWeaponTableAction } from '../../core/apply-invoke-pact-weapon-table-action';
 
 @Injectable()
 export class WarlockActionsHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
-    private readonly domain: CharacterDomainService,
     private readonly inventory: CharacterInventoryRepository,
     private readonly assertCanBindPact: AssertCanBindPactWeaponService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
-
-  private deps(): WarlockActionDeps {
-    return {
-      access: this.access,
-      state: this.state,
-      domain: this.domain,
-      mechanicalCatalog: this.mechanicalCatalog,
-    };
-  }
 
   async useTableAction(
     userId: string,
@@ -64,44 +40,25 @@ export class WarlockActionsHandler {
       throw new BadRequestException('Warlock action is not available');
     }
 
-    const deps = this.deps();
-    switch (dto.actionSlug) {
-      case 'magical-cunning':
-        return resolveMagicalCunning(deps, character);
-      case 'healing-light':
-        return resolveHealingLight(deps, character, dto.diceCount);
-      case 'dark-ones-luck':
-        return resolveDarkOnesOwnLuck(deps, character);
-      case 'fey-step-effect':
-        return resolveFeyStepEffect(deps, character);
-      case 'awakened-mind':
-        return resolveAwakenedMind(deps, character);
-      case 'fiendish-resilience':
-        return resolveFiendishResilience(deps, character);
-      case 'invoke-pact-weapon':
-        return resolveInvokePactWeapon(
-          {
-            ...deps,
-            inventory: this.inventory,
-            assertCanBindPact: this.assertCanBindPact,
-          },
-          character,
-          dto.itemSlug,
-        );
-      case 'hurl-through-hell':
-        return resolveHurlThroughHell(deps, character);
-      case 'searing-vengeance':
-        return resolveSearingVengeance(deps, character);
-      case 'beguiling-defenses':
-        return resolveBeguilingDefenses(deps, character);
-      case 'clairvoyant-combatant':
-        return resolveClairvoyantCombatant(deps, character);
-      default:
-        return applyDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
-          character,
-          dto.actionSlug,
-        );
+    if (dto.actionSlug === 'invoke-pact-weapon') {
+      return applyInvokePactWeaponTableAction({
+        state: this.state,
+        inventory: this.inventory,
+        assertCanBindPact: this.assertCanBindPact,
+        character,
+        itemSlug: dto.itemSlug,
+      });
     }
+
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+      },
+      character,
+      dto.actionSlug,
+      dto.diceCount != null ? { diceCount: dto.diceCount } : {},
+    );
   }
 }

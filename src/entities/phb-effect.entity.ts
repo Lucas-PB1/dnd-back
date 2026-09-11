@@ -42,6 +42,8 @@ export type EffectKind =
   | 'check_boost'
   | 'catalog_maneuver'
   | 'strike_self_cost'
+  | 'set_tracker'
+  | 'start_concentration'
   | 'table_note'
   | 'initiative_pb'
   | 'grant_inspiration'

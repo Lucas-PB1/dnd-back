@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isPaladinClass } from '@game/combat/domain/paladin';
-import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { LoadEffectCatalog } from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
@@ -11,38 +11,15 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import type { PaladinActionDeps } from './paladin-action-deps';
-import {
-  resolveAbjureEnemies,
-  resolveCurePoison,
-  resolveDivineSense,
-  resolveLayOnHands,
-} from './base-actions';
-import {
-  resolveGloriousDefense,
-  resolveInspiringSmite,
-  resolveOathChannel,
-  resolvePeerlessAthlete,
-  resolveReveler,
-  resolveUndyingSentinel,
-} from './oath-actions';
 
 @Injectable()
 export class PaladinActionsHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
-    private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
-
-  private deps(): PaladinActionDeps {
-    return {
-      access: this.access,
-      state: this.state,
-      domain: this.domain,
-    };
-  }
 
   async useTableAction(
     userId: string,
@@ -58,34 +35,18 @@ export class PaladinActionsHandler {
       throw new BadRequestException('Paladin action is not available');
     }
 
-    const deps = this.deps();
-    switch (dto.actionSlug) {
-      case 'lay-on-hands':
-        return resolveLayOnHands(deps, character, dto.amount);
-      case 'cure-poison':
-        return resolveCurePoison(deps, character);
-      case 'divine-sense':
-        return resolveDivineSense(deps, character);
-      case 'abjure-enemies':
-        return resolveAbjureEnemies(deps, character);
-      case 'oath-channel':
-        return resolveOathChannel(deps, character);
-      case 'inspiring-smite':
-        return resolveInspiringSmite(deps, character);
-      case 'peerless-athlete':
-        return resolvePeerlessAthlete(deps, character);
-      case 'glorious-defense':
-        return resolveGloriousDefense(deps, character);
-      case 'undying-sentinel':
-        return resolveUndyingSentinel(deps, character);
-      case 'reveler':
-        return resolveReveler(deps, character);
-      default:
-        return applyDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
-          character,
-          dto.actionSlug,
-        );
-    }
+    const amount =
+      dto.amount ?? (dto.actionSlug === 'lay-on-hands' ? 1 : undefined);
+
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+      },
+      character,
+      dto.actionSlug,
+      amount != null ? { amount } : {},
+    );
   }
 }

@@ -2,9 +2,21 @@ import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { rageDamageBonus } from '@game/combat/domain/barbarian';
+import { isWarlockClass } from '@game/combat/domain/warlock';
 import { findDungeoneerPrecautionSpell } from '@game/combat/domain/fighter';
+import { isBardClass } from '@game/combat/domain/bard';
+import { isMonkClass } from '@game/combat/domain/monk';
+import {
+  magicalCunningSlotRecoveryCount,
+  warlockPactSlotLevel,
+} from '@game/combat/domain/warlock';
+import { isWizardClass } from '@game/combat/domain/wizard';
 import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
-import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
+import {
+  FEATURE_SCHEDULE_KEYS,
+  featureSchedulesFromCatalog,
+  scheduleIntAtLevel,
+} from '@game/combat/domain/feature-schedule';
 import type { LoadEffectCatalog } from '@game/effects';
 import { executeCatalogEffect, type CatalogEffect } from '@game/effects';
 import type { ClassEconomyActionRecord } from '@game/combat/domain/class-action-ui-catalog';
@@ -24,6 +36,8 @@ import {
 import { applyCatalogManeuverTableAction } from './apply-catalog-maneuver-table-action';
 import { applyCheckBoostTableAction } from './apply-check-boost-table-action';
 import { applyHealHitPoints } from './apply-heal-hit-points';
+import { applySetBestialAspectTableAction } from './apply-set-bestial-aspect-table-action';
+import { applySetPersonaMasksTableAction } from './apply-set-persona-masks-table-action';
 import { applyStrikeSelfCostTableAction } from './apply-strike-self-cost-table-action';
 import { applyTemporaryHitPoints } from './apply-temporary-hit-points';
 import { spellcastingAbilityModifier } from './apply-feat-economy-executed-effect';
@@ -53,6 +67,9 @@ export type DeclaredEconomyTableActionOptions = {
   spellSlug?: string;
   optionSlug?: string;
   takeLowerBloodCost?: boolean;
+  amount?: number;
+  masks?: string[];
+  level?: number;
 };
 
 type SpendPlan = {
@@ -85,6 +102,19 @@ export async function applyDeclaredEconomyTableAction(
     character.classSlug ?? 'classe',
     action.name,
   );
+  if (actionSlug === 'healing-light' && options.diceCount != null) {
+    const chaMod = abilityModifier(character.abilityScores?.carisma ?? 10);
+    const maxDice = Math.max(1, chaMod);
+    if (
+      !Number.isInteger(options.diceCount) ||
+      options.diceCount < 1 ||
+      options.diceCount > maxDice
+    ) {
+      throw new BadRequestException(
+        `Luz Medicinal: escolha de 1 a ${maxDice} d6(s)`,
+      );
+    }
+  }
   if (
     action.subclassSlug != null &&
     character.subclassSlug !== action.subclassSlug
@@ -103,7 +133,9 @@ export async function applyDeclaredEconomyTableAction(
   );
 
   const structured = applicable.find((e) =>
-    ['check_boost', 'catalog_maneuver', 'strike_self_cost'].includes(e.kind),
+    ['check_boost', 'catalog_maneuver', 'strike_self_cost', 'set_tracker'].includes(
+      e.kind,
+    ),
   );
   if (structured?.kind === 'check_boost') {
     return applyCheckBoostTableAction({
@@ -141,6 +173,24 @@ export async function applyDeclaredEconomyTableAction(
       character,
       optionSlug: options.optionSlug ?? '',
       takeLowerBloodCost: options.takeLowerBloodCost,
+    });
+  }
+  if (structured?.kind === 'set_tracker') {
+    if (actionSlug === 'set-bestial-aspect') {
+      return applySetBestialAspectTableAction({
+        state: deps.state,
+        mechanicalCatalog: deps.mechanicalCatalog,
+        character,
+        actionName: action.name,
+        level: options.level,
+      });
+    }
+    return applySetPersonaMasksTableAction({
+      state: deps.state,
+      mechanicalCatalog: deps.mechanicalCatalog,
+      character,
+      actionName: action.name,
+      masks: options.masks ?? [],
     });
   }
 
@@ -197,7 +247,27 @@ export async function applyDeclaredEconomyTableAction(
   const strMod = abilityModifier(character.abilityScores?.forca ?? 10);
   const intMod = abilityModifier(character.abilityScores?.inteligencia ?? 10);
   const castingMod = spellcastingAbilityModifier(character.abilityScores);
-  const scheduleDieFaces = psiEnergyDieFaces(character.level, bands) ?? undefined;
+  const scheduleDieFaces = isBardClass(character.classSlug)
+    ? scheduleIntAtLevel(
+        bands,
+        FEATURE_SCHEDULE_KEYS.bardicInspirationDieFaces,
+        character.level,
+        6,
+      )
+    : isMonkClass(character.classSlug)
+      ? scheduleIntAtLevel(
+          bands,
+          FEATURE_SCHEDULE_KEYS.martialArtsDieFaces,
+          character.level,
+          6,
+        )
+      : (psiEnergyDieFaces(character.level, bands) ?? undefined);
+  const pactSlotLevel = isWarlockClass(character.classSlug)
+    ? warlockPactSlotLevel(character.level, bands)
+    : undefined;
+  const pactSlotsRecoveryCount = isWarlockClass(character.classSlug)
+    ? magicalCunningSlotRecoveryCount(character.level, bands)
+    : undefined;
 
   const toggleEffects = applicable.filter((e) => e.kind === 'toggle_combat_flag');
   const otherEffects = applicable.filter((e) => e.kind !== 'toggle_combat_flag');
@@ -209,6 +279,7 @@ export async function applyDeclaredEconomyTableAction(
       deps,
       character,
       action,
+      actionSlug,
       effect,
       state,
       note,
@@ -223,6 +294,8 @@ export async function applyDeclaredEconomyTableAction(
       intMod,
       castingMod,
       scheduleDieFaces,
+      pactSlotLevel,
+      pactSlotsRecoveryCount,
       rageActive: Boolean(state.rageActive),
     });
     state = applied.state;
@@ -246,6 +319,7 @@ export async function applyDeclaredEconomyTableAction(
       deps,
       character,
       action,
+      actionSlug,
       effect,
       state,
       note,
@@ -260,6 +334,8 @@ export async function applyDeclaredEconomyTableAction(
       intMod,
       castingMod,
       scheduleDieFaces,
+      pactSlotLevel,
+      pactSlotsRecoveryCount,
       rageActive: Boolean(state.rageActive),
     });
     state = applied.state;
@@ -287,6 +363,7 @@ type ApplyCtx = {
   deps: DeclaredEconomyTableActionDeps;
   character: PlayerCharacter;
   action: ClassEconomyActionRecord;
+  actionSlug: string;
   effect: CatalogEffect;
   state: TableActionResponseDto['state'];
   note: string;
@@ -301,6 +378,8 @@ type ApplyCtx = {
   intMod: number;
   castingMod: number;
   scheduleDieFaces?: number;
+  pactSlotLevel?: number;
+  pactSlotsRecoveryCount?: number;
   rageActive: boolean;
 };
 
@@ -318,6 +397,7 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     deps,
     character,
     action,
+    actionSlug,
     effect,
     options,
     rageBonus,
@@ -325,18 +405,45 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     intMod,
     castingMod,
     scheduleDieFaces,
+    pactSlotLevel,
+    pactSlotsRecoveryCount,
     rageActive,
   } = ctx;
   let { state, note, total, expression, roll, saveDc, resourceSpent } = ctx;
 
+  if (
+    effect.requiresOptionKey === 'equipped_persona_mask' &&
+    effect.requiresOptionValue
+  ) {
+    state = await deps.state.buildResponse(character);
+    const equipped = state.personaMasks ?? [];
+    if (!equipped.includes(effect.requiresOptionValue)) {
+      throw new BadRequestException(
+        `Vista a máscara requerida (${effect.requiresOptionValue}) antes de usar este efeito`,
+      );
+    }
+  }
+
   const needsIntFlat =
-    effect.numeric?.amountFormula === 'schedule_die_plus_flat';
+    effect.numeric?.amountFormula === 'schedule_die_plus_flat' &&
+    !isBardClass(character.classSlug);
+  const usesScheduleDieFormula =
+    effect.numeric?.amountFormula === 'schedule_die_plus_flat' ||
+    effect.numeric?.amountFormula === 'schedule_die_double_plus_flat';
+  const wardIntFlat =
+    isWizardClass(character.classSlug) &&
+    actionSlug === 'arcane-ward' &&
+    effect.kind === 'temp_hp';
   const needsCastingFlat =
     !needsIntFlat &&
+    !usesScheduleDieFormula &&
+    !wardIntFlat &&
     (effect.kind === 'feature_dc' ||
       effect.kind === 'heal' ||
       effect.kind === 'temp_hp' ||
       effect.kind === 'table_roll' ||
+      (effect.kind === 'table_note' &&
+        effect.numeric?.amountFormula === 'ability_mod') ||
       effect.numeric?.amountFormula === 'ability_mod' ||
       effect.numeric?.amountFormula === 'ability_mod_d8' ||
       effect.numeric?.amountFormula === 'dice_divine_spark_plus_flat' ||
@@ -348,6 +455,23 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     character.classSlug === 'barbarian' &&
     (effect.numeric?.amountFormula === 'ability_mod' ||
       effect.numeric?.amountFormula === 'eight_plus_mod_plus_pb');
+  const needsDexFlat =
+    !needsIntFlat &&
+    !needsCastingFlat &&
+    !needsStrFlat &&
+    isBardClass(character.classSlug) &&
+    actionSlug === 'unarmed-dance' &&
+    effect.numeric?.amountFormula === 'schedule_die_plus_flat';
+  const dexMod = abilityModifier(character.abilityScores?.destreza ?? 10);
+  const needsMonkDexFlat =
+    isMonkClass(character.classSlug) &&
+    actionSlug === 'guard-breaker' &&
+    effect.numeric?.amountFormula === 'ability_mod';
+  const needsScheduleCastingFlat =
+    usesScheduleDieFormula &&
+    (effect.kind === 'heal' ||
+      effect.kind === 'table_roll' ||
+      effect.kind === 'temp_hp');
 
   const executed = executeCatalogEffect(effect, {
     level: character.level,
@@ -355,16 +479,22 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     rageActive,
     diceCount: options.diceCount,
     scheduleDieFaces,
-    ...(needsIntFlat
-      ? { flatOverride: intMod }
+    pactSlotLevel,
+    pactSlotsRecoveryCount,
+    ...(needsScheduleCastingFlat
+      ? { flatOverride: castingMod }
+      : needsIntFlat || wardIntFlat
+      ? { flatOverride: wardIntFlat ? Math.max(1, intMod) : intMod }
       : needsCastingFlat
-        ? {
-            flatOverride:
-              character.classSlug === 'barbarian' ? strMod : castingMod,
-          }
-        : needsStrFlat
-          ? { flatOverride: strMod }
-          : {}),
+          ? {
+              flatOverride:
+                character.classSlug === 'barbarian' ? strMod : castingMod,
+            }
+          : needsStrFlat
+            ? { flatOverride: strMod }
+            : needsDexFlat || needsMonkDexFlat
+              ? { flatOverride: dexMod }
+              : {}),
   });
 
   let toggleEntered: boolean | null | undefined;
@@ -407,25 +537,47 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
           ? 'Ataque Imprudente ativo: Vantagem em ataques com Força; ataques contra você têm Vantagem.'
           : 'Ataque Imprudente encerrado.');
     }
-  } else if (executed.kind === 'heal') {
-    const healed = await applyHealHitPoints(
-      deps.state,
-      character,
-      executed.amount,
-    );
+  } else if (
+    effect.kind === 'heal' &&
+    (executed.kind === 'heal' || options.amount != null)
+  ) {
+    const healAmount =
+      options.amount ??
+      (executed.kind === 'heal' ? executed.amount : 0);
+    const healed = await applyHealHitPoints(deps.state, character, healAmount);
     state = healed.state;
-    total = executed.amount;
-    expression = executed.expression;
-    const effectNote = executed.note
-      ?.replace(/\{total\}/g, String(executed.amount))
-      .replace(/\{expression\}/g, executed.expression ?? String(executed.amount));
+    total = healAmount;
+    expression =
+      options.amount != null
+        ? String(healAmount)
+        : executed.kind === 'heal'
+          ? executed.expression
+          : String(healAmount);
+    const healNote =
+      executed.kind === 'heal' ? executed.note : effect.note?.note ?? null;
+    const effectNote = healNote
+      ?.replace(/\{total\}/g, String(healAmount))
+      .replace(
+        /\{expression\}/g,
+        expression ?? String(healAmount),
+      );
     note = [
       note,
       effectNote,
-      `Cura: ${executed.expression ?? executed.amount} → +${healed.healed} PV.`,
+      `Cura: ${expression ?? healAmount} → +${healed.healed} PV.`,
     ]
       .filter(Boolean)
       .join(' ');
+  } else if (executed.kind === 'survive_at_zero') {
+    state = await deps.state.patch(character, {
+      deathSaveSuccesses: 0,
+      deathSaveFailures: 0,
+    });
+    total = executed.amount;
+    note =
+      executed.note?.trim() ||
+      `Sentinela Imortal: defina seus PV atuais em ${executed.amount} (1 + 3 × nível, teto = PV máximos) e limpe salvaguardas contra morte.`;
+    note = note.replace(/\{total\}/g, String(executed.amount));
   } else if (executed.kind === 'temp_hp') {
     state = await applyTemporaryHitPoints(
       deps.state,
@@ -489,6 +641,33 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
         .replace(/\{expression\}/g, executed.expression)
         .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
     }
+    if (actionSlug === 'feral-howl') {
+      state = await deps.state.martial.setBestialAspectLevel(
+        character,
+        executed.amount,
+      );
+      note = `Uivo Feral: 1d4 = ${executed.amount}. Aspecto Bestial definido em ${executed.amount}.`;
+    }
+  } else if (executed.kind === 'start_concentration' && executed.spellSlug) {
+    state = await deps.state.patch(character, {
+      concentratingOn: executed.spellSlug,
+    });
+    if (executed.note?.trim()) {
+      note = executed.note.trim();
+    }
+  } else if (
+    executed.kind === 'spend_resource' &&
+    executed.resourceSlug &&
+    executed.amount > 0
+  ) {
+    state = (
+      await deps.state.useClassResource(
+        character,
+        executed.resourceSlug,
+        executed.amount,
+      )
+    ).state;
+    resourceSpent = true;
   } else if (executed.kind === 'heal_from_dice_pool') {
     if (!executed.resourceSlug) {
       throw new BadRequestException('heal_from_dice_pool exige resource_slug');
@@ -509,6 +688,24 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     note = note
       .replace(/\{total\}/g, String(executed.amount))
       .replace(/\{expression\}/g, executed.expression);
+    if (executed.resourceSlug === 'healing-light') {
+      const healed = await applyHealHitPoints(
+        deps.state,
+        character,
+        executed.amount,
+      );
+      state = healed.state;
+      note = `${note} (+${healed.healed} na ficha — ajuste se for aliado).`;
+    }
+  } else if (executed.kind === 'recover_spell_slot') {
+    for (let i = 0; i < executed.count; i += 1) {
+      await deps.state.recoverSpellSlotLevel(character, executed.slotLevel);
+    }
+    state = await deps.state.buildResponse(character);
+    total = executed.count;
+    note =
+      executed.note?.trim()?.replace(/\{total\}/g, String(executed.count)) ??
+      `${note} Recuperou ${executed.count} slot(s) de ${executed.slotLevel}º círculo.`;
   } else if (executed.kind === 'sync_companion') {
     if (!deps.companion || !options.userId) {
       throw new BadRequestException('Companheiro indisponível nesta ação');
@@ -555,11 +752,17 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     state = result.state;
     note = result.note;
   } else if (executed.kind === 'table_note' && executed.note) {
-    note = `${note} ${executed.note}`;
     if (executed.amount != null) {
       total = executed.amount;
       expression = executed.expression;
     }
+    note = `${note} ${executed.note}`
+      .replace(/\{total\}/g, total != null ? String(total) : '—')
+      .replace(
+        /\{expression\}/g,
+        expression != null ? String(expression) : '—',
+      )
+      .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
   } else if (executed.kind === 'grant_inspiration') {
     state = await deps.state.patch(character, { inspiration: true });
     if (executed.note) note = `${note} ${executed.note}`;
@@ -611,6 +814,9 @@ function resolveSpendPlan(
   action: ClassEconomyActionRecord,
   options: DeclaredEconomyTableActionOptions,
 ): SpendPlan {
+  if (options.amount != null && action.resourceSlug) {
+    return { resourceSlug: action.resourceSlug, amount: options.amount };
+  }
   const amount = action.spendAmount ?? 1;
   if (action.alwaysSpendsResource && action.resourceSlug) {
     return { resourceSlug: action.resourceSlug, amount };

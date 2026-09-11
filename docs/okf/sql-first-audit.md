@@ -74,6 +74,16 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda clérigo (fechada):** handler POST = só `applyDeclaredEconomyTableAction`. Seed `phb_effect.cleric-mesa.sql` (spark/preserve/fulminar/warding + notes de domínio).
 
+**Onda paladino (fechada):** handler POST = só `applyDeclaredEconomyTableAction` (+ `amount` para Mãos Consagradas). Seed `phb_effect.paladin-mesa.sql` (lay-on-hands/cure-poison/channel/juramentos).
+
+**Onda bardo (fechada):** handler POST = só `applyDeclaredEconomyTableAction` (+ `masks` via kind `set_tracker`). Seed `phb_effect.bard-mesa.sql` (BI/colégios/Bragi). Gate `equipped_persona_mask` no apply para ações de máscara.
+
+**Onda patrulheiro (fechada):** handler POST = só `applyDeclaredEconomyTableAction` (+ companion deps). Seed `phb_effect.ranger-mesa.sql`. Outliers: `set-bestial-aspect` (`set_tracker` + `level`), `feral-howl` (roll + patch aspecto), `start_concentration` (Marca gratuita).
+
+**Onda monge (fechada):** handler POST = só `applyDeclaredEconomyTableAction`. Seed `phb_effect.monk-mesa.sql` (~23 cases). Outlier: `hand-of-ultimate-mercy` (`spend_resource` 5 Foco + heal 4d10 + note).
+
+**Onda bruxo/mago (fechada):** handlers POST = `applyDeclaredEconomyTableAction` (+ outlier inventário/mísseis). Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`. Wire `recover_spell_slot`, `heal_from_dice_pool` (Luz Medicinal). Outliers: `invoke-pact-weapon`, arm/disarm Escudo/Giga-Míssil.
+
 ### Gates `has*` vs schedule (dívida média)
 
 `phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).

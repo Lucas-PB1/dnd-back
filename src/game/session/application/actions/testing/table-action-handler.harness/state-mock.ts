@@ -19,6 +19,7 @@ function createMartialMock(
     reloadFirearm: jest.fn().mockResolvedValue(stateResponse),
     fireChamber: jest.fn().mockResolvedValue(stateResponse),
     setPersonaMasks: jest.fn().mockResolvedValue(stateResponse),
+    setBestialAspectLevel: jest.fn().mockResolvedValue(stateResponse),
   };
 }
 

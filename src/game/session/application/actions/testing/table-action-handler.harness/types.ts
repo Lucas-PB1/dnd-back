@@ -40,6 +40,7 @@ export type TableActionMartialMock = {
   reloadFirearm: jest.Mock;
   fireChamber: jest.Mock;
   setPersonaMasks: jest.Mock;
+  setBestialAspectLevel: jest.Mock;
 };
 
 export type TableActionStateMock = jest.Mocked<
