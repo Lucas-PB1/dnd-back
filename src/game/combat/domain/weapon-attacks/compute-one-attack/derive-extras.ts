@@ -76,10 +76,11 @@ export function deriveAttackExtras(input: {
     subclassSlug: context.subclassSlug,
     level: context.level,
     mode,
+    featureSchedules: context.featureSchedules,
   });
   const brutalDice =
     mode === "melee" && ability.slug === "forca"
-      ? resolveBrutalStrikeDice(context.level ?? 0)
+      ? resolveBrutalStrikeDice(context.level ?? 0, context.featureSchedules)
       : null;
   const divineFuryDice = hasDivineFury({
     subclassSlug: context.subclassSlug,

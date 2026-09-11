@@ -1,44 +1,62 @@
 /**
  * Regras numéricas e constantes de combate do Bruxo (PHB 2024).
+ * Slots/invocações: SSOT `phb_class_feature_schedule` (bands obrigatórios).
  */
+
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
 
 export function isWarlockClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'warlock';
 }
 
-export function warlockPactSlotLevel(level: number): number {
-  if (level >= 9) return 5;
-  if (level >= 7) return 4;
-  if (level >= 5) return 3;
-  if (level >= 3) return 2;
-  return 1;
+export function warlockPactSlotLevel(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.warlockPactSlotLevel,
+    level,
+    1,
+  );
 }
 
-export function warlockPactSlotCount(level: number): number {
-  if (level >= 17) return 4;
-  if (level >= 11) return 3;
-  if (level >= 2) return 2;
-  return 1;
+export function warlockPactSlotCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.warlockPactSlotCount,
+    level,
+    1,
+  );
 }
 
 /** Astúcia Mágica: recupera metade dos slots (ceil). L20 Mestre Místico: todos. */
-export function magicalCunningSlotRecoveryCount(level: number): number {
-  const max = warlockPactSlotCount(level);
+export function magicalCunningSlotRecoveryCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  const max = warlockPactSlotCount(level, bands);
   if (level >= 20) return max;
   return Math.ceil(max / 2);
 }
 
-/** Contagem PHB 2024 — coluna Invocações da tabela do Bruxo. */
-export function warlockInvocationLimit(level: number): number {
-  if (level >= 18) return 10;
-  if (level >= 15) return 9;
-  if (level >= 12) return 8;
-  if (level >= 9) return 7;
-  if (level >= 7) return 6;
-  if (level >= 5) return 5;
-  if (level >= 2) return 3;
-  if (level >= 1) return 1;
-  return 0;
+export function warlockInvocationLimit(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.warlockInvocationLimit,
+    level,
+    0,
+  );
 }
 
 export const ELDRITCH_INVOCATION_OPTION_KEY = 'eldritch-invocation';

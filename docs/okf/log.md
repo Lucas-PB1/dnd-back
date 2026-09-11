@@ -81,3 +81,35 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 
 - +25 literais (`remaining-dynamic-as-static`); aggregate só usa `filterLevelCombatNotes`.
 - Removidos *CombatNotes* de fighter/rogue/ranger/cleric/bard/warlock/druid/wizard.
+- **Onda notes fechada.**
+
+## 2026-09-11 — Onda 2: piloto `phb_class_feature_schedule`
+
+- Tabela EAV nível→`value_num` (class/subclass + `feature_key`).
+- Seed piloto: `attacks_per_action` (fighter/monk/paladin/ranger), `martial_arts_die_faces`, `unarmored_speed_bonus_m` (monk).
+- Predicado `scheduleValueAtLevel`; load no combat slice + mechanical catalog.
+- Fallbacks TS só se `bands` omitido (callers legados).
+
+## 2026-09-11 — Onda 2: `phb_class_feature_schedule` wave2
+
+- Seed/migration: sneak, BI faces, rage bonus, indomitable, superiority, psi (psi-warrior+soulknife), champion crit, zealot heal.
+- Regras aceitam `bands`; combat slice carrega classe+subclasse; catalog expõe `featureSchedulesBySubclassSlug`.
+- Fallbacks TS mantidos para callers sem bands (session resources, actions).
+
+## 2026-09-11 — Onda 2: feature schedule sem legado
+
+- Wave3: brutal strike, gunslinger crit, warlock pact level/count + invocations, sorcerer metamagic.
+- `bands`/`featureSchedules` **obrigatórios** nas rules; removidos fallbacks nível→valor em TS.
+- Callers: weapon context, session actions, dice, validators, resources; fixtures no harness.
+- Channel/Focus/Wild Shape continuam em progression/`grant_resource` (sem duplicar).
+
+## 2026-09-11 — Dívida: handlers mesa `switch(actionSlug)`
+
+- Registrado como **alta** em [sql-first-audit.md](/sql-first-audit.md): quase toda classe ainda roteia slug→TS; `default` já usa economy.
+- Critério: economy-only (spend/nota/effect) vs custom (toggle, DTO extra, roll vivo, companion, conversão).
+- Piloto sugerido: bárbaro ou fighter; referência `monster-hunter-actions.handler.ts`.
+
+## 2026-09-11 — Dívida: gates `has*` ≠ schedule
+
+- Documentado em audit § Gates: schedule = nível→`value_num`; `has*` = unlock booleano → `phb_subclass_feature_gate` / gate de classe.
+- Não misturar com schedule; TS ok até a onda de gates.

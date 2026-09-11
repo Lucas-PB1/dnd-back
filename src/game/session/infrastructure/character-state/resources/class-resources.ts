@@ -17,6 +17,7 @@ import {
   superiorityDieFaces,
   superiorityDieLabel,
 } from '@game/combat/domain/fighter';
+import { loadMergedFeatureSchedules } from '@game/combat/infrastructure/feature-schedule.queries';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import {
   loadCharacterSpeciesChoices,
@@ -60,7 +61,16 @@ export async function buildClassResourceState(
   character: PlayerCharacter,
   state: PlayerCharacterState,
 ): Promise<ClassResourceStateDto[]> {
-  const resources = await resolveClassResources(dataSource, character);
+  const featureSchedules = await loadMergedFeatureSchedules(
+    dataSource,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const resources = await resolveClassResources(
+    dataSource,
+    character,
+    featureSchedules,
+  );
   const used = state.resourcesUsed ?? {};
   return resources.map((resource) => {
     const spent = used[resource.slug] ?? 0;
@@ -76,13 +86,13 @@ export async function buildClassResourceState(
         }
       : isSuperiority
         ? {
-            dieFaces: superiorityDieFaces(character.level),
-            dieLabel: superiorityDieLabel(character.level),
+            dieFaces: superiorityDieFaces(character.level, featureSchedules),
+            dieLabel: superiorityDieLabel(character.level, featureSchedules),
           }
         : isPsi
           ? {
-              dieFaces: psiEnergyDieFaces(character.level),
-              dieLabel: psiEnergyDieLabel(character.level),
+              dieFaces: psiEnergyDieFaces(character.level, featureSchedules),
+              dieLabel: psiEnergyDieLabel(character.level, featureSchedules),
             }
           : {};
     return {
@@ -99,6 +109,7 @@ export async function buildClassResourceState(
 export async function resolveClassResources(
   dataSource: DataSource,
   character: PlayerCharacter,
+  featureSchedules?: readonly import('@game/combat/domain/feature-schedule').FeatureScheduleBand[],
 ): Promise<ClassResourceMax[]> {
   const classRows = await loadClassResourceSchedule(
     dataSource,
@@ -107,15 +118,23 @@ export async function resolveClassResources(
   const subclassRows = character.subclassSlug
     ? await loadSubclassResourceSchedule(dataSource, character.subclassSlug)
     : [];
-  const [speciesRowsRaw, speciesChoices, speciesGates] = await Promise.all([
-    character.speciesSlug
-      ? loadSpeciesResourceSchedule(dataSource, character.speciesSlug)
-      : Promise.resolve([]),
-    loadCharacterSpeciesChoices(dataSource, character.id),
-    character.speciesSlug
-      ? loadSpeciesResourceOptionGates(dataSource, character.speciesSlug)
-      : Promise.resolve([]),
-  ]);
+  const [speciesRowsRaw, speciesChoices, speciesGates, schedules] =
+    await Promise.all([
+      character.speciesSlug
+        ? loadSpeciesResourceSchedule(dataSource, character.speciesSlug)
+        : Promise.resolve([]),
+      loadCharacterSpeciesChoices(dataSource, character.id),
+      character.speciesSlug
+        ? loadSpeciesResourceOptionGates(dataSource, character.speciesSlug)
+        : Promise.resolve([]),
+      featureSchedules != null
+        ? Promise.resolve(featureSchedules)
+        : loadMergedFeatureSchedules(
+            dataSource,
+            character.classSlug,
+            character.subclassSlug,
+          ),
+    ]);
   const speciesRows = filterSpeciesResourceScheduleByChoices(
     speciesRowsRaw,
     speciesGates,
@@ -169,6 +188,7 @@ export async function resolveClassResources(
       abilityModifiers: mods,
       transformationStage: transformation.stage,
       proficiencyBonusPlusStageSlugs: CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS,
+      featureSchedules: schedules,
     });
   }
 
@@ -186,6 +206,7 @@ export async function resolveClassResources(
     proficiencyBonus,
     abilityModifiers: mods,
     channelDivinityFromProgression: progression?.channelDivinity ?? null,
+    featureSchedules: schedules,
   });
 
   const bySlug = new Map<string, ClassResourceMax>();

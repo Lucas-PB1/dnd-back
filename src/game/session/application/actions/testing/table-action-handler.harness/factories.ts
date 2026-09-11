@@ -1,4 +1,8 @@
 import type { CombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import {
+  FEATURE_SCHEDULE_FIXTURES_BY_CLASS,
+  FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS,
+} from '@game/combat/domain/feature-schedule.fixtures';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { TableActionTestCharacter } from './types';
 
@@ -50,6 +54,8 @@ export function createEmptyMechanicalCatalogLoad(
     economyActions: [],
     panelActions: [],
     featureGatesBySubclassSlug: new Map(),
+    featureSchedulesByClassSlug: FEATURE_SCHEDULE_FIXTURES_BY_CLASS,
+    featureSchedulesBySubclassSlug: FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS,
     ...overrides,
   };
 }

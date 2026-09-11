@@ -75,12 +75,14 @@ export async function assembleMappedCombatSlice(input: {
   optionDamageTypes?: ReadonlyMap<string, string>;
   damageTypeLabels?: ReadonlyMap<string, string>;
   levelCombatNotes?: readonly LevelCombatNoteRow[];
+  featureSchedules: readonly import('../../domain/feature-schedule').FeatureScheduleBand[];
 }): Promise<MappedCombatSlice> {
   const classCombat = aggregateClassCombatContributions({
     classSlug: input.classSlug,
     subclassSlug: input.subclassSlug,
     level: input.level,
     levelCombatNotes: input.levelCombatNotes,
+    featureSchedules: input.featureSchedules,
   });
   const speciesNotes = speciesCombatNotes({
     speciesSlug: input.speciesSlug,

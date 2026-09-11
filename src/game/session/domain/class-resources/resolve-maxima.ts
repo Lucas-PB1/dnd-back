@@ -11,6 +11,7 @@ import {
   CHANNEL_DIVINITY_SLUG,
   LAY_ON_HANDS_SLUG,
 } from '../resource-slugs';
+import type { FeatureScheduleBand } from '@game/combat/domain/feature-schedule';
 import type {
   AbilityMods,
   ClassResourceMax,
@@ -28,6 +29,8 @@ export function resolveClassResourceMaxima(input: {
   /** Cap. 6: `fixed` sem fixedMax → estágio; slugs PB+stage somam estágio ao PB. */
   transformationStage?: number;
   proficiencyBonusPlusStageSlugs?: ReadonlySet<string>;
+  /** Schedules nível→valor (`phb_class_feature_schedule`), classe+subclasse. */
+  featureSchedules: readonly FeatureScheduleBand[];
 }): ClassResourceMax[] {
   const bySlug = new Map<string, ClassResourceScheduleRow[]>();
   for (const row of input.rows) {
@@ -48,6 +51,7 @@ export function resolveClassResourceMaxima(input: {
       input.level,
       input.proficiencyBonus,
       input.abilityModifiers,
+      input.featureSchedules,
     );
 
     if (

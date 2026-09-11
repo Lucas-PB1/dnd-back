@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import {
   resolveSoulknifeTableAction,
   type SoulknifeActionSlug,
@@ -7,8 +8,17 @@ import {
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter, RogueActionDeps } from './rogue-action-deps';
 
-export function psiDieFaces(character: PlayerCharacter): number {
-  const faces = psiEnergyDieFaces(character.level);
+export async function psiDieFaces(
+  deps: RogueActionDeps,
+  character: PlayerCharacter,
+): Promise<number> {
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const faces = psiEnergyDieFaces(character.level, bands);
   if (faces == null) {
     throw new BadRequestException('Soulknife Psi Energy Die is unavailable');
   }
@@ -27,6 +37,11 @@ export async function resolveSoulknifeAction(
 ) {
   const pb = await deps.domain.getProficiencyBonus(character.level);
   const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
   return resolveSoulknifeTableAction({
     catalog: catalog.tableActions,
     actionSlug,
@@ -34,5 +49,6 @@ export async function resolveSoulknifeAction(
     dexterityModifier: abilityModifier(character.abilityScores.destreza),
     proficiencyBonus: pb,
     ...options,
+    bands,
   });
 }

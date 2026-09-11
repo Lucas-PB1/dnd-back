@@ -2,6 +2,10 @@ import {
   FIXTURE_CUNNING_STRIKE_EFFECTS,
   FIXTURE_DUNGEONEER_SLAYER_LABELS,
 } from '@game/combat/domain/__fixtures__/mechanical-catalog';
+import {
+  FEATURE_SCHEDULE_FIXTURES_BY_CLASS,
+  FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS,
+} from '@game/combat/domain/feature-schedule.fixtures';
 import type { RollDamageDto } from '@game/dice/dto/character-roll.dto';
 import { executeRollDamage } from '../roll-damage';
 import { asRollDep, mockEffectCatalog, mockResourceSpender } from './mocks';
@@ -27,6 +31,9 @@ export function createRollDamageTestContext(): RollDamageTestContext {
       precautionSpells: [],
       economyActions: [],
       panelActions: [],
+      featureGatesBySubclassSlug: new Map(),
+      featureSchedulesByClassSlug: FEATURE_SCHEDULE_FIXTURES_BY_CLASS,
+      featureSchedulesBySubclassSlug: FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS,
     }),
   };
   const base = {

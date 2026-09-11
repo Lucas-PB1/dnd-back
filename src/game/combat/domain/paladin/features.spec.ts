@@ -8,8 +8,11 @@ import {
   paladinSavingThrowAuraBonus,
   radiantStrikesDie,
 } from './features';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('paladin-features', () => {
+  const paladinBands = fixtureSchedulesFor('paladin');
+
   it('identifies the paladin class', () => {
     expect(isPaladinClass('paladin')).toBe(true);
     expect(isPaladinClass('cleric')).toBe(false);
@@ -86,7 +89,7 @@ describe('paladin-features', () => {
   });
 
   it('grants Extra Attack at level 5', () => {
-    expect(paladinAttacksPerAction(4)).toBe(1);
-    expect(paladinAttacksPerAction(5)).toBe(2);
+    expect(paladinAttacksPerAction(4, paladinBands)).toBe(1);
+    expect(paladinAttacksPerAction(5, paladinBands)).toBe(2);
   });
 });

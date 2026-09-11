@@ -1,5 +1,6 @@
 import type { CatalogEffect } from "@game/effects";
 import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
+import { fixtureSchedulesFor } from "../../feature-schedule.fixtures";
 import type { EquippedWeaponPiece } from "../weapon-attack";
 import type { WeaponAttackContext } from "../weapon-attack.types";
 
@@ -135,11 +136,13 @@ export function withOwnedStyleEffects(
 export const FIGHTER_CTX: WeaponAttackContext = {
   proficiencyBonus: 2,
   weaponProficiencySlugs: ["armas-simples", "armas-marciais"],
+  featureSchedules: fixtureSchedulesFor('fighter'),
 };
 
 export const GUNSLINGER_RANGED_CTX: WeaponAttackContext = {
   proficiencyBonus: 2,
   weaponProficiencySlugs: ["armas-simples", "armas-marciais-a-distancia"],
+  featureSchedules: fixtureSchedulesFor('gunslinger'),
 };
 
 export function longsword(

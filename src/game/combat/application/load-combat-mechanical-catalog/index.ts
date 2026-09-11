@@ -21,6 +21,7 @@ import {
 } from '../../domain/build-strike-options-from-effects';
 import { mapCombatMechanicalCatalog } from './map-rows';
 import type { CombatMechanicalCatalog } from './types';
+import { loadAllFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
 
 export type {
   CombatMechanicalCatalog,
@@ -111,6 +112,7 @@ export class LoadCombatMechanicalCatalog {
       panelRows,
       strikeOptions,
       featureGatesBySubclassSlug,
+      featureSchedules,
     ] = await Promise.all([
       this.gunslingerRepo.find({ relations: ['subclass'] }),
       this.battleMasterRepo.find(),
@@ -130,6 +132,7 @@ export class LoadCombatMechanicalCatalog {
       }),
       this.loadStrikeOptions(),
       this.loadFeatureGates(),
+      loadAllFeatureSchedules(this.dataSource),
     ]);
 
     return mapCombatMechanicalCatalog({
@@ -145,6 +148,8 @@ export class LoadCombatMechanicalCatalog {
       economyRows,
       panelRows,
       featureGatesBySubclassSlug,
+      featureSchedulesByClassSlug: featureSchedules.byClassSlug,
+      featureSchedulesBySubclassSlug: featureSchedules.bySubclassSlug,
     });
   }
 

@@ -1,6 +1,7 @@
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { FeatureScheduleBand } from '@game/combat/domain/feature-schedule';
 import type { CunningStrikeEffect } from '@game/combat/domain/rogue/types';
 import type { RollDamageDto } from '@game/dice/dto/character-roll.dto';
 import type { findEquippedWeaponAttack } from '../roll-weapon-context';
@@ -23,6 +24,7 @@ export type DamageRollContext = {
   resourceSpender: CharacterResourceSpender;
   cunningStrikeEffects: readonly CunningStrikeEffect[];
   dungeoneerSlayerLabels: readonly string[];
+  featureSchedules: readonly FeatureScheduleBand[];
 };
 
 export type DamageEffect = (

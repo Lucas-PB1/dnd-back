@@ -1,4 +1,5 @@
 import { martialArtsDie } from '@game/combat/domain/monk';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   MonkActionDeps,
@@ -14,13 +15,20 @@ export async function resolveFlurryOfBlows(
   assertCharacterLevel(character, 2, 'Monk', 'Torrente de Golpes');
   const strikes = character.level >= 10 ? 3 : 2;
   const state = await spendFocus(deps, character, 1);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const die = martialArtsDie(character.level, bands);
+
   return {
     state,
     actionName: 'Torrente de Golpes',
     resourceSpent: true,
-    note: `Torrente de Golpes: gaste 1 Foco para fazer ${strikes} Ataques Desarmados como Ação Bônus (${martialArtsDie(
-      character.level,
-    )} cada).`,
+    note: `Torrente de Golpes: gaste 1 Foco para fazer ${strikes} Ataques Desarmados como Ação Bônus (${die} cada).`,
   };
 }
 

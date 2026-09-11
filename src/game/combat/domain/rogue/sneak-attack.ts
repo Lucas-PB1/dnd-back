@@ -1,12 +1,24 @@
 import { psiEnergyDiceSchedule } from '../fighter/features';
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../feature-schedule';
 
 export function isRogueClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'rogue';
 }
 
-/** Dados de Ataque Furtivo: 1d6 no nível 1 e +1d6 a cada nível ímpar. */
-export function sneakAttackDiceCount(level: number): number {
-  return Math.max(0, Math.ceil(level / 2));
+export function sneakAttackDiceCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.sneakAttackDiceCount,
+    level,
+    0,
+  );
 }
 
 /** O Perseguidor Aracnídeo pode trocar os d6 por d8 de dano Venenoso. */
@@ -21,8 +33,9 @@ export function sneakAttackDiceExpression(input: {
   level: number;
   subclassSlug?: string | null;
   usePoisonousStrike?: boolean;
+  featureSchedules: readonly FeatureScheduleBand[];
 }): string {
-  return `${sneakAttackDiceCount(input.level)}d${sneakAttackDieFaces(
+  return `${sneakAttackDiceCount(input.level, input.featureSchedules)}d${sneakAttackDieFaces(
     input.subclassSlug,
     input.usePoisonousStrike,
   )}`;
@@ -33,9 +46,12 @@ export function hasSlipperyMind(level: number): boolean {
 }
 
 /** Soulknife usa a mesma progressão de dados psiônicos do Psi Warrior. */
-export function soulknifePsiDiceSchedule(level: number): {
+export function soulknifePsiDiceSchedule(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): {
   faces: number;
   count: number;
 } | null {
-  return psiEnergyDiceSchedule(level);
+  return psiEnergyDiceSchedule(level, bands);
 }

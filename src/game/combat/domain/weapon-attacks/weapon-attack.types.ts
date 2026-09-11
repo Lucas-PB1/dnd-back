@@ -1,3 +1,4 @@
+import type { FeatureScheduleBand } from '../feature-schedule';
 import type { SizeCategory } from "../equipment/creature-size";
 import type { WeaponCharm } from "../equipment/weapon-charm";
 
@@ -25,6 +26,7 @@ export type EquippedWeaponPiece = {
 export type WeaponAttackContext = {
   proficiencyBonus: number;
   weaponProficiencySlugs: readonly string[];
+  featureSchedules: readonly FeatureScheduleBand[];
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
   sizeCategory?: SizeCategory;

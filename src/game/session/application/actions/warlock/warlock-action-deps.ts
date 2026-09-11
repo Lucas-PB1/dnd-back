@@ -1,3 +1,4 @@
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
@@ -13,6 +14,7 @@ export type WarlockActionDeps = {
   access: PlayerCharacterAccessService;
   state: CharacterStateRepository;
   domain: CharacterDomainService;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
 };
 
 export type WarlockTableActionResult = TableActionResponseDto;

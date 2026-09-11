@@ -102,6 +102,7 @@ export class ResolveEquipmentCompliance {
       proficiencyBonus: 0,
       weaponProficiencySlugs: [],
       featSlugs: input.featSlugs,
+      featureSchedules: [],
     });
 
     const armorTrainingSlugs = [

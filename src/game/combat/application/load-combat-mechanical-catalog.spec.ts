@@ -39,6 +39,7 @@ describe('LoadCombatMechanicalCatalog cache', () => {
       asDep(optionValueRepo),
       asDep(subclassRepo),
       asDep(effectCatalog),
+      asDep({ query: jest.fn().mockResolvedValue([]) }),
     );
 
     return {

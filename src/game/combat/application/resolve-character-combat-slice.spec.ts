@@ -42,29 +42,38 @@ describe('resolveCharacterCombatSlice combat bundle', () => {
     ];
 
     const dataSource = {
-      query: jest.fn().mockResolvedValue([
-        {
-          bundle: {
-            inventory: inventoryRows,
-            activeItemSlugs: ['leather-armor', 'longsword'],
-            items: [
-              { slug: 'leather-armor', name: 'Couro', properties: {} },
-              { slug: 'longsword', name: 'Espada longa', properties: {} },
-            ],
-            armor: [
-              {
-                itemSlug: 'leather-armor',
-                itemName: 'Couro',
-                categorySlug: 'light',
-                acBase: 11,
-                strengthReq: null,
-                stealthDisadvantage: false,
+      query: jest.fn().mockImplementation((sql: string) => {
+        if (String(sql).includes('get_character_combat_bundle')) {
+          return Promise.resolve([
+            {
+              bundle: {
+                inventory: inventoryRows,
+                activeItemSlugs: ['leather-armor', 'longsword'],
+                items: [
+                  { slug: 'leather-armor', name: 'Couro', properties: {} },
+                  { slug: 'longsword', name: 'Espada longa', properties: {} },
+                ],
+                armor: [
+                  {
+                    itemSlug: 'leather-armor',
+                    itemName: 'Couro',
+                    categorySlug: 'light',
+                    acBase: 11,
+                    strengthReq: null,
+                    stealthDisadvantage: false,
+                  },
+                ],
+                unarmoredDefenses: [],
               },
-            ],
-            unarmoredDefenses: [],
-          },
-        },
-      ]),
+            },
+          ]);
+        }
+        return Promise.resolve([]);
+      }),
+      getRepository: jest.fn().mockImplementation(() => ({
+        findOne: jest.fn().mockResolvedValue(null),
+        find: jest.fn().mockResolvedValue([]),
+      })),
     };
 
     const permanentItemEffects = {
@@ -116,11 +125,15 @@ describe('resolveCharacterCombatSlice combat bundle', () => {
       permanentItemEffects: asDep(permanentItemEffects),
     });
 
-    expect(dataSource.query).toHaveBeenCalledTimes(1);
     expect(dataSource.query).toHaveBeenCalledWith(
       expect.stringContaining('get_character_combat_bundle'),
       ['ch1', 'fighter', null],
     );
+    expect(
+      dataSource.query.mock.calls.filter((call) =>
+        String(call[0]).includes('get_character_combat_bundle'),
+      ),
+    ).toHaveLength(1);
     expect(permanentItemEffects.resolve).toHaveBeenCalledWith(
       'ch1',
       expect.objectContaining({

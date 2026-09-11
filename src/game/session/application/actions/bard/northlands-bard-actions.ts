@@ -1,4 +1,5 @@
 import { bardicInspirationDie } from '@game/combat/domain/bard';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import {
@@ -23,7 +24,13 @@ export async function resolveBragiRune(
   assertCharacterSubclass(character, 'skald', 'Skald');
   assertCharacterLevel(character, 6, 'Bardo', 'Runa da Fala de Bragi');
 
-  const die = bardicInspirationDie(character.level);
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const die = bardicInspirationDie(character.level, bands);
   const result = rollDamageParts(`1${die}`, 0);
   await spendInspiration(deps, character);
   const state = await applyTemporaryHitPoints(

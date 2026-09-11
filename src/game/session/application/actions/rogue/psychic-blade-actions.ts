@@ -51,7 +51,7 @@ export async function resolveConditionalPsiBonus(
     throw new BadRequestException(`${actionName} requires checkTotal and dc`);
   }
 
-  const faces = psiDieFaces(character);
+  const faces = await psiDieFaces(deps, character);
   const dieRoll = rollDie(faces);
   const newTotal = dto.checkTotal + dieRoll;
   const success = newTotal >= dto.dc;

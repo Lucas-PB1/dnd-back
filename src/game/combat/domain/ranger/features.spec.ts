@@ -7,8 +7,11 @@ import {
   rangerAttacksPerAction,
   rangerSpeedBonusMeters,
 } from './features';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('ranger-features', () => {
+  const rangerBands = fixtureSchedulesFor('ranger');
+
   it('identifies the ranger class', () => {
     expect(isRangerClass('ranger')).toBe(true);
     expect(isRangerClass('paladin')).toBe(false);
@@ -28,8 +31,8 @@ describe('ranger-features', () => {
   });
 
   it('grants Extra Attack, speed bonus and Precise Hunter by level', () => {
-    expect(rangerAttacksPerAction(4)).toBe(1);
-    expect(rangerAttacksPerAction(5)).toBe(2);
+    expect(rangerAttacksPerAction(4, rangerBands)).toBe(1);
+    expect(rangerAttacksPerAction(5, rangerBands)).toBe(2);
     expect(rangerSpeedBonusMeters({ classSlug: 'ranger', level: 5 })).toBe(0);
     expect(rangerSpeedBonusMeters({ classSlug: 'ranger', level: 6 })).toBe(3);
     expect(rangerSpeedBonusMeters({ classSlug: 'fighter', level: 6 })).toBe(0);

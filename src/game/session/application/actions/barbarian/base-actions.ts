@@ -2,6 +2,7 @@ import {
   isBarbarianClass,
   rageDamageBonus,
 } from '@game/combat/domain/barbarian';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import { BadRequestException } from '@nestjs/common';
@@ -32,7 +33,13 @@ export async function resolveToggleRage(
     };
   }
 
-  const bonus = rageDamageBonus(character.level);
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const bonus = rageDamageBonus(character.level, bands);
   let note = `Fúria ativa (+${bonus} dano FOR; Resistência Contundente/Cortante/Perfurante). Gasta 1 uso.`;
   let nextState = state;
 

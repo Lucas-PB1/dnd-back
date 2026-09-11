@@ -14,6 +14,7 @@ import {
   type EldritchCantripEligibility,
 } from '@game/combat/domain/warlock';
 import { isWarlockClass } from '@game/combat/domain/warlock';
+import { loadMergedFeatureSchedules } from '@game/combat/infrastructure/feature-schedule.queries';
 import {
   CharacterFeatDto,
   CharacterSpellDto,
@@ -59,11 +60,19 @@ export class CharacterEldritchInvocationsValidator {
       );
     }
 
-    const catalog = await loadEldritchInvocationCatalog(this.dataSource);
+    const [catalog, featureSchedules] = await Promise.all([
+      loadEldritchInvocationCatalog(this.dataSource),
+      loadMergedFeatureSchedules(
+        this.dataSource,
+        ctx.classSlug,
+        ctx.subclassSlug,
+      ),
+    ]);
     const errors = validateEldritchInvocationPicks({
       level: ctx.level,
       picks,
       catalog,
+      featureSchedules,
     });
 
     const cantripsBySlug = await this.loadCantripEligibility(

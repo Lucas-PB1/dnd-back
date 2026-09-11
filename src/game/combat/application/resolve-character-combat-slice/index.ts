@@ -8,6 +8,7 @@ import {
   loadSpeciesOptionDamageTypes,
 } from '../../infrastructure/species-catalog.queries';
 import { loadLevelCombatNotes } from '../../infrastructure/level-combat-note.queries';
+import { loadMergedFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
 import { loadDamageTypeLabels } from '@game/effects/infrastructure/damage-type.queries';
 import { ResolveEquippedArmorClass } from '../resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../resolve-equipped-weapon-attacks';
@@ -166,6 +167,11 @@ export async function resolveCharacterCombatSlice(input: {
     ),
     damageTypeLabels: await loadDamageTypeLabels(dataSource),
     levelCombatNotes: await loadLevelCombatNotes(
+      dataSource,
+      classSlug,
+      subclassSlug,
+    ),
+    featureSchedules: await loadMergedFeatureSchedules(
       dataSource,
       classSlug,
       subclassSlug,

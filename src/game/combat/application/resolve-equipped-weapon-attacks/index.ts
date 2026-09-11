@@ -6,6 +6,7 @@ import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { loadMergedFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
 import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
@@ -154,9 +155,17 @@ export class ResolveEquippedWeaponAttacks {
         context.classOptions,
       ),
     ];
+
+    const featureSchedules = await loadMergedFeatureSchedules(
+      this.dataSource,
+      context.classSlug,
+      context.subclassSlug,
+    );
+
     return computeWeaponAttacks(scores, mergedPieces, {
       proficiencyBonus: context.proficiencyBonus,
       weaponProficiencySlugs,
+      featureSchedules,
       featSlugs: context.featSlugs,
       fightingStyleSlugs: context.fightingStyleSlugs,
       sizeCategory: context.sizeCategory,

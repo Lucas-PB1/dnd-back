@@ -1,14 +1,25 @@
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../feature-schedule';
 
 export function isBardClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'bard';
 }
 
-export function bardicInspirationDie(level: number): string {
-  if (level >= 15) return 'd12';
-  if (level >= 10) return 'd10';
-  if (level >= 5) return 'd8';
-  return 'd6';
+export function bardicInspirationDie(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string {
+  const faces = scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.bardicInspirationDieFaces,
+    level,
+    6,
+  );
+  return `d${faces}`;
 }
 
 export function bardicInspirationMaxUses(charismaScore: number): number {

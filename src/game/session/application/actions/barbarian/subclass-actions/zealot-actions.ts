@@ -2,6 +2,7 @@ import {
   rageDamageBonus,
   zealotHealingDiceCount,
 } from '@game/combat/domain/barbarian';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import {
   assertCharacterLevel,
@@ -26,7 +27,15 @@ export async function resolveFanaticalFocus(
 ): Promise<BarbarianTableActionResult> {
   assertCharacterSubclass(character, 'zealot', 'Fanático');
   assertCharacterLevel(character, 6, 'Bárbaro', 'Concentração Fanática');
-  const bonus = rageDamageBonus(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const bonus = rageDamageBonus(character.level, bands);
+
   return {
     state: await deps.state.buildResponse(character),
     actionName: 'Concentração Fanática',
@@ -43,7 +52,14 @@ export async function resolveChampionOfTheGods(
 ): Promise<BarbarianTableActionResult> {
   assertCharacterSubclass(character, 'zealot', 'Fanático');
   assertCharacterLevel(character, 3, 'Bárbaro', 'Campeão dos Deuses');
-  const maxDice = zealotHealingDiceCount(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const maxDice = zealotHealingDiceCount(character.level, bands);
   const spent = diceCount ?? 1;
   if (!Number.isInteger(spent) || spent < 1 || spent > maxDice) {
     throw new BadRequestException(

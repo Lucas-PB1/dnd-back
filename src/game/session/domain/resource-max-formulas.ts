@@ -7,6 +7,7 @@ import {
   superiorityDiceCount,
 } from '@game/combat/domain/fighter';
 import { zealotHealingDiceCount } from '@game/combat/domain/barbarian';
+import type { FeatureScheduleBand } from '@game/combat/domain/feature-schedule';
 import type { AbilityMods, ClassResourceScheduleRow, ResourceMaxFormula } from './class-resources';
 
 function abilityModFromFormula(
@@ -25,19 +26,20 @@ export function resolveFormulaMax(
   level: number,
   proficiencyBonus: number,
   mods: AbilityMods,
+  featureSchedules: readonly FeatureScheduleBand[],
 ): number {
   if (row.maxFormula === 'fixed') return row.fixedMax ?? 0;
   if (row.maxFormula === 'level') return level;
   if (row.maxFormula === 'level_plus_one') return level + 1;
   if (row.maxFormula === 'proficiency_bonus') return proficiencyBonus;
   if (row.maxFormula === 'zealot_healing_dice_count') {
-    return zealotHealingDiceCount(level);
+    return zealotHealingDiceCount(level, featureSchedules);
   }
   if (row.maxFormula === 'superiority_dice_count') {
-    return superiorityDiceCount(level);
+    return superiorityDiceCount(level, featureSchedules);
   }
   if (row.maxFormula === 'psi_energy_dice_count') {
-    return psiEnergyDiceCount(level);
+    return psiEnergyDiceCount(level, featureSchedules);
   }
   const ability = abilityModFromFormula(row.maxFormula, mods);
   if (ability != null) {

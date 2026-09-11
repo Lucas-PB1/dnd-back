@@ -3,6 +3,7 @@
 
 TRUNCATE TABLE
   rpg.phb_damage_type,
+  rpg.phb_class_feature_schedule,
   rpg.phb_level_combat_note,
   rpg.phb_initiative_rule,
   rpg.phb_subclass_feature_gate,

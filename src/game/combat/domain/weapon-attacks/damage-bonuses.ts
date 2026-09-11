@@ -122,6 +122,7 @@ export function resolveDamageBonuses(input: {
     rageActive: input.context.rageActive,
     mode: input.mode,
     abilitySlug: input.ability.slug,
+    featureSchedules: input.context.featureSchedules,
   });
   if (rageBonus > 0) {
     damageBonus += rageBonus;

@@ -1,5 +1,6 @@
 import type { CunningStrikeEffect } from './types';
 import { sneakAttackDiceCount } from './sneak-attack';
+import type { FeatureScheduleBand } from '../feature-schedule';
 
 /**
  * Golpe Astuto — lookups.
@@ -37,6 +38,7 @@ export function validateCunningStrikeSelection(
     level: number;
     effectSlugs: readonly string[];
     subclassSlug?: string | null;
+    featureSchedules: readonly FeatureScheduleBand[];
   },
 ): {
   effects: CunningStrikeEffect[];
@@ -72,7 +74,7 @@ export function validateCunningStrikeSelection(
   });
 
   const diceCost = effects.reduce((total, effect) => total + effect.cost, 0);
-  const sneakAttackDice = sneakAttackDiceCount(input.level);
+  const sneakAttackDice = sneakAttackDiceCount(input.level, input.featureSchedules);
   if (diceCost > sneakAttackDice) {
     throw new Error(
       `Cunning Strike costs ${diceCost} dice, but Sneak Attack has only ${sneakAttackDice}`,

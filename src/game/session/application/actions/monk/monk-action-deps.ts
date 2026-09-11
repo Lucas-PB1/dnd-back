@@ -1,3 +1,4 @@
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { monkFocusSaveDc } from '@game/combat/domain/monk';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
@@ -15,6 +16,7 @@ export const FOCUS_RESOURCE_SLUG = 'focusPoints';
 export type MonkActionDeps = {
   state: CharacterStateRepository;
   domain: CharacterDomainService;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
 };
 
 export type MonkTableActionResult = TableActionResponseDto;

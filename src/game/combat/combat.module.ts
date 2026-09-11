@@ -15,6 +15,7 @@ import { PhbSpeciesArmorPreset } from '@entities/phb-species-armor-preset.entity
 import { PhbSubclassFeatureGate } from '@entities/phb-subclass-feature-gate.entity';
 import { PhbLevelCombatNote } from '@entities/phb-level-combat-note.entity';
 import { PhbDamageType } from '@entities/phb-damage-type.entity';
+import { PhbClassFeatureSchedule } from '@entities/phb-class-feature-schedule.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbClassRef } from '@entities/phb-class-ref.entity';
@@ -64,6 +65,7 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       PhbSubclassFeatureGate,
       PhbLevelCombatNote,
       PhbDamageType,
+      PhbClassFeatureSchedule,
     ]),
     GameSharedModule,
     EffectsModule,

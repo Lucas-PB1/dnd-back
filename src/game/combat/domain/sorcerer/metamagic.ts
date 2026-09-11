@@ -1,5 +1,11 @@
 /** Opções de Metamagia — regras de picks (catálogo vive em `rpg.phb_metamagic`). */
 
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../feature-schedule';
+
 export const METAMAGIC_OPTION_KEY = 'metamagic';
 
 export type MetamagicCatalogRow = {
@@ -10,12 +16,17 @@ export type MetamagicCatalogRow = {
   stacksWithOther: boolean;
 };
 
-/** L2: 2 · L10: 4 · L17: 6 */
-export function sorcererMetamagicLimit(level: number): number {
-  if (level >= 17) return 6;
-  if (level >= 10) return 4;
-  if (level >= 2) return 2;
-  return 0;
+/** L2: 2 · L10: 4 · L17: 6 — SSOT `sorcerer_metamagic_limit`. */
+export function sorcererMetamagicLimit(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.sorcererMetamagicLimit,
+    level,
+    0,
+  );
 }
 
 export type ClassOptionLike = {
@@ -42,9 +53,10 @@ export function validateMetamagicPicks(input: {
   level: number;
   picks: readonly { slug: string }[];
   catalog: readonly MetamagicCatalogRow[];
+  featureSchedules: readonly FeatureScheduleBand[];
 }): string[] {
   const errors: string[] = [];
-  const limit = sorcererMetamagicLimit(input.level);
+  const limit = sorcererMetamagicLimit(input.level, input.featureSchedules);
   if (input.picks.length > limit) {
     errors.push(
       `Feiticeiro nível ${input.level} pode ter no máximo ${limit} opção(ões) de Metamagia`,

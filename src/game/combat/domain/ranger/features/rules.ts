@@ -1,6 +1,11 @@
 /**
  * Regras numéricas de combate do Patrulheiro (PHB 2024): Marca do Predador e dados de arquétipo.
  */
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
 
 export type RangerSubclassSlug =
   | 'hunter'
@@ -38,8 +43,17 @@ export function hasRelentlessHunter(level: number): boolean {
   return level >= 13;
 }
 
-export function rangerAttacksPerAction(level: number): number {
-  return level >= 5 ? 2 : 1;
+/** Ataque Extra — SSOT: `attacks_per_action`. */
+export function rangerAttacksPerAction(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.attacksPerAction,
+    level,
+    1,
+  );
 }
 
 /** Errante (nível 6): +3 m sem armadura pesada. */

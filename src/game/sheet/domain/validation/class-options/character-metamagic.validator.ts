@@ -5,6 +5,7 @@ import {
   readMetamagicPicks,
   validateMetamagicPicks,
 } from '@game/combat/domain/sorcerer';
+import { loadMergedFeatureSchedules } from '@game/combat/infrastructure/feature-schedule.queries';
 import {
   CharacterSheetContext,
   CharacterSheetInput,
@@ -28,11 +29,19 @@ export class CharacterMetamagicValidator {
       );
     }
 
-    const catalog = await loadMetamagicCatalog(this.dataSource);
+    const [catalog, featureSchedules] = await Promise.all([
+      loadMetamagicCatalog(this.dataSource),
+      loadMergedFeatureSchedules(
+        this.dataSource,
+        ctx.classSlug,
+        ctx.subclassSlug,
+      ),
+    ]);
     const errors = validateMetamagicPicks({
       level: ctx.level,
       picks,
       catalog,
+      featureSchedules,
     });
     if (errors.length > 0) {
       throw new BadRequestException(errors.join('; '));

@@ -4,15 +4,18 @@ import {
   gunslingerCritThreshold,
   resolveAttackCritThreshold,
 } from './firearm';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('gunslinger-firearm', () => {
+  const gunslingerBands = fixtureSchedulesFor('gunslinger');
+
   it('crit thresholds by level', () => {
-    expect(gunslingerCritThreshold(1)).toBe(20);
-    expect(gunslingerCritThreshold(2)).toBe(19);
-    expect(gunslingerCritThreshold(8)).toBe(19);
-    expect(gunslingerCritThreshold(9)).toBe(18);
-    expect(gunslingerCritThreshold(16)).toBe(18);
-    expect(gunslingerCritThreshold(17)).toBe(17);
+    expect(gunslingerCritThreshold(1, gunslingerBands)).toBe(20);
+    expect(gunslingerCritThreshold(2, gunslingerBands)).toBe(19);
+    expect(gunslingerCritThreshold(8, gunslingerBands)).toBe(19);
+    expect(gunslingerCritThreshold(9, gunslingerBands)).toBe(18);
+    expect(gunslingerCritThreshold(16, gunslingerBands)).toBe(18);
+    expect(gunslingerCritThreshold(17, gunslingerBands)).toBe(17);
   });
 
   it('omits ability mod on firearms before overkill', () => {
@@ -41,6 +44,7 @@ describe('gunslinger-firearm', () => {
         classSlug: 'gunslinger',
         level: 9,
         mode: 'ranged',
+        featureSchedules: gunslingerBands,
       }),
     ).toBe(18);
     expect(
@@ -48,6 +52,7 @@ describe('gunslinger-firearm', () => {
         classSlug: 'gunslinger',
         level: 9,
         mode: 'melee',
+        featureSchedules: gunslingerBands,
       }),
     ).toBe(20);
     expect(
@@ -55,6 +60,7 @@ describe('gunslinger-firearm', () => {
         classSlug: 'fighter',
         level: 20,
         mode: 'ranged',
+        featureSchedules: [],
       }),
     ).toBe(20);
   });

@@ -42,6 +42,7 @@ describe('resolveClassResourceMaxima (Cap. 6 transformation)', () => {
       },
       transformationStage: 3,
       proficiencyBonusPlusStageSlugs: CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS,
+      featureSchedules: [],
     });
 
     const infernal = result.find((r) => r.slug === 'infernal-smite-uses');

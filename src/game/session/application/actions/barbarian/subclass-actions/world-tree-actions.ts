@@ -1,4 +1,5 @@
 import { rageDamageBonus } from '@game/combat/domain/barbarian';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import {
@@ -18,7 +19,13 @@ export async function resolveRevitalizingStrength(
 ): Promise<BarbarianTableActionResult> {
   assertCharacterSubclass(character, 'world-tree', 'Árvore do Mundo');
   assertCharacterLevel(character, 3, 'Bárbaro', 'Força Revigorante');
-  const dice = rageDamageBonus(character.level);
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const dice = rageDamageBonus(character.level, bands);
   const result = rollDamageParts(`${dice}d6`, 0);
   const state = await applyTemporaryHitPoints(
     deps.state,

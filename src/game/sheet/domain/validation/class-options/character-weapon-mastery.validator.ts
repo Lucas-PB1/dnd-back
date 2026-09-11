@@ -150,6 +150,7 @@ export class CharacterWeaponMasteryValidator {
         weaponProficiencySlugs,
         featSlugs,
         fightingStyleSlugs,
+        featureSchedules: [],
       })
     ) {
       throw new BadRequestException(

@@ -1,4 +1,5 @@
 import { martialArtsDie } from '@game/combat/domain/monk';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
@@ -13,6 +14,15 @@ import type {
 } from '../monk-action-deps';
 import { spendFocus, spendResource } from '../monk-action-deps';
 
+async function monkBands(deps: MonkActionDeps, character: PlayerCharacter) {
+  const catalog = await deps.mechanicalCatalog.load();
+  return featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+}
+
 const FLURRY_HEAL_HARM_SLUG = 'hand-of-harm-flurry';
 const ULTIMATE_MERCY_SLUG = 'hand-of-ultimate-mercy';
 
@@ -23,7 +33,8 @@ export async function resolveHandOfHealing(
   assertCharacterSubclass(character, 'mercy', 'Combatente da Misericórdia');
   assertCharacterLevel(character, 3, 'Monk', 'Mão de Cura');
   const wisdom = abilityModifier(character.abilityScores.sabedoria);
-  const heal = rollDamageParts(martialArtsDie(character.level), wisdom);
+  const bands = await monkBands(deps, character);
+  const heal = rollDamageParts(martialArtsDie(character.level, bands), wisdom);
   await spendFocus(deps, character, 1);
   const { state, healed } = await applyHealHitPoints(
     deps.state,
@@ -52,7 +63,8 @@ export async function resolveHandOfHarm(
   assertCharacterSubclass(character, 'mercy', 'Combatente da Misericórdia');
   assertCharacterLevel(character, 3, 'Monk', 'Mão de Dolo');
   const wisdom = abilityModifier(character.abilityScores.sabedoria);
-  const damage = rollDamageParts(martialArtsDie(character.level), wisdom);
+  const bands = await monkBands(deps, character);
+  const damage = rollDamageParts(martialArtsDie(character.level, bands), wisdom);
   const state = await spendFocus(deps, character, 1);
   const poison =
     character.level >= 6

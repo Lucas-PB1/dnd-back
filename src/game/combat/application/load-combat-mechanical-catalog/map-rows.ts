@@ -31,6 +31,14 @@ export type CombatMechanicalCatalogRows = {
     string,
     ReadonlyMap<string, number>
   >;
+  featureSchedulesByClassSlug: ReadonlyMap<
+    string,
+    readonly import('../../domain/feature-schedule').FeatureScheduleBand[]
+  >;
+  featureSchedulesBySubclassSlug: ReadonlyMap<
+    string,
+    readonly import('../../domain/feature-schedule').FeatureScheduleBand[]
+  >;
 };
 
 export function mapCombatMechanicalCatalog(
@@ -49,6 +57,8 @@ export function mapCombatMechanicalCatalog(
     economyRows,
     panelRows,
     featureGatesBySubclassSlug,
+    featureSchedulesByClassSlug,
+    featureSchedulesBySubclassSlug,
   } = rows;
 
   return {
@@ -117,5 +127,7 @@ export function mapCombatMechanicalCatalog(
     economyActions: mapEconomyActions(economyRows),
     panelActions: mapPanelActions(economyRows, panelRows),
     featureGatesBySubclassSlug,
+    featureSchedulesByClassSlug,
+    featureSchedulesBySubclassSlug,
   };
 }

@@ -11,6 +11,7 @@ import {
   psiEnergyDieFaces,
   superiorityDieFaces,
 } from './features';
+import type { FeatureScheduleBand } from '../feature-schedule';
 import {
   findSubclassTableAction,
   type SubclassTableAction,
@@ -38,6 +39,7 @@ type BattleMasterRollInput = {
   charismaModifier: number;
   dieRoll: number;
   useRelentless?: boolean;
+  bands: readonly FeatureScheduleBand[];
 };
 
 export function resolveBattleMasterTableRoll(input: BattleMasterRollInput) {
@@ -54,7 +56,7 @@ export function resolveBattleMasterTableRoll(input: BattleMasterRollInput) {
 
   const dieFaces = input.useRelentless
     ? 8
-    : superiorityDieFaces(input.level);
+    : superiorityDieFaces(input.level, input.bands);
   if (dieFaces == null) {
     throw new Error('Superiority Die is not available');
   }
@@ -121,6 +123,7 @@ export function resolvePsiWarriorTableAction(input: {
   intelligenceModifier: number;
   dieRoll?: number;
   usePsiDie?: boolean;
+  bands: readonly FeatureScheduleBand[];
 }) {
   const action = findSubclassTableAction(
     input.catalog,
@@ -136,7 +139,7 @@ export function resolvePsiWarriorTableAction(input: {
     );
   }
 
-  const dieFaces = psiEnergyDieFaces(input.level);
+  const dieFaces = psiEnergyDieFaces(input.level, input.bands);
   const spendsPsi = action.alwaysSpendsPool || Boolean(input.usePsiDie);
   if (spendsPsi && dieFaces == null) {
     throw new Error('Psi Energy Die is not available');

@@ -39,6 +39,8 @@ timestamp: 2026-09-11
 | Migrar initiative / bloodhound / companion labels / GH notes | feito — tabelas + seeds + predicados |
 | Migrar Northlands + packs PHB estáticos + damage_type PT | feito — `phb_level_combat_note` + `phb_damage_type` |
 | Migrar literais PHB restantes (8 classes) | feito — `remaining-static.sql`; dinâmicos ficam no TS |
+| Migrar feature schedules (piloto→wave3) + matar fallbacks | feito — `phb_class_feature_schedule` |
+| Handlers mesa `switch(actionSlug)` → economy | **dívida alta** — critério em [sql-first-audit.md](/sql-first-audit.md) § Mesa |
 | Reforçar `@catalog/game-port` se novos helpers | sob demanda |
 
 **Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.

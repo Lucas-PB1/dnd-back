@@ -11,8 +11,11 @@ import {
   type EldritchInvocationEffectRow,
 } from './eldritch-invocations';
 import { warlockInvocationLimit } from './features';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('eldritch-invocations', () => {
+  const warlockBands = fixtureSchedulesFor('warlock');
+
   const catalog: EldritchInvocationCatalogRow[] = [
     {
       slug: 'pact-of-the-blade',
@@ -94,7 +97,7 @@ describe('eldritch-invocations', () => {
   });
 
   it('rejects over-limit and missing pact prerequisite', () => {
-    expect(warlockInvocationLimit(1)).toBe(1);
+    expect(warlockInvocationLimit(1, warlockBands)).toBe(1);
     const errors = validateEldritchInvocationPicks({
       level: 5,
       picks: [
@@ -102,6 +105,7 @@ describe('eldritch-invocations', () => {
         { slug: 'agonizing-blast', instanceIndex: 1 },
       ],
       catalog,
+      featureSchedules: warlockBands,
     });
     expect(errors.some((e) => e.includes('pact-of-the-blade'))).toBe(true);
   });
@@ -117,6 +121,7 @@ describe('eldritch-invocations', () => {
         { slug: 'agonizing-blast', instanceIndex: 4 },
       ],
       catalog,
+      featureSchedules: warlockBands,
     });
     expect(errors).toEqual([]);
   });
@@ -322,6 +327,7 @@ describe('eldritch-invocations', () => {
     const picks = pickRandomValidEldritchInvocations({
       level: 5,
       catalog: fullCatalog,
+      featureSchedules: warlockBands,
       random: () => {
         seed += 0.17;
         return seed % 1;
@@ -333,6 +339,7 @@ describe('eldritch-invocations', () => {
         level: 5,
         picks,
         catalog: fullCatalog,
+        featureSchedules: warlockBands,
       }),
     ).toEqual([]);
   });

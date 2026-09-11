@@ -46,6 +46,7 @@ export class WarlockActionsHandler {
       access: this.access,
       state: this.state,
       domain: this.domain,
+      mechanicalCatalog: this.mechanicalCatalog,
     };
   }
 

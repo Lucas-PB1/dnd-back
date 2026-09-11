@@ -60,6 +60,7 @@ export const applySneakAttack: DamageEffect = async (ctx, acc) => {
       level: character.level,
       subclassSlug: character.subclassSlug,
       effectSlugs: cunningStrikeEffects,
+      featureSchedules: ctx.featureSchedules,
     });
   } catch (error) {
     throw new BadRequestException(

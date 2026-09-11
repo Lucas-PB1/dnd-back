@@ -9,7 +9,10 @@ import {
 } from "./fixtures";
 import type { WeaponAttackCase } from "./expect";
 
-const PB2 = { proficiencyBonus: 2 as const };
+const PB2 = {
+  proficiencyBonus: 2 as const,
+  featureSchedules: [] as const,
+};
 const DEX16 = { forca: 10, destreza: 16 };
 const GWM_CTX = { ...FIGHTER_CTX, featSlugs: ["great-weapon-master"] as const };
 const GWF_CTX = {

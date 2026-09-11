@@ -195,7 +195,10 @@ export class DuelCombatSnapshot {
     if (!character) return 1;
     if (!isFighterClass(character.classSlug)) return 1;
     const nick = await this.hasNickMasteryWeapon(character);
-    return attacksPerAction(character.level) + (nick ? 1 : 0);
+    const catalog = await this.mechanicalCatalog.load();
+    const bands =
+      catalog.featureSchedulesByClassSlug.get(character.classSlug) ?? [];
+    return attacksPerAction(character.level, bands) + (nick ? 1 : 0);
   }
 
   async resolveBloodStrikePanel(

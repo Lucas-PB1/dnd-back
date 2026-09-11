@@ -1,16 +1,25 @@
 /**
  * Regras de combate do Pistoleiro (Valdas) para armas de fogo e Tiro Crítico.
- * Fonte: features de classe; o motor só aplica números.
+ * Crit: SSOT `phb_class_feature_schedule.gunslinger_crit_threshold`.
  */
 
 import { resolveFighterAttackCritThreshold } from '../fighter/features';
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../feature-schedule';
 
-/** Limiar mínimo no d20 para crítico à distância (Pistoleiro). */
-export function gunslingerCritThreshold(level: number): number {
-  if (level >= 17) return 17;
-  if (level >= 9) return 18;
-  if (level >= 2) return 19;
-  return 20;
+export function gunslingerCritThreshold(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.gunslingerCritThreshold,
+    level,
+    20,
+  );
 }
 
 export function isGunslingerClass(classSlug: string | null | undefined): boolean {
@@ -25,7 +34,7 @@ export function isGunslingerClass(classSlug: string | null | undefined): boolean
  *
  * Exagero (nv.11+) reintroduz o modificador via `applyOverkillDamageBonus`.
  */
-export function firearmAbilityDamageBonus(abilityMod: number): number {
+export function firearmAbilityDamageBonus(_abilityMod: number): number {
   return 0;
 }
 
@@ -67,6 +76,7 @@ export function resolveAttackCritThreshold(input: {
   subclassSlug?: string | null;
   level?: number;
   mode: 'melee' | 'ranged';
+  featureSchedules: readonly FeatureScheduleBand[];
 }): number {
   let threshold = 20;
 
@@ -75,7 +85,10 @@ export function resolveAttackCritThreshold(input: {
     isGunslingerClass(input.classSlug) &&
     input.level != null
   ) {
-    threshold = Math.min(threshold, gunslingerCritThreshold(input.level));
+    threshold = Math.min(
+      threshold,
+      gunslingerCritThreshold(input.level, input.featureSchedules),
+    );
   }
 
   threshold = Math.min(
@@ -84,6 +97,7 @@ export function resolveAttackCritThreshold(input: {
       classSlug: input.classSlug,
       subclassSlug: input.subclassSlug,
       level: input.level,
+      featureSchedules: input.featureSchedules,
     }),
   );
 

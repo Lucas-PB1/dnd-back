@@ -17,7 +17,7 @@ export async function resolvePsychicWhispers(
   usePsiDie = false,
 ): Promise<RogueTableActionResult> {
   assertCharacterLevel(character, 3, 'Rogue', 'Psychic Whispers');
-  const faces = psiDieFaces(character);
+  const faces = await psiDieFaces(deps, character);
   const dieRoll = rollDie(faces);
   const pb = await deps.domain.getProficiencyBonus(character.level);
   const tableAction = await resolveSoulknifeAction(
@@ -50,7 +50,7 @@ export async function resolvePsychicTeleport(
   character: PlayerCharacter,
 ): Promise<RogueTableActionResult> {
   assertCharacterLevel(character, 9, 'Rogue', 'Psychic Teleportation');
-  const faces = psiDieFaces(character);
+  const faces = await psiDieFaces(deps, character);
   const dieRoll = rollDie(faces);
   const tableAction = await resolveSoulknifeAction(
     deps,

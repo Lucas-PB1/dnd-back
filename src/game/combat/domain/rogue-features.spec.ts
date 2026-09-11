@@ -9,13 +9,16 @@ import {
   soulknifePsiDiceSchedule,
   validateCunningStrikeSelection,
 } from './rogue';
+import { fixtureSchedulesFor } from './feature-schedule.fixtures';
 
 describe('rogue features', () => {
+  const rogueBands = fixtureSchedulesFor('rogue');
+
   it('increases Sneak Attack by one die every odd Rogue level', () => {
-    expect(sneakAttackDiceCount(1)).toBe(1);
-    expect(sneakAttackDiceCount(2)).toBe(1);
-    expect(sneakAttackDiceCount(3)).toBe(2);
-    expect(sneakAttackDiceCount(20)).toBe(10);
+    expect(sneakAttackDiceCount(1, rogueBands)).toBe(1);
+    expect(sneakAttackDiceCount(2, rogueBands)).toBe(1);
+    expect(sneakAttackDiceCount(3, rogueBands)).toBe(2);
+    expect(sneakAttackDiceCount(20, rogueBands)).toBe(10);
   });
 
   it('uses d8 only for an arachnoid poisonous strike', () => {
@@ -23,6 +26,7 @@ describe('rogue features', () => {
       sneakAttackDiceExpression({
         level: 9,
         subclassSlug: 'arachnoid-stalker',
+        featureSchedules: rogueBands,
       }),
     ).toBe('5d6');
     expect(
@@ -30,6 +34,7 @@ describe('rogue features', () => {
         level: 9,
         subclassSlug: 'arachnoid-stalker',
         usePoisonousStrike: true,
+        featureSchedules: rogueBands,
       }),
     ).toBe('5d8');
     expect(
@@ -37,6 +42,7 @@ describe('rogue features', () => {
         level: 9,
         subclassSlug: 'assassin',
         usePoisonousStrike: true,
+        featureSchedules: rogueBands,
       }),
     ).toBe('5d6');
   });
@@ -94,6 +100,7 @@ describe('rogue features', () => {
       validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 14,
         effectSlugs: ['daze', 'obscure'],
+        featureSchedules: rogueBands,
       }),
     ).toMatchObject({
       diceCost: 5,
@@ -106,6 +113,7 @@ describe('rogue features', () => {
       validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 10,
         effectSlugs: ['poison', 'withdraw'],
+        featureSchedules: rogueBands,
       }),
     ).toThrow(/at most 1/);
   });
@@ -115,6 +123,7 @@ describe('rogue features', () => {
       validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 14,
         effectSlugs: ['knock-out', 'obscure'],
+        featureSchedules: rogueBands,
       }),
     ).toThrow(/costs 9 dice.*only 7/);
   });
@@ -125,6 +134,7 @@ describe('rogue features', () => {
         level: 17,
         subclassSlug: 'assassin',
         effectSlugs: ['paralyze'],
+        featureSchedules: rogueBands,
       }),
     ).toThrow(/arachnoid-stalker/);
     expect(
@@ -132,14 +142,16 @@ describe('rogue features', () => {
         level: 17,
         subclassSlug: 'arachnoid-stalker',
         effectSlugs: ['paralyze'],
+        featureSchedules: rogueBands,
       }).diceCost,
     ).toBe(4);
   });
 
   it('uses the Psi Warrior dice schedule for Soulknife', () => {
+    const soulknifeBands = fixtureSchedulesFor('rogue', 'soulknife');
     for (const level of [3, 5, 9, 11, 13, 17]) {
-      expect(soulknifePsiDiceSchedule(level)).toEqual(
-        psiEnergyDiceSchedule(level),
+      expect(soulknifePsiDiceSchedule(level, soulknifeBands)).toEqual(
+        psiEnergyDiceSchedule(level, soulknifeBands),
       );
     }
   });

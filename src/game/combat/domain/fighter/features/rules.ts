@@ -1,17 +1,29 @@
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  scheduleIntOrNullAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
+
 /**
  * Regras numéricas de combate do Guerreiro (PHB 2024) e efeitos de subclasse.
+ * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
  */
 
 export function isFighterClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'fighter';
 }
 
-/** Ataques por Ação Atacar: 1 → 2 (nv.5) → 3 (nv.11) → 4 (nv.20). */
-export function attacksPerAction(level: number): number {
-  if (level >= 20) return 4;
-  if (level >= 11) return 3;
-  if (level >= 5) return 2;
-  return 1;
+export function attacksPerAction(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.attacksPerAction,
+    level,
+    1,
+  );
 }
 
 /** Cura de Recuperar Fôlego: 1d10 + nível de Guerreiro. */
@@ -19,76 +31,109 @@ export function secondWindHealDice(level: number): string {
   return `1d10+${Math.max(1, level)}`;
 }
 
-/** Usos de Indomável: 1 (nv.9), 2 (nv.13), 3 (nv.17). */
-export function indomitableMaxUses(level: number): number {
-  if (level >= 17) return 3;
-  if (level >= 13) return 2;
-  if (level >= 9) return 1;
-  return 0;
+export function indomitableMaxUses(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.indomitableMaxUses,
+    level,
+    0,
+  );
 }
 
-/** Dados de Superioridade (Mestre da Batalha): quantidade. */
-export function superiorityDiceCount(level: number): number {
-  if (level >= 15) return 6;
-  if (level >= 7) return 5;
-  if (level >= 3) return 4;
-  return 0;
+export function superiorityDiceCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.superiorityDiceCount,
+    level,
+    0,
+  );
 }
 
-/** Faces do Dado de Superioridade: d8 → d10 (nv.10) → d12 (nv.18). */
-export function superiorityDieFaces(level: number): number | null {
-  if (level < 3) return null;
-  if (level >= 18) return 12;
-  if (level >= 10) return 10;
-  return 8;
+export function superiorityDieFaces(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number | null {
+  return scheduleIntOrNullAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.superiorityDieFaces,
+    level,
+  );
 }
 
-export function superiorityDieLabel(level: number): string | null {
-  const faces = superiorityDieFaces(level);
+export function superiorityDieLabel(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string | null {
+  const faces = superiorityDieFaces(level, bands);
   return faces == null ? null : `d${faces}`;
 }
 
-/**
- * Dados de Energia Psiônica (Combatente Psíquico).
- * Nível → { faces, count }
- */
-export function psiEnergyDiceSchedule(level: number): {
+export function psiEnergyDiceSchedule(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): {
   faces: number;
   count: number;
 } | null {
-  if (level < 3) return null;
-  if (level >= 17) return { faces: 12, count: 12 };
-  if (level >= 13) return { faces: 10, count: 10 };
-  if (level >= 11) return { faces: 10, count: 8 };
-  if (level >= 9) return { faces: 8, count: 8 };
-  if (level >= 5) return { faces: 8, count: 6 };
-  return { faces: 6, count: 4 };
+  const faces = scheduleIntOrNullAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.psiEnergyDieFaces,
+    level,
+  );
+  const count = scheduleIntOrNullAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.psiEnergyDiceCount,
+    level,
+  );
+  if (faces == null || count == null) return null;
+  return { faces, count };
 }
 
-export function psiEnergyDiceCount(level: number): number {
-  return psiEnergyDiceSchedule(level)?.count ?? 0;
+export function psiEnergyDiceCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return psiEnergyDiceSchedule(level, bands)?.count ?? 0;
 }
 
-export function psiEnergyDieFaces(level: number): number | null {
-  return psiEnergyDiceSchedule(level)?.faces ?? null;
+export function psiEnergyDieFaces(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number | null {
+  return psiEnergyDiceSchedule(level, bands)?.faces ?? null;
 }
 
-export function psiEnergyDieLabel(level: number): string | null {
-  const faces = psiEnergyDieFaces(level);
+export function psiEnergyDieLabel(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string | null {
+  const faces = psiEnergyDieFaces(level, bands);
   return faces == null ? null : `d${faces}`;
 }
 
-/** Crítico do Campeão: 19–20 (nv.3), 18–20 (nv.15). */
-export function championCritThreshold(level: number): number {
-  if (level >= 15) return 18;
-  if (level >= 3) return 19;
-  return 20;
+export function championCritThreshold(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.championCritThreshold,
+    level,
+    20,
+  );
 }
 
 export function resolveFighterAttackCritThreshold(input: {
   classSlug?: string | null;
   subclassSlug?: string | null;
   level?: number;
+  featureSchedules: readonly FeatureScheduleBand[];
 }): number {
   if (
     !isFighterClass(input.classSlug) ||
@@ -97,7 +142,7 @@ export function resolveFighterAttackCritThreshold(input: {
   ) {
     return 20;
   }
-  return championCritThreshold(input.level);
+  return championCritThreshold(input.level, input.featureSchedules);
 }
 
 export function hasStudiedAttacks(level: number): boolean {

@@ -1,4 +1,5 @@
 import { warlockInvocationLimit } from '../features';
+import type { FeatureScheduleBand } from '../../feature-schedule';
 import { validateEldritchInvocationPicks } from './validate';
 import {
   GIFT_OF_THE_DEPTHS_SLUG,
@@ -91,10 +92,12 @@ export function buildEldritchCantripCastNote(input: {
 export function pickRandomValidEldritchInvocations(input: {
   level: number;
   catalog: readonly EldritchInvocationCatalogRow[];
+  featureSchedules: readonly FeatureScheduleBand[];
   limit?: number;
   random?: () => number;
 }): { slug: string; instanceIndex: number }[] {
-  const limit = input.limit ?? warlockInvocationLimit(input.level);
+  const limit =
+    input.limit ?? warlockInvocationLimit(input.level, input.featureSchedules);
   const random = input.random ?? Math.random;
   const eligible = input.catalog.filter((row) => row.minLevel <= input.level);
   const picks: { slug: string; instanceIndex: number }[] = [];
@@ -111,6 +114,7 @@ export function pickRandomValidEldritchInvocations(input: {
             level: input.level,
             picks: trial,
             catalog: input.catalog,
+            featureSchedules: input.featureSchedules,
           }).length === 0
         );
       }),

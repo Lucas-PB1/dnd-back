@@ -5,6 +5,7 @@ import {
   warlockInvocationLimit,
 } from '../features';
 import { cantripEligibleForBlastInvocation, knownPactSlugsFromPicks } from './read';
+import type { FeatureScheduleBand } from '../../feature-schedule';
 import type {
   EldritchBlastCantripBinding,
   EldritchCantripEligibility,
@@ -17,9 +18,10 @@ export function validateEldritchInvocationPicks(input: {
   level: number;
   picks: readonly { slug: string; instanceIndex: number }[];
   catalog: readonly EldritchInvocationCatalogRow[];
+  featureSchedules: readonly FeatureScheduleBand[];
 }): string[] {
   const errors: string[] = [];
-  const limit = warlockInvocationLimit(input.level);
+  const limit = warlockInvocationLimit(input.level, input.featureSchedules);
   if (input.picks.length > limit) {
     errors.push(
       `Bruxo nível ${input.level} permite até ${limit} invocação(ões); recebeu ${input.picks.length}`,

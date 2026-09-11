@@ -428,6 +428,9 @@ creature/phb/seed.primal-companion-templates.sql
 creature/phb/phb_companion_profile.all.sql
 creature/phb/phb_companion_command.all.sql
 catalog/phb/phb_initiative_rule.all.sql
+catalog/phb/phb_class_feature_schedule.pilot.sql
+catalog/phb/phb_class_feature_schedule.wave2.sql
+catalog/phb/phb_class_feature_schedule.wave3.sql
 notes/grim-hollow/phb_level_combat_note.grim-hollow.sql
 notes/northlands/phb_level_combat_note.northlands.sql
 notes/phb/phb_level_combat_note.static-packs.sql

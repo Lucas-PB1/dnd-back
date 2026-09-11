@@ -4,6 +4,7 @@ import type { CharacterResourceSpender } from '@game/session/domain/character-re
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { rollDamageParts } from '@game/dice/domain/dice';
@@ -131,6 +132,11 @@ export async function executeRollDamage(input: {
     resourceSpender: input.resourceSpender,
     cunningStrikeEffects: mechanical.cunningStrikeEffects,
     dungeoneerSlayerLabels: mechanical.dungeoneerSlayerLabels,
+    featureSchedules: featureSchedulesFromCatalog(
+      mechanical,
+      character.classSlug,
+      character.subclassSlug,
+    ),
   };
   for (const effect of DAMAGE_EFFECT_PIPELINE) {
     await effect(ctx, acc);

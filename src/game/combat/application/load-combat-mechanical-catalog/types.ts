@@ -29,4 +29,14 @@ export type CombatMechanicalCatalog = {
   panelActions: ClassPanelActionRecord[];
   /** gate_key → unlock_level, por subclass slug. */
   featureGatesBySubclassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
+  /** Schedules nível→valor por class slug. */
+  featureSchedulesByClassSlug: ReadonlyMap<
+    string,
+    readonly import('../../domain/feature-schedule').FeatureScheduleBand[]
+  >;
+  /** Schedules nível→valor por subclass slug. */
+  featureSchedulesBySubclassSlug: ReadonlyMap<
+    string,
+    readonly import('../../domain/feature-schedule').FeatureScheduleBand[]
+  >;
 };

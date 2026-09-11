@@ -1,4 +1,5 @@
 import { martialArtsDie, martialArtsDieFaces } from '@game/combat/domain/monk';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
@@ -12,6 +13,15 @@ import type {
   PlayerCharacter,
 } from '../monk-action-deps';
 import { focusDc, spendFocus, spendResource } from '../monk-action-deps';
+
+async function monkBands(deps: MonkActionDeps, character: PlayerCharacter) {
+  const catalog = await deps.mechanicalCatalog.load();
+  return featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+}
 
 const WHOLENESS_SLUG = 'wholeness-of-body';
 
@@ -41,7 +51,8 @@ export async function resolveWholenessOfBody(
     1,
     abilityModifier(character.abilityScores.sabedoria),
   );
-  const heal = rollDamageParts(martialArtsDie(character.level), wisdom);
+  const bands = await monkBands(deps, character);
+  const heal = rollDamageParts(martialArtsDie(character.level, bands), wisdom);
   await spendResource(deps, character, WHOLENESS_SLUG, 1);
   const { state, healed } = await applyHealHitPoints(
     deps.state,
@@ -100,7 +111,8 @@ export async function resolveElementalBlast(
   assertCharacterSubclass(character, 'elements', 'Combatente dos Elementos');
   assertCharacterLevel(character, 6, 'Monk', 'Explosão Elemental');
   const saveDc = await focusDc(deps, character);
-  const faces = martialArtsDieFaces(character.level);
+  const bands = await monkBands(deps, character);
+  const faces = martialArtsDieFaces(character.level, bands);
   const damage = rollDamageParts(`3d${faces}`, 0);
   const state = await spendFocus(deps, character, 2);
   return {

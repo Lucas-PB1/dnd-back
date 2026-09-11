@@ -42,7 +42,10 @@ export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
     character.subclassSlug === 'psi-warrior' &&
     character.level >= 3
   ) {
-    const faces = psiEnergyDieFaces(character.level);
+    const faces = psiEnergyDieFaces(
+      character.level,
+      ctx.featureSchedules,
+    );
     if (faces != null) {
       await resourceSpender.spendClassResource(
         character,

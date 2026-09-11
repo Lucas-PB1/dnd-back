@@ -13,6 +13,7 @@ import {
   runWeaponAttackCase,
   SOULKNIFE_PSYCHIC_BLADES,
 } from "./weapon-attack.spec.helpers";
+import { fixtureSchedulesFor } from "../feature-schedule.fixtures";
 
 describe("computeWeaponAttacks — class rules", () => {
   it.each(MONK_CASES)("$label", runWeaponAttackCase);
@@ -20,7 +21,12 @@ describe("computeWeaponAttacks — class rules", () => {
   it("omits ability damage on firearms and expands crit for gunslinger", () => {
     const attack = oneAttack(
       [revolver()],
-      { ...GUNSLINGER_RANGED_CTX, classSlug: "gunslinger", level: 5 },
+      {
+        ...GUNSLINGER_RANGED_CTX,
+        classSlug: "gunslinger",
+        level: 5,
+        featureSchedules: fixtureSchedulesFor("gunslinger"),
+      },
       undefined,
       { destreza: 16 },
     );
@@ -39,6 +45,7 @@ describe("computeWeaponAttacks — class rules", () => {
         proficiencyBonus: 4,
         classSlug: "gunslinger",
         level: 11,
+        featureSchedules: fixtureSchedulesFor("gunslinger"),
       },
       undefined,
       { destreza: 16 },
@@ -59,6 +66,7 @@ describe("computeWeaponAttacks — class rules", () => {
         classSlug: "barbarian",
         level: 9,
         rageActive: true,
+        featureSchedules: fixtureSchedulesFor("barbarian"),
       },
       undefined,
       { forca: 16 },
@@ -78,6 +86,7 @@ describe("computeWeaponAttacks — class rules", () => {
         featSlugs: ["blackpowder-pistol-expert"],
         classSlug: "fighter",
         level: 5,
+        featureSchedules: fixtureSchedulesFor("fighter"),
       },
       undefined,
       { destreza: 16 },
@@ -109,6 +118,7 @@ describe("computeWeaponAttacks — class rules", () => {
           classSlug: "rogue",
           subclassSlug: "soulknife",
           level: 9,
+          featureSchedules: fixtureSchedulesFor("rogue", "soulknife"),
         },
         { forca: 10, destreza: 16 },
       ),

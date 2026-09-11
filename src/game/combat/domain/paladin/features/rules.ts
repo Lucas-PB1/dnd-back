@@ -2,6 +2,11 @@
  * Regras numéricas de combate do Paladino (PHB 2024): Destruição Divina,
  * Golpes Radiantes e auras.
  */
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
 
 export type PaladinSubclassSlug =
   | 'devotion'
@@ -57,7 +62,15 @@ export function auraRangeMeters(level: number): number {
   return level >= 18 ? 9 : 3;
 }
 
-/** Ataque Extra do Paladino (nível 5). */
-export function paladinAttacksPerAction(level: number): number {
-  return level >= 5 ? 2 : 1;
+/** Ataque Extra — SSOT: `attacks_per_action`. */
+export function paladinAttacksPerAction(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.attacksPerAction,
+    level,
+    1,
+  );
 }

@@ -2,6 +2,7 @@ import {
   cunningStrikeSaveDc,
   soulknifePsiDiceSchedule,
 } from '../rogue';
+import type { FeatureScheduleBand } from '../feature-schedule';
 import {
   findSubclassTableAction,
   type SubclassTableAction,
@@ -27,6 +28,7 @@ export function resolveSoulknifeTableAction(input: {
   dieRoll?: number;
   usePsiDice?: boolean;
   succeededWithDie?: boolean;
+  bands: readonly FeatureScheduleBand[];
 }) {
   const action = findSubclassTableAction(
     input.catalog,
@@ -42,7 +44,7 @@ export function resolveSoulknifeTableAction(input: {
     );
   }
 
-  const schedule = soulknifePsiDiceSchedule(input.level);
+  const schedule = soulknifePsiDiceSchedule(input.level, input.bands);
   if (!schedule) {
     throw new Error('Soulknife Psi Energy Die is not available');
   }

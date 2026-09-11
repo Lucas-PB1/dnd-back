@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isMonkClass } from '@game/combat/domain/monk';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -45,10 +46,15 @@ export class MonkActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): MonkActionDeps {
-    return { state: this.state, domain: this.domain };
+    return {
+      state: this.state,
+      domain: this.domain,
+      mechanicalCatalog: this.mechanicalCatalog,
+    };
   }
 
   async useTableAction(

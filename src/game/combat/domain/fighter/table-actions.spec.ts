@@ -3,11 +3,15 @@ import {
   FIXTURE_DUNGEONEER_PRECAUTION_SPELLS,
   FIXTURE_PSI_ACTIONS,
 } from '../__fixtures__/mechanical-catalog';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 import {
   findDungeoneerPrecautionSpell,
   resolveBattleMasterTableRoll,
   resolvePsiWarriorTableAction,
 } from './table-actions';
+
+const BM_BANDS = fixtureSchedulesFor('fighter', 'battle-master');
+const PSI_BANDS = fixtureSchedulesFor('fighter', 'psi-warrior');
 
 describe('fighter tabletop actions', () => {
   describe('Battle Master', () => {
@@ -21,6 +25,7 @@ describe('fighter tabletop actions', () => {
         dexterityModifier: 2,
         charismaModifier: 0,
         dieRoll: 6,
+        bands: BM_BANDS,
       });
 
       expect(result.expression).toBe('1d8');
@@ -40,6 +45,7 @@ describe('fighter tabletop actions', () => {
         dexterityModifier: 5,
         charismaModifier: 1,
         dieRoll: 7,
+        bands: BM_BANDS,
       });
       const rally = resolveBattleMasterTableRoll({
         catalog: FIXTURE_BATTLE_MASTER_MANEUVERS,
@@ -50,6 +56,7 @@ describe('fighter tabletop actions', () => {
         dexterityModifier: 5,
         charismaModifier: 1,
         dieRoll: 7,
+        bands: BM_BANDS,
       });
 
       expect(parry.expression).toBe('1d10+5');
@@ -70,6 +77,7 @@ describe('fighter tabletop actions', () => {
         charismaModifier: 0,
         dieRoll: 8,
         useRelentless: true,
+        bands: BM_BANDS,
       });
 
       expect(result.dieFaces).toBe(8);
@@ -89,6 +97,7 @@ describe('fighter tabletop actions', () => {
           charismaModifier: 0,
           dieRoll: 4,
           useRelentless: true,
+          bands: BM_BANDS,
         }),
       ).toThrow(/level 15/);
     });
@@ -102,6 +111,7 @@ describe('fighter tabletop actions', () => {
         level: 5,
         intelligenceModifier: 3,
         dieRoll: 5,
+        bands: PSI_BANDS,
       });
 
       expect(result.expression).toBe('1d8+3');
@@ -116,6 +126,7 @@ describe('fighter tabletop actions', () => {
         actionSlug: 'psychic-leap',
         level: 7,
         intelligenceModifier: 3,
+        bands: PSI_BANDS,
       });
       const repeated = resolvePsiWarriorTableAction({
         catalog: FIXTURE_PSI_ACTIONS,
@@ -123,6 +134,7 @@ describe('fighter tabletop actions', () => {
         level: 7,
         intelligenceModifier: 3,
         usePsiDie: true,
+        bands: PSI_BANDS,
       });
 
       expect(free.resourceSlug).toBe('psychic-leap');
@@ -136,6 +148,7 @@ describe('fighter tabletop actions', () => {
           actionSlug: 'energy-bulwark',
           level: 14,
           intelligenceModifier: 3,
+          bands: PSI_BANDS,
         }),
       ).toThrow(/level 15/);
     });

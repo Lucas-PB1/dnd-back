@@ -1,5 +1,8 @@
 import { FIXTURE_SOULKNIFE_ACTIONS } from '../__fixtures__/mechanical-catalog';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 import { resolveSoulknifeTableAction } from './table-actions';
+
+const SOULKNIFE_BANDS = fixtureSchedulesFor('rogue', 'soulknife');
 
 describe('Soulknife tabletop actions', () => {
   it('rolls Psi-Bolstered Knack and spends the die only on success', () => {
@@ -11,6 +14,7 @@ describe('Soulknife tabletop actions', () => {
       proficiencyBonus: 3,
       dieRoll: 6,
       succeededWithDie: true,
+      bands: SOULKNIFE_BANDS,
     });
     const failure = resolveSoulknifeTableAction({
       catalog: FIXTURE_SOULKNIFE_ACTIONS,
@@ -20,6 +24,7 @@ describe('Soulknife tabletop actions', () => {
       proficiencyBonus: 3,
       dieRoll: 2,
       succeededWithDie: false,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(success).toMatchObject({
@@ -40,6 +45,7 @@ describe('Soulknife tabletop actions', () => {
       dexterityModifier: 3,
       proficiencyBonus: 2,
       dieRoll: 4,
+      bands: SOULKNIFE_BANDS,
     });
     const repeated = resolveSoulknifeTableAction({
       catalog: FIXTURE_SOULKNIFE_ACTIONS,
@@ -49,6 +55,7 @@ describe('Soulknife tabletop actions', () => {
       proficiencyBonus: 2,
       dieRoll: 4,
       usePsiDice: true,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(free.resourceSlug).toBe('psychic-whispers');
@@ -67,6 +74,7 @@ describe('Soulknife tabletop actions', () => {
       proficiencyBonus: 4,
       dieRoll: 7,
       succeededWithDie: true,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(result.psiDiceCost).toBe(1);
@@ -82,6 +90,7 @@ describe('Soulknife tabletop actions', () => {
       dexterityModifier: 5,
       proficiencyBonus: 4,
       dieRoll: 5,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(result).toMatchObject({
@@ -99,6 +108,7 @@ describe('Soulknife tabletop actions', () => {
       level: 13,
       dexterityModifier: 5,
       proficiencyBonus: 5,
+      bands: SOULKNIFE_BANDS,
     });
     const repeated = resolveSoulknifeTableAction({
       catalog: FIXTURE_SOULKNIFE_ACTIONS,
@@ -107,6 +117,7 @@ describe('Soulknife tabletop actions', () => {
       dexterityModifier: 5,
       proficiencyBonus: 5,
       usePsiDice: true,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(free.resourceSlug).toBe('psychic-veil');
@@ -123,6 +134,7 @@ describe('Soulknife tabletop actions', () => {
       dexterityModifier: 5,
       proficiencyBonus: 6,
       usePsiDice: true,
+      bands: SOULKNIFE_BANDS,
     });
 
     expect(result).toMatchObject({
@@ -141,6 +153,7 @@ describe('Soulknife tabletop actions', () => {
         level: 12,
         dexterityModifier: 5,
         proficiencyBonus: 4,
+        bands: SOULKNIFE_BANDS,
       }),
     ).toThrow(/level 13/);
   });
@@ -153,6 +166,7 @@ describe('Soulknife tabletop actions', () => {
         level: 9,
         dexterityModifier: 5,
         proficiencyBonus: 4,
+        bands: SOULKNIFE_BANDS,
       }),
     ).toThrow(/requires a Psi Energy Die roll/);
   });

@@ -1,4 +1,5 @@
 import { bardicInspirationDie } from '@game/combat/domain/bard';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import {
   assertCharacterLevel,
@@ -19,7 +20,14 @@ export async function resolveGrantInspiration(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   assertCharacterLevel(character, 1, 'Bardo', 'Inspiração de Bardo');
-  const die = bardicInspirationDie(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const die = bardicInspirationDie(character.level, bands);
   const state = await spendInspiration(deps, character);
 
   return {
@@ -37,7 +45,14 @@ export async function resolveCuttingWords(
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'lore', 'Colégio do Conhecimento');
   assertCharacterLevel(character, 3, 'Bardo', 'Palavras de Interrupção');
-  const die = bardicInspirationDie(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const die = bardicInspirationDie(character.level, bands);
   const result = rollDamageParts(`1${die}`, 0);
   const state = await spendInspiration(deps, character);
 
@@ -57,7 +72,14 @@ export async function resolveCombatInspiration(
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'valor', 'Colégio da Bravura');
   assertCharacterLevel(character, 3, 'Bardo', 'Inspiração em Combate');
-  const die = bardicInspirationDie(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const die = bardicInspirationDie(character.level, bands);
   const state = await spendInspiration(deps, character);
 
   return {

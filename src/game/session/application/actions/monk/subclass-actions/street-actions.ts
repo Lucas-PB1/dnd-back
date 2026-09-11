@@ -1,4 +1,5 @@
 import { martialArtsDieFaces } from '@game/combat/domain/monk';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
@@ -11,6 +12,15 @@ import type {
   PlayerCharacter,
 } from '../monk-action-deps';
 import { focusDc, spendFocus, spendResource } from '../monk-action-deps';
+
+async function monkBands(deps: MonkActionDeps, character: PlayerCharacter) {
+  const catalog = await deps.mechanicalCatalog.load();
+  return featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+}
 
 const STREET_KNOCKOUT_SLUG = 'street-knockout';
 
@@ -43,7 +53,8 @@ export async function resolveEnergyBurst(
 ): Promise<MonkTableActionResult> {
   assertStreet(character, 'Explosão de Energia', 6);
   const saveDc = await focusDc(deps, character);
-  const faces = martialArtsDieFaces(character.level);
+  const bands = await monkBands(deps, character);
+  const faces = martialArtsDieFaces(character.level, bands);
   const damage = rollDamageParts(`2d${faces}`, 0);
   const state = await spendFocus(deps, character, 1);
   return {
@@ -107,7 +118,8 @@ export async function resolveKnockout(
   character: PlayerCharacter,
 ): Promise<MonkTableActionResult> {
   assertStreet(character, 'K.O.', 17);
-  const faces = martialArtsDieFaces(character.level);
+  const bands = await monkBands(deps, character);
+  const faces = martialArtsDieFaces(character.level, bands);
   const damage = rollDamageParts(`3d${faces}`, 0);
   const state = await spendResource(
     deps,

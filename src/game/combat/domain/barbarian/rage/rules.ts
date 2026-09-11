@@ -1,7 +1,14 @@
 /**
  * Regras numéricas de combate do Bárbaro (PHB 2024): Fúria, Golpe Brutal e Fanático.
- * Fonte: features de classe; o motor só aplica números.
+ * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
  */
+
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  scheduleIntOrNullAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
 
 export function isBarbarianClass(
   classSlug: string | null | undefined,
@@ -9,22 +16,29 @@ export function isBarbarianClass(
   return classSlug === 'barbarian';
 }
 
-/** Dano da Fúria (coluna da tabela Características de Bárbaro). */
-export function rageDamageBonus(level: number): number {
-  if (level >= 16) return 4;
-  if (level >= 9) return 3;
-  if (level >= 1) return 2;
-  return 0;
+export function rageDamageBonus(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.rageDamageBonus,
+    level,
+    0,
+  );
 }
 
-/**
- * Golpe Brutal: dados extras no acerto (abre mão da vantagem do Imprudente).
- * 1d10 (nv.9–16), 2d10 (nv.17+).
- */
-export function brutalStrikeDice(level: number): string | null {
-  if (level >= 17) return '2d10';
-  if (level >= 9) return '1d10';
-  return null;
+/** Golpe Brutal: Nd10 — count em `brutal_strike_dice_count`. */
+export function brutalStrikeDice(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string | null {
+  const count = scheduleIntOrNullAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.brutalStrikeDiceCount,
+    level,
+  );
+  return count == null || count <= 0 ? null : `${count}d10`;
 }
 
 /** Tipos de dano com Resistência enquanto a Fúria está ativa. */
@@ -40,6 +54,7 @@ export function appliesRageDamageBonus(input: {
   rageActive?: boolean;
   mode: 'melee' | 'ranged';
   abilitySlug: 'forca' | 'destreza';
+  featureSchedules: readonly FeatureScheduleBand[];
 }): number {
   if (
     !input.rageActive ||
@@ -50,7 +65,7 @@ export function appliesRageDamageBonus(input: {
   ) {
     return 0;
   }
-  return rageDamageBonus(input.level);
+  return rageDamageBonus(input.level, input.featureSchedules);
 }
 
 /** Movimento Rápido (nv.5+): +3 m enquanto sem armadura pesada (não modelamos armadura aqui). */
@@ -75,11 +90,14 @@ export function hasDivineFury(input: {
   return input.subclassSlug === 'zealot' && (input.level ?? 0) >= 3;
 }
 
-/** Dados de Campeão dos Deuses (Fanático): 4→5→6→7. */
-export function zealotHealingDiceCount(level: number): number {
-  if (level >= 17) return 7;
-  if (level >= 12) return 6;
-  if (level >= 6) return 5;
-  if (level >= 3) return 4;
-  return 0;
+export function zealotHealingDiceCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.zealotHealingDiceCount,
+    level,
+    0,
+  );
 }

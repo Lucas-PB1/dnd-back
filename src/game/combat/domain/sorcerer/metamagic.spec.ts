@@ -2,8 +2,11 @@ import {
   sorcererMetamagicLimit,
   validateMetamagicPicks,
 } from './metamagic';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('sorcerer metamagic picks', () => {
+  const sorcererBands = fixtureSchedulesFor('sorcerer');
+
   const catalog = [
     {
       slug: 'quickened-spell',
@@ -22,10 +25,10 @@ describe('sorcerer metamagic picks', () => {
   ];
 
   it('limits picks by level', () => {
-    expect(sorcererMetamagicLimit(1)).toBe(0);
-    expect(sorcererMetamagicLimit(2)).toBe(2);
-    expect(sorcererMetamagicLimit(10)).toBe(4);
-    expect(sorcererMetamagicLimit(17)).toBe(6);
+    expect(sorcererMetamagicLimit(1, sorcererBands)).toBe(0);
+    expect(sorcererMetamagicLimit(2, sorcererBands)).toBe(2);
+    expect(sorcererMetamagicLimit(10, sorcererBands)).toBe(4);
+    expect(sorcererMetamagicLimit(17, sorcererBands)).toBe(6);
   });
 
   it('rejects unknown or excess picks using catalog rows', () => {
@@ -34,6 +37,7 @@ describe('sorcerer metamagic picks', () => {
         level: 2,
         picks: [{ slug: 'quickened-spell' }, { slug: 'subtle-spell' }],
         catalog,
+        featureSchedules: sorcererBands,
       }),
     ).toEqual([]);
 
@@ -46,6 +50,7 @@ describe('sorcerer metamagic picks', () => {
           { slug: 'subtle-spell' },
         ],
         catalog,
+        featureSchedules: sorcererBands,
       }).length,
     ).toBeGreaterThan(0);
 
@@ -54,6 +59,7 @@ describe('sorcerer metamagic picks', () => {
         level: 2,
         picks: [{ slug: 'not-real' }],
         catalog,
+        featureSchedules: sorcererBands,
       }),
     ).toContain("Opção de Metamagia desconhecida: 'not-real'");
   });

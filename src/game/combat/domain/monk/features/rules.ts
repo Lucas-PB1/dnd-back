@@ -1,7 +1,14 @@
 /**
  * Regras numéricas de combate do Monge (PHB 2024): Artes Marciais, Foco e movimento.
+ * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
  */
 import type { EquippedWeaponPiece } from '../../weapon-attacks/weapon-attack.types';
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  scheduleValueAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
 
 /** Slug sintético do Ataque Desarmado (não existe item no catálogo). */
 export const MONK_UNARMED_ITEM_SLUG = 'unarmed-strike';
@@ -17,16 +24,25 @@ export function isMonkClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'monk';
 }
 
-/** Dado de Artes Marciais: 1d6 → 1d8 → 1d10 → 1d12. */
-export function martialArtsDieFaces(level: number): 6 | 8 | 10 | 12 {
-  if (level >= 17) return 12;
-  if (level >= 11) return 10;
-  if (level >= 5) return 8;
+export function martialArtsDieFaces(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): 6 | 8 | 10 | 12 {
+  const faces = scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.martialArtsDieFaces,
+    level,
+    6,
+  );
+  if (faces === 12 || faces === 10 || faces === 8 || faces === 6) return faces;
   return 6;
 }
 
-export function martialArtsDie(level: number): string {
-  return `1d${martialArtsDieFaces(level)}`;
+export function martialArtsDie(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string {
+  return `1d${martialArtsDieFaces(level, bands)}`;
 }
 
 /** CD de Foco (Empurrar/Imobilizar, Golpe Atordoante etc.): 8 + SAB + PB. */
@@ -37,19 +53,20 @@ export function monkFocusSaveDc(input: {
   return 8 + input.wisdomModifier + input.proficiencyBonus;
 }
 
-/** Movimento sem Armadura (metros): +3 → +4,5 → +6 → +7,5 → +9. */
 export function unarmoredMovementBonusMeters(input: {
   classSlug?: string | null;
   level?: number;
+  featureSchedules: readonly FeatureScheduleBand[];
 }): number {
   if (!isMonkClass(input.classSlug)) return 0;
   const level = input.level ?? 0;
-  if (level >= 18) return 9;
-  if (level >= 14) return 7.5;
-  if (level >= 10) return 6;
-  if (level >= 6) return 4.5;
-  if (level >= 2) return 3;
-  return 0;
+  return (
+    scheduleValueAtLevel(
+      input.featureSchedules,
+      FEATURE_SCHEDULE_KEYS.unarmoredSpeedBonusM,
+      level,
+    ) ?? 0
+  );
 }
 
 /**
@@ -66,7 +83,14 @@ export function isMonkWeaponForAttack(
   return piece.category === 'martial' && piece.propertySlugs.includes('light');
 }
 
-/** Ataque Extra do Monge (nível 5): dois ataques na ação Atacar. */
-export function monkAttacksPerAction(level: number): number {
-  return level >= 5 ? 2 : 1;
+export function monkAttacksPerAction(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.attacksPerAction,
+    level,
+    1,
+  );
 }

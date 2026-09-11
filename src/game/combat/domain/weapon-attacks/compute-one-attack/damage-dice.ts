@@ -28,12 +28,13 @@ export function resolveDamageDice(input: {
 
   let monkMartialArtsDie: string | null = null;
   if (input.monkEligible) {
-    const maFaces = martialArtsDieFaces(input.context.level ?? 1);
+    const schedules = input.context.featureSchedules;
+    const maFaces = martialArtsDieFaces(input.context.level ?? 1, schedules);
     const weaponFaces = Number(/d(\d+)/i.exec(damageDice)?.[1] ?? "0");
     if (maFaces > weaponFaces) {
-      damageDice = martialArtsDie(input.context.level ?? 1);
+      damageDice = martialArtsDie(input.context.level ?? 1, schedules);
     }
-    monkMartialArtsDie = martialArtsDie(input.context.level ?? 1);
+    monkMartialArtsDie = martialArtsDie(input.context.level ?? 1, schedules);
   }
   return { damageDice, monkMartialArtsDie };
 }

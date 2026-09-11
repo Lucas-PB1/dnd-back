@@ -8,6 +8,7 @@ import {
   type ClassResourceMax,
   type ClassResourceScheduleRow,
 } from './class-resources';
+import { fixtureSchedulesFor } from '@game/combat/domain/feature-schedule.fixtures';
 
 describe('class-resources', () => {
   const mods: AbilityMods = {
@@ -50,6 +51,7 @@ describe('class-resources', () => {
       level: 5,
       proficiencyBonus: 3,
       abilityModifiers: mods,
+      featureSchedules: [],
     });
     expect(rage?.max).toBe(3);
   });
@@ -74,6 +76,7 @@ describe('class-resources', () => {
       proficiencyBonus: 3,
       abilityModifiers: mods,
       channelDivinityFromProgression: 2,
+      featureSchedules: [],
     });
     expect(channel?.max).toBe(2);
   });
@@ -97,6 +100,7 @@ describe('class-resources', () => {
       level: 1,
       proficiencyBonus: 2,
       abilityModifiers: { ...mods, carisma: -1 },
+      featureSchedules: [],
     });
     expect(bardic?.max).toBe(1);
   });
@@ -120,6 +124,7 @@ describe('class-resources', () => {
       level: 3,
       proficiencyBonus: 2,
       abilityModifiers: { ...mods, constituicao: 2 },
+      featureSchedules: [],
     });
     expect(pool?.max).toBe(3);
   });
@@ -154,6 +159,7 @@ describe('class-resources', () => {
       level: 5,
       proficiencyBonus: 3,
       abilityModifiers: mods,
+      featureSchedules: [],
     });
     expect(secondWind?.max).toBe(3);
   });
@@ -188,6 +194,10 @@ describe('class-resources', () => {
       level: 7,
       proficiencyBonus: 3,
       abilityModifiers: mods,
+      featureSchedules: [
+        ...fixtureSchedulesFor('fighter', 'battle-master'),
+        ...fixtureSchedulesFor(null, 'psi-warrior'),
+      ],
     });
     expect(resolved.find((r) => r.slug === 'superiority-dice')?.max).toBe(5);
     expect(resolved.find((r) => r.slug === 'psi-energy-dice')?.max).toBe(6);
@@ -223,6 +233,7 @@ describe('class-resources', () => {
       level: 5,
       proficiencyBonus: 3,
       abilityModifiers: mods,
+      featureSchedules: [],
     });
     expect(maxima.find((r) => r.slug === 'wildShape')?.max).toBe(5);
     expect(maxima.find((r) => r.slug === 'arcaneRecovery')?.max).toBe(6);

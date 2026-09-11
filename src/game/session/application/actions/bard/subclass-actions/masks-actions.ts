@@ -4,6 +4,7 @@ import {
   bardicInspirationDie,
   maxEquippedPersonaMasks,
 } from '@game/combat/domain/bard';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
@@ -20,6 +21,15 @@ import { spendInspiration } from '../bard-action-deps';
 
 const MASKS_SUBCLASS = 'college-of-masks' as const;
 const MASKS_LABEL = 'Colégio das Máscaras';
+
+async function bardBands(deps: BardActionDeps, character: PlayerCharacter) {
+  const catalog = await deps.mechanicalCatalog.load();
+  return featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+}
 
 async function bardSpellSaveDc(
   deps: BardActionDeps,
@@ -67,7 +77,10 @@ export async function resolvePersonaAngel(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   await requireEquippedMask(deps, character, 'persona-mask-angel', 'Anjo');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(
+    character.level,
+    await bardBands(deps, character),
+  );
   const result = rollDamageParts(`1${die}`, 0);
   const state = await spendInspiration(deps, character);
   return {
@@ -85,7 +98,10 @@ export async function resolvePersonaDevil(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   await requireEquippedMask(deps, character, 'persona-mask-devil', 'Diabo');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(
+    character.level,
+    await bardBands(deps, character),
+  );
   const result = rollDamageParts(`2${die}`, 0);
   await spendInspiration(deps, character);
   const state = await applyTemporaryHitPoints(
@@ -108,7 +124,10 @@ export async function resolvePersonaDragon(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   await requireEquippedMask(deps, character, 'persona-mask-dragon', 'Dragão');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(
+    character.level,
+    await bardBands(deps, character),
+  );
   const result = rollDamageParts(`2${die}`, 0);
   const saveDc = await bardSpellSaveDc(deps, character);
   const state = await spendInspiration(deps, character);

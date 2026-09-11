@@ -29,6 +29,7 @@ describe('MonkActionsHandler', () => {
     asHandlerDep(ctx.access),
     asHandlerDep(ctx.state),
     asHandlerDep(ctx.domain),
+    asHandlerDep(ctx.mechanicalCatalog),
   );
 
   beforeEach(() => {

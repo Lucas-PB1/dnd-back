@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { listBattleMasterManeuvers } from '@game/combat/domain/fighter';
 import { resolveBattleMasterTableRoll } from '@game/combat/domain/fighter';
 import { superiorityDieFaces } from '@game/combat/domain/fighter';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDie } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
@@ -73,9 +74,16 @@ export async function useBattleMasterManeuverAction(
     );
   }
 
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+
   const dieFaces = dto.useRelentless
     ? 8
-    : superiorityDieFaces(character.level);
+    : superiorityDieFaces(character.level, bands);
   if (dieFaces == null) {
     throw new BadRequestException('Superiority Die is not available');
   }
@@ -92,7 +100,6 @@ export async function useBattleMasterManeuverAction(
   }
 
   try {
-    const catalog = await deps.mechanicalCatalog.load();
     const result = resolveBattleMasterTableRoll({
       catalog: catalog.battleMasterManeuvers,
       maneuverSlug: dto.maneuverSlug,
@@ -103,6 +110,7 @@ export async function useBattleMasterManeuverAction(
       charismaModifier: abilityModifier(character.abilityScores.carisma),
       dieRoll,
       useRelentless: dto.useRelentless,
+      bands,
     });
 
     let note = result.note;

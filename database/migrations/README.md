@@ -25,6 +25,9 @@ Arquivos atuais:
 | `20260911_phb_level_combat_note_barb_monk_paladin_class.sql` | Notas de classe estáticas bárbaro/monge/paladino |
 | `20260911_phb_level_combat_note_bmp_no_dynamic.sql` | Ex-templates dinâmicos BMP → literais (schedule no texto) |
 | `20260911_phb_level_combat_note_remaining_dynamic_as_static.sql` | Ex-templates restantes (fighter/rogue/…/wizard) → literais |
+| `20260911_phb_class_feature_schedule.sql` | Tabela + piloto attacks_per_action / martial arts / unarmored speed |
+| `20260911_phb_class_feature_schedule_wave2.sql` | Schedules sneak/BI/rage/indomitable/superiority/psi/champion/zealot |
+| `20260911_phb_class_feature_schedule_wave3.sql` | brutal strike, gunslinger crit, warlock pact/invocations, metamagic |
 
 ## Quando usar forward vs editar schema/
 

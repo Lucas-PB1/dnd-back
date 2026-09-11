@@ -5,6 +5,7 @@ import {
   magicalCunningSlotRecoveryCount,
   warlockPactSlotLevel,
 } from '@game/combat/domain/warlock';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { applyHealHitPoints } from '@game/session/application/core/apply-heal-hit-points';
@@ -20,8 +21,15 @@ export async function resolveMagicalCunning(
   character: PlayerCharacter,
 ): Promise<WarlockTableActionResult> {
   assertCharacterLevel(character, 2, 'Bruxo', 'Astúcia Mágica');
-  const slotLvl = warlockPactSlotLevel(character.level);
-  const recoverCount = magicalCunningSlotRecoveryCount(character.level);
+
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const slotLvl = warlockPactSlotLevel(character.level, bands);
+  const recoverCount = magicalCunningSlotRecoveryCount(character.level, bands);
 
   await deps.state.useClassResource(
     character,

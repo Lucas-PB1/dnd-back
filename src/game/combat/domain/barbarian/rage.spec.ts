@@ -8,15 +8,19 @@ import {
   rageDamageBonus,
   zealotHealingDiceCount,
 } from './rage';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('barbarian-rage', () => {
+  const barbarianBands = fixtureSchedulesFor('barbarian');
+  const zealotBands = fixtureSchedulesFor('barbarian', 'zealot');
+
   it('resolves rage damage by level band', () => {
-    expect(rageDamageBonus(1)).toBe(2);
-    expect(rageDamageBonus(8)).toBe(2);
-    expect(rageDamageBonus(9)).toBe(3);
-    expect(rageDamageBonus(15)).toBe(3);
-    expect(rageDamageBonus(16)).toBe(4);
-    expect(rageDamageBonus(20)).toBe(4);
+    expect(rageDamageBonus(1, barbarianBands)).toBe(2);
+    expect(rageDamageBonus(8, barbarianBands)).toBe(2);
+    expect(rageDamageBonus(9, barbarianBands)).toBe(3);
+    expect(rageDamageBonus(15, barbarianBands)).toBe(3);
+    expect(rageDamageBonus(16, barbarianBands)).toBe(4);
+    expect(rageDamageBonus(20, barbarianBands)).toBe(4);
   });
 
   it('applies rage only to barbarian melee Strength while active', () => {
@@ -27,6 +31,7 @@ describe('barbarian-rage', () => {
         rageActive: true,
         mode: 'melee',
         abilitySlug: 'forca',
+        featureSchedules: barbarianBands,
       }),
     ).toBe(2);
     expect(
@@ -36,6 +41,7 @@ describe('barbarian-rage', () => {
         rageActive: false,
         mode: 'melee',
         abilitySlug: 'forca',
+        featureSchedules: barbarianBands,
       }),
     ).toBe(0);
     expect(
@@ -45,6 +51,7 @@ describe('barbarian-rage', () => {
         rageActive: true,
         mode: 'melee',
         abilitySlug: 'forca',
+        featureSchedules: [],
       }),
     ).toBe(0);
     expect(
@@ -54,15 +61,16 @@ describe('barbarian-rage', () => {
         rageActive: true,
         mode: 'ranged',
         abilitySlug: 'forca',
+        featureSchedules: barbarianBands,
       }),
     ).toBe(0);
   });
 
   it('resolves brutal strike dice', () => {
-    expect(brutalStrikeDice(8)).toBeNull();
-    expect(brutalStrikeDice(9)).toBe('1d10');
-    expect(brutalStrikeDice(16)).toBe('1d10');
-    expect(brutalStrikeDice(17)).toBe('2d10');
+    expect(brutalStrikeDice(8, barbarianBands)).toBeNull();
+    expect(brutalStrikeDice(9, barbarianBands)).toBe('1d10');
+    expect(brutalStrikeDice(16, barbarianBands)).toBe('1d10');
+    expect(brutalStrikeDice(17, barbarianBands)).toBe('2d10');
   });
 
   it('gives +3 m fast movement from level 5', () => {
@@ -77,10 +85,10 @@ describe('barbarian-rage', () => {
   it('builds divine fury and zealot healing schedule', () => {
     expect(hasDivineFury({ subclassSlug: 'zealot', level: 3 })).toBe(true);
     expect(divineFuryExtraDice(5)).toBe('1d6+2');
-    expect(zealotHealingDiceCount(3)).toBe(4);
-    expect(zealotHealingDiceCount(6)).toBe(5);
-    expect(zealotHealingDiceCount(12)).toBe(6);
-    expect(zealotHealingDiceCount(17)).toBe(7);
+    expect(zealotHealingDiceCount(3, zealotBands)).toBe(4);
+    expect(zealotHealingDiceCount(6, zealotBands)).toBe(5);
+    expect(zealotHealingDiceCount(12, zealotBands)).toBe(6);
+    expect(zealotHealingDiceCount(17, zealotBands)).toBe(7);
   });
 
   it('recognizes barbarian slug', () => {

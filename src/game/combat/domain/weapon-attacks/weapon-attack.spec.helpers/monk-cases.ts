@@ -1,4 +1,5 @@
 import { dagger } from "./fixtures";
+import { fixtureSchedulesFor } from "../../feature-schedule.fixtures";
 import type { WeaponAttackCase } from "./expect";
 
 const PB2 = { proficiencyBonus: 2 as const };
@@ -8,6 +9,7 @@ const MONK_L5 = {
   weaponProficiencySlugs: [] as string[],
   classSlug: "monk" as const,
   level: 5,
+  featureSchedules: fixtureSchedulesFor("monk"),
 };
 
 export const MONK_CASES: WeaponAttackCase[] = [
@@ -33,6 +35,7 @@ export const MONK_CASES: WeaponAttackCase[] = [
       weaponProficiencySlugs: ["armas-simples"],
       classSlug: "monk",
       level: 11,
+      featureSchedules: fixtureSchedulesFor("monk"),
     },
     scores: DEX16,
     pick: { itemSlug: "dagger", mode: "melee" },

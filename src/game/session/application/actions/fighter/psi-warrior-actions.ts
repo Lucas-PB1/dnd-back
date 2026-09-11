@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { resolvePsiWarriorTableAction } from '@game/combat/domain/fighter';
 import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDie } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
@@ -27,13 +28,18 @@ export async function usePsiWarriorAction(
     throw new BadRequestException('Psi Warrior action is not available');
   }
 
-  const dieFaces = psiEnergyDieFaces(character.level);
+  const catalog = await deps.mechanicalCatalog.load();
+  const bands = featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+  const dieFaces = psiEnergyDieFaces(character.level, bands);
   const dieRoll =
     dto.actionSlug === 'protective-field' && dieFaces != null
       ? rollDie(dieFaces)
       : undefined;
   try {
-    const catalog = await deps.mechanicalCatalog.load();
     const result = resolvePsiWarriorTableAction({
       catalog: catalog.tableActions,
       actionSlug: dto.actionSlug,
@@ -43,6 +49,7 @@ export async function usePsiWarriorAction(
       ),
       dieRoll,
       usePsiDie: dto.usePsiDie,
+      bands,
     });
     if (!result.resourceSlug) {
       throw new Error(`${result.actionName} has no resource configured`);

@@ -12,8 +12,13 @@ jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
   ),
 }));
 
+jest.mock('@game/sheet/infrastructure/initiative-rule.queries', () => ({
+  loadInitiativeRules: jest.fn(),
+}));
+
 import { executeRollInitiative } from './roll-initiative';
 import { loadAccessibleCharacter } from './roll-weapon-context';
+import { loadInitiativeRules } from '@game/sheet/infrastructure/initiative-rule.queries';
 import {
   asRollDep,
   mockResourceSpender,
@@ -84,6 +89,16 @@ describe('executeRollInitiative', () => {
         carisma: 10,
       },
     });
+    (loadInitiativeRules as jest.Mock).mockResolvedValue([
+      {
+        ownerKind: 'subclass',
+        ownerSlug: 'champion',
+        unlockLevel: 3,
+        ruleKind: 'advantage',
+        abilitySlug: null,
+        label: 'Atleta Extraordinário: vantagem na Iniciativa',
+      },
+    ]);
     const result = await executeRollInitiative(base);
     expect(result.kind).toBe('initiative');
     expect(result.modifier).toBe(4);
@@ -107,6 +122,16 @@ describe('executeRollInitiative', () => {
         carisma: 10,
       },
     });
+    (loadInitiativeRules as jest.Mock).mockResolvedValue([
+      {
+        ownerKind: 'subclass',
+        ownerSlug: 'gloom-stalker',
+        unlockLevel: 3,
+        ruleKind: 'ability_bonus',
+        abilitySlug: 'sabedoria',
+        label: 'Emboscador das Sombras',
+      },
+    ]);
     const result = await executeRollInitiative({
       ...base,
       sheet: asRollDep({

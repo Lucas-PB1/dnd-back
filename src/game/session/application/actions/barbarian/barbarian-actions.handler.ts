@@ -67,6 +67,7 @@ export class BarbarianActionsHandler {
       access: this.access,
       state: this.state,
       domain: this.domain,
+      mechanicalCatalog: this.mechanicalCatalog,
     };
   }
 

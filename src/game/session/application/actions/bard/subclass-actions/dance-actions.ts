@@ -1,4 +1,5 @@
 import { bardicInspirationDie } from '@game/combat/domain/bard';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
@@ -11,6 +12,15 @@ import type {
   PlayerCharacter,
 } from '../bard-action-deps';
 import { spendInspiration } from '../bard-action-deps';
+
+async function bardBands(deps: BardActionDeps, character: PlayerCharacter) {
+  const catalog = await deps.mechanicalCatalog.load();
+  return featureSchedulesFromCatalog(
+    catalog,
+    character.classSlug,
+    character.subclassSlug,
+  );
+}
 
 export async function resolveAgileResponse(
   deps: BardActionDeps,
@@ -34,7 +44,7 @@ export async function resolveCoordinatedMovement(
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'dance', 'Colégio da Dança');
   assertCharacterLevel(character, 6, 'Bardo', 'Movimento Coordenado');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(character.level, await bardBands(deps, character));
   const result = rollDamageParts(`1${die}`, 0);
   const state = await spendInspiration(deps, character);
   return {
@@ -53,7 +63,7 @@ export async function resolveUnarmedDance(
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'dance', 'Colégio da Dança');
   assertCharacterLevel(character, 3, 'Bardo', 'Dança Virtuosa (Ataque Desarmado)');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(character.level, await bardBands(deps, character));
   const dexterity = abilityModifier(character.abilityScores.destreza);
   const result = rollDamageParts(`1${die}`, dexterity);
 
@@ -74,7 +84,7 @@ export async function resolvePeerlessSkill(
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'lore', 'Colégio do Conhecimento');
   assertCharacterLevel(character, 14, 'Bardo', 'Perícia Inigualável');
-  const die = bardicInspirationDie(character.level);
+  const die = bardicInspirationDie(character.level, await bardBands(deps, character));
   const result = rollDamageParts(`1${die}`, 0);
   const state = await spendInspiration(deps, character);
   return {
