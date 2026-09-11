@@ -145,6 +145,10 @@ export class CharacterClassOptionsValidator {
     );
   }
 
+  async loadClassExpertiseSlots(classSlug: string) {
+    return this.expertiseValidator.loadClassExpertiseSlots(classSlug);
+  }
+
   async validateClassWeaponMasteryOptions(
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,

@@ -32,6 +32,7 @@ describe('CharacterCreateRequirementsValidator', () => {
       | 'validateSubclassOptions'
       | 'validateFightingStyleSelections'
       | 'validateClassExpertiseOptions'
+      | 'loadClassExpertiseSlots'
       | 'loadWeaponMasteryProgression'
       | 'validateClassWeaponMasteryOptions'
       | 'loadClassFeatureOptionKeysAtLevel'
@@ -73,6 +74,15 @@ describe('CharacterCreateRequirementsValidator', () => {
       validateSubclassOptions: jest.fn().mockResolvedValue(undefined),
       validateFightingStyleSelections: jest.fn().mockResolvedValue(undefined),
       validateClassExpertiseOptions: jest.fn().mockResolvedValue(undefined),
+      loadClassExpertiseSlots: jest.fn().mockImplementation(async (slug: string) => {
+        if (slug === 'rogue') {
+          return [
+            { optionKey: 'expertiseSkill1', unlockLevel: 1 },
+            { optionKey: 'expertiseSkill2', unlockLevel: 1 },
+          ];
+        }
+        return [];
+      }),
       loadWeaponMasteryProgression: jest.fn().mockResolvedValue([]),
       validateClassWeaponMasteryOptions: jest.fn().mockResolvedValue(undefined),
       loadClassFeatureOptionKeysAtLevel: jest.fn().mockResolvedValue([]),

@@ -8,6 +8,7 @@ import type { CharacterSheetRepository } from '@game/sheet/infrastructure/charac
 import type { LevelUpService } from '../domain/level-up.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import * as levelUpCatalog from '../infrastructure/queries/level-up-catalog.queries';
+import * as classOptionQueries from '@game/sheet/infrastructure/queries/class-option.queries';
 import { asDep } from '@common/testing/as-dep';
 
 const fighterProgression = [
@@ -91,6 +92,7 @@ describe('LevelUpHandler', () => {
     jest
       .spyOn(levelUpCatalog, 'loadAsiOrFeatLevels')
       .mockResolvedValue([4, 8, 12, 16, 19]);
+    jest.spyOn(classOptionQueries, 'loadClassExpertiseSlots').mockResolvedValue([]);
     repository = { findAccessibleOrFail: jest.fn() };
     updateCharacter = { execute: jest.fn() };
     characterState = { syncHitDiceOnLevelChange: jest.fn() };

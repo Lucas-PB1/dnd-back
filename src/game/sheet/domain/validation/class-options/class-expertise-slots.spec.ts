@@ -1,30 +1,51 @@
 import {
-  classExpertiseSlots,
   classExpertiseSlotsAtLevel,
   classExpertiseSlotsNewAtLevel,
   hasJackOfAllTrades,
-  WIZARD_SCHOLAR_SKILL_SLUGS,
+  isClassExpertiseOptionKey,
 } from './class-expertise-slots';
+import type { ClassExpertiseSlot } from './class-expertise-slots';
 
 describe('class-expertise-slots', () => {
-  it('maps Rogue / Bard / Ranger / Wizard schedules', () => {
-    expect(classExpertiseSlotsAtLevel('rogue', 1)).toHaveLength(2);
-    expect(classExpertiseSlotsAtLevel('rogue', 6)).toHaveLength(4);
-    expect(classExpertiseSlotsNewAtLevel('rogue', 6)).toHaveLength(2);
-    expect(classExpertiseSlotsAtLevel('bard', 2)).toHaveLength(2);
-    expect(classExpertiseSlotsAtLevel('bard', 9)).toHaveLength(4);
-    expect(classExpertiseSlotsNewAtLevel('bard', 9)).toHaveLength(2);
-    expect(classExpertiseSlotsAtLevel('ranger', 2)).toHaveLength(1);
-    expect(classExpertiseSlotsAtLevel('ranger', 9)).toHaveLength(3);
-    expect(classExpertiseSlotsNewAtLevel('ranger', 9)).toHaveLength(2);
-    expect(classExpertiseSlotsAtLevel('wizard', 2)).toHaveLength(1);
-    expect(classExpertiseSlotsNewAtLevel('wizard', 2)).toHaveLength(1);
-    expect(classExpertiseSlots('fighter')).toEqual([]);
+  const rogue: ClassExpertiseSlot[] = [
+    { optionKey: 'expertiseSkill1', unlockLevel: 1 },
+    { optionKey: 'expertiseSkill2', unlockLevel: 1 },
+    { optionKey: 'expertiseSkill3', unlockLevel: 6 },
+    { optionKey: 'expertiseSkill4', unlockLevel: 6 },
+  ];
+  const bard: ClassExpertiseSlot[] = [
+    { optionKey: 'expertiseSkill1', unlockLevel: 2 },
+    { optionKey: 'expertiseSkill2', unlockLevel: 2 },
+    { optionKey: 'expertiseSkill3', unlockLevel: 9 },
+    { optionKey: 'expertiseSkill4', unlockLevel: 9 },
+  ];
+  const ranger: ClassExpertiseSlot[] = [
+    { optionKey: 'expertiseSkill1', unlockLevel: 2 },
+    { optionKey: 'expertiseSkill2', unlockLevel: 9 },
+    { optionKey: 'expertiseSkill3', unlockLevel: 9 },
+  ];
+  const wizard: ClassExpertiseSlot[] = [
+    { optionKey: 'expertiseSkill1', unlockLevel: 2 },
+  ];
+
+  it('filters Rogue / Bard / Ranger / Wizard schedules from catalog slots', () => {
+    expect(classExpertiseSlotsAtLevel(rogue, 1)).toHaveLength(2);
+    expect(classExpertiseSlotsAtLevel(rogue, 6)).toHaveLength(4);
+    expect(classExpertiseSlotsNewAtLevel(rogue, 6)).toHaveLength(2);
+    expect(classExpertiseSlotsAtLevel(bard, 2)).toHaveLength(2);
+    expect(classExpertiseSlotsAtLevel(bard, 9)).toHaveLength(4);
+    expect(classExpertiseSlotsNewAtLevel(bard, 9)).toHaveLength(2);
+    expect(classExpertiseSlotsAtLevel(ranger, 2)).toHaveLength(1);
+    expect(classExpertiseSlotsAtLevel(ranger, 9)).toHaveLength(3);
+    expect(classExpertiseSlotsNewAtLevel(ranger, 9)).toHaveLength(2);
+    expect(classExpertiseSlotsAtLevel(wizard, 2)).toHaveLength(1);
+    expect(classExpertiseSlotsNewAtLevel(wizard, 2)).toHaveLength(1);
+    expect(classExpertiseSlotsAtLevel([], 20)).toEqual([]);
   });
 
-  it('restricts Wizard scholar skills', () => {
-    expect(WIZARD_SCHOLAR_SKILL_SLUGS).toContain('arcana');
-    expect(WIZARD_SCHOLAR_SKILL_SLUGS).not.toContain('athletics');
+  it('detects expertise option keys', () => {
+    expect(isClassExpertiseOptionKey('expertiseSkill1')).toBe(true);
+    expect(isClassExpertiseOptionKey('divineOrder')).toBe(false);
   });
 
   it('gives Jack of All Trades to Bard 2+', () => {

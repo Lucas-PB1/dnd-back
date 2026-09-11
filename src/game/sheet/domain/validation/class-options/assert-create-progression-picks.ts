@@ -30,7 +30,10 @@ export async function assertCreateProgressionPicks(input: {
   const { ctx, sheet, classOptionsValidator, extraSkillValidator } = input;
   const provided = sheet.classOptions ?? [];
 
-  const expertiseSlots = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
+  const expertiseSlots = classExpertiseSlotsAtLevel(
+    await classOptionsValidator.loadClassExpertiseSlots(ctx.classSlug),
+    ctx.level,
+  );
   const missingExpertise = missingFilledOptionKeys(
     expertiseSlots.map((slot) => slot.optionKey),
     provided,

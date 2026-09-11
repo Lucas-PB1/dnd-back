@@ -15,6 +15,8 @@ jest.mock('@game/sheet/infrastructure/queries/class-option.queries', () => ({
   loadSubclassOptionKeysAtLevel: jest.fn().mockResolvedValue(['fighting_style']),
   subclassOptionValueType: jest.fn().mockResolvedValue('fighting_style'),
   loadWeaponMasteryPiece: jest.fn(),
+  loadClassExpertiseSlots: jest.fn().mockResolvedValue([]),
+  loadExpertiseSkillWhitelist: jest.fn().mockResolvedValue(null),
 }));
 jest.mock('@game/sheet/infrastructure/queries/feat-option.queries', () => ({
   fightingStyleExists: jest.fn().mockResolvedValue(true),

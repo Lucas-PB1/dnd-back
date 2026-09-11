@@ -4,6 +4,10 @@ import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import {
+  isClassExpertiseOptionKey,
+  type ClassExpertiseSlot,
+} from '@game/sheet/domain/validation/class-options/class-expertise-slots';
 
 export type ClassFeatureDefRow = { optionKey: string; unlockLevel: number };
 
@@ -29,10 +33,55 @@ export async function loadClassOptionDefs(
     select: ['optionKey', 'unlockLevel'],
     order: { unlockLevel: 'ASC', optionKey: 'ASC' },
   });
-  return rows.map((row) => ({
-    optionKey: row.optionKey,
-    unlockLevel: row.unlockLevel ?? 1,
-  }));
+  return rows
+    .filter((row) => !isClassExpertiseOptionKey(row.optionKey))
+    .map((row) => ({
+      optionKey: row.optionKey,
+      unlockLevel: row.unlockLevel ?? 1,
+    }));
+}
+
+/** Slots de Especialização (`expertiseSkill*`) da classe. */
+export async function loadClassExpertiseSlots(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<ClassExpertiseSlot[]> {
+  const classId = await loadClassId(dataSource, classSlug);
+  if (!classId) return [];
+  const rows = await dataSource.getRepository(PhbOptionDef).find({
+    where: { scope: 'class', ownerId: classId },
+    select: ['optionKey', 'unlockLevel'],
+    order: { unlockLevel: 'ASC', optionKey: 'ASC' },
+  });
+  return rows
+    .filter((row) => isClassExpertiseOptionKey(row.optionKey))
+    .map((row) => ({
+      optionKey: row.optionKey,
+      unlockLevel: row.unlockLevel ?? 1,
+    }));
+}
+
+/**
+ * Whitelist de perícias para expertise (ex.: erudição do Mago).
+ * null = qualquer perícia já proficiente.
+ */
+export async function loadExpertiseSkillWhitelist(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<string[] | null> {
+  const classId = await loadClassId(dataSource, classSlug);
+  if (!classId) return null;
+  const rows = await dataSource
+    .getRepository(PhbOptionValue)
+    .createQueryBuilder('v')
+    .select('DISTINCT v.value_id', 'valueId')
+    .where('v.scope = :scope', { scope: 'class' })
+    .andWhere('v.owner_id = :ownerId', { ownerId: classId })
+    .andWhere('v.option_key ~ :pattern', { pattern: '^expertiseSkill[0-9]+$' })
+    .orderBy('v.value_id', 'ASC')
+    .getRawMany<{ valueId: string }>();
+  if (rows.length === 0) return null;
+  return rows.map((row) => row.valueId);
 }
 
 export async function classOptionValueExists(

@@ -15,6 +15,7 @@ Arquivos atuais:
 | `20260908_player_character_state_mesa_circumstances.sql` | `ALTER` em estado de mesa (`mesa_circumstances`) |
 | `20260911_phb_class_fighting_style_unlock_level.sql` | Coluna `fighting_style_unlock_level` + UPDATE classes PHB/Valdas/GH |
 | `20260911_phb_class_progression_asi_or_feat.sql` | Coluna `asi_or_feat` + UPDATE calendário ASI/talento |
+| `20260911_phb_class_expertise_option.sql` | `phb_option_def`/`value` de Especialização (rogue/bard/ranger/wizard) |
 
 ## Quando usar forward vs editar schema/
 

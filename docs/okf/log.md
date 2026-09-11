@@ -31,3 +31,10 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Migration forward: `database/migrations/20260911_phb_class_progression_asi_or_feat.sql`.
 - Seed: `database/seeds/class/phb/phb_class_progression.asi-or-feat.sql` (base 4/8/12/16/19; fighter +6/14; rogue +10).
 - Game: `loadAsiOrFeatLevels` + predicados puros sem Record de slugs; level-up preview/handler async.
+
+## 2026-09-11 — Onda 2: expertise slots em option_def
+
+- Seed: `database/seeds/class/phb/phb_class.expertise-option.sql` (rogue/bard/ranger/wizard + whitelist sábio).
+- Migration forward: `database/migrations/20260911_phb_class_expertise_option.sql`.
+- Game: `loadClassExpertiseSlots` / `loadExpertiseSkillWhitelist`; predicados puros; feature options excluem `expertiseSkill*`.
+- Jack of All Trades permanece em TS (dívida).

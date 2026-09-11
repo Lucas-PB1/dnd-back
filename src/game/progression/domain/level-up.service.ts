@@ -8,7 +8,10 @@ import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepar
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
-import { loadSubclassOptionSlotsNewAtLevel } from '@game/sheet/infrastructure/queries/class-option.queries';
+import {
+  loadClassExpertiseSlots,
+  loadSubclassOptionSlotsNewAtLevel,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';
 import { classExpertiseSlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
@@ -81,6 +84,7 @@ export class LevelUpService {
       subclassFeatures,
       masteryProgression,
       asiFeatLevels,
+      expertiseSlots,
     ] = await Promise.all([
       this.findNewSpellOptions(character, nextLevel),
       this.findAlwaysPreparedSpellsNewAtLevel(character, nextLevel),
@@ -97,6 +101,7 @@ export class LevelUpService {
       ),
       loadClassWeaponMasteryProgression(this.dataSource, character.classSlug),
       loadAsiOrFeatLevels(this.dataSource, character.classSlug),
+      loadClassExpertiseSlots(this.dataSource, character.classSlug),
     ]);
 
     return {
@@ -114,7 +119,7 @@ export class LevelUpService {
       newAlwaysPreparedSpells,
       newSubclassOptionSlots,
       newClassExpertiseSlots: classExpertiseSlotsNewAtLevel(
-        character.classSlug,
+        expertiseSlots,
         nextLevel,
       ),
       newWeaponMasterySlots: classWeaponMasterySlotsNewAtLevel(

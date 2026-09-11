@@ -73,6 +73,7 @@ economy/phb/phb_eldritch_invocation.all.sql
 economy/phb/phb_metamagic.all.sql
 species/phb/phb_species.resource-grant.sql
 class/phb/phb_class.option.sql
+class/phb/phb_class.expertise-option.sql
 class/phb/phb_class.granted-spell.sql
 subclass/phb/phb_subclass.granted-spell-supplement.sql
 creature/phb/phb_mount.images.sql

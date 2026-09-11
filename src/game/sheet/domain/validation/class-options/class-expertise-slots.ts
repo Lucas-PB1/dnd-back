@@ -1,6 +1,6 @@
 /**
- * Especialização (Expertise) por classe — PHB 2024.
- * Só perícias já proficientes; Wizard restringe a lista acadêmica.
+ * Especialização (Expertise) — predicados puros sobre slots do catálogo
+ * (`phb_option_def` scope=class, option_key expertiseSkill*).
  */
 
 export type ClassExpertiseSlot = {
@@ -8,74 +8,26 @@ export type ClassExpertiseSlot = {
   unlockLevel: number;
 };
 
-export const WIZARD_SCHOLAR_SKILL_SLUGS = [
-  'arcana',
-  'history',
-  'investigation',
-  'medicine',
-  'nature',
-  'religion',
-] as const;
-
-const CLASS_EXPERTISE_SLOTS: Readonly<Record<string, readonly ClassExpertiseSlot[]>> =
-  {
-    rogue: [
-      { optionKey: 'expertiseSkill1', unlockLevel: 1 },
-      { optionKey: 'expertiseSkill2', unlockLevel: 1 },
-      { optionKey: 'expertiseSkill3', unlockLevel: 6 },
-      { optionKey: 'expertiseSkill4', unlockLevel: 6 },
-    ],
-    bard: [
-      { optionKey: 'expertiseSkill1', unlockLevel: 2 },
-      { optionKey: 'expertiseSkill2', unlockLevel: 2 },
-      { optionKey: 'expertiseSkill3', unlockLevel: 9 },
-      { optionKey: 'expertiseSkill4', unlockLevel: 9 },
-    ],
-    ranger: [
-      { optionKey: 'expertiseSkill1', unlockLevel: 2 },
-      { optionKey: 'expertiseSkill2', unlockLevel: 9 },
-      { optionKey: 'expertiseSkill3', unlockLevel: 9 },
-    ],
-    wizard: [{ optionKey: 'expertiseSkill1', unlockLevel: 2 }],
-  };
-
-export function classExpertiseSlots(
-  classSlug: string | null | undefined,
-): readonly ClassExpertiseSlot[] {
-  return CLASS_EXPERTISE_SLOTS[classSlug ?? ''] ?? [];
-}
-
-export function classExpertiseSlotsAtLevel(
-  classSlug: string | null | undefined,
-  level: number,
-): ClassExpertiseSlot[] {
-  return classExpertiseSlots(classSlug).filter(
-    (slot) => slot.unlockLevel <= level,
-  );
-}
-
-/** Slots que desbloqueiam exatamente neste nível (ex.: Rogue 6 → +2 expertise). */
-export function classExpertiseSlotsNewAtLevel(
-  classSlug: string | null | undefined,
-  level: number,
-): ClassExpertiseSlot[] {
-  return classExpertiseSlots(classSlug).filter(
-    (slot) => slot.unlockLevel === level,
-  );
-}
-
 export function isClassExpertiseOptionKey(optionKey: string): boolean {
   return /^expertiseSkill\d+$/.test(optionKey);
 }
 
-export function allowedExpertiseSkillSlugsForClass(
-  classSlug: string | null | undefined,
-): readonly string[] | null {
-  if (classSlug === 'wizard') return WIZARD_SCHOLAR_SKILL_SLUGS;
-  return null;
+export function classExpertiseSlotsAtLevel(
+  slots: readonly ClassExpertiseSlot[],
+  level: number,
+): ClassExpertiseSlot[] {
+  return slots.filter((slot) => slot.unlockLevel <= level);
 }
 
-/** Pau pra Toda Obra — Bardo nível 2+. */
+/** Slots que desbloqueiam exatamente neste nível (ex.: Rogue 6 → +2 expertise). */
+export function classExpertiseSlotsNewAtLevel(
+  slots: readonly ClassExpertiseSlot[],
+  level: number,
+): ClassExpertiseSlot[] {
+  return slots.filter((slot) => slot.unlockLevel === level);
+}
+
+/** Pau pra Toda Obra — Bardo nível 2+ (ainda hardcoded; candidato SQL futuro). */
 export function hasJackOfAllTrades(
   classSlug: string | null | undefined,
   level: number,

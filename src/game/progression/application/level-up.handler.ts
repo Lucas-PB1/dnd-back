@@ -19,7 +19,10 @@ import {
   loadAsiOrFeatLevels,
   loadClassWeaponMasteryProgression,
 } from '../infrastructure/queries/level-up-catalog.queries';
-import { loadSubclassOptionSlotsNewAtLevel } from '@game/sheet/infrastructure/queries/class-option.queries';
+import {
+  loadClassExpertiseSlots,
+  loadSubclassOptionSlotsNewAtLevel,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
 
 @Injectable()
 export class LevelUpHandler {
@@ -53,8 +56,12 @@ export class LevelUpHandler {
       this.dataSource,
       character.classSlug,
     );
-    const newExpertiseSlots = classExpertiseSlotsNewAtLevel(
+    const expertiseSlots = await loadClassExpertiseSlots(
+      this.dataSource,
       character.classSlug,
+    );
+    const newExpertiseSlots = classExpertiseSlotsNewAtLevel(
+      expertiseSlots,
       nextLevel,
     );
     const newMasterySlots = classWeaponMasterySlotsNewAtLevel(

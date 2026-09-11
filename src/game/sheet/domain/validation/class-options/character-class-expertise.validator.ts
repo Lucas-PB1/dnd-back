@@ -3,17 +3,24 @@ import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import {
-  allowedExpertiseSkillSlugsForClass,
   classExpertiseSlotsAtLevel,
   isClassExpertiseOptionKey,
 } from './class-expertise-slots';
 import { collectProficientSkillSlugs } from '@game/sheet/domain/stats/character-check-bonuses';
 import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
+import {
+  loadClassExpertiseSlots,
+  loadExpertiseSkillWhitelist,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
 import { skillExists } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
 
 @Injectable()
 export class CharacterClassExpertiseValidator {
   constructor(private readonly dataSource: DataSource) {}
+
+  async loadClassExpertiseSlots(classSlug: string) {
+    return loadClassExpertiseSlots(this.dataSource, classSlug);
+  }
 
   async validateClassExpertiseOptions(
     ctx: CharacterSheetContext,
@@ -25,7 +32,8 @@ export class CharacterClassExpertiseValidator {
     const expertiseOptions = options.filter((option) =>
       isClassExpertiseOptionKey(option.optionKey),
     );
-    const unlocked = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
+    const slots = await loadClassExpertiseSlots(this.dataSource, ctx.classSlug);
+    const unlocked = classExpertiseSlotsAtLevel(slots, ctx.level);
     const unlockedKeys = new Set(unlocked.map((slot) => slot.optionKey));
 
     assertUnique(
@@ -64,7 +72,10 @@ export class CharacterClassExpertiseValidator {
       }),
     );
 
-    const whitelist = allowedExpertiseSkillSlugsForClass(ctx.classSlug);
+    const whitelist = await loadExpertiseSkillWhitelist(
+      this.dataSource,
+      ctx.classSlug,
+    );
     const chosen = expertiseOptions.map((option) => option.valueId);
     assertUnique(chosen, 'Expertise skill choices must be distinct');
 

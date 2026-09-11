@@ -4,12 +4,28 @@ jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => 
 jest.mock('@game/sheet/infrastructure/queries/skill-catalog.queries', () => ({
   skillExists: jest.fn(),
 }));
+jest.mock('@game/sheet/infrastructure/queries/class-option.queries', () => ({
+  loadClassExpertiseSlots: jest.fn(),
+  loadExpertiseSkillWhitelist: jest.fn(),
+}));
 
 import { DataSource } from 'typeorm';
 import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
 import { skillExists } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
+import {
+  loadClassExpertiseSlots,
+  loadExpertiseSkillWhitelist,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
+
+const rogueSlots = [
+  { optionKey: 'expertiseSkill1', unlockLevel: 1 },
+  { optionKey: 'expertiseSkill2', unlockLevel: 1 },
+  { optionKey: 'expertiseSkill3', unlockLevel: 6 },
+  { optionKey: 'expertiseSkill4', unlockLevel: 6 },
+];
+const wizardSlots = [{ optionKey: 'expertiseSkill1', unlockLevel: 2 }];
 
 describe('CharacterClassExpertiseValidator', () => {
   let validator: CharacterClassExpertiseValidator;
@@ -32,11 +48,15 @@ describe('CharacterClassExpertiseValidator', () => {
   beforeEach(() => {
     dataSource = {} as DataSource;
     validator = new CharacterClassExpertiseValidator(dataSource);
+    jest.mocked(loadClassExpertiseSlots).mockResolvedValue([]);
+    jest.mocked(loadExpertiseSkillWhitelist).mockResolvedValue(null);
   });
 
   function mockBackgroundSkills(slugs: string[]) {
     jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue(slugs);
-    jest.mocked(skillExists).mockImplementation(async (_, skill) => skill !== 'fake-skill');
+    jest
+      .mocked(skillExists)
+      .mockImplementation(async (_, skill) => skill !== 'fake-skill');
   }
 
   it('rejects expertise when class has no slots at level', async () => {
@@ -53,6 +73,7 @@ describe('CharacterClassExpertiseValidator', () => {
 
   it('accepts proficient skill for rogue at level 1', async () => {
     mockBackgroundSkills(['insight']);
+    jest.mocked(loadClassExpertiseSlots).mockResolvedValue(rogueSlots);
 
     await expect(
       validator.validateClassExpertiseOptions(
@@ -70,6 +91,7 @@ describe('CharacterClassExpertiseValidator', () => {
 
   it('rejects expertise on non-proficient skill', async () => {
     mockBackgroundSkills([]);
+    jest.mocked(loadClassExpertiseSlots).mockResolvedValue(rogueSlots);
 
     await expect(
       validator.validateClassExpertiseOptions(
@@ -84,6 +106,7 @@ describe('CharacterClassExpertiseValidator', () => {
 
   it('rejects invalid skill slug', async () => {
     mockBackgroundSkills(['stealth']);
+    jest.mocked(loadClassExpertiseSlots).mockResolvedValue(rogueSlots);
 
     await expect(
       validator.validateClassExpertiseOptions(
@@ -98,6 +121,15 @@ describe('CharacterClassExpertiseValidator', () => {
 
   it('restricts wizard expertise to scholar skills', async () => {
     mockBackgroundSkills([]);
+    jest.mocked(loadClassExpertiseSlots).mockResolvedValue(wizardSlots);
+    jest.mocked(loadExpertiseSkillWhitelist).mockResolvedValue([
+      'arcana',
+      'history',
+      'investigation',
+      'medicine',
+      'nature',
+      'religion',
+    ]);
 
     await expect(
       validator.validateClassExpertiseOptions(
