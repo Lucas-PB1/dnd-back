@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { parseItemCoverage } from '../../domain/coverage/item-coverage';
 import { assertCoverageNotEquippable } from '../../domain/assert-can-equip-item';

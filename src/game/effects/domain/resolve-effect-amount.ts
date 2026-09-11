@@ -1,5 +1,5 @@
 import { proficiencyBonusForLevel } from '@game/session/domain/proficiency-bonus-for-level';
-import type { EffectAmountFormula } from '@entities/phb-effect-numeric.entity';
+import type { EffectAmountFormula } from '@entities/effect/phb-effect-numeric.entity';
 import { rollDamageParts, type Rng } from '@game/dice/domain/dice';
 
 export type ResolvedAmount = {

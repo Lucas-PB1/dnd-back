@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import {
   PhbCompanionProfile,
   PhbCompanionTemplateMap,
-} from '@entities/phb-companion-profile.entity';
+} from '@entities/companion/phb-companion-profile.entity';
 import type {
   CompanionProfile,
   CompanionTemplateMapRow,

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import { BLOOD_STRIKE_OPTION_KEY_RE } from '../subclass-option-effects';
 import { assertDistinctBloodStrikes } from './assert-distinct-choices';

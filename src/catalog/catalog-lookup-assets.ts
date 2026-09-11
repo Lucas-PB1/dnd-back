@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
 import { requireCatalog } from '../common/assert';
 import { requireFound } from '../common/require-found';
-import { PhbAbilityGenerationMethod } from '../entities/phb-ability-generation-method.entity';
-import { PhbItem } from '../entities/phb-item.entity';
-import { PhbLanguage } from '../entities/phb-language.entity';
-import { PhbSkill } from '../entities/phb-skill.entity';
+import { PhbAbilityGenerationMethod } from '../entities/reference/phb-ability-generation-method.entity';
+import { PhbItem } from '../entities/equipment/phb-item.entity';
+import { PhbLanguage } from '../entities/reference/phb-language.entity';
+import { PhbSkill } from '../entities/reference/phb-skill.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
 
 export async function findSpellOrFail(

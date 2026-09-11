@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 describe('validateFeatProficiencyOption', () => {

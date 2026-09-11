@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-choices.entity';
 import { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 import { validateHeritageChoices } from '../../heritage/heritage-choices.validator';

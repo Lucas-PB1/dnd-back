@@ -1,5 +1,5 @@
 import type { Repository } from 'typeorm';
-import type { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import type { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import type { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { CampaignRepository } from '../../infrastructure/campaign.repository';

@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import type { CharacterTransformation } from './validate-transformation';
 import {
   GH_TRANSFORMATION_CATEGORY,

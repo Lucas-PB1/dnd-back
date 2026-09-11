@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   PaginatedResponseDto,

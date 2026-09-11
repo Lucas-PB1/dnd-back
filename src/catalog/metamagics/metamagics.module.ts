@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbMetamagic } from '@entities/phb-metamagic.entity';
+import { PhbMetamagic } from '@entities/class/phb-metamagic.entity';
 import { MetamagicsController } from './metamagics.controller';
 import { FindMetamagicsQuery } from './queries/find-metamagics.query';
 

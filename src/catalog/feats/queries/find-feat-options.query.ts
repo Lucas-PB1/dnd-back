@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { PaginatedResponseDto, paginateByKeys } from '@common/dto/pagination.dto';
 import { FeatOptionResponseDto } from '../dto/feat-option-response.dto';
 

@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { requireCatalog } from '../common/assert';
-import { PhbSpecies } from '../entities/phb-species.entity';
+import { PhbSpecies } from '../entities/species/phb-species.entity';
 
 export function isTraitPackageSpecies(row: PhbSpecies): boolean {
   const raw = row.sourceMeta?.variantOf;

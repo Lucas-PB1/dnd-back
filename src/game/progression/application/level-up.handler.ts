@@ -9,7 +9,7 @@ import { LevelUpDto } from '../dto/level-up.dto';
 import { CharacterResponseDto } from '@game/sheet/dto/character-response.dto';
 import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 import { DataSource } from 'typeorm';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { isAsiOrFeatLevel } from '../domain/asi-feat-levels';
 import {
   applyLevelUpAsiBoost,

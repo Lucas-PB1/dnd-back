@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';

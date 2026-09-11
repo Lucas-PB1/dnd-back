@@ -3,11 +3,11 @@ import { Repository } from 'typeorm';
 import { requireCatalog } from '../common/assert';
 import { requireFound } from '../common/require-found';
 import { VPhbClass } from '../entities/views/v-phb-class.entity';
-import { PhbSpecies } from '../entities/phb-species.entity';
-import { PhbHeritage } from '../entities/phb-heritage.entity';
+import { PhbSpecies } from '../entities/species/phb-species.entity';
+import { PhbHeritage } from '../entities/heritage/phb-heritage.entity';
 import { VPhbBackground } from '../entities/views/v-phb-background.entity';
 import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
-import { PhbAlignment } from '../entities/phb-alignment.entity';
+import { PhbAlignment } from '../entities/reference/phb-alignment.entity';
 
 export async function findClassOrFail(
   classesRepo: Repository<VPhbClass>,

@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { PhbClassFeature } from '@entities/phb-class-feature.entity';
-import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassFeature } from '@entities/class/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/class/phb-class-progression.entity';
 import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
 import {
   loadWeaponMasteryProgression,

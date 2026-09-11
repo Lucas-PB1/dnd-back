@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,

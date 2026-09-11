@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 
 export function parseItemReloadCapacity(
   properties: Record<string, unknown> | null | undefined,

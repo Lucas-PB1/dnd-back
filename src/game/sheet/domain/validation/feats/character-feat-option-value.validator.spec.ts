@@ -4,8 +4,8 @@ jest.mock('./feat-option-proficiency', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';

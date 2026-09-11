@@ -1,5 +1,5 @@
 import { In, type Repository } from 'typeorm';
-import type { PhbItem } from '@entities/phb-item.entity';
+import type { PhbItem } from '@entities/equipment/phb-item.entity';
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { itemRequiresAttunement } from '@game/inventory/domain/attunement';
 import {

@@ -1,7 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';

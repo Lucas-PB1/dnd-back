@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { VPhbCreatureTemplateBundle } from '@entities/views/v-phb-creature-template-bundle.entity';
 import { CreatureTemplatesController } from './creature-templates.controller';
 import { CreatureTemplateMapper } from './creature-template.mapper';

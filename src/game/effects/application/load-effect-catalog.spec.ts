@@ -1,12 +1,12 @@
 import { asDep } from '@common/testing/as-dep';
 import { LoadEffectCatalog } from './load-effect-catalog';
-import type { PhbEffect } from '@entities/phb-effect.entity';
+import type { PhbEffect } from '@entities/effect/phb-effect.entity';
 import type { Repository } from 'typeorm';
-import type { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import type { PhbSpecies } from '@entities/phb-species.entity';
-import type { PhbSpellRef } from '@entities/phb-spell-ref.entity';
-import type { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
-import type { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import type { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
+import type { PhbSpecies } from '@entities/species/phb-species.entity';
+import type { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
+import type { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
+import type { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 
 describe('LoadEffectCatalog', () => {
   it('maps repository rows to catalog effects with owner slug', async () => {

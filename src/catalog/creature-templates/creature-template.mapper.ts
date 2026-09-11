@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { VPhbCreatureTemplateBundle } from '@entities/views/v-phb-creature-template-bundle.entity';
 import {
   CreatureTemplateResponseDto,

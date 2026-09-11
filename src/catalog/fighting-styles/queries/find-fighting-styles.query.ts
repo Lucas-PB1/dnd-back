@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
 import {
   PaginatedResponseDto,
   paginateQbCursor,

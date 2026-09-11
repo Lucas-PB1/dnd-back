@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { PhbCharacterThread } from '@entities/reference/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 import {
   CharacterThreadResponseDto,

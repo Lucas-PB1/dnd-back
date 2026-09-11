@@ -1,4 +1,4 @@
-import type { PhbEffect } from '@entities/phb-effect.entity';
+import type { PhbEffect } from '@entities/effect/phb-effect.entity';
 import type { CatalogEffect } from '../domain/catalog-effect';
 
 export function mapPhbEffectToCatalog(

@@ -41,8 +41,8 @@ jest.mock('@game/sheet/infrastructure/queries/spell-catalog.queries', () => ({
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
 import { CharacterSheetValidator } from './character-sheet.validator';

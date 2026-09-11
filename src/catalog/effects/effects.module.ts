@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbEffect } from '@entities/phb-effect.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbEffect } from '@entities/effect/phb-effect.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
 import { FindOwnerEffectsQuery } from './queries/find-owner-effects.query';
 
 @Module({

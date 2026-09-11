@@ -13,7 +13,7 @@ import type { ArtifactRandomTableRow } from '../../domain/artifact/artifact-inst
 import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
 import { DmgArtifactRandomProperty } from '../../infrastructure/dmg-artifact-random-property.entity';
 import { inventoryItemToDto } from '../../infrastructure/inventory/inventory-item-mappers';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import type { InventoryItemResponseDto } from '../../dto/inventory.dto';
 import { loadArtifactRandomRows } from '../../infrastructure/inventory/load-artifact-attunement-deps';
 

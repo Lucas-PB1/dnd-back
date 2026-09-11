@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { PhbCharacterThread } from '@entities/reference/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 import { CharacterThreadsController } from './character-threads.controller';
 import { CharacterThreadMapper } from './character-thread.mapper';

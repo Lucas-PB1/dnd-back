@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogLookupModule } from '@catalog/catalog-lookup.module';
-import { PhbAlignment } from '@entities/phb-alignment.entity';
-import { PhbLanguage } from '@entities/phb-language.entity';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
-import { PhbAbilityGenerationMethod } from '@entities/phb-ability-generation-method.entity';
-import { PhbEdition } from '@entities/phb-edition.entity';
+import { PhbAlignment } from '@entities/reference/phb-alignment.entity';
+import { PhbLanguage } from '@entities/reference/phb-language.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
+import { PhbAbilityGenerationMethod } from '@entities/reference/phb-ability-generation-method.entity';
+import { PhbEdition } from '@entities/reference/phb-edition.entity';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { ReferenceMapper } from './reference.mapper';
 import { FindAlignmentsQuery } from './queries/find-alignments.query';

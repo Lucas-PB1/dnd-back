@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
+import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 import { VPhbVehicleTemplateBundle } from '@entities/views/v-phb-vehicle-template-bundle.entity';
 import { VehicleTemplatesController } from './vehicle-templates.controller';
 import { VehicleTemplateMapper } from './vehicle-template.mapper';

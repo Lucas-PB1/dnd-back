@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PhbSpecies } from '@entities/phb-species.entity';
-import { PhbSpeciesTrait } from '@entities/phb-species-trait.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
+import { PhbSpeciesTrait } from '@entities/species/phb-species-trait.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { DEFAULT_PHB_EDITION_SLUG } from '@common/dto/pagination.dto';
 import { SpeciesResponseDto } from './dto/species-response.dto';

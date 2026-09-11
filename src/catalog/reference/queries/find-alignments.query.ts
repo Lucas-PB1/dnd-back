@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAlignment } from '@entities/phb-alignment.entity';
+import { PhbAlignment } from '@entities/reference/phb-alignment.entity';
 import {
   PaginatedResponseDto,
   paginateByKeys,

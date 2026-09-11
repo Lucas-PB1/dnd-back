@@ -1,5 +1,5 @@
 import { In, Repository } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { PlayerCharacterItem } from '../player-character-item.entity';
 import { InventoryItemResponseDto } from '@game/inventory/dto/inventory.dto';
 import { catalogCostText } from '@game/inventory/domain/coin-purse';

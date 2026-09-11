@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
 import {
   PaginatedResponseDto,
   paginateByKeys,

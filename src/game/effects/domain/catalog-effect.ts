@@ -2,12 +2,12 @@ import type {
   EffectKind,
   EffectOwnerKind,
   EffectTrigger,
-} from '@entities/phb-effect.entity';
+} from '@entities/effect/phb-effect.entity';
 import type {
   EffectCastEconomyKind,
   EffectUsesFormula,
-} from '@entities/phb-effect-cast-economy.entity';
-import type { EffectAmountFormula } from '@entities/phb-effect-numeric.entity';
+} from '@entities/effect/phb-effect-cast-economy.entity';
+import type { EffectAmountFormula } from '@entities/effect/phb-effect-numeric.entity';
 
 export type {
   EffectKind,

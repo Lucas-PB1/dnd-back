@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 

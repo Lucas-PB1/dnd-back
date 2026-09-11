@@ -1,4 +1,4 @@
-import { PhbOptionDef } from '@entities/phb-option.entity';
+import { PhbOptionDef } from '@entities/reference/phb-option.entity';
 import { ritualSpellSlotIndex } from '@game/spellcasting/domain/ritual-spell-option-key';
 
 export { ritualSpellSlotIndex };

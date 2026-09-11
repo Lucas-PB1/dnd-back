@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '@common/assert';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import { isSkillOrToolSlug } from '@game/sheet/infrastructure/queries/feat-option.queries';
 

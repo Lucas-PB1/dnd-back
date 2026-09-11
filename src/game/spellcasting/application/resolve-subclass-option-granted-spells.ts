@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbOptionDef } from '@entities/phb-option.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionDef } from '@entities/reference/phb-option.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   SUBCLASS_GRANTED_SPELL_OPTION_KEYS,

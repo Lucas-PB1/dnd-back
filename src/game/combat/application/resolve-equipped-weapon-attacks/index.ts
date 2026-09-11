@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { loadMergedFeatureSchedules } from '../../infrastructure/feature-schedule.queries';

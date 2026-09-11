@@ -1,6 +1,6 @@
 import { FindClassOptionsQuery } from './find-class-options.query';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassOptionsQuery', () => {

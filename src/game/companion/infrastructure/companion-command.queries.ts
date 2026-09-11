@@ -1,5 +1,5 @@
 import type { DataSource } from 'typeorm';
-import { PhbCompanionCommand } from '@entities/phb-companion-command.entity';
+import { PhbCompanionCommand } from '@entities/companion/phb-companion-command.entity';
 
 export type CompanionCommandRow = {
   slug: string;

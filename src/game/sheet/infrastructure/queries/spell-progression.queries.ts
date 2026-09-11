@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
-import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/class/phb-class-progression.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { maxSpellLevelFromSlots } from '@game/spellcasting/domain/max-spell-level';
 

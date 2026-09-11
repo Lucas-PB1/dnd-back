@@ -1,4 +1,4 @@
-import type { PhbOptionDef } from '@entities/phb-option.entity';
+import type { PhbOptionDef } from '@entities/reference/phb-option.entity';
 import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 export const ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG = 'ability-score-improvement';

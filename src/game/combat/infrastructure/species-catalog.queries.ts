@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
-import { PhbSpecies } from '@entities/phb-species.entity';
-import { PhbSpeciesArmorPreset } from '@entities/phb-species-armor-preset.entity';
-import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
+import { PhbSpeciesArmorPreset } from '@entities/species/phb-species-armor-preset.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import type { SpeciesArmorPresetRow } from '@game/combat/domain/species/manikin-armor';
 
 export async function loadSpeciesArmorPresets(

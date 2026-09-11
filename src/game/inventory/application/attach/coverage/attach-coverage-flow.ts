@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import {
   coverageMatchesBase,

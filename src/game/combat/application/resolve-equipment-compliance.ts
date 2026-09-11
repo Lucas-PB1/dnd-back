@@ -14,7 +14,7 @@ import {
   type EquippedWeaponPiece,
 } from '../domain/weapon-attacks';
 import type { SizeCategory } from '../domain/equipment';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
 import { weaponPropsOf } from '@catalog/game-port';
 import { extraArmorTrainingFromClassOrder } from '@game/sheet/domain/validation/class-options/class-order-effects';
 

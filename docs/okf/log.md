@@ -209,3 +209,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - SQL: migration `20260911_phb_effect_early_route_kinds.sql` (`convert_spell_points`, `catalog_metamagic`, `firearm_*`, `wild_resurgence`, `set_starry_form`); seeds mesa alinhados; early-routes = só validações.
 - `effects/domain/execute/` — executeCatalogEffect fatiado; reexport estável via `domain/execute-catalog-effect`.
 - Jest: 26 suites / 193 testes verdes (`session/application` + `effects/domain`).
+
+## 2026-09-11 — Reorganização `src/entities` por domínio
+
+- Pastas: `effect/`, `class/`, `subclass-feature/`, `species/`, `heritage/`, `equipment/`, `spell/`, `feat/`, `companion/`, `template/`, `reference/` (+ `views/` mantida).
+- Imports `@entities/<domínio>/<arquivo>` e relativos `../entities/<domínio>/…`; barrels `index.ts` por pasta; `trace-entities-for-vercel.ts` atualizado.
+- Sem mudança de schema SQL — só layout TypeORM/TS.

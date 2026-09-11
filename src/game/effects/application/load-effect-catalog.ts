@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PhbEffect } from '@entities/phb-effect.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import { PhbSpellRef } from '@entities/phb-spell-ref.entity';
-import { PhbSpecies } from '@entities/phb-species.entity';
-import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbEffect } from '@entities/effect/phb-effect.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
+import { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
+import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import type { CatalogEffect, EffectOwnerKind } from '../domain/catalog-effect';
 import { mapPhbEffectToCatalog } from '../infrastructure/map-phb-effect';
 

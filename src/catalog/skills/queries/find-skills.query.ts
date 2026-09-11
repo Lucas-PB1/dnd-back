@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,

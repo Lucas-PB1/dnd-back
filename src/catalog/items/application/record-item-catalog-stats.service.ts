@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbItemCatalogStats } from '@entities/phb-item-catalog-stats.entity';
+import { PhbItemCatalogStats } from '@entities/equipment/phb-item-catalog-stats.entity';
 
 /** Upsert de contadores de view/purchase (tabela dedicada, fora de phb_item). */
 @Injectable()

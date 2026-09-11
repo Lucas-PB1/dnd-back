@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { itemRequiresAttunement } from '../../domain/attunement';
 import {
   coverageBonusToEffects,

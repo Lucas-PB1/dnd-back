@@ -2,19 +2,19 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '@catalog/catalog.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-choices.entity';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
@@ -70,7 +70,7 @@ import { UpdateCharacterNotesHandler } from './application/update-character-note
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
 import { CharacterThreadCommands } from './application/character-thread.commands';
-import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { PhbCharacterThread } from '@entities/reference/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 
 @Module({

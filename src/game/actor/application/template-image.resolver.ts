@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
-import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
+import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 
 @Injectable()
 export class TemplateImageResolver {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';

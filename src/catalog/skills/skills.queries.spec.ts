@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import { SkillsMapper } from './skills.mapper';
 import { FindSkillBySlugQuery } from './queries/find-skill-by-slug.query';
 

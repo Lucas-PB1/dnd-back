@@ -1,5 +1,5 @@
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import {

@@ -6,7 +6,7 @@ import {
   HERITAGE_SPEED_TRADE_KIND,
 } from './aggregate-trait-takes';
 import { In, Repository } from 'typeorm';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 
 export interface AggregatedHeritageTraitDto {
   traitSlug: string;

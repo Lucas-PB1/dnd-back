@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { PhbCharacterThread } from '@entities/reference/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 import {
   PlayerCharacterThread,

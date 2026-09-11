@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { PhbCharacterThread } from '@entities/reference/phb-character-thread.entity';
 import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 import {
   PlayerCharacterThread,

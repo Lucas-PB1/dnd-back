@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { assertUnique, requireCatalog } from '../common/assert';
 import { VPhbClass } from '../entities/views/v-phb-class.entity';
 import { VPhbClassSkillChoice } from '../entities/views/v-phb-class-skill-choice.entity';
-import { PhbSkill } from '../entities/phb-skill.entity';
+import { PhbSkill } from '../entities/reference/phb-skill.entity';
 
 export async function assertSkillInCatalog(
   skillsRepo: Repository<PhbSkill>,

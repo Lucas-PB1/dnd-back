@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { PhbOptionDef } from '@entities/phb-option.entity';
+import { PhbOptionDef } from '@entities/reference/phb-option.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import { LORE_BONUS_SKILL_KEYS } from '../subclass-option-effects';
 import {

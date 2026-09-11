@@ -26,7 +26,7 @@ import { collectMasteredWeaponSlugs } from '../../domain/validation/class-option
 import { assembleCharacterResponseDto } from '../assemble-character-response-dto';
 import { sheetProfile } from '@common/perf/sheet-profile';
 import { LoadCharacterThreadBundleQuery } from '../../application/load-character-thread-bundle.query';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { resolveAggregatedHeritageTraits } from '../../domain/heritage/resolve-aggregated-heritage-traits';
 import { resolveSheetMeta } from './resolve-sheet-meta';
 import { loadGatedSpeciesEffects, type LoadEffectCatalog } from '@game/effects';

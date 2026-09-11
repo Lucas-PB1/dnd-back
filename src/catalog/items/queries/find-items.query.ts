@@ -7,7 +7,7 @@ import {
   PaginatedResponseDto,
   paginateQbCursor,
 } from '@common/dto/pagination.dto';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { ItemsMapper } from '../items.mapper';

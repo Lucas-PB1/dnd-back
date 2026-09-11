@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
 
 export async function skillExists(

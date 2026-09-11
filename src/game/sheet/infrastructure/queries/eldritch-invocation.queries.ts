@@ -1,5 +1,5 @@
 import { DataSource, In, LessThanOrEqual } from 'typeorm';
-import { PhbEldritchInvocation } from '@entities/phb-eldritch-invocation.entity';
+import { PhbEldritchInvocation } from '@entities/class/phb-eldritch-invocation.entity';
 import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import type { EldritchInvocationCatalogRow } from '@game/combat/domain/warlock';
 

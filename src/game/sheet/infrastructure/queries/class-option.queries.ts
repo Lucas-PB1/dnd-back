@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
-import { PhbClassRef } from '@entities/phb-class-ref.entity';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbClassRef } from '@entities/class/phb-class-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import {
   isClassExpertiseOptionKey,
   type ClassExpertiseSlot,

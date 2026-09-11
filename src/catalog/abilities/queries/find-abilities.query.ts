@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAbility } from '@entities/phb-ability.entity';
+import { PhbAbility } from '@entities/reference/phb-ability.entity';
 import {
   PaginatedResponseDto,
   paginateByKeys,

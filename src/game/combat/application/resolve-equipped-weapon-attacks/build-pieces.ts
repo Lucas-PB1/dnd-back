@@ -1,7 +1,7 @@
 import { In, type Repository } from 'typeorm';
-import type { PhbWeapon } from '@entities/phb-weapon.entity';
-import type { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
-import type { PhbItem } from '@entities/phb-item.entity';
+import type { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
+import type { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
+import type { PhbItem } from '@entities/equipment/phb-item.entity';
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import {
   loadWeaponMasteryBySlug,

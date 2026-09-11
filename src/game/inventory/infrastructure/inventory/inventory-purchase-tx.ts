@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {

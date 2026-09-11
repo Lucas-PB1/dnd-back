@@ -8,9 +8,9 @@ import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
-import { PhbClassFeature } from '@entities/phb-class-feature.entity';
-import { PhbClassProgression } from '@entities/phb-class-progression.entity';
-import { PhbClassRef } from '@entities/phb-class-ref.entity';
+import { PhbClassFeature } from '@entities/class/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/class/phb-class-progression.entity';
+import { PhbClassRef } from '@entities/class/phb-class-ref.entity';
 import { CatalogLookupService } from '../catalog-lookup.service';
 import { ClassesMapper } from './classes.mapper';
 import { FindClassesQuery } from './queries/find-classes.query';
@@ -135,6 +135,7 @@ describe('Classes queries', () => {
     preparedSpells: 4,
     channelDivinity: null,
     weaponMastery: null,
+    asiOrFeat: false,
   };
 
   beforeEach(async () => {

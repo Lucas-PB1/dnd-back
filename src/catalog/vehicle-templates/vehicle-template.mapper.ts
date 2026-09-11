@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
+import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 import { VPhbVehicleTemplateBundle } from '@entities/views/v-phb-vehicle-template-bundle.entity';
 import {
   VehicleTemplateResponseDto,

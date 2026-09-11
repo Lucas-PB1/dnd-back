@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { PhbMetamagic } from '@entities/phb-metamagic.entity';
+import { PhbMetamagic } from '@entities/class/phb-metamagic.entity';
 import type { MetamagicCatalogRow } from '@game/combat/domain/sorcerer';
 
 export async function loadMetamagicCatalog(

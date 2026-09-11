@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/class/phb-class-progression.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { requireNonEmpty } from '@common/require-found';
 import {

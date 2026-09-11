@@ -16,7 +16,7 @@ import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepar
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { LoadCharacterThreadBundleQuery } from '../../application/load-character-thread-bundle.query';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { mapCharacterToDto } from './map-character-to-dto';
 import { LoadEffectCatalog } from '@game/effects';
 

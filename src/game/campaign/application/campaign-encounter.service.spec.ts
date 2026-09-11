@@ -12,7 +12,7 @@ import type { CampaignEncounter } from '../infrastructure/campaign-encounter.ent
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
-import type { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import type { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import type { Repository } from 'typeorm';
 import { asDep } from '@common/testing/as-dep';
 

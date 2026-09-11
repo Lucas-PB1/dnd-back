@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbOptionDef } from '@entities/phb-option.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionDef } from '@entities/reference/phb-option.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassGrantedSpell } from '@entities/views/v-phb-class-granted-spell.entity';

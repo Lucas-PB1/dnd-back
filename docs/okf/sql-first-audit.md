@@ -129,6 +129,21 @@ session/application/
 - `effects/domain/execute/` — executeCatalogEffect fatiado (resource/table/structured + facade).
 - Specs: fixtures `CatalogEffect` com `combatFlag`/`companion` null.
 
+## Reorganização `src/entities` por domínio (2026-09-11)
+
+```
+src/entities/
+  effect/              # PhbEffect + satélites
+  class/               # class-ref, feature, progression, metamagic, …
+  subclass-feature/    # subclass-ref, gates, manobras, masks, …
+  species/ heritage/ equipment/ spell/ feat/
+  companion/ template/ reference/
+  views/               # ViewEntity (inalterado flat)
+```
+
+- Alias: `@entities/<domínio>/phb-….entity` (tsconfig/jest já resolvem `*` em profundidade).
+- TypeORM: `autoLoadEntities` — sem glob; módulos `forFeature` atualizados via imports.
+
 ## Padrão do piloto (repetir)
 
 1. Schema SSOT + migration forward

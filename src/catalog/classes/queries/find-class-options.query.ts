@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   PaginatedResponseDto,

@@ -1,5 +1,5 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { PhbSpellRef } from './phb-spell-ref.entity';
+import { PhbSpellRef } from '../spell/phb-spell-ref.entity';
 import { PhbSubclassRef } from './phb-subclass-ref.entity';
 
 @Entity({ schema: 'rpg', name: 'phb_subclass_precaution_spell' })

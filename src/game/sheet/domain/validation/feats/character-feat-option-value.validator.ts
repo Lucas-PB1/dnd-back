@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';

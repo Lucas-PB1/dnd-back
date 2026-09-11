@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import type { Repository } from 'typeorm';
 import type { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
-import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/domain/ability-scores';
 import { resolveEncounterCreatureName } from '../../domain/resolve-encounter-creature-name';
 import type { AddEncounterCreatureDto } from '../../dto/encounter.dto';

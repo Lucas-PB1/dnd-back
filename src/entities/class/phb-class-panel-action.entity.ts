@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PhbClassRef } from './phb-class-ref.entity';
-import { PhbSubclassRef } from './phb-subclass-ref.entity';
+import { PhbSubclassRef } from '../subclass-feature/phb-subclass-ref.entity';
 
 @Entity({ schema: 'rpg', name: 'phb_class_panel_action' })
 export class PhbClassPanelAction {

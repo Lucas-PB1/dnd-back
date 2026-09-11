@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbHeritage } from '@entities/phb-heritage.entity';
+import { PhbHeritage } from '@entities/heritage/phb-heritage.entity';
 import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,

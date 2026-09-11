@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { PlayerCharacterItem } from '../player-character-item.entity';
 import { DmgArtifactRandomProperty } from '../dmg-artifact-random-property.entity';

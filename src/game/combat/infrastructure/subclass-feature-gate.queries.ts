@@ -1,6 +1,6 @@
 import type { DataSource } from 'typeorm';
-import { PhbSubclassFeatureGate } from '@entities/phb-subclass-feature-gate.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbSubclassFeatureGate } from '@entities/subclass-feature/phb-subclass-feature-gate.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 
 export async function loadSubclassFeatureGates(
   dataSource: DataSource,

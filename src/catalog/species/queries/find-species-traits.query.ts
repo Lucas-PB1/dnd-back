@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSpeciesTrait } from '@entities/phb-species-trait.entity';
+import { PhbSpeciesTrait } from '@entities/species/phb-species-trait.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   PaginatedResponseDto,

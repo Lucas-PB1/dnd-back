@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbHeritage } from '@entities/phb-heritage.entity';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritage } from '@entities/heritage/phb-heritage.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-choices.entity';
 import { VPhbHeritageTraditionalBuild } from '@entities/views/v-phb-heritage-traditional-build.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';

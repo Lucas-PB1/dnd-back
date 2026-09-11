@@ -1,5 +1,5 @@
 import type { DataSource } from 'typeorm';
-import { PhbDamageType } from '@entities/phb-damage-type.entity';
+import { PhbDamageType } from '@entities/reference/phb-damage-type.entity';
 
 export async function loadDamageTypeLabels(
   dataSource: DataSource,

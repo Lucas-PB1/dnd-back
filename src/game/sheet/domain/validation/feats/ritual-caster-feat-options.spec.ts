@@ -1,4 +1,4 @@
-import type { PhbOptionDef } from '@entities/phb-option.entity';
+import type { PhbOptionDef } from '@entities/reference/phb-option.entity';
 import { asDep } from '@common/testing/as-dep';
 import { requiredFeatOptionDefsForInstance } from './ritual-caster-feat-options';
 

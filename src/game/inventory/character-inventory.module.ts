@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '@catalog/catalog.module';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import { CombatModule } from '../combat/combat.module';
 import { EffectsModule } from '../effects/effects.module';

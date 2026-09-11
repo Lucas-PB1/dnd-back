@@ -7,12 +7,12 @@ jest.mock('@game/sheet/infrastructure/queries/feat-option.queries', () => ({
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
-import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
-import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
 import { CharacterClassOptionsValidator } from './character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './character-species-choices.validator';
 import { CharacterHeritageChoicesValidator } from './character-heritage-choices.validator';

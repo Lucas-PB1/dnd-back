@@ -1,6 +1,6 @@
 import { FindLanguagesQuery } from './find-languages.query';
 import type { ReferenceMapper } from '../reference.mapper';
-import type { PhbLanguage } from '@entities/phb-language.entity';
+import type { PhbLanguage } from '@entities/reference/phb-language.entity';
 import { asDep } from '@common/testing/as-dep';
 
 function languageRow(overrides: Partial<PhbLanguage> = {}): PhbLanguage {

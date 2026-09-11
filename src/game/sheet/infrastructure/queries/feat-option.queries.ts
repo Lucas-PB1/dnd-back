@@ -1,8 +1,8 @@
 import { DataSource, In } from 'typeorm';
 import { ClassProficienciesQuery } from '@catalog/game-port';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
-import { PhbItem } from '@entities/phb-item.entity';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 
 export async function loadClassSavingThrowSlugs(

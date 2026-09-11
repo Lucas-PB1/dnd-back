@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { GameSharedModule } from '../shared/game-shared.module';

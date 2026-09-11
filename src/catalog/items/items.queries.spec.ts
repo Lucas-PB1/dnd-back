@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PhbItem } from '@entities/phb-item.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { ItemResponseDto } from './dto/item-response.dto';
 import { ItemsMapper } from './items.mapper';
 import { FindItemBySlugQuery } from './queries/find-item-by-slug.query';

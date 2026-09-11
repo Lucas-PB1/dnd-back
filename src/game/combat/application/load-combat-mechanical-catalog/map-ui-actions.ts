@@ -1,4 +1,4 @@
-import type { PhbClassPanelAction } from '@entities/phb-class-panel-action.entity';
+import type { PhbClassPanelAction } from '@entities/class/phb-class-panel-action.entity';
 import type { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
 import type {
   ActionEconomyBucket,

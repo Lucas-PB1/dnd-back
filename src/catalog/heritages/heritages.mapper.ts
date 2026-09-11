@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PhbHeritage } from '@entities/phb-heritage.entity';
-import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { PhbHeritage } from '@entities/heritage/phb-heritage.entity';
+import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-choices.entity';
 import { DEFAULT_PHB_EDITION_SLUG } from '@common/dto/pagination.dto';
 import { HeritageResponseDto } from './dto/heritage-response.dto';

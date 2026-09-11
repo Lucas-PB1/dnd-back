@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { requireFound } from '@common/require-found';
-import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
+import { PhbFightingStyle } from '@entities/class/phb-fighting-style.entity';
 import { FightingStyleResponseDto } from '../dto/fighting-style-response.dto';
 import { FightingStylesMapper } from '../fighting-styles.mapper';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
 import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,

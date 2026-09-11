@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbEffect } from '@entities/phb-effect.entity';
-import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbEffect } from '@entities/effect/phb-effect.entity';
+import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
+import { PhbSpecies } from '@entities/species/phb-species.entity';
 import { EffectSummaryResponseDto } from '../dto/effect-summary-response.dto';
 
 export type CatalogEffectOwnerKind = 'feat' | 'species';

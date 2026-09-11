@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
-import { PhbClassRef } from '@entities/phb-class-ref.entity';
+import { PhbClassRef } from '@entities/class/phb-class-ref.entity';
 import { VPhbClass } from '@entities/views/v-phb-class.entity';
-import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/class/phb-class-progression.entity';
 import type { ClassProgressionMasteryRow } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
 
 export async function resolveSubclassUnlockLevel(

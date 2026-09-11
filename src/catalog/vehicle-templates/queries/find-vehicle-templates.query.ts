@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
+import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 import { VPhbVehicleTemplateBundle } from '@entities/views/v-phb-vehicle-template-bundle.entity';
 import {
   applyIlikeSearch,

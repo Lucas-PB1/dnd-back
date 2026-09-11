@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbMetamagic } from '@entities/phb-metamagic.entity';
+import { PhbMetamagic } from '@entities/class/phb-metamagic.entity';
 import { MetamagicResponseDto } from '../dto/metamagic-response.dto';
 
 @Injectable()

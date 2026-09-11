@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
-import { PhbWeaponProperty } from '@entities/phb-weapon-property.entity';
+import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
+import { PhbWeaponProperty } from '@entities/equipment/phb-weapon-property.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,

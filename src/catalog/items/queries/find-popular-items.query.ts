@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbItemCatalogStats } from '@entities/phb-item-catalog-stats.entity';
+import { PhbItemCatalogStats } from '@entities/equipment/phb-item-catalog-stats.entity';
 import { ItemsMapper } from '../items.mapper';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL } from '../domain/class-granted-catalog-item';

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogLookupModule } from '@catalog/catalog-lookup.module';
-import { PhbSkill } from '@entities/phb-skill.entity';
+import { PhbSkill } from '@entities/reference/phb-skill.entity';
 import { SkillsController } from './skills.controller';
 import { SkillsMapper } from './skills.mapper';
 import { FindSkillsQuery } from './queries/find-skills.query';
