@@ -36,6 +36,7 @@ export function computePassivePerception(
     subclassOptions?: readonly { optionKey: string; valueId: string }[];
     classSlug?: string | null;
     level?: number;
+    jackOfAllTradesUnlockLevel?: number | null;
   },
 ): number {
   const rank = skillProficiencyRank('perception', skillSources);
@@ -73,6 +74,7 @@ export function computeDerivedStats(input: {
   subclassOptions?: readonly { optionKey: string; valueId: string }[];
   classSlug?: string | null;
   level?: number;
+  jackOfAllTradesUnlockLevel?: number | null;
 }): CharacterDerivedStats {
   return {
     abilityModifiers: computeAbilityModifiers(input.abilityScores),
@@ -90,6 +92,7 @@ export function computeDerivedStats(input: {
         subclassOptions: input.subclassOptions,
         classSlug: input.classSlug,
         level: input.level,
+        jackOfAllTradesUnlockLevel: input.jackOfAllTradesUnlockLevel,
       },
     ),
   };

@@ -262,6 +262,7 @@ species/grim-hollow/phb_species.heritage-playable.sql
 catalog/grim-hollow/phb_edition.citation-cap2.sql
 class/grim-hollow/phb_class.monster-hunter.sql
 class/phb/phb_class.fighting-style-unlock.sql
+class/phb/phb_class.jack-of-all-trades.sql
 class/grim-hollow/phb_class.monster-hunter-proficiency.sql
 class/grim-hollow/phb_class.monster-hunter-progression.sql
 class/phb/phb_class_progression.asi-or-feat.sql
@@ -421,6 +422,7 @@ economy/phb/phb_companion.tracker.sql
 creature/phb/seed.primal-companion-earth.sql
 creature/phb/phb_vehicles.all.sql
 creature/phb/seed.primal-companion-templates.sql
+creature/phb/phb_companion_profile.all.sql
 creature/phb/seed.nwb-longships.sql
 creature/phb/seed.nwb-bestiary.sql
 creature/phb/phb_mounts.all.sql

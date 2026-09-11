@@ -48,9 +48,9 @@ describe('class-expertise-slots', () => {
     expect(isClassExpertiseOptionKey('divineOrder')).toBe(false);
   });
 
-  it('gives Jack of All Trades to Bard 2+', () => {
-    expect(hasJackOfAllTrades('bard', 1)).toBe(false);
-    expect(hasJackOfAllTrades('bard', 2)).toBe(true);
-    expect(hasJackOfAllTrades('rogue', 5)).toBe(false);
+  it('gives Jack of All Trades when level meets catalog unlock', () => {
+    expect(hasJackOfAllTrades(2, 1)).toBe(false);
+    expect(hasJackOfAllTrades(2, 2)).toBe(true);
+    expect(hasJackOfAllTrades(null, 5)).toBe(false);
   });
 });

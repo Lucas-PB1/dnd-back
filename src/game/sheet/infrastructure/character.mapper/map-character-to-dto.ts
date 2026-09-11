@@ -30,6 +30,7 @@ import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { resolveAggregatedHeritageTraits } from '../../domain/heritage/resolve-aggregated-heritage-traits';
 import { resolveSheetMeta } from './resolve-sheet-meta';
 import { loadGatedSpeciesEffects, type LoadEffectCatalog } from '@game/effects';
+import { resolveJackOfAllTradesLevel } from '@game/sheet/infrastructure/queries/class-meta.queries';
 
 export type MapCharacterToDtoDeps = {
   dataSource: DataSource;
@@ -90,6 +91,10 @@ export async function mapCharacterToDto(
     speciesSlug: row.speciesSlug,
     speciesChoices: loaded.speciesChoices,
   });
+  const jackOfAllTradesUnlockLevel = await resolveJackOfAllTradesLevel(
+    deps.dataSource,
+    row.classSlug,
+  );
   const derived = computeDerivedStats({
     abilityScores: effectiveAbilityScores,
     proficiencyBonus,
@@ -103,6 +108,7 @@ export async function mapCharacterToDto(
     subclassOptions: loaded.subclassOptions,
     classSlug: row.classSlug,
     level: row.level,
+    jackOfAllTradesUnlockLevel,
   });
   const sizeCategory = resolveSizeCategory(
     speciesSize ?? undefined,

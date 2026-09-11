@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import {
+  PhbCompanionProfile,
+  PhbCompanionTemplateMap,
+} from '@entities/phb-companion-profile.entity';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbVehicleTemplate } from '@entities/phb-vehicle-template.entity';
 import { CatalogModule } from '@catalog/catalog.module';
@@ -57,6 +62,9 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
       PhbItem,
       PhbVehicleTemplate,
       PhbCreatureTemplate,
+      PhbCompanionProfile,
+      PhbCompanionTemplateMap,
+      PhbSubclassRef,
     ]),
   ],
   controllers: [

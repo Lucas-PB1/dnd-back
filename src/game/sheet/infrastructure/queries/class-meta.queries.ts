@@ -27,6 +27,18 @@ export async function resolveFightingStyleUnlockLevel(
   return row?.fightingStyleUnlockLevel ?? null;
 }
 
+/** Nível do Pau pra Toda Obra; null = classe sem a característica. */
+export async function resolveJackOfAllTradesLevel(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<number | null> {
+  const row = await dataSource.getRepository(PhbClassRef).findOne({
+    where: { slug: classSlug },
+    select: ['jackOfAllTradesLevel'],
+  });
+  return row?.jackOfAllTradesLevel ?? null;
+}
+
 export async function loadWeaponMasteryProgression(
   dataSource: DataSource,
   classSlug: string,

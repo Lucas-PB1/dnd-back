@@ -13,7 +13,9 @@ export function skillProficiencyRank(
   if (expertise.has(skillSlug)) return 'expertise';
   const proficient = new Set(collectProficientSkillSlugs(input));
   if (proficient.has(skillSlug)) return 'proficient';
-  if (hasJackOfAllTrades(input.classSlug, input.level ?? 0)) return 'jack';
+  if (hasJackOfAllTrades(input.jackOfAllTradesUnlockLevel, input.level ?? 0)) {
+    return 'jack';
+  }
   return 'none';
 }
 

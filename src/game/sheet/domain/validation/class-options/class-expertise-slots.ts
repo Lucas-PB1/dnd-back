@@ -27,10 +27,10 @@ export function classExpertiseSlotsNewAtLevel(
   return slots.filter((slot) => slot.unlockLevel === level);
 }
 
-/** Pau pra Toda Obra — Bardo nível 2+ (ainda hardcoded; candidato SQL futuro). */
+/** Pau pra Toda Obra — predicado puro sobre unlock do catálogo. */
 export function hasJackOfAllTrades(
-  classSlug: string | null | undefined,
+  unlockLevel: number | null | undefined,
   level: number,
 ): boolean {
-  return classSlug === 'bard' && level >= 2;
+  return unlockLevel != null && level >= unlockLevel;
 }

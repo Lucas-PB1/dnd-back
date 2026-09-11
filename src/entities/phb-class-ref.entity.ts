@@ -15,6 +15,9 @@ export class PhbClassRef {
   @Column({ name: 'fighting_style_unlock_level', type: 'int', nullable: true })
   fightingStyleUnlockLevel!: number | null;
 
+  @Column({ name: 'jack_of_all_trades_level', type: 'int', nullable: true })
+  jackOfAllTradesLevel!: number | null;
+
   @Column({ name: 'weapon_mastery_eligibility', type: 'text', nullable: true })
   weaponMasteryEligibility!: string | null;
 }

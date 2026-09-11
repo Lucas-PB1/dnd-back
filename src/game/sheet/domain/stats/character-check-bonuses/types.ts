@@ -48,4 +48,6 @@ export type SkillBonusSources = {
   subclassOptions?: readonly SubclassOptionLike[];
   classSlug?: string | null;
   level?: number;
+  /** Unlock do catálogo (`phb_class.jack_of_all_trades_level`); null = sem a feature. */
+  jackOfAllTradesUnlockLevel?: number | null;
 };

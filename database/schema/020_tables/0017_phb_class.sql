@@ -16,6 +16,9 @@ CREATE TABLE rpg.phb_class (
   fighting_style_unlock_level INTEGER CHECK (
     fighting_style_unlock_level IS NULL OR fighting_style_unlock_level >= 1
   ),
+  jack_of_all_trades_level INTEGER CHECK (
+    jack_of_all_trades_level IS NULL OR jack_of_all_trades_level >= 1
+  ),
   subclass_label TEXT,
   skill_choice_count INTEGER CHECK (skill_choice_count >= 1),
   skill_choice_from TEXT CHECK (skill_choice_from IN ('any')),

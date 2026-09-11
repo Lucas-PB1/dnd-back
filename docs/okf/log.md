@@ -38,3 +38,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Migration forward: `database/migrations/20260911_phb_class_expertise_option.sql`.
 - Game: `loadClassExpertiseSlots` / `loadExpertiseSkillWhitelist`; predicados puros; feature options excluem `expertiseSkill*`.
 - Jack of All Trades permanece em TS (dívida).
+
+## 2026-09-11 — Onda 2: Jack of All Trades + companion profiles
+
+- Jack: coluna `jack_of_all_trades_level` + seed bard=2; mapper passa unlock para `computeDerivedStats`.
+- Companion: `phb_companion_profile` + `phb_companion_template_map` (JSONB option_matches → template/label).
+- Game: queries async; `resolveCompanionConfig(profile, maps, options)` puro.

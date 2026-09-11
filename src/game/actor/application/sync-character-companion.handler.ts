@@ -8,9 +8,12 @@ import { DataSource, Repository } from 'typeorm';
 import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
-  findCompanionProfile,
   resolveCompanionConfig,
 } from '@game/companion/domain/companion-profiles';
+import {
+  loadCompanionProfileBySubclass,
+  loadCompanionTemplateMaps,
+} from '@game/companion/infrastructure/companion-profile.queries';
 import { loadCharacterSheet } from '@game/sheet/infrastructure/character-sheet/load-character-sheet';
 import { ActorMapper } from '../infrastructure/actor.mapper';
 import { ActorPersistenceService } from '../infrastructure/actor-persistence.service';
@@ -43,7 +46,10 @@ export class SyncCharacterCompanionHandler {
       characterId,
       'write',
     );
-    const profile = findCompanionProfile(character.subclassSlug);
+    const profile = await loadCompanionProfileBySubclass(
+      this.dataSource,
+      character.subclassSlug,
+    );
     if (!profile) {
       throw new BadRequestException(
         'Esta subclasse não possui companheiro vinculado à ficha',
@@ -60,8 +66,13 @@ export class SyncCharacterCompanionHandler {
       characterId,
       character.backgroundSlug,
     );
+    const maps = await loadCompanionTemplateMaps(
+      this.dataSource,
+      profile.profileId,
+    );
     const config = resolveCompanionConfig(
-      character.subclassSlug,
+      profile,
+      maps,
       sheet.subclassOptions,
     );
     if (!config) {

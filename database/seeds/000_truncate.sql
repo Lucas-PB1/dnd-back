@@ -2,6 +2,8 @@
 -- Lote C: updated for phb_option_def/value unificado
 
 TRUNCATE TABLE
+  rpg.phb_companion_template_map,
+  rpg.phb_companion_profile,
   rpg.phb_effect,
   rpg.phb_metamagic,
   rpg.phb_eldritch_invocation,

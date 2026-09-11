@@ -9,6 +9,10 @@ import {
   isCompanionCommandSlug,
 } from '@game/companion/domain/companion-commands';
 import { resolveCompanionConfig } from '@game/companion/domain/companion-profiles';
+import {
+  loadCompanionProfileBySubclass,
+  loadCompanionTemplateMaps,
+} from '@game/companion/infrastructure/companion-profile.queries';
 import { loadCharacterSheet } from '@game/sheet/infrastructure/character-sheet/load-character-sheet';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
@@ -73,8 +77,16 @@ export async function resolveCompanionCommand(
     character.id,
     character.backgroundSlug,
   );
-  const config = resolveCompanionConfig(
+  const profile = await loadCompanionProfileBySubclass(
+    deps.dataSource,
     character.subclassSlug,
+  );
+  const maps = profile
+    ? await loadCompanionTemplateMaps(deps.dataSource, profile.profileId)
+    : [];
+  const config = resolveCompanionConfig(
+    profile,
+    maps,
     sheet.subclassOptions,
   );
 

@@ -120,7 +120,7 @@ describe('Classes queries', () => {
 
   const sampleFeature: PhbClassFeature = {
     id: '1',
-    klass: { id: '10', slug: 'bard', subclassUnlockLevel: 3, fightingStyleUnlockLevel: null, weaponMasteryEligibility: null },
+    klass: { id: '10', slug: 'bard', subclassUnlockLevel: 3, fightingStyleUnlockLevel: null, jackOfAllTradesLevel: 2, weaponMasteryEligibility: null },
     level: 1,
     name: 'Conjuração',
     description: 'Você aprendeu a conjurar magias.',
@@ -129,7 +129,7 @@ describe('Classes queries', () => {
   const sampleProgression: PhbClassProgression = {
     classId: '11',
     level: 1,
-    klass: { id: '11', slug: 'wizard', subclassUnlockLevel: 3, fightingStyleUnlockLevel: null, weaponMasteryEligibility: null },
+    klass: { id: '11', slug: 'wizard', subclassUnlockLevel: 3, fightingStyleUnlockLevel: null, jackOfAllTradesLevel: null, weaponMasteryEligibility: null },
     proficiencyBonus: 2,
     cantrips: 3,
     preparedSpells: 4,

@@ -17,16 +17,17 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Desbloqueio Estilo de Luta por classe | `rpg.phb_class.fighting_style_unlock_level` + seed + `resolveFightingStyleUnlockLevel` | **migrado** |
 | ASI / feat levels por classe | `rpg.phb_class_progression.asi_or_feat` + seed + `loadAsiOrFeatLevels` | **migrado** |
 | Expertise slots / níveis | `phb_option_def` (`expertiseSkill*`) + whitelist wizard em `option_value` | **migrado** |
+| Jack of All Trades (bard≥2) | `phb_class.jack_of_all_trades_level` + `resolveJackOfAllTradesLevel` | **migrado** |
+| Companion profiles (slug→config) | `phb_companion_profile` + `phb_companion_template_map` | **migrado** |
 
 ## Dívida (próximos candidatos)
 
 | Prioridade | Achado | Arquivo(s) tipicos | Casa SQL sugerida |
 | --- | --- | --- | --- |
-| média | Jack of All Trades (bard≥2) | `class-expertise-slots.ts` | effect / class feature flag |
-| média | Companion profiles (slug→config) | `companion/domain/companion-profiles.ts` | tabela companion / effects |
 | média | Manikin AC / ancestry damage maps | `combat/domain/species/*` | effects (`ac_*`, damage type) |
 | média | Initiative gates / bloodhound etc. | duel / combat notes | effects / subclass features |
 | baixa | Notes de combate por nível | textos em TS | `combat_note` effect / catalog text |
+| baixa | Companion command labels | `companion-commands.ts` | catalog / i18n |
 
 Detalhe da auditoria completa ficou no transcript da sessão; este concept é o índice vivo.
 

@@ -102,6 +102,7 @@ describe('character-check-bonuses expertise sources', () => {
       skillProficiencyRank('athletics', {
         classSlug: 'bard',
         level: 2,
+        jackOfAllTradesUnlockLevel: 2,
         classSkillSlugs: [],
         backgroundSkillSlugs: [],
       }),

@@ -33,7 +33,9 @@ timestamp: 2026-09-11
 | Migrar 1 caso piloto (fighting style unlock) | feito — coluna + seed + query + validator |
 | Migrar ASI / feat levels | feito — `asi_or_feat` em progression + `loadAsiOrFeatLevels` |
 | Migrar expertise slots | feito — `phb_option_def` + `loadClassExpertiseSlots` |
-| Próximos hardcodes (companion, …) | pendente — ver audit |
+| Migrar Jack of All Trades | feito — `jack_of_all_trades_level` |
+| Migrar companion profiles | feito — `phb_companion_profile` + template map |
+| Próximos hardcodes (manikin, initiative, …) | pendente — ver audit |
 | Reforçar `@catalog/game-port` se novos helpers | sob demanda |
 
 **Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.
