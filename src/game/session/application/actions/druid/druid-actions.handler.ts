@@ -11,11 +11,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import {
-  applyMoonCombatWildShapeTableAction,
-  applyRestoreLunarStepTableAction,
-} from '../../core/apply-wild-resurgence-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class DruidActionsHandler {
@@ -41,20 +37,6 @@ export class DruidActionsHandler {
       throw new BadRequestException('Druid action is not available');
     }
 
-    if (dto.actionSlug === 'moon-combat-wild-shape') {
-      return applyMoonCombatWildShapeTableAction({
-        state: this.state,
-        character,
-      });
-    }
-    if (dto.actionSlug === 'restore-lunar-step') {
-      return applyRestoreLunarStepTableAction({
-        state: this.state,
-        character,
-        slotLevel: dto.slotLevel,
-      });
-    }
-
     return applyDeclaredEconomyTableAction(
       {
         state: this.state,
@@ -67,6 +49,6 @@ export class DruidActionsHandler {
       {
         slotLevel: dto.slotLevel,
       },
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

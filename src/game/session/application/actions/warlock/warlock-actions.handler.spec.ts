@@ -106,6 +106,18 @@ const WARLOCK_ECONOMY = [
     featSlug: null,
     description: 'Inferno.',
   },
+  {
+    id: 'warlock-invoke-pact-weapon',
+    name: 'Invocar Arma de Pacto',
+    economy: 'bonus' as const,
+    classSlug: 'warlock',
+    minLevel: 1,
+    alwaysSpendsResource: false,
+    tableAction: 'invoke-pact-weapon',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Pacto.',
+  },
 ];
 
 function effect(
@@ -421,6 +433,13 @@ describe('WarlockActionsHandler', () => {
     assertCanBindPact.assertCharacterCanUsePactBlade.mockRejectedValueOnce(
       new BadRequestException('Requer a invocação Pacto da Lâmina'),
     );
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'bind_pact_weapon',
+        actionSlug: 'invoke-pact-weapon',
+        ownerKind: 'class',
+      }),
+    ]);
 
     await expect(
       handler.useTableAction('user-1', 'war-1', {
@@ -432,6 +451,14 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('binds and notes when invoking a pact weapon', async () => {
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'bind_pact_weapon',
+        actionSlug: 'invoke-pact-weapon',
+        ownerKind: 'class',
+      }),
+    ]);
+
     const result = await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'invoke-pact-weapon',
       itemSlug: 'longsword',
@@ -452,6 +479,13 @@ describe('WarlockActionsHandler', () => {
 
   it('uses already-marked pact weapon when itemSlug is omitted', async () => {
     inventory.findPactWeaponSlug.mockResolvedValueOnce('dagger');
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'bind_pact_weapon',
+        actionSlug: 'invoke-pact-weapon',
+        ownerKind: 'class',
+      }),
+    ]);
 
     await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'invoke-pact-weapon',

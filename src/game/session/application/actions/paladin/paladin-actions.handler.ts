@@ -10,7 +10,7 @@ import {
   UsePaladinTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class PaladinActionsHandler {
@@ -47,6 +47,6 @@ export class PaladinActionsHandler {
       character,
       dto.actionSlug,
       amount != null ? { amount } : {},
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

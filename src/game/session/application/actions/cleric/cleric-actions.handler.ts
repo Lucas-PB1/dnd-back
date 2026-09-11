@@ -10,7 +10,7 @@ import {
   UseClericTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class ClericActionsHandler {
@@ -43,6 +43,6 @@ export class ClericActionsHandler {
       },
       character,
       dto.actionSlug,
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

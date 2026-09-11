@@ -8,14 +8,8 @@ import { parseHitDieLabel } from '@game/sheet/domain/stats/hit-points.calc';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
-import { applyFeatEconomyTableAction } from '../../core/apply-feat-economy-table-action';
-
-export type UseFeatTableActionDto = {
-  featSlug: string;
-  actionSlug: string;
-  itemSlug?: string;
-  enabled?: boolean;
-};
+import { UseFeatTableActionDto } from '@game/session/dto/table-actions/table-actions-feat.dto';
+import { applyFeatEconomyTableAction } from '../../table-actions/feat';
 
 @Injectable()
 export class FeatEconomyActionsHandler {

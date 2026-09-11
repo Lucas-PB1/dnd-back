@@ -135,6 +135,31 @@ const DRUID_EFFECTS: CatalogEffect[] = [
     actionSlug: 'land-aid',
     dice: { die: '2d6' },
   } as CatalogEffect,
+  {
+    kind: 'moon_combat_wild_shape',
+    ownerKind: 'subclass',
+    ownerSlug: 'moon',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'moon-combat-wild-shape',
+    note: { note: 'Forma Selvagem de Combate' },
+  } as CatalogEffect,
+  {
+    kind: 'wild_resurgence',
+    ownerKind: 'class',
+    ownerSlug: 'druid',
+    unlockLevel: 5,
+    trigger: 'on_table_action',
+    actionSlug: 'wild-resurgence-slot',
+  } as CatalogEffect,
+  {
+    kind: 'set_starry_form',
+    ownerKind: 'subclass',
+    ownerSlug: 'stars',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'starry-form-archer',
+  } as CatalogEffect,
 ];
 
 describe('DruidActionsHandler', () => {

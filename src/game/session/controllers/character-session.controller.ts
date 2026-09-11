@@ -21,13 +21,15 @@ import {
 import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
 import { CurrentUser } from '@identity/decorators/current-user.decorator';
 import { AuthUser } from '@identity/auth-user';
-import { GetCharacterStateQuery } from '../application/core/get-character-state.query';
-import { PatchCharacterStateHandler } from '../application/core/patch-character-state.handler';
-import { CastSpellHandler } from '../application/core/cast-spell.handler';
-import { RestHandler } from '../application/core/rest.handler';
-import { UseClassResourceHandler } from '../application/core/use-class-resource.handler';
-import { RecoverClassResourceHandler } from '../application/core/recover-class-resource.handler';
-import { TransferInspirationHandler } from '../application/core/transfer-inspiration.handler';
+import {
+  CastSpellHandler,
+  GetCharacterStateQuery,
+  PatchCharacterStateHandler,
+  RecoverClassResourceHandler,
+  RestHandler,
+  TransferInspirationHandler,
+  UseClassResourceHandler,
+} from '../application/session-commands';
 import {
   CastSpellDto,
   CastSpellResponseDto,

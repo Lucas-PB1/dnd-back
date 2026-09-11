@@ -296,3 +296,30 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Realidade Ilusória: Ação Bônus — enquanto uma Ilusão conjurada com espaço estiver ativa, torne real 1 objeto inanimado não mágico dela por 1 minuto (não causa dano nem condições).'
 FROM ins;
+
+-- Escudo / Giga-Míssil arm/disarm (apply missile_mage_arm)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'missile_mage_arm'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, v.action_slug, v.unlock_level, 1, v.label
+  FROM sc
+  CROSS JOIN (VALUES
+    ('arm-missile-shield', 10, 'Armar Escudo de Mísseis'),
+    ('disarm-missile-shield', 10, 'Desarmar Escudo de Mísseis'),
+    ('arm-giga-missile', 14, 'Armar Giga-Míssil'),
+    ('disarm-giga-missile', 14, 'Desarmar Giga-Míssil')
+  ) AS v(action_slug, unlock_level, label)
+  RETURNING id, action_slug
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  CASE action_slug
+    WHEN 'arm-missile-shield' THEN 'Arme Escudo de Mísseis antes do próximo Mísseis Mágicos.'
+    WHEN 'disarm-missile-shield' THEN 'Desarme Escudo de Mísseis na ficha.'
+    WHEN 'arm-giga-missile' THEN 'Arme Giga-Míssil antes do próximo Mísseis Mágicos.'
+    ELSE 'Desarme Giga-Míssil na ficha.'
+  END
+FROM ins;

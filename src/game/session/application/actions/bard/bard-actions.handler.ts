@@ -10,7 +10,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class BardActionsHandler {
@@ -44,6 +44,6 @@ export class BardActionsHandler {
       character,
       dto.actionSlug,
       dto.masks != null ? { masks: dto.masks } : {},
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

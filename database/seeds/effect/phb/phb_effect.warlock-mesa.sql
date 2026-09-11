@@ -249,3 +249,20 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Combatente Clarividente (−1 uso): ao formar ligação telepática com Mente Desperta, o alvo faz salvaguarda de Sabedoria. Em falha, Desvantagem em ataques contra você e Vantagem nos seus ataques contra ele. Recarrega em Descanso Curto/Longo ou ao gastar um Slot de Pacto.'
 FROM ins;
+
+-- Invocar Arma de Pacto
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'bind_pact_weapon'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'invoke-pact-weapon', 1, 1,
+         'Invocar Arma de Pacto'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Invocar Arma de Pacto: vincula e equipa arma corpo a corpo do inventário (Carisma no ataque/dano).'
+FROM ins;

@@ -62,6 +62,14 @@ const GUNSLINGER_ECONOMY = [
 
 const GUNSLINGER_EFFECTS: CatalogEffect[] = [
   {
+    kind: 'catalog_maneuver',
+    ownerKind: 'class',
+    ownerSlug: 'gunslinger',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'use-maneuver',
+  } as CatalogEffect,
+  {
     kind: 'recover_resource',
     resourceSlug: 'risk',
     ownerKind: 'class',
@@ -71,6 +79,22 @@ const GUNSLINGER_EFFECTS: CatalogEffect[] = [
     actionSlug: 'recover-risk',
     numeric: { amountFormula: 'fixed', flat: 1 },
     note: { note: 'Dado de Risco' },
+  } as CatalogEffect,
+  {
+    kind: 'firearm_reload',
+    ownerKind: 'class',
+    ownerSlug: 'gunslinger',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'reload-firearm',
+  } as CatalogEffect,
+  {
+    kind: 'firearm_fire',
+    ownerKind: 'class',
+    ownerSlug: 'gunslinger',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'fire-chamber',
   } as CatalogEffect,
 ];
 
@@ -118,7 +142,11 @@ describe('GunslingerActionsHandler', () => {
         { slug: 'risk', remaining: 4, max: 4, name: 'Risco', used: 0 },
       ],
     });
-    effectCatalog.load.mockResolvedValue(GUNSLINGER_EFFECTS);
+    effectCatalog.load.mockImplementation(({ actionSlug }: { actionSlug?: string }) =>
+      Promise.resolve(
+        GUNSLINGER_EFFECTS.filter((effect) => effect.actionSlug === actionSlug),
+      ),
+    );
     handler = new GunslingerActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),

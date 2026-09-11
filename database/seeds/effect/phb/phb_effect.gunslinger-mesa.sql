@@ -44,13 +44,13 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+  SELECT v.kind::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
          'on_table_action'::rpg.effect_trigger, v.action_slug, 2, 1, v.label
   FROM cls
   CROSS JOIN (VALUES
-    ('reload-firearm', 'Recarregar'),
-    ('fire-chamber', 'Disparar')
-  ) AS v(action_slug, label)
+    ('firearm_reload', 'reload-firearm', 'Recarregar'),
+    ('firearm_fire', 'fire-chamber', 'Disparar')
+  ) AS v(kind, action_slug, label)
   RETURNING id, action_slug
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)

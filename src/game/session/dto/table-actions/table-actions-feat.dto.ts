@@ -1,7 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { TableActionOptionsDto } from './table-action-options.dto';
 
-export class UseFeatTableActionDto {
+export class UseFeatTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ example: 'healer' })
   @IsString()
   featSlug!: string;
@@ -9,14 +10,6 @@ export class UseFeatTableActionDto {
   @ApiProperty({ example: 'healer-combat-medic' })
   @IsString()
   actionSlug!: string;
-
-  @ApiPropertyOptional({
-    example: 'escada',
-    description: 'Item da tabela Fabricação Rápida (artisan-craft)',
-  })
-  @IsOptional()
-  @IsString()
-  itemSlug?: string;
 
   @ApiPropertyOptional({
     example: true,

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
-import { LoadEffectCatalog } from '@game/effects';
 import { isWizardClass } from '@game/combat/domain/wizard';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   TableActionResponseDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
@@ -10,11 +10,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import {
-  applyMissileMageArmTableAction,
-  parseMissileMageArmAction,
-} from '../../core/apply-missile-mage-arm-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class WizardActionsHandler {
@@ -39,15 +35,6 @@ export class WizardActionsHandler {
       throw new BadRequestException('Wizard action is not available');
     }
 
-    const missileArm = parseMissileMageArmAction(dto.actionSlug);
-    if (missileArm) {
-      return applyMissileMageArmTableAction({
-        state: this.state,
-        character,
-        ...missileArm,
-      });
-    }
-
     return applyDeclaredEconomyTableAction(
       {
         state: this.state,
@@ -56,6 +43,6 @@ export class WizardActionsHandler {
       },
       character,
       dto.actionSlug,
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

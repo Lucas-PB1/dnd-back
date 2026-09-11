@@ -1,5 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsIn, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsIn } from 'class-validator';
+import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const CLERIC_TABLE_ACTION_SLUGS = [
   'divine-spark-heal',
@@ -26,7 +27,7 @@ const CLERIC_TABLE_ACTION_SLUGS = [
   'intertwined-fate',
 ] as const;
 
-export class UseClericTableActionDto {
+export class UseClericTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: CLERIC_TABLE_ACTION_SLUGS })
   @IsIn(CLERIC_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof CLERIC_TABLE_ACTION_SLUGS)[number];
@@ -55,18 +56,8 @@ const BARD_TABLE_ACTION_SLUGS = [
   'battle-sagas',
 ] as const;
 
-export class UseBardTableActionDto {
+export class UseBardTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: BARD_TABLE_ACTION_SLUGS })
   @IsIn(BARD_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof BARD_TABLE_ACTION_SLUGS)[number];
-
-  @ApiPropertyOptional({
-    type: [String],
-    description: 'Máscaras a vestir (set-persona-masks)',
-    example: ['persona-mask-angel'],
-  })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  masks?: string[];
 }

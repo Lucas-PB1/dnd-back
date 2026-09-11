@@ -48,6 +48,8 @@ function effect(
     save: null,
     forcedMovement: null,
     dice: null,
+    combatFlag: null,
+    companion: null,
     ...overrides,
   };
 }

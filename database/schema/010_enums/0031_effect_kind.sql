@@ -116,7 +116,19 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'recover_resource_to_max',
   'check_boost',
   'catalog_maneuver',
+  'catalog_metamagic',
+  'convert_spell_points',
+  'firearm_reload',
+  'firearm_fire',
+  'wild_resurgence',
+  'set_starry_form',
   'strike_self_cost',
   'set_tracker',
-  'start_concentration'
+  'start_concentration',
+  'missile_mage_arm',
+  'resource_fallback_spend',
+  'moon_combat_wild_shape',
+  'restore_resource_from_slot',
+  'bind_pact_weapon',
+  'psychic_blade_attack'
 );

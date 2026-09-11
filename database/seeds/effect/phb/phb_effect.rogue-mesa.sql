@@ -180,3 +180,26 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Usar Dispositivo Mágico: 6 = propriedade não gasta cargas; senão gasta normalmente.'
 FROM fx;
+
+-- Lâmina Psíquica (ataque na mesa)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'psychic_blade_attack'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, v.action_slug, 3, 1, v.label
+  FROM sc
+  CROSS JOIN (VALUES
+    ('psychic-blade-main', 'Lâmina Psíquica'),
+    ('psychic-blade-bonus', 'Lâmina Psíquica adicional')
+  ) AS v(action_slug, label)
+  RETURNING id, action_slug
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  CASE action_slug
+    WHEN 'psychic-blade-main' THEN 'Lâmina Psíquica: rola ataque e dano Psíquico (1d6+DES).'
+    ELSE 'Lâmina Psíquica adicional: rola ataque e dano Psíquico (1d4+DES).'
+  END
+FROM ins;

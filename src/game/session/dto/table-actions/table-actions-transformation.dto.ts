@@ -1,9 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ABERRANT_MUTATION_SLUGS } from '@game/session/domain/transformation/aberrant-mutation';
+import { TableActionOptionsDto } from './table-action-options.dto';
 
 /** `{transformationSlug}/{boonId}` — SSOT em economy/grim-hollow Cap. 6 */
-export class UseTransformationTableActionDto {
+export class UseTransformationTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ example: 'gh-transformation-fiend/infernal-smite' })
   @IsString()
   @IsNotEmpty()

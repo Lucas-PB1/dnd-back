@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsInt, IsOptional, Min } from 'class-validator';
+import { IsIn, IsOptional } from 'class-validator';
+import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const BARBARIAN_TABLE_ACTION_SLUGS = [
   'toggle-rage',
@@ -42,19 +43,10 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'shape-of-the-wild-rage-recover',
 ] as const;
 
-export class UseBarbarianTableActionDto {
+export class UseBarbarianTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: BARBARIAN_TABLE_ACTION_SLUGS })
   @IsIn([...BARBARIAN_TABLE_ACTION_SLUGS])
   actionSlug!: (typeof BARBARIAN_TABLE_ACTION_SLUGS)[number];
-
-  @ApiPropertyOptional({
-    minimum: 1,
-    description: 'Dados d12 de Campeão dos Deuses a gastar',
-  })
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  diceCount?: number;
 
   @ApiPropertyOptional({
     enum: ['strike', 'help', 'dash', 'disengage', 'dodge'],
@@ -62,5 +54,10 @@ export class UseBarbarianTableActionDto {
   })
   @IsOptional()
   @IsIn(['strike', 'help', 'dash', 'disengage', 'dodge'])
-  companionCommand?: 'strike' | 'help' | 'dash' | 'disengage' | 'dodge';
+  declare companionCommand?:
+    | 'strike'
+    | 'help'
+    | 'dash'
+    | 'disengage'
+    | 'dodge';
 }

@@ -108,6 +108,39 @@ const SORCERER_ECONOMY = [
 
 const SORCERER_EFFECTS: CatalogEffect[] = [
   {
+    kind: 'convert_spell_points',
+    ownerKind: 'class',
+    ownerSlug: 'sorcerer',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'convert-slot-1-to-points',
+  } as CatalogEffect,
+  {
+    kind: 'convert_spell_points',
+    ownerKind: 'class',
+    ownerSlug: 'sorcerer',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'convert-points-to-slot-1',
+  } as CatalogEffect,
+  {
+    kind: 'catalog_metamagic',
+    ownerKind: 'class',
+    ownerSlug: 'sorcerer',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'use-metamagic',
+  } as CatalogEffect,
+  {
+    kind: 'resource_fallback_spend',
+    ownerKind: 'class',
+    ownerSlug: 'sorcerer',
+    unlockLevel: 1,
+    trigger: 'on_table_action',
+    actionSlug: 'innate-sorcery',
+    note: { note: 'Feitiçaria Inata' },
+  } as CatalogEffect,
+  {
     kind: 'table_note',
     ownerKind: 'subclass',
     ownerSlug: 'wild-magic',

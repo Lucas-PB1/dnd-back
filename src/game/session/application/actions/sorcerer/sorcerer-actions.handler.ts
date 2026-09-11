@@ -12,11 +12,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import {
-  applyDragonWingsTableAction,
-  applyInnateSorceryTableAction,
-} from '../../core/apply-sorcerer-fallback-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class SorcererActionsHandler {
@@ -43,19 +39,6 @@ export class SorcererActionsHandler {
       throw new BadRequestException('Sorcerer action is not available');
     }
 
-    if (dto.actionSlug === 'innate-sorcery') {
-      return applyInnateSorceryTableAction({
-        state: this.state,
-        character,
-      });
-    }
-    if (dto.actionSlug === 'dragon-wings') {
-      return applyDragonWingsTableAction({
-        state: this.state,
-        character,
-      });
-    }
-
     return applyDeclaredEconomyTableAction(
       {
         state: this.state,
@@ -68,8 +51,8 @@ export class SorcererActionsHandler {
       dto.actionSlug,
       {
         metamagicSlug: dto.metamagicSlug,
-        amount: dto.pointsSpent,
+        amount: dto.pointsSpent ?? dto.amount,
       },
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

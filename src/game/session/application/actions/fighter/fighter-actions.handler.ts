@@ -13,7 +13,7 @@ import type {
   UseFighterTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class FighterActionsHandler {
@@ -91,6 +91,6 @@ export class FighterActionsHandler {
         optionSlug: dto.optionSlug,
         takeLowerBloodCost: dto.takeLowerBloodCost,
       },
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

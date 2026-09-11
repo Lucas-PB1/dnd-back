@@ -187,3 +187,25 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Apply: `check_boost` com dado psi (schedule); `convert_spell_points` via slug; `catalog_metamagic`; manobras/tiros pistoleiro; Forma Estelada / Ressurgimento Selvagem tipados.
 - Handlers POST = `applyDeclaredEconomyTableAction` (+ outliers mínimos). Resolvers mortos removidos.
 - Outliers: Lâmina Psíquica (ataque); Feitiçaria Inata/Asas de Dragão (fallback SP); Lua combate + Restaurar Passo Lunar.
+
+## 2026-09-11 — Outliers mesa → kinds tipados
+
+- Migration `20260911_phb_effect_outlier_kinds.sql`: 6 kinds + economy rows (arm/disarm mísseis, invoke-pact, psychic-blade, moon-combat, arcane-recovery 1–5, spell-mastery, fiendish-resilience).
+- Seeds mesa: `missile_mage_arm`, `resource_fallback_spend`, `moon_combat_wild_shape`, `restore_resource_from_slot`, `bind_pact_weapon`, `psychic_blade_attack`.
+- Apply structured dispatch **antes** de `resolveSpendPlan` (innate/dragon-wings não gastam pool errado).
+- Handlers wizard/sorcerer/druid/warlock/rogue = só `applyDeclaredEconomyTableAction` (+ deps inventário warlock).
+- Gunslinger feat path (reload/fire-chamber sem classe) mantido no handler.
+
+## 2026-09-11 — Reorganização session/application/core
+
+- Nova estrutura:
+  - `session-commands/` — Nest handlers + spend side-effects (cast-spell, get/patch-state, rest, resource handlers).
+  - `table-actions/primitives/` — heal, temp HP, guards.
+  - `table-actions/feat/` — feat economy.
+  - `table-actions/kinds/{martial,caster,form-state,attack}/` — applies tipados.
+  - `table-actions/apply-declared-economy/` — orquestrador fatiado (produção ≤200 linhas/arquivo).
+- Pasta `core/` removida; controller/module/handlers apontam para `session-commands` / `table-actions`.
+- DTO: `TableActionOptionsDto` compartilhado; classes estendem o bag (incl. barbarian/feat/MH/transformation).
+- SQL: migration `20260911_phb_effect_early_route_kinds.sql` (`convert_spell_points`, `catalog_metamagic`, `firearm_*`, `wild_resurgence`, `set_starry_form`); seeds mesa alinhados; early-routes = só validações.
+- `effects/domain/execute/` — executeCatalogEffect fatiado; reexport estável via `domain/execute-catalog-effect`.
+- Jest: 26 suites / 193 testes verdes (`session/application` + `effects/domain`).

@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsInt, IsOptional, Max, Min } from 'class-validator';
+import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const PALADIN_TABLE_ACTION_SLUGS = [
   'lay-on-hands',
@@ -19,19 +20,10 @@ const PALADIN_TABLE_ACTION_SLUGS = [
   'spirit-of-the-valkyrie',
 ] as const;
 
-export class UsePaladinTableActionDto {
+export class UsePaladinTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: PALADIN_TABLE_ACTION_SLUGS })
   @IsIn([...PALADIN_TABLE_ACTION_SLUGS])
   actionSlug!: (typeof PALADIN_TABLE_ACTION_SLUGS)[number];
-
-  @ApiPropertyOptional({
-    minimum: 1,
-    description: 'Pontos de Mãos Consagradas a gastar (cura)',
-  })
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  amount?: number;
 }
 
 const RANGER_TABLE_ACTION_SLUGS = [
@@ -52,7 +44,7 @@ const RANGER_TABLE_ACTION_SLUGS = [
   'mental-agony',
 ] as const;
 
-export class UseRangerTableActionDto {
+export class UseRangerTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: RANGER_TABLE_ACTION_SLUGS })
   @IsIn([...RANGER_TABLE_ACTION_SLUGS])
   actionSlug!: (typeof RANGER_TABLE_ACTION_SLUGS)[number];
@@ -66,7 +58,7 @@ export class UseRangerTableActionDto {
   @IsInt()
   @Min(0)
   @Max(5)
-  level?: number;
+  declare level?: number;
 
   @ApiPropertyOptional({
     enum: ['strike', 'help', 'dash', 'disengage', 'dodge'],
@@ -74,5 +66,10 @@ export class UseRangerTableActionDto {
   })
   @IsOptional()
   @IsIn(['strike', 'help', 'dash', 'disengage', 'dodge'])
-  companionCommand?: 'strike' | 'help' | 'dash' | 'disengage' | 'dodge';
+  declare companionCommand?:
+    | 'strike'
+    | 'help'
+    | 'dash'
+    | 'disengage'
+    | 'dodge';
 }

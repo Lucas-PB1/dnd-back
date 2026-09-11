@@ -10,9 +10,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import { applyPsychicBladeTableAction } from '../../core/apply-psychic-blade-table-action';
-import { assertCharacterSubclass } from '../../core/table-action-guards';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class RogueActionsHandler {
@@ -38,27 +36,6 @@ export class RogueActionsHandler {
       throw new BadRequestException('Rogue action is not available');
     }
 
-    if (dto.actionSlug.startsWith('psychic-')) {
-      assertCharacterSubclass(character, 'soulknife', 'Soulknife');
-    }
-
-    if (dto.actionSlug === 'psychic-blade-main') {
-      return applyPsychicBladeTableAction({
-        state: this.state,
-        character,
-        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
-        bonusAttack: false,
-      });
-    }
-    if (dto.actionSlug === 'psychic-blade-bonus') {
-      return applyPsychicBladeTableAction({
-        state: this.state,
-        character,
-        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
-        bonusAttack: true,
-      });
-    }
-
     return applyDeclaredEconomyTableAction(
       {
         state: this.state,
@@ -73,6 +50,6 @@ export class RogueActionsHandler {
         dc: dto.dc,
         usePsiDie: dto.usePsiDie,
       },
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

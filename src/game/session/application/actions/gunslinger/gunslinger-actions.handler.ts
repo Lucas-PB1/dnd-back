@@ -17,13 +17,13 @@ import {
   UseGunslingerTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import {
-  UseManeuverResponseDto,
-} from '@game/session/dto/core/session-commands.dto';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+  applyDeclaredEconomyTableAction,
+  type DeclaredEconomyTableActionResult,
+} from '../../table-actions/apply-declared-economy';
 import {
   applyFireChamberTableAction,
   applyReloadFirearmTableAction,
-} from '../../core/apply-gunslinger-maneuver-table-action';
+} from '../../table-actions/kinds/martial/apply-gunslinger-maneuver-table-action';
 
 @Injectable()
 export class GunslingerActionsHandler {
@@ -48,7 +48,7 @@ export class GunslingerActionsHandler {
     userId: string,
     characterId: string,
     dto: UseGunslingerTableActionDto,
-  ): Promise<UseManeuverResponseDto | TableActionResponseDto> {
+  ): Promise<DeclaredEconomyTableActionResult> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,

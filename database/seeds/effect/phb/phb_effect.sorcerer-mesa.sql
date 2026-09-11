@@ -137,3 +137,76 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Implosão de Distorção: teleporte e dano espacial (1×/DL).'
 FROM ins;
+
+-- Feitiçaria Inata (fallback SP)
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'resource_fallback_spend'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'innate-sorcery', 1, 1,
+         'Feitiçaria Inata'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Feitiçaria Inata: usa o pool ou 2 PF (L7+) antes do resolveSpendPlan.'
+FROM ins;
+
+-- Asas de Dragão (fallback SP)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'draconic'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'resource_fallback_spend'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'dragon-wings', 14, 1,
+         'Asas de Dragão'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Asas de Dragão: usa o pool ou 3 PF para restaurar o uso.'
+FROM ins;
+
+-- Fonte de Magia (converter slot ↔ PF)
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'convert_spell_points'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, v.action_slug, 2, 1, v.label
+  FROM cls
+  CROSS JOIN (VALUES
+    ('convert-slot-1-to-points', 'Converter Slot 1º → PF'),
+    ('convert-slot-2-to-points', 'Converter Slot 2º → PF'),
+    ('convert-slot-3-to-points', 'Converter Slot 3º → PF'),
+    ('convert-slot-4-to-points', 'Converter Slot 4º → PF'),
+    ('convert-slot-5-to-points', 'Converter Slot 5º → PF'),
+    ('convert-points-to-slot-1', 'Criar Slot 1º (2 PF)'),
+    ('convert-points-to-slot-2', 'Criar Slot 2º (3 PF)'),
+    ('convert-points-to-slot-3', 'Criar Slot 3º (5 PF)'),
+    ('convert-points-to-slot-4', 'Criar Slot 4º (6 PF)'),
+    ('convert-points-to-slot-5', 'Criar Slot 5º (7 PF)')
+  ) AS v(action_slug, label)
+  RETURNING id
+)
+SELECT 1 FROM ins;
+
+-- Metamagia (mesa)
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'catalog_metamagic'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'use-metamagic', 2, 1,
+         'Metamagia (mesa)'
+  FROM cls
+  RETURNING id
+)
+SELECT 1 FROM ins;

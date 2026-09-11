@@ -7,7 +7,7 @@ import { CharacterStateRepository } from '@game/session/infrastructure/character
 import { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import { UseTransformationTableActionDto } from '@game/session/dto/table-actions/table-actions-transformation.dto';
 import { loadCharacterTransformation } from '@game/session/infrastructure/queries/transformation-character.queries';
-import { applyFeatEconomyTableAction } from '../../core/apply-feat-economy-table-action';
+import { applyFeatEconomyTableAction } from '../../table-actions/feat';
 
 @Injectable()
 export class TransformationActionsHandler {

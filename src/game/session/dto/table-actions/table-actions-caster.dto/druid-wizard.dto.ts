@@ -1,5 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsInt, IsOptional, Min } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsIn } from 'class-validator';
+import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const DRUID_TABLE_ACTION_SLUGS = [
   'wild-shape',
@@ -31,19 +32,10 @@ const DRUID_TABLE_ACTION_SLUGS = [
   'children-of-great-wolf',
 ] as const;
 
-export class UseDruidTableActionDto {
+export class UseDruidTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: DRUID_TABLE_ACTION_SLUGS })
   @IsIn(DRUID_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof DRUID_TABLE_ACTION_SLUGS)[number];
-
-  @ApiPropertyOptional({
-    example: 2,
-    description: 'Círculo do espaço gasto (ex.: restaurar Passo Lunar, mín. 2).',
-  })
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  slotLevel?: number;
 }
 
 const WIZARD_TABLE_ACTION_SLUGS = [
@@ -73,7 +65,7 @@ const WIZARD_TABLE_ACTION_SLUGS = [
   'bone-puppetry',
 ] as const;
 
-export class UseWizardTableActionDto {
+export class UseWizardTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: WIZARD_TABLE_ACTION_SLUGS })
   @IsIn(WIZARD_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof WIZARD_TABLE_ACTION_SLUGS)[number];

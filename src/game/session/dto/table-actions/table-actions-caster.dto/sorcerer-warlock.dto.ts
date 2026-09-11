@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsIn, IsInt, IsOptional, Min } from 'class-validator';
+import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const SORCERER_TABLE_ACTION_SLUGS = [
   'convert-slot-1-to-points',
@@ -28,19 +29,12 @@ const SORCERER_TABLE_ACTION_SLUGS = [
   'spirit-secrets',
 ] as const;
 
-export class UseSorcererTableActionDto {
+export class UseSorcererTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: SORCERER_TABLE_ACTION_SLUGS })
   @IsIn(SORCERER_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof SORCERER_TABLE_ACTION_SLUGS)[number];
 
-  @ApiPropertyOptional({
-    example: 'subtle-spell',
-    description: 'Slug da opção de Metamagia (use-metamagic)',
-  })
-  @IsOptional()
-  @IsString()
-  metamagicSlug?: string;
-
+  /** Alias JSON legado → `amount` no apply (Bastião da Lei). */
   @ApiPropertyOptional({
     example: 3,
     description: 'Pontos de Feitiçaria gastos (bastion-of-law: 1–5)',
@@ -67,26 +61,8 @@ const WARLOCK_TABLE_ACTION_SLUGS = [
   'harbinger-of-chaos',
 ] as const;
 
-export class UseWarlockTableActionDto {
+export class UseWarlockTableActionDto extends TableActionOptionsDto {
   @ApiProperty({ enum: WARLOCK_TABLE_ACTION_SLUGS })
   @IsIn(WARLOCK_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof WARLOCK_TABLE_ACTION_SLUGS)[number];
-
-  @ApiPropertyOptional({
-    example: 'longsword',
-    description:
-      'Slug da arma do inventário (invoke-pact-weapon). Se omitido, usa a já marcada.',
-  })
-  @IsOptional()
-  @IsString()
-  itemSlug?: string;
-
-  @ApiPropertyOptional({
-    example: 2,
-    description: 'Quantidade de d6 da Luz Medicinal (1–mod. Carisma).',
-  })
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  diceCount?: number;
 }

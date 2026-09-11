@@ -51,6 +51,19 @@ const ROGUE_ECONOMY = [
     featSlug: null,
     description: 'Web',
   },
+  {
+    id: 'rogue-psychic-blade-main',
+    name: 'Lâmina Psíquica',
+    economy: 'action' as const,
+    classSlug: 'rogue',
+    subclassSlug: 'soulknife',
+    minLevel: 3,
+    alwaysSpendsResource: false,
+    tableAction: 'psychic-blade-main',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Blade',
+  },
 ];
 
 const ROGUE_EFFECTS: CatalogEffect[] = [
@@ -90,6 +103,15 @@ const ROGUE_EFFECTS: CatalogEffect[] = [
     trigger: 'on_table_action',
     actionSlug: 'arachnoid-web',
     note: { note: 'Correia CD {saveDc}' },
+  } as CatalogEffect,
+  {
+    kind: 'psychic_blade_attack',
+    ownerKind: 'subclass',
+    ownerSlug: 'soulknife',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'psychic-blade-main',
+    note: { note: 'Lâmina Psíquica' },
   } as CatalogEffect,
 ];
 

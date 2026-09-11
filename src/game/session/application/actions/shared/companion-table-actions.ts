@@ -20,7 +20,7 @@ import type { SyncCharacterCompanionHandler } from '@game/actor/application/sync
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '@game/session/application/core/table-action-guards';
+} from '../../table-actions/primitives/table-action-guards';
 
 export type CompanionTableActionDeps = {
   state: CharacterStateRepository;

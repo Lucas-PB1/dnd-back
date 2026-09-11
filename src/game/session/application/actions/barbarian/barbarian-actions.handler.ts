@@ -13,7 +13,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class BarbarianActionsHandler {
@@ -58,6 +58,6 @@ export class BarbarianActionsHandler {
         diceCount: dto.diceCount,
         companionCommand: dto.companionCommand,
       },
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

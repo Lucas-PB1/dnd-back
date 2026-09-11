@@ -10,7 +10,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class MonkActionsHandler {
@@ -43,6 +43,6 @@ export class MonkActionsHandler {
       },
       character,
       dto.actionSlug,
-    );
+    ) as Promise<TableActionResponseDto>;
   }
 }

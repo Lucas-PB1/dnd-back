@@ -12,8 +12,7 @@ import {
   UseWarlockTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import { applyInvokePactWeaponTableAction } from '../../core/apply-invoke-pact-weapon-table-action';
+import { applyDeclaredEconomyTableAction } from '../../table-actions/apply-declared-economy';
 
 @Injectable()
 export class WarlockActionsHandler {
@@ -40,25 +39,20 @@ export class WarlockActionsHandler {
       throw new BadRequestException('Warlock action is not available');
     }
 
-    if (dto.actionSlug === 'invoke-pact-weapon') {
-      return applyInvokePactWeaponTableAction({
-        state: this.state,
-        inventory: this.inventory,
-        assertCanBindPact: this.assertCanBindPact,
-        character,
-        itemSlug: dto.itemSlug,
-      });
-    }
-
     return applyDeclaredEconomyTableAction(
       {
         state: this.state,
         mechanicalCatalog: this.mechanicalCatalog,
         effectCatalog: this.effectCatalog,
+        inventory: this.inventory,
+        assertCanBindPact: this.assertCanBindPact,
       },
       character,
       dto.actionSlug,
-      dto.diceCount != null ? { diceCount: dto.diceCount } : {},
-    );
+      {
+        ...(dto.diceCount != null ? { diceCount: dto.diceCount } : {}),
+        ...(dto.itemSlug != null ? { itemSlug: dto.itemSlug } : {}),
+      },
+    ) as Promise<TableActionResponseDto>;
   }
 }

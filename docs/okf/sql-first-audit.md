@@ -82,15 +82,17 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda monge (fechada):** handler POST = só `applyDeclaredEconomyTableAction`. Seed `phb_effect.monk-mesa.sql` (~23 cases). Outlier: `hand-of-ultimate-mercy` (`spend_resource` 5 Foco + heal 4d10 + note).
 
-**Onda bruxo/mago (fechada):** handlers POST = `applyDeclaredEconomyTableAction` (+ outlier inventário/mísseis). Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`. Wire `recover_spell_slot`, `heal_from_dice_pool` (Luz Medicinal). Outliers: `invoke-pact-weapon`, arm/disarm Escudo/Giga-Míssil.
+**Onda bruxo/mago (fechada):** handlers POST = `applyDeclaredEconomyTableAction`. Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`. Wire `recover_spell_slot`, `heal_from_dice_pool` (Luz Medicinal). Kinds: `bind_pact_weapon`, `missile_mage_arm`.
 
-**Onda ladino (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Lâmina Psíquica). Seed `phb_effect.rogue-mesa.sql`. Soulknife: `check_boost` + free/paid psi (`usePsiDie`); subclasses `table_note`/`feature_dc`.
+**Onda ladino (fechada):** handler POST = `applyDeclaredEconomyTableAction`. Seed `phb_effect.rogue-mesa.sql`. Soulknife: `check_boost` + free/paid psi (`usePsiDie`); kind `psychic_blade_attack`.
 
-**Onda feiticeiro (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Feitiçaria Inata/Asas fallback SP). Seed `phb_effect.sorcerer-mesa.sql`. Fonte de Magia via slug; `use-metamagic` → catálogo DB.
+**Onda feiticeiro (fechada):** handler POST = `applyDeclaredEconomyTableAction`. Seed `phb_effect.sorcerer-mesa.sql`. Fonte de Magia via slug; `use-metamagic` → catálogo DB; kind `resource_fallback_spend` (innate/dragon-wings).
 
 **Onda pistoleiro (fechada):** handler POST = `applyDeclaredEconomyTableAction` (default economy wired). Seed `phb_effect.gunslinger-mesa.sql`. `use-maneuver`/`recover-risk`/`reload-firearm`/`fire-chamber`.
 
-**Onda druida (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Lua combate, Restaurar Passo Lunar). Seed `phb_effect.druid-mesa.sql`. Forma Estelada state machine tipada; `natural-recovery-*` → `recover_spell_slot`.
+**Onda druida (fechada):** handler POST = `applyDeclaredEconomyTableAction`. Seed `phb_effect.druid-mesa.sql`. Forma Estelada state machine tipada; `natural-recovery-*` → `recover_spell_slot`. Kinds: `moon_combat_wild_shape`, `restore_resource_from_slot`.
+
+**Outliers mesa → kinds tipados (2026-09-11):** `missile_mage_arm`, `resource_fallback_spend`, `moon_combat_wild_shape`, `restore_resource_from_slot`, `bind_pact_weapon`, `psychic_blade_attack` — structured apply antes de `resolveSpendPlan`. Handlers classe = zero `if (actionSlug)`. Gunslinger non-class feat path (`reload-firearm`/`fire-chamber`) permanece no handler.
 
 ### Gates `has*` vs schedule (dívida média)
 
@@ -102,6 +104,30 @@ Funções `hasStudiedAttacks` / `hasTacticalMind` / `hasAuraOfProtection` / `has
 - Por enquanto deixar em TS está ok; migrar gates é **próxima onda** após (ou em paralelo a) limpar handlers mesa, sem acoplar às waves de schedule.
 
 Exemplos vivos em TS: `fighter/features/rules.ts` (`hasTactical*`, `hasStudiedAttacks`), paladin aura, rogue slippery mind, gates similares em outras classes.
+
+## Reorganização session/application/core (2026-09-11)
+
+Nova estrutura pós-consolidação de table actions:
+
+```
+session/application/
+  session-commands/          # Nest handlers (cast, state, rest, resources)
+  table-actions/
+    apply-declared-economy/  # orquestrador fatiado (≤200 linhas/arquivo)
+    kinds/
+      martial/               # maneuver, check_boost, strike_self_cost, gunslinger
+      caster/                # metamagic, convert, sorcerer-fallback, missile, pact
+      form-state/            # starry, wild-resurgence, bestial, masks
+      attack/                # psychic_blade
+    primitives/              # heal, temp HP, guards, circumstances
+    feat/                    # feat economy actions
+```
+
+- `core/` removida; imports atualizados (controller → `session-commands`).
+- DTO unificado: `dto/table-actions/table-action-options.dto.ts`.
+- Early-route kinds: migration `20260911_phb_effect_early_route_kinds.sql` + seeds sorcerer/gunslinger/druid mesa.
+- `effects/domain/execute/` — executeCatalogEffect fatiado (resource/table/structured + facade).
+- Specs: fixtures `CatalogEffect` com `combatFlag`/`companion` null.
 
 ## Padrão do piloto (repetir)
 

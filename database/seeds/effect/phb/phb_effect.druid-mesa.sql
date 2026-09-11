@@ -204,3 +204,73 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_dice (effect_id, die)
 SELECT id, '1d6' FROM ins;
+
+-- Forma Selvagem de Combate (Lua)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'moon_combat_wild_shape'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'moon-combat-wild-shape', 3, 1,
+         'Forma Selvagem de Combate'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Forma Selvagem de Combate: PV temp., CA 13+SAB, ND máx. conforme nível.'
+FROM ins;
+
+-- Restaurar Passo Lunar (slot → uso)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'restore_resource_from_slot'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'restore-lunar-step', 10, 1,
+         'Restaurar Passo Lunar'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Restaurar Passo Lunar: gaste espaço 2+ para recuperar 1 uso de Passo Lunar.'
+FROM ins;
+
+-- Ressurgimento Selvagem
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'wild_resurgence'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, v.action_slug, 5, 1, v.label
+  FROM cls
+  CROSS JOIN (VALUES
+    ('wild-resurgence-slot', 'Ressurgimento (Forma → Slot 1º)'),
+    ('wild-resurgence-shape', 'Ressurgimento (Slot 1º → Forma)')
+  ) AS v(action_slug, label)
+  RETURNING id
+)
+SELECT 1 FROM ins;
+
+-- Forma Estelada (constelações)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'stars'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'set_starry_form'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, v.action_slug, 3, 1, v.label
+  FROM sc
+  CROSS JOIN (VALUES
+    ('starry-form-archer', 'Forma Estelar: Arqueiro'),
+    ('starry-form-chalice', 'Forma Estelar: Taça'),
+    ('starry-form-dragon', 'Forma Estelar: Dragão'),
+    ('starry-form-end', 'Encerrar Forma Estelada')
+  ) AS v(action_slug, label)
+  RETURNING id
+)
+SELECT 1 FROM ins;
