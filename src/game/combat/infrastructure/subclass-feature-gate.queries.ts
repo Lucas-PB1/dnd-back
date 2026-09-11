@@ -1,6 +1,6 @@
 import type { DataSource } from 'typeorm';
-import { PhbSubclass } from '../../../entities/phb-subclass.entity';
-import { PhbSubclassFeatureGate } from '../../../entities/phb-subclass-feature-gate.entity';
+import { PhbSubclassFeatureGate } from '@entities/phb-subclass-feature-gate.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 
 export async function loadSubclassFeatureGates(
   dataSource: DataSource,
@@ -10,7 +10,7 @@ export async function loadSubclassFeatureGates(
   const rows = await dataSource
     .getRepository(PhbSubclassFeatureGate)
     .createQueryBuilder('g')
-    .innerJoin(PhbSubclass, 's', 's.id = g.subclass_id')
+    .innerJoin(PhbSubclassRef, 's', 's.id = g.subclass_id')
     .where('s.slug = :subclassSlug', { subclassSlug })
     .getMany();
   return new Map(rows.map((row) => [row.gateKey, row.unlockLevel]));

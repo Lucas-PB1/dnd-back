@@ -89,13 +89,15 @@ describe('barbarian-rage', () => {
     expect(isBarbarianClass('gunslinger')).toBe(false);
   });
 
-  it('includes subclass combat notes', () => {
+  it('subclass combat notes live in catalog (local add is no-op)', () => {
     const notes = barbarianCombatNotes({
       classSlug: 'barbarian',
       subclassSlug: 'berserker',
       level: 14,
     });
-    expect(notes.some((n) => n.includes('Frenesi'))).toBe(true);
-    expect(notes.some((n) => n.includes('Presença Intimidante'))).toBe(true);
+    expect(notes.some((n) => n.includes('Frenesi'))).toBe(false);
+    expect(notes.some((n) => /Fúria/i.test(n) || /Instintos/i.test(n))).toBe(
+      true,
+    );
   });
 });

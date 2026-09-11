@@ -58,3 +58,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - `phb_companion_command` — labels PT dos comandos de mesa.
 - `phb_level_combat_note` — notas GH Cap.2 por nível.
 - Game: predicados puros + load no mechanical catalog / combat slice / roll initiative.
+
+## 2026-09-11 — Onda 2: Northlands/PHB notes + damage_type
+
+- Seeds Northlands (36) + packs estáticos (gunslinger, sorcerer, barb/monk/paladin subclass).
+- Tabela `phb_damage_type` (slug → label_pt); `speciesPassiveNotesFromEffects` lê o mapa.
+- Aggregate usa só `filterLevelCombatNotes` do catálogo para textos estáticos.

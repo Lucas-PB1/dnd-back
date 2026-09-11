@@ -37,7 +37,8 @@ timestamp: 2026-09-11
 | Migrar companion profiles | feito — `phb_companion_profile` + template map |
 | Migrar Manikin AC / ancestry | feito — armor preset + damage_type EN |
 | Migrar initiative / bloodhound / companion labels / GH notes | feito — tabelas + seeds + predicados |
-| Próximos hardcodes (PHB notes, …) | pendente — ver audit |
+| Migrar Northlands + packs PHB estáticos + damage_type PT | feito — `phb_level_combat_note` + `phb_damage_type` |
+| Notes PHB dinâmicas | pendente — ver audit |
 | Reforçar `@catalog/game-port` se novos helpers | sob demanda |
 
 **Pronto quando:** playbook “add species” executável só com SQL + Query Catalog.

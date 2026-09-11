@@ -32,11 +32,7 @@ import { warlockCombatNotes } from './warlock';
 import { druidCombatNotes } from './druid';
 import { wizardCombatNotes } from './wizard';
 import { gunslingerCombatNotes } from './gunslinger';
-import {
-  grimHollowClassCombatNotes,
-  grimHollowSubclassCombatNotes,
-  northlandsSubclassCombatNotes,
-} from './notes';
+import { filterLevelCombatNotes } from './notes/level-combat-notes';
 import type { LevelCombatNoteRow } from '../infrastructure/level-combat-note.queries';
 
 export type ClassCombatContribution = {
@@ -49,19 +45,19 @@ type ClassCombatInput = {
   classSlug: string;
   subclassSlug: string | null;
   level: number;
-  /** Notas de combate por nível do catálogo (GH etc.). */
+  /** Notas de combate por nível do catálogo (GH, Northlands, packs PHB). */
   levelCombatNotes?: readonly LevelCombatNoteRow[];
 };
 
 /**
  * Agrega contribuições explícitas de cada classe.
- * Cada pasta de classe (`fighter/`, `rogue/`, …) permanece dona das regras via `index.ts`; este módulo só combina.
- * Pack Northlands / Grim Hollow Cap. 2: `notes/`.
+ * Textos estáticos por nível vêm de `phb_level_combat_note`; funções *CombatNotes
+ * cobrem notas dinâmicas (dados, templates, estado).
  */
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,
 ): ClassCombatContribution {
-  const { classSlug, subclassSlug, level, levelCombatNotes } = input;
+  const { classSlug, subclassSlug, level, levelCombatNotes = [] } = input;
 
   const notes = [
     ...barbarianCombatNotes({ classSlug, subclassSlug, level }),
@@ -77,17 +73,8 @@ export function aggregateClassCombatContributions(
     ...druidCombatNotes({ classSlug, subclassSlug, level }),
     ...wizardCombatNotes({ classSlug, subclassSlug, level }),
     ...gunslingerCombatNotes({ classSlug, subclassSlug, level }),
-    ...northlandsSubclassCombatNotes({ subclassSlug, level }),
-    ...grimHollowSubclassCombatNotes({
-      subclassSlug,
-      level,
-      catalogNotes: levelCombatNotes,
-    }),
-    ...grimHollowClassCombatNotes({
-      classSlug,
-      level,
-      catalogNotes: levelCombatNotes,
-    }),
+    ...filterLevelCombatNotes(levelCombatNotes, 'subclass', subclassSlug, level),
+    ...filterLevelCombatNotes(levelCombatNotes, 'class', classSlug, level),
   ];
 
   const speedBonusMeters =

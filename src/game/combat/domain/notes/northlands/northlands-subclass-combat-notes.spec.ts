@@ -1,14 +1,49 @@
 import { northlandsSubclassCombatNotes } from './northlands-subclass-combat-notes';
+import type { LevelCombatNoteRow } from '../../../infrastructure/level-combat-note.queries';
+
+const CATALOG: LevelCombatNoteRow[] = [
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'path-of-the-titan',
+    unlockLevel: 3,
+    note: 'Fúria dos Gigantes: ao ativar Fúria, pode tornar-se Grande.',
+    sortOrder: 0,
+  },
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'path-of-the-titan',
+    unlockLevel: 14,
+    note: 'Fúria dos Titãs: ao ativar Fúria, pode tornar-se Enorme.',
+    sortOrder: 0,
+  },
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'viking',
+    unlockLevel: 3,
+    note: 'Nascido no Mar: Vantagem vs empurrão/Caído/movimento forçado.',
+    sortOrder: 0,
+  },
+  {
+    ownerKind: 'subclass',
+    ownerSlug: 'oath-of-valhalla',
+    unlockLevel: 7,
+    note: 'Aura Trovejante: Imunidade a Trovão na Aura de Proteção.',
+    sortOrder: 0,
+  },
+];
 
 describe('northlandsSubclassCombatNotes', () => {
   it('returns empty without subclass', () => {
-    expect(northlandsSubclassCombatNotes({ level: 5 })).toEqual([]);
+    expect(
+      northlandsSubclassCombatNotes({ level: 5, catalogNotes: CATALOG }),
+    ).toEqual([]);
   });
 
   it('lists titan rage size at L3+', () => {
     const notes = northlandsSubclassCombatNotes({
       subclassSlug: 'path-of-the-titan',
       level: 3,
+      catalogNotes: CATALOG,
     });
     expect(notes.some((n) => /Fúria dos Gigantes/i.test(n))).toBe(true);
     expect(notes.some((n) => /Enorme/i.test(n))).toBe(false);
@@ -18,6 +53,7 @@ describe('northlandsSubclassCombatNotes', () => {
     const notes = northlandsSubclassCombatNotes({
       subclassSlug: 'path-of-the-titan',
       level: 14,
+      catalogNotes: CATALOG,
     });
     expect(notes.some((n) => /Enorme/i.test(n))).toBe(true);
   });
@@ -26,6 +62,7 @@ describe('northlandsSubclassCombatNotes', () => {
     const notes = northlandsSubclassCombatNotes({
       subclassSlug: 'viking',
       level: 3,
+      catalogNotes: CATALOG,
     });
     expect(notes.some((n) => /Nascido no Mar/i.test(n))).toBe(true);
   });
@@ -34,6 +71,7 @@ describe('northlandsSubclassCombatNotes', () => {
     const notes = northlandsSubclassCombatNotes({
       subclassSlug: 'oath-of-valhalla',
       level: 7,
+      catalogNotes: CATALOG,
     });
     expect(notes.some((n) => /Aura Trovejante/i.test(n))).toBe(true);
   });

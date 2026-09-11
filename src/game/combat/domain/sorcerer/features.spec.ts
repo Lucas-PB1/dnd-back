@@ -27,15 +27,14 @@ describe('sorcerer-features', () => {
     expect(() => sorceryPointCostToCreateSlot(6)).toThrow();
   });
 
-  it('generates combat notes for sorcerer and subclasses', () => {
-    const notes = sorcererCombatNotes({ classSlug: 'sorcerer', level: 5 });
-    expect(notes.some((n) => n.includes('Fonte de Magia'))).toBe(true);
-    expect(notes.some((n) => n.includes('Metamagia'))).toBe(true);
-
-    const draconicNotes = sorcererCombatNotes({ classSlug: 'sorcerer', subclassSlug: 'draconic', level: 3 });
-    expect(draconicNotes.some((n) => n.includes('Resiliência Dracônica'))).toBe(true);
-
-    const wildNotes = sorcererCombatNotes({ classSlug: 'sorcerer', subclassSlug: 'wild-magic', level: 3 });
-    expect(wildNotes.some((n) => n.includes('Marés do Caos'))).toBe(true);
+  it('combat notes migrated to catalog (local function is empty)', () => {
+    expect(sorcererCombatNotes({ classSlug: 'sorcerer', level: 5 })).toEqual([]);
+    expect(
+      sorcererCombatNotes({
+        classSlug: 'sorcerer',
+        subclassSlug: 'draconic',
+        level: 3,
+      }),
+    ).toEqual([]);
   });
 });

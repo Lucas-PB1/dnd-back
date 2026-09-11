@@ -3,23 +3,9 @@
  * SSOT: `rpg.phb_level_combat_note`. Economia C063–C068 cobre botões Usar.
  */
 import type { LevelCombatNoteRow } from '../../../infrastructure/level-combat-note.queries';
+import { filterLevelCombatNotes } from '../level-combat-notes';
 
-export function filterLevelCombatNotes(
-  rows: readonly LevelCombatNoteRow[],
-  ownerKind: 'class' | 'subclass',
-  ownerSlug: string | null | undefined,
-  level: number,
-): string[] {
-  if (!ownerSlug) return [];
-  return rows
-    .filter(
-      (row) =>
-        row.ownerKind === ownerKind &&
-        row.ownerSlug === ownerSlug &&
-        level >= row.unlockLevel,
-    )
-    .map((row) => row.note);
-}
+export { filterLevelCombatNotes } from '../level-combat-notes';
 
 export function grimHollowSubclassCombatNotes(input: {
   subclassSlug?: string | null;

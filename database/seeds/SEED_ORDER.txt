@@ -2,6 +2,7 @@
 catalog/phb/phb_edition.all.sql
 catalog/phb/phb_alignment.all.sql
 catalog/phb/phb_ability.all.sql
+catalog/phb/phb_damage_type.all.sql
 catalog/phb/phb_language.all.sql
 catalog/phb/phb_skill.all.sql
 catalog/phb/phb_source_citation.all.sql
@@ -428,6 +429,8 @@ creature/phb/phb_companion_profile.all.sql
 creature/phb/phb_companion_command.all.sql
 catalog/phb/phb_initiative_rule.all.sql
 notes/grim-hollow/phb_level_combat_note.grim-hollow.sql
+notes/northlands/phb_level_combat_note.northlands.sql
+notes/phb/phb_level_combat_note.static-packs.sql
 creature/phb/seed.nwb-longships.sql
 creature/phb/seed.nwb-bestiary.sql
 creature/phb/phb_mounts.all.sql

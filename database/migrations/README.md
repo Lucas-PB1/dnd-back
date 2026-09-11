@@ -20,6 +20,7 @@ Arquivos atuais:
 | `20260911_phb_companion_profile.sql` | Tabelas + seed de perfil/template de companheiro |
 | `20260911_phb_species_armor_preset_and_damage_type.sql` | Presets CA Manikin + `damage_type` EN em ancestry/legacy |
 | `20260911_phb_initiative_gates_notes_companion.sql` | Initiative rules, bloodhound gates, companion commands, GH level combat notes |
+| `20260911_phb_level_notes_northlands_phb_damage_type.sql` | Northlands + packs PHB estáticos em level notes; `phb_damage_type` labels PT |
 
 ## Quando usar forward vs editar schema/
 

@@ -145,17 +145,13 @@ const NOTE_KINDS = new Set<CatalogEffect['kind']>([
   'damage_bonus',
 ]);
 
-/** Rótulos PT para display — i18n, não regra de catálogo. */
-const DAMAGE_TYPE_PT: Record<string, string> = {
-  fire: 'Ígneo',
-  cold: 'Gélido',
-  lightning: 'Elétrico',
-  acid: 'Ácido',
-  poison: 'Venenoso',
-  necrotic: 'Necrótico',
-  radiant: 'Radiante',
-  thunder: 'Trovejante',
-};
+/** Rótulos PT para display — prefer mapa do catálogo `phb_damage_type`. */
+function damageTypeLabel(
+  slug: string,
+  labels?: ReadonlyMap<string, string>,
+): string {
+  return labels?.get(slug) ?? slug;
+}
 
 /**
  * Passivas de espécie a partir do catálogo de efeitos (SSOT).
@@ -165,12 +161,18 @@ export function speciesPassiveNotesFromEffects(
   effects: readonly CatalogEffect[],
   choices: readonly EffectChoiceRef[] = [],
   optionDamageTypes?: ReadonlyMap<string, string>,
+  damageTypeLabels?: ReadonlyMap<string, string>,
 ): string[] {
   const notes: string[] = [];
   const seen = new Set<string>();
   for (const effect of effects) {
     if (!NOTE_KINDS.has(effect.kind)) continue;
-    const text = formatSpeciesPassiveNote(effect, choices, optionDamageTypes);
+    const text = formatSpeciesPassiveNote(
+      effect,
+      choices,
+      optionDamageTypes,
+      damageTypeLabels,
+    );
     if (!text || seen.has(text)) continue;
     seen.add(text);
     notes.push(text);
@@ -182,12 +184,18 @@ function formatSpeciesPassiveNote(
   effect: CatalogEffect,
   choices: readonly EffectChoiceRef[],
   optionDamageTypes?: ReadonlyMap<string, string>,
+  damageTypeLabels?: ReadonlyMap<string, string>,
 ): string | null {
   const fromNote = effect.note?.note?.trim();
   if (fromNote) return fromNote;
 
   if (effect.kind === 'damage_resistance') {
-    const enriched = formatResistanceNote(effect, choices, optionDamageTypes);
+    const enriched = formatResistanceNote(
+      effect,
+      choices,
+      optionDamageTypes,
+      damageTypeLabels,
+    );
     if (enriched) return enriched;
   }
 
@@ -199,10 +207,11 @@ function formatResistanceNote(
   effect: CatalogEffect,
   choices: readonly EffectChoiceRef[],
   optionDamageTypes?: ReadonlyMap<string, string>,
+  damageTypeLabels?: ReadonlyMap<string, string>,
 ): string | null {
   const fixed = effect.damageType?.damageTypeSlug;
   if (fixed) {
-    const pt = DAMAGE_TYPE_PT[fixed] ?? fixed;
+    const pt = damageTypeLabel(fixed, damageTypeLabels);
     return effect.label?.trim() || `Resistência a dano ${pt}.`;
   }
   const optionKey = effect.damageType?.optionKey;
@@ -219,7 +228,7 @@ function formatResistanceNote(
 
   const typeSlug = optionDamageTypes?.get(`${optionKey}:${value}`);
   if (!typeSlug) return effect.label?.trim() || null;
-  const pt = DAMAGE_TYPE_PT[typeSlug] ?? typeSlug;
+  const pt = damageTypeLabel(typeSlug, damageTypeLabels);
   const suffix =
     optionKey === 'dragonAncestryId'
       ? ' (Herança Dracônica)'

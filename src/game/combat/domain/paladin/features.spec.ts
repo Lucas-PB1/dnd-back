@@ -104,13 +104,13 @@ describe('paladin-features', () => {
       expect(notes.join(' ')).toContain('Golpes Radiantes');
     });
 
-    it('adds subclass notes', () => {
+    it('subclass notes live in catalog (local add is no-op)', () => {
       const notes = paladinCombatNotes({
         classSlug: 'paladin',
         subclassSlug: 'vengeance',
         level: 3,
       });
-      expect(notes.join(' ')).toContain('Voto de Inimizade');
+      expect(notes.join(' ')).not.toContain('Voto de Inimizade');
     });
   });
 });

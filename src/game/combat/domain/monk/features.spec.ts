@@ -59,7 +59,7 @@ describe('monk-features', () => {
     ).toBe(false);
   });
 
-  it('describes core and subclass notes', () => {
+  it('describes core notes; subclass notes live in catalog', () => {
     const notes = monkCombatNotes({
       classSlug: 'monk',
       subclassSlug: 'mercy',
@@ -67,7 +67,7 @@ describe('monk-features', () => {
     });
     expect(notes[0]).toContain('Artes Marciais');
     expect(notes.some((note) => note.includes('Golpe Atordoante'))).toBe(true);
-    expect(notes.some((note) => note.includes('Mão de Cura'))).toBe(true);
+    expect(notes.some((note) => note.includes('Mão de Cura'))).toBe(false);
   });
 
   it('returns no notes for non-monks', () => {

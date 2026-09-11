@@ -1,40 +1,19 @@
 /**
- * Passivas / lembretes de subclasses Northlands (painel Passivas).
- * Economia C052–C054 cobre os botões Usar; aqui ficam efeitos contínuos e features sem botão.
+ * Passivas Northlands — SSOT = `phb_level_combat_note`.
+ * Mantido como thin wrapper para specs / imports legados.
  */
-import {
-  fenrisSubclassNotes,
-  nornboundSubclassNotes,
-  skaldSubclassNotes,
-  spiritCallerSubclassNotes,
-  tricksterSubclassNotes,
-} from './northlands-subclass-notes-caster';
-import {
-  titanSubclassNotes,
-  valhallaSubclassNotes,
-  vikingSubclassNotes,
-} from './northlands-subclass-notes-martial';
-
-type NoteFn = (level: number) => string[];
-
-const BY_SUBCLASS: Record<string, NoteFn> = {
-  'path-of-the-titan': titanSubclassNotes,
-  skald: skaldSubclassNotes,
-  nornbound: nornboundSubclassNotes,
-  'circle-of-fenris': fenrisSubclassNotes,
-  viking: vikingSubclassNotes,
-  'oath-of-valhalla': valhallaSubclassNotes,
-  'spirit-caller': spiritCallerSubclassNotes,
-  trickster: tricksterSubclassNotes,
-};
+import type { LevelCombatNoteRow } from '../../../infrastructure/level-combat-note.queries';
+import { filterLevelCombatNotes } from '../level-combat-notes';
 
 export function northlandsSubclassCombatNotes(input: {
   subclassSlug?: string | null;
   level?: number;
+  catalogNotes?: readonly LevelCombatNoteRow[];
 }): string[] {
-  const slug = input.subclassSlug;
-  if (!slug) return [];
-  const fn = BY_SUBCLASS[slug];
-  if (!fn) return [];
-  return fn(input.level ?? 1);
+  return filterLevelCombatNotes(
+    input.catalogNotes ?? [],
+    'subclass',
+    input.subclassSlug,
+    input.level ?? 1,
+  );
 }
