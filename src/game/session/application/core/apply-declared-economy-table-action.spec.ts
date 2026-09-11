@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
-import { resolveDeclaredEconomyTableAction } from './resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from './apply-declared-economy-table-action';
 import { asDep } from '@common/testing/as-dep';
 
-describe('resolveDeclaredEconomyTableAction', () => {
+describe('applyDeclaredEconomyTableAction', () => {
   const stateResponse = { classResources: [], tempHp: 0 };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
@@ -85,10 +85,9 @@ describe('resolveDeclaredEconomyTableAction', () => {
       subclassSlug: 'berserker',
       resourceSlug: 'rage',
       alwaysSpendsResource: true,
-      recoverResourceSlug: 'intimidating-presence',
-      recoverAmount: 1,
       tableAction: 'restore-intimidating-presence',
-      description: 'Restaurou Presença Intimidante gastando 1 uso de Fúria.',
+      description:
+        'Sem ação: gaste 1 uso de Fúria para restaurar Presença Intimidante.',
     },
   ];
 
@@ -122,7 +121,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
   });
 
   it('spends spendAmount from economy catalog', async () => {
-    const result = await resolveDeclaredEconomyTableAction(
+    const result = await applyDeclaredEconomyTableAction(
       { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
       asDep(blade),
       'erupting-blades',
@@ -148,7 +147,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
         },
       ]),
     };
-    const result = await resolveDeclaredEconomyTableAction(
+    const result = await applyDeclaredEconomyTableAction(
       {
         state: asDep(state),
         mechanicalCatalog: asDep(mechanicalCatalog),
@@ -188,7 +187,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
         },
       ]),
     };
-    const result = await resolveDeclaredEconomyTableAction(
+    const result = await applyDeclaredEconomyTableAction(
       {
         state: asDep(state),
         mechanicalCatalog: asDep(mechanicalCatalog),
@@ -217,7 +216,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
       subclassSlug: 'path-of-the-lightning-vessel',
       level: 3,
     };
-    const result = await resolveDeclaredEconomyTableAction(
+    const result = await applyDeclaredEconomyTableAction(
       { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
       asDep(lightning),
       'lightning-step',
@@ -229,7 +228,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
 
   it('rejects wrong subclass', async () => {
     await expect(
-      resolveDeclaredEconomyTableAction(
+      applyDeclaredEconomyTableAction(
         {
           state: asDep(state),
           mechanicalCatalog: asDep(mechanicalCatalog),
@@ -247,8 +246,26 @@ describe('resolveDeclaredEconomyTableAction', () => {
       subclassSlug: 'sangromancer',
       level: 14,
     };
-    const result = await resolveDeclaredEconomyTableAction(
-      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'recover_resource',
+          trigger: 'on_table_action',
+          actionSlug: 'red-renewal',
+          resourceSlug: 'sangromancy-dice',
+          numeric: { amountFormula: 'level_div_2', flat: null },
+          note: {
+            note: 'Recuperados dados de Sangromancia (metade do nível). Recupere também o mesmo número de Dados de Vida gastos.',
+          },
+        },
+      ]),
+    };
+    const result = await applyDeclaredEconomyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
       asDep(sangro),
       'red-renewal',
     );
@@ -263,18 +280,36 @@ describe('resolveDeclaredEconomyTableAction', () => {
       7,
     );
     expect(result.total).toBe(7);
-    expect(result.note).toContain('7 Dado(s) de Sangromancia');
+    expect(result.note).toContain('Sangromancia');
   });
 
-  it('recovers catalog pool after spend (recoverResourceSlug)', async () => {
+  it('recovers catalog pool via recover_resource effect', async () => {
     const berserker = {
       id: 'barb-restore',
       classSlug: 'barbarian',
       subclassSlug: 'berserker',
       level: 14,
     };
-    const result = await resolveDeclaredEconomyTableAction(
-      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'recover_resource',
+          trigger: 'on_table_action',
+          actionSlug: 'restore-intimidating-presence',
+          resourceSlug: 'intimidating-presence',
+          numeric: { amountFormula: 'fixed', flat: 1 },
+          note: {
+            note: 'Restaurou Presença Intimidante gastando 1 uso de Fúria.',
+          },
+        },
+      ]),
+    };
+    const result = await applyDeclaredEconomyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
       asDep(berserker),
       'restore-intimidating-presence',
     );

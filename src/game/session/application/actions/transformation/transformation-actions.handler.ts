@@ -7,7 +7,7 @@ import { CharacterStateRepository } from '@game/session/infrastructure/character
 import { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import { UseTransformationTableActionDto } from '@game/session/dto/table-actions/table-actions-transformation.dto';
 import { loadCharacterTransformation } from '@game/session/infrastructure/queries/transformation-character.queries';
-import { resolveFeatEconomyTableAction } from '../../core/resolve-feat-economy-table-action';
+import { applyFeatEconomyTableAction } from '../../core/apply-feat-economy-table-action';
 
 @Injectable()
 export class TransformationActionsHandler {
@@ -39,7 +39,7 @@ export class TransformationActionsHandler {
       );
     }
 
-    return resolveFeatEconomyTableAction(
+    return applyFeatEconomyTableAction(
       {
         state: this.state,
         mechanicalCatalog: this.mechanicalCatalog,

@@ -34,7 +34,7 @@ import {
   resolveVirtuosoSkill,
 } from './subclass-actions';
 import { resolveBragiRune } from './northlands-bard-actions';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 
 @Injectable()
 export class BardActionsHandler {
@@ -109,7 +109,7 @@ export class BardActionsHandler {
       case 'set-persona-masks':
         return resolveSetPersonaMasks(deps, character, dto.masks ?? []);
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
           character,
           dto.actionSlug,

@@ -10,7 +10,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 import type { DruidActionDeps } from './druid-action-deps';
 import {
   resolveWildResurgenceShape,
@@ -131,7 +131,7 @@ export class DruidActionsHandler {
       case 'wickerbone-behemoth':
         return resolveWickerboneBehemoth(deps, character);
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
           character,
           dto.actionSlug,

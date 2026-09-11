@@ -69,7 +69,7 @@ Todo re-export público de pasta → **`index.ts` na raiz da pasta** — nunca `
 | OK | Evitar |
 |----|--------|
 | `mechanical-catalog/index.ts` reexporta `gunslinger-maneuvers.fixtures.ts` | `mechanical-catalog.fixtures.ts` ao lado da pasta |
-| `barbarian/subclass-actions/index.ts` + arquivos por subclasse | `subclass-actions.ts` + pasta `subclass-actions/` |
+| `monk/subclass-actions/index.ts` + arquivos por subclasse | `subclass-actions.ts` + pasta `subclass-actions/` |
 | `combat/domain/rogue/index.ts` na borda do módulo | Barrel no meio da árvore só para esconder split |
 
 **Imports externos:** path da pasta (`…/mechanical-catalog`, `…/subclass-actions`). **Imports internos** da pasta: arquivo concreto (`./berserker-actions`), não o próprio `index.ts`.

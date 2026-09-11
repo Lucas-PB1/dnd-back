@@ -13,10 +13,14 @@ export function resolveEffectAmount(input: {
   flat: number | null;
   level: number;
   rng?: Rng;
-    hitDieFaces?: number;
+  hitDieFaces?: number;
+  /** Bônus de dano da Fúria (schedule). */
+  rageBonus?: number;
+  rageActive?: boolean;
 }): ResolvedAmount {
   const pb = proficiencyBonusForLevel(input.level);
   const rng = input.rng ?? Math.random;
+  const rageBonus = Math.max(1, input.rageBonus ?? 2);
 
   switch (input.amountFormula) {
     case 'fixed':
@@ -76,10 +80,26 @@ export function resolveEffectAmount(input: {
     case 'proficiency_bonus_plus_cha':
       return { amount: pb + (input.flat ?? 0) };
     case 'attack_ability_mod':
-      // flat carrega o mod do atributo do ataque quando o caller resolve.
+    case 'ability_mod':
       return { amount: input.flat ?? 0 };
     case 'eight_plus_mod_plus_pb':
       return { amount: 8 + (input.flat ?? 0) + pb };
+    case 'rage_bonus':
+      return { amount: rageBonus };
+    case 'rage_bonus_d6': {
+      const rolled = rollDamageParts(`${rageBonus}d6`, 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 6,
+      };
+    }
+    case 'half_level_if_rage':
+      return {
+        amount: input.rageActive
+          ? Math.max(0, Math.floor(input.level / 2))
+          : 0,
+      };
     default: {
       const _exhaustive: never = input.amountFormula;
       return _exhaustive;

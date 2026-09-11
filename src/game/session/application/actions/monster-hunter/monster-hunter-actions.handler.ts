@@ -9,7 +9,7 @@ import {
 import {
   UseMonsterHunterTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-monster-hunter.dto';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 
 @Injectable()
 export class MonsterHunterActionsHandler {
@@ -35,7 +35,7 @@ export class MonsterHunterActionsHandler {
       );
     }
 
-    return resolveDeclaredEconomyTableAction(
+    return applyDeclaredEconomyTableAction(
       { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
       character,
       dto.actionSlug,

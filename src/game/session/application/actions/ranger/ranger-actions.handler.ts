@@ -12,10 +12,10 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 import {
-  resolveCompanionCommand,
-  resolveCompanionSummon,
+  applyCompanionCommand,
+  applyCompanionSummon,
 } from '../shared/companion-table-actions';
 import type { RangerActionDeps } from './ranger-action-deps';
 import {
@@ -86,7 +86,7 @@ export class RangerActionsHandler {
       case 'misty-wanderer':
         return resolveMistyWanderer(deps, character);
       case 'primal-companion-summon':
-        return resolveCompanionSummon(
+        return applyCompanionSummon(
           companionDeps,
           userId,
           character,
@@ -95,7 +95,7 @@ export class RangerActionsHandler {
           'Invocar Companheiro Primal',
         );
       case 'primal-companion-restore':
-        return resolveCompanionSummon(
+        return applyCompanionSummon(
           companionDeps,
           userId,
           character,
@@ -105,7 +105,7 @@ export class RangerActionsHandler {
           true,
         );
       case 'primal-companion':
-        return resolveCompanionCommand(
+        return applyCompanionCommand(
           companionDeps,
           character,
           'beast-master',
@@ -122,7 +122,7 @@ export class RangerActionsHandler {
       case 'feral-howl':
         return resolveFeralHowl(deps, character);
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           deps,
           character,
           dto.actionSlug,

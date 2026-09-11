@@ -58,6 +58,7 @@ describe('SorcererActionsHandler', () => {
       asHandlerDep(ctx.domain),
       asHandlerDep(dataSource),
       asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep({ load: jest.fn().mockResolvedValue([]) }),
     );
   });
 

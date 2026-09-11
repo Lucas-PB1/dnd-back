@@ -34,7 +34,7 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| alta | Handlers de mesa com `switch (actionSlug)` por classe | `phb_class_economy_action` + `resolveDeclaredEconomyTableAction` (+ effects `on_table_action`) |
+| alta | Handlers de mesa com `switch (actionSlug)` por classe | `phb_class_economy_action` + `applyDeclaredEconomyTableAction` (+ effects `on_table_action`) |
 | média | Gates booleanos (`hasAuraOfProtection`, `hasSlipperyMind`, `hasTacticalMind`…) | `phb_subclass_feature_gate` / feature_gate de classe |
 | média | Schedules menores restantes (divine strike, masks, portent…) | mesmo `phb_class_feature_schedule` |
 | baixa | Transformation Cap.6 / heritage notes | outro SSOT (já separado) |
@@ -47,7 +47,7 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 ### Mesa — handlers `switch` (dívida alta)
 
-**Hoje:** quase toda classe em `session/application/actions/*/…handler.ts` roteia slug→função TS; o `default` já cai em `resolveDeclaredEconomyTableAction` (SSOT SQL). Referência boa: `monster-hunter-actions.handler.ts` (quase só economy).
+**Hoje:** quase toda classe em `session/application/actions/*/…handler.ts` roteia slug→função TS; o `default` já cai em `applyDeclaredEconomyTableAction` (SSOT SQL). Referência boa: `monster-hunter-actions.handler.ts` (quase só economy).
 
 **Critério — pode virar só economy (+ effect opcional)**
 
@@ -68,9 +68,7 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda sugerida:** 1 classe piloto (bárbaro ou fighter) — inventariar cases vs rows em `phb_class_economy_action`; remover do switch o que já tem row equivalente; expandir `executeCatalogEffect` só se faltar kind. Não misturar com schedules/gates.
 
-**Piloto bárbaro (parcial):** removidos do switch (caem no `default` economy): `retaliation`, `zealous-presence`, `rage-of-the-gods`, `traverse-the-tree`, `magic-missile-throws`, `shield-block`, `restore-intimidating-presence`, `restore-zealous-presence`, `shape-of-the-wild-rage-recover`. Funções TS mortas apagadas. Restante do switch = custom (toggle/roll/CD/DTO/companion).
-
-**Spend→recover:** colunas `recover_resource_slug` / `recover_amount` em `phb_class_economy_action`; resolver genérico em `resolveDeclaredEconomyTableAction`. Também: monge `recover-knockout` (5 Foco→K.O.), feiticeiro `restore-balance` (só spend+nota). Monge `default` agora usa economy (antes throw).
+**Piloto bárbaro (fechado):** handler sem `switch` — só `applyDeclaredEconomyTableAction` + kinds genéricos (`toggle_combat_flag`, `table_roll`, `feature_dc`, `heal_from_dice_pool`, `sync_companion`, `companion_command`, `recover_resource*`). Seed `phb_effect.barbarian-mesa.sql`.
 
 ### Gates `has*` vs schedule (dívida média)
 

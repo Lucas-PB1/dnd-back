@@ -2,6 +2,8 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { PhbEffectCastEconomy } from './phb-effect-cast-economy.entity';
 import { PhbEffectCheckAdvantage } from './phb-effect-check-advantage.entity';
 import { PhbEffectCombatMod } from './phb-effect-combat-mod.entity';
+import { PhbEffectCombatFlag } from './phb-effect-combat-flag.entity';
+import { PhbEffectCompanion } from './phb-effect-companion.entity';
 import { PhbEffectDamageDie } from './phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from './phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from './phb-effect-environmental-immunity.entity';
@@ -31,6 +33,12 @@ export type EffectKind =
   | 'temp_hp'
   | 'heal'
   | 'spend_resource'
+  | 'recover_resource'
+  | 'recover_resource_to_max'
+  | 'toggle_combat_flag'
+  | 'sync_companion'
+  | 'companion_command'
+  | 'table_roll'
   | 'table_note'
   | 'initiative_pb'
   | 'grant_inspiration'
@@ -279,4 +287,10 @@ export class PhbEffect {
 
   @OneToOne(() => PhbEffectDice, (row) => row.effect, { eager: true })
   dice?: PhbEffectDice | null;
+
+  @OneToOne(() => PhbEffectCombatFlag, (row) => row.effect, { eager: true })
+  combatFlag?: PhbEffectCombatFlag | null;
+
+  @OneToOne(() => PhbEffectCompanion, (row) => row.effect, { eager: true })
+  companion?: PhbEffectCompanion | null;
 }

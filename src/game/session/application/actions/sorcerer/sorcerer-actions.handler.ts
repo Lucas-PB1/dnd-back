@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   isSorcererClass,
   METAMAGIC_OPTION_KEY,
@@ -15,7 +16,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 import type { SorcererActionDeps } from './sorcerer-action-deps';
 import {
   convertPointsToSlot,
@@ -42,6 +43,7 @@ export class SorcererActionsHandler {
     private readonly domain: CharacterDomainService,
     private readonly dataSource: DataSource,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   private deps(): SorcererActionDeps {
@@ -163,8 +165,12 @@ export class SorcererActionsHandler {
       case 'warp-implosion':
         return resolveWarpImplosion(deps, character);
       default:
-        return resolveDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+        return applyDeclaredEconomyTableAction(
+          {
+            state: this.state,
+            mechanicalCatalog: this.mechanicalCatalog,
+            effectCatalog: this.effectCatalog,
+          },
           character,
           dto.actionSlug,
         );

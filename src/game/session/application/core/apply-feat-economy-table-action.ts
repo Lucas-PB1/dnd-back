@@ -32,7 +32,7 @@ export type FeatEconomyTableActionDeps = {
   dataSource?: DataSource;
 };
 
-export async function resolveFeatEconomyTableAction(
+export async function applyFeatEconomyTableAction(
   deps: FeatEconomyTableActionDeps,
   character: PlayerCharacter,
   featSlug: string,

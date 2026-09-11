@@ -29,9 +29,6 @@ export type ClassEconomyActionRecord = {
   description?: string;
   tableAction?: string;
   spendAmount?: number;
-  /** Após gastar `resourceSlug`, recupera este pool. */
-  recoverResourceSlug?: string;
-  recoverAmount?: number;
   /** Magia vinculada (cast de item / consulta UI). */
   spellSlug?: string;
 };

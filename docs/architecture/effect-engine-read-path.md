@@ -112,7 +112,8 @@ Inventário vivo dos kinds **com wire tipado**. Kinds só-seed/`combat_note` fic
 | `damage_die_floor` / flip / explode / … | — | `hasDamageDie*` / flags assemble | combat slice / dice |
 | `grant_spell` / `free_cast` / `grant_spell_by_level` | spell + cast_economy | `resolveFeatCastEconomyFromEffects` / `resolveSpeciesSpellCastEconomyFromEffects` | spellcasting economy |
 | espécies passivas | note / sense / resistance / … | `speciesPassiveNotesFromEffects` | combat notes (SSOT effects) |
-| `temp_hp` / `heal` / `spend_resource` / `grant_inspiration` | numeric/note | `executeCatalogEffect` | session spend / table-action |
+| `temp_hp` / `heal` / `spend_resource` / `recover_resource` / `recover_resource_to_max` / `toggle_combat_flag` / `sync_companion` / `companion_command` / `table_roll` / `feature_dc` / `heal_from_dice_pool` / `grant_inspiration` | numeric/note/dice/flag/companion | `executeCatalogEffect` + `applyDeclaredEconomyTableAction` | session spend / table-action |
+
 | `combat_note` / `table_note` + note satélite | `phb_effect_note` | `combatNotesFromEffects` | passivas combate |
 | `grant_sense` | `phb_effect_sense` | `sensesFromEffects` | sheet / combat notes |
 | `damage_resistance` | `phb_effect_damage_type` | `damageResistancesFromEffects` | sheet / combat |

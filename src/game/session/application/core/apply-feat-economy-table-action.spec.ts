@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import type { ClassEconomyActionRecord } from '@game/combat/domain/class-action-ui-catalog';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import { resolveFeatEconomyTableAction } from './resolve-feat-economy-table-action';
+import { applyFeatEconomyTableAction } from './apply-feat-economy-table-action';
 
 const character = { id: 'c1', level: 10 } as PlayerCharacter;
 
@@ -105,7 +105,7 @@ const economyActions: ClassEconomyActionRecord[] = [
   },
 ];
 
-describe('resolveFeatEconomyTableAction', () => {
+describe('applyFeatEconomyTableAction', () => {
   const mechanicalCatalog = {
     load: async () => ({ economyActions, panelActions: [] }),
   };
@@ -129,7 +129,7 @@ describe('resolveFeatEconomyTableAction', () => {
   });
 
   it('gasta recurso e devolve nota quando ação existe', async () => {
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
       character,
       transformation.slug,
@@ -149,7 +149,7 @@ describe('resolveFeatEconomyTableAction', () => {
 
   it('rejeita estágio insuficiente', async () => {
     await expect(
-      resolveFeatEconomyTableAction(
+      applyFeatEconomyTableAction(
         { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
         character,
         transformation.slug,
@@ -161,7 +161,7 @@ describe('resolveFeatEconomyTableAction', () => {
 
   it('rejeita quando choice não casa com requires_option', async () => {
     await expect(
-      resolveFeatEconomyTableAction(
+      applyFeatEconomyTableAction(
         { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
         character,
         transformation.slug,
@@ -218,7 +218,7 @@ describe('resolveFeatEconomyTableAction', () => {
       ]),
     };
 
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       {
         state: state as never,
         mechanicalCatalog: mechanicalCatalog as never,
@@ -304,7 +304,7 @@ describe('resolveFeatEconomyTableAction', () => {
       ]),
     };
 
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       {
         state: state as never,
         mechanicalCatalog: mechanicalCatalog as never,
@@ -382,7 +382,7 @@ describe('resolveFeatEconomyTableAction', () => {
     };
 
     const lich = { id: 'c-lich', level: 10 } as PlayerCharacter;
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       {
         state: state as never,
         mechanicalCatalog: mechanicalCatalog as never,
@@ -413,7 +413,7 @@ describe('resolveFeatEconomyTableAction', () => {
 
   it('ativa Mutação Aberrante com mutationSlug e gasta uso', async () => {
     const horror = { id: 'c-horror', level: 5 } as PlayerCharacter;
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       {
         state: state as never,
         mechanicalCatalog: mechanicalCatalog as never,
@@ -445,7 +445,7 @@ describe('resolveFeatEconomyTableAction', () => {
 
   it('encerra Mutação Aberrante sem gastar uso', async () => {
     const horror = { id: 'c-horror', level: 5 } as PlayerCharacter;
-    const result = await resolveFeatEconomyTableAction(
+    const result = await applyFeatEconomyTableAction(
       {
         state: state as never,
         mechanicalCatalog: mechanicalCatalog as never,

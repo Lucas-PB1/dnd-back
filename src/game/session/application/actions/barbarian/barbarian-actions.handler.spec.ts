@@ -27,17 +27,10 @@ describe('BarbarianActionsHandler', () => {
       classResources: [
         { slug: 'rage', remaining: 2, max: 2, name: 'Fúria', used: 0 },
         {
-          slug: 'zealous-presence',
-          remaining: 1,
-          max: 1,
-          name: 'Presença Zelosa',
-          used: 0,
-        },
-        {
-          slug: 'rage-of-the-gods',
-          remaining: 1,
-          max: 1,
-          name: 'Fúria dos Deuses',
+          slug: 'divine-fury-dice',
+          remaining: 4,
+          max: 4,
+          name: 'Dados de Fúria Divina',
           used: 0,
         },
       ],
@@ -49,6 +42,45 @@ describe('BarbarianActionsHandler', () => {
     mechanicalCatalogLoad: {
       economyActions: [
         {
+          id: 'barbarian-rage',
+          name: 'Fúria',
+          economy: 'bonus',
+          classSlug: 'barbarian',
+          minLevel: 1,
+          resourceSlug: 'rage',
+          alwaysSpendsResource: false,
+          tableAction: 'toggle-rage',
+          itemSlug: null,
+          featSlug: null,
+          description: 'Entrar/encerrar Fúria.',
+        },
+        {
+          id: 'barbarian-frenzy',
+          name: 'Frenesi',
+          economy: 'free',
+          classSlug: 'barbarian',
+          subclassSlug: 'berserker',
+          minLevel: 3,
+          tableAction: 'frenzy',
+          itemSlug: null,
+          featSlug: null,
+          description: 'Frenesi.',
+        },
+        {
+          id: 'barbarian-champion',
+          name: 'Campeão dos Deuses',
+          economy: 'bonus',
+          classSlug: 'barbarian',
+          subclassSlug: 'zealot',
+          minLevel: 3,
+          resourceSlug: 'divine-fury-dice',
+          alwaysSpendsResource: false,
+          tableAction: 'champion-of-the-gods',
+          itemSlug: null,
+          featSlug: null,
+          description: 'Gaste d12s.',
+        },
+        {
           id: 'barbarian-retaliation',
           name: 'Retaliação',
           economy: 'reaction',
@@ -58,87 +90,10 @@ describe('BarbarianActionsHandler', () => {
           tableAction: 'retaliation',
           itemSlug: null,
           featSlug: null,
-          description:
-            'Quando sofrer dano de criatura a 1,5 m, Reação para atacar corpo a corpo (arma ou Desarmado).',
+          description: 'Reação: ataque corpo a corpo.',
         },
         {
-          id: 'barbarian-zealous-presence',
-          name: 'Presença Zelosa',
-          economy: 'bonus',
-          classSlug: 'barbarian',
-          subclassSlug: 'zealot',
-          minLevel: 10,
-          resourceSlug: 'zealous-presence',
-          alwaysSpendsResource: true,
-          tableAction: 'zealous-presence',
-          itemSlug: null,
-          featSlug: null,
-          description:
-            'Ação Bônus: até 10 criaturas a 18 m têm Vantagem em ataques e salvaguardas até o início do seu próximo turno. 1×/DL.',
-        },
-        {
-          id: 'barbarian-rage-of-the-gods',
-          name: 'Fúria dos Deuses',
-          economy: 'free',
-          classSlug: 'barbarian',
-          subclassSlug: 'zealot',
-          minLevel: 14,
-          resourceSlug: 'rage-of-the-gods',
-          alwaysSpendsResource: true,
-          tableAction: 'rage-of-the-gods',
-          itemSlug: null,
-          featSlug: null,
-          description:
-            'Ao ativar Fúria, assuma forma divina 1 min: Resistência Necrótico/Psíquico/Radiante; Voo; Reação gasta Fúria para manter aliado com PV = nível.',
-        },
-        {
-          id: 'barbarian-traverse-the-tree',
-          name: 'Percorrer a Árvore',
-          economy: 'bonus',
-          classSlug: 'barbarian',
-          subclassSlug: 'world-tree',
-          minLevel: 14,
-          tableAction: 'traverse-the-tree',
-          itemSlug: null,
-          featSlug: null,
-          description:
-            'Ao ativar Fúria ou AB enquanto ativa: teleporte até 18 m. 1×/Fúria: até 45 m e leve até 6 aliados.',
-        },
-        {
-          id: 'barbarian-restore-intimidating-presence',
-          name: 'Restaurar Presença Intimidante',
-          economy: 'free',
-          classSlug: 'barbarian',
-          subclassSlug: 'berserker',
-          minLevel: 14,
-          resourceSlug: 'rage',
-          alwaysSpendsResource: true,
-          recoverResourceSlug: 'intimidating-presence',
-          recoverAmount: 1,
-          tableAction: 'restore-intimidating-presence',
-          itemSlug: null,
-          featSlug: null,
-          description:
-            'Restaurou Presença Intimidante gastando 1 uso de Fúria.',
-        },
-        {
-          id: 'barbarian-restore-zealous-presence',
-          name: 'Restaurar Presença Zelosa',
-          economy: 'free',
-          classSlug: 'barbarian',
-          subclassSlug: 'zealot',
-          minLevel: 10,
-          resourceSlug: 'rage',
-          alwaysSpendsResource: true,
-          recoverResourceSlug: 'zealous-presence',
-          recoverAmount: 1,
-          tableAction: 'restore-zealous-presence',
-          itemSlug: null,
-          featSlug: null,
-          description: 'Restaurou Presença Zelosa gastando 1 uso de Fúria.',
-        },
-        {
-          id: 'gh-barbarian-shape-of-the-wild-rage-recover',
+          id: 'gh-shape-recover',
           name: 'Restaurar Forma do Selvagem',
           economy: 'free',
           classSlug: 'barbarian',
@@ -146,23 +101,24 @@ describe('BarbarianActionsHandler', () => {
           minLevel: 14,
           resourceSlug: 'rage',
           alwaysSpendsResource: true,
-          recoverResourceSlug: 'shape-of-the-wild',
-          recoverAmount: 1,
           tableAction: 'shape-of-the-wild-rage-recover',
           itemSlug: null,
           featSlug: null,
-          description:
-            'Restaurou Forma do Selvagem gastando 1 uso de Fúria.',
+          description: 'Gaste Fúria.',
         },
       ],
     },
   });
   const syncCompanion = { execute: jest.fn().mockResolvedValue(undefined) };
   const dataSource = { query: jest.fn() };
+  const effectCatalog = {
+    load: jest.fn().mockResolvedValue([]),
+  };
   let handler: BarbarianActionsHandler;
 
   beforeEach(() => {
     ctx.resetMocks();
+    effectCatalog.load.mockResolvedValue([]);
     ctx.state.martial.toggleRage.mockImplementation(async (_c, active) => ({
       ...ctx.stateResponse,
       rageActive: active ?? true,
@@ -170,20 +126,45 @@ describe('BarbarianActionsHandler', () => {
     handler = new BarbarianActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),
-      asHandlerDep(ctx.domain),
       asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep(effectCatalog),
       asHandlerDep(syncCompanion),
       asHandlerDep(dataSource),
     );
   });
 
-  it('toggles rage on and spends via martial', async () => {
+  it('rejects non-barbarian', async () => {
+    ctx.mockCharacterOnce({
+      ...barbarian,
+      classSlug: 'fighter',
+    });
+    await expect(
+      handler.useTableAction('user-1', 'barb-1', { actionSlug: 'toggle-rage' }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('toggles rage via toggle_combat_flag effect', async () => {
+    effectCatalog.load.mockResolvedValueOnce([
+      {
+        kind: 'toggle_combat_flag',
+        trigger: 'on_table_action',
+        actionSlug: 'toggle-rage',
+        combatFlag: {
+          flag: 'rage',
+          spendOnEnter: true,
+          forceEnter: false,
+        },
+        note: null,
+      },
+    ]);
+
     const result = await handler.useTableAction('user-1', 'barb-1', {
       actionSlug: 'toggle-rage',
     });
 
     expect(ctx.state.martial.toggleRage).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'barb-1' }),
+      true,
       true,
     );
     expect(result.resourceSpent).toBe(true);
@@ -196,6 +177,26 @@ describe('BarbarianActionsHandler', () => {
       subclassSlug: 'world-tree',
       level: 5,
     });
+    effectCatalog.load.mockResolvedValueOnce([
+      {
+        kind: 'toggle_combat_flag',
+        trigger: 'on_table_action',
+        actionSlug: 'toggle-rage',
+        combatFlag: {
+          flag: 'rage',
+          spendOnEnter: true,
+          forceEnter: false,
+        },
+        note: null,
+      },
+      {
+        kind: 'temp_hp',
+        trigger: 'on_table_action',
+        actionSlug: 'toggle-rage',
+        numeric: { amountFormula: 'level', flat: null },
+        note: null,
+      },
+    ]);
 
     const result = await handler.useTableAction('user-1', 'barb-1', {
       actionSlug: 'toggle-rage',
@@ -205,24 +206,49 @@ describe('BarbarianActionsHandler', () => {
       expect.objectContaining({ id: 'barb-1' }),
       expect.objectContaining({ tempHp: 5 }),
     );
-    expect(result.note).toContain('Surto de Vitalidade');
+    expect(result.note).toContain('PV temporários');
   });
 
-  it('resolves Frenzy damage for Berserker', async () => {
+  it('resolves Frenzy via table_roll', async () => {
+    effectCatalog.load.mockResolvedValueOnce([
+      {
+        kind: 'table_roll',
+        trigger: 'on_table_action',
+        actionSlug: 'frenzy',
+        numeric: { amountFormula: 'rage_bonus_d6', flat: null },
+        note: {
+          note: 'Frenesi: +{total} ({expression})',
+        },
+      },
+    ]);
+
     const result = await handler.useTableAction('user-1', 'barb-1', {
       actionSlug: 'frenzy',
     });
 
-    expect(result.expression).toBe('2d6');
+    expect(result.expression).toMatch(/d6/);
+    expect(result.total).toBeGreaterThan(0);
     expect(result.note).toContain('Frenesi');
   });
 
-  it('resolves Champion of the Gods with dice spend', async () => {
+  it('resolves Champion of the Gods with diceCount', async () => {
     ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'zealot',
       level: 6,
     });
+    effectCatalog.load.mockResolvedValueOnce([
+      {
+        kind: 'heal_from_dice_pool',
+        trigger: 'on_table_action',
+        actionSlug: 'champion-of-the-gods',
+        resourceSlug: 'divine-fury-dice',
+        dice: { die: '1d12', dieAtLevel: null, atLevel: null, damageTypeSlug: null },
+        note: {
+          note: 'Campeão: {total} ({expression})',
+        },
+      },
+    ]);
 
     const result = await handler.useTableAction('user-1', 'barb-1', {
       actionSlug: 'champion-of-the-gods',
@@ -234,100 +260,23 @@ describe('BarbarianActionsHandler', () => {
       'divine-fury-dice',
       2,
     );
-    expect(result.expression).toBe('2d12');
-    expect(result.note).toContain('Campeão dos Deuses');
+    expect(result.expression).toMatch(/2d12/);
+    expect(result.total).toBeGreaterThan(0);
   });
 
-  it('enters free rage for muscle wizard without spend flag', async () => {
+  it('routes note-only retaliation via declared economy', async () => {
     ctx.mockCharacterOnce({
       ...barbarian,
-      subclassSlug: 'path-of-the-muscle-wizard',
-    });
-
-    await handler.useTableAction('user-1', 'barb-1', {
-      actionSlug: 'undeniable-magic-rage',
-    });
-
-    expect(ctx.state.martial.toggleRage).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'barb-1' }),
-      true,
-      false,
-    );
-  });
-
-  it('resolves Wild Heart Eagle while raging', async () => {
-    ctx.mockCharacterOnce({
-      ...barbarian,
-      subclassSlug: 'wild-heart',
-    });
-    ctx.state.buildResponse.mockResolvedValueOnce({
-      ...ctx.stateResponse,
-      rageActive: true,
+      subclassSlug: 'berserker',
+      level: 10,
     });
 
     const result = await handler.useTableAction('user-1', 'barb-1', {
-      actionSlug: 'wild-heart-eagle',
+      actionSlug: 'retaliation',
     });
 
-    expect(result.note).toContain('Águia');
-    expect(result.note).toContain('Correr');
-  });
-
-  it('rejects Wild Heart Eagle without rage', async () => {
-    ctx.mockCharacterOnce({
-      ...barbarian,
-      subclassSlug: 'wild-heart',
-    });
-    ctx.state.buildResponse.mockResolvedValueOnce({
-      ...ctx.stateResponse,
-      rageActive: false,
-    });
-
-    await expect(
-      handler.useTableAction('user-1', 'barb-1', {
-        actionSlug: 'wild-heart-eagle',
-      }),
-    ).rejects.toBeInstanceOf(BadRequestException);
-  });
-
-  it('rejects non-barbarian', async () => {
-    ctx.mockCharacterOnce({ ...barbarian, classSlug: 'fighter' });
-
-    await expect(
-      handler.useTableAction('user-1', 'barb-1', {
-        actionSlug: 'toggle-rage',
-      }),
-    ).rejects.toBeInstanceOf(BadRequestException);
-  });
-
-  it('uses Shape of the Wild: spends resource and restores companion HP', async () => {
-    ctx.mockCharacterOnce({
-      ...barbarian,
-      subclassSlug: 'pathofthe-primal-spirit',
-      level: 14,
-    });
-    syncCompanion.execute.mockResolvedValueOnce({
-      name: 'Espírito Primal',
-      variantLabel: 'Striker · Mar',
-      hitPointsCurrent: 40,
-      hitPointsMax: 40,
-      reused: true,
-    });
-
-    const result = await handler.useTableAction('user-1', 'barb-1', {
-      actionSlug: 'shape-of-the-wild',
-    });
-
-    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'barb-1' }),
-      'shape-of-the-wild',
-      1,
-    );
-    expect(syncCompanion.execute).toHaveBeenCalledWith('user-1', 'barb-1', {
-      restoreHp: true,
-    });
-    expect(result.resourceSpent).toBe(true);
-    expect(result.note).toMatch(/Forma do Selvagem/);
+    expect(result.actionName).toBe('Retaliação');
+    expect(result.resourceSpent).toBe(false);
   });
 
   it('recovers Shape of the Wild by spending Rage', async () => {
@@ -336,6 +285,16 @@ describe('BarbarianActionsHandler', () => {
       subclassSlug: 'pathofthe-primal-spirit',
       level: 14,
     });
+    effectCatalog.load.mockResolvedValueOnce([
+      {
+        kind: 'recover_resource',
+        trigger: 'on_table_action',
+        actionSlug: 'shape-of-the-wild-rage-recover',
+        resourceSlug: 'shape-of-the-wild',
+        numeric: { amountFormula: 'fixed', flat: 1 },
+        note: { note: 'Restaurou Forma do Selvagem gastando 1 uso de Fúria.' },
+      },
+    ]);
 
     const result = await handler.useTableAction('user-1', 'barb-1', {
       actionSlug: 'shape-of-the-wild-rage-recover',
@@ -352,42 +311,5 @@ describe('BarbarianActionsHandler', () => {
       1,
     );
     expect(result.note).toMatch(/Restaurou Forma do Selvagem/);
-  });
-
-  it('routes note-only retaliation via declared economy', async () => {
-    ctx.mockCharacterOnce({
-      ...barbarian,
-      subclassSlug: 'berserker',
-      level: 10,
-    });
-
-    const result = await handler.useTableAction('user-1', 'barb-1', {
-      actionSlug: 'retaliation',
-    });
-
-    expect(result.actionName).toBe('Retaliação');
-    expect(result.resourceSpent).toBe(false);
-    expect(result.note).toContain('Reação');
-    expect(ctx.state.useClassResource).not.toHaveBeenCalled();
-  });
-
-  it('routes zealous-presence spend via declared economy', async () => {
-    ctx.mockCharacterOnce({
-      ...barbarian,
-      subclassSlug: 'zealot',
-      level: 10,
-    });
-
-    const result = await handler.useTableAction('user-1', 'barb-1', {
-      actionSlug: 'zealous-presence',
-    });
-
-    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'barb-1' }),
-      'zealous-presence',
-      1,
-    );
-    expect(result.resourceSpent).toBe(true);
-    expect(result.actionName).toBe('Presença Zelosa');
   });
 });

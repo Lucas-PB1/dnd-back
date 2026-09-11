@@ -174,5 +174,17 @@ export function mapPhbEffectToCatalog(
           damageTypeSlug: row.dice.damageTypeSlug,
         }
       : null,
+    combatFlag: row.combatFlag
+      ? {
+          flag: row.combatFlag.flag,
+          spendOnEnter: Boolean(row.combatFlag.spendOnEnter),
+          forceEnter: Boolean(row.combatFlag.forceEnter),
+        }
+      : null,
+    companion: row.companion
+      ? {
+          restoreHp: Boolean(row.companion.restoreHp),
+        }
+      : null,
   };
 }

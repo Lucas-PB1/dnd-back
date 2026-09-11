@@ -11,7 +11,7 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 import type { WizardActionDeps } from './wizard-action-deps';
 import {
   resolveArcaneRecovery,
@@ -116,7 +116,7 @@ export class WizardActionsHandler {
       case 'disarm-giga-missile':
         return resolveMissileFlag(deps, character, 'giga', false);
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           {
             state: this.state,
             mechanicalCatalog: this.mechanicalCatalog,

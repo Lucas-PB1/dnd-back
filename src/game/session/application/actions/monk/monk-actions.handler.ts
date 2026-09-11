@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadEffectCatalog } from '@game/effects';
 import { isMonkClass } from '@game/combat/domain/monk';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -38,7 +39,7 @@ import {
   resolveVibratingPalm,
   resolveWholenessOfBody,
 } from './subclass-actions';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 
 @Injectable()
 export class MonkActionsHandler {
@@ -47,6 +48,7 @@ export class MonkActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   private deps(): MonkActionDeps {
@@ -120,8 +122,12 @@ export class MonkActionsHandler {
       case 'knockout':
         return resolveKnockout(deps, character);
       default:
-        return resolveDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+        return applyDeclaredEconomyTableAction(
+          {
+            state: this.state,
+            mechanicalCatalog: this.mechanicalCatalog,
+            effectCatalog: this.effectCatalog,
+          },
           character,
           dto.actionSlug,
         );

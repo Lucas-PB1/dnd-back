@@ -122,6 +122,25 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 ## 2026-09-11 — Economy spend→recover + mais cases fora do switch
 
 - Schema/migration: `recover_resource_slug` + `recover_amount` em `phb_class_economy_action` (view/MV/entity).
-- `resolveDeclaredEconomyTableAction` recupera pool após spend.
+- `applyDeclaredEconomyTableAction` recupera pool após spend.
 - Fora do switch: bárbaro restores (intimidating/zealous/shape-of-the-wild); monge `recover-knockout`; feiticeiro `restore-balance`.
 - Monge `default` → economy (antes BadRequest).
+
+## 2026-09-11 — Mesa alinhada a talentos: economy + `recover_resource`
+
+- Kind `recover_resource` no motor `phb_effect` (dicionário + execute + feat/declared apply).
+- Removidas colunas recover_* da economy; gasto continua nas colunas do botão.
+- Seed `phb_effect.mesa-recover.sql` (bárbaro restores, K.O., red-renewal).
+- Handlers barb/monk/sorc passam `effectCatalog` no `default` economy.
+
+## 2026-09-11 — Piloto bárbaro fechado (switch zero)
+
+- Kinds: `toggle_combat_flag`, `sync_companion`, `companion_command`, `table_roll`, `recover_resource_to_max` (+ wire `feature_dc` / `heal_from_dice_pool`).
+- `BarbarianActionsHandler` só access + `applyDeclaredEconomyTableAction`.
+- Seed `phb_effect.barbarian-mesa.sql`; resolvers TS de base/subclass apagados.
+
+## 2026-09-11 — Rename apply* (sem retrocompat resolve)
+
+- Runners: `applyDeclaredEconomyTableAction` / `applyFeatEconomyTableAction` (arquivos `apply-*-economy-table-action.ts`).
+- Helpers de kind: `applyCompanionSummon` / `applyCompanionCommand`.
+- Pasta vazia `barbarian/subclass-actions` removida; dívida por slug continua só nas outras classes.

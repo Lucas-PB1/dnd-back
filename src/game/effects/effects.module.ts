@@ -3,7 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhbEffect } from '@entities/phb-effect.entity';
 import { PhbEffectCastEconomy } from '@entities/phb-effect-cast-economy.entity';
 import { PhbEffectCheckAdvantage } from '@entities/phb-effect-check-advantage.entity';
+import { PhbEffectCombatFlag } from '@entities/phb-effect-combat-flag.entity';
 import { PhbEffectCombatMod } from '@entities/phb-effect-combat-mod.entity';
+import { PhbEffectCompanion } from '@entities/phb-effect-companion.entity';
 import { PhbEffectDamageDie } from '@entities/phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from '@entities/phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from '@entities/phb-effect-environmental-immunity.entity';
@@ -58,6 +60,8 @@ import { LoadEffectCatalog } from './application/load-effect-catalog';
       PhbEffectSave,
       PhbEffectForcedMovement,
       PhbEffectDice,
+      PhbEffectCombatFlag,
+      PhbEffectCompanion,
       PhbFeatRef,
       PhbSpecies,
       PhbSpellRef,

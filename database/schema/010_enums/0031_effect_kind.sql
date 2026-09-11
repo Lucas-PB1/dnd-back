@@ -6,6 +6,7 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'temp_hp',
   'heal',
   'spend_resource',
+  'recover_resource',
   'table_note',
   'initiative_pb',
   'grant_inspiration',
@@ -106,5 +107,11 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'extra_damage_dice',
   'replace_attack_with_save',
   'ignore_target_armor',
-  'add_arena_effect'
+  'add_arena_effect',
+  'recover_resource',
+  'toggle_combat_flag',
+  'sync_companion',
+  'companion_command',
+  'table_roll',
+  'recover_resource_to_max'
 );

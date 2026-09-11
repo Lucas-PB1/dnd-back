@@ -19,7 +19,7 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 2. **Satélites tipados** por família de params (`phb_effect_spell`, `phb_effect_cast_economy`, `phb_effect_numeric`, …) — **sem** JSONB como SSOT mecânico.
 3. Dicionário fechado de `kind` (doc vivo); kind novo = satélite + serviço + entrada no dicionário no mesmo PR.
 4. Runtime em `src/game/effects/` (loader + executor por kind).
-5. Irredutíveis (metamagia, wild shape, rage) permanecem em handlers até existir kind honesto.
+5. Irredutíveis (metamagia, forma selvagem de druida, fluxos com UI especial) permanecem em handlers até existir kind honesto. Toggle de Fúria/Imprudente e companion de mesa usam kinds genéricos (`toggle_combat_flag`, `sync_companion`, `companion_command`).
 
 ## Anti-padrões
 

@@ -15,7 +15,11 @@ export type EffectAmountFormula =
   | 'dice_2d4_plus_flat'
   | 'proficiency_bonus_plus_cha'
   | 'attack_ability_mod'
-  | 'eight_plus_mod_plus_pb';
+  | 'eight_plus_mod_plus_pb'
+  | 'rage_bonus'
+  | 'rage_bonus_d6'
+  | 'half_level_if_rage'
+  | 'ability_mod';
 
 @Entity({ schema: 'rpg', name: 'phb_effect_numeric' })
 export class PhbEffectNumeric {

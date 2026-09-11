@@ -28,7 +28,7 @@ export type CompanionTableActionDeps = {
   syncCompanion: SyncCharacterCompanionHandler;
 };
 
-export async function resolveCompanionSummon(
+export async function applyCompanionSummon(
   deps: CompanionTableActionDeps,
   userId: string,
   character: PlayerCharacter,
@@ -56,7 +56,7 @@ export async function resolveCompanionSummon(
   };
 }
 
-export async function resolveCompanionCommand(
+export async function applyCompanionCommand(
   deps: CompanionTableActionDeps,
   character: PlayerCharacter,
   subclassSlug: string,

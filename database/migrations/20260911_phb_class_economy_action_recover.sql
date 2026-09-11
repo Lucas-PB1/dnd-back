@@ -1,21 +1,11 @@
--- Forward: spend→recover em phb_class_economy_action (restaurar pool gastando outro).
+-- Forward: kind recover_resource + apply mesa (spend na economy, recover no effect).
+-- Se a migration anterior de colunas recover_* na economy já rodou, remove-as.
+
+ALTER TYPE rpg.effect_kind ADD VALUE IF NOT EXISTS 'recover_resource';
 
 ALTER TABLE rpg.phb_class_economy_action
-  ADD COLUMN IF NOT EXISTS recover_resource_slug TEXT NULL,
-  ADD COLUMN IF NOT EXISTS recover_amount INT NULL;
-
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1
-    FROM pg_constraint
-    WHERE conname = 'phb_class_economy_action_recover_amount_check'
-  ) THEN
-    ALTER TABLE rpg.phb_class_economy_action
-      ADD CONSTRAINT phb_class_economy_action_recover_amount_check
-      CHECK (recover_amount IS NULL OR recover_amount >= 1);
-  END IF;
-END $$;
+  DROP COLUMN IF EXISTS recover_resource_slug,
+  DROP COLUMN IF EXISTS recover_amount;
 
 CREATE OR REPLACE VIEW rpg.v_phb_class_economy_action AS
 SELECT
@@ -37,8 +27,6 @@ SELECT
   a.description,
   a.table_action,
   a.spend_amount,
-  a.recover_resource_slug,
-  a.recover_amount,
   a.spell_slug,
   a.sort_order,
   a.requires_option_key,
@@ -66,8 +54,6 @@ SELECT
   a.description,
   a.table_action,
   a.spend_amount,
-  a.recover_resource_slug,
-  a.recover_amount,
   a.spell_slug,
   a.sort_order,
   a.min_trait_takes
@@ -83,31 +69,8 @@ CREATE MATERIALIZED VIEW rpg.mv_phb_class_economy_action AS
 CREATE UNIQUE INDEX idx_mv_phb_class_economy_action
   ON rpg.mv_phb_class_economy_action (action_id);
 
+-- Spend amount do K.O. fica na economy (padrão feat).
 UPDATE rpg.phb_class_economy_action
-SET
-  recover_resource_slug = 'intimidating-presence',
-  recover_amount = 1,
-  description = 'Restaurou Presença Intimidante gastando 1 uso de Fúria.'
-WHERE action_id = 'barbarian-restore-intimidating-presence';
-
-UPDATE rpg.phb_class_economy_action
-SET
-  recover_resource_slug = 'zealous-presence',
-  recover_amount = 1,
-  description = 'Restaurou Presença Zelosa gastando 1 uso de Fúria.'
-WHERE action_id = 'barbarian-restore-zealous-presence';
-
-UPDATE rpg.phb_class_economy_action
-SET
-  recover_resource_slug = 'shape-of-the-wild',
-  recover_amount = 1,
-  description = 'Restaurou Forma do Selvagem gastando 1 uso de Fúria.'
-WHERE action_id = 'gh-barbarian-pathofthe-primal-spirit-shape-of-the-wild-rage-recover';
-
-UPDATE rpg.phb_class_economy_action
-SET
-  spend_amount = 5,
-  recover_resource_slug = 'street-knockout',
-  recover_amount = 1,
-  description = 'Recuperar K.O.: gaste 5 Foco para recuperar 1 uso de K.O. (sem ação).'
-WHERE action_id = 'monk-recover-knockout';
+SET spend_amount = 5
+WHERE action_id = 'monk-recover-knockout'
+  AND (spend_amount IS DISTINCT FROM 5);

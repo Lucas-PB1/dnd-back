@@ -137,6 +137,16 @@ export type EffectDiceSatellite = {
   damageTypeSlug: string | null;
 };
 
+export type EffectCombatFlagSatellite = {
+  flag: 'rage' | 'reckless';
+  spendOnEnter: boolean;
+  forceEnter: boolean;
+};
+
+export type EffectCompanionSatellite = {
+  restoreHp: boolean;
+};
+
 export type CatalogEffect = {
   id: string;
   kind: EffectKind;
@@ -182,4 +192,6 @@ export type CatalogEffect = {
     maxTargetSize: string | null;
   } | null;
   dice: EffectDiceSatellite | null;
+  combatFlag: EffectCombatFlagSatellite | null;
+  companion: EffectCompanionSatellite | null;
 };

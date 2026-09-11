@@ -60,12 +60,6 @@ export class VPhbClassEconomyAction {
   @ViewColumn({ name: 'spend_amount' })
   spendAmount!: number | null;
 
-  @ViewColumn({ name: 'recover_resource_slug' })
-  recoverResourceSlug!: string | null;
-
-  @ViewColumn({ name: 'recover_amount' })
-  recoverAmount!: number | null;
-
   @ViewColumn({ name: 'spell_slug' })
   spellSlug!: string | null;
 

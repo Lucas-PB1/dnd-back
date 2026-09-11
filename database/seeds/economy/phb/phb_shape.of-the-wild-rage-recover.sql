@@ -23,8 +23,7 @@ ON CONFLICT (subclass_id, slug) DO UPDATE SET
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, subclass_id, name, economy, unlock_level,
   resource_slug, free_resource_slug, always_spends_resource,
-  summary, description, table_action, spend_amount,
-  recover_resource_slug, recover_amount, sort_order
+  summary, description, table_action, spend_amount, sort_order
 ) VALUES
 (
   'gh-barbarian-pathofthe-primal-spirit-shape-of-the-wild-rage-recover',
@@ -37,11 +36,9 @@ INSERT INTO rpg.phb_class_economy_action (
   NULL,
   true,
   'Gaste 1 Fúria: restaurar uso',
-  'Restaurou Forma do Selvagem gastando 1 uso de Fúria.',
+  'Sem ação: gaste 1 uso de Fúria para restaurar Forma do Selvagem.',
   'shape-of-the-wild-rage-recover',
   NULL,
-  'shape-of-the-wild',
-  1,
   374
 )
 ON CONFLICT (action_id) DO UPDATE SET
@@ -56,8 +53,6 @@ ON CONFLICT (action_id) DO UPDATE SET
   description = EXCLUDED.description,
   table_action = EXCLUDED.table_action,
   spend_amount = EXCLUDED.spend_amount,
-  recover_resource_slug = EXCLUDED.recover_resource_slug,
-  recover_amount = EXCLUDED.recover_amount,
   sort_order = EXCLUDED.sort_order;
 
 INSERT INTO rpg.phb_class_panel_action (

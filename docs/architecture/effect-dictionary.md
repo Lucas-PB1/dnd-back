@@ -86,6 +86,48 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Trigger:** `on_table_action`
 - **UI:** `phb_class_economy_action` continua sendo o botão; efeito executa o gasto
 
+### `recover_resource`
+
+- **Semântica:** recupera N do pool no clique de mesa (ex.: gastar Fúria na economy e recuperar presença via effect).
+- **Campos no núcleo:** `resource_slug` (pool a recuperar); amount em `phb_effect_numeric` (`fixed` / fórmulas de nível)
+- **Trigger:** `on_table_action`
+- **UI:** botão em `phb_class_economy_action` (gasto do pool de custo fica nas colunas da economy); apply em `applyDeclaredEconomyTableAction` / `applyFeatEconomyTableAction`
+- **≠** `phb_effect_resource.recover_*` (recuperação em descanso do pool concedido)
+
+### `recover_resource_to_max`
+
+- **Semântica:** recupera o pool até o máximo (ex.: Fúria Persistente).
+- **Campos no núcleo:** `resource_slug`
+- **Trigger:** `on_table_action`
+- **Apply:** `martial.recoverAllRage` se `rage`; senão recover pela diferença max−remaining
+
+### `toggle_combat_flag`
+
+- **Semântica:** alterna flag de combate (`rage` / `reckless`).
+- **Satélite:** `phb_effect_combat_flag` (`flag`, `spend_on_enter`, `force_enter`)
+- **Trigger:** `on_table_action`
+- **Apply:** `state.martial.toggleRage` / `toggleReckless` — gasto de Fúria só ao entrar se `spend_on_enter`
+
+### `sync_companion`
+
+- **Semântica:** sincroniza/invoca companheiro (opcional restore HP).
+- **Satélite:** `phb_effect_companion` (`restore_hp`)
+- **Trigger:** `on_table_action`
+- **Apply:** `applyCompanionSummon`
+
+### `companion_command`
+
+- **Semântica:** comanda companheiro (`companionCommand` no DTO).
+- **Satélite:** nenhum
+- **Trigger:** `on_table_action`
+- **Apply:** `applyCompanionCommand`
+
+### `table_roll`
+
+- **Semântica:** rola dados na mesa e devolve `expression`/`total` (sem apply no alvo).
+- **Satélite:** `phb_effect_dice` e/ou `phb_effect_numeric` (`rage_bonus_d6`, `ability_mod`, `half_level_if_rage`, …)
+- **Trigger:** `on_table_action`
+
 ### `table_note` (Fase 2)
 
 - **Semântica:** só nota para a mesa (declare efeito).
@@ -331,7 +373,7 @@ FS: **sem** kind novo exclusivo — reuso `attack_bonus` / `ac_bonus` / `light_b
 
 ## Irredutíveis (sem kind)
 
-Metamagia, forma selvagem, toggle de fúria, fluxos com UI especial — handler dedicado até haver verbo honesto.
+Metamagia, forma selvagem de druida, fluxos com UI especial — handler dedicado até haver verbo honesto. Toggle Fúria/Imprudente e companion de mesa: kinds genéricos.
 
 ## Regra de evolução
 

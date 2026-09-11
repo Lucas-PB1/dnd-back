@@ -12,7 +12,7 @@ import {
   UseWarlockTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 import type { WarlockActionDeps } from './warlock-action-deps';
 import {
   resolveDarkOnesOwnLuck,
@@ -97,7 +97,7 @@ export class WarlockActionsHandler {
       case 'clairvoyant-combatant':
         return resolveClairvoyantCombatant(deps, character);
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
           character,
           dto.actionSlug,

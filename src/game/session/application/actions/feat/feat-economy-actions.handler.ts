@@ -8,7 +8,7 @@ import { parseHitDieLabel } from '@game/sheet/domain/stats/hit-points.calc';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
-import { resolveFeatEconomyTableAction } from '../../core/resolve-feat-economy-table-action';
+import { applyFeatEconomyTableAction } from '../../core/apply-feat-economy-table-action';
 
 export type UseFeatTableActionDto = {
   featSlug: string;
@@ -46,7 +46,7 @@ export class FeatEconomyActionsHandler {
       );
     }
     const hitDieFaces = await this.loadHitDieFaces(character.classSlug);
-    return resolveFeatEconomyTableAction(
+    return applyFeatEconomyTableAction(
       {
         state: this.state,
         mechanicalCatalog: this.mechanicalCatalog,

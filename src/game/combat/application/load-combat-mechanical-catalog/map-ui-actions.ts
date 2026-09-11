@@ -72,9 +72,6 @@ export function mapEconomyActions(
     description: row.description ?? undefined,
     tableAction: row.tableAction ?? undefined,
     spendAmount: row.spendAmount == null ? undefined : Number(row.spendAmount),
-    recoverResourceSlug: row.recoverResourceSlug ?? undefined,
-    recoverAmount:
-      row.recoverAmount == null ? undefined : Number(row.recoverAmount),
     spellSlug: row.spellSlug ?? undefined,
   }));
 }

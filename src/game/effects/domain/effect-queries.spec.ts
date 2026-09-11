@@ -47,6 +47,8 @@ function baseEffect(
     save: null,
     forcedMovement: null,
     dice: null,
+    combatFlag: null,
+    companion: null,
     },
     overrides,
     {
@@ -156,6 +158,26 @@ describe('executeCatalogEffect', () => {
       { level: 3 },
     );
     expect(result).toEqual({ kind: 'grant_inspiration', note: 'Canção' });
+  });
+
+  it('executes recover_resource', () => {
+    const result = executeCatalogEffect(
+      baseEffect({
+        kind: 'recover_resource',
+        trigger: 'on_table_action',
+        actionSlug: 'restore-intimidating-presence',
+        resourceSlug: 'intimidating-presence',
+        numeric: { amountFormula: 'fixed', flat: 1 },
+        note: { note: 'Restaurou' },
+      }),
+      { level: 14 },
+    );
+    expect(result).toEqual({
+      kind: 'recover_resource',
+      resourceSlug: 'intimidating-presence',
+      amount: 1,
+      note: 'Restaurou',
+    });
   });
 });
 

@@ -32,7 +32,7 @@ import {
 import { useDungeonPrecautionAction } from './dungeoneer-actions';
 import { usePsiWarriorAction } from './psi-warrior-actions';
 import { useBloodStrikeAction } from './blood-hound-actions';
-import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
 
 const PSI_PREFIX = 'psi:';
 
@@ -149,7 +149,7 @@ export class FighterActionsHandler {
         });
       }
       default:
-        return resolveDeclaredEconomyTableAction(
+        return applyDeclaredEconomyTableAction(
           {
             state: deps.state,
             mechanicalCatalog: deps.mechanicalCatalog,

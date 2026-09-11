@@ -79,6 +79,22 @@ export async function applyFeatEconomyExecutedEffect(input: {
     note = [note, executed.note, `PV temporários aplicados: ${executed.amount}.`]
       .filter(Boolean)
       .join(' ');
+  } else if (executed.kind === 'recover_resource' && executed.resourceSlug) {
+    state = await input.state.recoverClassResource(
+      input.character,
+      executed.resourceSlug,
+      executed.amount,
+    );
+    total = executed.amount;
+    note = [
+      note,
+      executed.note,
+      executed.note
+        ? null
+        : `Recuperados ${executed.amount} uso(s) de ${executed.resourceSlug}.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
   } else if (executed.kind === 'grant_inspiration') {
     state = await input.state.patch(input.character, { inspiration: true });
     note = [note, executed.note].filter(Boolean).join(' ');

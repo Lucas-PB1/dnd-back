@@ -449,6 +449,8 @@ effect/northlands/phb_effect.northlands.sql
 effect/valdas/phb_effect.valdas.sql
 effect/valdas/phb_effect.spellblade-cantrips.sql
 effect/phb/phb_effect.mesa-spend.sql
+effect/phb/phb_effect.mesa-recover.sql
+effect/phb/phb_effect.barbarian-mesa.sql
 effect/phb/phb_effect.species.sql
 transformation/grim-hollow/phb_effect.grant-resource.gh-transformations.sql
 effect/phb/phb_effect.class.sql
