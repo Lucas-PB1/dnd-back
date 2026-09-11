@@ -1,4 +1,4 @@
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 
 const EMPTY_PROFICIENCIES = {
   savingThrowSlugs: [] as string[],

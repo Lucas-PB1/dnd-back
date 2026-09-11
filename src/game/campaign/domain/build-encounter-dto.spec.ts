@@ -1,7 +1,7 @@
 import { buildCampaignEncounterDto } from './build-encounter-dto';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
-import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { ActorCombatantEnrichment } from '../application/enrich-encounter-actors';
+import { combatantFixture as combatant } from '@common/testing/combatant.fixture';
 
 function encounter(
   overrides: Partial<CampaignEncounter> = {},
@@ -18,27 +18,6 @@ function encounter(
     createdBy: 'u1',
     createdAt: new Date(),
     updatedAt: new Date(),
-    ...overrides,
-  };
-}
-
-function combatant(
-  overrides: Partial<CampaignEncounterCombatant>,
-): CampaignEncounterCombatant {
-  return {
-    id: 'cb1',
-    encounterId: 'e1',
-    kind: 'actor',
-    characterId: null,
-    actorId: 'actor1',
-    initiativeTotal: 12,
-    initiativeModifier: 2,
-    sortOrder: 0,
-    isActive: true,
-    hitPointsCurrent: null,
-    hitPointsMax: null,
-    tempHp: 0,
-    conditions: [],
     ...overrides,
   };
 }

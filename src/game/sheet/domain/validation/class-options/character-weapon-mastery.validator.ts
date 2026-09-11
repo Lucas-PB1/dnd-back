@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import {
   classWeaponMasterySlotsAtLevel,

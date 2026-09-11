@@ -23,7 +23,7 @@ import { CharacterSpellMasteryValidator } from './character-spell-mastery.valida
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './character-metamagic.validator';
 import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';

@@ -9,7 +9,7 @@ jest.mock('@game/sheet/infrastructure/queries/class-option.queries', () => ({
 
 import { DataSource } from 'typeorm';
 import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 import { mockClassProficienciesQuery } from '../testing/class-validation.spec.helpers';
 import {

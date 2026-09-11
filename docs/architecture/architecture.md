@@ -109,6 +109,7 @@ game       →  pode ler catalog (service/query); referencia slug PHB
 - **Proibido:** `catalog` importar `game`
 - **Proibido:** lógica de ficha dentro de `catalog/classes`
 - **Permitido:** `game` chamar `CatalogLookupService` para validar slug de classe
+- **Porta estável:** demais imports Catalog→Game passam por `@catalog/game-port` (não por `domain/` / `queries/` profundos)
 
 ## Quando usar DDD tático
 
@@ -139,7 +140,7 @@ flowchart TB
     R[Repository]
     GC --> H --> D
     H --> R
-    H --> CL[CatalogLookupService]
+    H --> CL[CatalogLookupService / @catalog/game-port]
   end
 ```
 

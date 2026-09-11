@@ -6,7 +6,7 @@ import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-
 import {
   loadWeaponMasteryBySlug,
   weaponPropsOf,
-} from '@catalog/equipment/weapon-props';
+} from '@catalog/game-port';
 import type { EquippedWeaponPiece } from '../../domain/weapon-attacks';
 import { psychicBladeEquipmentSlot } from '../../domain/rogue/psychic-blades';
 import { parseWeaponCharm } from '../../domain/equipment';

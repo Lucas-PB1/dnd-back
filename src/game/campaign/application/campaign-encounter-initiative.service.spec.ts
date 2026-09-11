@@ -6,9 +6,9 @@ import type { CharacterRollsService } from '@game/dice/application/character-rol
 import type { LoadEncounterDto } from './load-encounter-dto';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
-import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import { rollD20Check } from '@game/dice/domain/dice';
 import { asDep } from '@common/testing/as-dep';
+import { combatantFixture } from '@common/testing/combatant.fixture';
 
 jest.mock('@game/dice/domain/dice', () => ({
   ...jest.requireActual('@game/dice/domain/dice'),
@@ -29,23 +29,6 @@ const enc = (): CampaignEncounter => ({
   createdBy: 'u1',
   createdAt: new Date(),
   updatedAt: new Date(),
-});
-
-const cb = (o: Partial<CampaignEncounterCombatant>): CampaignEncounterCombatant => ({
-  id: 'cb1',
-  encounterId: 'e1',
-  kind: 'actor',
-  characterId: null,
-  actorId: 'actor1',
-  initiativeTotal: null,
-  initiativeModifier: 2,
-  sortOrder: 0,
-  isActive: true,
-  hitPointsCurrent: null,
-  hitPointsMax: null,
-  tempHp: 0,
-  conditions: [],
-  ...o,
 });
 
 const d20 = (total: number) => ({
@@ -102,7 +85,7 @@ describe('CampaignEncounterInitiativeService', () => {
   });
 
   it('rollOne rolls actor initiative for dm', async () => {
-    const combatant = cb({ initiativeModifier: 2 });
+    const combatant = combatantFixture({ initiativeModifier: 2 });
     encounters.findCombatantByIdOrFail.mockResolvedValue(combatant);
     mockRoll.mockReturnValue(d20(15));
 
@@ -113,7 +96,7 @@ describe('CampaignEncounterInitiativeService', () => {
 
   it('rollOne forbids player rolling for actor or closed encounter', async () => {
     campaigns.requireMember.mockResolvedValue({ role: 'player', userId: 'u1' } as CampaignMember);
-    encounters.findCombatantByIdOrFail.mockResolvedValue(cb({ kind: 'actor' }));
+    encounters.findCombatantByIdOrFail.mockResolvedValue(combatantFixture({ kind: 'actor' }));
     await expect(service.rollOne('u1', 'c1', 'e1', 'cb1', {})).rejects.toBeInstanceOf(
       ForbiddenException,
     );
@@ -126,7 +109,7 @@ describe('CampaignEncounterInitiativeService', () => {
 
   it('rollOne allows player rolling own PC', async () => {
     campaigns.requireMember.mockResolvedValue({ role: 'player', userId: 'u1' } as CampaignMember);
-    const pc = cb({ kind: 'pc', characterId: 'char1' });
+    const pc = combatantFixture({ kind: 'pc', characterId: 'char1' });
     encounters.findCombatantByIdOrFail.mockResolvedValue(pc);
     campaigns.findCharactersByIds.mockResolvedValue(asDep([{ id: 'char1', userId: 'u1' }]));
     rolls.rollInitiative.mockResolvedValue({
@@ -145,9 +128,9 @@ describe('CampaignEncounterInitiativeService', () => {
 
   it('rollAll rolls pending combatants and resets turn index', async () => {
     encounters.listCombatants.mockResolvedValue([
-      cb({ id: 'cb1', initiativeTotal: null }),
-      cb({ id: 'cb2', initiativeTotal: 12 }),
-      cb({ id: 'cb3', isActive: false, initiativeTotal: null }),
+      combatantFixture({ id: 'cb1', initiativeTotal: null }),
+      combatantFixture({ id: 'cb2', initiativeTotal: 12 }),
+      combatantFixture({ id: 'cb3', isActive: false, initiativeTotal: null }),
     ]);
     mockRoll.mockReturnValue(d20(11));
     const encounter = enc();

@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';

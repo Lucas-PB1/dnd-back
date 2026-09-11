@@ -6,8 +6,8 @@ import {
 import type { CharacterRollsService } from '@game/dice/application/character-rolls.service';
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
-import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import { rollD20Check } from '@game/dice/domain/dice';
+import { combatantFixture as combatant } from '@common/testing/combatant.fixture';
 
 jest.mock('@game/dice/domain/dice', () => ({
   ...jest.requireActual('@game/dice/domain/dice'),
@@ -15,27 +15,6 @@ jest.mock('@game/dice/domain/dice', () => ({
 }));
 
 const mockRollD20Check = rollD20Check as jest.MockedFunction<typeof rollD20Check>;
-
-function combatant(
-  overrides: Partial<CampaignEncounterCombatant>,
-): CampaignEncounterCombatant {
-  return {
-    id: 'cb1',
-    encounterId: 'e1',
-    kind: 'actor',
-    characterId: null,
-    actorId: 'actor1',
-    initiativeTotal: null,
-    initiativeModifier: 2,
-    sortOrder: 0,
-    isActive: true,
-    hitPointsCurrent: null,
-    hitPointsMax: null,
-    tempHp: 0,
-    conditions: [],
-    ...overrides,
-  };
-}
 
 describe('encounter-initiative-roll', () => {
   const rolls = { rollInitiative: jest.fn() } as unknown as CharacterRollsService;

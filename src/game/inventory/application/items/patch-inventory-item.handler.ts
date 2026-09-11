@@ -19,7 +19,7 @@ import {
   resolveInventoryPayment,
   scaleCoinPurse,
 } from '../../domain/coin-purse';
-import { RecordItemCatalogStatsService } from '@catalog/items/application/record-item-catalog-stats.service';
+import { RecordItemCatalogStatsService } from '@catalog/game-port';
 
 function isEquipping(dto: PatchInventoryItemDto): boolean {
   if (dto.location === 'equipped') return true;

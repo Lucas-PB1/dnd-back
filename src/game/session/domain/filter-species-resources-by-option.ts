@@ -1,4 +1,4 @@
-import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
+import { choiceKindForOptionKey } from '@catalog/game-port';
 
 /**
  * Filtra grants de recurso de espécie pelas mesmas gates `requires_option_*`

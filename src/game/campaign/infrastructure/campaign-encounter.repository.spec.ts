@@ -4,6 +4,7 @@ import type { CampaignRepository } from './campaign.repository';
 import { CampaignEncounterRepository } from './campaign-encounter.repository';
 import type { CampaignEncounter } from './campaign-encounter.entity';
 import type { CampaignEncounterCombatant } from './campaign-encounter-combatant.entity';
+import { combatantFixture as combatant } from '@common/testing/combatant.fixture';
 
 function encounter(overrides: Partial<CampaignEncounter> = {}): CampaignEncounter {
   return {
@@ -18,14 +19,6 @@ function encounter(overrides: Partial<CampaignEncounter> = {}): CampaignEncounte
     createdBy: 'u1',
     ...overrides,
   } as CampaignEncounter;
-}
-
-function combatant(overrides: Partial<CampaignEncounterCombatant> = {}): CampaignEncounterCombatant {
-  return {
-    id: 'cb1', encounterId: 'enc1', kind: 'pc', characterId: 'ch1', actorId: null,
-    initiativeTotal: 18,
-    initiativeModifier: 3, sortOrder: 0, isActive: true, ...overrides,
-  } as CampaignEncounterCombatant;
 }
 
 describe('CampaignEncounterRepository', () => {
@@ -121,8 +114,22 @@ describe('CampaignEncounterRepository', () => {
 
   describe('refreshSortOrders', () => {
     it('sorts by initiative and saves updated order', async () => {
-      const low = combatant({ id: 'cb-low', initiativeTotal: 10, sortOrder: 0 });
-      const high = combatant({ id: 'cb-high', initiativeTotal: 20, sortOrder: 1 });
+      const low = combatant({
+        id: 'cb-low',
+        kind: 'pc',
+        characterId: 'ch1',
+        actorId: null,
+        initiativeTotal: 10,
+        sortOrder: 0,
+      });
+      const high = combatant({
+        id: 'cb-high',
+        kind: 'pc',
+        characterId: 'ch1',
+        actorId: null,
+        initiativeTotal: 20,
+        sortOrder: 1,
+      });
       combatants.find.mockResolvedValue([low, high]);
       const saved = await repository.refreshSortOrders('enc1');
       expect(high.sortOrder).toBe(0);
@@ -140,7 +147,14 @@ describe('CampaignEncounterRepository', () => {
         initiativeTotal: 15,
         sortOrder: 1,
       });
-      const pc = combatant({ id: 'cb-pc', initiativeTotal: 12, sortOrder: 0 });
+      const pc = combatant({
+        id: 'cb-pc',
+        kind: 'pc',
+        characterId: 'ch1',
+        actorId: null,
+        initiativeTotal: 12,
+        sortOrder: 0,
+      });
       combatants.find.mockResolvedValue([pc, actorCombatant]);
       await repository.refreshSortOrders('enc1', new Map([['actor-1', 'Goblin']]));
       expect(actorCombatant.sortOrder).toBe(0);

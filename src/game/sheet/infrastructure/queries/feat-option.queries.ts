@@ -1,5 +1,5 @@
 import { DataSource, In } from 'typeorm';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbSkill } from '@entities/phb-skill.entity';

@@ -1,5 +1,5 @@
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
+import { assertNotClassGrantedCatalogItem } from '@catalog/game-port';
 import {
   EMPTY_COIN_PURSE,
   type CoinPurse,

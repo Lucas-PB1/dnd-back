@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
+import { choiceKindForOptionKey } from '@catalog/game-port';
 import { VPhbHpBonusSource } from '@entities/views/v-phb-hp-bonus-source.entity';
 import { VPhbUnarmoredDefense } from '@entities/views/v-phb-unarmored-defense.entity';
 import { withDefaultSpeciesChoices } from '@game/effects';

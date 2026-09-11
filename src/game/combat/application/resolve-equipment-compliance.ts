@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
@@ -15,7 +15,7 @@ import {
 } from '../domain/weapon-attacks';
 import type { SizeCategory } from '../domain/equipment';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { weaponPropsOf } from '@catalog/equipment/weapon-props';
+import { weaponPropsOf } from '@catalog/game-port';
 import { extraArmorTrainingFromClassOrder } from '@game/sheet/domain/validation/class-options/class-order-effects';
 
 export type EquipmentComplianceResolveInput = {

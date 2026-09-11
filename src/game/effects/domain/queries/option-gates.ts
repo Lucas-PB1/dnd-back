@@ -1,6 +1,8 @@
 import type { CatalogEffect } from '../catalog-effect';
-import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
-import { DWARF_CULTURE_KIND } from '@catalog/species/domain/species-culture';
+import {
+  choiceKindForOptionKey,
+  DWARF_CULTURE_KIND,
+} from '@catalog/game-port';
 
 export type EffectChoiceRef = {
   choiceKind: string;

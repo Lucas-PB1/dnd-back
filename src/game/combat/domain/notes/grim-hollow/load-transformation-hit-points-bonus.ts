@@ -1,6 +1,6 @@
 import type { DataSource } from 'typeorm';
 import { hitPointsBonus } from '@game/sheet/domain/stats/hit-points.calc';
-import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
+import { choiceKindForOptionKey } from '@catalog/game-port';
 
 type TransformationHpInput = {
   slug: string;

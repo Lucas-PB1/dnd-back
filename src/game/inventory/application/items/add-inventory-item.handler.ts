@@ -1,5 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { RecordItemCatalogStatsService } from '@catalog/items/application/record-item-catalog-stats.service';
+import {
+  assertNotClassGrantedCatalogItem,
+  RecordItemCatalogStatsService,
+} from '@catalog/game-port';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
@@ -18,7 +21,6 @@ import {
   scaleCoinPurse,
 } from '../../domain/coin-purse';
 import { isServiceItem } from '../../domain/item-kind';
-import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
 import { assertNotStandaloneCoverageItem } from '../../domain/coverage/coverage-inventory-rules';
 
 @Injectable()

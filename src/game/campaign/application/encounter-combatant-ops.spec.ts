@@ -6,8 +6,8 @@ import {
 } from './encounter-combatant-ops';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
-import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import { combatantFixture as combatant } from '@common/testing/combatant.fixture';
 
 function member(role: CampaignMember['role']): CampaignMember {
   return {
@@ -32,27 +32,6 @@ function encounter(overrides: Partial<CampaignEncounter> = {}): CampaignEncounte
     createdBy: 'u1',
     createdAt: new Date(),
     updatedAt: new Date(),
-    ...overrides,
-  };
-}
-
-function combatant(
-  overrides: Partial<CampaignEncounterCombatant>,
-): CampaignEncounterCombatant {
-  return {
-    id: 'cb1',
-    encounterId: 'e1',
-    kind: 'pc',
-    characterId: 'char1',
-    actorId: null,
-    initiativeTotal: null,
-    initiativeModifier: null,
-    sortOrder: 0,
-    isActive: true,
-    hitPointsCurrent: null,
-    hitPointsMax: null,
-    tempHp: 0,
-    conditions: [],
     ...overrides,
   };
 }

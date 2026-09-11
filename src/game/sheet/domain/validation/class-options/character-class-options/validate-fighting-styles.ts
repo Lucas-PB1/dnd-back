@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
+import { ClassProficienciesQuery } from '@catalog/game-port';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { isGeneralFeatFightingStylePick } from '@game/shared/domain/fighting-style-general-feat';

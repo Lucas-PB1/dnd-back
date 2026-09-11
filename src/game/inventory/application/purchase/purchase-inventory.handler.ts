@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { RecordItemCatalogStatsService } from '@catalog/items/application/record-item-catalog-stats.service';
+import { RecordItemCatalogStatsService } from '@catalog/game-port';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';

@@ -1,5 +1,5 @@
 import type { CatalogEffect, EffectCastEconomySatellite } from '../catalog-effect';
-import { choiceKindForOptionKey } from '@catalog/species/domain/species-option-keys';
+import { choiceKindForOptionKey } from '@catalog/game-port';
 import type { EffectChoiceRef } from './option-gates';
 
 /** Feat slugs granted by `grant_feat` (ex.: Humano Versátil). */
