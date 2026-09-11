@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import type { CatalogEffect } from '@game/effects';
 import {
   asHandlerDep,
   createTableActionHandlerTestContext,
@@ -6,6 +7,135 @@ import {
   createTestCharacter,
 } from '../testing/table-action-handler.harness';
 import { DruidActionsHandler } from './druid-actions.handler';
+
+const DRUID_ECONOMY = [
+  {
+    id: 'druid-wild-shape',
+    name: 'Forma Selvagem',
+    economy: 'bonus' as const,
+    classSlug: 'druid',
+    minLevel: 2,
+    resourceSlug: 'wildShape',
+    alwaysSpendsResource: true,
+    tableAction: 'wild-shape',
+    itemSlug: null,
+    featSlug: null,
+    description: 'WS',
+  },
+  {
+    id: 'druid-wild-resurgence-slot',
+    name: 'Ressurgimento (Forma → Slot)',
+    economy: 'free' as const,
+    classSlug: 'druid',
+    minLevel: 5,
+    resourceSlug: 'wildShape',
+    alwaysSpendsResource: true,
+    tableAction: 'wild-resurgence-slot',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Resurgence',
+  },
+  {
+    id: 'druid-starry-archer',
+    name: 'Forma Estelar: Arqueiro',
+    economy: 'bonus' as const,
+    classSlug: 'druid',
+    subclassSlug: 'stars',
+    minLevel: 3,
+    resourceSlug: 'wildShape',
+    alwaysSpendsResource: true,
+    tableAction: 'starry-form-archer',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Archer',
+  },
+  {
+    id: 'druid-moon-combat',
+    name: 'Forma Selvagem de Combate',
+    economy: 'bonus' as const,
+    classSlug: 'druid',
+    subclassSlug: 'moon',
+    minLevel: 3,
+    resourceSlug: 'wildShape',
+    alwaysSpendsResource: true,
+    tableAction: 'moon-combat-wild-shape',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Moon',
+  },
+  {
+    id: 'druid-land-aid',
+    name: 'Auxílio da Terra',
+    economy: 'action' as const,
+    classSlug: 'druid',
+    subclassSlug: 'land',
+    minLevel: 3,
+    resourceSlug: 'wildShape',
+    alwaysSpendsResource: true,
+    tableAction: 'land-aid',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Auxílio da Terra',
+  },
+  {
+    id: 'druid-natural-recovery-2',
+    name: 'Recuperação Natural (2º)',
+    economy: 'free' as const,
+    classSlug: 'druid',
+    subclassSlug: 'land',
+    minLevel: 6,
+    resourceSlug: 'natural-recovery',
+    alwaysSpendsResource: false,
+    tableAction: 'natural-recovery-2',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Recovery',
+  },
+];
+
+const DRUID_EFFECTS: CatalogEffect[] = [
+  {
+    kind: 'table_note',
+    ownerKind: 'class',
+    ownerSlug: 'druid',
+    unlockLevel: 2,
+    trigger: 'on_table_action',
+    actionSlug: 'wild-shape',
+    note: { note: 'Forma Selvagem: gastou 1 uso.' },
+  } as CatalogEffect,
+  {
+    kind: 'recover_spell_slot',
+    ownerKind: 'subclass',
+    ownerSlug: 'land',
+    unlockLevel: 6,
+    trigger: 'on_table_action',
+    actionSlug: 'natural-recovery-2',
+    spell: { spellLevel: 2, optionKey: 'fixed_slot' },
+    note: { note: 'Recuperação Natural slot 2º' },
+  } as CatalogEffect,
+  {
+    kind: 'table_roll',
+    ownerKind: 'subclass',
+    ownerSlug: 'land',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'land-aid',
+    numeric: null,
+    dice: { die: '2d6' },
+    note: {
+      note: 'Auxílio da Terra: Esfera 3 m — {total} Necrótico ({expression}) ou metade; cura aliado na área.',
+    },
+  } as CatalogEffect,
+  {
+    kind: 'heal',
+    ownerKind: 'subclass',
+    ownerSlug: 'land',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'land-aid',
+    dice: { die: '2d6' },
+  } as CatalogEffect,
+];
 
 describe('DruidActionsHandler', () => {
   const druid = createTestCharacter({
@@ -29,16 +159,29 @@ describe('DruidActionsHandler', () => {
       aberrantMutationActive: null,
     },
     defaultCharacter: druid,
+    mechanicalCatalogLoad: { economyActions: DRUID_ECONOMY },
   });
+  const effectCatalog = { load: jest.fn().mockResolvedValue(DRUID_EFFECTS) };
   let handler: DruidActionsHandler;
 
   beforeEach(() => {
     ctx.resetMocks();
+    ctx.state.setStarryForm.mockImplementation(async (_c, dto) => ({
+      ...ctx.stateResponse,
+      starryFormActive: dto.active,
+      stellarConstellation: dto.constellation,
+    }));
+    effectCatalog.load.mockImplementation(({ actionSlug }: { actionSlug?: string }) =>
+      Promise.resolve(
+        DRUID_EFFECTS.filter((effect) => effect.actionSlug === actionSlug),
+      ),
+    );
     handler = new DruidActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),
       asHandlerDep(ctx.domain),
       asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep(effectCatalog),
     );
   });
 

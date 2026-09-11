@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { LoadEffectCatalog } from '@game/effects';
 import {
   TableActionResponseDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
@@ -10,23 +11,8 @@ import {
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import { applyPsychicBladeTableAction } from '../../core/apply-psychic-blade-table-action';
 import { assertCharacterSubclass } from '../../core/table-action-guards';
-import type { RogueActionDeps } from './rogue-action-deps';
-import {
-  resolveConditionalPsiBonus,
-  rollPsychicBlade,
-} from './psychic-blade-actions';
-import {
-  resolvePsychicTeleport,
-  resolvePsychicVeil,
-  resolvePsychicWhispers,
-  resolveRendMind,
-} from './soulknife-actions';
-import {
-  resolveArachnoidWeb,
-  resolveMagicDeviceCharge,
-  resolveSpellThief,
-} from './subclass-actions';
 
 @Injectable()
 export class RogueActionsHandler {
@@ -35,15 +21,8 @@ export class RogueActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
-
-  private deps(): RogueActionDeps {
-    return {
-      state: this.state,
-      domain: this.domain,
-      mechanicalCatalog: this.mechanicalCatalog,
-    };
-  }
 
   async useTableAction(
     userId: string,
@@ -63,36 +42,37 @@ export class RogueActionsHandler {
       assertCharacterSubclass(character, 'soulknife', 'Soulknife');
     }
 
-    const deps = this.deps();
-    switch (dto.actionSlug) {
-      case 'psychic-blade-main':
-        return rollPsychicBlade(deps, character, false);
-      case 'psychic-blade-bonus':
-        return rollPsychicBlade(deps, character, true);
-      case 'psi-bolstered-knack':
-        return resolveConditionalPsiBonus(deps, character, dto, false);
-      case 'guided-strike':
-        return resolveConditionalPsiBonus(deps, character, dto, true);
-      case 'psychic-whispers':
-        return resolvePsychicWhispers(deps, character, dto.usePsiDie);
-      case 'psychic-teleport':
-        return resolvePsychicTeleport(deps, character);
-      case 'psychic-veil':
-        return resolvePsychicVeil(deps, character, dto.usePsiDie);
-      case 'rend-mind':
-        return resolveRendMind(deps, character, dto.usePsiDie);
-      case 'spell-thief':
-        return resolveSpellThief(deps, character);
-      case 'arachnoid-web':
-        return resolveArachnoidWeb(deps, character);
-      case 'magic-device-charge':
-        return resolveMagicDeviceCharge(deps, character);
-      default:
-        return applyDeclaredEconomyTableAction(
-          deps,
-          character,
-          dto.actionSlug,
-        );
+    if (dto.actionSlug === 'psychic-blade-main') {
+      return applyPsychicBladeTableAction({
+        state: this.state,
+        character,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+        bonusAttack: false,
+      });
     }
+    if (dto.actionSlug === 'psychic-blade-bonus') {
+      return applyPsychicBladeTableAction({
+        state: this.state,
+        character,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+        bonusAttack: true,
+      });
+    }
+
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+      },
+      character,
+      dto.actionSlug,
+      {
+        checkTotal: dto.checkTotal,
+        dc: dto.dc,
+        usePsiDie: dto.usePsiDie,
+      },
+    );
   }
 }

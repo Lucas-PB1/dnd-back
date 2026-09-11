@@ -1,11 +1,78 @@
 import { BadRequestException } from '@nestjs/common';
 import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
+import type { CatalogEffect } from '@game/effects';
 import {
   asHandlerDep,
   createTableActionHandlerTestContext,
   createTestCharacter,
 } from '../testing/table-action-handler.harness';
 import { GunslingerActionsHandler } from './gunslinger-actions.handler';
+
+const GUNSLINGER_ECONOMY = [
+  {
+    id: 'gs-use-maneuver',
+    name: 'Usar Manobra',
+    economy: 'free' as const,
+    classSlug: 'gunslinger',
+    minLevel: 2,
+    resourceSlug: 'risk',
+    alwaysSpendsResource: false,
+    tableAction: 'use-maneuver',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Maneuver',
+  },
+  {
+    id: 'gs-recover-risk',
+    name: 'Gambito Terrível',
+    economy: 'free' as const,
+    classSlug: 'gunslinger',
+    minLevel: 15,
+    alwaysSpendsResource: false,
+    tableAction: 'recover-risk',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Recover',
+  },
+  {
+    id: 'gs-reload',
+    name: 'Recarregar',
+    economy: 'action' as const,
+    classSlug: 'gunslinger',
+    minLevel: 2,
+    alwaysSpendsResource: false,
+    tableAction: 'reload-firearm',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Reload',
+  },
+  {
+    id: 'gs-fire',
+    name: 'Disparar',
+    economy: 'action' as const,
+    classSlug: 'gunslinger',
+    minLevel: 2,
+    alwaysSpendsResource: false,
+    tableAction: 'fire-chamber',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Fire',
+  },
+];
+
+const GUNSLINGER_EFFECTS: CatalogEffect[] = [
+  {
+    kind: 'recover_resource',
+    resourceSlug: 'risk',
+    ownerKind: 'class',
+    ownerSlug: 'gunslinger',
+    unlockLevel: 15,
+    trigger: 'on_table_action',
+    actionSlug: 'recover-risk',
+    numeric: { amountFormula: 'fixed', flat: 1 },
+    note: { note: 'Dado de Risco' },
+  } as CatalogEffect,
+];
 
 describe('GunslingerActionsHandler', () => {
   const gunslinger = createTestCharacter({
@@ -30,7 +97,11 @@ describe('GunslingerActionsHandler', () => {
       ],
     },
     defaultCharacter: gunslinger,
+    mechanicalCatalogLoad: { economyActions: GUNSLINGER_ECONOMY },
   });
+  const effectCatalog = {
+    load: jest.fn().mockResolvedValue(GUNSLINGER_EFFECTS),
+  };
   let handler: GunslingerActionsHandler;
 
   beforeEach(() => {
@@ -47,10 +118,13 @@ describe('GunslingerActionsHandler', () => {
         { slug: 'risk', remaining: 4, max: 4, name: 'Risco', used: 0 },
       ],
     });
+    effectCatalog.load.mockResolvedValue(GUNSLINGER_EFFECTS);
     handler = new GunslingerActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),
       asHandlerDep(ctx.sheet),
+      asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep(effectCatalog),
     );
   });
 

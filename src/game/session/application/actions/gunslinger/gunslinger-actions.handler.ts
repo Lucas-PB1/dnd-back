@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isGunslingerClass } from '@game/combat/domain/gunslinger';
 import {
   canUseFirearmTableActions,
   isBlackPowderPistolSlug,
   isFirearmTableActionSlug,
 } from '@game/combat/domain/feat/grim-hollow-cap4-weapon-rules';
+import { LoadEffectCatalog } from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -17,6 +19,11 @@ import {
 import {
   UseManeuverResponseDto,
 } from '@game/session/dto/core/session-commands.dto';
+import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
+import {
+  applyFireChamberTableAction,
+  applyReloadFirearmTableAction,
+} from '../../core/apply-gunslinger-maneuver-table-action';
 
 @Injectable()
 export class GunslingerActionsHandler {
@@ -24,6 +31,8 @@ export class GunslingerActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly sheet: CharacterSheetRepository,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async listManeuvers(userId: string, characterId: string) {
@@ -48,66 +57,37 @@ export class GunslingerActionsHandler {
     const isGunslinger = isGunslingerClass(character.classSlug);
     if (!isGunslinger) {
       await this.assertNonGunslingerFirearmAction(character.id, dto);
+      const itemSlug = dto.itemSlug!.trim();
+      if (dto.actionSlug === 'reload-firearm') {
+        return applyReloadFirearmTableAction({
+          state: this.state,
+          character,
+          itemSlug,
+        });
+      }
+      return applyFireChamberTableAction({
+        state: this.state,
+        character,
+        itemSlug,
+        shots: dto.shots ?? 1,
+      });
     }
 
-    switch (dto.actionSlug) {
-      case 'use-maneuver': {
-        if (!dto.maneuverSlug?.trim()) {
-          throw new BadRequestException('maneuverSlug é obrigatório');
-        }
-        return this.state.martial.useManeuver(character, dto.maneuverSlug);
-      }
-      case 'recover-risk': {
-        if (character.level < 15) {
-          throw new BadRequestException(
-            'Gambito Terrível requires Gunslinger level 15+',
-          );
-        }
-        const state = await this.state.recoverClassResource(
-          character,
-          'risk',
-          1,
-        );
-        return {
-          state,
-          actionName: 'Gambito Terrível',
-          resourceSpent: false,
-          note: 'Gambito Terrível: recuperou 1 Dado de Risco (marque quando rolar Iniciativa ou obtiver um Acerto Crítico).',
-        };
-      }
-      case 'reload-firearm': {
-        const itemSlug = requireItemSlug(dto.itemSlug);
-        const state = await this.state.martial.reloadFirearm(
-          character,
-          itemSlug,
-        );
-        return {
-          state,
-          actionName: 'Recarregar',
-          resourceSpent: false,
-          note: `Recarregou ${itemSlug}.`,
-        };
-      }
-      case 'fire-chamber': {
-        const itemSlug = requireItemSlug(dto.itemSlug);
-        const shots = dto.shots ?? 1;
-        const state = await this.state.martial.fireChamber(
-          character,
-          itemSlug,
-          shots,
-        );
-        return {
-          state,
-          actionName: 'Disparar',
-          resourceSpent: false,
-          note: `Gastou ${shots} tiro(s) de ${itemSlug}.`,
-        };
-      }
-      default:
-        throw new BadRequestException(
-          `Ação de Pistoleiro desconhecida: ${dto.actionSlug as string}`,
-        );
-    }
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+        sheet: this.sheet,
+      },
+      character,
+      dto.actionSlug,
+      {
+        maneuverSlug: dto.maneuverSlug,
+        itemSlug: dto.itemSlug,
+        shots: dto.shots,
+      },
+    );
   }
 
   private async assertNonGunslingerFirearmAction(
@@ -122,18 +102,14 @@ export class GunslingerActionsHandler {
     if (!canUseFirearmTableActions({ classSlug: '', featSlugs })) {
       throw new BadRequestException('Gunslinger action is not available');
     }
-    const itemSlug = requireItemSlug(dto.itemSlug);
+    const itemSlug = dto.itemSlug?.trim();
+    if (!itemSlug) {
+      throw new BadRequestException('itemSlug é obrigatório');
+    }
     if (!isBlackPowderPistolSlug(itemSlug)) {
       throw new BadRequestException(
         'Ação disponível apenas para pistola de pólvora',
       );
     }
   }
-}
-
-function requireItemSlug(itemSlug: string | undefined): string {
-  if (!itemSlug?.trim()) {
-    throw new BadRequestException('itemSlug é obrigatório');
-  }
-  return itemSlug.trim();
 }

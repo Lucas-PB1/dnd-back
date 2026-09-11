@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import type { CatalogEffect } from '@game/effects';
 import {
   asHandlerDep,
   createTableActionHandlerTestContext,
@@ -6,6 +7,135 @@ import {
   createTestCharacter,
 } from '../testing/table-action-handler.harness';
 import { SorcererActionsHandler } from './sorcerer-actions.handler';
+
+const SORCERER_ECONOMY = [
+  {
+    id: 'sorc-convert-slot-1',
+    name: 'Converter Slot 1º',
+    economy: 'free' as const,
+    classSlug: 'sorcerer',
+    minLevel: 2,
+    alwaysSpendsResource: false,
+    tableAction: 'convert-slot-1-to-points',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Convert',
+  },
+  {
+    id: 'sorc-convert-points-1',
+    name: 'Criar Slot 1º',
+    economy: 'free' as const,
+    classSlug: 'sorcerer',
+    minLevel: 2,
+    resourceSlug: 'sorceryPoints',
+    alwaysSpendsResource: true,
+    spendAmount: 2,
+    tableAction: 'convert-points-to-slot-1',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Convert',
+  },
+  {
+    id: 'sorc-use-metamagic',
+    name: 'Metamagia',
+    economy: 'free' as const,
+    classSlug: 'sorcerer',
+    minLevel: 2,
+    resourceSlug: 'sorceryPoints',
+    alwaysSpendsResource: false,
+    tableAction: 'use-metamagic',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Meta',
+  },
+  {
+    id: 'sorc-innate',
+    name: 'Feitiçaria Inata',
+    economy: 'bonus' as const,
+    classSlug: 'sorcerer',
+    minLevel: 1,
+    resourceSlug: 'innate-sorcery',
+    alwaysSpendsResource: true,
+    tableAction: 'innate-sorcery',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Innate',
+  },
+  {
+    id: 'sorc-tides',
+    name: 'Marés do Caos',
+    economy: 'free' as const,
+    classSlug: 'sorcerer',
+    subclassSlug: 'wild-magic',
+    minLevel: 3,
+    resourceSlug: 'tides-of-chaos',
+    alwaysSpendsResource: true,
+    tableAction: 'tides-of-chaos',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Tides',
+  },
+  {
+    id: 'sorc-bastion',
+    name: 'Bastião da Lei',
+    economy: 'action' as const,
+    classSlug: 'sorcerer',
+    subclassSlug: 'clockwork',
+    minLevel: 6,
+    resourceSlug: 'sorceryPoints',
+    alwaysSpendsResource: false,
+    tableAction: 'bastion-of-law',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Bastion',
+  },
+  {
+    id: 'sorc-heroic',
+    name: 'Alma Heróica',
+    economy: 'free' as const,
+    classSlug: 'sorcerer',
+    subclassSlug: 'heroic-sorcery',
+    minLevel: 3,
+    resourceSlug: 'sorceryPoints',
+    alwaysSpendsResource: true,
+    spendAmount: 1,
+    tableAction: 'heroic-soul',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Heroic',
+  },
+];
+
+const SORCERER_EFFECTS: CatalogEffect[] = [
+  {
+    kind: 'table_note',
+    ownerKind: 'subclass',
+    ownerSlug: 'wild-magic',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'tides-of-chaos',
+    note: { note: 'Marés do Caos' },
+  } as CatalogEffect,
+  {
+    kind: 'table_note',
+    ownerKind: 'subclass',
+    ownerSlug: 'clockwork',
+    unlockLevel: 6,
+    trigger: 'on_table_action',
+    actionSlug: 'bastion-of-law',
+    note: { note: 'Bastião {total}d8' },
+  } as CatalogEffect,
+  {
+    kind: 'temp_hp',
+    ownerKind: 'subclass',
+    ownerSlug: 'heroic-sorcery',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'heroic-soul',
+    dice: { die: '1d6' },
+    note: { note: 'Alma Heróica {total} PV temp ({expression}) aplicados na ficha.' },
+  } as CatalogEffect,
+];
 
 describe('SorcererActionsHandler', () => {
   const sorcerer = createTestCharacter({
@@ -43,22 +173,29 @@ describe('SorcererActionsHandler', () => {
       tempHp: 0,
     },
     defaultCharacter: sorcerer,
+    mechanicalCatalogLoad: { economyActions: SORCERER_ECONOMY },
   });
   const dataSource = {
     query: jest.fn().mockResolvedValue([{ value_id: 'subtle-spell' }]),
   };
+  const effectCatalog = { load: jest.fn().mockResolvedValue(SORCERER_EFFECTS) };
   let handler: SorcererActionsHandler;
 
   beforeEach(() => {
     ctx.resetMocks();
     dataSource.query.mockResolvedValue([{ value_id: 'subtle-spell' }]);
+    effectCatalog.load.mockImplementation(({ actionSlug }: { actionSlug?: string }) =>
+      Promise.resolve(
+        SORCERER_EFFECTS.filter((effect) => effect.actionSlug === actionSlug),
+      ),
+    );
     handler = new SorcererActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),
       asHandlerDep(ctx.domain),
       asHandlerDep(dataSource),
       asHandlerDep(ctx.mechanicalCatalog),
-      asHandlerDep({ load: jest.fn().mockResolvedValue([]) }),
+      asHandlerDep(effectCatalog),
     );
   });
 

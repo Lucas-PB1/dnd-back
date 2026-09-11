@@ -16,8 +16,10 @@ export async function applyCheckBoostTableAction(input: {
   checkTotal?: number;
   dc?: number;
   note?: string | null;
+  dieFaces?: number;
 }): Promise<TableActionResponseDto> {
-  const roll = rollDie(10);
+  const faces = input.dieFaces ?? 10;
+  const roll = rollDie(faces);
   const hasCheckContext =
     typeof input.checkTotal === 'number' && typeof input.dc === 'number';
 
@@ -39,14 +41,14 @@ export async function applyCheckBoostTableAction(input: {
     return {
       state,
       actionName: input.actionName,
-      expression: '1d10',
+      expression: `1d${faces}`,
       roll,
       total: newTotal,
       resourceSpent,
       note: success
         ? input.note?.trim() ||
-          `${input.actionName}: sucesso; uso de ${input.resourceSlug} gasto`
-        : `${input.actionName}: ainda falhou; uso de ${input.resourceSlug} não gasto`,
+          `${input.actionName}: ${input.checkTotal} + ${roll} = ${newTotal} vs ${input.dc}; sucesso, dado gasto`
+        : `${input.actionName}: ${input.checkTotal} + ${roll} = ${newTotal} vs ${input.dc}; ainda falhou, dado preservado`,
     };
   }
 
@@ -59,13 +61,13 @@ export async function applyCheckBoostTableAction(input: {
     return {
       state: spent.state,
       actionName: input.actionName,
-      expression: '1d10',
+      expression: `1d${faces}`,
       roll,
       total: roll,
       resourceSpent: true,
       note:
         input.note?.trim() ||
-        `${input.actionName}: +${roll} (1d10). Some ao teste; se ainda falhar, devolva o uso.`,
+        `${input.actionName}: +${roll} (1d${faces}). Some ao teste; se ainda falhar, devolva o uso.`,
     };
   } catch (error) {
     throw new BadRequestException(

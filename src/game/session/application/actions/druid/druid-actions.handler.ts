@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isDruidClass } from '@game/combat/domain/druid';
+import { LoadEffectCatalog } from '@game/effects';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
@@ -11,43 +12,10 @@ import {
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import type { DruidActionDeps } from './druid-action-deps';
 import {
-  resolveWildResurgenceShape,
-  resolveWildResurgenceSlot,
-  resolveWildShape,
-} from './wild-shape-actions';
-import {
-  resolveCityShape,
-  resolveCosmicOmen,
-  resolveMoonCombatWildShape,
-  resolveOceanManifestation,
-  resolveStarryFormArcher,
-  resolveStarryFormChalice,
-  resolveStarryFormDragon,
-  resolveStarryFormEnd,
-  resolveStellarGuidance,
-  resolveWallWarp,
-  resolveWrathOfTheSea,
-} from './subclass-actions';
-import {
-  resolveLunarStep,
-  resolveRestoreLunarStep,
-} from './moon-actions';
-import {
-  resolveLandAid,
-  resolveNaturalRecovery,
-  resolveNatureSanctuary,
-} from './land-actions';
-import { resolveWickerboneBehemoth } from './symbiosis-actions';
-
-const NATURAL_RECOVERY_SLUGS = {
-  'natural-recovery-1': 1,
-  'natural-recovery-2': 2,
-  'natural-recovery-3': 3,
-  'natural-recovery-4': 4,
-  'natural-recovery-5': 5,
-} as const;
+  applyMoonCombatWildShapeTableAction,
+  applyRestoreLunarStepTableAction,
+} from '../../core/apply-wild-resurgence-table-action';
 
 @Injectable()
 export class DruidActionsHandler {
@@ -56,17 +24,8 @@ export class DruidActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
-
-  private deps(): DruidActionDeps & {
-    mechanicalCatalog: LoadCombatMechanicalCatalog;
-  } {
-    return {
-      state: this.state,
-      domain: this.domain,
-      mechanicalCatalog: this.mechanicalCatalog,
-    };
-  }
 
   async useTableAction(
     userId: string,
@@ -82,60 +41,32 @@ export class DruidActionsHandler {
       throw new BadRequestException('Druid action is not available');
     }
 
-    const deps = this.deps();
-    const recoveryLevel =
-      NATURAL_RECOVERY_SLUGS[
-        dto.actionSlug as keyof typeof NATURAL_RECOVERY_SLUGS
-      ];
-    if (recoveryLevel != null) {
-      return resolveNaturalRecovery(deps, character, recoveryLevel);
+    if (dto.actionSlug === 'moon-combat-wild-shape') {
+      return applyMoonCombatWildShapeTableAction({
+        state: this.state,
+        character,
+      });
+    }
+    if (dto.actionSlug === 'restore-lunar-step') {
+      return applyRestoreLunarStepTableAction({
+        state: this.state,
+        character,
+        slotLevel: dto.slotLevel,
+      });
     }
 
-    switch (dto.actionSlug) {
-      case 'wild-shape':
-        return resolveWildShape(deps, character);
-      case 'wild-resurgence-slot':
-        return resolveWildResurgenceSlot(deps, character);
-      case 'wild-resurgence-shape':
-        return resolveWildResurgenceShape(deps, character);
-      case 'starry-form-archer':
-        return resolveStarryFormArcher(deps, character);
-      case 'starry-form-chalice':
-        return resolveStarryFormChalice(deps, character);
-      case 'starry-form-dragon':
-        return resolveStarryFormDragon(deps, character);
-      case 'starry-form-end':
-        return resolveStarryFormEnd(deps, character);
-      case 'stellar-guidance':
-        return resolveStellarGuidance(deps, character);
-      case 'cosmic-omen':
-        return resolveCosmicOmen(deps, character);
-      case 'wrath-of-the-sea':
-        return resolveWrathOfTheSea(deps, character);
-      case 'ocean-manifestation':
-        return resolveOceanManifestation(deps, character);
-      case 'moon-combat-wild-shape':
-        return resolveMoonCombatWildShape(deps, character);
-      case 'lunar-step':
-        return resolveLunarStep(deps, character);
-      case 'restore-lunar-step':
-        return resolveRestoreLunarStep(deps, character, dto.slotLevel);
-      case 'land-aid':
-        return resolveLandAid(deps, character);
-      case 'nature-sanctuary':
-        return resolveNatureSanctuary(deps, character);
-      case 'city-shape':
-        return resolveCityShape(deps, character);
-      case 'wall-warp':
-        return resolveWallWarp(deps, character);
-      case 'wickerbone-behemoth':
-        return resolveWickerboneBehemoth(deps, character);
-      default:
-        return applyDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
-          character,
-          dto.actionSlug,
-        );
-    }
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+      },
+      character,
+      dto.actionSlug,
+      {
+        slotLevel: dto.slotLevel,
+      },
+    );
   }
 }

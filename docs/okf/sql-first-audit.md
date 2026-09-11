@@ -84,6 +84,14 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda bruxo/mago (fechada):** handlers POST = `applyDeclaredEconomyTableAction` (+ outlier inventário/mísseis). Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`. Wire `recover_spell_slot`, `heal_from_dice_pool` (Luz Medicinal). Outliers: `invoke-pact-weapon`, arm/disarm Escudo/Giga-Míssil.
 
+**Onda ladino (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Lâmina Psíquica). Seed `phb_effect.rogue-mesa.sql`. Soulknife: `check_boost` + free/paid psi (`usePsiDie`); subclasses `table_note`/`feature_dc`.
+
+**Onda feiticeiro (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Feitiçaria Inata/Asas fallback SP). Seed `phb_effect.sorcerer-mesa.sql`. Fonte de Magia via slug; `use-metamagic` → catálogo DB.
+
+**Onda pistoleiro (fechada):** handler POST = `applyDeclaredEconomyTableAction` (default economy wired). Seed `phb_effect.gunslinger-mesa.sql`. `use-maneuver`/`recover-risk`/`reload-firearm`/`fire-chamber`.
+
+**Onda druida (fechada):** handler POST = `applyDeclaredEconomyTableAction` (+ Lua combate, Restaurar Passo Lunar). Seed `phb_effect.druid-mesa.sql`. Forma Estelada state machine tipada; `natural-recovery-*` → `recover_spell_slot`.
+
 ### Gates `has*` vs schedule (dívida média)
 
 `phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).

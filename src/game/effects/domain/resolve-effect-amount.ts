@@ -124,7 +124,7 @@ export function resolveEffectAmount(input: {
           : 0,
       };
     case 'level_times_5':
-      return { amount: 5 * input.level + (input.flat ?? 0) };
+      return { amount: 5 * input.level };
     case 'dice_divine_spark_plus_flat': {
       const level = input.level;
       const die =

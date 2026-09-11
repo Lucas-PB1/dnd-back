@@ -180,3 +180,10 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Seeds `phb_effect.warlock-mesa.sql`, `phb_effect.wizard-mesa.sql`; wire `recover_spell_slot`; fórmulas `pact_slots_recovery_count`, `portent_d20_count`.
 - Apply: pact slot schedule (Astúcia Mágica); cura em `healing-light`; ward INT mín. 1.
 - Outliers: `invoke-pact-weapon` (inventário); arm/disarm mísseis (`setMissileMageArmedFlags`).
+
+## 2026-09-11 — Ladino, Feiticeiro, Pistoleiro e Druida mesa fechados
+
+- Seeds `phb_effect.rogue-mesa.sql`, `phb_effect.sorcerer-mesa.sql`, `phb_effect.gunslinger-mesa.sql`, `phb_effect.druid-mesa.sql`.
+- Apply: `check_boost` com dado psi (schedule); `convert_spell_points` via slug; `catalog_metamagic`; manobras/tiros pistoleiro; Forma Estelada / Ressurgimento Selvagem tipados.
+- Handlers POST = `applyDeclaredEconomyTableAction` (+ outliers mínimos). Resolvers mortos removidos.
+- Outliers: Lâmina Psíquica (ataque); Feitiçaria Inata/Asas de Dragão (fallback SP); Lua combate + Restaurar Passo Lunar.

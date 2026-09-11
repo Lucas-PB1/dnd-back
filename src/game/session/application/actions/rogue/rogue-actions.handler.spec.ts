@@ -1,4 +1,4 @@
-import { FIXTURE_SOULKNIFE_ACTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog';
+import type { CatalogEffect } from '@game/effects';
 import {
   asHandlerDep,
   createTableActionHandlerTestContext,
@@ -6,6 +6,92 @@ import {
   createTestCharacter,
 } from '../testing/table-action-handler.harness';
 import { RogueActionsHandler } from './rogue-actions.handler';
+
+const ROGUE_ECONOMY = [
+  {
+    id: 'rogue-psi-bolstered',
+    name: 'Aptidão Reforçada Psiquicamente',
+    economy: 'free' as const,
+    classSlug: 'rogue',
+    subclassSlug: 'soulknife',
+    minLevel: 3,
+    resourceSlug: 'soulknife-psi-dice',
+    alwaysSpendsResource: false,
+    tableAction: 'psi-bolstered-knack',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Psi knack',
+  },
+  {
+    id: 'rogue-psychic-whispers',
+    name: 'Sussurros Psíquicos',
+    economy: 'action' as const,
+    classSlug: 'rogue',
+    subclassSlug: 'soulknife',
+    minLevel: 3,
+    resourceSlug: 'soulknife-psi-dice',
+    freeResourceSlug: 'psychic-whispers',
+    alwaysSpendsResource: false,
+    tableAction: 'psychic-whispers',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Whispers',
+  },
+  {
+    id: 'rogue-arachnoid-web',
+    name: 'Correia / Teia',
+    economy: 'bonus' as const,
+    classSlug: 'rogue',
+    subclassSlug: 'arachnoid-stalker',
+    minLevel: 3,
+    resourceSlug: 'arachnoid-web',
+    alwaysSpendsResource: true,
+    tableAction: 'arachnoid-web',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Web',
+  },
+];
+
+const ROGUE_EFFECTS: CatalogEffect[] = [
+  {
+    kind: 'check_boost',
+    resourceSlug: 'soulknife-psi-dice',
+    ownerKind: 'subclass',
+    ownerSlug: 'soulknife',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'psi-bolstered-knack',
+    note: { note: 'Psi knack' },
+  } as CatalogEffect,
+  {
+    kind: 'table_roll',
+    ownerKind: 'subclass',
+    ownerSlug: 'soulknife',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'psychic-whispers',
+    numeric: { amountFormula: 'schedule_die_plus_flat', flat: null },
+  } as CatalogEffect,
+  {
+    kind: 'feature_dc',
+    ownerKind: 'subclass',
+    ownerSlug: 'arachnoid-stalker',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'arachnoid-web',
+    numeric: { amountFormula: 'eight_plus_mod_plus_pb', flat: null },
+  } as CatalogEffect,
+  {
+    kind: 'table_note',
+    ownerKind: 'subclass',
+    ownerSlug: 'arachnoid-stalker',
+    unlockLevel: 3,
+    trigger: 'on_table_action',
+    actionSlug: 'arachnoid-web',
+    note: { note: 'Correia CD {saveDc}' },
+  } as CatalogEffect,
+];
 
 describe('RogueActionsHandler', () => {
   const rogue = createTestCharacter({
@@ -24,17 +110,24 @@ describe('RogueActionsHandler', () => {
   });
   const ctx = createTableActionHandlerTestContext({
     defaultCharacter: rogue,
-    mechanicalCatalogLoad: { tableActions: [...FIXTURE_SOULKNIFE_ACTIONS] },
+    mechanicalCatalogLoad: { economyActions: ROGUE_ECONOMY },
   });
+  const effectCatalog = { load: jest.fn().mockResolvedValue(ROGUE_EFFECTS) };
   let handler: RogueActionsHandler;
 
   beforeEach(() => {
     ctx.resetMocks();
+    effectCatalog.load.mockImplementation(({ actionSlug }: { actionSlug?: string }) =>
+      Promise.resolve(
+        ROGUE_EFFECTS.filter((effect) => effect.actionSlug === actionSlug),
+      ),
+    );
     handler = new RogueActionsHandler(
       asHandlerDep(ctx.access),
       asHandlerDep(ctx.state),
       asHandlerDep(ctx.domain),
       asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep(effectCatalog),
     );
   });
 
@@ -53,6 +146,11 @@ describe('RogueActionsHandler', () => {
 
     jest.clearAllMocks();
     ctx.resetMocks();
+    effectCatalog.load.mockImplementation(({ actionSlug }: { actionSlug?: string }) =>
+      Promise.resolve(
+        ROGUE_EFFECTS.filter((effect) => effect.actionSlug === actionSlug),
+      ),
+    );
     const failure = await handler.useTableAction('user-1', 'rogue-1', {
       actionSlug: 'psi-bolstered-knack',
       checkTotal: 1,
@@ -86,6 +184,7 @@ describe('RogueActionsHandler', () => {
   it('spends the Arachnoid web resource', async () => {
     ctx.mockCharacterOnce({
       ...rogue,
+      level: 5,
       subclassSlug: 'arachnoid-stalker',
       abilityScores: createTestAbilityScores({
         forca: 8,
