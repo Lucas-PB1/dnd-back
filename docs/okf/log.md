@@ -64,3 +64,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Seeds Northlands (36) + packs estáticos (gunslinger, sorcerer, barb/monk/paladin subclass).
 - Tabela `phb_damage_type` (slug → label_pt); `speciesPassiveNotesFromEffects` lê o mapa.
 - Aggregate usa só `filterLevelCombatNotes` do catálogo para textos estáticos.
+
+## 2026-09-11 — Onda 2: remaining static PHB notes
+
+- +165 literais (fighter/rogue/ranger/warlock/wizard/cleric/bard/druid).
+- Funções *CombatNotes* só emitem templates dinâmicos (`${}`, schedules, ternários).
+- Total `phb_level_combat_note` local ≈ 356 linhas.

@@ -37,15 +37,20 @@ describe('bard-features', () => {
     expect(bardicInspirationRestRecovery(10)).toBe('short');
   });
 
-  it('generates combat notes for base bard and subclasses', () => {
+  it('keeps dynamic bard inspiration note; static notes live in catalog', () => {
     const baseNotes = bardCombatNotes({ classSlug: 'bard', level: 5 });
-    expect(baseNotes.some((n) => n.includes('Inspiração de Bardo (d8)'))).toBe(true);
-    expect(baseNotes.some((n) => n.includes('Fonte de Inspiração'))).toBe(true);
+    expect(baseNotes.some((n) => n.includes('Inspiração de Bardo (d8)'))).toBe(
+      true,
+    );
+    expect(baseNotes.some((n) => n.includes('Fonte de Inspiração'))).toBe(false);
 
-    const loreNotes = bardCombatNotes({ classSlug: 'bard', subclassSlug: 'lore', level: 3 });
-    expect(loreNotes.some((n) => n.includes('Palavras de Interrupção'))).toBe(true);
-
-    const glamourNotes = bardCombatNotes({ classSlug: 'bard', subclassSlug: 'glamour', level: 3 });
-    expect(glamourNotes.some((n) => n.includes('Manto de Inspiração'))).toBe(true);
+    const loreNotes = bardCombatNotes({
+      classSlug: 'bard',
+      subclassSlug: 'lore',
+      level: 3,
+    });
+    expect(loreNotes.some((n) => n.includes('Palavras de Interrupção'))).toBe(
+      false,
+    );
   });
 });

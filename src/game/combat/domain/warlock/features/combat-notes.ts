@@ -1,5 +1,5 @@
 /**
- * Notas de combate do Bruxo para a mesa (números no motor; duração/alvo na mesa).
+ * Notas dinâmicas do Bruxo. Estáticas → `phb_level_combat_note`.
  */
 import {
   isWarlockClass,
@@ -25,12 +25,6 @@ export function warlockCombatNotes(input: {
     `Magia de Pacto (${slotQty} slots de ${slotLvl}º círculo): todos os slots recarregam em Descanso Curto ou Longo.`,
   ];
 
-  addBaseWarlockNotes(notes, level);
-  addWarlockSubclassNotes(notes, input.subclassSlug, level);
-  return notes;
-}
-
-function addBaseWarlockNotes(notes: string[], level: number): void {
   const invocationLimit = warlockInvocationLimit(level);
   if (invocationLimit > 0) {
     notes.push(
@@ -43,9 +37,6 @@ function addBaseWarlockNotes(notes: string[], level: number): void {
       `Astúcia Mágica: rito de 1 min recupera ${recover} slot(s) de Pacto (1×/Descanso Longo).`,
     );
   }
-  if (level >= 11) {
-    notes.push(
-      'Arcanum Místico: conjura magias de 6º a 9º círculo sem gastar slots de pacto (1×/Descanso Longo cada).',
-    );
-  }
+  addWarlockSubclassNotes(notes, input.subclassSlug, level);
+  return notes;
 }

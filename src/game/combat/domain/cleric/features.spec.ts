@@ -31,7 +31,7 @@ describe('cleric-features', () => {
     expect(divineStrikeDice(14)).toBe('2d8');
   });
 
-  it('returns core and subclass notes available at the current level', () => {
+  it('keeps dynamic cleric notes; static subclass notes live in catalog', () => {
     const notes = clericCombatNotes({
       classSlug: 'cleric',
       subclassSlug: 'war',
@@ -39,9 +39,8 @@ describe('cleric-features', () => {
     }).join(' ');
 
     expect(notes).toContain('Canalizar Divindade');
-    expect(notes).toContain('Fulminar Mortos-Vivos');
-    expect(notes).toContain('Sacerdote da Guerra');
-    expect(notes).toContain('Bênção do Deus da Guerra');
+    expect(notes).not.toContain('Fulminar Mortos-Vivos');
+    expect(notes).not.toContain('Sacerdote da Guerra');
     expect(notes).not.toContain('Intervenção Divina');
   });
 

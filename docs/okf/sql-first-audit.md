@@ -23,13 +23,13 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Initiative / bloodhound gates | `phb_initiative_rule` / `phb_subclass_feature_gate` | **migrado** |
 | Notes GH / Northlands / packs PHB estáticos | `phb_level_combat_note` | **migrado** |
 | Labels PT de tipo de dano | `phb_damage_type` | **migrado** |
+| Notes PHB restantes (literais) | `phb_level_combat_note.remaining-static` | **migrado** |
 
 ## Dívida restante
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| baixa | Notes PHB dinâmicas (dados, templates `${}`, rageActive) | manter TS ou `table_note` com placeholders |
-| baixa | Notes fighter/rogue/ranger/warlock/wizard base e subclass mistos | migrar só literais estáticos restantes |
+| baixa | Templates dinâmicos (`${die}`, slots, rageActive) | manter predicado TS (já o caso) |
 
 ## Padrão do piloto (repetir)
 

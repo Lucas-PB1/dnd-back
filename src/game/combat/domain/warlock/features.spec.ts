@@ -55,17 +55,10 @@ describe('warlock-features', () => {
     expect(healingLightDiceMax(10)).toBe(11);
   });
 
-  it('generates combat notes for base warlock and subclasses', () => {
+  it('keeps dynamic warlock notes; static patron notes live in catalog', () => {
     const notes = warlockCombatNotes({ classSlug: 'warlock', level: 5 });
     expect(notes.some((n) => n.includes('Magia de Pacto'))).toBe(true);
     expect(notes.some((n) => n.includes('Astúcia Mágica'))).toBe(true);
-
-    const fiendNotes = warlockCombatNotes({
-      classSlug: 'warlock',
-      subclassSlug: 'fiend',
-      level: 3,
-    });
-    expect(fiendNotes.some((n) => n.includes('Bênção do Tenebroso'))).toBe(true);
 
     const celestialNotes = warlockCombatNotes({
       classSlug: 'warlock',
@@ -79,18 +72,16 @@ describe('warlock-features', () => {
       subclassSlug: 'archfey',
       level: 14,
     });
-    expect(archfeyNotes.some((n) => n.includes('Magia Sedutora'))).toBe(true);
     expect(archfeyNotes.some((n) => n.includes('Passo Nebuloso'))).toBe(true);
+    expect(archfeyNotes.some((n) => n.includes('Magia Sedutora'))).toBe(false);
 
-    const gooNotes = warlockCombatNotes({
+    const fiendNotes = warlockCombatNotes({
       classSlug: 'warlock',
-      subclassSlug: 'great-old-one',
-      level: 14,
+      subclassSlug: 'fiend',
+      level: 3,
     });
-    expect(gooNotes.some((n) => n.includes('Combatente Clarividente'))).toBe(
-      true,
+    expect(fiendNotes.some((n) => n.includes('Bênção do Tenebroso'))).toBe(
+      false,
     );
-    expect(gooNotes.some((n) => n.includes('Criar Servo'))).toBe(true);
-    expect(gooNotes.some((n) => n.includes('teleporte'))).toBe(false);
   });
 });

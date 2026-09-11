@@ -38,15 +38,14 @@ describe('ranger-features', () => {
     expect(hasPreciseHunter(17)).toBe(true);
   });
 
-  it('lists core and subclass notes', () => {
+  it('keeps dynamic gloom-stalker note; static core notes live in catalog', () => {
     const notes = rangerCombatNotes({
       classSlug: 'ranger',
       subclassSlug: 'gloom-stalker',
       level: 11,
     });
-    expect(notes.join(' ')).toContain('Inimigo Favorito');
-    expect(notes.join(' ')).toContain('Incansável');
     expect(notes.join(' ')).toContain('Emboscador das Sombras');
-    expect(notes.join(' ')).toContain('Torrente do Vigilante');
+    expect(notes.join(' ')).not.toContain('Inimigo Favorito');
+    expect(notes.join(' ')).not.toContain('Torrente do Vigilante');
   });
 });

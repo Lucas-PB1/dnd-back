@@ -29,47 +29,22 @@ describe('wizard-features', () => {
     expect(portentDiceCount(14)).toBe(3);
   });
 
-  it('generates combat notes for base wizard and subclasses', () => {
+  it('keeps dynamic wizard notes; static subclass notes live in catalog', () => {
     const notes = wizardCombatNotes({ classSlug: 'wizard', level: 5 });
     expect(notes.some((n) => n.includes('Recuperação Arcana'))).toBe(true);
 
-    const abjurerNotes = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'abjurer', level: 3 });
-    expect(abjurerNotes.some((n) => n.includes('Proteção Arcana'))).toBe(true);
+    const abjurerNotes = wizardCombatNotes({
+      classSlug: 'wizard',
+      subclassSlug: 'abjurer',
+      level: 3,
+    });
+    expect(abjurerNotes.some((n) => n.includes('Proteção Arcana'))).toBe(false);
 
-    const divinerNotes = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'diviner', level: 3 });
+    const divinerNotes = wizardCombatNotes({
+      classSlug: 'wizard',
+      subclassSlug: 'diviner',
+      level: 3,
+    });
     expect(divinerNotes.some((n) => n.includes('Presságio'))).toBe(true);
-
-    const evokerL3 = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'evoker', level: 3 });
-    expect(evokerL3.some((n) => n.includes('Truque Potente'))).toBe(true);
-    expect(evokerL3.some((n) => n.includes('Esculpir Magias'))).toBe(false);
-
-    const evokerL6 = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'evoker', level: 6 });
-    expect(evokerL6.some((n) => n.includes('Esculpir Magias'))).toBe(true);
-
-    const mmNotes = wizardCombatNotes({
-      classSlug: 'wizard',
-      subclassSlug: 'magic-missile-mage',
-      level: 14,
-    });
-    expect(mmNotes.some((n) => n.includes('Mago dos Mísseis'))).toBe(true);
-    expect(mmNotes.some((n) => n.includes('Mísseis Versáteis'))).toBe(false);
-    expect(mmNotes.some((n) => n.includes('Escudo de Mísseis'))).toBe(false);
-    expect(mmNotes.some((n) => n.includes('Giga-Míssil'))).toBe(false);
-
-    const sangroL6 = wizardCombatNotes({
-      classSlug: 'wizard',
-      subclassSlug: 'sangromancer',
-      level: 6,
-    });
-    expect(sangroL6.some((n) => n.includes('Dados de Sangromancia'))).toBe(true);
-    expect(sangroL6.some((n) => n.includes('Vigor Sanguíneo'))).toBe(true);
-    expect(sangroL6.some((n) => n.includes('Sangue por Sangue'))).toBe(false);
-
-    const sangroL14 = wizardCombatNotes({
-      classSlug: 'wizard',
-      subclassSlug: 'sangromancer',
-      level: 14,
-    });
-    expect(sangroL14.some((n) => n.includes('Renovação Rubra'))).toBe(true);
   });
 });

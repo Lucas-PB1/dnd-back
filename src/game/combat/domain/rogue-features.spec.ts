@@ -152,22 +152,29 @@ describe('rogue features', () => {
 
   it.each([
     ['soulknife', 'Adaga Espiritual'],
-    ['assassin', 'Assassinar'],
-    ['thief', 'Ladrão'],
-    ['arcane-trickster', 'Trapaceiro Arcano'],
-    ['arachnoid-stalker', 'Golpe Venenoso'],
-  ])('adds base and %s subclass combat notes', (subclassSlug, expectedNote) => {
-    const notes = rogueCombatNotes({
-      classSlug: 'rogue',
-      subclassSlug,
-      level: 17,
-    });
+    ['assassin', null],
+    ['thief', null],
+    ['arcane-trickster', null],
+    ['arachnoid-stalker', null],
+  ])(
+    'keeps sneak attack (+ dynamic soulknife); static subclass notes in catalog (%s)',
+    (subclassSlug, expectedDynamic) => {
+      const notes = rogueCombatNotes({
+        classSlug: 'rogue',
+        subclassSlug,
+        level: 17,
+      });
 
-    expect(notes.some((note) => note.includes('Ataque Furtivo: 9d6'))).toBe(
-      true,
-    );
-    expect(notes.some((note) => note.includes(expectedNote))).toBe(true);
-  });
+      expect(notes.some((note) => note.includes('Ataque Furtivo: 9d6'))).toBe(
+        true,
+      );
+      if (expectedDynamic) {
+        expect(notes.some((note) => note.includes(expectedDynamic))).toBe(true);
+      } else {
+        expect(notes).toHaveLength(1);
+      }
+    },
+  );
 
   it('does not emit Rogue notes for another class', () => {
     expect(
