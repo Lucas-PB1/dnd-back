@@ -26,6 +26,7 @@ import { applyCheckBoostTableAction } from './apply-check-boost-table-action';
 import { applyHealHitPoints } from './apply-heal-hit-points';
 import { applyStrikeSelfCostTableAction } from './apply-strike-self-cost-table-action';
 import { applyTemporaryHitPoints } from './apply-temporary-hit-points';
+import { spellcastingAbilityModifier } from './apply-feat-economy-executed-effect';
 import { assertCharacterLevel } from './table-action-guards';
 
 export type DeclaredEconomyTableActionDeps = {
@@ -195,6 +196,7 @@ export async function applyDeclaredEconomyTableAction(
   const rageBonus = rageDamageBonus(character.level, bands);
   const strMod = abilityModifier(character.abilityScores?.forca ?? 10);
   const intMod = abilityModifier(character.abilityScores?.inteligencia ?? 10);
+  const castingMod = spellcastingAbilityModifier(character.abilityScores);
   const scheduleDieFaces = psiEnergyDieFaces(character.level, bands) ?? undefined;
 
   const toggleEffects = applicable.filter((e) => e.kind === 'toggle_combat_flag');
@@ -219,6 +221,7 @@ export async function applyDeclaredEconomyTableAction(
       rageBonus,
       strMod,
       intMod,
+      castingMod,
       scheduleDieFaces,
       rageActive: Boolean(state.rageActive),
     });
@@ -255,6 +258,7 @@ export async function applyDeclaredEconomyTableAction(
       rageBonus,
       strMod,
       intMod,
+      castingMod,
       scheduleDieFaces,
       rageActive: Boolean(state.rageActive),
     });
@@ -295,6 +299,7 @@ type ApplyCtx = {
   rageBonus: number;
   strMod: number;
   intMod: number;
+  castingMod: number;
   scheduleDieFaces?: number;
   rageActive: boolean;
 };
@@ -318,6 +323,7 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     rageBonus,
     strMod,
     intMod,
+    castingMod,
     scheduleDieFaces,
     rageActive,
   } = ctx;
@@ -325,10 +331,22 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
 
   const needsIntFlat =
     effect.numeric?.amountFormula === 'schedule_die_plus_flat';
-  const needsStrFlat =
+  const needsCastingFlat =
     !needsIntFlat &&
     (effect.kind === 'feature_dc' ||
+      effect.kind === 'heal' ||
+      effect.kind === 'temp_hp' ||
+      effect.kind === 'table_roll' ||
       effect.numeric?.amountFormula === 'ability_mod' ||
+      effect.numeric?.amountFormula === 'ability_mod_d8' ||
+      effect.numeric?.amountFormula === 'dice_divine_spark_plus_flat' ||
+      effect.numeric?.amountFormula === 'dice_2d6_plus_flat' ||
+      effect.numeric?.amountFormula === 'eight_plus_mod_plus_pb');
+  const needsStrFlat =
+    !needsIntFlat &&
+    !needsCastingFlat &&
+    character.classSlug === 'barbarian' &&
+    (effect.numeric?.amountFormula === 'ability_mod' ||
       effect.numeric?.amountFormula === 'eight_plus_mod_plus_pb');
 
   const executed = executeCatalogEffect(effect, {
@@ -339,9 +357,14 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     scheduleDieFaces,
     ...(needsIntFlat
       ? { flatOverride: intMod }
-      : needsStrFlat
-        ? { flatOverride: strMod }
-        : {}),
+      : needsCastingFlat
+        ? {
+            flatOverride:
+              character.classSlug === 'barbarian' ? strMod : castingMod,
+          }
+        : needsStrFlat
+          ? { flatOverride: strMod }
+          : {}),
   });
 
   let toggleEntered: boolean | null | undefined;
@@ -391,11 +414,14 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
       executed.amount,
     );
     state = healed.state;
-    total = healed.healed;
+    total = executed.amount;
     expression = executed.expression;
+    const effectNote = executed.note
+      ?.replace(/\{total\}/g, String(executed.amount))
+      .replace(/\{expression\}/g, executed.expression ?? String(executed.amount));
     note = [
       note,
-      executed.note,
+      effectNote,
       `Cura: ${executed.expression ?? executed.amount} → +${healed.healed} PV.`,
     ]
       .filter(Boolean)
@@ -408,7 +434,13 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     );
     total = executed.amount;
     expression = executed.expression;
-    note = `${note} PV temporários aplicados: ${executed.amount}.`;
+    note = [
+      note,
+      executed.note?.trim(),
+      `PV temporários aplicados: ${executed.amount}.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
   } else if (executed.kind === 'recover_resource' && executed.resourceSlug) {
     state = await deps.state.recoverClassResource(
       character,
@@ -454,7 +486,8 @@ async function applyOneEffect(ctx: ApplyCtx): Promise<{
     if (executed.note?.trim()) {
       note = executed.note
         .replace(/\{total\}/g, String(executed.amount))
-        .replace(/\{expression\}/g, executed.expression);
+        .replace(/\{expression\}/g, executed.expression)
+        .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
     }
   } else if (executed.kind === 'heal_from_dice_pool') {
     if (!executed.resourceSlug) {

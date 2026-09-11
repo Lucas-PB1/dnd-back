@@ -72,6 +72,8 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Onda guerreiro (fechada):** handler POST = só `applyDeclaredEconomyTableAction` (kinds tipados inclusos). Economy BM: **um** botão `use-maneuver` (sem rows `fighter-bm-*` lembrete). GET `listBattleMasterManeuvers` = picker read-model, não switch de apply. Seed `phb_effect.fighter-mesa.sql`.
 
+**Onda clérigo (fechada):** handler POST = só `applyDeclaredEconomyTableAction`. Seed `phb_effect.cleric-mesa.sql` (spark/preserve/fulminar/warding + notes de domínio).
+
 ### Gates `has*` vs schedule (dívida média)
 
 `phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).

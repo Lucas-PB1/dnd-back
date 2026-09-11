@@ -452,6 +452,7 @@ effect/phb/phb_effect.mesa-spend.sql
 effect/phb/phb_effect.mesa-recover.sql
 effect/phb/phb_effect.barbarian-mesa.sql
 effect/phb/phb_effect.fighter-mesa.sql
+effect/phb/phb_effect.cleric-mesa.sql
 effect/phb/phb_effect.species.sql
 transformation/grim-hollow/phb_effect.grant-resource.gh-transformations.sql
 effect/phb/phb_effect.class.sql

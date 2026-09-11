@@ -336,6 +336,25 @@ export function executeCatalogEffect(
         note: effect.note?.note ?? null,
       };
     }
+    // Fórmula já resolve o total (dados inclusos) — sem phb_effect_dice.
+    if (effect.numeric && !effect.dice) {
+      const resolved = resolveEffectAmount({
+        amountFormula: effect.numeric.amountFormula,
+        flat,
+        level: context.level,
+        rng: context.rng,
+        hitDieFaces: context.hitDieFaces,
+        scheduleDieFaces: context.scheduleDieFaces,
+        rageBonus: context.rageBonus,
+        rageActive: context.rageActive,
+      });
+      return {
+        kind: 'table_roll',
+        amount: resolved.amount,
+        expression: resolved.expression ?? String(resolved.amount),
+        note: effect.note?.note ?? null,
+      };
+    }
     const die = effect.dice?.die ?? '1d6';
     let bonus = 0;
     if (effect.numeric?.amountFormula === 'ability_mod') {

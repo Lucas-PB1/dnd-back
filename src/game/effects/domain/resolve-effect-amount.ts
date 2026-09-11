@@ -121,6 +121,44 @@ export function resolveEffectAmount(input: {
           ? Math.max(0, Math.floor(input.level / 2))
           : 0,
       };
+    case 'level_times_5':
+      return { amount: 5 * input.level };
+    case 'dice_divine_spark_plus_flat': {
+      const level = input.level;
+      const die =
+        level >= 18 ? '4d8' : level >= 13 ? '3d8' : level >= 7 ? '2d8' : '1d8';
+      const rolled = rollDamageParts(die, input.flat ?? 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 8,
+      };
+    }
+    case 'ability_mod_d8': {
+      const count = Math.max(1, input.flat ?? 1);
+      const rolled = rollDamageParts(`${count}d8`, 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 8,
+      };
+    }
+    case 'dice_2d6_plus_flat': {
+      const rolled = rollDamageParts('2d6', input.flat ?? 0, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 6,
+      };
+    }
+    case 'dice_2d10_plus_level': {
+      const rolled = rollDamageParts('2d10', input.level, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 10,
+      };
+    }
     default: {
       const _exhaustive: never = input.amountFormula;
       return _exhaustive;

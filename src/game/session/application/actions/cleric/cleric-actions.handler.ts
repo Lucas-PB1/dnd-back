@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isClericClass } from '@game/combat/domain/cleric';
-import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { LoadEffectCatalog } from '@game/effects';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
@@ -9,44 +10,16 @@ import {
   UseClericTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { applyDeclaredEconomyTableAction } from '../../core/apply-declared-economy-table-action';
-import type { ClericActionDeps } from './cleric-action-deps';
-import {
-  resolveDivineIntervention,
-  resolveDivineSpark,
-  resolvePreserveLife,
-  resolveTurnUndead,
-} from './base-actions';
-import {
-  resolveChromaticAffinity,
-  resolveCrownOfLight,
-  resolveDragonMajesty,
-  resolveGuidedStrike,
-  resolveInvokeDuplicity,
-  resolveLegendaryAspectRend,
-  resolveLegendaryAspectTail,
-  resolveLegendaryAspectWings,
-  resolveRadianceOfDawn,
-  resolveSerpentBlessing,
-  resolveTrickstersBlessing,
-  resolveWardingFlare,
-  resolveWarGodsBlessing,
-  resolveWarPriest,
-} from './subclass-actions';
 
 @Injectable()
 export class ClericActionsHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
-    private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
-
-  private deps(): ClericActionDeps {
-    return { state: this.state, domain: this.domain };
-  }
 
   async useTableAction(
     userId: string,
@@ -62,52 +35,14 @@ export class ClericActionsHandler {
       throw new BadRequestException('Cleric action is not available');
     }
 
-    const deps = this.deps();
-    switch (dto.actionSlug) {
-      case 'divine-spark-heal':
-        return resolveDivineSpark(deps, character, 'heal');
-      case 'divine-spark-damage':
-        return resolveDivineSpark(deps, character, 'damage');
-      case 'turn-undead':
-        return resolveTurnUndead(deps, character);
-      case 'divine-intervention':
-        return resolveDivineIntervention(deps, character);
-      case 'preserve-life':
-        return resolvePreserveLife(deps, character);
-      case 'radiance-of-dawn':
-        return resolveRadianceOfDawn(deps, character);
-      case 'warding-flare':
-        return resolveWardingFlare(deps, character);
-      case 'crown-of-light':
-        return resolveCrownOfLight(deps, character);
-      case 'tricksters-blessing':
-        return resolveTrickstersBlessing(deps, character);
-      case 'invoke-duplicity':
-        return resolveInvokeDuplicity(deps, character);
-      case 'guided-strike':
-        return resolveGuidedStrike(deps, character);
-      case 'war-priest':
-        return resolveWarPriest(deps, character);
-      case 'war-gods-blessing':
-        return resolveWarGodsBlessing(deps, character);
-      case 'dragon-majesty':
-        return resolveDragonMajesty(deps, character);
-      case 'serpent-blessing':
-        return resolveSerpentBlessing(deps, character);
-      case 'chromatic-affinity':
-        return resolveChromaticAffinity(deps, character);
-      case 'legendary-aspect-rend':
-        return resolveLegendaryAspectRend(deps, character);
-      case 'legendary-aspect-tail':
-        return resolveLegendaryAspectTail(deps, character);
-      case 'legendary-aspect-wings':
-        return resolveLegendaryAspectWings(deps, character);
-      default:
-        return applyDeclaredEconomyTableAction(
-          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
-          character,
-          dto.actionSlug,
-        );
-    }
+    return applyDeclaredEconomyTableAction(
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+      },
+      character,
+      dto.actionSlug,
+    );
   }
 }

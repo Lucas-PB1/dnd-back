@@ -157,7 +157,8 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Apply: free_resource + `usePsiDie`; options tipadas; `spellSlug` precaução.
 - `FighterActionsHandler` só access + apply (+ GET manobras). Resolvers tipados mortos removidos.
 
-## 2026-09-11 — BM alinhado ao bárbaro (UI)
+## 2026-09-11 — Clérigo mesa fechado (switch zero)
 
-- Removidos lembretes `fighter-bm-*` (table_action NULL); fica só `use-maneuver` + GET picker.
-- Apply BM continua no kind `catalog_maneuver` (paralelo a companion/toggle do bárbaro).
+- Seed `phb_effect.cleric-mesa.sql`; fórmulas `level_times_5`, `dice_divine_spark_plus_flat`, `ability_mod_d8`, `dice_2d6_plus_flat`, `dice_2d10_plus_level`.
+- Apply: castingMod (WIS/CHA/INT) para flatOverride de casters; `{saveDc}` em table_roll; table_roll com fórmula completa sem dice.
+- `ClericActionsHandler` só `applyDeclaredEconomyTableAction`. Resolvers base/subclass removidos.
