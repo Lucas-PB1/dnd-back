@@ -31,6 +31,7 @@ export class CastSpellHandler {
       spellSaveDcOverride: result.spellSaveDcOverride ?? null,
       spellAttackBonusOverride: result.spellAttackBonusOverride ?? null,
       spirit: result.spirit ?? null,
+      spirits: result.spirits ?? null,
       state: result.state,
     };
   }

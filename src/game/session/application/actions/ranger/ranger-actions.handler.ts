@@ -5,6 +5,7 @@ import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-comba
 import { isRangerClass } from '@game/combat/domain/ranger';
 import { LoadEffectCatalog } from '@game/effects';
 import { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
+import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import {
   TableActionResponseDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
@@ -23,6 +24,7 @@ export class RangerActionsHandler {
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly effectCatalog: LoadEffectCatalog,
     private readonly syncCompanion: SyncCharacterCompanionHandler,
+    private readonly syncSpellSpirit: SyncSpellSpiritHandler,
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}
@@ -46,6 +48,8 @@ export class RangerActionsHandler {
         state: this.state,
         mechanicalCatalog: this.mechanicalCatalog,
         effectCatalog: this.effectCatalog,
+        dataSource: this.dataSource,
+        syncSpellSpirit: this.syncSpellSpirit,
         companion: {
           dataSource: this.dataSource,
           syncCompanion: this.syncCompanion,
@@ -57,6 +61,8 @@ export class RangerActionsHandler {
         userId,
         companionCommand: dto.companionCommand,
         level: dto.level,
+        spiritVariantKey: dto.spiritVariantKey,
+        slotLevel: dto.slotLevel,
       },
     ) as Promise<TableActionResponseDto>;
   }

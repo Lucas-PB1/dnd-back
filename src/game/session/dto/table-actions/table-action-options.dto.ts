@@ -59,10 +59,18 @@ export class TableActionOptionsDto {
   @IsBoolean()
   useRelentless?: boolean;
 
-  @ApiPropertyOptional({ description: 'Slug de magia (precaução etc.)' })
+  @ApiPropertyOptional({ description: 'Slug de magia (precaução / Criaturas Espectrais)' })
   @IsOptional()
   @IsString()
   spellSlug?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Variante spirit (spectral-summon / fey-reinforcements / cast spirit)',
+  })
+  @IsOptional()
+  @IsString()
+  spiritVariantKey?: string;
 
   @ApiPropertyOptional({ description: 'Opção tipada (ex.: Golpe de Sangue)' })
   @IsOptional()

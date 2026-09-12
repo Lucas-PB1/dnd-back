@@ -448,10 +448,10 @@ INSERT INTO rpg.phb_spell_spirit (spell_slug, actor_kind, replace_policy, fly_sp
 VALUES ('animar-objetos', 'companion', 'replace_same_spell', NULL)
 ON CONFLICT (spell_slug) DO UPDATE SET actor_kind = EXCLUDED.actor_kind, replace_policy = EXCLUDED.replace_policy, fly_speed_min_slot = EXCLUDED.fly_speed_min_slot;
 DELETE FROM rpg.phb_spell_spirit_variant WHERE spell_slug = 'animar-objetos';
-INSERT INTO rpg.phb_spell_spirit_variant (spell_slug, variant_key, template_slug, label) VALUES
-  ('animar-objetos', 'medio', 'objeto-animado-medio', 'Médio ou menor'),
-  ('animar-objetos', 'grande', 'objeto-animado-grande', 'Grande'),
-  ('animar-objetos', 'enorme', 'objeto-animado-enorme', 'Enorme');
+INSERT INTO rpg.phb_spell_spirit_variant (spell_slug, variant_key, template_slug, label, budget_cost) VALUES
+  ('animar-objetos', 'medio', 'objeto-animado-medio', 'Médio ou menor', 1),
+  ('animar-objetos', 'grande', 'objeto-animado-grande', 'Grande', 2),
+  ('animar-objetos', 'enorme', 'objeto-animado-enorme', 'Enorme', 3);
 
 -- Escalas
 INSERT INTO rpg.phb_creature_scale_by_slot (

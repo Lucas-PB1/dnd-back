@@ -6,9 +6,11 @@ import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { isSpellMasterySpell } from '@game/combat/domain/wizard';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import { LoadEffectCatalog } from '@game/effects';
 import {
   SyncSpellSpiritHandler,
@@ -57,6 +59,7 @@ export async function applyCastSpell(input: {
   spellSaveDcOverride: number | null;
   spellAttackBonusOverride: number | null;
   spirit: SyncSpellSpiritResult | null;
+  spirits: SyncSpellSpiritResult['actors'] | null;
   state: CharacterStateResponseDto;
 }> {
   const {
@@ -142,13 +145,34 @@ export async function applyCastSpell(input: {
     slotLevelUsed: number | null,
   ): Promise<SyncSpellSpiritResult | null> => {
     const slotForSpirit = slotLevelUsed ?? spell.level;
+    const abilitySlug = await loadSpellcastingAbilitySlug(
+      dataSource,
+      character.classSlug,
+    );
+    const scores = character.abilityScores;
+    const castingAbilityMod =
+      abilitySlug && scores
+        ? abilityModifier(scores[abilitySlug] ?? 10)
+        : null;
     return syncSpellSpirit.execute({
       ownerUserId: character.userId,
       characterId: character.id,
       spellSlug: dto.spellSlug,
       variantKey: dto.spiritVariantKey,
+      spiritCount: dto.spiritCount,
+      selections: dto.spiritSelections,
       slotLevel: slotForSpirit,
+      castingAbilityMod,
     });
+  };
+
+  const spiritNoteFrom = (spirit: SyncSpellSpiritResult): string => {
+    if (spirit.actors.length > 1) {
+      return `Espíritos: ${spirit.actors.length}× (${spirit.actors
+        .map((a) => a.variantLabel)
+        .join(', ')})`;
+    }
+    return `Espírito: ${spirit.variantLabel} (${spirit.templateSlug})`;
   };
 
   if (spend.usedItemCast) {
@@ -173,7 +197,7 @@ export async function applyCastSpell(input: {
     await stateRepo.save(state);
     const spirit = await finishSpirit(spend.slotLevelUsed);
     if (spirit) {
-      const spiritNote = `Espírito: ${spirit.variantLabel} (${spirit.templateSlug})`;
+      const spiritNote = spiritNoteFrom(spirit);
       finished.note = finished.note
         ? `${finished.note} · ${spiritNote}`
         : spiritNote;
@@ -184,6 +208,7 @@ export async function applyCastSpell(input: {
       spellSaveDcOverride: finished.spellSaveDcOverride,
       spellAttackBonusOverride: finished.spellAttackBonusOverride,
       spirit,
+      spirits: spirit?.actors ?? null,
       state: await buildResponse(character, state),
     };
   }
@@ -215,7 +240,7 @@ export async function applyCastSpell(input: {
   await stateRepo.save(state);
   const spirit = await finishSpirit(spend.slotLevelUsed);
   if (spirit) {
-    const spiritNote = `Espírito: ${spirit.variantLabel} (${spirit.templateSlug})`;
+    const spiritNote = spiritNoteFrom(spirit);
     note = note ? `${note} · ${spiritNote}` : spiritNote;
   }
   return {
@@ -224,6 +249,7 @@ export async function applyCastSpell(input: {
     spellSaveDcOverride: null,
     spellAttackBonusOverride: null,
     spirit,
+    spirits: spirit?.actors ?? null,
     state: await buildResponse(character, state),
   };
 }

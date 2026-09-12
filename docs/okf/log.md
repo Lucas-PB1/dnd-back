@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-12 — Multi-token Animar Objetos + wire spectral/fey
+
+- `budget_cost` em `phb_spell_spirit_variant`; cast aceita `spiritCount` / `spiritSelections`.
+- Sync spawna N actors no orçamento (mod × 1/2/3); resposta `spirits[]`.
+- Table-actions `spectral-summon` (½ PV + concentração) e `fey-reinforcements` (sem concentração) reusam mapas Summon.
+
 ## 2026-09-12 — Animar Objetos: ficha alinhada ao scrap
 
 - Fonte: `docs/source/scrap/Animate Objects - Spells - D&D Beyond.html`.

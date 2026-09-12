@@ -9,3 +9,4 @@ export {
   parseMissileMageArmAction,
 } from './apply-missile-mage-arm-table-action';
 export { applyInvokePactWeaponTableAction } from './apply-invoke-pact-weapon-table-action';
+export { applySpellSpiritFeatureTableAction } from './apply-spell-spirit-feature-table-action';

@@ -4,6 +4,11 @@ import { DataSource, In, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/game-port';
 import { scaleSpiritCombatStats } from '@game/spirit/domain/scale-spirit-stats';
 import {
+  planSpiritSpawns,
+  resolveSpiritSelections,
+  type SpiritSelectionInput,
+} from '@game/spirit/domain/spirit-spawn-plan';
+import {
   loadSpellSpiritProfile,
   loadSpellSpiritVariants,
 } from '@game/spirit/infrastructure/spell-spirit.queries';
@@ -12,7 +17,7 @@ import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persis
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { GameActorSpeed } from '@game/actor/infrastructure/game-actor-speed.entity';
 
-export type SyncSpellSpiritResult = {
+export type SyncSpellSpiritActorResult = {
   actorId: string;
   templateSlug: string;
   variantKey: string;
@@ -20,6 +25,11 @@ export type SyncSpellSpiritResult = {
   reused: boolean;
   armorClass: number | null;
   hitPointsMax: number | null;
+};
+
+/** Compat: campos do primeiro actor + lista completa. */
+export type SyncSpellSpiritResult = SyncSpellSpiritActorResult & {
+  actors: SyncSpellSpiritActorResult[];
 };
 
 @Injectable()
@@ -36,14 +46,20 @@ export class SyncSpellSpiritHandler {
 
   /**
    * Se a magia não está em phb_spell_spirit, retorna null.
-   * Se está e falta spiritVariantKey, falha com BadRequest.
+   * Se está e falta variante, falha com BadRequest.
    */
   async execute(input: {
     ownerUserId: string;
     characterId: string;
     spellSlug: string;
     variantKey: string | undefined;
+    spiritCount?: number;
+    selections?: SpiritSelectionInput[];
     slotLevel: number;
+    /** Orçamento (Animar Objetos). */
+    castingAbilityMod?: number | null;
+    /** Ex.: 0.5 para Criaturas Espectrais. */
+    hpMultiplier?: number;
   }): Promise<SyncSpellSpiritResult | null> {
     const profile = await loadSpellSpiritProfile(
       this.dataSource,
@@ -61,98 +77,93 @@ export class SyncSpellSpiritHandler {
       );
     }
 
-    if (!input.variantKey) {
-      const keys = variants.map((v) => v.variantKey).join(', ');
-      throw new BadRequestException(
-        `spiritVariantKey é obrigatório para '${input.spellSlug}' (opções: ${keys})`,
-      );
-    }
+    const selections = resolveSpiritSelections({
+      variantKey: input.variantKey,
+      spiritCount: input.spiritCount,
+      selections: input.selections,
+    });
+    const planned = planSpiritSpawns({
+      spellSlug: input.spellSlug,
+      selections,
+      variants,
+      castingAbilityMod: input.castingAbilityMod,
+    });
 
-    const chosen = variants.find((v) => v.variantKey === input.variantKey);
-    if (!chosen) {
-      const keys = variants.map((v) => v.variantKey).join(', ');
-      throw new BadRequestException(
-        `Variante '${input.variantKey}' inválida para '${input.spellSlug}' (opções: ${keys})`,
-      );
-    }
-
-    await this.catalogLookup.findCreatureTemplateOrFail(chosen.templateSlug);
-    const scale = await loadScaleBySlot(this.dataSource, chosen.templateSlug);
-    if (!scale) {
-      throw new BadRequestException(
-        `Template '${chosen.templateSlug}' sem phb_creature_scale_by_slot`,
-      );
-    }
-    const scaled = scaleSpiritCombatStats(
-      {
-        scaleMinSlot: scale.scaleMinSlot,
-        acBase: scale.acBase,
-        acPerSlot: scale.acPerSlot,
-        hpBase: scale.hpBase,
-        hpPerSlot: scale.hpPerSlot,
-        hpMode: scale.hpMode,
-      },
-      input.slotLevel,
-    );
     const templateSlugs = variants.map((v) => v.templateSlug);
-
     const existing = await this.actors.find({
       where: {
         parentCharacterId: input.characterId,
         templateSlug: In(templateSlugs),
       },
-      order: { createdAt: 'ASC' },
     });
+    if (existing.length > 0) {
+      await this.actors.remove(existing);
+    }
 
-    const sameTemplate = existing.find(
-      (actor) => actor.templateSlug === chosen.templateSlug,
-    );
-    if (sameTemplate) {
-      await this.applyScaledStats(sameTemplate, scaled, true);
-      await this.applyFlyGate(
-        sameTemplate.id,
-        profile.flySpeedMinSlot,
+    const hpMultiplier =
+      input.hpMultiplier != null && Number.isFinite(input.hpMultiplier)
+        ? Math.max(0, input.hpMultiplier)
+        : 1;
+
+    const results: SyncSpellSpiritActorResult[] = [];
+    for (const spawn of planned) {
+      await this.catalogLookup.findCreatureTemplateOrFail(spawn.templateSlug);
+      const scale = await loadScaleBySlot(this.dataSource, spawn.templateSlug);
+      if (!scale) {
+        throw new BadRequestException(
+          `Template '${spawn.templateSlug}' sem phb_creature_scale_by_slot`,
+        );
+      }
+      const scaled = scaleSpiritCombatStats(
+        {
+          scaleMinSlot: scale.scaleMinSlot,
+          acBase: scale.acBase,
+          acPerSlot: scale.acPerSlot,
+          hpBase: scale.hpBase,
+          hpPerSlot: scale.hpPerSlot,
+          hpMode: scale.hpMode,
+        },
         input.slotLevel,
       );
-      for (const other of existing) {
-        if (other.id !== sameTemplate.id) {
-          await this.actors.remove(other);
-        }
+      const hitPointsMax =
+        scaled.hitPointsMax != null
+          ? Math.max(1, Math.floor(scaled.hitPointsMax * hpMultiplier))
+          : null;
+      const armorClass = scaled.armorClass;
+
+      for (let i = 0; i < spawn.count; i += 1) {
+        const actorId = await this.persistence.spawnFromTemplate({
+          templateSlug: spawn.templateSlug,
+          ownerUserId: input.ownerUserId,
+          actorKind: profile.actorKind,
+          parentCharacterId: input.characterId,
+        });
+        const actor = await this.actors.findOneOrFail({ where: { id: actorId } });
+        await this.applyScaledStats(actor, { hitPointsMax, armorClass }, true);
+        await this.applyFlyGate(
+          actorId,
+          profile.flySpeedMinSlot,
+          input.slotLevel,
+        );
+        results.push({
+          actorId,
+          templateSlug: spawn.templateSlug,
+          variantKey: spawn.variantKey,
+          variantLabel: spawn.label,
+          reused: false,
+          armorClass,
+          hitPointsMax,
+        });
       }
-      return {
-        actorId: sameTemplate.id,
-        templateSlug: chosen.templateSlug,
-        variantKey: chosen.variantKey,
-        variantLabel: chosen.label,
-        reused: true,
-        armorClass: scaled.armorClass,
-        hitPointsMax: scaled.hitPointsMax,
-      };
     }
 
-    for (const actor of existing) {
-      await this.actors.remove(actor);
+    const first = results[0];
+    if (!first) {
+      throw new BadRequestException(
+        `Falha ao sincronizar espírito de '${input.spellSlug}'`,
+      );
     }
-
-    const actorId = await this.persistence.spawnFromTemplate({
-      templateSlug: chosen.templateSlug,
-      ownerUserId: input.ownerUserId,
-      actorKind: profile.actorKind,
-      parentCharacterId: input.characterId,
-    });
-    const actor = await this.actors.findOneOrFail({ where: { id: actorId } });
-    await this.applyScaledStats(actor, scaled, true);
-    await this.applyFlyGate(actorId, profile.flySpeedMinSlot, input.slotLevel);
-
-    return {
-      actorId,
-      templateSlug: chosen.templateSlug,
-      variantKey: chosen.variantKey,
-      variantLabel: chosen.label,
-      reused: false,
-      armorClass: scaled.armorClass,
-      hitPointsMax: scaled.hitPointsMax,
-    };
+    return { ...first, actors: results };
   }
 
   private async applyScaledStats(

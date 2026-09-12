@@ -181,6 +181,7 @@ describe('RangerActionsHandler', () => {
       asHandlerDep(ctx.mechanicalCatalog),
       asHandlerDep(effectCatalog),
       asHandlerDep(syncCompanion),
+      asHandlerDep({ execute: jest.fn() }),
       asHandlerDep(dataSource),
     );
   });

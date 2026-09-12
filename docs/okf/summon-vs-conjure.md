@@ -77,10 +77,9 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 ## Dívida (fora desta onda)
 
 - Find Familiar CR0 / Wild Shape / MM genérico
-- Animar Objetos: fichas por tamanho ok (CA 15; PV 10/20/40; Pancada por tamanho). Orçamento RAW = mod. conjuração (Médio−=1, Grande=2, Enorme=3). Sync ainda spawna **1** actor; N tokens no orçamento = dívida UX opcional
-- spectral-summon / fey-reinforcements (reusam Summon; wire depois)
+- fey-reinforcements: sem concentração automática de 1 min (despawn manual / mesa)
 - Conjure\* como actor (não — permanece `area_effect`)
 
 ## Status `spirit_actor`
 
-Find Steed + todos os Summon com bloco no PHB (incl. Inseto Gigante / Animar Objetos) mapeados; escala em `phb_creature_scale_by_slot`; despawn no fim/troca de concentração. Ver [creature-template-scale-control.md](/creature-template-scale-control.md).
+Find Steed + Summons PHB + Inseto Gigante + Animar Objetos (multi-token com orçamento mod × 1/2/3). Escala em `phb_creature_scale_by_slot`; despawn no fim/troca de concentração. `spectral-summon` / `fey-reinforcements` syncam via table-action reusando mapas Summon. Ver [creature-template-scale-control.md](/creature-template-scale-control.md).

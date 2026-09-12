@@ -11,6 +11,7 @@ import type {
 import { resolveSpendPlan } from './resolve-spend-plan';
 import { applyOneEffect } from './apply-one-effect';
 import { buildEffectLoopContext } from './build-effect-loop-context';
+import { applySpellSpiritFeatureTableAction } from '../kinds/caster/apply-spell-spirit-feature-table-action';
 
 export async function runDeclaredEffectsLoop(input: {
   deps: DeclaredEconomyTableActionDeps;
@@ -48,7 +49,10 @@ export async function runDeclaredEffectsLoop(input: {
   let resourceSpent = spend.amount > 0;
   let actionName = action.name;
 
-  if (options.spellSlug) {
+  if (actionSlug === 'dungeon-precaution') {
+    if (!options.spellSlug) {
+      throw new BadRequestException('spellSlug é obrigatório');
+    }
     const spell = findDungeoneerPrecautionSpell(
       catalog.precautionSpells,
       options.spellSlug,
@@ -60,8 +64,6 @@ export async function runDeclaredEffectsLoop(input: {
     }
     actionName = spell.name;
     note = `Precauções na Masmorra: conjure ${spell.name} sem gastar espaço de magia; escolha INT, SAB ou CAR como atributo de conjuração.`;
-  } else if (actionSlug === 'dungeon-precaution') {
-    throw new BadRequestException('spellSlug é obrigatório');
   }
 
   const {
@@ -153,6 +155,39 @@ export async function runDeclaredEffectsLoop(input: {
     roll = applied.roll;
     saveDc = applied.saveDc;
     resourceSpent = applied.resourceSpent;
+  }
+
+  if (
+    (actionSlug === 'spectral-summon' ||
+      actionSlug === 'fey-reinforcements') &&
+    deps.syncSpellSpirit &&
+    deps.dataSource &&
+    options.userId
+  ) {
+    return applySpellSpiritFeatureTableAction({
+      state: deps.state,
+      dataSource: deps.dataSource,
+      syncSpellSpirit: deps.syncSpellSpirit,
+      userId: options.userId,
+      character,
+      actionSlug,
+      actionName,
+      resourceSpent,
+      baseNote: note,
+      currentState: state,
+      spellSlug: options.spellSlug,
+      spiritVariantKey: options.spiritVariantKey,
+      slotLevel: options.slotLevel,
+    });
+  }
+
+  if (
+    actionSlug === 'spectral-summon' ||
+    actionSlug === 'fey-reinforcements'
+  ) {
+    throw new BadRequestException(
+      `${actionName}: sync de espírito indisponível neste contexto`,
+    );
   }
 
   return {

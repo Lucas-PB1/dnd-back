@@ -1,7 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isWizardClass } from '@game/combat/domain/wizard';
 import { LoadEffectCatalog } from '@game/effects';
+import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import {
   TableActionResponseDto,
 } from '@game/session/dto/fighter/fighter-session.dto';
@@ -19,6 +22,9 @@ export class WizardActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly effectCatalog: LoadEffectCatalog,
+    private readonly syncSpellSpirit: SyncSpellSpiritHandler,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   async useTableAction(
@@ -40,9 +46,17 @@ export class WizardActionsHandler {
         state: this.state,
         mechanicalCatalog: this.mechanicalCatalog,
         effectCatalog: this.effectCatalog,
+        dataSource: this.dataSource,
+        syncSpellSpirit: this.syncSpellSpirit,
       },
       character,
       dto.actionSlug,
+      {
+        userId,
+        spellSlug: dto.spellSlug,
+        spiritVariantKey: dto.spiritVariantKey,
+        slotLevel: dto.slotLevel,
+      },
     ) as Promise<TableActionResponseDto>;
   }
 }

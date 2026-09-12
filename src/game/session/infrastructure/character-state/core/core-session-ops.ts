@@ -71,6 +71,7 @@ export async function castSpellOp(
   spellSaveDcOverride: number | null;
   spellAttackBonusOverride: number | null;
   spirit: SyncSpellSpiritResult | null;
+  spirits: SyncSpellSpiritResult['actors'] | null;
   state: CharacterStateResponseDto;
 }> {
   const state = await deps.findOrCreate(character.id, character.level);

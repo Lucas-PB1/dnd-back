@@ -16,6 +16,7 @@ CREATE TABLE rpg.phb_spell_spirit_variant (
   variant_key TEXT NOT NULL CHECK (char_length(variant_key) BETWEEN 1 AND 64),
   template_slug TEXT NOT NULL REFERENCES rpg.phb_creature_template(slug) ON DELETE RESTRICT,
   label TEXT NOT NULL CHECK (char_length(label) BETWEEN 1 AND 120),
+  budget_cost INT NOT NULL DEFAULT 1 CHECK (budget_cost >= 1),
   UNIQUE (spell_slug, variant_key)
 );
 

@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsBoolean,
   IsIn,
   IsInt,
@@ -10,6 +11,17 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CharacterStateResponseDto } from '../character-state-response.dto';
+
+export class SpiritSelectionDto {
+  @ApiProperty({ example: 'medio' })
+  @IsString()
+  variantKey!: string;
+
+  @ApiProperty({ example: 2 })
+  @IsInt()
+  @Min(1)
+  count!: number;
+}
 
 export class ArtifactRandomCastDto {
   @ApiProperty({ example: 'varinha-de-orcus' })
@@ -138,6 +150,27 @@ export class CastSpellDto {
   @IsOptional()
   @IsString()
   spiritVariantKey?: string;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description:
+      'Quantidade da mesma variante (Animar Objetos). Ignorado se spiritSelections for enviado.',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  spiritCount?: number;
+
+  @ApiPropertyOptional({
+    type: [SpiritSelectionDto],
+    description:
+      'Seleções mistas por tamanho (Animar Objetos). Orçamento = mod. conjuração (1/2/3).',
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SpiritSelectionDto)
+  spiritSelections?: SpiritSelectionDto[];
 }
 
 export class CastSpellSpiritDto {
@@ -189,9 +222,16 @@ export class CastSpellResponseDto {
 
   @ApiPropertyOptional({
     type: CastSpellSpiritDto,
-    description: 'Actor spirit/montaria sincronizado após o cast (se aplicável)',
+    description:
+      'Primeiro actor spirit/montaria sincronizado após o cast (compat)',
   })
   spirit?: CastSpellSpiritDto | null;
+
+  @ApiPropertyOptional({
+    type: [CastSpellSpiritDto],
+    description: 'Todos os actors spawnados (Animar Objetos multi-token)',
+  })
+  spirits?: CastSpellSpiritDto[] | null;
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;

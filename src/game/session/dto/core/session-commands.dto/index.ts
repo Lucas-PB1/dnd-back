@@ -12,6 +12,7 @@ export {
 } from './state-rest.dto';
 export {
   ArtifactRandomCastDto,
+  SpiritSelectionDto,
   CastSpellDto,
   CastSpellSpiritDto,
   CastSpellResponseDto,

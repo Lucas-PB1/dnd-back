@@ -15,6 +15,7 @@ export type SpellSpiritVariantRow = {
   variantKey: string;
   templateSlug: string;
   label: string;
+  budgetCost: number;
 };
 
 export async function loadSpellSpiritProfile(
@@ -45,5 +46,6 @@ export async function loadSpellSpiritVariants(
     variantKey: row.variantKey,
     templateSlug: row.templateSlug,
     label: row.label,
+    budgetCost: row.budgetCost ?? 1,
   }));
 }

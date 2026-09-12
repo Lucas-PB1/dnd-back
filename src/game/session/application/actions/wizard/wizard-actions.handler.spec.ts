@@ -158,6 +158,8 @@ describe('WizardActionsHandler', () => {
       asHandlerDep(ctx.state),
       asHandlerDep(ctx.mechanicalCatalog),
       asHandlerDep(effectCatalog),
+      asHandlerDep({ execute: jest.fn() }),
+      asHandlerDep({}),
     );
   });
 

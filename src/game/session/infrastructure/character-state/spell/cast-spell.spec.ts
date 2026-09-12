@@ -7,7 +7,15 @@ jest.mock('../resources/class-resources', () => ({
   loadActiveItemSlugs: jest.fn(),
 }));
 
+jest.mock(
+  '@game/spellcasting/application/resolve-character-spellcasting-slice',
+  () => ({
+    loadSpellcastingAbilitySlug: jest.fn().mockResolvedValue(null),
+  }),
+);
+
 import { loadActiveItemSlugs } from '../resources/class-resources';
+import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import { asDep } from '@common/testing/as-dep';
 
 const resolveClassResourcesMock = resolveClassResources as jest.MockedFunction<
@@ -16,6 +24,10 @@ const resolveClassResourcesMock = resolveClassResources as jest.MockedFunction<
 const loadActiveItemSlugsMock = loadActiveItemSlugs as jest.MockedFunction<
   typeof loadActiveItemSlugs
 >;
+const loadSpellcastingAbilitySlugMock =
+  loadSpellcastingAbilitySlug as jest.MockedFunction<
+    typeof loadSpellcastingAbilitySlug
+  >;
 
 describe('applyCastSpell', () => {
   const character = {
@@ -96,6 +108,8 @@ describe('applyCastSpell', () => {
     resolveClassResourcesMock.mockResolvedValue([]);
     loadActiveItemSlugsMock.mockReset();
     loadActiveItemSlugsMock.mockResolvedValue([]);
+    loadSpellcastingAbilitySlugMock.mockReset();
+    loadSpellcastingAbilitySlugMock.mockResolvedValue(null);
   });
 
   const drowFairyFireEffect = {
@@ -206,6 +220,8 @@ describe('applyCastSpell', () => {
       level: 2,
       concentration: false,
     });
+    loadSpellcastingAbilitySlugMock.mockResolvedValue('carisma');
+    (character.abilityScores as { carisma?: number }).carisma = 16;
     syncSpellSpirit.execute.mockResolvedValue({
       actorId: 'actor-1',
       templateSlug: 'montaria-sobrenatural-celestial',
@@ -214,6 +230,17 @@ describe('applyCastSpell', () => {
       reused: false,
       armorClass: 12,
       hitPointsMax: 25,
+      actors: [
+        {
+          actorId: 'actor-1',
+          templateSlug: 'montaria-sobrenatural-celestial',
+          variantKey: 'celestial',
+          variantLabel: 'Celestial',
+          reused: false,
+          armorClass: 12,
+          hitPointsMax: 25,
+        },
+      ],
     });
 
     const result = await cast(
@@ -230,7 +257,10 @@ describe('applyCastSpell', () => {
       characterId: 'c1',
       spellSlug: 'convocar-montaria',
       variantKey: 'celestial',
+      spiritCount: undefined,
+      selections: undefined,
       slotLevel: 2,
+      castingAbilityMod: expect.any(Number),
     });
     expect(result.spirit?.templateSlug).toBe('montaria-sobrenatural-celestial');
     expect(result.spirit?.hitPointsMax).toBe(25);
