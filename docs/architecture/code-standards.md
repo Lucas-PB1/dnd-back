@@ -203,6 +203,12 @@ npm test -- --testPathPattern=foo # módulo tocado
 npm run test:cov                  # cobertura (CI)
 ```
 
+## Documentação no TypeScript
+
+Default: **não comentar** — nome, tipo e pasta bastam.  
+Rule: `.cursor/rules/typescript-docs.mdc` — **proibido `//` como docs**; só `/** */` (TSDoc) para invariante/SSOT/edge D&D.  
+Contrato HTTP → Swagger; catálogo → SQL + OKF.
+
 ## Legado
 
 - Não expandir caminhos marcados `legacy` / mortos.

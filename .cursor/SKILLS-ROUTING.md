@@ -31,6 +31,7 @@ Complementa `~/.cursor/SKILLS-ROUTING.md`.
 | `game-folder-conventions.mdc` | `src/game/**` — onde criar arquivos |
 | `catalog-sql-first.mdc` | `database/**`, `src/catalog/**` |
 | `file-size.mdc` | limites de linhas |
+| `typescript-docs.mdc` | `src/**/*.ts` — sem `//` docs; só TSDoc raro |
 
 ## Commands do projeto
 

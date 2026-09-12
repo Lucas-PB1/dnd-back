@@ -1,0 +1,72 @@
+---
+description: >-
+  Docs TypeScript: sem `//` inline; só TSDoc (`/** */`) quando o
+  tipo/nome não carrega a invariante.
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript — documentação (só TSDoc)
+
+Complementa `docs/architecture/code-standards.md`. Preferência: **código autoexplicativo**.
+
+## Formato
+
+| Forma | Uso |
+| --- | --- |
+| `/** … */` (TSDoc) | Única forma de documentação humana no código |
+| `// …` | **Proibido** como docs (inline ou linha inteira) |
+| `// eslint-…` / `// @ts-…` | Só diretiva de ferramenta, inevitável + motivo curto |
+
+Sem comentário no meio da linha (`code; // nota`).
+
+## Default
+
+**Não documentar.** Nome + tipo + pasta (`domain/` / `application/` / …) bastam.
+
+## Proibido (ruído)
+
+- TSDoc em propriedade/parâmetro que só traduz o identificador
+- Narrar o óbvio (`/** Lê inspiração */` acima de `getInspiration`)
+- Histórico de onda/PR em cima de campo trivial
+- Qualquer `//` explicativo
+- `eslint-disable` / `@ts-ignore` sem remover a causa
+- Duplicar `@ApiProperty({ description })` / seed SQL
+
+```typescript
+// ❌
+export type Ctx = {
+  /** Contagem de schedule (portent). */
+  scheduleCount?: number;
+};
+const n = level; // nível do personagem
+
+// ✅
+export type Ctx = {
+  scheduleCount?: number;
+};
+```
+
+## Permitido (raro) — só `/** */`
+
+Quando o **porquê** não cabe no nome:
+
+| Caso | Onde |
+| --- | --- |
+| Invariante / limitação do TS | Acima do tipo ou função |
+| Ponte SSOT não óbvia | Acima da função de merge/load — não em cada campo |
+| Regra D&D sem casa no identificador | Acima da regra |
+| Cabeçalho de módulo | Só entrypoint/contrato apontando SSOT ou escopo |
+
+## Onde a docs mora de verdade
+
+- Contrato HTTP → Swagger / DTO
+- Catálogo / regra de dados → SQL + OKF (`docs/okf/`)
+- Layout → `game-folder-conventions.mdc`
+
+## Checklist
+
+1. Renomear/tipar em vez de documentar?
+2. É `//`? → apague (ou vire TSDoc se for invariante real)
+3. TSDoc só repete o nome? → apague
+4. Precisa de escape TS/ESLint? → tipar/herança/genérico antes de disable
