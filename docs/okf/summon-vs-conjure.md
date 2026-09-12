@@ -43,7 +43,7 @@ Ambas as famílias Summon e Conjure são escola **Conjuration** → slug de esco
 | EN | PT canônico | Slug | Kind note |
 | --- | --- | --- | --- |
 | Find Steed | Convocar Montaria | `convocar-montaria` | Otherworldly Steed; tipo Celestial/Fey/Fiend |
-| Find Familiar | Convocar Familiar | `convocar-familiar` | formas CR0 (bestiary; sem bloco no texto) |
+| Find Familiar | Convocar Familiar | `convocar-familiar` | mapa → templates de monstro CR0 (`gato`, `coruja`…); “familiar” = vínculo, não identidade |
 
 ### `area_effect` (Conjure\*)
 
@@ -76,9 +76,10 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 
 ## Dívida (fora desta onda)
 
-- Find Familiar CR0 / Wild Shape / MM genérico
+- Wild Shape / MM genérico
 - Conjure\* como actor (não — permanece `area_effect`)
+- Familiar Morcego: stats no seed (SRD); imagem ainda sem scrap Beyond
 
 ## Status `spirit_actor`
 
-Find Steed + Summons PHB + Inseto Gigante + Animar Objetos (multi-token com orçamento mod × 1/2/3). Escala em `phb_creature_scale_by_slot`; despawn no fim/troca de concentração. `spectral-summon` / `fey-reinforcements` syncam via table-action reusando mapas Summon. Ver [creature-template-scale-control.md](/creature-template-scale-control.md).
+Find Steed + Summons PHB + Inseto Gigante + Animar Objetos + **Find Familiar** (mapa → 11 bestas CR0). Escala em `phb_creature_scale_by_slot`; despawn no fim/troca de concentração (familiares: replace no recast). `spectral-summon` / `fey-reinforcements` syncam via table-action. Ver [creature-template-scale-control.md](/creature-template-scale-control.md).

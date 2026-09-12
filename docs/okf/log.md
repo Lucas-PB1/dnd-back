@@ -1,5 +1,16 @@
 # log
 
+## 2026-09-12 — Find Familiar: templates = monstros
+
+- Identidade: slugs de besta (`gato`, `coruja`…), não `familiar-*`.
+- Vínculo: só `phb_spell_spirit_variant` (convocar-familiar → template).
+- Imagens em `public/catalog/beasts/`; removido traço “Espírito Familiar” do template.
+
+## 2026-09-12 — Find Familiar (CR0)
+
+- Seed `seed.find-familiar.sql`: 11 formas listadas na magia (stats SRD 5.2.1; imagens Beyond no scrap, exceto Morcego).
+- Mapa `convocar-familiar` + escala flat; gerador `scripts/generate/seed-find-familiar.mjs`.
+
 ## 2026-09-12 — fey-reinforcements: sem timer de 1 min
 
 - Decisão: duração 1 min fica na mesa/nota; sem despawn automático por clock.
