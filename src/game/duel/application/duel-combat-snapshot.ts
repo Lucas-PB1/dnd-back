@@ -18,6 +18,10 @@ import {
   isFighterClass,
 } from '@game/combat/domain/fighter';
 import {
+  CLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
+import {
   findStrikeOptionForTableAction,
   strikeSaveDc,
 } from '@game/combat/domain/strike-option';
@@ -287,11 +291,19 @@ export class DuelCombatSnapshot {
     const actionSurge = resourceOf('actionSurge');
     const indomitable = resourceOf('indomitable');
     const budget = await this.resolveTurnAttackBudget(character);
+    const catalog = await this.mechanicalCatalog.load();
     return {
       available: true,
       attacksPerAction: budget,
       turnAttacksRemaining: duel.turnAttacksRemaining,
-      tacticalMaster: hasTacticalMaster(character.level),
+      tacticalMaster: hasTacticalMaster(
+        character.level,
+        unlockFromGates(
+          catalog.featureGatesByClassSlug,
+          character.classSlug,
+          CLASS_GATE.tacticalMaster,
+        ),
+      ),
       secondWindRemaining: secondWind?.remaining ?? 0,
       secondWindMax: secondWind?.max ?? 0,
       actionSurgeRemaining: actionSurge?.remaining ?? 0,

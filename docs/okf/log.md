@@ -221,3 +221,16 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Delete: resolvers Psi/Soulknife; DTOs session órfãos; cadeia `applySecondWind`/`ActionSurge`/`TacticalMind` (session); `divineSparkDice`; pastas vazias `sorcerer/feature-actions`.
 - Dice usa helpers `has*` (evasion, slippery mind, diamond soul, studied attacks, door kick, indomitable, assassin mobile aim) em vez de `level >= N` inline.
 - Duel Second Wind / Action Surge **intactos** (implementação própria).
+
+## 2026-09-11 — Gates `has*` → SQL (`phb_class_feature_gate`)
+
+- Schema + migration `0155` / `20260911_phb_class_feature_gate.sql`.
+- Seeds classe (studied/tactical/indomitable/evasion/slippery/diamond/aura/precise…) + subclass wave (door_kick, assassin_mobile_aim, divine_fury, psychic_blades).
+- `featureGatesByClassSlug` no mechanical catalog; helpers `CLASS_GATE` / `SUBCLASS_GATE` / `unlockFromGates`.
+- Dice, duel, combat slice e weapon attacks passam unlock do catálogo.
+
+## 2026-09-12 — Schedules wave4 (menores restantes)
+
+- Seed: `catalog/phb/phb_class_feature_schedule.wave4.sql` (cleric divine strike/spark; paladin radiant/aura; college-of-masks; diviner portent).
+- Keys: `FEATURE_SCHEDULE_KEYS` + fixtures; helpers com `bands`; `scheduleCount` em effect loop / `resolveEffectAmount`.
+- Call sites: damage cleric/paladin; `set-persona-masks` via mechanical catalog.

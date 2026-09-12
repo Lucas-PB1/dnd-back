@@ -4,6 +4,7 @@ import {
   scheduleIntAtLevel,
   type FeatureScheduleBand,
 } from '../feature-schedule';
+import { meetsFeatureGate } from '../feature-gates';
 
 export function isRogueClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'rogue';
@@ -41,18 +42,27 @@ export function sneakAttackDiceExpression(input: {
   )}`;
 }
 
-export function hasSlipperyMind(level: number): boolean {
-  return level >= 15;
+export function hasSlipperyMind(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Evasão (Ladino 7+): salvaguarda de Destreza que reduz dano à metade. */
-export function hasEvasion(level: number): boolean {
-  return level >= 7;
+/** Evasão (Ladino): salvaguarda de Destreza que reduz dano à metade. */
+export function hasEvasion(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Assassino 9+: Mira Firme sem zerar Deslocamento (Mira Móvel). */
-export function hasAssassinMobileAim(level: number): boolean {
-  return level >= 9;
+/** Assassino: Mira Firme sem zerar Deslocamento (Mira Móvel). */
+export function hasAssassinMobileAim(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
 /** Soulknife usa a mesma progressão de dados psiônicos do Psi Warrior. */

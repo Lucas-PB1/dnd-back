@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { rollD20Check } from '@game/dice/domain/dice';
@@ -16,6 +17,11 @@ import {
   effectiveCoverForAttack,
   isCoverBlockingAttack,
 } from '@game/dice/domain/attack-cover';
+import {
+  CLASS_GATE,
+  SUBCLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
 import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
 import {
   findEquippedWeaponAttack,
@@ -41,6 +47,7 @@ export async function executeRollAttack(input: {
   permanentItemEffects: ResolveActivePermanentItemEffects;
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
   effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
@@ -51,6 +58,19 @@ export async function executeRollAttack(input: {
     input.userId,
     input.characterId,
   );
+  const catalog = await input.mechanicalCatalog.load();
+  const classUnlock = (gateKey: string) =>
+    unlockFromGates(
+      catalog.featureGatesByClassSlug,
+      character.classSlug,
+      gateKey,
+    );
+  const subclassUnlock = (gateKey: string) =>
+    unlockFromGates(
+      catalog.featureGatesBySubclassSlug,
+      character.subclassSlug,
+      gateKey,
+    );
   const { attack, combatFlags, featSlugs } = await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
@@ -78,7 +98,10 @@ export async function executeRollAttack(input: {
   if (input.dto.preciseHunter) {
     if (
       !isRangerClass(character.classSlug) ||
-      !hasPreciseHunter(character.level)
+      !hasPreciseHunter(
+        character.level,
+        classUnlock(CLASS_GATE.preciseHunter),
+      )
     ) {
       throw new BadRequestException('Precise Hunter requires Ranger level 17');
     }
@@ -106,6 +129,10 @@ export async function executeRollAttack(input: {
     abilitySlug: attack.abilitySlug,
     combatFlags,
     featSlugs,
+    studiedAttacksUnlock: classUnlock(CLASS_GATE.studiedAttacks),
+    doorKickUnlock: subclassUnlock(SUBCLASS_GATE.doorKick),
+    assassinMobileAimUnlock: subclassUnlock(SUBCLASS_GATE.assassinMobileAim),
+    preciseHunterUnlock: classUnlock(CLASS_GATE.preciseHunter),
   });
 
   const coverLabel = coverNote(effectiveCover);

@@ -111,7 +111,7 @@ export class LoadCombatMechanicalCatalog {
       economyRows,
       panelRows,
       strikeOptions,
-      featureGatesBySubclassSlug,
+      featureGates,
       featureSchedules,
     ] = await Promise.all([
       this.gunslingerRepo.find({ relations: ['subclass'] }),
@@ -147,33 +147,41 @@ export class LoadCombatMechanicalCatalog {
       precautionRows,
       economyRows,
       panelRows,
-      featureGatesBySubclassSlug,
+      featureGatesBySubclassSlug: featureGates.bySubclassSlug,
+      featureGatesByClassSlug: featureGates.byClassSlug,
       featureSchedulesByClassSlug: featureSchedules.byClassSlug,
       featureSchedulesBySubclassSlug: featureSchedules.bySubclassSlug,
     });
   }
 
-  private async loadFeatureGates(): Promise<
-    ReadonlyMap<string, ReadonlyMap<string, number>>
-  > {
-    const raw: { slug: string; gate_key: string; unlock_level: number }[] =
-      await this.dataSource.query(
+  private async loadFeatureGates(): Promise<{
+    bySubclassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
+    byClassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
+  }> {
+    const [subclassRaw, classRaw]: [
+      { slug: string; gate_key: string; unlock_level: number }[],
+      { slug: string; gate_key: string; unlock_level: number }[],
+    ] = await Promise.all([
+      this.dataSource.query(
         `
         SELECT s.slug, g.gate_key, g.unlock_level
         FROM rpg.phb_subclass_feature_gate g
         JOIN rpg.phb_subclass s ON s.id = g.subclass_id
         `,
-      );
-    const bySubclass = new Map<string, Map<string, number>>();
-    for (const row of raw) {
-      let gates = bySubclass.get(row.slug);
-      if (!gates) {
-        gates = new Map();
-        bySubclass.set(row.slug, gates);
-      }
-      gates.set(row.gate_key, Number(row.unlock_level));
-    }
-    return bySubclass;
+      ),
+      this.dataSource.query(
+        `
+        SELECT c.slug, g.gate_key, g.unlock_level
+        FROM rpg.phb_class_feature_gate g
+        JOIN rpg.phb_class c ON c.id = g.class_id
+        `,
+      ),
+    ]);
+
+    return {
+      bySubclassSlug: groupGatesBySlug(subclassRaw),
+      byClassSlug: groupGatesBySlug(classRaw),
+    };
   }
 
   private async loadStrikeOptions() {
@@ -205,4 +213,19 @@ export class LoadCombatMechanicalCatalog {
     });
     return new Map(rows.map((row) => [row.valueId, row.label]));
   }
+}
+
+function groupGatesBySlug(
+  raw: { slug: string; gate_key: string; unlock_level: number }[],
+): ReadonlyMap<string, ReadonlyMap<string, number>> {
+  const byOwner = new Map<string, Map<string, number>>();
+  for (const row of raw) {
+    let gates = byOwner.get(row.slug);
+    if (!gates) {
+      gates = new Map();
+      byOwner.set(row.slug, gates);
+    }
+    gates.set(row.gate_key, Number(row.unlock_level));
+  }
+  return byOwner;
 }

@@ -36,7 +36,7 @@ describe('ranger-features', () => {
     expect(rangerSpeedBonusMeters({ classSlug: 'ranger', level: 5 })).toBe(0);
     expect(rangerSpeedBonusMeters({ classSlug: 'ranger', level: 6 })).toBe(3);
     expect(rangerSpeedBonusMeters({ classSlug: 'fighter', level: 6 })).toBe(0);
-    expect(hasPreciseHunter(16)).toBe(false);
-    expect(hasPreciseHunter(17)).toBe(true);
+    expect(hasPreciseHunter(16, 17)).toBe(false);
+    expect(hasPreciseHunter(17, 17)).toBe(true);
   });
 });

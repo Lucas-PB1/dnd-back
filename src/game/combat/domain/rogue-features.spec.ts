@@ -157,7 +157,7 @@ describe('rogue features', () => {
   });
 
   it('unlocks Slippery Mind at level 15', () => {
-    expect(hasSlipperyMind(14)).toBe(false);
-    expect(hasSlipperyMind(15)).toBe(true);
+    expect(hasSlipperyMind(14, 15)).toBe(false);
+    expect(hasSlipperyMind(15, 15)).toBe(true);
   });
 });

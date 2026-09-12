@@ -1,3 +1,4 @@
+import type { FeatureGatesByOwnerSlug } from '../feature-gates';
 import type { FeatureScheduleBand } from '../feature-schedule';
 import type { SizeCategory } from "../equipment/creature-size";
 import type { WeaponCharm } from "../equipment/weapon-charm";
@@ -27,6 +28,7 @@ export type WeaponAttackContext = {
   proficiencyBonus: number;
   weaponProficiencySlugs: readonly string[];
   featureSchedules: readonly FeatureScheduleBand[];
+  featureGatesBySubclassSlug?: FeatureGatesByOwnerSlug;
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
   sizeCategory?: SizeCategory;

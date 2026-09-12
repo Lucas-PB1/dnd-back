@@ -162,6 +162,8 @@ export type ExecuteCatalogEffectContext = {
   rageActive?: boolean;
   /** Contagem de dados (Campeão dos Deuses / Luz Medicinal). */
   diceCount?: number;
+  /** Contagem numérica de schedule (portent / divine spark). */
+  scheduleCount?: number;
   pactSlotLevel?: number;
   pactSlotsRecoveryCount?: number;
 };

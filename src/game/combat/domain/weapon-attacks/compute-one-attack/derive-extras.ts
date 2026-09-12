@@ -10,6 +10,10 @@ import {
   divineFuryExtraDice,
   hasDivineFury,
 } from "../../barbarian/rage";
+import {
+  SUBCLASS_GATE,
+  unlockFromGates,
+} from "../../feature-gates";
 import { resolveAttackCritThreshold } from "../../gunslinger/firearm";
 import { isPsychicBladeItemSlug } from "../../rogue/psychic-blades";
 import { ownedStyleOrFeatSlugs, styleOrFeatHasKind } from "@game/effects";
@@ -85,6 +89,11 @@ export function deriveAttackExtras(input: {
   const divineFuryDice = hasDivineFury({
     subclassSlug: context.subclassSlug,
     level: context.level,
+    unlockLevel: unlockFromGates(
+      context.featureGatesBySubclassSlug,
+      context.subclassSlug,
+      SUBCLASS_GATE.divineFury,
+    ),
   })
     ? divineFuryExtraDice(context.level ?? 0)
     : null;

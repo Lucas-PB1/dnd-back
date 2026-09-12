@@ -6,12 +6,17 @@ import { PhbWeapon } from '@entities/equipment/phb-weapon.entity';
 import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { LoadCombatMechanicalCatalog } from '../load-combat-mechanical-catalog';
 import { loadMergedFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
 import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
   type WeaponAttack,
 } from '../../domain/weapon-attacks';
+import {
+  SUBCLASS_GATE,
+  unlockFromGates,
+} from '../../domain/feature-gates';
 import {
   hasPsychicBlades,
   PSYCHIC_BLADE_ITEM_SLUGS,
@@ -93,6 +98,7 @@ export class ResolveEquippedWeaponAttacks {
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
     private readonly dataSource: DataSource,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   async resolve(
@@ -101,10 +107,16 @@ export class ResolveEquippedWeaponAttacks {
     context: WeaponAttackResolveContext,
   ): Promise<WeaponAttack[]> {
     const isMonk = context.classSlug === 'monk';
+    const catalog = await this.mechanicalCatalog.load();
     const soulknifeBlades = hasPsychicBlades({
       classSlug: context.classSlug,
       subclassSlug: context.subclassSlug,
       level: context.level,
+      unlockLevel: unlockFromGates(
+        catalog.featureGatesBySubclassSlug,
+        context.subclassSlug,
+        SUBCLASS_GATE.psychicBlades,
+      ),
     });
     const equipped = context.equippedItems
       ? context.equippedItems.filter(
@@ -166,6 +178,7 @@ export class ResolveEquippedWeaponAttacks {
       proficiencyBonus: context.proficiencyBonus,
       weaponProficiencySlugs,
       featureSchedules,
+      featureGatesBySubclassSlug: catalog.featureGatesBySubclassSlug,
       featSlugs: context.featSlugs,
       fightingStyleSlugs: context.fightingStyleSlugs,
       sizeCategory: context.sizeCategory,

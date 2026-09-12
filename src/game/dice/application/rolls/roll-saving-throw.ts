@@ -1,5 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import {
+  CLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
 import {
   hasIndomitable,
   isFighterClass,
@@ -67,6 +72,7 @@ export async function executeRollSavingThrow(input: {
   dataSource: DataSource;
   permanentItemEffects: ResolveActivePermanentItemEffects;
   resourceSpender: CharacterResourceSpender;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
   effectCatalog: LoadEffectCatalog;
   userId: string;
   characterId: string;
@@ -77,6 +83,13 @@ export async function executeRollSavingThrow(input: {
     input.userId,
     input.characterId,
   );
+  const catalog = await input.mechanicalCatalog.load();
+  const classUnlock = (gateKey: string) =>
+    unlockFromGates(
+      catalog.featureGatesByClassSlug,
+      character.classSlug,
+      gateKey,
+    );
   const ability = input.dto.abilitySlug as AbilityKey;
   const stRows = await input.dataSource.query<{ slug: string }[]>(
     `SELECT a.slug
@@ -95,12 +108,15 @@ export async function executeRollSavingThrow(input: {
   );
   if (
     isRogueClass(character.classSlug) &&
-    hasSlipperyMind(character.level)
+    hasSlipperyMind(character.level, classUnlock(CLASS_GATE.slipperyMind))
   ) {
     saveProficiencies.add('sabedoria');
     saveProficiencies.add('carisma');
   }
-  if (isMonkClass(character.classSlug) && hasDiamondSoul(character.level)) {
+  if (
+    isMonkClass(character.classSlug) &&
+    hasDiamondSoul(character.level, classUnlock(CLASS_GATE.diamondSoul))
+  ) {
     for (const slug of Object.keys(ABILITY_LABELS) as AbilityKey[]) {
       saveProficiencies.add(slug);
     }
@@ -131,6 +147,7 @@ export async function executeRollSavingThrow(input: {
     classSlug: character.classSlug,
     level: character.level,
     charismaModifier: mods.carisma,
+    unlockLevel: classUnlock(CLASS_GATE.auraOfProtection),
   });
   if (auraBonus > 0) {
     bonus += auraBonus;
@@ -148,7 +165,7 @@ export async function executeRollSavingThrow(input: {
   if (input.dto.indomitable) {
     if (
       !isFighterClass(character.classSlug) ||
-      !hasIndomitable(character.level)
+      !hasIndomitable(character.level, classUnlock(CLASS_GATE.indomitable))
     ) {
       throw new BadRequestException('Indomitable requires Fighter level 9+');
     }
@@ -171,9 +188,9 @@ export async function executeRollSavingThrow(input: {
   });
   if (
     ((isRogueClass(character.classSlug) &&
-      hasRogueEvasion(character.level)) ||
+      hasRogueEvasion(character.level, classUnlock(CLASS_GATE.evasion))) ||
       (isMonkClass(character.classSlug) &&
-        hasMonkEvasion(character.level))) &&
+        hasMonkEvasion(character.level, classUnlock(CLASS_GATE.evasion)))) &&
     ability === 'destreza'
   ) {
     notes.push(

@@ -1,24 +1,34 @@
 -- Forward: option_def/value de Especialização por classe (SQL-first expertise slots)
+-- Greenfield-safe: sem rows se phb_class ainda não foi seedado (dados também em seeds/).
 
 INSERT INTO rpg.phb_option_def (
   scope, owner_id, option_key, label, unlock_level, value_type, sort_order
 )
-VALUES
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'expertiseSkill1', 'Especialização 1', 1, 'skill'::rpg.option_value_type, 10),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'expertiseSkill2', 'Especialização 2', 1, 'skill'::rpg.option_value_type, 11),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'expertiseSkill3', 'Especialização 3', 6, 'skill'::rpg.option_value_type, 12),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'expertiseSkill4', 'Especialização 4', 6, 'skill'::rpg.option_value_type, 13),
-
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'expertiseSkill1', 'Especialização 1', 2, 'skill'::rpg.option_value_type, 10),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'expertiseSkill2', 'Especialização 2', 2, 'skill'::rpg.option_value_type, 11),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'expertiseSkill3', 'Especialização 3', 9, 'skill'::rpg.option_value_type, 12),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'expertiseSkill4', 'Especialização 4', 9, 'skill'::rpg.option_value_type, 13),
-
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'expertiseSkill1', 'Especialização 1', 2, 'skill'::rpg.option_value_type, 10),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'expertiseSkill2', 'Especialização 2', 9, 'skill'::rpg.option_value_type, 11),
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'expertiseSkill3', 'Especialização 3', 9, 'skill'::rpg.option_value_type, 12),
-
-  ('class'::rpg.option_scope, (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'expertiseSkill1', 'Especialização (erudição)', 2, 'skill'::rpg.option_value_type, 10)
+SELECT
+  'class'::rpg.option_scope,
+  c.id,
+  v.option_key,
+  v.label,
+  v.unlock_level,
+  'skill'::rpg.option_value_type,
+  v.sort_order
+FROM rpg.phb_class c
+JOIN (
+  VALUES
+    ('rogue', 'expertiseSkill1', 'Especialização 1', 1, 10),
+    ('rogue', 'expertiseSkill2', 'Especialização 2', 1, 11),
+    ('rogue', 'expertiseSkill3', 'Especialização 3', 6, 12),
+    ('rogue', 'expertiseSkill4', 'Especialização 4', 6, 13),
+    ('bard', 'expertiseSkill1', 'Especialização 1', 2, 10),
+    ('bard', 'expertiseSkill2', 'Especialização 2', 2, 11),
+    ('bard', 'expertiseSkill3', 'Especialização 3', 9, 12),
+    ('bard', 'expertiseSkill4', 'Especialização 4', 9, 13),
+    ('ranger', 'expertiseSkill1', 'Especialização 1', 2, 10),
+    ('ranger', 'expertiseSkill2', 'Especialização 2', 9, 11),
+    ('ranger', 'expertiseSkill3', 'Especialização 3', 9, 12),
+    ('wizard', 'expertiseSkill1', 'Especialização (erudição)', 2, 10)
+) AS v(class_slug, option_key, label, unlock_level, sort_order)
+  ON c.slug = v.class_slug
 ON CONFLICT (scope, owner_id, option_key) DO UPDATE SET
   label = EXCLUDED.label,
   unlock_level = EXCLUDED.unlock_level,

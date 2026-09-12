@@ -1,3 +1,4 @@
+export * from './phb-class-feature-gate.entity';
 export * from './phb-class-feature-schedule.entity';
 export * from './phb-class-feature.entity';
 export * from './phb-class-panel-action.entity';

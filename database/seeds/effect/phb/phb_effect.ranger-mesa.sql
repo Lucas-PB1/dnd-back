@@ -214,14 +214,11 @@ ins AS (
 INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
 SELECT id, true FROM ins;
 
-WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master'),
-ins AS (
-  INSERT INTO rpg.phb_effect (
-    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
-  )
-  SELECT 'companion_command'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
-         'on_table_action'::rpg.effect_trigger, 'primal-companion', 3, 1,
-         'Companheiro Primal'
-  FROM sc
-  RETURNING id
-);
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master')
+INSERT INTO rpg.phb_effect (
+  kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+)
+SELECT 'companion_command'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+       'on_table_action'::rpg.effect_trigger, 'primal-companion', 3, 1,
+       'Companheiro Primal'
+FROM sc;

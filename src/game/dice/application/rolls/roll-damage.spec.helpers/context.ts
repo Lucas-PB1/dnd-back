@@ -32,6 +32,7 @@ export function createRollDamageTestContext(): RollDamageTestContext {
       economyActions: [],
       panelActions: [],
       featureGatesBySubclassSlug: new Map(),
+      featureGatesByClassSlug: new Map(),
       featureSchedulesByClassSlug: FEATURE_SCHEDULE_FIXTURES_BY_CLASS,
       featureSchedulesBySubclassSlug: FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS,
     }),

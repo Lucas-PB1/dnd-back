@@ -29,14 +29,15 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Schedules nível→valor (piloto) | `phb_class_feature_schedule` | **migrado** (attacks, martial arts, unarmored) |
 | Schedules onda 2 | `phb_class_feature_schedule` | **migrado** (sneak, BI, rage, indomitable, superiority, psi, champion, zealot) |
 | Schedules onda 3 | `phb_class_feature_schedule` | **migrado** (brutal, gunslinger crit, warlock pact/invocations, metamagic) |
+| Schedules onda 4 | `phb_class_feature_schedule` | **migrado** (divine strike/spark, radiant strikes, aura range, masks, portent) |
 
 ## Dívida restante
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| média | Gates booleanos (`hasAuraOfProtection`, `hasSlipperyMind`, `hasTacticalMind`…) | `phb_subclass_feature_gate` / feature_gate de classe |
-| média | Schedules menores restantes (divine strike, masks, portent…) | mesmo `phb_class_feature_schedule` |
 | baixa | Transformation Cap.6 / heritage notes | outro SSOT (já separado) |
+| — | Gates booleanos `has*` (fighter/rogue/monk/paladin/ranger + subclass) | **migrado** → `phb_class_feature_gate` + `phb_subclass_feature_gate` |
+| — | Schedules menores (divine strike, masks, portent, aura, radiant) | **migrado** → wave4 `phb_class_feature_schedule` |
 | — | Fórmulas com mod/estado (`rageActive`, CD, smite por slot, magical cunning ceil) | **manter TS** |
 | — | Channel Divinity / Focus (ki) / Wild Shape usos | já em progression / grant_resource — **não** duplicar |
 | — | Handlers mesa `switch (actionSlug)` | **fechado** (todas as classes → economy) |
@@ -102,16 +103,15 @@ Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de clas
 
 **Outliers mesa → kinds tipados (2026-09-11):** `missile_mage_arm`, `resource_fallback_spend`, `moon_combat_wild_shape`, `restore_resource_from_slot`, `bind_pact_weapon`, `psychic_blade_attack` — structured apply antes de `resolveSpendPlan`. Handlers classe = zero `if (actionSlug)`. Gunslinger non-class feat path (`reload-firearm`/`fire-chamber`) permanece no handler.
 
-### Gates `has*` vs schedule (dívida média)
+### Gates `has*` vs schedule (dívida média) — **onda gates fechada 2026-09-11**
 
-`phb_class_feature_schedule` é **nível→número** (`value_num`: ataques, faces de dado, usos, limiares…).
+- Tabela nova: `phb_class_feature_gate` (class_id, gate_key, unlock_level).
+- Seeds: `phb_class.feature-gate.all.sql` + `phb_subclass.feature-gate.wave.sql` (door_kick, assassin_mobile_aim, divine_fury, psychic_blades).
+- Catálogo mecânico: `featureGatesByClassSlug` + `featureGatesBySubclassSlug`.
+- Predicados: `meetsFeatureGate` / `unlockFromGates` em `combat/domain/feature-gates.ts`; `has*(level, unlockLevel)`.
+- Callers (dice, duel, combat slice, weapon attacks) leem unlock do catálogo — sem `level >= N` nos helpers.
 
-Funções `hasStudiedAttacks` / `hasTacticalMind` / `hasAuraOfProtection` / `hasSlipperyMind` etc. são só **“desbloqueou no nível X?”** (booleano). Casa natural: `phb_subclass_feature_gate` ou equivalente de **classe** — o mesmo padrão já usado no Sabujo (`phb_subclass_feature_gate`).
-
-- **Não** misturar gates com schedule (não inventar `value_num` 0/1 como SSOT de unlock).
-- Por enquanto deixar em TS está ok; migrar gates é **próxima onda** após (ou em paralelo a) limpar handlers mesa, sem acoplar às waves de schedule.
-
-Exemplos vivos em TS: `fighter/features/rules.ts` (`hasTactical*`, `hasStudiedAttacks`), paladin aura, rogue slippery mind, gates similares em outras classes.
+**Schedules menores (fechado 2026-09-12):** seed `phb_class_feature_schedule.wave4.sql` — divine strike/spark, radiant strikes, aura range, persona masks, portent. Helpers exigem `bands`; effect amount usa `scheduleCount`.
 
 ## Reorganização session/application/core (2026-09-11)
 

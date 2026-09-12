@@ -41,15 +41,15 @@ describe('paladin-features', () => {
 
   describe('radiantStrikesDie', () => {
     it('grants 1d8 only at level 11+', () => {
-      expect(radiantStrikesDie(10)).toBeNull();
-      expect(radiantStrikesDie(11)).toBe('1d8');
+      expect(radiantStrikesDie(10, paladinBands)).toBeNull();
+      expect(radiantStrikesDie(11, paladinBands)).toBe('1d8');
     });
   });
 
   describe('Aura of Protection', () => {
     it('unlocks at level 6', () => {
-      expect(hasAuraOfProtection(5)).toBe(false);
-      expect(hasAuraOfProtection(6)).toBe(true);
+      expect(hasAuraOfProtection(5, 6)).toBe(false);
+      expect(hasAuraOfProtection(6, 6)).toBe(true);
     });
 
     it('uses the Charisma modifier with a minimum of +1', () => {
@@ -64,6 +64,7 @@ describe('paladin-features', () => {
           classSlug: 'paladin',
           level: 6,
           charismaModifier: 3,
+          unlockLevel: 6,
         }),
       ).toBe(3);
       expect(
@@ -71,6 +72,7 @@ describe('paladin-features', () => {
           classSlug: 'paladin',
           level: 5,
           charismaModifier: 3,
+          unlockLevel: 6,
         }),
       ).toBe(0);
       expect(
@@ -78,13 +80,14 @@ describe('paladin-features', () => {
           classSlug: 'fighter',
           level: 10,
           charismaModifier: 3,
+          unlockLevel: 6,
         }),
       ).toBe(0);
     });
 
     it('expands the aura range at level 18', () => {
-      expect(auraRangeMeters(6)).toBe(3);
-      expect(auraRangeMeters(18)).toBe(9);
+      expect(auraRangeMeters(6, paladinBands)).toBe(3);
+      expect(auraRangeMeters(18, paladinBands)).toBe(9);
     });
   });
 

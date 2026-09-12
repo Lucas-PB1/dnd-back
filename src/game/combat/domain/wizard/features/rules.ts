@@ -2,6 +2,12 @@
  * Regras numéricas de combate do Mago (PHB 2024): Recuperação Arcana, Mísseis e recursos.
  */
 
+import {
+  FEATURE_SCHEDULE_KEYS,
+  scheduleIntAtLevel,
+  type FeatureScheduleBand,
+} from '../../feature-schedule';
+
 export const MAGIC_MISSILE_SPELL_SLUG = 'misseis-magicos';
 export const MAGIC_MISSILE_MAGE_SUBCLASS = 'magic-missile-mage';
 export const MAGIC_MISSILE_FREE_RESOURCE = 'magic-missile-free';
@@ -129,6 +135,14 @@ export function abjurerArcaneWardHp(level: number, intMod: number): number {
   return 2 * level + Math.max(1, intMod);
 }
 
-export function portentDiceCount(level: number): number {
-  return level >= 14 ? 3 : 2;
+export function portentDiceCount(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return scheduleIntAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.portentD20Count,
+    level,
+    2,
+  );
 }

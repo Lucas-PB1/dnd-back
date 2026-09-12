@@ -5,6 +5,10 @@
  * spendStrikeSelfCost / resolveStrikeHitPackage / pending-combat-effect.
  */
 
+import { meetsFeatureGate } from '../feature-gates';
+
+export { meetsFeatureGate } from '../feature-gates';
+
 export const BLOOD_STRIKE_RESOURCE_SLUG = 'blood-strike';
 export const BLOOD_HOUND_SUBCLASS_SLUG = 'blood-hound';
 export const BLOOD_STRIKE_TABLE_ACTION = 'blood-strike';
@@ -20,13 +24,6 @@ export const BLOOD_CONDITION_CONSTRAIN = 'blood-constrain';
 export const BLOOD_CONDITION_EXILE = 'blood-exile';
 
 export type BloodArmamentDamageType = 'acid' | 'necrotic' | 'poison';
-
-export function meetsFeatureGate(
-  level: number,
-  unlockLevel: number | null | undefined,
-): boolean {
-  return unlockLevel != null && level >= unlockLevel;
-}
 
 /** Sangue da Criação: rerrolar custo e ficar com o menor. */
 export function canTakeLowerBloodCost(

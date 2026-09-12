@@ -25,6 +25,7 @@ import {
 import { transformationCombatNotes } from '../../domain/notes/grim-hollow/transformation-combat-notes';
 import { loadTransformationHitPointsBonus } from '../../domain/notes/grim-hollow/load-transformation-hit-points-bonus';
 import { paladinSavingThrowAuraBonus } from '../../domain/paladin';
+import { CLASS_GATE } from '../../domain/feature-gates';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { sheetProfile } from '@common/perf/sheet-profile';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
@@ -76,6 +77,7 @@ export async function assembleMappedCombatSlice(input: {
   damageTypeLabels?: ReadonlyMap<string, string>;
   levelCombatNotes?: readonly LevelCombatNoteRow[];
   featureSchedules: readonly import('../../domain/feature-schedule').FeatureScheduleBand[];
+  classFeatureGates?: ReadonlyMap<string, number>;
 }): Promise<MappedCombatSlice> {
   const classCombat = aggregateClassCombatContributions({
     classSlug: input.classSlug,
@@ -166,6 +168,8 @@ export async function assembleMappedCombatSlice(input: {
       classSlug: input.classSlug,
       level: input.level,
       charismaModifier: abilityModifier(input.combatScores.carisma),
+      unlockLevel:
+        input.classFeatureGates?.get(CLASS_GATE.auraOfProtection) ?? null,
     }),
     featEffectFlags: {
       inspirationRefundOnFail: hasInspirationRefundOnFail(

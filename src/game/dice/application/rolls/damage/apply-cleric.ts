@@ -10,12 +10,10 @@ import type { DamageEffect } from './damage-roll-context';
 export const applyClericExtras: DamageEffect = (ctx, acc) => {
   if (!ctx.dto.divineStrike) return;
 
-  if (!isClericClass(ctx.character.classSlug) || ctx.character.level < 7) {
+  const dice = divineStrikeDice(ctx.character.level, ctx.featureSchedules);
+  if (!isClericClass(ctx.character.classSlug) || !dice) {
     throw new BadRequestException('Divine Strike requires Cleric level 7');
   }
-
-  const dice = divineStrikeDice(ctx.character.level);
-  if (!dice) return;
 
   addDamagePart(acc, dice, { critical: ctx.dto.critical });
   acc.notes.push(

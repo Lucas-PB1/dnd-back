@@ -73,6 +73,11 @@ describe('resolveCharacterCombatSlice combat bundle', () => {
       getRepository: jest.fn().mockImplementation(() => ({
         findOne: jest.fn().mockResolvedValue(null),
         find: jest.fn().mockResolvedValue([]),
+        createQueryBuilder: jest.fn().mockReturnValue({
+          innerJoin: jest.fn().mockReturnThis(),
+          where: jest.fn().mockReturnThis(),
+          getMany: jest.fn().mockResolvedValue([]),
+        }),
       })),
     };
 

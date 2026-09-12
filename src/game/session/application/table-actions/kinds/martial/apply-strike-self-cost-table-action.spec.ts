@@ -71,6 +71,7 @@ describe('applyStrikeSelfCostTableAction', () => {
               ]),
             ],
           ]),
+          featureGatesByClassSlug: new Map(),
         }),
       },
     };

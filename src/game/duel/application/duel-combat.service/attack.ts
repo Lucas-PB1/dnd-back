@@ -19,6 +19,10 @@ import {
   hasTacticalMaster,
   isBloodHoundSubclass,
 } from '@game/combat/domain/fighter';
+import {
+  CLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import { strikeSaveDc, type StrikeOption } from '@game/combat/domain/strike-option';
@@ -284,9 +288,21 @@ export async function attack(
     }
   }
 
+  const catalog = await deps.mechanicalCatalog.load();
+  const tacticalMasterUnlock = unlockFromGates(
+    catalog.featureGatesByClassSlug,
+    attackerPc.classSlug,
+    CLASS_GATE.tacticalMaster,
+  );
+  const studiedAttacksUnlock = unlockFromGates(
+    catalog.featureGatesByClassSlug,
+    attackerPc.classSlug,
+    CLASS_GATE.studiedAttacks,
+  );
+
   if (
     input.masteryOverrideSlug &&
-    (!hasTacticalMaster(attackerPc.level) ||
+    (!hasTacticalMaster(attackerPc.level, tacticalMasterUnlock) ||
       !TACTICAL_MASTER_OVERRIDES.has(input.masteryOverrideSlug))
   ) {
     throw new BadRequestException(
@@ -363,6 +379,7 @@ export async function attack(
     weaponAttack.masterySlug,
     input.masteryOverrideSlug,
     attackerPc,
+    tacticalMasterUnlock,
   );
   const attackAbilityMod = abilityModifier(
     attackerPc.abilityScores[weaponAttack.abilitySlug],
@@ -377,7 +394,7 @@ export async function attack(
       `${attackerPc.name}: ${attackLabel}${visionNote} — errou (total ${attackRoll.total} vs CA ${attackRoll.effectiveTargetAc ?? targetAc}).`,
     );
 
-    if (hasStudiedAttacks(attackerPc.level)) {
+    if (hasStudiedAttacks(attackerPc.level, studiedAttacksUnlock)) {
       duel.arenaEffects = asArenaEffects(
         addPendingEffect(
           duel.arenaEffects,

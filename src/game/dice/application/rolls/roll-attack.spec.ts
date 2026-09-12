@@ -17,6 +17,32 @@ import {
   loadAccessibleCharacter,
 } from './roll-weapon-context';
 import { asRollDep, mockEffectCatalog, mockResourceSpender } from './roll-damage.spec.helpers';
+import {
+  CLASS_GATE,
+  SUBCLASS_GATE,
+} from '@game/combat/domain/feature-gates';
+
+const FEATURE_GATE_FIXTURE = {
+  featureGatesByClassSlug: new Map<string, Map<string, number>>([
+    [
+      'fighter',
+      new Map([
+        [CLASS_GATE.studiedAttacks, 13],
+        [CLASS_GATE.tacticalMaster, 9],
+      ]),
+    ],
+    ['ranger', new Map([[CLASS_GATE.preciseHunter, 17]])],
+    ['rogue', new Map()],
+    ['barbarian', new Map()],
+  ]),
+  featureGatesBySubclassSlug: new Map<string, Map<string, number>>([
+    [
+      'assassin',
+      new Map([[SUBCLASS_GATE.assassinMobileAim, 9]]),
+    ],
+    ['dungeoneer', new Map([[SUBCLASS_GATE.doorKick, 3]])],
+  ]),
+};
 
 describe('executeRollAttack', () => {
   const base = {
@@ -27,6 +53,9 @@ describe('executeRollAttack', () => {
     permanentItemEffects: asRollDep({}),
     dataSource: asRollDep({}),
     resourceSpender: mockResourceSpender(),
+    mechanicalCatalog: asRollDep({
+      load: jest.fn().mockResolvedValue(FEATURE_GATE_FIXTURE),
+    }),
     effectCatalog: mockEffectCatalog(),
     userId: 'u1',
     characterId: 'c1',

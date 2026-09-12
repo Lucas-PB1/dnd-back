@@ -2,6 +2,10 @@ import {
   divineFuryExtraDice,
   hasDivineFury,
 } from '@game/combat/domain/barbarian';
+import {
+  SUBCLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
 import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { addDamagePart } from './damage-accumulator';
@@ -29,6 +33,11 @@ export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
     hasDivineFury({
       subclassSlug: character.subclassSlug,
       level: character.level,
+      unlockLevel: unlockFromGates(
+        ctx.featureGatesBySubclassSlug,
+        character.subclassSlug,
+        SUBCLASS_GATE.divineFury,
+      ),
     })
   ) {
     addDamagePart(acc, divineFuryExtraDice(character.level), {

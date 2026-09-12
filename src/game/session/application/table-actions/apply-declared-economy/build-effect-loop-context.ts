@@ -11,6 +11,7 @@ import {
   FEATURE_SCHEDULE_KEYS,
   featureSchedulesFromCatalog,
   scheduleIntAtLevel,
+  scheduleIntOrNullAtLevel,
 } from '@game/combat/domain/feature-schedule';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { DeclaredEconomyTableActionDeps } from './types';
@@ -55,6 +56,18 @@ export function buildEffectLoopContext(
   const pactSlotsRecoveryCount = isWarlockClass(character.classSlug)
     ? magicalCunningSlotRecoveryCount(character.level, bands)
     : undefined;
+  const scheduleCount =
+    scheduleIntOrNullAtLevel(
+      bands,
+      FEATURE_SCHEDULE_KEYS.divineSparkDiceCount,
+      character.level,
+    ) ??
+    scheduleIntOrNullAtLevel(
+      bands,
+      FEATURE_SCHEDULE_KEYS.portentD20Count,
+      character.level,
+    ) ??
+    undefined;
 
   return {
     rageBonus,
@@ -62,6 +75,7 @@ export function buildEffectLoopContext(
     intMod,
     castingMod,
     scheduleDieFaces,
+    scheduleCount,
     pactSlotLevel,
     pactSlotsRecoveryCount,
   };

@@ -187,7 +187,16 @@ async function migrateOne(label, url) {
     await assertSchemaSafe(client, applied, files);
     let pending = 0;
 
-    for (const { filePath, version } of files) {
+    const schemaFiles = files.filter(
+      ({ version }) =>
+        version.startsWith('schema/') || version.startsWith('baseline/'),
+    );
+    const forwardFiles = files.filter(
+      ({ version }) =>
+        !version.startsWith('schema/') && !version.startsWith('baseline/'),
+    );
+
+    for (const { filePath, version } of schemaFiles) {
       if (applied.has(version)) continue;
 
       const sql = fs.readFileSync(filePath, 'utf8');
@@ -211,9 +220,54 @@ async function migrateOne(label, url) {
       }
     }
 
-    if (pending === 0) {
-      console.log('  nenhuma migration pendente');
+    const tableExists = await client.query(`
+      SELECT EXISTS (
+        SELECT 1 FROM information_schema.tables
+        WHERE table_schema = 'rpg' AND table_name = 'phb_class'
+      ) AS ok
+    `);
+    let hasCatalogRows = false;
+    if (tableExists.rows[0]?.ok) {
+      const classRows = await client.query(
+        'SELECT EXISTS (SELECT 1 FROM rpg.phb_class LIMIT 1) AS ok',
+      );
+      hasCatalogRows = Boolean(classRows.rows[0]?.ok);
+    }
+    const pendingForward = forwardFiles.filter(({ version }) => !applied.has(version));
+
+    if (pendingForward.length > 0 && !hasCatalogRows) {
+      console.log(
+        `  ${pendingForward.length} forward migration(s) adiadas — rode npm run db:seed e depois npm run db:migrate`,
+      );
     } else {
+      for (const { filePath, version } of pendingForward) {
+        const sql = fs.readFileSync(filePath, 'utf8');
+        const relativeFromRoot = path
+          .relative(rootDir, filePath)
+          .replace(/\\/g, '/');
+
+        process.stdout.write(`  applying ${relativeFromRoot}... `);
+        await client.query('BEGIN');
+        try {
+          await client.query(sql);
+          await client.query(
+            'INSERT INTO rpg.schema_migration (version) VALUES ($1)',
+            [version],
+          );
+          await client.query('COMMIT');
+          console.log('ok');
+          pending++;
+        } catch (err) {
+          await client.query('ROLLBACK');
+          console.log('failed');
+          throw err;
+        }
+      }
+    }
+
+    if (pending === 0 && (hasCatalogRows || pendingForward.length === 0)) {
+      console.log('  nenhuma migration pendente');
+    } else if (pending > 0) {
       console.log(`  ${pending} migration(s) aplicada(s)`);
     }
   } finally {

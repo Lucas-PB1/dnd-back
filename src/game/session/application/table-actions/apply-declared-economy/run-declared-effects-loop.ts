@@ -70,6 +70,7 @@ export async function runDeclaredEffectsLoop(input: {
     intMod,
     castingMod,
     scheduleDieFaces,
+    scheduleCount,
     pactSlotLevel,
     pactSlotsRecoveryCount,
   } = buildEffectLoopContext(catalog, character);
@@ -99,6 +100,7 @@ export async function runDeclaredEffectsLoop(input: {
       intMod,
       castingMod,
       scheduleDieFaces,
+      scheduleCount,
       pactSlotLevel,
       pactSlotsRecoveryCount,
       rageActive: Boolean(state.rageActive),
@@ -139,6 +141,7 @@ export async function runDeclaredEffectsLoop(input: {
       intMod,
       castingMod,
       scheduleDieFaces,
+      scheduleCount,
       pactSlotLevel,
       pactSlotsRecoveryCount,
       rageActive: Boolean(state.rageActive),

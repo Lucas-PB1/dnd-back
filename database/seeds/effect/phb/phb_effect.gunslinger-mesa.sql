@@ -17,16 +17,17 @@ SELECT 1 FROM ins;
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
 ins AS (
   INSERT INTO rpg.phb_effect (
-    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+    kind, owner_kind, owner_id, trigger, action_slug, resource_slug,
+    unlock_level, sort_order, label
   )
   SELECT 'recover_resource'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
-         'on_table_action'::rpg.effect_trigger, 'recover-risk', 15, 1,
-         'Gambito Terrível'
+         'on_table_action'::rpg.effect_trigger, 'recover-risk', 'risk',
+         15, 1, 'Gambito Terrível'
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_resource (effect_id, resource_slug, amount)
-SELECT id, 'risk', 1 FROM ins;
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
 fx AS (

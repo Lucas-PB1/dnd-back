@@ -163,6 +163,8 @@ feat/valdas/phb_feat_option.spellblade.sql
 catalog/steinhardt/phb_edition.base.sql
 subclass/steinhardt/phb_subclass.all.sql
 class/steinhardt/phb_subclass.feature-gate.blood-hound.sql
+class/phb/phb_class.feature-gate.all.sql
+class/phb/phb_subclass.feature-gate.wave.sql
 subclass/steinhardt/phb_subclass_feature.all.sql
 spell/steinhardt/phb_spell.all.sql
 subclass/steinhardt/phb_subclass_prepared_spell.all.sql
@@ -431,6 +433,7 @@ catalog/phb/phb_initiative_rule.all.sql
 catalog/phb/phb_class_feature_schedule.pilot.sql
 catalog/phb/phb_class_feature_schedule.wave2.sql
 catalog/phb/phb_class_feature_schedule.wave3.sql
+catalog/phb/phb_class_feature_schedule.wave4.sql
 notes/grim-hollow/phb_level_combat_note.grim-hollow.sql
 notes/northlands/phb_level_combat_note.northlands.sql
 notes/phb/phb_level_combat_note.static-packs.sql

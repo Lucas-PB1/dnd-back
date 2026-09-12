@@ -19,6 +19,13 @@ export const FEATURE_SCHEDULE_KEYS = {
   warlockPactSlotCount: 'warlock_pact_slot_count',
   warlockInvocationLimit: 'warlock_invocation_limit',
   sorcererMetamagicLimit: 'sorcerer_metamagic_limit',
+  divineStrikeDiceCount: 'divine_strike_dice_count',
+  divineSparkDiceCount: 'divine_spark_dice_count',
+  radiantStrikesDiceCount: 'radiant_strikes_dice_count',
+  auraRangeM: 'aura_range_m',
+  personaMasksEquipped: 'persona_masks_equipped',
+  personaMasksKnown: 'persona_masks_known',
+  portentD20Count: 'portent_d20_count',
 } as const;
 
 export type FeatureScheduleKey =

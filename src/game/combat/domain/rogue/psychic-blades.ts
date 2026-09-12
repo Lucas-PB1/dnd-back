@@ -4,6 +4,7 @@
  * Aqui só identidade (slug) e elegibilidade da subclasse.
  */
 import { isRogueClass } from './sneak-attack';
+import { meetsFeatureGate } from '../feature-gates';
 
 /** Ataque principal — slug do catálogo. */
 export const PSYCHIC_BLADE_ITEM_SLUG = 'psychic-blade';
@@ -27,10 +28,11 @@ export function hasPsychicBlades(input: {
   classSlug?: string | null;
   subclassSlug?: string | null;
   level?: number;
+  unlockLevel?: number | null;
 }): boolean {
   return (
     isSoulknifeSubclass(input.classSlug, input.subclassSlug) &&
-    (input.level ?? 0) >= 3
+    meetsFeatureGate(input.level ?? 0, input.unlockLevel)
   );
 }
 

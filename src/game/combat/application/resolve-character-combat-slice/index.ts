@@ -9,6 +9,7 @@ import {
 } from '../../infrastructure/species-catalog.queries';
 import { loadLevelCombatNotes } from '../../infrastructure/level-combat-note.queries';
 import { loadMergedFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
+import { loadClassFeatureGates } from '../../infrastructure/feature-gate.queries';
 import { loadDamageTypeLabels } from '@game/effects/infrastructure/damage-type.queries';
 import { ResolveEquippedArmorClass } from '../resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../resolve-equipped-weapon-attacks';
@@ -176,5 +177,6 @@ export async function resolveCharacterCombatSlice(input: {
       classSlug,
       subclassSlug,
     ),
+    classFeatureGates: await loadClassFeatureGates(dataSource, classSlug),
   });
 }

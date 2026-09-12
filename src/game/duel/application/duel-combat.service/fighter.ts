@@ -2,6 +2,11 @@ import { BadRequestException } from '@nestjs/common';
 import { rollExpression } from '@game/dice/domain/dice';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import {
+  CLASS_GATE,
+  unlockFromGates,
+} from '@game/combat/domain/feature-gates';
 import {
   hasTacticalShift,
   isFighterClass,
@@ -21,6 +26,7 @@ export type FighterDeps = {
   state: CharacterStateRepository;
   access: PlayerCharacterAccessService;
   snapshot: DuelCombatSnapshot;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
 };
 
 function conditionsDeps(deps: FighterDeps): ConditionsDeps {
@@ -57,7 +63,17 @@ export async function useSecondWind(
   await deps.repo.saveMember(actor);
 
   let note = `${character.name}: Recuperar Fôlego (${healRoll.expression}) — ${healed.before} → ${healed.after} PV.`;
-  if (hasTacticalShift(character.level)) {
+  const catalog = await deps.mechanicalCatalog.load();
+  if (
+    hasTacticalShift(
+      character.level,
+      unlockFromGates(
+        catalog.featureGatesByClassSlug,
+        character.classSlug,
+        CLASS_GATE.tacticalShift,
+      ),
+    )
+  ) {
     note += ' Ajuste Tático: mova-se até metade do Deslocamento sem provocar AO.';
   }
   duel.combatLog = appendCombatLog(duel.combatLog, note);

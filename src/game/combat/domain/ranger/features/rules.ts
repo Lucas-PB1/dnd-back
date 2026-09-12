@@ -6,6 +6,7 @@ import {
   scheduleIntAtLevel,
   type FeatureScheduleBand,
 } from '../../feature-schedule';
+import { meetsFeatureGate } from '../../feature-gates';
 
 export type RangerSubclassSlug =
   | 'hunter'
@@ -35,12 +36,18 @@ export function gloomDreadAmbusherDie(level: number): string {
   return level >= 11 ? '2d8' : '2d6';
 }
 
-export function hasPreciseHunter(level: number): boolean {
-  return level >= 17;
+export function hasPreciseHunter(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
-export function hasRelentlessHunter(level: number): boolean {
-  return level >= 13;
+export function hasRelentlessHunter(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
 /** Ataque Extra — SSOT: `attacks_per_action`. */

@@ -21,6 +21,7 @@ export function tableNoteFromEffect(
     rng: context.rng,
     hitDieFaces: context.hitDieFaces,
     scheduleDieFaces: context.scheduleDieFaces,
+    scheduleCount: context.scheduleCount,
     rageBonus: context.rageBonus,
     rageActive: context.rageActive,
   });

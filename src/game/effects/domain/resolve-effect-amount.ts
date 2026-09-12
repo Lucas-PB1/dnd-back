@@ -16,6 +16,8 @@ export function resolveEffectAmount(input: {
   hitDieFaces?: number;
   /** Faces do dado vindo de schedule (psi / superioridade). */
   scheduleDieFaces?: number;
+  /** Contagem vinda de schedule (portent / divine spark). */
+  scheduleCount?: number;
   /** Bônus de dano da Fúria (schedule). */
   rageBonus?: number;
   rageActive?: boolean;
@@ -126,9 +128,8 @@ export function resolveEffectAmount(input: {
     case 'level_times_5':
       return { amount: 5 * input.level };
     case 'dice_divine_spark_plus_flat': {
-      const level = input.level;
-      const die =
-        level >= 18 ? '4d8' : level >= 13 ? '3d8' : level >= 7 ? '2d8' : '1d8';
+      const count = Math.max(1, input.scheduleCount ?? 1);
+      const die = `${count}d8`;
       const rolled = rollDamageParts(die, input.flat ?? 0, { rng });
       return {
         amount: rolled.total,
@@ -202,7 +203,7 @@ export function resolveEffectAmount(input: {
         amount: Math.max(1, input.pactSlotsRecoveryCount ?? 1),
       };
     case 'portent_d20_count': {
-      const count = input.level >= 14 ? 3 : 2;
+      const count = Math.max(1, input.scheduleCount ?? 2);
       const rolls = Array.from(
         { length: count },
         () => 1 + Math.floor(rng() * 20),

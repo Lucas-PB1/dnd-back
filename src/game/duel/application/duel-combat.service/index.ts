@@ -64,6 +64,7 @@ export class DuelCombatService {
       state: this.state,
       access: this.access,
       snapshot: this.snapshot,
+      mechanicalCatalog: this.mechanicalCatalog,
     };
   }
 

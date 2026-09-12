@@ -29,6 +29,8 @@ export type CombatMechanicalCatalog = {
   panelActions: ClassPanelActionRecord[];
   /** gate_key → unlock_level, por subclass slug. */
   featureGatesBySubclassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
+  /** gate_key → unlock_level, por class slug. */
+  featureGatesByClassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
   /** Schedules nível→valor por class slug. */
   featureSchedulesByClassSlug: ReadonlyMap<
     string,

@@ -75,6 +75,7 @@ export type ApplyCtx = {
   intMod: number;
   castingMod: number;
   scheduleDieFaces?: number;
+  scheduleCount?: number;
   pactSlotLevel?: number;
   pactSlotsRecoveryCount?: number;
   rageActive: boolean;

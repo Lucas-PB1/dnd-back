@@ -137,6 +137,7 @@ export async function executeRollDamage(input: {
       character.classSlug,
       character.subclassSlug,
     ),
+    featureGatesBySubclassSlug: mechanical.featureGatesBySubclassSlug,
   };
   for (const effect of DAMAGE_EFFECT_PIPELINE) {
     await effect(ctx, acc);

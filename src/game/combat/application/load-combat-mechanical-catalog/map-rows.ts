@@ -31,6 +31,7 @@ export type CombatMechanicalCatalogRows = {
     string,
     ReadonlyMap<string, number>
   >;
+  featureGatesByClassSlug: ReadonlyMap<string, ReadonlyMap<string, number>>;
   featureSchedulesByClassSlug: ReadonlyMap<
     string,
     readonly import('../../domain/feature-schedule').FeatureScheduleBand[]
@@ -57,6 +58,7 @@ export function mapCombatMechanicalCatalog(
     economyRows,
     panelRows,
     featureGatesBySubclassSlug,
+    featureGatesByClassSlug,
     featureSchedulesByClassSlug,
     featureSchedulesBySubclassSlug,
   } = rows;
@@ -127,6 +129,7 @@ export function mapCombatMechanicalCatalog(
     economyActions: mapEconomyActions(economyRows),
     panelActions: mapPanelActions(economyRows, panelRows),
     featureGatesBySubclassSlug,
+    featureGatesByClassSlug,
     featureSchedulesByClassSlug,
     featureSchedulesBySubclassSlug,
   };

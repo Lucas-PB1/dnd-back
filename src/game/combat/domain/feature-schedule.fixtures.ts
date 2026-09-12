@@ -15,7 +15,7 @@ function bands(
   }));
 }
 
-/** Fixtures espelhando seeds piloto + wave2 + wave3 (specs / harness). */
+/** Fixtures espelhando seeds piloto + wave2–4 (specs / harness). */
 export const FEATURE_SCHEDULE_FIXTURES_BY_CLASS: ReadonlyMap<
   string,
   readonly FeatureScheduleBand[]
@@ -49,8 +49,25 @@ export const FEATURE_SCHEDULE_FIXTURES_BY_CLASS: ReadonlyMap<
     ),
   ],
   [
+    'cleric',
+    bands(
+      [k.divineStrikeDiceCount, 7, 1],
+      [k.divineStrikeDiceCount, 14, 2],
+      [k.divineSparkDiceCount, 2, 1],
+      [k.divineSparkDiceCount, 7, 2],
+      [k.divineSparkDiceCount, 13, 3],
+      [k.divineSparkDiceCount, 18, 4],
+    ),
+  ],
+  [
     'paladin',
-    bands([k.attacksPerAction, 1, 1], [k.attacksPerAction, 5, 2]),
+    bands(
+      [k.attacksPerAction, 1, 1],
+      [k.attacksPerAction, 5, 2],
+      [k.radiantStrikesDiceCount, 11, 1],
+      [k.auraRangeM, 6, 3],
+      [k.auraRangeM, 18, 9],
+    ),
   ],
   [
     'ranger',
@@ -193,6 +210,23 @@ export const FEATURE_SCHEDULE_FIXTURES_BY_SUBCLASS: ReadonlyMap<
       [k.zealotHealingDiceCount, 6, 5],
       [k.zealotHealingDiceCount, 12, 6],
       [k.zealotHealingDiceCount, 17, 7],
+    ),
+  ],
+  [
+    'college-of-masks',
+    bands(
+      [k.personaMasksEquipped, 3, 1],
+      [k.personaMasksEquipped, 14, 2],
+      [k.personaMasksKnown, 3, 3],
+      [k.personaMasksKnown, 6, 4],
+      [k.personaMasksKnown, 14, 5],
+    ),
+  ],
+  [
+    'diviner',
+    bands(
+      [k.portentD20Count, 2, 2],
+      [k.portentD20Count, 14, 3],
     ),
   ],
 ]);

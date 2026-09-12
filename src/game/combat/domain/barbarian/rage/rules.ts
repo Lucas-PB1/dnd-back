@@ -9,6 +9,7 @@ import {
   scheduleIntOrNullAtLevel,
   type FeatureScheduleBand,
 } from '../../feature-schedule';
+import { meetsFeatureGate } from '../../feature-gates';
 
 export function isBarbarianClass(
   classSlug: string | null | undefined,
@@ -86,8 +87,12 @@ export function divineFuryExtraDice(level: number): string {
 export function hasDivineFury(input: {
   subclassSlug?: string | null;
   level?: number;
+  unlockLevel?: number | null;
 }): boolean {
-  return input.subclassSlug === 'zealot' && (input.level ?? 0) >= 3;
+  return (
+    input.subclassSlug === 'zealot' &&
+    meetsFeatureGate(input.level ?? 0, input.unlockLevel)
+  );
 }
 
 export function zealotHealingDiceCount(

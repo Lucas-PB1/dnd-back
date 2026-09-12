@@ -14,9 +14,9 @@ INSERT INTO rpg.phb_class_economy_action (
 )
 SELECT v.action_id, c.id, sc.id, v.name, v.economy::rpg.action_economy_bucket,
        v.unlock_level, v.resource_slug, v.free_resource_slug, v.always_spends,
-       v.summary, v.description, v.table_action, v.spend_amount, v.sort_order
+       v.summary, v.description, v.table_action, v.spend_amount::integer, v.sort_order
 FROM (VALUES
-  ('wizard-arm-missile-shield', NULL, 'Armar Escudo de Mísseis', 'free', 10, NULL, NULL, false, 'Armar antes do cast', 'Marque Escudo de Mísseis armado na ficha.', 'arm-missile-shield', NULL, 69),
+  ('wizard-arm-missile-shield', NULL::text, 'Armar Escudo de Mísseis', 'free', 10, NULL::text, NULL::text, false, 'Armar antes do cast', 'Marque Escudo de Mísseis armado na ficha.', 'arm-missile-shield', NULL::integer, 69),
   ('wizard-disarm-missile-shield', NULL, 'Desarmar Escudo de Mísseis', 'free', 10, NULL, NULL, false, 'Desarmar Escudo', 'Remove flag de Escudo de Mísseis armado.', 'disarm-missile-shield', NULL, 69),
   ('wizard-arm-giga-missile', NULL, 'Armar Giga-Míssil', 'free', 14, NULL, NULL, false, 'Armar antes do cast', 'Marque Giga-Míssil armado na ficha.', 'arm-giga-missile', NULL, 70),
   ('wizard-disarm-giga-missile', NULL, 'Desarmar Giga-Míssil', 'free', 14, NULL, NULL, false, 'Desarmar Giga-Míssil', 'Remove flag de Giga-Míssil armado.', 'disarm-giga-missile', NULL, 70),

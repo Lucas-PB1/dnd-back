@@ -12,6 +12,7 @@ describe('ResolveEquippedWeaponAttacks', () => {
   let masteryRepo: { find: jest.Mock };
   let catalogItems: { find: jest.Mock };
   let dataSource: { query: jest.Mock };
+  let mechanicalCatalog: { load: jest.Mock };
   let service: ResolveEquippedWeaponAttacks;
 
   beforeEach(() => {
@@ -22,12 +23,19 @@ describe('ResolveEquippedWeaponAttacks', () => {
     dataSource = {
       query: jest.fn().mockResolvedValue([{ slug: 'simple' }, { slug: 'martial' }]),
     };
+    mechanicalCatalog = {
+      load: jest.fn().mockResolvedValue({
+        featureGatesBySubclassSlug: new Map(),
+        featureGatesByClassSlug: new Map(),
+      }),
+    };
     service = new ResolveEquippedWeaponAttacks(
       inventoryItems as unknown as Repository<PlayerCharacterItem>,
       weapons as unknown as Repository<PhbWeapon>,
       masteryRepo as unknown as Repository<PhbWeaponMastery>,
       catalogItems as unknown as Repository<PhbItem>,
       dataSource as unknown as DataSource,
+      mechanicalCatalog as unknown as import('./load-combat-mechanical-catalog').LoadCombatMechanicalCatalog,
     );
   });
 

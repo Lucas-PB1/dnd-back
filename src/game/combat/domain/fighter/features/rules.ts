@@ -4,6 +4,7 @@ import {
   scheduleIntOrNullAtLevel,
   type FeatureScheduleBand,
 } from '../../feature-schedule';
+import { meetsFeatureGate } from '../../feature-gates';
 
 /**
  * Regras numéricas de combate do Guerreiro (PHB 2024) e efeitos de subclasse.
@@ -145,31 +146,46 @@ export function resolveFighterAttackCritThreshold(input: {
   return championCritThreshold(input.level, input.featureSchedules);
 }
 
-export function hasStudiedAttacks(level: number): boolean {
-  return level >= 13;
-}
-
-export function hasTacticalMaster(level: number): boolean {
-  return level >= 9;
-}
-
-export function hasTacticalShift(level: number): boolean {
-  return level >= 5;
-}
-
-export function hasTacticalMind(level: number): boolean {
-  return level >= 2;
-}
-
-/** Indomável (Guerreiro 9+). */
-export function hasIndomitable(level: number): boolean {
-  return level >= 9;
-}
-
-/** Chute na Porta (Dungeonera 3+). */
-export function hasDoorKick(
-  subclassSlug: string | null | undefined,
+export function hasStudiedAttacks(
   level: number,
+  unlockLevel: number | null | undefined,
 ): boolean {
-  return subclassSlug === 'dungeoneer' && level >= 3;
+  return meetsFeatureGate(level, unlockLevel);
+}
+
+export function hasTacticalMaster(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
+}
+
+export function hasTacticalShift(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
+}
+
+export function hasTacticalMind(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
+}
+
+/** Indomável (Guerreiro). */
+export function hasIndomitable(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
+}
+
+/** Chute na Porta (Dungeonera). */
+export function hasDoorKick(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }

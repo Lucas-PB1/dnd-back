@@ -83,7 +83,9 @@ describe('barbarian-rage', () => {
   });
 
   it('builds divine fury and zealot healing schedule', () => {
-    expect(hasDivineFury({ subclassSlug: 'zealot', level: 3 })).toBe(true);
+    expect(
+      hasDivineFury({ subclassSlug: 'zealot', level: 3, unlockLevel: 3 }),
+    ).toBe(true);
     expect(divineFuryExtraDice(5)).toBe('1d6+2');
     expect(zealotHealingDiceCount(3, zealotBands)).toBe(4);
     expect(zealotHealingDiceCount(6, zealotBands)).toBe(5);

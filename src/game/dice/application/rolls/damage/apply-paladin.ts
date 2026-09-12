@@ -1,5 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
-import { divineSmiteDice } from '@game/combat/domain/paladin';
+import {
+  divineSmiteDice,
+  radiantStrikesDie,
+} from '@game/combat/domain/paladin';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
@@ -25,12 +28,11 @@ export const applyPaladinExtras: DamageEffect = async (ctx, acc) => {
     throw new BadRequestException('Divine Smite requires Paladin class');
   }
 
-  if (
-    character.classSlug === 'paladin' &&
-    character.level >= 11 &&
-    dto.mode === 'melee'
-  ) {
-    addDamagePart(acc, '1d8', { critical: dto.critical });
-    acc.notes.push('Golpes Radiantes: +1d8 Radiante');
+  if (character.classSlug === 'paladin' && dto.mode === 'melee') {
+    const radiant = radiantStrikesDie(character.level, ctx.featureSchedules);
+    if (radiant) {
+      addDamagePart(acc, radiant, { critical: dto.critical });
+      acc.notes.push(`Golpes Radiantes: +${radiant} Radiante`);
+    }
   }
 };

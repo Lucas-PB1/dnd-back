@@ -4,8 +4,11 @@ import {
   isWizardClass,
   portentDiceCount,
 } from './features';
+import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('wizard-features', () => {
+  const divinerBands = fixtureSchedulesFor('wizard', 'diviner');
+
   it('identifies wizard class correctly', () => {
     expect(isWizardClass('wizard')).toBe(true);
     expect(isWizardClass('sorcerer')).toBe(false);
@@ -24,7 +27,7 @@ describe('wizard-features', () => {
   });
 
   it('computes portent dice count', () => {
-    expect(portentDiceCount(3)).toBe(2);
-    expect(portentDiceCount(14)).toBe(3);
+    expect(portentDiceCount(3, divinerBands)).toBe(2);
+    expect(portentDiceCount(14, divinerBands)).toBe(3);
   });
 });

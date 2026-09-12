@@ -21,10 +21,11 @@ export function resolveActiveMasterySlug(
   weaponMasterySlug: string | null,
   override: 'push' | 'sap' | 'slow' | undefined,
   attackerPc: PlayerCharacter,
+  unlockLevel: number | null | undefined,
 ): string | null {
   if (
     override &&
-    hasTacticalMaster(attackerPc.level) &&
+    hasTacticalMaster(attackerPc.level, unlockLevel) &&
     TACTICAL_MASTER_OVERRIDES.has(override)
   ) {
     return override;

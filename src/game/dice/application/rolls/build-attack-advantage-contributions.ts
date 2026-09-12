@@ -28,6 +28,10 @@ type AttackRollContext = {
   abilitySlug: string;
   combatFlags: WeaponCombatFlags;
   featSlugs: readonly string[];
+  studiedAttacksUnlock: number | null;
+  doorKickUnlock: number | null;
+  assassinMobileAimUnlock: number | null;
+  preciseHunterUnlock: number | null;
 };
 
 export function buildAttackAdvantageContributions(
@@ -76,19 +80,20 @@ export function buildAttackAdvantageContributions(
   if (
     ctx.dto.studiedAttack &&
     isFighterClass(ctx.classSlug) &&
-    hasStudiedAttacks(ctx.level)
+    hasStudiedAttacks(ctx.level, ctx.studiedAttacksUnlock)
   ) {
     contributions.push('advantage');
     notes.push('Ataques Estudados: vantagem contra o mesmo alvo');
   }
-  if (ctx.dto.doorKick && hasDoorKick(ctx.subclassSlug, ctx.level)) {
+  if (ctx.dto.doorKick && hasDoorKick(ctx.level, ctx.doorKickUnlock)) {
     contributions.push('advantage');
     notes.push('Chute na Porta: vantagem na primeira rodada');
   }
   if (ctx.dto.steadyAim) {
     contributions.push('advantage');
     notes.push(
-      ctx.subclassSlug === 'assassin' && hasAssassinMobileAim(ctx.level)
+      ctx.subclassSlug === 'assassin' &&
+        hasAssassinMobileAim(ctx.level, ctx.assassinMobileAimUnlock)
         ? 'Mira Móvel: Mira Firme concede vantagem sem reduzir o Deslocamento'
         : 'Mira Firme: vantagem; Deslocamento 0 até o fim do turno',
     );
@@ -102,7 +107,7 @@ export function buildAttackAdvantageContributions(
   if (
     ctx.dto.preciseHunter &&
     isRangerClass(ctx.classSlug) &&
-    hasPreciseHunter(ctx.level)
+    hasPreciseHunter(ctx.level, ctx.preciseHunterUnlock)
   ) {
     contributions.push('advantage');
     notes.push(

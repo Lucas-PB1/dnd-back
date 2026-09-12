@@ -66,6 +66,7 @@ export function executeTableEffect(
         flat: null,
         level: context.level,
         rng: context.rng,
+        scheduleCount: context.scheduleCount,
       });
       return {
         kind: 'table_roll',
@@ -114,6 +115,7 @@ export function executeTableEffect(
         rng: context.rng,
         hitDieFaces: context.hitDieFaces,
         scheduleDieFaces: context.scheduleDieFaces,
+        scheduleCount: context.scheduleCount,
         rageBonus: context.rageBonus,
         rageActive: context.rageActive,
       });
@@ -176,6 +178,7 @@ export function executeTableEffect(
     rng: context.rng,
     hitDieFaces: context.hitDieFaces,
     scheduleDieFaces: context.scheduleDieFaces,
+    scheduleCount: context.scheduleCount,
     rageBonus: context.rageBonus,
     rageActive: context.rageActive,
   });

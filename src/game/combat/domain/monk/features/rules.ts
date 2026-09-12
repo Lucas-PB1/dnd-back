@@ -9,6 +9,7 @@ import {
   scheduleValueAtLevel,
   type FeatureScheduleBand,
 } from '../../feature-schedule';
+import { meetsFeatureGate } from '../../feature-gates';
 
 /** Slug sintético do Ataque Desarmado (não existe item no catálogo). */
 export const MONK_UNARMED_ITEM_SLUG = 'unarmed-strike';
@@ -24,14 +25,20 @@ export function isMonkClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'monk';
 }
 
-/** Evasão (Monge 7+). */
-export function hasEvasion(level: number): boolean {
-  return level >= 7;
+/** Evasão (Monge). */
+export function hasEvasion(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Alma de Diamante (Monge 14+): proficiência em todas as salvaguardas. */
-export function hasDiamondSoul(level: number): boolean {
-  return level >= 14;
+/** Alma de Diamante (Monge): proficiência em todas as salvaguardas. */
+export function hasDiamondSoul(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
 export function martialArtsDieFaces(

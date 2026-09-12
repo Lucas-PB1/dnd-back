@@ -51,6 +51,19 @@ import {
   mockEffectCatalog,
   mockResourceSpender,
 } from './roll-damage.spec.helpers';
+import { CLASS_GATE } from '@game/combat/domain/feature-gates';
+
+function mechanicalCatalogWithClassGates(
+  classSlug: string,
+  gates: ReadonlyMap<string, number>,
+) {
+  return {
+    load: jest.fn().mockResolvedValue({
+      featureGatesByClassSlug: new Map([[classSlug, gates]]),
+      featureGatesBySubclassSlug: new Map(),
+    }),
+  };
+}
 
 describe('executeRollSavingThrow', () => {
   const sheet = {
@@ -79,6 +92,12 @@ describe('executeRollSavingThrow', () => {
       }),
     }),
     resourceSpender,
+    mechanicalCatalog: asRollDep(
+      mechanicalCatalogWithClassGates(
+        'fighter',
+        new Map([[CLASS_GATE.indomitable, 9]]),
+      ),
+    ),
     effectCatalog: mockEffectCatalog(),
     userId: 'user-1',
     characterId: 'fighter-1',

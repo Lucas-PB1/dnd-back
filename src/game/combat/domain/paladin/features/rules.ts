@@ -5,8 +5,11 @@
 import {
   FEATURE_SCHEDULE_KEYS,
   scheduleIntAtLevel,
+  scheduleIntOrNullAtLevel,
+  scheduleValueAtLevel,
   type FeatureScheduleBand,
 } from '../../feature-schedule';
+import { meetsFeatureGate } from '../../feature-gates';
 
 export type PaladinSubclassSlug =
   | 'devotion'
@@ -32,14 +35,25 @@ export function divineSmiteDice(input: {
   return `${base + bonus}d8`;
 }
 
-/** Golpes Radiantes (nível 11): +1d8 Radiante em ataques corpo a corpo. */
-export function radiantStrikesDie(level: number): string | null {
-  return level >= 11 ? '1d8' : null;
+/** Golpes Radiantes: +Nd8 Radiante — SSOT `radiant_strikes_dice_count`. */
+export function radiantStrikesDie(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): string | null {
+  const count = scheduleIntOrNullAtLevel(
+    bands,
+    FEATURE_SCHEDULE_KEYS.radiantStrikesDiceCount,
+    level,
+  );
+  return count == null || count < 1 ? null : `${count}d8`;
 }
 
-/** Aura de Proteção (nível 6+): você e aliados somam o mod. de Carisma às salvaguardas. */
-export function hasAuraOfProtection(level: number): boolean {
-  return level >= 6;
+/** Aura de Proteção: você e aliados somam o mod. de Carisma às salvaguardas. */
+export function hasAuraOfProtection(
+  level: number,
+  unlockLevel: number | null | undefined,
+): boolean {
+  return meetsFeatureGate(level, unlockLevel);
 }
 
 export function auraOfProtectionBonus(charismaModifier: number): number {
@@ -51,15 +65,24 @@ export function paladinSavingThrowAuraBonus(input: {
   classSlug?: string | null;
   level: number;
   charismaModifier: number;
+  unlockLevel?: number | null;
 }): number {
-  if (!isPaladinClass(input.classSlug) || !hasAuraOfProtection(input.level)) {
+  if (
+    !isPaladinClass(input.classSlug) ||
+    !hasAuraOfProtection(input.level, input.unlockLevel)
+  ) {
     return 0;
   }
   return auraOfProtectionBonus(input.charismaModifier);
 }
 
-export function auraRangeMeters(level: number): number {
-  return level >= 18 ? 9 : 3;
+export function auraRangeMeters(
+  level: number,
+  bands: readonly FeatureScheduleBand[],
+): number {
+  return (
+    scheduleValueAtLevel(bands, FEATURE_SCHEDULE_KEYS.auraRangeM, level) ?? 3
+  );
 }
 
 /** Ataque Extra — SSOT: `attacks_per_action`. */

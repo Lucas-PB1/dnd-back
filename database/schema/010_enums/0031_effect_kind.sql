@@ -108,7 +108,6 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'replace_attack_with_save',
   'ignore_target_armor',
   'add_arena_effect',
-  'recover_resource',
   'toggle_combat_flag',
   'sync_companion',
   'companion_command',
