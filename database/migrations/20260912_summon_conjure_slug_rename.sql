@@ -44,9 +44,9 @@ BEGIN
   END IF;
 
   IF v_to_exists THEN
-    -- Duplicata: aponta FKs para o canônico e remove o antigo.
-    PERFORM rpg._spell_slug_retarget(p_from, p_to);
-    DELETE FROM rpg.phb_spell WHERE slug = p_from;
+    -- Ambos existem: no seed canônico Summon (invocar-*) e Conjure (conjurar-*)
+    -- são magias distintas — não apagar o from.
+    -- (Upgrade antigo: to ainda não existe e cai no rename abaixo.)
     UPDATE rpg.phb_spell SET name = p_name WHERE slug = p_to AND name IS DISTINCT FROM p_name;
     RETURN;
   END IF;
