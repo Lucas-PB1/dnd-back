@@ -6,6 +6,12 @@ CREATE TABLE rpg.phb_character_thread_milestone_benefit (
   description TEXT NOT NULL,
   choice_group TEXT,
   sort_order INT NOT NULL DEFAULT 0,
+  bracket_max_kept INTEGER CHECK (bracket_max_kept IS NULL OR bracket_max_kept >= 1),
+  bracket_roll_kinds TEXT[],
+  bracket_trigger_note TEXT
+    CHECK (bracket_trigger_note IS NULL OR length(trim(bracket_trigger_note)) > 0),
+  spend_side_effect_note TEXT
+    CHECK (spend_side_effect_note IS NULL OR length(trim(spend_side_effect_note)) > 0),
   UNIQUE (milestone_id, benefit_key)
 );
 

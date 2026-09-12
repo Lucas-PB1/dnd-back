@@ -234,3 +234,11 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Seed: `catalog/phb/phb_class_feature_schedule.wave4.sql` (cleric divine strike/spark; paladin radiant/aura; college-of-masks; diviner portent).
 - Keys: `FEATURE_SCHEDULE_KEYS` + fixtures; helpers com `bands`; `scheduleCount` em effect loop / `resolveEffectAmount`.
 - Call sites: damage cleric/paladin; `set-persona-masks` via mechanical catalog.
+
+## 2026-09-12 — Transformations + threads SQL-first
+
+- Enum: `proficiency_bonus_plus_stage` + `transformation_stage`; grants Cap.6 regenerados; removido Set TS `CAP6_PB_PLUS_STAGE_*`.
+- Tables: `phb_heritage_combat_note`, `phb_transformation_boon_combat_note`; colunas bracket/spend em `phb_character_thread_milestone_benefit`.
+- Wire: heritage/transformation notes via catalog; Cursemarked brackets + Fatebound spend notes via SQL; motor HP Fatebound permanece TS.
+- Dívida: `CAP6_CHOICE_RULES` ainda em TS (batches).
+- Docs: audit + waves-plan mesa stale → fechado.

@@ -1,3 +1,4 @@
+import type { DataSource } from 'typeorm';
 import { applyCurrentHitPoints } from '../table-actions/primitives/apply-current-hit-points';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
@@ -11,68 +12,78 @@ export const GLORIOUS_END_RESOURCE = 'glorious-end';
 
 const UNCONSCIOUS = 'unconscious';
 
-const LAST_ACT_NOTE =
-  'Último Ato: 1 PV, condições limpas. Neste turno: imunidade + vantagem + dano +nível. Após o turno: morte permanente (mesa). Fim Glorioso: aliados testemunhas — vantagem em d20 por 24h.';
+const FATEBOUND_SPEND_RESOURCES = new Set([
+  DOOM_DELAYED_RESOURCE,
+  LAST_ACT_OF_FATE_RESOURCE,
+  GLORIOUS_END_RESOURCE,
+]);
 
-const GLORIOUS_END_NOTE =
-  'Fim Glorioso: aliados testemunhas — vantagem em testes d20 por 24 horas.';
-
+export async function loadThreadSpendSideEffectNote(
+  dataSource: DataSource,
+  resourceSlug: string,
+): Promise<string | null> {
+  const rows = await dataSource.query<{ note: string | null }[]>(
+    `SELECT spend_side_effect_note AS note
+     FROM rpg.phb_character_thread_milestone_benefit
+     WHERE benefit_key = $1
+       AND spend_side_effect_note IS NOT NULL
+     LIMIT 1`,
+    [resourceSlug],
+  );
+  return rows[0]?.note?.trim() || null;
+}
 
 export async function applyThreadResourceSpendSideEffects(input: {
+  dataSource: DataSource;
   state: CharacterStateRepository;
   character: PlayerCharacter;
   resourceSlug: string;
   currentState: CharacterStateResponseDto;
 }): Promise<{ state: CharacterStateResponseDto; note: string | null }> {
-  const { state, character, resourceSlug, currentState } = input;
+  const { dataSource, state, character, resourceSlug, currentState } = input;
+
+  if (!FATEBOUND_SPEND_RESOURCES.has(resourceSlug)) {
+    return { state: currentState, note: null };
+  }
+
+  const note = await loadThreadSpendSideEffectNote(dataSource, resourceSlug);
 
   if (resourceSlug === DOOM_DELAYED_RESOURCE) {
-    return applyDoomDelayed(state, character);
+    const next = await applyDoomDelayed(state, character);
+    return { state: next, note };
   }
   if (resourceSlug === LAST_ACT_OF_FATE_RESOURCE) {
-    return applyLastActOfFate(state, character);
-  }
-  if (resourceSlug === GLORIOUS_END_RESOURCE) {
-    return { state: currentState, note: GLORIOUS_END_NOTE };
+    const next = await applyLastActOfFate(state, character);
+    return { state: next, note };
   }
 
-  return { state: currentState, note: null };
+  return { state: currentState, note };
 }
 
 async function applyDoomDelayed(
   state: CharacterStateRepository,
   character: PlayerCharacter,
-): Promise<{ state: CharacterStateResponseDto; note: string }> {
+): Promise<CharacterStateResponseDto> {
   const afterHp = await applyCurrentHitPoints(state, character, 0);
   const conditions = afterHp.conditions.includes(UNCONSCIOUS)
     ? afterHp.conditions
     : [...afterHp.conditions, UNCONSCIOUS];
 
-  const next = await state.patch(character, {
+  return state.patch(character, {
     deathSaveSuccesses: 3,
     deathSaveFailures: 0,
     conditions,
   });
-
-  return {
-    state: next,
-    note: 'Ruína Adiada: estável a 0 PV (1/DL).',
-  };
 }
 
 async function applyLastActOfFate(
   state: CharacterStateRepository,
   character: PlayerCharacter,
-): Promise<{ state: CharacterStateResponseDto; note: string }> {
+): Promise<CharacterStateResponseDto> {
   await applyCurrentHitPoints(state, character, 1);
-  const next = await state.patch(character, {
+  return state.patch(character, {
     deathSaveSuccesses: 0,
     deathSaveFailures: 0,
     conditions: [],
   });
-
-  return {
-    state: next,
-    note: LAST_ACT_NOTE,
-  };
 }

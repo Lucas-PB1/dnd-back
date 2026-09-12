@@ -1,14 +1,13 @@
-import { CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS } from '@game/session/domain/transformation/cap6-resource-max';
 import { resolveClassResourceMaxima } from './resolve-maxima';
 
 describe('resolveClassResourceMaxima (Cap. 6 transformation)', () => {
-  it('PB+stage e fixed-null-as-stage', () => {
+  it('PB+stage e transformation_stage via fórmula SQL', () => {
     const rows = [
       {
         resourceSlug: 'infernal-smite-uses',
         resourceName: 'Punição Infernal',
         unlockLevel: 1,
-        maxFormula: 'proficiency_bonus',
+        maxFormula: 'proficiency_bonus_plus_stage',
         fixedMax: null,
         recoverOneOnShort: false,
         recoverAllOnShort: true,
@@ -19,7 +18,7 @@ describe('resolveClassResourceMaxima (Cap. 6 transformation)', () => {
         resourceSlug: 'angelic-wings-uses',
         resourceName: 'Angelic Wings',
         unlockLevel: 1,
-        maxFormula: 'fixed',
+        maxFormula: 'transformation_stage',
         fixedMax: null,
         recoverOneOnShort: false,
         recoverAllOnShort: true,
@@ -41,7 +40,6 @@ describe('resolveClassResourceMaxima (Cap. 6 transformation)', () => {
         carisma: 0,
       },
       transformationStage: 3,
-      proficiencyBonusPlusStageSlugs: CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS,
       featureSchedules: [],
     });
 

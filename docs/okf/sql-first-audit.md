@@ -35,7 +35,9 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
-| baixa | Transformation Cap.6 / heritage notes | outro SSOT (já separado) |
+| — | Transformation Cap.6 formulas + boon notes + heritage notes | **migrado** → `resource_max_formula` + `phb_transformation_boon_combat_note` + `phb_heritage_combat_note` |
+| — | Threads Cursemarked brackets + Fatebound spend notes | **migrado** → colunas em `phb_character_thread_milestone_benefit` |
+| baixa | Cap.6 choice rules (`CAP6_CHOICE_RULES`) | tabelas stage/auto/pick (próxima onda) |
 | — | Gates booleanos `has*` (fighter/rogue/monk/paladin/ranger + subclass) | **migrado** → `phb_class_feature_gate` + `phb_subclass_feature_gate` |
 | — | Schedules menores (divine strike, masks, portent, aura, radiant) | **migrado** → wave4 `phb_class_feature_schedule` |
 | — | Fórmulas com mod/estado (`rageActive`, CD, smite por slot, magical cunning ceil) | **manter TS** |
@@ -54,9 +56,11 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 
 Aggregate de classe só lê `filterLevelCombatNotes`. Sem `*CombatNotes` de classe no motor.
 
-### Mesa — handlers `switch` (dívida alta)
+### Mesa — handlers `switch` (fechado)
 
-**Hoje:** quase toda classe em `session/application/actions/*/…handler.ts` roteia slug→função TS; o `default` já cai em `applyDeclaredEconomyTableAction` (SSOT SQL). Referência boa: `monster-hunter-actions.handler.ts` (quase só economy).
+**Status:** todas as classes mesa → `applyDeclaredEconomyTableAction` + kinds tipados. Sem dívida de inventário `switch` aberta neste audit.
+
+**Histórico / critérios** (mantidos como referência):
 
 **Critério — pode virar só economy (+ effect opcional)**
 

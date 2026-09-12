@@ -28,11 +28,8 @@ function sqlEscape(value) {
 }
 
 function mapDbMaxFormula(resource) {
-  if (resource.maxFormula === 'proficiency_bonus_plus_stage') {
-    return 'proficiency_bonus';
-  }
   if (resource.maxFormula === 'fixed' && resource.fixedMax == null) {
-    return 'level';
+    return 'transformation_stage';
   }
   return resource.maxFormula;
 }

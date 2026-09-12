@@ -9,7 +9,6 @@ import {
 } from '@game/session/domain/cursemarked-bracket';
 import { loadActiveCursemarkedBracketBenefit } from '@game/session/infrastructure/queries/cursemarked-bracket.queries';
 
-
 export async function applyCursemarkedBracketIfTriggered(input: {
   dataSource: DataSource;
   character: PlayerCharacter;
@@ -18,14 +17,14 @@ export async function applyCursemarkedBracketIfTriggered(input: {
   kept: number;
   notes: string[];
 }): Promise<void> {
-  const benefit = await loadActiveCursemarkedBracketBenefit(
+  const rule = await loadActiveCursemarkedBracketBenefit(
     input.dataSource,
     input.character.id,
   );
-  if (!benefit) return;
+  if (!rule) return;
   if (
     !cursemarkedBracketTriggers({
-      benefit,
+      rule,
       kind: input.kind,
       kept: input.kept,
     })
@@ -39,7 +38,7 @@ export async function applyCursemarkedBracketIfTriggered(input: {
   );
   if (locked > 0) return;
 
-  input.notes.push(cursemarkedBracketNote(benefit));
+  input.notes.push(cursemarkedBracketNote(rule));
   await input.resourceSpender.setResourcesUsedEntry(
     input.character,
     CURSEMARKED_BRACKET_LOCK,

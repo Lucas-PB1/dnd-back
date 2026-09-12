@@ -1,5 +1,5 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
--- Transformações GH Cap. 6 — grant_resource (SSOT; J061 só defs)
+-- Transformações GH Cap. 6 — grant_resource (SSOT; defs em phb_resource_definition.gh-transformations.sql)
 -- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-aberrant-horror'),
@@ -22,7 +22,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -214,7 +214,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -310,7 +310,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -358,7 +358,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -382,7 +382,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -406,7 +406,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -670,7 +670,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -718,7 +718,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -742,7 +742,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -766,7 +766,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -790,7 +790,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -814,7 +814,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -862,7 +862,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'proficiency_bonus_plus_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -910,7 +910,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -958,7 +958,7 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, TRUE, TRUE
 FROM ins CROSS JOIN rd;
 
@@ -1054,6 +1054,6 @@ INSERT INTO rpg.phb_effect_resource (
   effect_id, resource_id, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT ins.id, rd.id, 'level'::rpg.resource_max_formula, NULL,
+SELECT ins.id, rd.id, 'transformation_stage'::rpg.resource_max_formula, NULL,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;

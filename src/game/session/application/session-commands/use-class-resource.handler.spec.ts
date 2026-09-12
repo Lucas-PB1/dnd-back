@@ -27,10 +27,27 @@ describe('UseClassResourceHandler', () => {
   const effectCatalog = {
     load: jest.fn().mockResolvedValue([]),
   };
+  const dataSource = {
+    query: jest.fn().mockImplementation(async (_sql: string, params?: unknown[]) => {
+      const slug = Array.isArray(params) ? String(params[0] ?? '') : '';
+      if (slug === 'doom-delayed') {
+        return [{ note: 'Ruína Adiada: estável a 0 PV (1/DL).' }];
+      }
+      if (slug === 'last-act-of-fate') {
+        return [
+          {
+            note: 'Último Ato: 1 PV, condições limpas. Neste turno: imunidade + vantagem + dano +nível. Após o turno: morte permanente (mesa). Fim Glorioso: aliados testemunhas — vantagem em d20 por 24h.',
+          },
+        ];
+      }
+      return [];
+    }),
+  };
   const handler = new UseClassResourceHandler(
     asDep(access),
     asDep(state),
     asDep(effectCatalog),
+    asDep(dataSource),
   );
 
   beforeEach(() => {

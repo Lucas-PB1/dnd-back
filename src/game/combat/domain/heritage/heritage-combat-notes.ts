@@ -4,62 +4,55 @@ import {
   type HeritageTraitPick,
 } from '@game/sheet/domain/heritage/aggregate-trait-takes';
 
-const DARKVISION_BASE_M = 18;
-const DARKVISION_IMPROVED_M = 36;
+export type HeritageCombatNoteRow = {
+  traitSlug: string;
+  minTraitTakes: number;
+  note: string;
+};
 
 export function heritageCombatNotes(input: {
   heritageChoices?: readonly HeritageTraitPick[];
+  catalogNotes?: readonly HeritageCombatNoteRow[];
 }): string[] {
   const picks = collectHeritageTraitPicks(input.heritageChoices ?? []);
   if (picks.length === 0) return [];
+  const catalog = input.catalogNotes ?? [];
+  if (catalog.length === 0) return [];
 
   const notes: string[] = [];
   const aggregated = aggregateTraitTakes(picks);
 
   for (const entry of aggregated) {
-    switch (entry.traitSlug) {
-      case 'improved-darkvision':
-        notes.push(
-          entry.takeCount >= 2
-            ? `Visão no Escuro ${DARKVISION_IMPROVED_M} m.`
-            : `Visão no Escuro ${DARKVISION_BASE_M} m.`,
-        );
-        break;
-      case 'damage-immunity':
-        notes.push(
-          entry.takeCount >= 2
-            ? 'Resistência a um tipo de dano; reação → imunidade temporária (1×/SR).'
-            : 'Resistência a um tipo de dano (escolha do traço).',
-        );
-        break;
-      case 'extra-tough':
-        notes.push(`+${entry.takeCount} PV máx. por nível (Robustez).`);
-        break;
-      case 'weapon-specialist':
-        notes.push('Proficiência em armas (escolha do traço).');
-        break;
-      case 'helpful-tactics':
-        notes.push('Vantagem em testes para ajudar aliados.');
-        break;
-      case 'magical-savant':
-      case 'magical-savvy':
-        notes.push('Truques adicionais (escolha do traço).');
-        break;
-      case 'stand-fast':
-        notes.push('Bônus em salvaguardas contra ser movido.');
-        break;
-      case 'artisanal-expertise':
-        notes.push('Proficiência em ferramentas (escolha do traço).');
-        break;
-      case 'restorative-rest':
-        notes.push('Descanso curto: gasta Dados de Vida adicionais.');
-        break;
-      default:
-        break;
-    }
+    const matching = catalog
+      .filter(
+        (row) =>
+          row.traitSlug === entry.traitSlug &&
+          entry.takeCount >= row.minTraitTakes,
+      )
+      .sort((a, b) => b.minTraitTakes - a.minTraitTakes);
+    const row = matching[0];
+    if (!row) continue;
+    notes.push(row.note.replaceAll('{takes}', String(entry.takeCount)));
   }
 
   return notes;
+}
+
+export async function loadHeritageCombatNotes(
+  dataSource: import('typeorm').DataSource,
+): Promise<HeritageCombatNoteRow[]> {
+  const rows = await dataSource.query<
+    Array<{ trait_slug: string; min_trait_takes: number; note: string }>
+  >(
+    `SELECT ht.slug AS trait_slug, n.min_trait_takes, n.note
+     FROM rpg.phb_heritage_combat_note n
+     JOIN rpg.phb_heritage_trait ht ON ht.id = n.trait_id`,
+  );
+  return rows.map((row) => ({
+    traitSlug: row.trait_slug,
+    minTraitTakes: Number(row.min_trait_takes),
+    note: row.note,
+  }));
 }
 
 export async function loadHeritageHitPointsBonus(

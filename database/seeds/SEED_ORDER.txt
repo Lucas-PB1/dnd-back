@@ -232,6 +232,7 @@ species/northlands/phb_species.flavor.sql
 species/northlands/phb_dwarf.culture.sql
 thread/northlands/phb_character_thread.resources.sql
 thread/northlands/phb_character_thread.economy-action.sql
+thread/northlands/phb_character_thread.bracket-spend-notes.sql
 catalog/griffons-saddlebag/phb_edition.base.sql
 subclass/griffons-saddlebag/phb_subclass.all.sql
 subclass/griffons-saddlebag/phb_subclass_feature.all.sql
@@ -306,6 +307,7 @@ transformation/grim-hollow/phb_feat_benefit.specter.sql
 transformation/grim-hollow/phb_feat_benefit.vampire.sql
 transformation/grim-hollow/phb_feat_option.gh-transformations.sql
 transformation/grim-hollow/phb_resource_definition.gh-transformations.sql
+transformation/grim-hollow/phb_transformation_boon_combat_note.all.sql
 catalog/dmg/phb_edition.base.sql
 item/dmg/phb_item.all.sql
 item/dmg/phb_item.consumable-flag.sql
@@ -417,6 +419,7 @@ economy/phb/phb_combat.modifier-sangromancer.sql
 heritage/phb/phb_heritage_trait.mechanics-core.sql
 heritage/phb/phb_heritage_trait.mechanics-bulk.sql
 heritage/phb/phb_heritage_trait.resources.sql
+heritage/phb/phb_heritage_combat_note.all.sql
 economy/phb/phb_class_economy_action.gh-cap2-resources.sql
 economy/grim-hollow/phb_combat.modifier-grim-hollow-cap2.sql
 economy/grim-hollow/phb_class_economy_action.gh-cap4-feats.sql

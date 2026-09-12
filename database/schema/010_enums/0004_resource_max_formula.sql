@@ -1,6 +1,8 @@
 CREATE TYPE rpg.resource_max_formula AS ENUM (
   'fixed',
   'proficiency_bonus',
+  'proficiency_bonus_plus_stage',
+  'transformation_stage',
   'charisma_mod',
   'wisdom_mod',
   'constitution_mod',

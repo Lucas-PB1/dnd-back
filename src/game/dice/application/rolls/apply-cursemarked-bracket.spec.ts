@@ -14,6 +14,30 @@ const loadBracket = loadActiveCursemarkedBracketBenefit as jest.MockedFunction<
   typeof loadActiveCursemarkedBracketBenefit
 >;
 
+const tides = {
+  benefitKey: 'tides-of-fate',
+  maxKept: 3,
+  rollKinds: ['save'] as const,
+  note: 'Cursemarked — Marés do Destino: Anti-overlap.',
+  rankOrder: 1,
+};
+
+const burdens = {
+  benefitKey: 'burdens-shield',
+  maxKept: 5,
+  rollKinds: ['save', 'skill'] as const,
+  note: 'Cursemarked — Escudo do Fardo: Anti-overlap.',
+  rankOrder: 2,
+};
+
+const threads = {
+  benefitKey: 'threads-entwined',
+  maxKept: 7,
+  rollKinds: ['save', 'skill', 'attack'] as const,
+  note: 'Cursemarked — Fios Entrelaçados: Anti-overlap.',
+  rankOrder: 3,
+};
+
 describe('applyCursemarkedBracketIfTriggered', () => {
   const character = asRollDep({ id: 'pc-1', level: 5 });
   const dataSource = asRollDep({});
@@ -44,7 +68,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
   });
 
   it('no-ops when kind or kept outside range', async () => {
-    loadBracket.mockResolvedValue('tides-of-fate');
+    loadBracket.mockResolvedValue(tides);
     const notes: string[] = [];
     const resourceSpender = {
       getResourcesUsedEntry: jest.fn(),
@@ -65,7 +89,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
   });
 
   it('no-ops silently when lock is set', async () => {
-    loadBracket.mockResolvedValue('burdens-shield');
+    loadBracket.mockResolvedValue(burdens);
     const notes: string[] = [];
     const resourceSpender = {
       getResourcesUsedEntry: jest.fn().mockResolvedValue(1),
@@ -86,7 +110,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
   });
 
   it('pushes note and sets lock on trigger', async () => {
-    loadBracket.mockResolvedValue('threads-entwined');
+    loadBracket.mockResolvedValue(threads);
     const notes: string[] = [];
     const resourceSpender = {
       getResourcesUsedEntry: jest.fn().mockResolvedValue(0),

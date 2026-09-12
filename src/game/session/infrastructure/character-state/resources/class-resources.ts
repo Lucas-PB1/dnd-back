@@ -9,7 +9,6 @@ import {
   type ClassResourceMax,
 } from '@game/session/domain/class-resources';
 import { filterSpeciesResourceScheduleByChoices } from '@game/session/domain/filter-species-resources-by-option';
-import { CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS } from '@game/session/domain/transformation/cap6-resource-max';
 import { riskDieFaces, riskDieLabel } from '@game/session/domain/risk-die';
 import {
   psiEnergyDieFaces,
@@ -187,7 +186,6 @@ export async function resolveClassResources(
       proficiencyBonus,
       abilityModifiers: mods,
       transformationStage: transformation.stage,
-      proficiencyBonusPlusStageSlugs: CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS,
       featureSchedules: schedules,
     });
   }

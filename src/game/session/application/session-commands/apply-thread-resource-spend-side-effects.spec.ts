@@ -17,6 +17,12 @@ describe('applyThreadResourceSpendSideEffects', () => {
     classResources: [],
   };
 
+  function dataSourceWithNote(note: string | null) {
+    return {
+      query: jest.fn().mockResolvedValue(note ? [{ note }] : []),
+    };
+  }
+
   it('no-ops for other resource slugs', async () => {
     const state = {
       applyCurrentHitPoints: jest.fn(),
@@ -24,6 +30,7 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(dataSourceWithNote(null)),
       state: asDep(state),
       character,
       resourceSlug: 'jarls-authority',
@@ -54,6 +61,9 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(
+        dataSourceWithNote('Ruína Adiada: estável a 0 PV (1/DL).'),
+      ),
       state: asDep(state),
       character,
       resourceSlug: DOOM_DELAYED_RESOURCE,
@@ -82,6 +92,7 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(dataSourceWithNote('Ruína Adiada')),
       state: asDep(state),
       character,
       resourceSlug: DOOM_DELAYED_RESOURCE,
@@ -113,6 +124,11 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(
+        dataSourceWithNote(
+          'Último Ato: 1 PV, condições limpas. Neste turno: imunidade + vantagem + dano +nível. Após o turno: morte permanente (mesa). Fim Glorioso: aliados testemunhas — vantagem em d20 por 24h.',
+        ),
+      ),
       state: asDep(state),
       character,
       resourceSlug: LAST_ACT_OF_FATE_RESOURCE,
@@ -137,6 +153,11 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(
+        dataSourceWithNote(
+          'Fim Glorioso: aliados testemunhas — vantagem em testes d20 por 24 horas.',
+        ),
+      ),
       state: asDep(state),
       character,
       resourceSlug: GLORIOUS_END_RESOURCE,

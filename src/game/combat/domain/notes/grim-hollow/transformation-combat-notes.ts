@@ -1,8 +1,6 @@
 import { CAP6_CHOICE_RULES } from '@game/sheet/domain/transformation/cap6-choice-rules';
-import {
-  CAP6_BOON_COMBAT_NOTES,
-  CAP6_ECONOMY_LABEL_PT,
-} from './transformation-combat-notes-data';
+import { CAP6_ECONOMY_LABEL_PT } from './transformation-combat-notes-data/economy-labels';
+import type { Cap6BoonCombatNote } from './transformation-combat-notes-data/types';
 
 export type TransformationCombatInput = {
   slug: string;
@@ -12,6 +10,7 @@ export type TransformationCombatInput = {
 
 export function transformationCombatNotes(
   input: TransformationCombatInput | null | undefined,
+  boonNotes: ReadonlyMap<string, Cap6BoonCombatNote> | Record<string, Cap6BoonCombatNote>,
 ): string[] {
   if (!input?.slug?.trim()) return [];
   const slug = input.slug.trim();
@@ -35,16 +34,21 @@ export function transformationCombatNotes(
     if (value) active.add(value);
   }
 
+  const lookup =
+    boonNotes instanceof Map
+      ? boonNotes
+      : new Map(Object.entries(boonNotes));
+
   const notes: string[] = [];
   for (const boonId of active) {
-    const meta = CAP6_BOON_COMBAT_NOTES[boonId];
+    const meta = lookup.get(boonId);
     if (!meta) {
       notes.push(`Transformação: ${boonId}.`);
       continue;
     }
     const name = stripStageBoonPrefix(meta.namePt);
     const tags = meta.economy
-      .map((tag) => CAP6_ECONOMY_LABEL_PT[tag] ?? tag)
+      .map((tag: string) => CAP6_ECONOMY_LABEL_PT[tag] ?? tag)
       .filter(Boolean);
     const detail = meta.notePt?.trim();
     if (tags.length > 0) {

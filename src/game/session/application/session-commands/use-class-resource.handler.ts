@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { LoadEffectCatalog } from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -15,6 +17,8 @@ export class UseClassResourceHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly effectCatalog: LoadEffectCatalog,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   async execute(
@@ -45,6 +49,7 @@ export class UseClassResourceHandler {
       effects,
     });
     const thread = await applyThreadResourceSpendSideEffects({
+      dataSource: this.dataSource,
       state: this.state,
       character,
       resourceSlug,

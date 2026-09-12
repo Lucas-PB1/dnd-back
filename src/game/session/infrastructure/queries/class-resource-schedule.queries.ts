@@ -1,9 +1,6 @@
 import { DataSource } from 'typeorm';
 import type { ClassResourceScheduleRow } from '@game/session/domain/class-resources';
-import {
-  CURSEMARKED_BRACKET_BENEFITS,
-  CURSEMARKED_GREATER_SACRIFICE,
-} from '@game/session/domain/cursemarked-bracket';
+import { CURSEMARKED_GREATER_SACRIFICE } from '@game/session/domain/cursemarked-bracket';
 import {
   mapResourceScheduleRow,
   type ClassResourceDbRow,
@@ -182,11 +179,15 @@ export async function loadThreadResourceSchedule(
          m.benefit_key = rd.slug
          OR (
            rd.slug = $2
-           AND m.benefit_key = ANY($3::text[])
+           AND m.benefit_key IN (
+             SELECT b.benefit_key
+             FROM rpg.phb_character_thread_milestone_benefit b
+             WHERE b.bracket_max_kept IS NOT NULL
+           )
          )
        )
      ORDER BY rd.slug, e.unlock_level`,
-    [characterId, CURSEMARKED_GREATER_SACRIFICE, [...CURSEMARKED_BRACKET_BENEFITS]],
+    [characterId, CURSEMARKED_GREATER_SACRIFICE],
   );
   return rows.map(mapResourceScheduleRow);
 }

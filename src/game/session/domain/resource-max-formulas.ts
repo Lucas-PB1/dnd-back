@@ -25,11 +25,16 @@ export function resolveFormulaMax(
   proficiencyBonus: number,
   mods: AbilityMods,
   featureSchedules: readonly FeatureScheduleBand[],
+  transformationStage = 0,
 ): number {
   if (row.maxFormula === 'fixed') return row.fixedMax ?? 0;
   if (row.maxFormula === 'level') return level;
   if (row.maxFormula === 'level_plus_one') return level + 1;
   if (row.maxFormula === 'proficiency_bonus') return proficiencyBonus;
+  if (row.maxFormula === 'transformation_stage') return transformationStage;
+  if (row.maxFormula === 'proficiency_bonus_plus_stage') {
+    return proficiencyBonus + transformationStage;
+  }
   if (row.maxFormula === 'zealot_healing_dice_count') {
     return zealotHealingDiceCount(level, featureSchedules);
   }

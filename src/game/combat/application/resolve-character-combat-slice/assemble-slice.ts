@@ -20,9 +20,11 @@ import { itemCombatNotes } from '../../domain/item/combat-notes';
 import { speciesCombatNotes } from '../../domain/species/combat-notes';
 import {
   heritageCombatNotes,
+  loadHeritageCombatNotes,
   loadHeritageHitPointsBonus,
 } from '../../domain/heritage/heritage-combat-notes';
 import { transformationCombatNotes } from '../../domain/notes/grim-hollow/transformation-combat-notes';
+import { loadTransformationBoonCombatNotes } from '../../domain/notes/grim-hollow/load-transformation-boon-combat-notes';
 import { loadTransformationHitPointsBonus } from '../../domain/notes/grim-hollow/load-transformation-hit-points-bonus';
 import { paladinSavingThrowAuraBonus } from '../../domain/paladin';
 import { CLASS_GATE } from '../../domain/feature-gates';
@@ -93,11 +95,20 @@ export async function assembleMappedCombatSlice(input: {
     optionDamageTypes: input.optionDamageTypes,
     damageTypeLabels: input.damageTypeLabels,
   });
+  const heritageCatalogNotes = await sheetProfile('combat.heritageNotes', () =>
+    loadHeritageCombatNotes(input.dataSource),
+  );
   const heritageNotes = heritageCombatNotes({
     heritageChoices: input.heritageChoices,
+    catalogNotes: heritageCatalogNotes,
   });
+  const transformationBoonNotes = await sheetProfile(
+    'combat.transformationBoonNotes',
+    () => loadTransformationBoonCombatNotes(input.dataSource),
+  );
   const transformationNotes = transformationCombatNotes(
     input.transformation ?? null,
+    transformationBoonNotes,
   );
   const heritageHpBonus = await sheetProfile('combat.heritageHp', () =>
     loadHeritageHitPointsBonus(

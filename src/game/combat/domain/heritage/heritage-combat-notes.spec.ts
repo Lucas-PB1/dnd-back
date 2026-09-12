@@ -4,6 +4,34 @@ import {
 } from './heritage-combat-notes';
 import { asDep } from '@common/testing/as-dep';
 
+const CATALOG = [
+  {
+    traitSlug: 'extra-tough',
+    minTraitTakes: 1,
+    note: '+{takes} PV máx. por nível (Robustez).',
+  },
+  {
+    traitSlug: 'improved-darkvision',
+    minTraitTakes: 1,
+    note: 'Visão no Escuro 18 m.',
+  },
+  {
+    traitSlug: 'improved-darkvision',
+    minTraitTakes: 2,
+    note: 'Visão no Escuro 36 m.',
+  },
+  {
+    traitSlug: 'damage-immunity',
+    minTraitTakes: 1,
+    note: 'Resistência a um tipo de dano (escolha do traço).',
+  },
+  {
+    traitSlug: 'damage-immunity',
+    minTraitTakes: 2,
+    note: 'Resistência a um tipo de dano; reação → imunidade temporária (1×/SR).',
+  },
+] as const;
+
 describe('heritageCombatNotes', () => {
   it('notes extra-tough HP per take', () => {
     const notes = heritageCombatNotes({
@@ -11,6 +39,7 @@ describe('heritageCombatNotes', () => {
         { choiceKind: 'heritage_trait_1', choiceSlug: 'extra-tough' },
         { choiceKind: 'heritage_trait_2', choiceSlug: 'extra-tough' },
       ],
+      catalogNotes: CATALOG,
     });
     expect(notes).toContain('+2 PV máx. por nível (Robustez).');
   });
@@ -21,6 +50,7 @@ describe('heritageCombatNotes', () => {
         { choiceKind: 'heritage_trait_1', choiceSlug: 'improved-darkvision' },
         { choiceKind: 'heritage_trait_2', choiceSlug: 'improved-darkvision' },
       ],
+      catalogNotes: CATALOG,
     });
     expect(notes).toContain('Visão no Escuro 36 m.');
   });
@@ -30,12 +60,14 @@ describe('heritageCombatNotes', () => {
       heritageChoices: [
         { choiceKind: 'heritage_trait_1', choiceSlug: 'damage-immunity' },
       ],
+      catalogNotes: CATALOG,
     });
     const two = heritageCombatNotes({
       heritageChoices: [
         { choiceKind: 'heritage_trait_1', choiceSlug: 'damage-immunity' },
         { choiceKind: 'heritage_trait_2', choiceSlug: 'damage-immunity' },
       ],
+      catalogNotes: CATALOG,
     });
     expect(one[0]).toMatch(/Resistência/);
     expect(two[0]).toMatch(/imunidade temporária/);
