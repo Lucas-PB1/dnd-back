@@ -1,6 +1,6 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
 -- Transformações GH Cap. 6 — grant_resource (SSOT; defs em phb_resource_definition.gh-transformations.sql)
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-aberrant-horror'),
 rd AS (

@@ -58,7 +58,7 @@ database/
 ```
 
 - Conteúdo = identidade jogável — **não** `E008` / `C078`.
-- Ordem: [`SEED_ORDER.txt`](../../database/seeds/SEED_ORDER.txt) (`node scripts/generate-seed-order.mjs`).
+- Ordem: [`SEED_ORDER.txt`](../../database/seeds/SEED_ORDER.txt) (`node scripts/generate/seed-order.mjs`).
 
 ## Regras duras
 

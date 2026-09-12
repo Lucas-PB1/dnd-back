@@ -3,13 +3,13 @@
  * Mede latência HTTP dos hot paths (header X-Response-Time).
  *
  * Uso:
- *   node scripts/measure-latency.mjs
- *   node scripts/measure-latency.mjs --rounds=10 --warm=1
- *   node scripts/measure-latency.mjs --token=eyJ... --character=uuid
+ *   node scripts/ops/measure-latency.mjs
+ *   node scripts/ops/measure-latency.mjs --rounds=10 --warm=1
+ *   node scripts/ops/measure-latency.mjs --token=eyJ... --character=uuid
  *
  * Env: API_BASE_URL, MEASURE_TOKEN, MEASURE_CHARACTER_ID
  */
-import { loadEnv } from './lib/load-env.mjs';
+import { loadEnv } from '../lib/load-env.mjs';
 
 loadEnv();
 

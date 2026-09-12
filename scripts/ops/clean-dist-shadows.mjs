@@ -9,7 +9,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const distRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
+const distRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../..',
+  'dist',
+);
 
 function walkDirs(dir, visit) {
   if (!fs.existsSync(dir)) return;

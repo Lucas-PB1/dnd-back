@@ -3,15 +3,15 @@
  * DROP SCHEMA rpg — apenas desenvolvimento local (DATABASE_URL por padrão).
  * 
  * Uso:
- *   node scripts/dev-reset.mjs                  # DROP local
- *   node scripts/dev-reset.mjs --target=supabase # DROP Supabase (requer confirmação)
+ *   node scripts/db/dev-reset.mjs                  # DROP local
+ *   node scripts/db/dev-reset.mjs --target=supabase # DROP Supabase (requer confirmação)
  */
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline/promises';
-import { loadEnv, rootDir } from './lib/load-env.mjs';
-import { assertLocalDatabaseUrl } from './lib/assert-local-db.mjs';
-import { createPgClient, maskDatabaseUrl } from './lib/pg-client.mjs';
+import { loadEnv, rootDir } from '../lib/load-env.mjs';
+import { assertLocalDatabaseUrl } from '../lib/assert-local-db.mjs';
+import { createPgClient, maskDatabaseUrl } from '../lib/pg-client.mjs';
 
 loadEnv();
 

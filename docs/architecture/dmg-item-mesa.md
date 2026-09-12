@@ -268,7 +268,7 @@ mesa_complete: false
 
 ## 5. Convenções de seed (quando for implementar)
 
-Ordem de packs: `dmg` → `combat` (ver `scripts/run-seeds.mjs`).
+Ordem de packs: `dmg` → `combat` (ver `scripts/db/run-seeds.mjs`).
 
 Sugestão de arquivos (criar só na fase correspondente):
 

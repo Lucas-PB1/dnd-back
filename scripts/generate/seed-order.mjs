@@ -3,7 +3,7 @@
  * Gera SEED_ORDER.txt na ordem histórica dos packs (git HEAD).
  * Casa legado → path atual por source+stem, depois hash normalizado.
  *
- * Uso: node scripts/generate-seed-order.mjs
+ * Uso: node scripts/generate/seed-order.mjs
  */
 import { execSync } from 'child_process';
 import crypto from 'crypto';
@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const seedsDir = path.join(root, 'database/seeds');
 
 const OLD_PACKS = [
@@ -284,7 +284,7 @@ for (const rel of allRels) {
 
 fs.writeFileSync(
   path.join(seedsDir, 'SEED_ORDER.txt'),
-  `# Ordem FK-safe (packs históricos). Gerar: node scripts/generate-seed-order.mjs\n${ordered.join('\n')}\n`,
+  `# Ordem FK-safe (packs históricos). Gerar: node scripts/generate/seed-order.mjs\n${ordered.join('\n')}\n`,
   'utf8',
 );
 console.log(

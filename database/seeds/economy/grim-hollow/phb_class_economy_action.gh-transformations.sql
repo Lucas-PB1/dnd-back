@@ -1,5 +1,5 @@
 -- Economy — transformações Grim Hollow Cap. 6
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 -- table_action = `{transformationSlug}/{boonId}`; spend-resource quando alwaysSpendsResource.
 
 INSERT INTO rpg.phb_class_economy_action (

@@ -2,14 +2,14 @@
 /**
  * Gera resource defs + grant_resource effects + economy Cap.6
  * a partir de cap6-economy.json.
- * Uso: node scripts/generate-ghpg-cap6-economy-seeds.mjs
+ * Uso: node scripts/generate/cap6-economy-seeds.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, '..');
+const root = join(__dirname, '../..');
 const economy = JSON.parse(
   readFileSync(
     join(root, 'docs/source/extracts/grim-hollow/cap6-economy.json'),
@@ -123,7 +123,7 @@ const outTransform = join(root, 'database/seeds/transformation/grim-hollow');
 const outEconomy = join(root, 'database/seeds/economy/grim-hollow');
 
 const j061 = `-- Recursos de transformação — Grim Hollow Cap. 6 (economy tipada)
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 -- Grants: SSOT em phb_effect.grant-resource.gh-transformations.sql
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, feat_id, min_level)
@@ -138,12 +138,12 @@ ON CONFLICT (slug) DO UPDATE SET
 
 const e008 = `-- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
 -- Transformações GH Cap. 6 — grant_resource (SSOT; defs em phb_resource_definition.gh-transformations.sql)
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 ${buildEffectBlocks()}
 `;
 
 const c078 = `-- Economy — transformações Grim Hollow Cap. 6
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 -- table_action = \`{transformationSlug}/{boonId}\`; spend-resource quando alwaysSpendsResource.
 
 INSERT INTO rpg.phb_class_economy_action (

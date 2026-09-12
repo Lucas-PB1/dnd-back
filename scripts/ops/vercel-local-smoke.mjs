@@ -3,7 +3,7 @@
  * Sobe `vercel dev`, aguarda /health e encerra.
  * Requer: npm install, .env com DATABASE_URL (+ SUPABASE_URL se VERCEL=1 no validate).
  *
- * Uso: node scripts/vercel-local-smoke.mjs
+ * Uso: node scripts/ops/vercel-local-smoke.mjs
  */
 import { spawn } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';

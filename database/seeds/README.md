@@ -21,4 +21,4 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 
 **Regra:** stats de arma (dano, tipo, propriedades, maestria) vivem no catálogo (`phb_item` / `phb_weapon`), nunca hardcoded no domain TypeScript.
 
-Ordem de packs: ver `scripts/run-seeds.mjs` / skill `postgres-apply-catalog` → `seed-order.md`.
+Ordem de packs: ver `scripts/db/run-seeds.mjs` / skill `postgres-apply-catalog` → `seed-order.md`.

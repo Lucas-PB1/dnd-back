@@ -1,44 +1,46 @@
 # Scripts — dnd-api
 
-Só o essencial: banco, smokes e measure. Seeds/extracts já vivem no git (`database/seeds/`, `docs/source/extracts/`). **Não** acumular geradores extract/generate/verify — histórico do git se precisar reabrir um one-off.
+Só o essencial: banco, smokes, measure e geradores Cap.6/`SEED_ORDER`. One-offs vivem no **histórico git** — não reacumular na raiz.
 
 ## Comandos npm
 
 | Script | Arquivo | Uso |
 |--------|---------|-----|
 | `npm run db:setup` | validate + reset + migrate + seed | Dev fresh (local) |
-| `npm run db:reset` | `dev-reset.mjs` | Limpa schema `rpg` (dev) |
-| `npm run db:migrate` | `run-migrations.mjs` | Baseline + forward |
-| `npm run db:seed` | `run-seeds.mjs` | Aplica seeds |
-| `npm run db:validate:sequences` | `validate-sql-sequences.mjs` | FK-safe antes de seed |
+| `npm run db:reset` | `db/dev-reset.mjs` | Limpa schema `rpg` (dev) |
+| `npm run db:migrate` | `db/run-migrations.mjs` | Baseline + forward |
+| `npm run db:seed` | `db/run-seeds.mjs` | Aplica seeds |
+| `npm run db:validate:sequences` | `db/validate-sql-sequences.mjs` | FK-safe antes de seed |
 | `npm run db:migrate:supabase` / `:all` | idem `--target` | Prod / ambos |
 | `npm run db:seed:supabase` / `:all` | idem | Prod / ambos |
 | `npm run db:setup:all` | local + supabase | Setup completo |
-| `npm run smoke:health` | `smoke-health.mjs` | GET `/health` |
-| `npm run vercel:smoke` | `vercel-local-smoke.mjs` | Smoke Vercel dev |
-| `npm run measure:latency` | `measure-latency.mjs` | Latência — [`docs/deploy/measure-latency.md`](../docs/deploy/measure-latency.md) |
-| `npm run measure:character` | `measure-character-once.mjs` | Benchmark ficha |
+| `npm run smoke:health` | `ops/smoke-health.mjs` | GET `/health` |
+| `npm run vercel:smoke` | `ops/vercel-local-smoke.mjs` | Smoke Vercel dev |
+| `npm run measure:latency` | `ops/measure-latency.mjs` | Latência — [`docs/deploy/measure-latency.md`](../docs/deploy/measure-latency.md) |
+| `npm run measure:character` | `ops/measure-character-once.mjs` | Benchmark ficha |
+| `npm run start:dev` | `ops/clean-dist-shadows.mjs` + nest | Dev API |
 
 ## Estrutura
 
 ```
 scripts/
 ├── README.md
-├── lib/
-│   ├── load-env.mjs
-│   ├── pg-client.mjs
-│   └── sql-files.mjs
-├── dev-reset.mjs
-├── run-migrations.mjs
-├── run-seeds.mjs
-├── validate-sql-sequences.mjs
-├── smoke-health.mjs
-├── vercel-local-smoke.mjs
-├── measure-latency.mjs
-└── measure-character-once.mjs
+├── lib/                 # load-env, pg-client, sql-files, assert-local-db
+├── db/                  # reset / migrate / seed / validate
+├── generate/            # regeneradores SSOT (Cap.6 + SEED_ORDER)
+└── ops/                 # smoke, measure, clean-dist
 ```
 
-**12 arquivos** no total (8 scripts + 3 lib + este README).
+## Geradores (exceção documentada)
+
+Regeneram seeds a partir de extracts/TS — não são one-offs de migrate:
+
+| Comando | Saída |
+|---------|--------|
+| `node scripts/generate/seed-order.mjs` | `database/seeds/SEED_ORDER.txt` |
+| `node scripts/generate/cap6-economy-seeds.mjs` | defs + grants + economy Cap.6 |
+| `node scripts/generate/cap6-choice-rules-seed.mjs` | `phb_transformation_choice_rules.all.sql` |
+| `node scripts/generate/cap6-boon-combat-notes-seed.mjs` | `phb_transformation_boon_combat_note.all.sql` |
 
 ## Env
 

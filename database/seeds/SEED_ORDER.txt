@@ -1,4 +1,4 @@
-﻿# Ordem FK-safe (packs hist├│ricos). Gerar: node scripts/generate-seed-order.mjs
+# Ordem FK-safe (packs históricos). Gerar: node scripts/generate/seed-order.mjs
 catalog/phb/phb_edition.all.sql
 catalog/phb/phb_alignment.all.sql
 catalog/phb/phb_ability.all.sql

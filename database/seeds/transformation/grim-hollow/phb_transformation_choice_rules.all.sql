@@ -1,4 +1,4 @@
--- Cap.6 — choice rules (SSOT; gerado por scripts/generate-cap6-choice-rules-seed.mjs)
+-- Cap.6 — choice rules (SSOT; gerado por scripts/generate/cap6-choice-rules-seed.mjs)
 
 -- —— gh-transformation-aberrant-horror ——
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-aberrant-horror')

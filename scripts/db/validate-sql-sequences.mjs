@@ -2,13 +2,13 @@
 /**
  * Valida layout SQL declarative: schema/** + seeds/{domínio}/{fonte}/{tabela}.{slug}.sql
  * Gates: sem ALTER/DROP em seeds; INSERT com ON CONFLICT (exceto truncate).
- * Uso: node scripts/validate-sql-sequences.mjs
+ * Uso: node scripts/db/validate-sql-sequences.mjs
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 let failed = false;
 
 function fail(msg) {

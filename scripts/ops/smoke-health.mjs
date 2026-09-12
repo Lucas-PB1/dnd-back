@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Smoke test — GET /health (local, vercel dev ou produção).
- * Uso: node scripts/smoke-health.mjs [baseUrl]
+ * Uso: node scripts/ops/smoke-health.mjs [baseUrl]
  */
 const baseUrl = (process.argv[2] ?? process.env.SMOKE_URL ?? 'http://localhost:3000').replace(
   /\/$/,

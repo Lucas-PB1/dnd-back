@@ -3,16 +3,16 @@
  * Aplica schema declarative (database/schema/**) + migrations forward-only pendentes.
  *
  * Uso:
- *   node scripts/run-migrations.mjs                 # DATABASE_URL
- *   node scripts/run-migrations.mjs --target=supabase
- *   node scripts/run-migrations.mjs --target=all
+ *   node scripts/db/run-migrations.mjs                 # DATABASE_URL
+ *   node scripts/db/run-migrations.mjs --target=supabase
+ *   node scripts/db/run-migrations.mjs --target=all
  */
 import fs from 'fs';
 import path from 'path';
-import { loadEnv, rootDir } from './lib/load-env.mjs';
-import { assertLocalDatabaseUrl } from './lib/assert-local-db.mjs';
-import { createPgClient, maskDatabaseUrl } from './lib/pg-client.mjs';
-import { listSqlFiles, migrationVersion } from './lib/sql-files.mjs';
+import { loadEnv, rootDir } from '../lib/load-env.mjs';
+import { assertLocalDatabaseUrl } from '../lib/assert-local-db.mjs';
+import { createPgClient, maskDatabaseUrl } from '../lib/pg-client.mjs';
+import { listSqlFiles, migrationVersion } from '../lib/sql-files.mjs';
 
 loadEnv();
 
@@ -147,7 +147,7 @@ async function assertSchemaSafe(client, applied, files) {
     npm run db:reset                  # local
     npm run db:setup:all              # local + Supabase (wipe + schema + seed)
 
-  Ou, só Supabase: CONFIRM_DROP_RPG=yes node scripts/dev-reset.mjs --target=supabase --confirm
+  Ou, só Supabase: CONFIRM_DROP_RPG=yes node scripts/db/dev-reset.mjs --target=supabase --confirm
 `);
   process.exit(1);
 }

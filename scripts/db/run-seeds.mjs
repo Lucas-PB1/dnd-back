@@ -3,19 +3,19 @@
  * Aplica seeds SQL (catálogo PHB + fontes).
  *
  * Uso:
- *   node scripts/run-seeds.mjs
- *   node scripts/run-seeds.mjs --target=supabase
- *   node scripts/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql
- *   node scripts/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql --skip-truncate
+ *   node scripts/db/run-seeds.mjs
+ *   node scripts/db/run-seeds.mjs --target=supabase
+ *   node scripts/db/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql
+ *   node scripts/db/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql --skip-truncate
  *
  * Iteração: use DATABASE_URL=localhost (npm run db:up). Cloud só com --target=supabase.
  */
 import fs from 'fs';
 import path from 'path';
-import { loadEnv, rootDir } from './lib/load-env.mjs';
-import { assertLocalDatabaseUrl } from './lib/assert-local-db.mjs';
-import { createPgClient, maskDatabaseUrl } from './lib/pg-client.mjs';
-import { listSqlFiles } from './lib/sql-files.mjs';
+import { loadEnv, rootDir } from '../lib/load-env.mjs';
+import { assertLocalDatabaseUrl } from '../lib/assert-local-db.mjs';
+import { createPgClient, maskDatabaseUrl } from '../lib/pg-client.mjs';
+import { listSqlFiles } from '../lib/sql-files.mjs';
 
 loadEnv();
 

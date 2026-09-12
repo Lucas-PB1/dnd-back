@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
  * Gera seeds Cap.6 choice rules a partir dos batches TS.
- * Uso: node scripts/generate-cap6-choice-rules-seed.mjs
+ * Uso: node scripts/generate/cap6-choice-rules-seed.mjs
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, '..');
+const root = join(__dirname, '../..');
 const batchesDir = join(
   root,
   'src/game/sheet/domain/transformation/cap6-choice-rules/batches',
@@ -148,7 +148,7 @@ for (const [slug, rule] of Object.entries(rulesBySlug).sort(([a], [b]) =>
   blocks.push(parts.join('\n'));
 }
 
-const out = `-- Cap.6 — choice rules (SSOT; gerado por scripts/generate-cap6-choice-rules-seed.mjs)
+const out = `-- Cap.6 — choice rules (SSOT; gerado por scripts/generate/cap6-choice-rules-seed.mjs)
 
 ${blocks.join('\n\n')}
 `;

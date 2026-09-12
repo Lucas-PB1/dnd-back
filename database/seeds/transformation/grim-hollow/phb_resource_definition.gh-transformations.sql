@@ -1,5 +1,5 @@
 -- Recursos de transformação — Grim Hollow Cap. 6 (economy tipada)
--- Gerado por scripts/generate-ghpg-cap6-economy-seeds.mjs
+-- Gerado por scripts/generate/cap6-economy-seeds.mjs
 -- Grants: SSOT em phb_effect.grant-resource.gh-transformations.sql
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, feat_id, min_level)

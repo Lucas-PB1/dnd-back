@@ -1,4 +1,4 @@
--- Cap.6 — notas de combate por boon (SSOT; gerado por scripts/generate-cap6-boon-combat-notes-seed.mjs)
+-- Cap.6 — notas de combate por boon (SSOT; gerado por scripts/generate/cap6-boon-combat-notes-seed.mjs)
 
 INSERT INTO rpg.phb_transformation_boon_combat_note (boon_id, name_pt, economy, note_pt)
 VALUES

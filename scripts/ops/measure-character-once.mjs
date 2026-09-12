@@ -11,8 +11,8 @@ import 'reflect-metadata';
 import path from 'path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import { loadEnv, rootDir } from './lib/load-env.mjs';
-import { createPgClient } from './lib/pg-client.mjs';
+import { loadEnv, rootDir } from '../lib/load-env.mjs';
+import { createPgClient } from '../lib/pg-client.mjs';
 
 loadEnv();
 process.env.SHEET_PROFILE = '1';

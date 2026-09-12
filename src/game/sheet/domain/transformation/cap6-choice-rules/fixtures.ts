@@ -1,6 +1,6 @@
 /**
  * Fixtures de teste — SSOT de produção é SQL
- * (`phb_transformation_*` + generate-cap6-choice-rules-seed.mjs).
+ * (`phb_transformation_*` + scripts/generate/cap6-choice-rules-seed.mjs).
  */
 import * as batch_a from './batches/batch-a';
 import * as batch_b from './batches/batch-b';
