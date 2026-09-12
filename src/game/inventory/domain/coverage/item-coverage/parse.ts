@@ -1,4 +1,3 @@
-/** Parse e tipos de cobertura DMG (`properties.kind = coverage`). */
 
 export const COVERAGE_APPLIES_TO = [
   'weapon',
@@ -23,11 +22,8 @@ export type CoverageBaseContext = {
   itemSlug: string;
   itemName: string;
   itemType: string;
-  /** phb_weapon.category: simple | martial | … */
   weaponCategory?: string | null;
-  /** v_phb_armor.category_slug: light | medium | heavy | shield */
   armorCategorySlug?: string | null;
-  /** properties.weaponSubtype / armorSubtype / category */
   subtypeLabel?: string | null;
 };
 
@@ -44,7 +40,6 @@ export function normalizeCoverageText(value: string): string {
     .trim();
 }
 
-/** Lê `kind/appliesTo/appliesFilter/requiresTierBonus` do catálogo. */
 export function parseItemCoverage(
   properties: Record<string, unknown> | null | undefined,
 ): ItemCoverage | null {

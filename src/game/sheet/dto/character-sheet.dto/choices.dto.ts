@@ -35,7 +35,6 @@ export class SubclassOptionDto {
   valueId!: string;
 }
 
-/** Opções da classe (ex.: Especialização / Expertise / Invocações). */
 export class ClassOptionDto {
   @ApiProperty({ example: 'expertiseSkill1' })
   @IsString()
@@ -58,7 +57,6 @@ export class ClassOptionDto {
   instanceIndex?: number;
 }
 
-/** Transformação GH Cap. 6 — não usar characterFeats. */
 export class CharacterTransformationDto {
   @ApiProperty({ example: 'gh-transformation-vampire' })
   @IsString()

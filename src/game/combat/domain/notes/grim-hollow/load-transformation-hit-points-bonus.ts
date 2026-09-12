@@ -15,7 +15,6 @@ type HpBonusRow = {
   requires_option_value: string | null;
 };
 
-/** Bônus de PV máx. de combat_mod da transformação Cap. 6 (gated por escolha). */
 export async function loadTransformationHitPointsBonus(
   dataSource: DataSource,
   transformation: TransformationHpInput | null | undefined,

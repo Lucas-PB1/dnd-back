@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Consome MV `mv_class_spell_slots`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_class_spell_slots' })
 export class VClassSpellSlots {
   @ViewColumn({ name: 'class_slug' })

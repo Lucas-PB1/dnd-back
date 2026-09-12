@@ -34,7 +34,6 @@ const AMMUNITION_CONTAINER_HINTS = [
   'case',
 ] as const;
 
-/** Peça base é munição (não estojo/aljava). */
 export function isAmmunitionBase(base: CoverageBaseContext): boolean {
   const slug = normalizeCoverageText(base.itemSlug);
   const name = normalizeCoverageText(base.itemName);

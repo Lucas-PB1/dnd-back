@@ -1,4 +1,4 @@
-/** Moedas D&D — tipos e câmbio PHB (Coin Values). */
+
 
 export type CoinPurse = {
   copper: number;
@@ -26,10 +26,7 @@ export const COIN_KEYS = [
 
 export type CoinKey = (typeof COIN_KEYS)[number];
 
-/**
- * PHB Coin Values em cobre (1 PO = 100 PC).
- * 1 PC=1, 1 PP(prata)=10, 1 PE=50, 1 PO=100, 1 PL=1000
- */
+
 export const COPPER_PER_COIN: Record<CoinKey, number> = {
   copper: 1,
   silver: 10,

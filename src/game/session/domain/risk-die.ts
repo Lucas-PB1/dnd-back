@@ -1,7 +1,4 @@
-/**
- * Tamanho do Risk die do Gunslinger (Valdas) por nível.
- * Contagens (4/5/6) vêm de `phb_effect.grant_resource`; o dado não cabe no modelo de usos.
- */
+
 
 const RISK_DIE_FACES_BY_LEVEL: ReadonlyArray<{
   minLevel: number;
@@ -13,7 +10,6 @@ const RISK_DIE_FACES_BY_LEVEL: ReadonlyArray<{
   { minLevel: 18, maxLevel: 20, faces: 12 },
 ];
 
-/** Faces do Risk die no nível dado, ou null se Risk ainda não existir (nv. &lt; 2). */
 export function riskDieFaces(level: number): number | null {
   if (!Number.isInteger(level) || level < 2 || level > 20) return null;
   for (const row of RISK_DIE_FACES_BY_LEVEL) {
@@ -22,7 +18,6 @@ export function riskDieFaces(level: number): number | null {
   return null;
 }
 
-/** Rótulo curto para UI (ex. "d8"); null se sem Risk. */
 export function riskDieLabel(level: number): string | null {
   const faces = riskDieFaces(level);
   return faces == null ? null : `d${faces}`;

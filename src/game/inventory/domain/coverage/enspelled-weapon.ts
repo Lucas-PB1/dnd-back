@@ -1,4 +1,3 @@
-/** Itens Enspelled DMG — magia vinculada (arma / armadura / cajado). */
 
 export const ENSPELLED_MAX_SPELL_LEVEL = 8;
 
@@ -17,9 +16,7 @@ const WEAPON_SCHOOLS = [
 const ARMOR_SCHOOLS = ['abjuracao', 'ilusao'] as const;
 
 export type EnspelledProfile = {
-  /** coverage = overlay; unique = peça própria com bound_spell_slug */
   kind: 'coverage' | 'unique';
-  /** null = qualquer escola */
   schoolSlugs: readonly string[] | null;
   maxLevel: number;
 };
@@ -83,7 +80,6 @@ export function assertEnspelledBoundSpell(input: {
   }
 }
 
-/** Tabela DMG Enspelled: raridade / CD / bônus de ataque mágico por nível da magia. */
 export type EnspelledRarity =
   | 'uncommon'
   | 'rare'

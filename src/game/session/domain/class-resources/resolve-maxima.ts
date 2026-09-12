@@ -1,8 +1,4 @@
-/**
- * Resolve máximos de recursos de classe (PHB 2024).
- * Cotas vêm de `phb_effect.grant_resource` + `phb_class_progression.channel_divinity`.
- * Tabelas nível→quantidade: [`resource-max-formulas.ts`](../resource-max-formulas.ts).
- */
+
 
 import { resolveFormulaMax } from '../resource-max-formulas';
 import {
@@ -18,18 +14,14 @@ import type {
   ClassResourceScheduleRow,
 } from './types';
 
-/** Maior cota desbloqueada ≤ nível atual por slug. */
 export function resolveClassResourceMaxima(input: {
   rows: readonly ClassResourceScheduleRow[];
   level: number;
   proficiencyBonus: number;
   abilityModifiers: AbilityMods;
-  /** Sobrescreve max de channelDivinity (coluna de progressão). */
   channelDivinityFromProgression?: number | null;
-  /** Cap. 6: `fixed` sem fixedMax → estágio; slugs PB+stage somam estágio ao PB. */
   transformationStage?: number;
   proficiencyBonusPlusStageSlugs?: ReadonlySet<string>;
-  /** Schedules nível→valor (`phb_class_feature_schedule`), classe+subclasse. */
   featureSchedules: readonly FeatureScheduleBand[];
 }): ClassResourceMax[] {
   const bySlug = new Map<string, ClassResourceScheduleRow[]>();
@@ -61,7 +53,6 @@ export function resolveClassResourceMaxima(input: {
       max = input.channelDivinityFromProgression;
     }
 
-    // Mãos Consagradas do Paladino: reserva de cura = 5 × nível (PHB).
     if (slug === LAY_ON_HANDS_SLUG) {
       const LAY_ON_HANDS_HP_PER_LEVEL = 5;
       max = LAY_ON_HANDS_HP_PER_LEVEL * input.level;

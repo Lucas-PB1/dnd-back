@@ -1,4 +1,3 @@
-/** Arcana Mística — Bruxo L11/13/15/17. */
 export const MYSTIC_ARCANUM_SLOTS = [
   { optionKey: 'mysticArcanum6', unlockLevel: 11, spellLevel: 6 },
   { optionKey: 'mysticArcanum7', unlockLevel: 13, spellLevel: 7 },

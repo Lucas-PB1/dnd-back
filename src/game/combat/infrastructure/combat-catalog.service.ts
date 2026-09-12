@@ -29,7 +29,6 @@ type UnarmoredDefenseInput = {
   subclassSlug?: string | null;
 };
 
-/** Catalogo de bonus de PV e Defesa sem Armadura (views + phb_effect). */
 @Injectable()
 export class CombatCatalogService {
   constructor(

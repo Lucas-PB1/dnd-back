@@ -5,7 +5,6 @@ export { ritualSpellSlotIndex };
 
 export const RITUAL_CASTER_FEAT_SLUG = 'ritual-caster';
 
-/** Opções exigidas para Conjurador Ritualista conforme o BP; demais talentos retornam todas as defs. */
 export function requiredFeatOptionDefsForInstance(
   featSlug: string,
   defs: PhbOptionDef[],

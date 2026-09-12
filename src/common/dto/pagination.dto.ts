@@ -31,10 +31,8 @@ export {
   type CursorValues,
 } from './pagination-cursor';
 
-/** Fallback when species/source_meta omit editionSlug (PHB seeds). */
 export const DEFAULT_PHB_EDITION_SLUG = 'phb-2024-pt';
 
-/** Parse `editionSlugs=a,b` or repeated query keys into a string[]. */
 export function parseEditionSlugsParam(value: unknown): string[] | undefined {
   if (value == null || value === '') return undefined;
   const parts = Array.isArray(value)
@@ -72,7 +70,6 @@ export class PaginationQueryDto {
   editionSlugs?: string[];
 }
 
-/** Listagens de catálogo com busca textual `q`. */
 export class SearchQueryDto extends PaginationQueryDto {
   @ApiPropertyOptional({
     description: 'Case-insensitive text filter',
@@ -82,7 +79,6 @@ export class SearchQueryDto extends PaginationQueryDto {
   q?: string;
 }
 
-/** Listagens com `q` + filtro `category`. */
 export class CategorySearchQueryDto extends SearchQueryDto {
   @ApiPropertyOptional({
     description: 'Category slug filter',
@@ -108,7 +104,6 @@ export class PaginatedResponseDto<T> {
   meta!: PaginatedMetaDto;
 }
 
-/** Aplica `OR col ILIKE :q` nas colunas/expressões informadas. */
 export function applyIlikeSearch<T extends object>(
   qb: SelectQueryBuilder<T>,
   columns: string[],
@@ -120,7 +115,6 @@ export function applyIlikeSearch<T extends object>(
   qb.andWhere(`(${clause})`, { q: `%${term}%` });
 }
 
-/** Filtra por `editionSlug` (coluna da view ou expressão SQL). */
 export function applyEditionSlugFilter<T extends object>(
   qb: SelectQueryBuilder<T>,
   columnExpr: string,
@@ -144,7 +138,6 @@ export function filterRowsByEditionSlug<T extends { editionSlug?: string | null 
   });
 }
 
-/** Cursor in-memory por slug (listas ordenadas por nome/slug). */
 export function paginateBySlug<T extends { slug: string }>(
   items: T[],
   cursor?: string,
@@ -160,7 +153,6 @@ export function paginateBySlug<T extends { slug: string }>(
   });
 }
 
-/** Cursor in-memory com chave composta (valores já ordenados ASC). */
 export function paginateByKeys<T>(
   items: T[],
   options: {
@@ -179,7 +171,6 @@ export function paginateByKeys<T>(
   });
 }
 
-/** Nested catalog: exige linhas, mapeia e pagina por cursor de slug no DTO. */
 export function paginateOrNotFound<TRow, TDto extends { slug: string }>(
   rows: TRow[],
   mapFn: (row: TRow) => TDto,

@@ -26,9 +26,7 @@ export type EquipmentComplianceResolveInput = {
   sizeCategory?: SizeCategory;
   weaponPieces?: EquippedWeaponPiece[];
   hasShield?: boolean;
-  /** Snapshot compartilhado — evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
-  /** Catálogo de armadura já carregado (combat bundle). */
   armorCatalogRows?: Array<{
     itemSlug: string;
     itemName: string;

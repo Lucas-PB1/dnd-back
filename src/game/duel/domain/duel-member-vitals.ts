@@ -11,7 +11,6 @@ export type AppliedCombatantDamage = {
   tempHpAfter: number;
 };
 
-/** Snapshot de vitals da ficha → combatente (startCombat). */
 export function snapshotMemberVitalsFromCharacter(
   member: DuelMember,
   character: PlayerCharacter,
@@ -26,7 +25,6 @@ export function snapshotMemberVitalsFromCharacter(
   member.speedPenaltyM = 0;
 }
 
-/** Aplica dano nos vitals do combatente (≠ ficha). */
 export function applyDamageToMemberVitals(
   member: DuelMember,
   damage: number,

@@ -6,7 +6,6 @@ import {
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Destruição Divina e Golpes Radiantes (após o Golpe Mortal no pipeline). */
 export const applyPaladinExtras: DamageEffect = async (ctx, acc) => {
   const { character, dto, resourceSpender } = ctx;
 

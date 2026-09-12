@@ -6,9 +6,7 @@ import {
 } from '@game/combat/domain/warlock';
 import { loadEldritchInvocationEffectCatalog } from '@game/combat/application/load-eldritch-invocation-effect-catalog';
 
-/**
- * Magias always_prepared concedidas por Invocações Místicas free_cast.
- */
+
 export async function resolveEldritchGrantedSpellSlugs(
   dataSource: DataSource,
   classOptions: readonly ClassOptionLike[] | null | undefined,

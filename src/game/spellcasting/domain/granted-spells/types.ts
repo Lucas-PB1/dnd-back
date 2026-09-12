@@ -7,23 +7,19 @@ import type { CatalogEffect } from '@game/effects';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 
-/** Linha do catálogo `v_phb_feat_granted_spell`. */
 export type FeatGrantedSpellRow = {
   featSlug: string;
   spellSlug: string;
 };
 
-/** Magia always_prepared com nível de desbloqueio (classe ou subclasse). */
 export type UnlockLevelGrantedSpellRow = {
   unlockLevel: number;
   spellSlug: string;
   terrainSlug?: string | null;
 };
 
-/** Magia fixa de subclasse (ex. Finger Guns do Spellslinger). */
 export type SubclassGrantedSpellRow = UnlockLevelGrantedSpellRow;
 
-/** Magia always_prepared de característica de classe (S023). */
 export type ClassGrantedSpellRow = UnlockLevelGrantedSpellRow;
 
 export type GrantedSpellMergeContext = {
@@ -37,18 +33,13 @@ export type GrantedSpellMergeContext = {
   previousSpeciesSlug?: string;
   previousSpeciesChoices?: readonly SpeciesChoiceDto[];
   previousLevel?: number;
-  /** Catálogo de magias fixas de talento (`v_phb_feat_granted_spell`). */
   featFixedSpells?: readonly FeatGrantedSpellRow[];
-  /** Efeitos de espécie já gated (`grant_spell` + cast_economy). */
   speciesEffects?: readonly CatalogEffect[];
   previousSpeciesEffects?: readonly CatalogEffect[];
-  /** Magias always_prepared da subclasse (Finger Guns etc.). */
   subclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
   previousSubclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
-  /** Magias always_prepared de classe (Marca do Predador, Destruição Divina, …). */
   classGrantedSpells?: readonly ClassGrantedSpellRow[];
   previousClassGrantedSpells?: readonly ClassGrantedSpellRow[];
-  /** Concessões extras (ex. free_cast de Invocações Místicas, Descobertas Mágicas). */
   extraGrantedSpellSlugs?: ReadonlySet<string>;
   previousExtraGrantedSpellSlugs?: ReadonlySet<string>;
   subclassSlug?: string | null;

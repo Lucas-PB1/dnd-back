@@ -42,51 +42,39 @@ export class PlayerCharacterState {
   @Column({ type: 'boolean', default: false })
   inspiration!: boolean;
 
-  /** Tiros restantes por arma equipada com Recarga: `{ [itemSlug]: remaining }`. */
   @Column({ name: 'firearm_chambers', type: 'jsonb', default: {} })
   firearmChambers!: Record<string, number>;
 
-  /** Fúria do Bárbaro ativa. */
   @Column({ name: 'rage_active', type: 'boolean', default: false })
   rageActive!: boolean;
 
-  /** Ataque Imprudente ativo. */
   @Column({ name: 'reckless_active', type: 'boolean', default: false })
   recklessActive!: boolean;
 
-  /** Máscaras de Persona equipadas (Colégio das Máscaras). */
   @Column({ name: 'persona_masks', type: 'jsonb', default: [] })
   personaMasks!: string[];
 
-  /** Nível de Aspecto Bestial (Beastborne), 0–5. */
   @Column({ name: 'bestial_aspect_level', type: 'int', default: 0 })
   bestialAspectLevel!: number;
 
-  /** Escudo de Mísseis armado para o próximo cast de Mísseis Mágicos. */
   @Column({ name: 'missile_shield_armed', type: 'boolean', default: false })
   missileShieldArmed!: boolean;
 
-  /** Giga-Míssil armado para o próximo cast de Mísseis Mágicos. */
   @Column({ name: 'giga_missile_armed', type: 'boolean', default: false })
   gigaMissileArmed!: boolean;
 
-  /** Forma Estrelada ativa (Círculo das Estrelas). */
   @Column({ name: 'starry_form_active', type: 'boolean', default: false })
   starryFormActive!: boolean;
 
-  /** Constelação brilhando na Forma Estrelada: archer | dragon | chalice. */
   @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
   stellarConstellation!: string | null;
 
-  /** Mutação Aberrante ativa (Cap. 6). */
   @Column({ name: 'aberrant_mutation_active', type: 'text', nullable: true })
   aberrantMutationActive!: string | null;
 
-  /** Veículo/montaria em que o PC está a bordo (game_actor). */
   @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
   boardedActorId!: string | null;
 
-  /** Circunstâncias de mesa: snow_ice | in_water | extreme_cold. */
   @Column({ name: 'mesa_circumstances', type: 'text', array: true, default: [] })
   mesaCircumstances!: string[];
 }

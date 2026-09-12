@@ -29,10 +29,7 @@ export function characterSeesInMagicalDarkness(input: {
   );
 }
 
-/**
- * Escuridão mágica: quem não vê ataca com desvantagem; quem vê e o alvo não,
- * ganha vantagem. Se ninguém vê, vantagem+desvantagem cancelam → normal.
- */
+
 export function resolveDuelAttackVisionMode(input: {
   arenaEffects: readonly string[] | null | undefined;
   attackerSeesMagicalDarkness: boolean;

@@ -6,7 +6,6 @@ import {
   type CursemarkedBracketBenefit,
 } from '@game/session/domain/cursemarked-bracket';
 
-/** Benefício de bracket Cursemarked ativo (maior rank), ou null. */
 export async function loadActiveCursemarkedBracketBenefit(
   dataSource: DataSource,
   characterId: string,

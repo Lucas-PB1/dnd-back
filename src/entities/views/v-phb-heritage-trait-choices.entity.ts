@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Consome MV `mv_phb_heritage_trait_choices`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_heritage_trait_choices' })
 export class VPhbHeritageTraitChoices {
   @ViewColumn({ name: 'heritage_slug' })

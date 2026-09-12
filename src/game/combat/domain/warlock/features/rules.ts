@@ -1,7 +1,4 @@
-/**
- * Regras numéricas e constantes de combate do Bruxo (PHB 2024).
- * Slots/invocações: SSOT `phb_class_feature_schedule` (bands obrigatórios).
- */
+
 
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -37,7 +34,6 @@ export function warlockPactSlotCount(
   );
 }
 
-/** Astúcia Mágica: recupera metade dos slots (ceil). L20 Mestre Místico: todos. */
 export function magicalCunningSlotRecoveryCount(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -60,12 +56,9 @@ export function warlockInvocationLimit(
 }
 
 export const ELDRITCH_INVOCATION_OPTION_KEY = 'eldritch-invocation';
-/** Sibling: mesmo instanceIndex da invocação de blast → slug do truque vinculado. */
 export const ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY =
   'eldritch-invocation-cantrip';
-/**
- * Sibling: mesmo instanceIndex de `lessons-of-the-first-ones` → talento de Origem.
- */
+
 export const ELDRITCH_INVOCATION_ORIGIN_FEAT_OPTION_KEY =
   'eldritch-invocation-origin-feat';
 

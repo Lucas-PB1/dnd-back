@@ -20,7 +20,6 @@ export type EffectiveUpdateSheet = {
   effectiveHeritageChoices: SpeciesChoiceDto[];
 };
 
-/** Resolve feats/options/choices efetivos e consome swap de cantrip High Elf se houver. */
 export async function resolveEffectiveUpdateSheet(input: {
   dataSource: DataSource;
   characterId: string;

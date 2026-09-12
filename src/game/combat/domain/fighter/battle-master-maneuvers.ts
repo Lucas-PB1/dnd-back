@@ -1,7 +1,4 @@
-/**
- * Manobras do Mestre da Batalha — tipos e lookups.
- * Catálogo: `rpg.phb_battle_master_maneuver`.
- */
+
 
 export type BattleMasterManeuver = {
   slug: string;
@@ -25,7 +22,6 @@ export function findBattleMasterManeuver(
   return catalog.find((item) => item.slug === slug);
 }
 
-/** CD de manobra: 8 + PB + FOR ou DES (o maior). */
 export function battleMasterSaveDc(input: {
   proficiencyBonus: number;
   strengthMod: number;

@@ -42,7 +42,6 @@ export async function afterDamage(
     hitPointsAfter: number;
     bloodStrikeDamaged?: boolean;
     attackerPc?: PlayerCharacter;
-    /** false = ação completa (magia); default true = gasta 1 ataque */
     spendAttack?: boolean;
   },
 ): Promise<{ duel: Duel; members: DuelMember[] }> {
@@ -75,7 +74,6 @@ export async function afterDamage(
             `${input.attackerName}: Sinfonia de Sangue — recupera 1 Golpe de Sangue.`,
           );
         } catch {
-          // pool já cheia — ignora
         }
       }
     }
@@ -187,10 +185,7 @@ export function advanceTurn(
   duel.turnCharacterId = other.characterId;
 }
 
-/**
- * Pending `blood-exile` + incapacitado: perde o turno e limpa a condição.
- * Kind vem do catálogo (`on_fail_pending_kind`); o skip ainda é produto Sabujo.
- */
+
 export async function maybeSkipPendingExileTurn(
   deps: TurnDeps,
   duel: Duel,

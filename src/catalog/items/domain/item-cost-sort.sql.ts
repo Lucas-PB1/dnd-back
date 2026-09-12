@@ -1,4 +1,4 @@
-/** Expressão SQL: custo aproximado em cobre para ORDER BY (texto PHB-PT). */
+
 export const ITEM_COST_COPPER_ORDER_EXPR = `(
   CASE
     WHEN item.cost IS NULL OR NULLIF(TRIM(item.cost->>'text'), '') IS NULL THEN NULL

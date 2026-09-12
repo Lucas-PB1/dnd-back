@@ -14,14 +14,10 @@ export function resolveEffectAmount(input: {
   level: number;
   rng?: Rng;
   hitDieFaces?: number;
-  /** Faces do dado vindo de schedule (psi / superioridade). */
   scheduleDieFaces?: number;
-  /** Contagem vinda de schedule (portent / divine spark). */
   scheduleCount?: number;
-  /** Bônus de dano da Fúria (schedule). */
   rageBonus?: number;
   rageActive?: boolean;
-  /** Astúcia Mágica: quantidade de slots de Pacto a recuperar. */
   pactSlotsRecoveryCount?: number;
 }): ResolvedAmount {
   const pb = proficiencyBonusForLevel(input.level);

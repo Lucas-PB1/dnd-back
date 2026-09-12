@@ -6,7 +6,6 @@ import {
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Golpe Divino, opção de Golpes Abençoados usada com ataque de arma. */
 export const applyClericExtras: DamageEffect = (ctx, acc) => {
   if (!ctx.dto.divineStrike) return;
 

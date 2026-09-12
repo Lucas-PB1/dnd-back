@@ -99,7 +99,6 @@ function matchArmor(coverage: ItemCoverage, base: CoverageBaseContext): boolean 
   return matchesAllowlist(base, coverage.appliesFilter);
 }
 
-/** True se a peça base passa no filtro da cobertura. */
 export function coverageMatchesBase(
   coverage: ItemCoverage,
   base: CoverageBaseContext,

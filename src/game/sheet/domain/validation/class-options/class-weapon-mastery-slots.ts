@@ -1,7 +1,4 @@
-/**
- * Maestria em Arma — deriva slots a partir de `phb_class_progression.weapon_mastery`.
- * Não hardcodar cotas por classe: a fonte de verdade é o banco / API de progressão.
- */
+
 
 export type ClassWeaponMasterySlot = {
   optionKey: string;
@@ -17,7 +14,6 @@ export type ClassProgressionMasteryRow = {
 
 export const WEAPON_MASTER_FEAT_OPTION_KEY = 'masteryWeapon';
 
-/** Converte a coluna cumulativa `weapon_mastery` em slots `masteryWeaponN`. */
 export function classWeaponMasterySlotsFromProgression(
   rows: readonly ClassProgressionMasteryRow[],
 ): ClassWeaponMasterySlot[] {
@@ -72,7 +68,6 @@ export function parseWeaponMasteryEligibility(
 type ClassOptionLike = { optionKey: string; valueId: string };
 type FeatOptionLike = { optionKey: string; valueId: string };
 
-/** Armas cujas propriedades de maestria o personagem pode usar. */
 export function collectMasteredWeaponSlugs(input: {
   classOptions?: readonly ClassOptionLike[];
   featOptions?: readonly FeatOptionLike[];

@@ -1,4 +1,4 @@
-/** Seeds `combat/C00*` — Beastborne aspect benefits by level. */
+
 export const FIXTURE_BESTIAL_ASPECT_BENEFITS = [
   {
     level: 1,

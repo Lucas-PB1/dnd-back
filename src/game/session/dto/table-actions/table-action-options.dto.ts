@@ -8,10 +8,7 @@ import {
   Min,
 } from 'class-validator';
 
-/**
- * Options bag compartilhado das table-actions (alinhado a DeclaredEconomyTableActionOptions).
- * Classes estendem e adicionam só `actionSlug` (+ enums).
- */
+
 export class TableActionOptionsDto {
   @ApiPropertyOptional({ description: 'Quantidade (ex.: Mãos Consagradas, Bastião)' })
   @IsOptional()

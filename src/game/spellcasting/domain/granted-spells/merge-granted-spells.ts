@@ -4,11 +4,6 @@ import { collectSpeciesGrantedSpellSlugs } from './collect-species-granted-spell
 import { collectGrantedSpellSlugsAtLevel } from './collect-subclass-granted-spells';
 import { GrantedSpellMergeContext } from './types';
 
-/**
- * Mantém magias da classe/subclasse e sincroniza always_prepared de
- * talento/espécie/classe/subclasse. Remove always_prepared que eram só
- * concessão gerenciada e não estão mais concedidas.
- */
 export function mergeCharacterSpellsWithGrantedSources(
   baseSpells: readonly CharacterSpellDto[],
   context: GrantedSpellMergeContext,

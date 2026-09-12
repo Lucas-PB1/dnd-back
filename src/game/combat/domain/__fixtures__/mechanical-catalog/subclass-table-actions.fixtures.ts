@@ -1,6 +1,5 @@
 import type { SubclassTableAction } from '../../catalog/subclass-table-action';
 
-/** Seeds `combat/C00*` — Psi Warrior table actions. */
 export const FIXTURE_PSI_ACTIONS: readonly SubclassTableAction[] = [
   {
     subclassSlug: 'psi-warrior',
@@ -62,7 +61,6 @@ export const FIXTURE_PSI_ACTIONS: readonly SubclassTableAction[] = [
   },
 ];
 
-/** Seeds `combat/C00*` — Soulknife table actions. */
 export const FIXTURE_SOULKNIFE_ACTIONS: readonly SubclassTableAction[] = [
   {
     subclassSlug: 'soulknife',

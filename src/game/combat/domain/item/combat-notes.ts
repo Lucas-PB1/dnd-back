@@ -1,4 +1,3 @@
-/** Lembretes passivos de item (`properties.combatNotes`) para Passivas. */
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -18,7 +17,6 @@ export function combatNotesFromProperties(
 
 export function itemCombatNotes(input: {
   itemSlugs: readonly string[];
-  /** Catálogo `phb_item.properties` por slug (SSOT). */
   propertiesBySlug?: ReadonlyMap<string, Record<string, unknown> | null>;
 }): string[] {
   const notes: string[] = [];

@@ -9,10 +9,7 @@ import {
 } from '@game/session/domain/cursemarked-bracket';
 import { loadActiveCursemarkedBracketBenefit } from '@game/session/infrastructure/queries/cursemarked-bracket.queries';
 
-/**
- * Se o d20 kept cai na faixa do bracket Cursemarked ativo e não há lock,
- * anota o efeito e trava anti-overlap até o início do próximo turno.
- */
+
 export async function applyCursemarkedBracketIfTriggered(input: {
   dataSource: DataSource;
   character: PlayerCharacter;

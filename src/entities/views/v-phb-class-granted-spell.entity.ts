@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Consome MV `mv_phb_class_granted_spell`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_class_granted_spell' })
 export class VPhbClassGrantedSpell {
   @ViewColumn({ name: 'class_slug' })

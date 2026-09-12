@@ -1,4 +1,4 @@
-/** Validação de cast de magia via carga de item (fase 6). */
+
 
 import { BadRequestException } from '@nestjs/common';
 import { isEnspelledEconomyItemSlug } from '@game/inventory/domain/coverage/enspelled-weapon';
@@ -15,7 +15,6 @@ export type ItemCastBoundSpellRow = {
   attachedCoverageSpellSlug: string;
 };
 
-/** Confirma que a row de economy autoriza o cast pedido. */
 export function assertItemCastEconomyAllows(input: {
   matches: readonly ItemCastEconomyMatch[];
   spellSlug: string;
@@ -48,7 +47,6 @@ export function assertItemCastEconomyAllows(input: {
   );
 }
 
-/** Cast gratuito de item (sem resource / spend) — ex. Magi custo 0. */
 export function assertItemFreeSpellCastAllows(input: {
   matches: readonly ItemCastEconomyMatch[];
   spellSlug: string;

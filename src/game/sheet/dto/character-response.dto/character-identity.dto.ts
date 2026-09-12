@@ -12,7 +12,6 @@ import {
 import { AbilityScoresDto } from '../ability-scores.dto';
 import { AggregatedHeritageTraitDto } from './heritage-trait.dto';
 
-/** Identidade, opções de ficha e antecedentes — base de CharacterResponseDto. */
 export class CharacterIdentityResponseDto {
   @ApiProperty({ format: 'uuid' })
   id!: string;

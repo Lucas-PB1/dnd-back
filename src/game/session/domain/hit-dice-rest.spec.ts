@@ -14,7 +14,7 @@ describe('hit-dice-rest', () => {
       constitutionModifier: 2,
       hitPointsCurrent: 10,
       hitPointsMax: 40,
-      rng: () => 0, // faces = 1
+      rng: () => 0,
     });
     expect(result.rolls).toEqual([1, 1]);
     expect(result.rawHealed).toBe(6);

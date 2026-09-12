@@ -2,11 +2,6 @@ import type { CunningStrikeEffect } from './types';
 import { sneakAttackDiceCount } from './sneak-attack';
 import type { FeatureScheduleBand } from '../feature-schedule';
 
-/**
- * Golpe Astuto — lookups.
- * Catálogo: `rpg.phb_cunning_strike_effect` / `v_phb_cunning_strike_effect`.
- */
-
 export function cunningStrikeSaveDc(input: {
   dexterityModifier: number;
   proficiencyBonus: number;

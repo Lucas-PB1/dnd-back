@@ -10,10 +10,6 @@ export function isNorthlandsEditionSlug(slug: string): boolean {
   );
 }
 
-/**
- * Golias (PHB) é substituído por Giganteide (Northlands) quando conteúdo NL está no escopo.
- * Sem filtro de edição = todas as fontes ativas → Northlands no escopo.
- */
 export function isNorthlandsCatalogInScope(editionSlugs?: string[]): boolean {
   const slugs = editionSlugs?.map((slug) => slug.trim()).filter(Boolean);
   if (!slugs?.length) return true;

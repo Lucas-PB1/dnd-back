@@ -1,4 +1,3 @@
-/** Tabela Fabricação Rápida (PHB Artesão) — ferramenta → itens catálogo. */
 export const ARTISAN_QUICK_CRAFT_BY_TOOL: Readonly<
   Record<string, readonly string[]>
 > = {

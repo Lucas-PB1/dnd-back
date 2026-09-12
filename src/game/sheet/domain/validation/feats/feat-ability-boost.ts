@@ -76,7 +76,6 @@ function applyAbilityScoreImprovementInstance(
   return scores;
 }
 
-/** +1 (abilityIncrease) e ASI do talento Aumento no Valor de Atributo. */
 export function applyFeatAbilityIncreases(
   scores: AbilityScores,
   featOptions: FeatOptionDto[] | undefined,

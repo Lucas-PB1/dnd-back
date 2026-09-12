@@ -291,7 +291,6 @@ describe('class-resources', () => {
     ];
     const used = { varinhaMisseisCharges: 6 };
     const result = applyLongRestResourceRecovery(used, resources, () => 0.99);
-    // 1d6 with rng 0.99 → 6, +1 = 7, capped by spent 6
     expect(result.used).toEqual({});
     expect(result.notes[0]).toMatch(/recuperou 6/);
   });

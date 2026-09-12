@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import type { SpeciesResourceOptionGate } from '@game/session/domain/filter-species-resources-by-option';
 
-/** Gates `requires_option_*` das economy actions de transformação (feat Cap. 6). */
+
 export async function loadTransformationResourceOptionGates(
   dataSource: DataSource,
   transformationSlug: string,

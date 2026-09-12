@@ -6,7 +6,6 @@ type InventoryRow = {
   instanceProperties: Record<string, unknown> | null;
 };
 
-/** Remove quantidade fabricada pelo Artesão (início do próximo DL). */
 export function dissolveArtisanCraftedItems(
   rows: readonly InventoryRow[],
 ): { keep: InventoryRow[]; removedNotes: string[] } {

@@ -68,7 +68,7 @@ describe('dice domain', () => {
   it('rollDamageParts treats 1 and 2 as 3 with GWF', () => {
     const result = rollDamageParts('2d6', 4, {
       treatOnesAndTwosAsThree: true,
-      rng: () => 0, // face 1
+      rng: () => 0,
     });
     expect(result.dice[0].rolls).toEqual([1, 1]);
     expect(result.dice[0].kept).toEqual([3, 3]);

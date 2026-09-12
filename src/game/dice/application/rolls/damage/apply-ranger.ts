@@ -9,7 +9,6 @@ import {
 import { addDamagePart, addFlatDamage } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Marca do Predador, Carnificina, Assassino de Colossos, Golpes Terríveis e Golpe Terrível. */
 export const applyRangerExtras: DamageEffect = async (ctx, acc) => {
   const { character, combatFlags, dto, resourceSpender } = ctx;
 

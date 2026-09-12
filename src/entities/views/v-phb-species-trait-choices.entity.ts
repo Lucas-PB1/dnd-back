@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Read model de choices de espécie. Consome MV `mv_phb_species_trait_choices`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_species_trait_choices' })
 export class VPhbSpeciesTraitChoices {
   @ViewColumn({ name: 'species_slug' })
@@ -30,7 +29,6 @@ export class VPhbSpeciesTraitChoices {
   @ViewColumn({ name: 'damage_type' })
   damageType!: string | null;
 
-  /** NULL = always available with the species; otherwise only when edition is enabled. */
   @ViewColumn({ name: 'edition_slug' })
   editionSlug!: string | null;
 }

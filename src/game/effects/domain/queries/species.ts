@@ -2,7 +2,6 @@ import type { CatalogEffect, EffectCastEconomySatellite } from '../catalog-effec
 import { choiceKindForOptionKey } from '@catalog/game-port';
 import type { EffectChoiceRef } from './option-gates';
 
-/** Feat slugs granted by `grant_feat` (ex.: Humano Versátil). */
 export function featSlugsFromEffects(
   effects: readonly CatalogEffect[],
   choices: readonly EffectChoiceRef[],
@@ -19,7 +18,6 @@ export function featSlugsFromEffects(
   return [...new Set(slugs)];
 }
 
-/** Idiomas escolha concedidos por `grant_language` com option_key. */
 export function languageChoiceCountFromEffects(
   effects: readonly CatalogEffect[],
 ): number {
@@ -81,7 +79,6 @@ export function damageResistancesFromEffects(
       types.push(effect.damageType.damageTypeSlug);
       continue;
     }
-    // option_key → type resolved by caller map if needed; skip unresolved
     if (effect.damageType.optionKey) {
       const choice = choices.find(
         (row) =>
@@ -145,7 +142,6 @@ const NOTE_KINDS = new Set<CatalogEffect['kind']>([
   'damage_bonus',
 ]);
 
-/** Rótulos PT para display — prefer mapa do catálogo `phb_damage_type`. */
 function damageTypeLabel(
   slug: string,
   labels?: ReadonlyMap<string, string>,
@@ -153,10 +149,6 @@ function damageTypeLabel(
   return labels?.get(slug) ?? slug;
 }
 
-/**
- * Passivas de espécie a partir do catálogo de efeitos (SSOT).
- * Prefer note satélite; senão label; resistência por option resolve o tipo via catálogo.
- */
 export function speciesPassiveNotesFromEffects(
   effects: readonly CatalogEffect[],
   choices: readonly EffectChoiceRef[] = [],
@@ -238,7 +230,6 @@ function formatResistanceNote(
   return `Resistência a dano ${pt}${suffix}.`;
 }
 
-/** Magias concedidas por `grant_spell` de espécie (já gated). */
 export function speciesGrantedSpellSlugsFromEffects(
   effects: readonly CatalogEffect[],
   level: number,

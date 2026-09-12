@@ -12,7 +12,6 @@ import {
   RITUAL_CASTER_FEAT_SLUG,
 } from './ritual-caster-feat-options';
 
-/** Regras síncronas de opções de feat (ASI, Magic Initiate, Ritual Caster, casting ligado). */
 export function validateAbilityScoreImprovement(
   characterFeats: CharacterFeatDto[],
   options: FeatOptionDto[],

@@ -10,7 +10,6 @@ export type HitDiceSpendResult = {
   hitPointsCurrent: number;
 };
 
-/** PHB: por dado, max(0, 1dX + CON). */
 export function rollHitDieHealing(
   hitDieSides: number,
   constitutionModifier: number,
@@ -67,7 +66,6 @@ export function spendHitDice(input: {
   };
 }
 
-/** PHB: recupera metade do total de dados (mín. 1), sem passar do máximo. */
 export function restoreHitDiceOnLongRest(
   hitDiceCurrent: number,
   hitDiceMax: number,

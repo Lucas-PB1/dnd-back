@@ -1,4 +1,4 @@
-/** Regras e notas de combate do Bruxo (PHB 2024). */
+
 
 export type { BlastInvocationSlug } from './rules';
 export {

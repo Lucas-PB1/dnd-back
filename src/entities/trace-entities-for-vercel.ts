@@ -1,7 +1,4 @@
-/**
- * Imports relativos para o NFT da Vercel incluir entities no bundle.
- * Carregado por main.ts apos register-path-aliases.
- */
+
 
 import './reference/phb-ability-generation-method.entity';
 import './reference/phb-ability.entity';

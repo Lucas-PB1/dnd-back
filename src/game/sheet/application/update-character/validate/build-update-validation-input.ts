@@ -12,10 +12,7 @@ type EffectiveIdentitySlugs = {
   heritageSlug: string | null;
 };
 
-/**
- * Injeta contexto de proficiência/feats já na ficha quando o patch omite campos
- * que a validação ainda precisa (ex.: level-up com expertise/weapon mastery).
- */
+
 export function buildUpdateValidationInput(input: {
   sheetInput: CharacterSheetInput;
   sheetSnapshot: CharacterSheetData;
@@ -38,7 +35,6 @@ export function buildUpdateValidationInput(input: {
   const patchHasClassOptions = sheetInput.classOptions !== undefined;
   const injectClassOptions =
     shouldResyncSpells && sheetInput.classOptions === undefined;
-  /** Expertise/mastery precisam das perícias da ficha mesmo quando classOptions vêm do snapshot (só level↑). */
   const needsProficiencyContext = patchHasClassOptions || injectClassOptions;
 
   const injectFeatOptions =

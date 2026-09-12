@@ -1,7 +1,4 @@
-/**
- * Regras Treasure (DMG Cap. 7) para conjuração a partir de item.
- * SSOT numérico (CD / ataque / círculo) vem de `phb_item.properties`.
- */
+
 
 export type ItemCastSlotRule =
   | { mode: 'charge-upcast' }
@@ -17,11 +14,8 @@ export type ParsedItemCastProperties = {
   spellSaveDc: number | null;
   spellAttackBonus: number | null;
   requiresComponents: boolean;
-  /** Item usa atributo de conjuração do portador (Treasure +0+PB se não tiver). */
   useCasterAbility: boolean;
-  /** Regra única do item (ex. varinha Relâmpagos). */
   itemCastSlotRule: ItemCastSlotRule | null;
-  /** Regras por resource_slug (ex. ondaGloboUse / órbes). */
   itemCastSlotRules: Readonly<Record<string, ItemCastSlotRule>>;
 };
 
@@ -31,7 +25,6 @@ export type ItemCastTreasureNotesInput = {
   spellSaveDc?: number | null;
   spellAttackBonus?: number | null;
   casterHasSpellcastingAbility: boolean;
-  /** Só emite nota +0+PB quando o item pede atributo do portador. */
   useCasterAbility: boolean;
 };
 
@@ -86,7 +79,6 @@ function parseSlotRulesMap(
   return out;
 }
 
-/** Lê CD / ataque / componentes / slot de `phb_item.properties`. */
 export function parseItemCastProperties(
   properties: Record<string, unknown> | null | undefined,
 ): ParsedItemCastProperties {
@@ -120,7 +112,6 @@ export function parseItemCastProperties(
   };
 }
 
-/** Escolhe regra de círculo: mapa por resource → regra do item → null (default). */
 export function pickItemCastSlotRule(
   parsed: ParsedItemCastProperties,
   resourceSlug?: string | null,

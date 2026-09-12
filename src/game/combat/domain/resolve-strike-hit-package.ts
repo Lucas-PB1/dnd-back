@@ -1,7 +1,4 @@
-/**
- * Resolve pacote de acerto a partir de `StrikeOption` (catálogo).
- * Reutilizável por duelo / combate futuro — sem nome de subclasse.
- */
+
 
 import { rollExpression, type Rng } from '@game/dice/domain/dice';
 import {
@@ -29,7 +26,6 @@ export type StrikeHitPackage = {
   replacesAttackWithSave: boolean;
 };
 
-/** Monta o pacote tipado (dados extras já rolados). */
 export function resolveStrikeHitPackage(input: {
   option: StrikeOption;
   level: number;
@@ -65,7 +61,6 @@ export function resolveStrikeHitPackage(input: {
   };
 }
 
-/** Dado secundário (ex.: piercing além da arma). */
 export function rollStrikeSecondaryDice(input: {
   option: StrikeOption;
   level: number;
@@ -80,12 +75,10 @@ export function rollStrikeSecondaryDice(input: {
   };
 }
 
-/** Metade arredondada para baixo (5e — save sucesso / withering). */
 export function halfDamage(total: number): number {
   return Math.floor(Math.max(0, total) / 2);
 }
 
-/** CA efetiva ignorando armadura/escudo: 10 + DEX. */
 export function unarmoredDexArmorClass(dexterityModifier: number): number {
   return 10 + dexterityModifier;
 }

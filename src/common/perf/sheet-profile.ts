@@ -1,4 +1,4 @@
-/** Opt-in: SHEET_PROFILE=1 — spans do GET ficha (measure:character). */
+
 
 export type SheetProfileSpan = { name: string; ms: number };
 

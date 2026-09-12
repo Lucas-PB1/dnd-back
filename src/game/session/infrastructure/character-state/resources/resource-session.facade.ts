@@ -11,7 +11,6 @@ import {
   type ResourceSessionDeps,
 } from '../resources/resource-session-ops';
 
-/** Agrupa ops de recurso/slot; deps via factory do repository. */
 export class ResourceSessionFacade {
   constructor(private readonly getDeps: () => ResourceSessionDeps) {}
 

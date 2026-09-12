@@ -1,7 +1,4 @@
-/**
- * Perícia extra de classe (não expertise) — PHB 2024.
- * Bárbaro L3: Conhecimento Primordial.
- */
+
 
 export type ClassExtraSkillSlot = {
   optionKey: string;

@@ -1,4 +1,4 @@
-/** Buckets de tempo de conjuração para filtro do catálogo. */
+
 export type SpellCastingTimeKind =
   | 'action'
   | 'bonus'
@@ -6,7 +6,7 @@ export type SpellCastingTimeKind =
   | 'minute'
   | 'hour';
 
-/** Buckets de alcance / área aproximada. */
+
 export type SpellRangeKind =
   | 'self'
   | 'touch'
@@ -27,7 +27,7 @@ type QbLike = {
   andWhere: (sql: string, params?: Record<string, unknown>) => unknown;
 };
 
-/** Aplica filtros opcionais de magia (ritual, tempo, alcance, teste…). */
+
 export function applySpellListExtraFilters(
   qb: QbLike,
   filters: SpellListExtraFilters,
@@ -106,7 +106,6 @@ function applyRangeKind(qb: QbLike, kind: SpellRangeKind | undefined): void {
       qb.andWhere(`(${col} ILIKE 'Toque%' OR ${col} ILIKE 'Touch%')`);
       return;
     case 'short':
-      // Até ~9 m / 30 pés (sem Pessoal/Toque).
       qb.andWhere(
         `(
           ${col} ~* '^(1,?5|3|4,?5|6|9)\\s*(metros?|m)$'

@@ -1,6 +1,4 @@
-/**
- * Efeitos mecânicos de Ordem Divina / Ordem Primal — PHB 2024 S023.
- */
+
 
 export const DIVINE_ORDER_KEY = 'divineOrder';
 export const PRIMAL_ORDER_KEY = 'primalOrder';
@@ -48,7 +46,6 @@ export function extraCantripsFromClassOrder(
   return 0;
 }
 
-/** Bônus extra (mod. Sabedoria, mín. +1) em perícias de Ordem. */
 export function classOrderSkillCheckBonus(
   skillSlug: string,
   classOptions: readonly ClassOptionLike[] | undefined,

@@ -47,7 +47,6 @@ import type { AberrantMutationSlug } from '@game/session/domain/transformation/a
 
 @Injectable()
 export class CharacterStateRepository extends CharacterStateResourceApi {
-  /** Ops marciais (gunslinger / bárbaro / fighter / máscaras / beastborne). */
   readonly martial: MartialSessionFacade;
   readonly resources: ResourceSessionFacade;
 

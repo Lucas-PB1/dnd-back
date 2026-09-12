@@ -1,15 +1,9 @@
-/**
- * Lâminas Psíquicas (Adaga Espiritual).
- * Stats e propriedades: catálogo `phb_item` / `phb_weapon` (seed C015) — sem hardcode.
- * Aqui só identidade (slug) e elegibilidade da subclasse.
- */
+
 import { isRogueClass } from './sneak-attack';
 import { meetsFeatureGate } from '../feature-gates';
 
-/** Ataque principal — slug do catálogo. */
 export const PSYCHIC_BLADE_ITEM_SLUG = 'psychic-blade';
 
-/** Segunda lâmina (Ação Bônus) — slug do catálogo. */
 export const PSYCHIC_BLADE_BONUS_ITEM_SLUG = 'psychic-blade-bonus';
 
 export const PSYCHIC_BLADE_ITEM_SLUGS = [
@@ -42,7 +36,6 @@ export function isPsychicBladeItemSlug(slug: string): boolean {
   );
 }
 
-/** Slot sintético na ficha: principal vs Ação Bônus. */
 export function psychicBladeEquipmentSlot(
   slug: string,
 ): 'main_hand' | 'off_hand' {

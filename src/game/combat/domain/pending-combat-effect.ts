@@ -1,11 +1,7 @@
-/**
- * Efeitos pendentes em combate (marcas, tokens) — SSOT genérico.
- * Persistência (ex.: duel.arena_effects) fica no adapter do contexto.
- */
+
 
 export type PendingEffectConsumeOn = 'next_attack' | 'turn_start';
 
-/** Token estável: `kind:characterId` (kind sem `:`). */
 export function pendingEffectToken(kind: string, characterId: string): string {
   if (!kind || kind.includes(':')) {
     throw new Error(`Invalid pending effect kind: ${kind}`);

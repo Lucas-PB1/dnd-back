@@ -39,10 +39,7 @@ function requireTrait(
   return row;
 }
 
-/**
- * Gera um bloco de senciência a partir das tabelas DMG (uso futuro / testes).
- * Artefatos nomeados NÃO usam este path — copiam sentience fixa do catálogo.
- */
+
 export function rollSentientTraits(input: {
   tableRows: readonly SentientTraitTableRow[];
   rng: Rng;
@@ -79,7 +76,6 @@ export function rollSentientTraits(input: {
     purposeSummary: String(
       purpose.payload.purposeSummary ?? purpose.summaryPt,
     ),
-    // Método documentado em kind=ability_scores (4d6dl1).
     inteligencia: roll4d6DropLowest(rng),
     sabedoria: roll4d6DropLowest(rng),
     carisma: roll4d6DropLowest(rng),

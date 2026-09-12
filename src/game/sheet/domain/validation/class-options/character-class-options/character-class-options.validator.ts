@@ -29,7 +29,6 @@ import {
   validateSpeciesChoices,
 } from './validate-origin-choices';
 
-/** Facade estável: fighting styles + delegação para validators por concern. */
 @Injectable()
 export class CharacterClassOptionsValidator {
   constructor(

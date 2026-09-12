@@ -90,7 +90,6 @@ export async function resolveCharacterSpellcastingSlice(input: {
     speciesEffects,
   } = input;
 
-  // Grants só anotam fontes em magias já na ficha — sem spells, zero I/O.
   if (sheet.characterSpells.length === 0) {
     return {
       characterSpells: [],
@@ -116,7 +115,6 @@ export async function resolveCharacterSpellcastingSlice(input: {
       grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: speciesSlug ? [speciesSlug] : [],
         featSlugs,
-        // classGrantedSpells não entra no annotate do GET
         classSlug: null,
       }),
   );

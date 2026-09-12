@@ -20,10 +20,8 @@ export type ArmorClassResolveInput = {
   featEffects?: readonly import('@game/effects').CatalogEffect[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
-  /** Snapshot compartilhado - evita novo find no combat slice. */
   equippedItems?: PlayerCharacterItem[];
   speciesArmorPreset?: SpeciesArmorPresetRow | null;
-  /** Catalogo de armadura ja carregado (combat bundle). */
   armorCatalogRows?: Array<{
     itemSlug: string;
     itemName: string;

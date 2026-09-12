@@ -1,7 +1,6 @@
 import { parseInstanceProperties } from './roll-artifact-instance';
 import type { ArtifactInstanceProperties } from './artifact-instance.types';
 
-/** Nova aparição: limpa props aleatórias (mantém senciência). */
 export function clearArtifactRandomForReroll(
   instanceProperties: unknown,
 ): ArtifactInstanceProperties {

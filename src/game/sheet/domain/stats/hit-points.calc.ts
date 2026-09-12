@@ -7,16 +7,10 @@ export interface ClassHpProfile {
   constitutionModApplies?: boolean;
 }
 
-/**
- * Fonte permanente de PV máximo já resolvida do catálogo
- * (`v_phb_hp_bonus_source`). A regra de quais slugs concedem o bônus vive no
- * banco; aqui só somamos os efeitos.
- */
 export type HitPointsBonusRow = {
   label: string;
   flat?: number;
   perLevel?: number;
-  /** Nível de personagem a partir do qual a fonte passa a valer. */
   fromLevel?: number;
 };
 
@@ -38,7 +32,6 @@ export function hpGainPerLevel(
   return Math.max(minimumGain, hpFixedPerLevel + constitutionMod);
 }
 
-/** Soma dos bônus permanentes de PV máximo aplicáveis no nível informado. */
 export function hitPointsBonus(
   level: number,
   sources: readonly HitPointsBonusRow[] = [],

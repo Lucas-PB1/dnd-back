@@ -33,16 +33,10 @@ type ClassCombatInput = {
   classSlug: string;
   subclassSlug: string | null;
   level: number;
-  /** Notas de combate por nível do catálogo. */
   levelCombatNotes?: readonly LevelCombatNoteRow[];
-  /** Schedules nível→valor (`phb_class_feature_schedule`). */
   featureSchedules: readonly FeatureScheduleBand[];
 };
 
-/**
- * Agrega contribuições de classe.
- * Textos: `phb_level_combat_note`. Números: schedule do catálogo quando presente.
- */
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,
 ): ClassCombatContribution {

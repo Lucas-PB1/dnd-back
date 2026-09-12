@@ -52,10 +52,7 @@ const SKILLS_PT = [
   'Sobrevivência',
 ] as const;
 
-/**
- * Resolve escolhas “do Mestre” no momento do roll (atributo, resistência, perícia,
- * magia do círculo) e materializa efeitos aplicáveis.
- */
+
 export function materializeRolledEffect(
   row: ArtifactRandomTableRow,
   rng: Rng,

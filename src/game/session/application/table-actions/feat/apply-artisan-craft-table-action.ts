@@ -19,7 +19,6 @@ export type ArtisanCraftDeps = {
   dataSource: DataSource;
 };
 
-/** Fabricação Rápida: spawna 1 item da tabela até o próximo DL. */
 export async function applyArtisanCraftTableAction(input: {
   deps: ArtisanCraftDeps;
   character: PlayerCharacter;

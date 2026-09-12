@@ -6,10 +6,7 @@ export type SpeciesChoiceLike = {
   choiceSlug: string;
 };
 
-/**
- * Passivas de espécie — SSOT = `phb_effect` (já filtrado por gates).
- * Resistências por opção usam `optionDamageTypes` + labels de `phb_damage_type`.
- */
+
 export function speciesCombatNotes(input: {
   speciesSlug?: string | null;
   speciesChoices?: readonly SpeciesChoiceLike[];

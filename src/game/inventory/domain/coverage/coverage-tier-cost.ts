@@ -3,10 +3,6 @@ import { parseItemCoverage } from './item-coverage';
 import type { CoinPurse } from '../coin-purse';
 import { EMPTY_COIN_PURSE } from '../coin-purse';
 
-/**
- * Valores DMG 2024 (Magic Item Rarities and Values).
- * Peça base PHB soma à parte (já cobrada na linha do item mundano).
- */
 const RARITY_VALUE_GP = {
   uncommon: 400,
   rare: 4_000,
@@ -14,11 +10,6 @@ const RARITY_VALUE_GP = {
   legendary: 200_000,
 } as const;
 
-/**
- * Mapa de raridade por bônus — headers DMG:
- * - Armadura: Raro (+1) / Muito Raro (+2) / Lendário (+3)
- * - Arma, Escudo, Munição, Varinha: Incomum (+1) / Raro (+2) / Muito Raro (+3)
- */
 const TIER_RARITY_BY_APPLIES: Record<
   CoverageAppliesTo,
   Record<1 | 2 | 3, keyof typeof RARITY_VALUE_GP>
@@ -55,7 +46,6 @@ export function coverageTierBonusPurse(
   };
 }
 
-/** Preço da cobertura quando o catálogo não tem `cost` e há tier +1/+2/+3. */
 export function resolveCoveragePurchaseCost(
   properties: Record<string, unknown> | null | undefined,
   bonus: 1 | 2 | 3 | undefined,

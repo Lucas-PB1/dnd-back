@@ -15,9 +15,6 @@ import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterSheetContext } from '../character-sheet.types';
 import type { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 
-/**
- * Valida escolhas obrigatórias no POST /characters quando o catálogo exige.
- */
 @Injectable()
 export class CharacterCreateRequirementsValidator {
   constructor(

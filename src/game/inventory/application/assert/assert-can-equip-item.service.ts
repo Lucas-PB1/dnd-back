@@ -6,7 +6,6 @@ import { PlayerCharacter } from '@game/shared/infrastructure/player-character.en
 import { parseItemCoverage } from '../../domain/coverage/item-coverage';
 import { assertCoverageNotEquippable } from '../../domain/assert-can-equip-item';
 
-/** Gate de equip: só bloqueia cobertura; proficiência é soft (compliance/ataques). */
 @Injectable()
 export class AssertCanEquipItemService {
   constructor(

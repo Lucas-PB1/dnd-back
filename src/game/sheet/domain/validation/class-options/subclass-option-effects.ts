@@ -8,16 +8,11 @@ export const LORE_MAGICAL_DISCOVERY_KEYS = new Set([
   'magicalDiscovery2',
 ]);
 
-/** Blade of Radiance — Revelações Santas (2 truques de Clérigo). */
 export const BLADE_HOLY_CANTRIP_KEYS = new Set([
   'holyRevelationCantrip1',
   'holyRevelationCantrip2',
 ]);
 
-/**
- * Magias always-prepared de Revelações Santas (Lâmina do Esplendor):
- * à vontade, só em si, sem espaço (texto da feature).
- */
 export const BLADE_HOLY_REVELATION_SPELL_SLUGS = new Set([
   'heroismo',
   'protecao-contra-o-bem-e-o-mal',
@@ -34,13 +29,11 @@ export function isBladeHolyRevelationAtWillSpell(
   );
 }
 
-/** Chaves de magia always_prepared vindas de picks de subclasse. */
 export const SUBCLASS_GRANTED_SPELL_OPTION_KEYS = new Set([
   ...LORE_MAGICAL_DISCOVERY_KEYS,
   ...BLADE_HOLY_CANTRIP_KEYS,
 ]);
 
-/** Prefixo dos slots de Golpe de Sangue (valores únicos entre slots). */
 export const BLOOD_STRIKE_OPTION_KEY_RE = /^bloodStrike\d+$/;
 
 export const LORE_BONUS_SKILL_KEYS = new Set([
@@ -87,7 +80,6 @@ export function resolveLandTerrainSlug(
   );
 }
 
-/** Magias always_prepared vindas de picks de subclasse (Descobertas / Revelações). */
 export function collectSubclassOptionGrantedSpellSlugs(
   level: number,
   subclassOptions: readonly SubclassOptionPick[] | undefined,
@@ -106,7 +98,6 @@ export function collectSubclassOptionGrantedSpellSlugs(
   return slugs;
 }
 
-/** Magias gratuitas no grimório (Versado em {Escola} / Sangromancia). */
 export function collectSubclassSpellbookBonusSlugs(
   subclassOptions: readonly SubclassOptionPick[] | undefined,
 ): Set<string> {

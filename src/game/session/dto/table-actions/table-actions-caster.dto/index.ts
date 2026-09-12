@@ -1,4 +1,3 @@
-﻿/** Reexport estável — implementação nos módulos irmãos. */
 export {
   UseClericTableActionDto,
   UseBardTableActionDto,

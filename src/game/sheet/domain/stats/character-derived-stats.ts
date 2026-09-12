@@ -53,10 +53,6 @@ export type CharacterDerivedStats = {
   passivePerception: number;
 };
 
-/**
- * Stats derivados de atributos + perícias (sem equipamento).
- * CA: SSOT em `ResolveEquippedArmorClass` / `resolveCharacterCombatSlice` — não calcular aqui.
- */
 export function computeDerivedStats(input: {
   abilityScores: AbilityScores;
   proficiencyBonus: number;

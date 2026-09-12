@@ -1,4 +1,3 @@
-/** Garante PV atual ≤ PV máximo quando ambos estão definidos. */
 export function clampHitPointsCurrent(
   current: number | null | undefined,
   max: number | null | undefined,
@@ -7,7 +6,6 @@ export function clampHitPointsCurrent(
   return current > max ? max : current;
 }
 
-/** PV como percentual 0–100 (ex.: visão jogador em encontros). */
 export function hitPointsPercent(
   current: number | null | undefined,
   max: number | null | undefined,

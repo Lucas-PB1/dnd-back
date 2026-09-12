@@ -1,12 +1,6 @@
 import { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from './ability-modifier';
 
-/**
- * Aumento de atributo concedido por capacidade de classe em um nível fixo
- * (resolvido de `mv_phb_class_ability_boost`). Diferente do ASI/talentos, pode
- * elevar o atributo acima de 20 até `scoreMax`. A regra de qual classe/nível
- * concede o bônus vive no banco; aqui só aplicamos os efeitos.
- */
 export type ClassAbilityBoostRow = {
   ability: keyof AbilityScores;
   label: string;
@@ -20,11 +14,6 @@ export type AppliedClassAbilityBoosts = {
   labels: string[];
 };
 
-/**
- * Aplica os aumentos de classe sobre os atributos base, respeitando o teto
- * próprio de cada fonte e o nível do personagem. Nunca reduz um atributo já
- * acima do teto (ex.: edição manual), só eleva.
- */
 export function applyClassAbilityBoosts(
   scores: AbilityScores,
   level: number,
@@ -46,10 +35,6 @@ export function applyClassAbilityBoosts(
   return { scores: next, labels: [...labels] };
 }
 
-/**
- * Delta de PV máximo decorrente do aumento de Constituição por classe.
- * Cada ponto de modificador de Constituição soma 1 PV por nível.
- */
 export function classHitPointsBonus(
   baseConstitution: number,
   boostedConstitution: number,

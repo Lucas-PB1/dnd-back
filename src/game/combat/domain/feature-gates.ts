@@ -1,8 +1,3 @@
-/**
- * Gates booleanos nível→unlock (SSOT: phb_class_feature_gate /
- * phb_subclass_feature_gate). Predicados puros recebem unlock do catálogo.
- */
-
 export const CLASS_GATE = {
   studiedAttacks: 'studied_attacks',
   tacticalMaster: 'tactical_master',

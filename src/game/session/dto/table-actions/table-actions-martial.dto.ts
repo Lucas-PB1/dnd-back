@@ -1,4 +1,3 @@
-/** Reexport estável — implementação em `./martial/`. */
 export {
   UseRogueTableActionDto,
   UseMonkTableActionDto,

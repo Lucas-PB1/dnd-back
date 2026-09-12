@@ -19,7 +19,6 @@ export function skillProficiencyRank(
   return 'none';
 }
 
-/** Mod + PB (×2 expertise; metade arredondada para baixo se Jack of All Trades). */
 export function skillCheckBonus(
   abilityModifier: number,
   proficiencyBonus: number,

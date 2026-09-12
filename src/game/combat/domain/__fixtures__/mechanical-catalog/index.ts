@@ -1,4 +1,4 @@
-/** Fixtures espelhando seeds `combat/C00*` (sem DB). */
+
 export { FIXTURE_GUNSLINGER_MANEUVERS } from './gunslinger-maneuvers.fixtures';
 export { FIXTURE_BATTLE_MASTER_MANEUVERS } from './battle-master-maneuvers.fixtures';
 export { FIXTURE_CUNNING_STRIKE_EFFECTS } from './rogue-cunning-strike.fixtures';

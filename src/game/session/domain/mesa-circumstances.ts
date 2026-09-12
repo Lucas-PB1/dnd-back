@@ -1,4 +1,3 @@
-/** Circunstâncias de mesa (neve/água/frio) — toggle na ficha, não combate real. */
 export const MESA_CIRCUMSTANCE_TAGS = [
   'snow_ice',
   'in_water',

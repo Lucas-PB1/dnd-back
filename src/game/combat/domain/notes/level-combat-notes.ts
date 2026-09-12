@@ -1,6 +1,5 @@
 import type { LevelCombatNoteRow } from '../../infrastructure/level-combat-note.queries';
 
-/** Filtra notas de combate por nível a partir do catálogo. */
 export function filterLevelCombatNotes(
   rows: readonly LevelCombatNoteRow[],
   ownerKind: 'class' | 'subclass',

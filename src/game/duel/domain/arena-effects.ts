@@ -2,14 +2,12 @@ export const DUEL_ARENA_EFFECTS = ['magical_darkness'] as const;
 
 export type DuelArenaEffect = (typeof DUEL_ARENA_EFFECTS)[number] | string;
 
-/** Aceita tokens de arena + pending (`kind:characterId`). */
 export function asArenaEffects(
   effects: readonly string[] | null | undefined,
 ): DuelArenaEffect[] {
   return [...(effects ?? [])];
 }
 
-/** Slug PHB PT da magia Escuridão. */
 export const MAGICAL_DARKNESS_SPELL_SLUG = 'escuridao';
 
 export const DEVIL_SIGHT_INVOCATION_SLUG = 'devil-sight';

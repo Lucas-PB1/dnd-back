@@ -29,13 +29,11 @@ function applyPoisonResist(
   return damageTotal;
 }
 
-/** Consome PV temp. antes dos PV atuais (5e). Prefere vitals do combatente. */
 export async function applyDuelDamageToTarget(input: {
   state?: CharacterStateRepository;
   member?: DuelMember;
   target: PlayerCharacter;
   damage: number;
-  /** Tipo de dano (Armamento / golpe); Anatomia: resist. Veneno no Sabujo. */
   damageType?: string | null;
 }): Promise<AppliedDuelDamage> {
   const damageTotal = applyPoisonResist(

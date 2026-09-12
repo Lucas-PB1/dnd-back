@@ -1,4 +1,4 @@
-/** Itens amaldiçoados (Treasure Cap. 7) — SSOT `properties.cursed`. */
+
 
 export function itemIsCursed(
   properties: Record<string, unknown> | null | undefined,
@@ -12,7 +12,6 @@ export function instanceCurseBroken(
   return instanceProperties?.curseBroken === true;
 }
 
-/** Pode encerrar sintonia voluntariamente (patch attuned=false). */
 export function mayEndCursedAttunement(input: {
   properties: Record<string, unknown> | null | undefined;
   instanceProperties: Record<string, unknown> | null | undefined;

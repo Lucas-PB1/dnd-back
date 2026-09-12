@@ -4,7 +4,6 @@ import {
 } from '../../character-sheet.types';
 import type { ValidateSheetInputDeps } from './types';
 
-/** Valida o bloco `classOptions` (expertise, mastery, invocações, etc.). */
 export async function validateClassOptionsInput(
   deps: Pick<
     ValidateSheetInputDeps,

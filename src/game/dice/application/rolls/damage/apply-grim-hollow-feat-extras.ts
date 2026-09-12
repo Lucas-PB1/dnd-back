@@ -2,7 +2,6 @@ import { BadRequestException } from '@nestjs/common';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Golpe Rápido (Determinação do Sindicato) — toggle no dano do ataque. */
 export const applyGrimHollowFeatExtras: DamageEffect = async (ctx, acc) => {
   const { dto, attack } = ctx;
   if (!dto.quickStrike) return;

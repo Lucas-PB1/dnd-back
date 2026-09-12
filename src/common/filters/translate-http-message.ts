@@ -1,7 +1,4 @@
-/**
- * Traduz mensagens de erro HTTP user-facing EN → PT-BR.
- * Mensagens já em português (acentos / frases conhecidas) passam intactas.
- */
+
 
 const ERROR_LABEL_PT: Record<string, string> = {
   'Bad Request': 'Requisição inválida',

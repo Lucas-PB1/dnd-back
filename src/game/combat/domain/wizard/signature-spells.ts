@@ -1,4 +1,3 @@
-/** Assinatura Mágica — Mago L20: duas magias de 3º círculo. */
 export const SIGNATURE_SPELL_1_KEY = 'signatureSpell1';
 export const SIGNATURE_SPELL_2_KEY = 'signatureSpell2';
 export const SIGNATURE_SPELL_UNLOCK_LEVEL = 20;

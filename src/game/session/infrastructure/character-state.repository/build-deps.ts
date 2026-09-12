@@ -26,7 +26,6 @@ export type CharacterStateFindOrCreate = (
   level?: number,
 ) => Promise<PlayerCharacterState>;
 
-/** Portas injetadas + callbacks do repository Nest. */
 export type CharacterStateRepoPorts = {
   stateRepo: Repository<PlayerCharacterState>;
   classSlots: Repository<VClassSpellSlots>;

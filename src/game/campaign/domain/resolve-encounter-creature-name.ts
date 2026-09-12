@@ -1,4 +1,3 @@
-/** Nome exibido ao adicionar criatura(s) ao encontro. */
 export function resolveEncounterCreatureName(input: {
   templateName: string;
   index: number;

@@ -1,4 +1,4 @@
-/** Predicados puros sobre níveis ASI/talento vindos do catálogo (`phb_class_progression.asi_or_feat`). */
+
 
 export function isAsiOrFeatLevel(
   asiFeatLevels: readonly number[],

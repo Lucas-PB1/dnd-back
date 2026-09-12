@@ -1,7 +1,4 @@
-/**
- * Regras numéricas de combate do Paladino (PHB 2024): Destruição Divina,
- * Golpes Radiantes e auras.
- */
+
 import {
   FEATURE_SCHEDULE_KEYS,
   scheduleIntAtLevel,
@@ -22,10 +19,6 @@ export function isPaladinClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'paladin';
 }
 
-/**
- * Destruição Divina (Divine Smite): 2d8 Radiante num espaço de 1º círculo,
- * +1d8 por círculo acima do 1º e +1d8 contra Corruptores/Mortos-vivos.
- */
 export function divineSmiteDice(input: {
   slotLevel: number;
   vsUndeadOrFiend?: boolean;
@@ -35,7 +28,6 @@ export function divineSmiteDice(input: {
   return `${base + bonus}d8`;
 }
 
-/** Golpes Radiantes: +Nd8 Radiante — SSOT `radiant_strikes_dice_count`. */
 export function radiantStrikesDie(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -48,7 +40,6 @@ export function radiantStrikesDie(
   return count == null || count < 1 ? null : `${count}d8`;
 }
 
-/** Aura de Proteção: você e aliados somam o mod. de Carisma às salvaguardas. */
 export function hasAuraOfProtection(
   level: number,
   unlockLevel: number | null | undefined,
@@ -60,7 +51,6 @@ export function auraOfProtectionBonus(charismaModifier: number): number {
   return Math.max(1, charismaModifier);
 }
 
-/** Bônus de Aura de Proteção para a ficha/rolagem (0 se não aplicar). */
 export function paladinSavingThrowAuraBonus(input: {
   classSlug?: string | null;
   level: number;
@@ -85,7 +75,6 @@ export function auraRangeMeters(
   );
 }
 
-/** Ataque Extra — SSOT: `attacks_per_action`. */
 export function paladinAttacksPerAction(
   level: number,
   bands: readonly FeatureScheduleBand[],

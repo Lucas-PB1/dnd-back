@@ -18,7 +18,6 @@ type EffectiveIdentity = {
   subclassSlug: string | null;
 };
 
-/** Valida sheet input, feat options e fighting styles do patch de update. */
 export async function validateUpdateCharacterSheet(input: {
   sheetValidator: CharacterSheetValidator;
   dto: UpdateCharacterDto;

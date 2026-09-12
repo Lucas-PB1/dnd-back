@@ -6,7 +6,6 @@ type StartingEquipmentRow = {
   quantity?: number;
 };
 
-/** Materializa pacotes de criação como itens no inventário (Beyond-like). */
 @Injectable()
 export class SeedStartingInventoryHandler {
   constructor(private readonly inventory: CharacterInventoryRepository) {}

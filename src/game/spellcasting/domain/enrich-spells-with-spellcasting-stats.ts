@@ -13,7 +13,6 @@ import { resolveSpellcastingAbilityForSpell } from './resolve-granted-spellcasti
 import { resolveGrantedSpellCastEconomy } from './resolve-granted-spell-cast-economy';
 import { spellcastingDerivedStats } from './spellcasting-stats';
 
-/** Anexa atributo/CD/ataque/economia por magia (campos só de resposta). */
 export function enrichSpellsWithSpellcastingStats(
   spells: readonly CharacterSpellDto[],
   input: {

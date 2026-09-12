@@ -7,12 +7,6 @@ import { EffectsModule } from '../effects/effects.module';
 import { CharacterDiceController } from './character-dice.controller';
 import { CharacterRollsService } from './application/character-rolls.service';
 
-/**
- * Combat (ataques equipados) vem de CombatModule.
- * Sheet: CharacterDomainService + CharacterSheetRepository.
- * Session: CharacterStateRepository para gasto unificado de recursos/slots.
- * Ciclo Sheet→Campaign→Dice→Session→Sheet quebrado: Sheet usa Shared para refs.
- */
 @Module({
   imports: [
     GameSharedModule,

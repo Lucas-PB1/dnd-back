@@ -1,6 +1,5 @@
 import { DWARF_CULTURE_KIND } from './species-culture';
 
-/** option_key do catálogo → choiceKind na ficha. */
 const OPTION_KEY_TO_CHOICE_KIND: Record<string, string> = {
   giantAncestryId: 'giant_ancestry',
   constructionId: 'geppettin_construction',

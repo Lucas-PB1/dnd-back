@@ -28,7 +28,6 @@ export function resolveEffectiveCharacterIdentity(
   };
 }
 
-/** Valida refs de catálogo só quando o patch toca identidade/alinhamento. */
 export async function validateUpdateCatalogRefsIfNeeded(input: {
   catalogLookup: CatalogLookupService;
   dto: UpdateCharacterDto;

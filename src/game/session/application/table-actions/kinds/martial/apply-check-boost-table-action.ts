@@ -4,10 +4,7 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
-/**
- * Mente Tática / boosts de teste: rola 1d10; gasta o pool só se check+dc virarem sucesso
- * (ou sempre, se o contexto de teste não for informado).
- */
+
 export async function applyCheckBoostTableAction(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;

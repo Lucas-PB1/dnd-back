@@ -4,7 +4,6 @@ import type { CampaignDetailDto } from '../../dto/campaign.dto';
 import { resolveAuthUserProfiles } from '../resolve-auth-user-profiles';
 import { toMemberDto, toSummary } from './to-dto';
 
-/** Monta o detalhe da campanha (membros + personagens vinculados). */
 export async function buildCampaignDetail(
   repo: CampaignRepository,
   dataSource: DataSource,

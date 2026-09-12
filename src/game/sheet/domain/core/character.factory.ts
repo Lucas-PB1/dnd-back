@@ -88,7 +88,6 @@ export class CharacterFactory {
     return { ...entity, backgroundToolItemSlug: toolItemSlug };
   }
 
-  /** Aplica bônus do antecedente sobre scores base (criação). */
   static withBackgroundBoostsApplied(
     entity: Partial<PlayerCharacter>,
     dto: Pick<
@@ -114,7 +113,6 @@ export class CharacterFactory {
     };
   }
 
-  /** +1 de talentos com optionKey abilityIncrease (após antecedente). */
   static withFeatAbilityBoostsApplied(
     entity: Partial<PlayerCharacter>,
     featOptions: FeatOptionDto[] | undefined,

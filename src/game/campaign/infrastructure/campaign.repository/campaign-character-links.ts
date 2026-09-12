@@ -96,7 +96,6 @@ export type CampaignRef = {
   myRole: 'dm' | 'player' | 'assistant' | null;
 };
 
-/** characterId → campanhas vinculadas (skip payment + papel do viewer). */
 export type CampaignRefsByCharacterId = Map<string, CampaignRef[]>;
 
 export async function listCampaignRefsByCharacterIds(

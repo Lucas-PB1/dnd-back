@@ -13,11 +13,6 @@ type ClassAbilityBoostQueryRow = {
   from_level: number;
 };
 
-/**
- * Lê os aumentos permanentes de atributo por classe (`mv_phb_class_ability_boost`)
- * para a classe informada. A regra de qual classe/nível concede o bônus vive no
- * banco; o teto próprio e o nível são aplicados por `applyClassAbilityBoosts`.
- */
 export async function loadClassAbilityBoosts(
   dataSource: DataSource,
   classSlug: string | null | undefined,
@@ -38,7 +33,6 @@ export async function loadClassAbilityBoosts(
   }));
 }
 
-/** Atributos base já com os aumentos permanentes de classe aplicados. */
 export async function resolveEffectiveAbilityScores(
   dataSource: DataSource,
   classSlug: string | null | undefined,

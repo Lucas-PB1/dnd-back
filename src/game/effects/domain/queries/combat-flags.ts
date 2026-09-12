@@ -24,7 +24,6 @@ export type FeatAcBonusSource = {
   bonus: number;
 };
 
-/** Fontes tipadas de `ac_bonus` por talento (para a UI nomear o toggle). */
 export function acBonusSourcesFromEffects(
   effects: readonly CatalogEffect[],
   featSlugs: readonly string[],

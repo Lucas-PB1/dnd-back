@@ -9,7 +9,6 @@ import { CharacterMysticArcanumValidator } from '../class-options/character-myst
 import { CharacterSignatureSpellsValidator } from '../class-options/character-signature-spells.validator';
 import { CharacterTransformationValidator } from '../../transformation/character-transformation.validator';
 
-/** Dependências da orquestração de `validateSheetInput` (sem Nest Injectable). */
 export type ValidateSheetInputDeps = {
   catalogLookup: Pick<CatalogLookupService, 'validateClassSkillChoices'>;
   backgroundValidator: Pick<

@@ -34,7 +34,6 @@ export class UseSorcererTableActionDto extends TableActionOptionsDto {
   @IsIn(SORCERER_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof SORCERER_TABLE_ACTION_SLUGS)[number];
 
-  /** Alias JSON legado → `amount` no apply (Bastião da Lei). */
   @ApiPropertyOptional({
     example: 3,
     description: 'Pontos de Feitiçaria gastos (bastion-of-law: 1–5)',

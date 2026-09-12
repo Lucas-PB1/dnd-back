@@ -67,7 +67,6 @@ function applyFeatWeaponMerges(
     }
     let versatileDamage = piece.versatileDamage;
     if (versatileFull && piece.versatileDamage) {
-      // Empunhadura Expandida: 1H usa dano entre parênteses — sinaliza via property
       if (!propertySlugs.includes('versatile-full-1h')) {
         propertySlugs.push('versatile-full-1h');
       }

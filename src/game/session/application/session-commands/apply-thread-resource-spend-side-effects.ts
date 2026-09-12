@@ -17,9 +17,7 @@ const LAST_ACT_NOTE =
 const GLORIOUS_END_NOTE =
   'Fim Glorioso: aliados testemunhas — vantagem em testes d20 por 24 horas.';
 
-/**
- * Efeitos colaterais ao gastar recurso de Character Thread (spend-resource).
- */
+
 export async function applyThreadResourceSpendSideEffects(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;

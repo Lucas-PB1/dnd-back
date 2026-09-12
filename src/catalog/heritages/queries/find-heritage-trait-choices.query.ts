@@ -37,7 +37,6 @@ export class FindHeritageTraitChoicesQuery {
     const rows = await qb.getMany();
     requireNonEmpty(rows, `Heritage '${heritageSlug}' has no trait choices`);
 
-    // Produto: só build tradicional (+ tamanho). Sem pool custom / 9º traço.
     const filtered = rows.filter((row) => {
       if (row.choiceKind === 'heritage_trait_9') return false;
       if (row.choiceKind === 'heritage_speed_trade') return false;

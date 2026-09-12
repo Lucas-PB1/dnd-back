@@ -156,7 +156,6 @@ export class DuelRepository {
     return this.getById(duelId);
   }
 
-  /** Participante ou espectador autenticado (qualquer um com o id do duelo). */
   async getForViewer(
     userId: string,
     duelId: string,

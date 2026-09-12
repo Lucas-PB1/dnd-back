@@ -11,7 +11,7 @@ import {
 } from './maneuvers-effects.dto';
 import { ClassEconomyActionDto, ClassPanelActionDto } from './economy-panel.dto';
 
-/** Resposta pública do catálogo mecânico de combate (SSOT no schema `rpg`). */
+
 export class CombatMechanicalCatalogResponseDto {
   @ApiProperty({ type: [GunslingerManeuverDto] })
   gunslingerManeuvers!: GunslingerManeuverDto[];

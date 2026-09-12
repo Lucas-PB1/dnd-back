@@ -72,7 +72,6 @@ describe('roll-artifact-instance', () => {
   });
 
   it('rolls quota and materializes +1 CA / ability choice', () => {
-    // d100 for minor → 0.95 → 96 → ac-bonus-1; then ability pick index 0
     const rng = seqRng([0.95, 0.0, 0.1, 0.2]);
     const result = rollArtifactRandomProperties({
       quota: {
@@ -353,8 +352,6 @@ describe('rollSentientTraits', () => {
   ];
 
   it('builds coherent sentience from tables', () => {
-    // alignment d100=98 → 0.97; communication d10=10 → 0.9; senses d4=4 → 0.75; purpose d10=2 → 0.1
-    // then many d6 for abilities
     const rng = seqRng([
       0.97, 0.9, 0.75, 0.1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
       0.5, 0.5,

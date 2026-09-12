@@ -1,4 +1,3 @@
-/** Reexport estável — implementação em `./inventory/`. */
 export { InventoryItemResponseDto } from './inventory/item-response.dto';
 export {
   InventoryEncumbranceDto,

@@ -5,7 +5,6 @@ import {
   type ClassResourceDbRow,
 } from './resource-schedule.shared';
 
-/** Schedule de recursos de talento: só `phb_effect.grant_resource`. */
 export async function loadFeatResourceSchedule(
   dataSource: DataSource,
   featSlugs: readonly string[],

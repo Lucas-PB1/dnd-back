@@ -289,7 +289,7 @@ describe('applyCastSpell', () => {
         },
       ])
       .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([]); // loadSpellcastingAbilitySlug → no ability
+      .mockResolvedValueOnce([]);
 
     const result = await cast(
       {

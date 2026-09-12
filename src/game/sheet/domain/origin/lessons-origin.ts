@@ -5,10 +5,7 @@ import {
 } from '@game/combat/domain/warlock';
 import { nextFeatInstanceIndex } from '../validation/feats/character-feat';
 
-/**
- * Materializa talentos de Origem de Lições dos Primeiros em characterFeats.
- * Não remove talentos — use `syncLessonsOriginCharacterFeats` na atualização.
- */
+
 export function resolveLessonsOriginCharacterFeats(
   classOptions: readonly ClassOptionLike[] | null | undefined,
   provided: CharacterFeatDto[],
@@ -27,15 +24,11 @@ export function resolveLessonsOriginCharacterFeats(
   return feats;
 }
 
-/**
- * Sincroniza characterFeats ao trocar picks de Lições dos Primeiros.
- * Remove talentos que só existiam por picks antigos (não protegidos).
- */
+
 export function syncLessonsOriginCharacterFeats(input: {
   previousClassOptions: readonly ClassOptionLike[] | null | undefined;
   nextClassOptions: readonly ClassOptionLike[] | null | undefined;
   characterFeats: CharacterFeatDto[];
-  /** Slugs que não devem ser removidos (antecedente, humano, etc.). */
   protectedFeatSlugs: ReadonlySet<string>;
 }): CharacterFeatDto[] {
   const previous = new Set(

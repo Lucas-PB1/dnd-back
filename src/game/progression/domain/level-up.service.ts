@@ -129,10 +129,7 @@ export class LevelUpService {
     };
   }
 
-  /**
-   * Lista de magias para conjuradores reais (slots de classe/subclasse).
-   * Não inclui always-prepared de subclasse sem spellcasting (ex.: Lâmina do Esplendor).
-   */
+
   private async findNewSpellOptions(
     character: PlayerCharacter,
     nextLevel: number,
@@ -176,7 +173,6 @@ export class LevelUpService {
     });
   }
 
-  /** Magias always-prepared que desbloqueiam exatamente neste nível. */
   private async findAlwaysPreparedSpellsNewAtLevel(
     character: PlayerCharacter,
     nextLevel: number,

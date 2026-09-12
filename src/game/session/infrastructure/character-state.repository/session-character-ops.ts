@@ -107,7 +107,6 @@ export async function clearResourcesUsedEntryByCharacterId(
   await ports.stateRepo.save(state);
 }
 
-/** Persiste PV atuais (dano/cura de table-action) e devolve o state completo. */
 export async function applyCurrentHitPointsOp(
   ports: SessionCharacterPorts,
   character: PlayerCharacter,

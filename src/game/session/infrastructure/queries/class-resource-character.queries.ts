@@ -41,7 +41,6 @@ export async function loadClassProgressionSnapshot(
   };
 }
 
-/** Itens equipados (+ sintonizados se exigir), charms anexados e consumíveis com quantity > 0. */
 export async function loadActiveItemSlugs(
   dataSource: DataSource,
   characterId: string,

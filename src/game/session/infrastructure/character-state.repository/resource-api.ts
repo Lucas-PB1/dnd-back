@@ -10,10 +10,7 @@ import {
   setResourcesUsedEntry,
 } from './session-character-ops';
 
-/**
- * Superfície CharacterResourceSpender + aliases de recurso/slot.
- * Separada do wiring Nest do repository.
- */
+
 export abstract class CharacterStateResourceApi {
   abstract readonly resources: ResourceSessionFacade;
   protected abstract ports(): CharacterStateRepoPorts;

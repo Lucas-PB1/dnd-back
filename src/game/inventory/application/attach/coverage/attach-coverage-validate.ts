@@ -30,7 +30,6 @@ export function assertCoverageBonusAllowed(
   return { needsTier };
 }
 
-/** Valida presença/ausência de spellSlug conforme o tipo de cobertura. */
 export function assertCoverageSpellSlugParam(
   coverageSlug: string,
   spellSlug: string | undefined,

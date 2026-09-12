@@ -85,7 +85,6 @@ function grantChoiceSpellEffect(
   };
 }
 
-/** Efeitos já gated (como `loadGatedSpeciesEffects` devolveria). */
 const AASIMAR_EFFECTS = [grantSpellEffect('aasimar', 'luz', 1)];
 const TIEFLING_INFERNAL_EFFECTS = [
   grantSpellEffect('tiefling', 'taumaturgia', 1),

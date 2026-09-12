@@ -15,7 +15,6 @@ export type OriginResourceSpendResult = {
   roll?: ResourceDieRollDto | null;
 };
 
-/** Efeitos ao gastar recurso — só `phb_effect` (`on_resource_spend`). */
 export async function applyOriginResourceSpendEffects(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;

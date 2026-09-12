@@ -1,4 +1,4 @@
-/** Seeds `combat/C00*` — College of Masks persona slugs. */
+
 export const FIXTURE_PERSONA_MASK_SLUGS = [
   'persona-mask-angel',
   'persona-mask-archmage',

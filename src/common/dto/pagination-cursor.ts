@@ -4,9 +4,7 @@ import { SelectQueryBuilder } from 'typeorm';
 export type CursorValues = Record<string, string | number>;
 
 export type CursorKeyDef = {
-  /** Expressão SQL no QB (ex.: `spell.level`). */
   expr: string;
-  /** Nome no payload do cursor (ex.: `level`). */
   name: string;
 };
 
@@ -46,9 +44,8 @@ export function decodeCursor(
   }
 }
 
-/** WHERE composto ASC: (a > ?) OR (a = ? AND b > ?) OR … */
-export function applyAscendingCursor(
-  qb: SelectQueryBuilder<object>,
+export function applyAscendingCursor<T extends object>(
+  qb: SelectQueryBuilder<T>,
   cursor: CursorValues | null,
   keys: readonly CursorKeyDef[],
 ): void {
@@ -70,10 +67,6 @@ export function applyAscendingCursor(
   qb.andWhere(`(${parts.join(' OR ')})`, params);
 }
 
-/**
- * Paginação por cursor (1 query, sem COUNT/OFFSET).
- * `orderBy` do QB deve bater com `keys` (ASC).
- */
 export async function paginateQbCursor<T extends object>(
   qb: SelectQueryBuilder<T>,
   options: {
@@ -89,11 +82,7 @@ export async function paginateQbCursor<T extends object>(
     ? decodeCursor(options.cursor, keyNames)
     : null;
 
-  applyAscendingCursor(
-    qb as unknown as SelectQueryBuilder<object>,
-    decoded,
-    options.keys,
-  );
+  applyAscendingCursor(qb, decoded, options.keys);
 
   const fetched = await qb.take(limit + 1).getMany();
   const hasMore = fetched.length > limit;
@@ -111,7 +100,6 @@ export async function paginateQbCursor<T extends object>(
   };
 }
 
-/** Cursor sobre lista já ordenada (catálogo pequeno / nested). */
 export function paginateCursor<T>(
   items: T[],
   options: {
@@ -145,7 +133,6 @@ export function paginateCursor<T>(
   };
 }
 
-/** Compara tuplas ASC (valores na mesma ordem de keyNames). */
 export function isAfterTuple(
   rowValues: Array<string | number>,
   cursor: CursorValues,

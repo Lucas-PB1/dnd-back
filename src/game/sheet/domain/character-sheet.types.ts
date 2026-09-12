@@ -24,7 +24,6 @@ export interface CharacterSheetData {
   languageSlugs: string[];
   abilityGenerationMethodSlug: string | null;
   backgroundSkillSlugs: string[];
-  /** Preenchidos pelo RPC sheet bundle (P032+); omitidos em EMPTY. */
   proficiencyBonus?: number | null;
   classAbilityBoosts?: ClassAbilityBoostRow[];
   speciesSize?: string | null;
@@ -46,7 +45,6 @@ export const EMPTY_SHEET_DATA: CharacterSheetData = {
   backgroundSkillSlugs: [],
 };
 
-/** Subconjunto da sheet para granted spell cast options no state. */
 export type GrantedSpellSheetSlice = Pick<
   CharacterSheetData,
   | 'characterFeats'

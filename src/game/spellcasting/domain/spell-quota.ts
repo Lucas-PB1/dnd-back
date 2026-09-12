@@ -1,6 +1,4 @@
-/**
- * Cotas de truques / magias conhecidas ou preparadas (espelha o front).
- */
+
 
 export const PREPARED_SPELL_CLASS_SLUGS = new Set([
   'cleric',
@@ -76,7 +74,6 @@ export type SpellQuotaViolation = {
   max: number;
 };
 
-/** Retorna a primeira violação encontrada, ou null se ok. */
 export function findSpellQuotaViolation(input: {
   classSlug: string;
   level: number;
@@ -84,7 +81,6 @@ export function findSpellQuotaViolation(input: {
   catalog: readonly SpellCatalogLevel[];
   cantripsMax: number | null;
   preparedOrKnownMax: number | null;
-  /** Override do mode derivado de classSlug (ex. subclass caster prepared). */
   mode?: ClassSpellcastingMode;
 }): SpellQuotaViolation | null {
   const mode = input.mode ?? classSpellcastingMode(input.classSlug);

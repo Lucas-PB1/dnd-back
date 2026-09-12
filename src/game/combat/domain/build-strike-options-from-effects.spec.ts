@@ -55,10 +55,8 @@ const LABELS = new Map(
   BLOOD_HOUND_STRIKE_OPTIONS.map((row) => [row.slug, row.name]),
 );
 
-/** Pacote mínimo espelhando seed para 4 golpes representativos. */
 function sampleEffects(): CatalogEffect[] {
   return [
-    // hunting
     base({
       id: 'h1',
       kind: 'self_damage',
@@ -97,7 +95,6 @@ function sampleEffects(): CatalogEffect[] {
       label: 'Golpe da Caça',
       sortOrder: 30,
     }),
-    // bloodshard
     base({
       id: 'b1',
       kind: 'self_damage',
@@ -136,7 +133,6 @@ function sampleEffects(): CatalogEffect[] {
         damageTypeSlug: 'piercing',
       },
     }),
-    // exiling
     base({
       id: 'e1',
       kind: 'self_damage',
@@ -192,7 +188,6 @@ function sampleEffects(): CatalogEffect[] {
         pendingKind: 'blood-exile',
       },
     }),
-    // bewitching
     base({
       id: 'w1',
       kind: 'self_damage',

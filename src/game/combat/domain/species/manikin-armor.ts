@@ -16,11 +16,9 @@ export type SpeciesArmorPresetRow = {
 export type SpeciesArmorPresetResult = {
   armorClass: number;
   label: string;
-  /** Conta como armadura vestida (estilo Defensivo). */
   countsAsWornArmor: boolean;
 };
 
-/** CA a partir de preset do catálogo (`phb_species_armor_preset`). */
 export function computeSpeciesArmorPreset(
   scores: AbilityScores,
   preset: SpeciesArmorPresetRow,
@@ -45,7 +43,6 @@ export function computeSpeciesArmorPreset(
   };
 }
 
-/** Escolha cujo valueId existe nos presets da espécie. */
 export function armorPresetSlugFromChoices(
   presets: readonly SpeciesArmorPresetRow[],
   speciesChoices:

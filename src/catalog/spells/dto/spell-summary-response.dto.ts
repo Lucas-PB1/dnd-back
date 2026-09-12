@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-/** Listagem leve (`fields=summary`) — labels sem description/higherLevels. */
+
 export class SpellSummaryResponseDto {
   @ApiProperty({ example: 'alarme' })
   slug!: string;

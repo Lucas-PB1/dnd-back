@@ -16,7 +16,6 @@ export type DuelSpellResolution =
     }
   | { kind: 'slot_only'; note: string };
 
-/** Magias com resolução tipada no duelo (além de gastar slot/recurso). */
 export function resolveDuelSpellEffect(input: {
   spellSlug: string;
   slotLevel: number;

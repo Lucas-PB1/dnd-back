@@ -1,6 +1,5 @@
 import { COIN_KEYS, COPPER_PER_COIN, type CoinPurse } from './types';
 
-/** Soma purses via cobre (câmbio PHB). */
 export function addCoinPurses(a: CoinPurse, b: CoinPurse): CoinPurse {
   return copperToPurse(purseToCopper(a) + purseToCopper(b));
 }
@@ -26,7 +25,6 @@ export function purseToCopper(purse: CoinPurse): number {
   return total;
 }
 
-/** Rebalanceia cobre em PL → PO → PE → PP → PC (greedy). */
 export function copperToPurse(copper: number): CoinPurse {
   if (!Number.isInteger(copper) || copper < 0) {
     throw new Error('Copper amount must be a non-negative integer');
@@ -49,12 +47,10 @@ export function copperToPurse(copper: number): CoinPurse {
   };
 }
 
-/** Metade do valor (venda PHB) — arredonda para baixo em cobre. */
 export function halfCoinPurseValue(purse: CoinPurse): CoinPurse {
   return copperToPurse(Math.floor(purseToCopper(purse) / 2));
 }
 
-/** Desconto percentual na loja — arredonda para baixo em cobre. */
 export function applyPurchaseDiscount(
   purse: CoinPurse,
   percentOff: number,
@@ -90,9 +86,6 @@ export function debitCoins(balance: CoinPurse, cost: CoinPurse): CoinPurse {
   };
 }
 
-/**
- * Debita pelo valor total em cobre e rebalanceia o saldo (loja aceita mistura).
- */
 export function debitCoinsWithExchange(
   balance: CoinPurse,
   cost: CoinPurse,
@@ -117,9 +110,6 @@ export function creditCoins(balance: CoinPurse, delta: CoinPurse): CoinPurse {
   };
 }
 
-/**
- * Credita e rebalanceia (útil após venda ½).
- */
 export function creditCoinsWithExchange(
   balance: CoinPurse,
   delta: CoinPurse,
@@ -147,9 +137,6 @@ export type InventoryPaymentDecision =
   | { mustPay: false; reason: 'solo' | 'gift' | 'skip' }
   | { mustPay: true };
 
-/**
- * Solo → free. DM/assistant → gift free. Player → pay unless skip liberado e pay=false.
- */
 export function resolveInventoryPayment(input: {
   inCampaign: boolean;
   viewerIsDmOrAssistant: boolean;

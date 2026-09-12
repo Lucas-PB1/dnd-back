@@ -23,7 +23,6 @@ export async function loadCharacterSpeciesChoices(
   }));
 }
 
-/** Gates de economy por resource_slug da espécie (C011/C055). */
 export async function loadSpeciesResourceOptionGates(
   dataSource: DataSource,
   speciesSlug: string,

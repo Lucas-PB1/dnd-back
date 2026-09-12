@@ -1,4 +1,3 @@
-/** Re-exports de pending tokens para o domínio do duelo. */
 export {
   addPendingEffect,
   consumePendingEffect,

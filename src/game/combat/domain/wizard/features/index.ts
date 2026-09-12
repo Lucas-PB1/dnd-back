@@ -1,4 +1,4 @@
-/** Regras e notas de combate do Mago (PHB 2024). */
+
 
 export {
   MAGIC_MISSILE_SPELL_SLUG,

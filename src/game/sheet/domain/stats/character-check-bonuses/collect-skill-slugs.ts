@@ -98,7 +98,6 @@ export function collectClassExpertiseSkillSlugs(
     .map((option) => option.valueId);
 }
 
-/** Proficiências “base” (sem expertise condicional Observant/Keen Mind / similar). */
 function collectPriorProficientSkillSlugs(input: SkillBonusSources): string[] {
   const featOptions = (input.featOptions ?? []).filter(
     (option) => !isProfOrExpertiseChoiceOption(option, input.featEffects),

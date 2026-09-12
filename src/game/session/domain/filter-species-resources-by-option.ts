@@ -1,10 +1,5 @@
 import { choiceKindForOptionKey } from '@catalog/game-port';
 
-/**
- * Filtra grants de recurso de espécie pelas mesmas gates `requires_option_*`
- * das economy actions (ex.: C055) — SSOT do catálogo, sem lista de slugs.
- */
-
 export type SpeciesChoiceRef = {
   choiceKind: string;
   choiceSlug: string;
@@ -37,10 +32,6 @@ function gateMatchesChoices(
   return choiceSlugForOptionKey(key, choices) === value;
 }
 
-/**
- * Mantém o recurso se não há gate, se há linha sem option, ou se alguma
- * gate casa com as choices (pool compartilhado + vários botões, ex. Goliath).
- */
 export function isSpeciesResourceAllowedByChoices(
   resourceSlug: string,
   gates: readonly SpeciesResourceOptionGate[],

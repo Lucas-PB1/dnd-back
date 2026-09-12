@@ -4,9 +4,6 @@ import type {
 } from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
-/**
- * Atualiza PV atuais na ficha (dano/cura aplicados pelo handler) e devolve o state.
- */
 export async function applyCurrentHitPoints(
   stateRepo: CharacterStateRepository,
   character: PlayerCharacter,

@@ -1,10 +1,7 @@
-/**
- * Strike options — tipos e lookups sobre catálogo montado de phb_effect.
- */
+
 
 import { rollExpression, type Rng } from '@game/dice/domain/dice';
 
-/** Slugs de atributo da ficha (PT). */
 export type StrikeSaveAbility =
   | 'forca'
   | 'destreza'
@@ -72,7 +69,6 @@ export function findStrikeOption(
   return catalog.find((row) => row.slug === slug);
 }
 
-/** Filtra por `table_action` do catálogo (ex.: blood-strike). */
 export function findStrikeOptionForTableAction(
   catalog: readonly StrikeOption[],
   slug: string,
@@ -112,11 +108,9 @@ export type StrikeSelfCostRoll = {
   secondTotal: number | null;
 };
 
-/** Rola custo em si a partir de `costDice` do catálogo. */
 export function rollStrikeSelfCost(input: {
   costDice: string;
   takeLower?: boolean;
-  /** Nível mínimo para takeLower (ex.: 10 Sangue da Criação). */
   takeLowerMinLevel?: number;
   level: number;
   rng?: Rng;

@@ -1,7 +1,4 @@
-/**
- * Regras numéricas de combate do Monge (PHB 2024): Artes Marciais, Foco e movimento.
- * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
- */
+
 import type { EquippedWeaponPiece } from '../../weapon-attacks/weapon-attack.types';
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -11,7 +8,6 @@ import {
 } from '../../feature-schedule';
 import { meetsFeatureGate } from '../../feature-gates';
 
-/** Slug sintético do Ataque Desarmado (não existe item no catálogo). */
 export const MONK_UNARMED_ITEM_SLUG = 'unarmed-strike';
 
 export type MonkSubclassSlug =
@@ -25,7 +21,6 @@ export function isMonkClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'monk';
 }
 
-/** Evasão (Monge). */
 export function hasEvasion(
   level: number,
   unlockLevel: number | null | undefined,
@@ -33,7 +28,6 @@ export function hasEvasion(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Alma de Diamante (Monge): proficiência em todas as salvaguardas. */
 export function hasDiamondSoul(
   level: number,
   unlockLevel: number | null | undefined,
@@ -62,7 +56,6 @@ export function martialArtsDie(
   return `1d${martialArtsDieFaces(level, bands)}`;
 }
 
-/** CD de Foco (Empurrar/Imobilizar, Golpe Atordoante etc.): 8 + SAB + PB. */
 export function monkFocusSaveDc(input: {
   wisdomModifier: number;
   proficiencyBonus: number;
@@ -86,10 +79,6 @@ export function unarmoredMovementBonusMeters(input: {
   );
 }
 
-/**
- * Arma de Monge para fins de Artes Marciais: Ataque Desarmado, armas Simples
- * corpo a corpo e armas Marciais corpo a corpo com a propriedade Leve.
- */
 export function isMonkWeaponForAttack(
   piece: EquippedWeaponPiece,
   mode: 'melee' | 'ranged',

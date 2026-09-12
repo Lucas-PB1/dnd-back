@@ -1,9 +1,4 @@
-/**
- * Idiomas extras de classe — PHB 2024.
- * Druida L1: Idioma Druídico (concedido).
- * Ladino L1: Gíria dos Ladrões + 1 idioma.
- * Patrulheiro L2: Explorador Hábil +2 idiomas.
- */
+
 
 export const THIEVES_CANT_LANGUAGE_SLUG = 'thieves-cant';
 export const DRUIDIC_LANGUAGE_SLUG = 'druidic';

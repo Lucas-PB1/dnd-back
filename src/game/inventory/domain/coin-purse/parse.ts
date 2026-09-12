@@ -6,7 +6,6 @@ import {
   type CoinPurse,
 } from './types';
 
-/** Abreviações do catálogo PHB-PT + PL para platina (evita colisão PP=prata). */
 const TOKEN_TO_KEY: Record<string, CoinKey> = {
   pc: 'copper',
   pp: 'silver',
@@ -16,7 +15,6 @@ const TOKEN_TO_KEY: Record<string, CoinKey> = {
   ppl: 'platinum',
 };
 
-/** Extrai valor inteiro aceitando milhar BR (`1.500`). */
 function parseAmountToken(raw: string): number {
   const normalized = raw.replace(/\./g, '');
   const amount = Number(normalized);
@@ -62,14 +60,12 @@ export function catalogCostText(
   return typeof text === 'string' ? text : null;
 }
 
-/** Formata purse não-vazio (ex. `3 PO · 5 PP`). */
 export function formatCoinPurseText(purse: CoinPurse): string {
   return COIN_KEYS.filter((key) => purse[key] > 0)
     .map((key) => `${purse[key]} ${COIN_LABEL[key]}`)
     .join(' · ');
 }
 
-/** Mensagem amigável a partir de erro de parse/debit do domínio. */
 export function coinPurseErrorMessage(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error);
   if (/no catalog price/i.test(message)) {

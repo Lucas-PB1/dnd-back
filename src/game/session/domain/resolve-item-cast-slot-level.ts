@@ -1,10 +1,6 @@
 import type { ItemCastSlotRule } from './item-cast-rules';
 
-/**
- * Nível de conjuração ao gastar cargas de item.
- * - Default: max(nível da magia, spend) — custo em cargas ≠ círculo.
- * - Regra SSOT em `properties.itemCastSlotRule(s)` (charge-upcast / fixed / …).
- */
+
 export function resolveItemCastSlotLevel(input: {
   spellLevel: number;
   spendAmount: number;
@@ -27,6 +23,5 @@ export function resolveItemCastSlotLevel(input: {
     }
     return Math.max(spellLevel, spendAmount);
   }
-  // charge-upcast: 1 carga = círculo base; extras sobem o círculo
   return spellLevel + spendAmount - 1;
 }

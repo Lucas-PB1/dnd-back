@@ -11,7 +11,6 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Golpe Brutal, Fúria Divina, Golpe Psiônico e Matar Monstro. */
 export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
   const { attack, combatFlags, dto, character, domain, resourceSpender } = ctx;
 

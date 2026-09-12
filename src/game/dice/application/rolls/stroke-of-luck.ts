@@ -50,7 +50,6 @@ function formatSigned(value: number): string {
   return value > 0 ? `+${value}` : String(value);
 }
 
-/** Aplica Golpe de Sorte quando solicitado no DTO, mutando notes. */
 export async function applyStrokeOfLuckIfRequested(input: {
   requested: boolean | undefined;
   spender: CharacterResourceSpender;

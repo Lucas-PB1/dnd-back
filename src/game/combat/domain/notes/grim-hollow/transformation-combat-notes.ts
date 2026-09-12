@@ -10,7 +10,6 @@ export type TransformationCombatInput = {
   choices?: readonly { choiceKind: string; choiceSlug: string }[];
 };
 
-/** Lembretes de boons ativos da transformação Cap. 6 (passivo / mesa). */
 export function transformationCombatNotes(
   input: TransformationCombatInput | null | undefined,
 ): string[] {

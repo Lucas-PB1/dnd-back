@@ -7,7 +7,6 @@ import {
 const DARKVISION_BASE_M = 18;
 const DARKVISION_IMPROVED_M = 36;
 
-/** Lembretes passivos de traços GH para a faixa de combate/ficha. */
 export function heritageCombatNotes(input: {
   heritageChoices?: readonly HeritageTraitPick[];
 }): string[] {
@@ -102,7 +101,6 @@ export async function loadHeritageHitPointsBonus(
     const fromLevel = Number(row.from_level) || 1;
     if (level < fromLevel) continue;
     bonus += Number(row.flat_bonus) || 0;
-    // Extra Tough: +1/nível por take (2× → +2/nível).
     const perLevel = Number(row.per_level_bonus) || 0;
     bonus += perLevel * level * Math.max(1, entry.takeCount);
   }

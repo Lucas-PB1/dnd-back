@@ -1,6 +1,5 @@
 import type { StrikeOption } from '../../strike-option';
 
-/** Fixture espelhando seed Sabujo (phb_effect.blood-strike-options). */
 export const BLOOD_HOUND_STRIKE_OPTIONS: readonly StrikeOption[] = [
   {
     slug: 'bewitching-strike',

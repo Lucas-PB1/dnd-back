@@ -16,7 +16,6 @@ export type CharacterAccessMode = 'read' | 'write' | 'own';
 
 const WRITE_ROLES: readonly CampaignRole[] = ['dm', 'assistant'];
 
-/** Acesso a personagem via vínculo em campanha (além do dono). */
 @Injectable()
 export class CampaignCharacterAccessService {
   constructor(
@@ -59,10 +58,7 @@ export class CampaignCharacterAccessService {
     return row?.role ?? null;
   }
 
-  /**
-   * Campanhas vinculadas aos personagens (skip payment + papel do viewer).
-   * Porta Shared — Sheet não precisa importar CampaignModule.
-   */
+
   listCampaignRefsByCharacterIds(
     characterIds: string[],
     userId: string,
@@ -78,10 +74,7 @@ export class CampaignCharacterAccessService {
     );
   }
 
-  /**
-   * Contexto de cobrança ao adicionar item: campanha linkada + papel do viewer.
-   * `allowPlayerSkipPayment` é OR entre campanhas linkadas.
-   */
+
   async resolveInventoryPaymentContext(
     userId: string,
     characterId: string,

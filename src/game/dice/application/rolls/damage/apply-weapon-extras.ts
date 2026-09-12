@@ -2,7 +2,6 @@ import { rollDamageParts } from '@game/dice/domain/dice';
 import { addDamagePart, type DamageAccumulator } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Exagero, Mira e Tiro na cabeça. */
 export const applyWeaponMasteryExtras: DamageEffect = (ctx, acc) => {
   const { attack, dto, character } = ctx;
 

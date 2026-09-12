@@ -6,7 +6,6 @@ import { ItemsMapper } from '../items.mapper';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL } from '../domain/class-granted-catalog-item';
 
-/** Mais comprados / vistos — telemetria (dicas Beyond shop). */
 @Injectable()
 export class FindPopularItemsQuery {
   constructor(

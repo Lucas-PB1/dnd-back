@@ -1,4 +1,4 @@
-/** Regras e notas de combate do Guerreiro (PHB 2024). */
+
 
 export {
   isFighterClass,

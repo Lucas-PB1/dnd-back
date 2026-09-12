@@ -76,10 +76,7 @@ function collectRolledPermanentEffects(
   return merged;
 }
 
-/**
- * Mescla PE das props de artefato roladas nas properties do catálogo
- * para o resolve de efeitos permanentes ativos.
- */
+
 export function mergeArtifactInstanceIntoCatalogProperties(
   catalogProperties: Record<string, unknown> | null | undefined,
   instanceProperties: unknown,

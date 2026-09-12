@@ -41,7 +41,6 @@ export async function loadClassOptionDefs(
     }));
 }
 
-/** Slots de Especialização (`expertiseSkill*`) da classe. */
 export async function loadClassExpertiseSlots(
   dataSource: DataSource,
   classSlug: string,
@@ -61,10 +60,6 @@ export async function loadClassExpertiseSlots(
     }));
 }
 
-/**
- * Whitelist de perícias para expertise (ex.: erudição do Mago).
- * null = qualquer perícia já proficiente.
- */
 export async function loadExpertiseSkillWhitelist(
   dataSource: DataSource,
   classSlug: string,
@@ -125,7 +120,6 @@ export type SubclassOptionSlotRow = {
   unlockLevel: number;
 };
 
-/** Opções de subclasse que desbloqueiam exatamente neste nível. */
 export async function loadSubclassOptionSlotsNewAtLevel(
   dataSource: DataSource,
   subclassId: string,

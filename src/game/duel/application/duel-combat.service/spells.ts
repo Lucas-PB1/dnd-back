@@ -113,7 +113,6 @@ export async function castSpell(
     slotLevel: input.slotLevel,
   });
 
-  // Concentração mudou: se não for mais Escuridão e este PC era a fonte, limpa arena.
   if (
     duel.arenaEffectSourceCharacterId === caster.characterId &&
     cast.state.concentratingOn !== MAGICAL_DARKNESS_SPELL_SLUG

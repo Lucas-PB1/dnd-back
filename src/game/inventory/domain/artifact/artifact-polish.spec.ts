@@ -21,7 +21,7 @@ describe('artifact polish domain', () => {
         sentience: { carisma: 18, inteligencia: 14, sabedoria: 10 },
       },
     });
-    expect(result.saveDc).toBe(16); // 12 + 4
+    expect(result.saveDc).toBe(16);
     expect(result.note).toMatch(/CD 16/);
   });
 

@@ -1,7 +1,4 @@
-/**
- * Highest spell circle with at least one slot (PHB slot tables).
- * Source of truth for what a character may prepare from the class list.
- */
+
 export function maxSpellLevelFromSlots(
   slots: Record<string, number> | null | undefined,
 ): number {

@@ -1,6 +1,4 @@
-/**
- * Heurística melee PHB: ammunition sem thrown ⇒ só à distância.
- */
+
 export function isMeleeWeaponFromPropertyIds(
   propertyIds: readonly string[] | null | undefined,
 ): boolean {

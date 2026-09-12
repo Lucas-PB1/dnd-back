@@ -14,13 +14,10 @@ import {
 export type AberrantMutationResolveResult = {
   handled: boolean;
   response?: TableActionResponseDto;
-  /** Se true, caller deve gastar uso e setar esta mutação após o spend. */
   activateSlug?: AberrantMutationSlug;
 };
 
-/**
- * Clear sem gasto, ou valida slug para ativar (gasto fica no caller).
- */
+
 export async function resolveAberrantMutationSidePath(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;

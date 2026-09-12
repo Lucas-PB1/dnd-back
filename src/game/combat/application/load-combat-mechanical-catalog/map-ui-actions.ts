@@ -33,7 +33,6 @@ function asPanelSection(value: string): PanelActionSection {
     : 'base';
 }
 
-/** Prefere o texto jogável mais completo entre C009 e C010 title. */
 function pickPlayableText(
   ...candidates: Array<string | null | undefined>
 ): string | undefined {

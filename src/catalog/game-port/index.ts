@@ -1,11 +1,4 @@
-/**
- * Porta estável Catalog → Game (ACL).
- *
- * O BC Game deve importar daqui (ou `CatalogLookupService` / `CatalogModule`),
- * não de caminhos profundos `@catalog/<feature>/domain|queries|application/...`.
- *
- * Ampliar esta superfície com cuidado — cada export é contrato entre BCs.
- */
+
 export { CatalogLookupService } from '../catalog-lookup.service';
 export { ClassProficienciesQuery } from '../classes/queries/class-proficiencies.query';
 export { RecordItemCatalogStatsService } from '../items/application/record-item-catalog-stats.service';

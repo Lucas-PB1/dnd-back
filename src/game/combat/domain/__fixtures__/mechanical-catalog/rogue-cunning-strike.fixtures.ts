@@ -1,6 +1,5 @@
 import type { CunningStrikeEffect } from '../../rogue/types';
 
-/** Seeds `combat/C00*` — Rogue Cunning Strike effects. */
 export const FIXTURE_CUNNING_STRIKE_EFFECTS: readonly CunningStrikeEffect[] = [
   {
     slug: 'poison',

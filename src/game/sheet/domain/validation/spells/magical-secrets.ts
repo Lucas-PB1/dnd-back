@@ -1,4 +1,3 @@
-/** Segredos Mágicos (Bardo L10+): listas extras para magias preparadas. */
 export const MAGICAL_SECRETS_UNLOCK_LEVEL = 10;
 export const MAGICAL_SECRETS_LIST_SLUGS = ['cleric', 'druid', 'wizard'] as const;
 

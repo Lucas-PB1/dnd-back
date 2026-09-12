@@ -14,7 +14,6 @@ export function ignoresPartialCover(featSlugs: readonly string[]): boolean {
   return featSlugs.includes('sharpshooter');
 }
 
-/** Atirador de Elite / Besta Perita: sem desv. alcance longo nem corpo a corpo com ranged. */
 export function ignoresRangedRangePenalties(
   featSlugs: readonly string[],
   mode: 'melee' | 'ranged',

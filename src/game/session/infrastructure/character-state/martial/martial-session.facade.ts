@@ -18,7 +18,6 @@ import {
   useManeuverOp,
 } from './index';
 
-/** Agrupa ops marciais; deps via factory (buildResponse do repository). */
 export class MartialSessionFacade {
   constructor(private readonly getDeps: () => MartialSessionDeps) {}
 

@@ -6,11 +6,6 @@ import {
 } from '../../feature-schedule';
 import { meetsFeatureGate } from '../../feature-gates';
 
-/**
- * Regras numéricas de combate do Guerreiro (PHB 2024) e efeitos de subclasse.
- * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
- */
-
 export function isFighterClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'fighter';
 }
@@ -27,7 +22,6 @@ export function attacksPerAction(
   );
 }
 
-/** Cura de Recuperar Fôlego: 1d10 + nível de Guerreiro. */
 export function secondWindHealDice(level: number): string {
   return `1d10+${Math.max(1, level)}`;
 }
@@ -174,7 +168,6 @@ export function hasTacticalMind(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Indomável (Guerreiro). */
 export function hasIndomitable(
   level: number,
   unlockLevel: number | null | undefined,
@@ -182,7 +175,6 @@ export function hasIndomitable(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Chute na Porta (Dungeonera). */
 export function hasDoorKick(
   level: number,
   unlockLevel: number | null | undefined,

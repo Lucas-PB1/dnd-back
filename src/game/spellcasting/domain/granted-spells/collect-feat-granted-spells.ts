@@ -5,7 +5,6 @@ import type {
 import { ritualSpellSlotIndex } from '../ritual-spell-option-key';
 import { FeatGrantedSpellRow } from './types';
 
-/** Keys de opção que carregam slug de magia (qualquer feat — Magic Initiate, Blessings, …). */
 const FEAT_SPELL_OPTION_KEYS = new Set([
   'cantrip1',
   'cantrip2',
@@ -22,7 +21,6 @@ function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
   return false;
 }
 
-/** Slugs de magia concedidos por talentos (escolhas em featOptions + fixas do catálogo). */
 export function collectFeatGrantedSpellSlugs(
   featOptions: readonly FeatOptionDto[] | undefined,
   characterFeats: readonly CharacterFeatDto[] | undefined,

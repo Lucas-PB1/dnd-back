@@ -13,7 +13,6 @@ import type {
   EldritchOriginFeatBinding,
 } from './types';
 
-/** Valida picks contra catálogo e limite de nível (vazio = ok). */
 export function validateEldritchInvocationPicks(input: {
   level: number;
   picks: readonly { slug: string; instanceIndex: number }[];
@@ -71,7 +70,6 @@ export function validateEldritchInvocationPicks(input: {
   return errors;
 }
 
-/** Valida siblings eldritch-invocation-cantrip para picks de blast. */
 export function validateEldritchBlastCantripBindings(input: {
   picks: readonly { slug: string; instanceIndex: number }[];
   bindings: readonly EldritchBlastCantripBinding[];
@@ -135,7 +133,6 @@ export function validateEldritchBlastCantripBindings(input: {
   return errors;
 }
 
-/** Valida siblings eldritch-invocation-origin-feat (Lições dos Primeiros). */
 export function validateEldritchOriginFeatBindings(input: {
   picks: readonly { slug: string; instanceIndex: number }[];
   bindings: readonly EldritchOriginFeatBinding[];

@@ -41,7 +41,6 @@ export type InitiativeRollContext = {
   featEffects?: readonly CatalogEffect[];
   heritageChoices?: readonly HeritageTraitPick[];
   speciesChoices?: readonly SpeciesChoiceLike[];
-  /** Regras de iniciativa do catálogo (classe/subclasse). */
   initiativeRules?: readonly InitiativeRuleRow[];
 };
 

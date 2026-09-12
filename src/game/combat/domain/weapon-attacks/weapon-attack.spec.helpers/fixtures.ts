@@ -64,7 +64,6 @@ function styleEffect(
   };
 }
 
-/** Efeitos tipados para estilos/talentos usados nos specs de ataque (sem legacyFlat). */
 export function catalogEffectsForOwnedStyles(
   owned: readonly string[],
 ): CatalogEffect[] {

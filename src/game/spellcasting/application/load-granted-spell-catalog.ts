@@ -68,7 +68,6 @@ export class LoadGrantedSpellCatalog {
     return mapUnlockRows(rows);
   }
 
-  /** Catálogo de merge (talentos + classe/subclasse). Magias de espécie vêm de `phb_effect`. */
   async loadMergeCatalog(input: {
     speciesSlugs?: string[];
     featSlugs: string[];

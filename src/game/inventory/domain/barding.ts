@@ -1,4 +1,4 @@
-/** Barding PHB Cap. 6 — armadura de montaria (custo ×4, peso ×2). */
+
 
 export const BARDING_SLUG_PREFIX = 'barding-';
 
@@ -12,7 +12,6 @@ export function bardingSlugForArmor(armorSlug: string): string {
   return `${BARDING_SLUG_PREFIX}${armorSlug}`;
 }
 
-/** Multiplica peso textual (ex. `6,5 kg` → `13 kg`). */
 export function scaleWeightText(weight: string | null, factor: number): string | null {
   if (!weight?.trim() || weight.trim() === '—') return weight;
   const match = weight.trim().match(/^([\d.,]+)\s*(.*)$/);

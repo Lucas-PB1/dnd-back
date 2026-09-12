@@ -7,7 +7,6 @@ import {
 import type { LoadEffectCatalog } from './load-effect-catalog';
 import type { EffectKind } from '../domain/catalog-effect';
 
-/** Carrega efeitos de espécie e aplica gates de opção (cultura/linhagem). */
 export async function loadGatedSpeciesEffects(input: {
   effectCatalog: LoadEffectCatalog;
   speciesSlug: string | null | undefined;

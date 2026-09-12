@@ -1,14 +1,11 @@
-/** Tag editorial no início de `phb_spell.description` (Cap. 7 GH). */
 export const SANGROMANCY_DESCRIPTION_PREFIX = '[Sangromancia]';
 
-/** Filtro em `phb_option_def.spell_school_slugs` para picks de grimório bônus. */
 export const SANGROMANCY_SCHOOL_FILTER_SLUG = 'sangromancia';
 
 export const SANGROMANCER_SUBCLASS_SLUG = 'sangromancer';
 
 export const SANGUINE_THIEF_SUBCLASS_SLUG = 'sanguine-thief';
 
-/** Níveis em que o mago ganha um novo círculo de espaço (PHB 2024). */
 export const WIZARD_NEW_SLOT_TIER_LEVELS = [
   { classLevel: 3, maxSpellLevel: 2 },
   { classLevel: 5, maxSpellLevel: 3 },
@@ -39,7 +36,6 @@ const SANGROMANCY_SAVANT_KEY_SET = new Set<string>(
   SANGROMANCY_SAVANT_OPTION_KEYS,
 );
 
-/** Definição de cada pick de grimório bônus (2 no nv. 3 + 1 por faixa de slot). */
 export const SANGROMANCY_SAVANT_OPTION_DEFS: readonly {
   optionKey: SangromancySavantOptionKey;
   unlockLevel: number;
@@ -69,7 +65,6 @@ export function isSangromancerWizard(
   return classSlug === 'wizard' && subclassSlug === SANGROMANCER_SUBCLASS_SLUG;
 }
 
-/** Lista de magias = mago PHB + tag [Sangromancia] (Sangromante ou Ladrão Sanguíneo). */
 export function usesWizardPlusSangromancyList(
   classSlug: string | null | undefined,
   subclassSlug: string | null | undefined,

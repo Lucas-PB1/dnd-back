@@ -1,4 +1,4 @@
-/** Cobertura DMG (`properties.kind = coverage`) — parse e matching. */
+
 
 export {
   COVERAGE_APPLIES_TO,

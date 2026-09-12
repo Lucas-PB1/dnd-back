@@ -2,9 +2,7 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { CharacterStateResponseDto } from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
-/**
- * Incrementa PV atuais (cura) respeitando o máximo da ficha.
- */
+
 export async function applyHealHitPoints(
   stateRepo: CharacterStateRepository,
   character: PlayerCharacter,

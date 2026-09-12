@@ -13,7 +13,6 @@ export class PlayerCharacterSpeciesChoice {
   choiceSlug!: string;
 }
 
-// Lote C: unified runtime option storage
 @Entity({ schema: 'rpg', name: 'player_character_option' })
 export class PlayerCharacterOption {
   @PrimaryGeneratedColumn('uuid')

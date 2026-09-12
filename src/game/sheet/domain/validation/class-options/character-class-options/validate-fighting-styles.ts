@@ -21,7 +21,6 @@ export type FightingStyleValidationDeps = {
   catalogLookup: CatalogLookupService;
 };
 
-/** Valida feats e opções de subclasse de estilo de luta; exige unicidade. */
 export async function validateFightingStyleSelections(
   deps: FightingStyleValidationDeps,
   classSlug: string,

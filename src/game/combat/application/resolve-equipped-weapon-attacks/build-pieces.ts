@@ -116,7 +116,6 @@ export async function piecesFromInventory(
   return pieces;
 }
 
-/** Armas do catálogo por slug (ex.: Lâminas Psíquicas do seed C015). */
 export async function piecesFromCatalogSlugs(
   weapons: Repository<PhbWeapon>,
   masteryRepo: Repository<PhbWeaponMastery>,

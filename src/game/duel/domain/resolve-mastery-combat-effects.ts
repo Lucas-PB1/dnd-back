@@ -1,6 +1,4 @@
-/**
- * Resolve effects de maestria no acerto/erro (genérico — Guerreiro é consumidor).
- */
+
 
 import type { CatalogEffect } from '@game/effects/domain/catalog-effect';
 import {

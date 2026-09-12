@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 
-/** Feat slugs por personagem — uma query, sem carregar a sheet. */
 export async function loadFeatSlugsByCharacterIds(
   dataSource: DataSource,
   characterIds: readonly string[],

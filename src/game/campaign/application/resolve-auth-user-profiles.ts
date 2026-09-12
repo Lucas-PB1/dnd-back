@@ -15,10 +15,7 @@ type AuthUserRow = {
   bio: string | null;
 };
 
-/**
- * Lê display name / e-mail / avatar / bio de auth.users (Supabase).
- * Sem schema auth (testes locais) devolve mapa vazio.
- */
+
 export async function resolveAuthUserProfiles(
   dataSource: DataSource,
   userIds: string[],
@@ -56,7 +53,6 @@ export async function resolveAuthUserProfiles(
       });
     }
   } catch {
-    // Sem auth schema — UI cai no fallback.
   }
 
   return map;

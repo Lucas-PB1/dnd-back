@@ -2,7 +2,6 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { Repository } from 'typeorm';
 import { PlayerCharacterItem } from '../player-character-item.entity';
 
-/** Seed mochila a partir do equipamento inicial; não sobrescreve itens existentes. */
 export async function ensureFromStartingEquipment(
   items: Repository<PlayerCharacterItem>,
   catalogLookup: CatalogLookupService,

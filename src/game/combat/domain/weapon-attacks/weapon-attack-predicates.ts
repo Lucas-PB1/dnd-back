@@ -12,7 +12,6 @@ const MARTIAL_PROFICIENCY = "armas-marciais";
 const ADVANCED_PROFICIENCY = "armas-avancadas";
 const MARTIAL_LIGHT_PROFICIENCY = "armas-marciais-leves";
 const MARTIAL_RANGED_PROFICIENCY = "armas-marciais-a-distancia";
-/** PHB 2024 Ladino: marciais com Acuidade ou Leve. */
 const MARTIAL_FINESSE_OR_LIGHT_PROFICIENCY =
   "armas-marciais-acuidade-ou-leves";
 

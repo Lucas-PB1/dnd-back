@@ -1,4 +1,4 @@
-/** Regras e notas de combate do Patrulheiro (PHB 2024). */
+
 
 export type { RangerSubclassSlug } from './rules';
 export {

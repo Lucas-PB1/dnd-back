@@ -51,11 +51,6 @@ function featSlugForSpell(
   );
 }
 
-/**
- * Economia de conjuração para magias concedidas (domain rules PHB 2024).
- * Espécie/feat: só `phb_effect` cast_economy (incl. truques de escolha tipados).
- * Subclasse: slot_only, exceto Revelações Santas (Lâmina do Esplendor) → at_will.
- */
 export function resolveGrantedSpellCastEconomy(input: {
   spellSlug: string;
   source?: CharacterSpellSource;
@@ -69,8 +64,6 @@ export function resolveGrantedSpellCastEconomy(input: {
 }): CastEconomy {
   const source = input.source ?? 'class';
 
-  // Revelações Santas: à vontade mesmo se a fonte vier anotada como class
-  // (ex.: cast path sem subclassSpellSlugs).
   if (isBladeHolyRevelationAtWillSpell(input.subclassSlug, input.spellSlug)) {
     return 'at_will';
   }
@@ -117,7 +110,6 @@ export function resolveGrantedSpellCastEconomy(input: {
   return 'slot_only';
 }
 
-/** Máximo de free casts por magia concedida (default 1/DL; Greater Freyr = PB). */
 export function freeCastMaxUses(input: {
   economy: CastEconomy;
   spellSlug: string;

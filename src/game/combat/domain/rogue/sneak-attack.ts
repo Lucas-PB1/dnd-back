@@ -22,7 +22,6 @@ export function sneakAttackDiceCount(
   );
 }
 
-/** O Perseguidor Aracnídeo pode trocar os d6 por d8 de dano Venenoso. */
 export function sneakAttackDieFaces(
   subclassSlug?: string | null,
   usePoisonousStrike = false,
@@ -49,7 +48,6 @@ export function hasSlipperyMind(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Evasão (Ladino): salvaguarda de Destreza que reduz dano à metade. */
 export function hasEvasion(
   level: number,
   unlockLevel: number | null | undefined,
@@ -57,7 +55,6 @@ export function hasEvasion(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Assassino: Mira Firme sem zerar Deslocamento (Mira Móvel). */
 export function hasAssassinMobileAim(
   level: number,
   unlockLevel: number | null | undefined,
@@ -65,7 +62,6 @@ export function hasAssassinMobileAim(
   return meetsFeatureGate(level, unlockLevel);
 }
 
-/** Soulknife usa a mesma progressão de dados psiônicos do Psi Warrior. */
 export function soulknifePsiDiceSchedule(
   level: number,
   bands: readonly FeatureScheduleBand[],

@@ -20,7 +20,6 @@ export async function loadCharacterSheet(
   return mapSheetBundle(rows[0]?.bundle);
 }
 
-/** Feats/options/species/spells + classOptions — para GET state. */
 export async function loadGrantedSpellSheetSlice(
   deps: CharacterSheetLoadDeps,
   characterId: string,

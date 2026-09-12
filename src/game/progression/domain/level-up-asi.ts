@@ -7,7 +7,6 @@ export type LevelUpAsiDistributionMode = 'plus2' | 'plus1plus1';
 export type LevelUpAsiInput = {
   distributionMode: LevelUpAsiDistributionMode;
   primaryAbilitySlug: string;
-  /** Obrigatório em plus1plus1; deve diferir do primary. */
   secondaryAbilitySlug?: string;
 };
 
@@ -40,7 +39,6 @@ function bumpAbility(
   };
 }
 
-/** Resolve ASI a partir dos campos opcionais do LevelUpDto; null se nenhum campo ASI. */
 export function resolveLevelUpAsiFromDto(dto: {
   asiDistributionMode?: LevelUpAsiDistributionMode;
   asiPrimaryAbilitySlug?: string;
@@ -78,7 +76,6 @@ export function resolveLevelUpAsiFromDto(dto: {
   };
 }
 
-/** Aplica ASI de level-up: +2 em um atributo ou +1 em dois distintos (cap 20). */
 export function applyLevelUpAsiBoost(
   scores: AbilityScores,
   input: LevelUpAsiInput,

@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Consome MV `mv_phb_hp_bonus_source`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_hp_bonus_source' })
 export class VPhbHpBonusSource {
   @ViewColumn({ name: 'source_kind' })

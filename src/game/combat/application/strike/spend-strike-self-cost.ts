@@ -28,10 +28,7 @@ export type SpendStrikeSelfCostPorts = {
 
 export type SpendStrikeSelfCostNoteStyle = 'table' | 'duel';
 
-/**
- * Gasta 1 uso do `resource_slug` da strike option + custo em si.
- * Cura Sinfonia só se `applySymphonyHeal` e gate de produto (unlock do catálogo).
- */
+
 export async function spendStrikeSelfCost(input: {
   character: PlayerCharacter;
   option: StrikeOption;
@@ -40,7 +37,6 @@ export async function spendStrikeSelfCost(input: {
   lowerCostUnlockLevel?: number | null;
   symphonyUnlockLevel?: number | null;
   ports: SpendStrikeSelfCostPorts;
-  /** Override resource (default: option.resourceSlug — obrigatório no catálogo). */
   resourceSlug?: string;
   applySymphonyHeal?: boolean;
   rng?: Rng;

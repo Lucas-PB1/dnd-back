@@ -1,4 +1,3 @@
-/** Quota de props aleatórias declarada em phb_item.properties.artifactRandomQuota. */
 export type ArtifactRandomQuota = {
   minorBeneficial: number;
   majorBeneficial: number;
@@ -16,7 +15,6 @@ export type ArtifactSpellEffect = {
   type: 'artifactSpell';
   spellLevel: number;
   spellSlug?: string;
-  /** Gasto até o próximo descanso longo (MVP ≈ amanhecer). */
   spentUntilLongRest?: boolean;
   spellSaveDc?: number;
 };
@@ -86,7 +84,6 @@ export type CatalogSentience = {
   [key: string]: unknown;
 };
 
-/** Penalidades one-shot (ex. major detrimental −2) até Restauração Maior. */
 export type ArtifactAbilityPenalties = Partial<
   Record<
     | 'forca'
@@ -102,7 +99,6 @@ export type ArtifactAbilityPenalties = Partial<
 export type ArtifactInstanceProperties = {
   artifactRandom?: ArtifactRandomRollResult;
   sentience?: CatalogSentience;
-  /** Valores negativos (ex. forca: -2). Persistentes até Restauração Maior. */
   abilityPenalties?: ArtifactAbilityPenalties;
 };
 

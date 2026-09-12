@@ -15,9 +15,6 @@ import {
 } from './structured-kind-routes';
 import { runDeclaredEffectsLoop } from './run-declared-effects-loop';
 
-/**
- * SSOT mesa: `phb_class_economy_action` (botão/gasto) + `phb_effect` on_table_action (apply).
- */
 export async function applyDeclaredEconomyTableAction(
   deps: DeclaredEconomyTableActionDeps,
   character: PlayerCharacter,

@@ -3,7 +3,6 @@ import { CharacterRepository } from './infrastructure/character.repository';
 import { PlayerCharacter } from './infrastructure/player-character.entity';
 import type { CharacterAccessMode } from '../campaign/infrastructure/campaign-character-access.service';
 
-/** Acesso a `player_character` (dono ou membro de campanha). */
 @Injectable()
 export class PlayerCharacterAccessService {
   constructor(private readonly characters: CharacterRepository) {}

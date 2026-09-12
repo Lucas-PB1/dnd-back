@@ -18,7 +18,6 @@ import { addInventoryItemRow } from './inventory-coin-tx';
 import { inventoryItemToDto } from './inventory-item-mappers';
 import { findInventoryItemOrFail } from './inventory-item-ops';
 
-/** Compra multi-linha: débito (se houver) + upserts atômicos. */
 export async function purchaseInventoryLines(input: {
   dataSource: DataSource;
   catalogItems: Repository<PhbItem>;
@@ -47,8 +46,6 @@ export async function purchaseInventoryLines(input: {
     });
   }
 
-  // Upserts fora da TX de moedas: cada INSERT…ON CONFLICT é atômico e
-  // não depende de hold de conexão (PgBouncer transaction pooler).
   const items = dataSource.getRepository(PlayerCharacterItem);
   const results: InventoryItemResponseDto[] = [];
   for (const line of lines) {
@@ -65,7 +62,6 @@ export async function purchaseInventoryLines(input: {
   return results;
 }
 
-/** Ajusta qty com débito (↑) ou crédito (↓) atômico. */
 export async function adjustInventoryQuantityWithCoins(input: {
   dataSource: DataSource;
   catalogItems: Repository<PhbItem>;
@@ -123,7 +119,6 @@ export async function adjustInventoryQuantityWithCoins(input: {
   });
 }
 
-/** Remove qty parcial ou total, com crédito opcional. */
 export async function removeInventoryQuantityWithCredit(input: {
   dataSource: DataSource;
   characterId: string;

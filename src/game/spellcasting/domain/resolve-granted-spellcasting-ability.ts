@@ -41,7 +41,6 @@ function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
   return false;
 }
 
-/** Resolve featSlug that granted a spell (option choice or fixed catalog grant). */
 export function resolveFeatSlugForGrantedSpell(
   spellSlug: string,
   featOptions: readonly FeatOptionDto[] | undefined,
@@ -91,10 +90,6 @@ function castingAbilityFromSpeciesChoices(
   return null;
 }
 
-/**
- * Atributo de conjuração efetivo para uma magia na ficha,
- * considerando classe, talento (`castingAbility`) e espécie (`*_casting_ability`).
- */
 export function resolveSpellcastingAbilityForSpell(input: {
   source: CharacterSpellSource | undefined;
   spellSlug: string;

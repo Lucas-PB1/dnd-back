@@ -8,7 +8,6 @@ import { SPECIES_LANGUAGE_CHOICE_COUNT } from '../../origin/species-language';
 import type { ValidateSheetInputDeps } from './types';
 import { validateClassOptionsInput } from './validate-class-options-input';
 
-/** Orquestra validações parciais do patch/create de ficha. */
 export async function validateSheetInput(
   deps: ValidateSheetInputDeps,
   input: CharacterSheetInput,

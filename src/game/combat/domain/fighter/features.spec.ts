@@ -1,6 +1,4 @@
-/**
- * Specs do domínio Guerreiro (PHB 2024).
- */
+
 import {
   attacksPerAction,
   championCritThreshold,

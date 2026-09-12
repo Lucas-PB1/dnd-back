@@ -129,7 +129,6 @@ export function assertBackgroundBoostSlugsAllowed(
   }
 }
 
-/** Normaliza payload parcial da API para o input de domínio. */
 export function resolveBackgroundAbilityBoostInput(input: {
   mode?: string | null;
   plus2Slug?: string | null;

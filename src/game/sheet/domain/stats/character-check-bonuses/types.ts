@@ -1,6 +1,5 @@
 import type { CatalogEffect } from '@game/effects';
 
-/** Escolhas de espécie que concedem uma perícia (slug em choiceSlug). */
 export const SKILL_SPECIES_CHOICE_KINDS = new Set([
   'human_skill',
   'elf_keen_senses',
@@ -48,6 +47,5 @@ export type SkillBonusSources = {
   subclassOptions?: readonly SubclassOptionLike[];
   classSlug?: string | null;
   level?: number;
-  /** Unlock do catálogo (`phb_class.jack_of_all_trades_level`); null = sem a feature. */
   jackOfAllTradesUnlockLevel?: number | null;
 };

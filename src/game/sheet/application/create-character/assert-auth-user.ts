@@ -25,7 +25,6 @@ export async function assertAuthUserExists(
     }
   } catch (error) {
     if (error instanceof UnauthorizedException) throw error;
-    // Sem schema auth (ex.: Postgres local de teste) — deixa o save decidir.
   }
 }
 

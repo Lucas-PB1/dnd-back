@@ -92,9 +92,7 @@ export function knownPactSlugsFromPicks(
   return set;
 }
 
-/**
- * Extrai alcance em metros a partir do texto do catálogo (ex.: "36 metros", "120 feet").
- */
+
 export function parseSpellRangeMeters(
   rangeText: string | null | undefined,
 ): number | null {

@@ -3,7 +3,7 @@ import type {
   EncounterCombatantKind,
 } from '@game/campaign/infrastructure/campaign-encounter-combatant.entity';
 
-/** Fixture compartilhada de combatant de encontro (specs de campaign). */
+
 export function combatantFixture(
   overrides: Partial<CampaignEncounterCombatant> = {},
 ): CampaignEncounterCombatant {

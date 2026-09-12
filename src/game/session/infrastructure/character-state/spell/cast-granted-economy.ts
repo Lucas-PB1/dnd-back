@@ -32,7 +32,6 @@ export async function resolveSpellCastEconomyForCharacter(
   return budget.economy;
 }
 
-/** Economia + teto de free casts (Greater Freyr = PB; efeitos tipados quando seedados). */
 export async function resolveGrantedFreeCastBudget(
   character: PlayerCharacter,
   spellSlug: string,

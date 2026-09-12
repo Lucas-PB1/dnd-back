@@ -4,7 +4,6 @@ import type { CampaignEncounter } from '../infrastructure/campaign-encounter.ent
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import { sortCombatantsByInitiative } from '../domain/encounter-initiative';
 
-/** Libera anti-overlap Cursemarked no PC cujo turno começa. */
 export async function clearCursemarkedLockForCurrentPc(input: {
   encounters: CampaignEncounterRepository;
   characterState: CharacterStateRepository;

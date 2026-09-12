@@ -52,7 +52,6 @@ describe('resolvePurchaseLines purchase discount', () => {
       { percentOff: 50, nonMagicOnly: false, foodDrinkOnly: true },
     );
 
-    // 50 + 50 + 100 = 200 PO → 20000 PC
     expect(purseToCopper(result.totalCost)).toBe(20000);
   });
 });

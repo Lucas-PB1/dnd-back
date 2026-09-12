@@ -8,7 +8,6 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 
 import { asDep } from '@common/testing/as-dep';
 
-/** Cast test double para construtor de handler — não usar `as never`. */
 export function asHandlerDep<T = never>(mock: object): T {
   return asDep<T>(mock);
 }

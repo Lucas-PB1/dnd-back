@@ -1,7 +1,4 @@
-/**
- * Regras de combate do Pistoleiro (Valdas) para armas de fogo e Tiro Crítico.
- * Crit: SSOT `phb_class_feature_schedule.gunslinger_crit_threshold`.
- */
+
 
 import { resolveFighterAttackCritThreshold } from '../fighter/features';
 import {
@@ -26,22 +23,10 @@ export function isGunslingerClass(classSlug: string | null | undefined): boolean
   return classSlug === 'gunslinger';
 }
 
-/**
- * Dano base de arma de fogo: não soma o modificador de atributo
- * (exceto se negativo — o RAW omite só o bônus positivo implícito;
- * Valdas: "não adiciona seu modificador", então zeroamos positivos e
- * negativos para bater o texto; negativos ficam 0 também).
- *
- * Exagero (nv.11+) reintroduz o modificador via `applyOverkillDamageBonus`.
- */
 export function firearmAbilityDamageBonus(_abilityMod: number): number {
   return 0;
 }
 
-/**
- * Exagero (nível 11+): em arma de fogo à distância, reintroduz o
- * modificador. Em arma à distância que já somava o mod, +1d8 extra.
- */
 export function applyOverkillDamageBonus(input: {
   level: number;
   isFirearm: boolean;
@@ -67,10 +52,6 @@ export function applyOverkillDamageBonus(input: {
   };
 }
 
-/**
- * Limiar de crítico efetivo: Pistoleiro (à distância) ou Campeão (qualquer).
- * O menor limiar (melhor crítico) vence se ambos se aplicarem.
- */
 export function resolveAttackCritThreshold(input: {
   classSlug?: string | null;
   subclassSlug?: string | null;

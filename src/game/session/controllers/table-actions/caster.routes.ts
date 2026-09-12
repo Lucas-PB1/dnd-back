@@ -16,90 +16,85 @@ import {
   UseWarlockTableActionDto,
   UseWizardTableActionDto,
 } from '../../dto/table-actions/table-actions-caster.dto';
-import { NestMixinCtor } from './mixin-ctor';
 import { TableActionEndpoint } from './route-decorators';
 
-/** Cleric / Bard / Sorcerer / Warlock / Druid / Wizard. */
-export function WithCasterTableActions<TBase extends NestMixinCtor>(Base: TBase) {
-  abstract class CasterTableActionsHost extends Base {
-    abstract readonly cleric: ClericActionsHandler;
-    abstract readonly bard: BardActionsHandler;
-    abstract readonly sorcerer: SorcererActionsHandler;
-    abstract readonly warlock: WarlockActionsHandler;
-    abstract readonly druid: DruidActionsHandler;
-    abstract readonly wizard: WizardActionsHandler;
+export abstract class CasterTableActionsHost {
+  abstract readonly cleric: ClericActionsHandler;
+  abstract readonly bard: BardActionsHandler;
+  abstract readonly sorcerer: SorcererActionsHandler;
+  abstract readonly warlock: WarlockActionsHandler;
+  abstract readonly druid: DruidActionsHandler;
+  abstract readonly wizard: WizardActionsHandler;
 
-    @TableActionEndpoint(
-      'cleric',
-      'Resolve a Cleric or Cleric-subclass tabletop action',
-    )
-    useClericTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseClericTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.cleric.useTableAction(user.id, id, dto);
-    }
-
-    @TableActionEndpoint(
-      'bard',
-      'Resolve a Bard or Bard-subclass tabletop action',
-    )
-    useBardTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseBardTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.bard.useTableAction(user.id, id, dto);
-    }
-
-    @TableActionEndpoint(
-      'sorcerer',
-      'Resolve a Sorcerer or Sorcerer-subclass tabletop action',
-    )
-    useSorcererTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseSorcererTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.sorcerer.useTableAction(user.id, id, dto);
-    }
-
-    @TableActionEndpoint(
-      'warlock',
-      'Resolve a Warlock or Warlock-subclass tabletop action',
-    )
-    useWarlockTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseWarlockTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.warlock.useTableAction(user.id, id, dto);
-    }
-
-    @TableActionEndpoint(
-      'druid',
-      'Resolve a Druid or Druid-subclass tabletop action',
-    )
-    useDruidTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseDruidTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.druid.useTableAction(user.id, id, dto);
-    }
-
-    @TableActionEndpoint(
-      'wizard',
-      'Resolve a Wizard or Wizard-subclass tabletop action',
-    )
-    useWizardTableAction(
-      @CurrentUser() user: AuthUser,
-      @Param('id', ParseUUIDPipe) id: string,
-      @Body() dto: UseWizardTableActionDto,
-    ): Promise<TableActionResponseDto> {
-      return this.wizard.useTableAction(user.id, id, dto);
-    }
+  @TableActionEndpoint(
+    'cleric',
+    'Resolve a Cleric or Cleric-subclass tabletop action',
+  )
+  useClericTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseClericTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.cleric.useTableAction(user.id, id, dto);
   }
-  return CasterTableActionsHost;
+
+  @TableActionEndpoint(
+    'bard',
+    'Resolve a Bard or Bard-subclass tabletop action',
+  )
+  useBardTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseBardTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.bard.useTableAction(user.id, id, dto);
+  }
+
+  @TableActionEndpoint(
+    'sorcerer',
+    'Resolve a Sorcerer or Sorcerer-subclass tabletop action',
+  )
+  useSorcererTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseSorcererTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.sorcerer.useTableAction(user.id, id, dto);
+  }
+
+  @TableActionEndpoint(
+    'warlock',
+    'Resolve a Warlock or Warlock-subclass tabletop action',
+  )
+  useWarlockTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseWarlockTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.warlock.useTableAction(user.id, id, dto);
+  }
+
+  @TableActionEndpoint(
+    'druid',
+    'Resolve a Druid or Druid-subclass tabletop action',
+  )
+  useDruidTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseDruidTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.druid.useTableAction(user.id, id, dto);
+  }
+
+  @TableActionEndpoint(
+    'wizard',
+    'Resolve a Wizard or Wizard-subclass tabletop action',
+  )
+  useWizardTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseWizardTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.wizard.useTableAction(user.id, id, dto);
+  }
 }

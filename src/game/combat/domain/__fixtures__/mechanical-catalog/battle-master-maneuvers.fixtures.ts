@@ -1,6 +1,5 @@
 import type { BattleMasterManeuver } from '../../fighter/battle-master-maneuvers';
 
-/** Seeds `combat/C00*` — Battle Master maneuvers. */
 export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = [
   {
     slug: 'parry',

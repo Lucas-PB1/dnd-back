@@ -13,7 +13,6 @@ type EffectiveIdentity = {
   backgroundSlug: string;
 };
 
-/** Aplica patch de background (boosts/tool) + UpdateCharacterDto na row. */
 export async function applyBackgroundAndIdentityUpdate(input: {
   row: PlayerCharacter;
   dto: UpdateCharacterDto;

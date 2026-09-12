@@ -15,7 +15,6 @@ export async function resolveSubclassUnlockLevel(
   return row?.subclassUnlockLevel ?? 3;
 }
 
-/** Nível do catálogo em que a classe exige Estilo de Luta; null = não exige. */
 export async function resolveFightingStyleUnlockLevel(
   dataSource: DataSource,
   classSlug: string,
@@ -27,7 +26,6 @@ export async function resolveFightingStyleUnlockLevel(
   return row?.fightingStyleUnlockLevel ?? null;
 }
 
-/** Nível do Pau pra Toda Obra; null = classe sem a característica. */
 export async function resolveJackOfAllTradesLevel(
   dataSource: DataSource,
   classSlug: string,

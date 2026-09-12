@@ -25,7 +25,6 @@ export class PurchaseInventoryLineDto {
   @Min(1)
   quantity?: number;
 
-  /** Aplicar cobertura nesta linha (peça base já no inventário ou comprada na mesma TX). */
   @ApiPropertyOptional({ example: 'arma-1-2-ou-3' })
   @IsOptional()
   @IsString()

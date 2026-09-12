@@ -1,4 +1,4 @@
-/** Ação de mesa tipada (Psi Warrior, Soulknife, …) — SSOT no banco. */
+
 
 export type SubclassTableAction = {
   subclassSlug: string;

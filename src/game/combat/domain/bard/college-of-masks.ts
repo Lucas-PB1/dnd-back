@@ -1,8 +1,4 @@
-/**
- * Máscaras do Colégio das Máscaras — validação.
- * Contagens: SSOT `phb_class_feature_schedule` (college-of-masks).
- * Catálogo de slugs: `rpg.phb_persona_mask`.
- */
+
 
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -12,7 +8,6 @@ import {
 
 export type PersonaMaskSlug = string;
 
-/** Máscaras equipadas simultaneamente — SSOT `persona_masks_equipped`. */
 export function maxEquippedPersonaMasks(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -25,7 +20,6 @@ export function maxEquippedPersonaMasks(
   );
 }
 
-/** Máscaras conhecidas — SSOT `persona_masks_known`. */
 export function knownPersonaMaskCount(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -45,9 +39,6 @@ export function isPersonaMaskSlug(
   return catalogSlugs.includes(slug);
 }
 
-/**
- * Valida máscaras equipadas na mesa: slugs do catálogo, sem duplicata, até o máximo do nível.
- */
 export function assertValidPersonaMasks(
   catalogSlugs: readonly string[],
   masks: string[],

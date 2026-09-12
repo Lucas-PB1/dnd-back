@@ -25,10 +25,6 @@ function mergeAbilityMaps(
   return result;
 }
 
-/**
- * Aplica bônus de atributo de itens ativos sobre uma cópia das pontuações,
- * respeitando o teto de cada atributo (20 por padrão).
- */
 export function applyItemAbilityBonuses(
   scores: AbilityScores,
   abilityBonuses: PermanentItemEffects['abilityBonuses'],
@@ -46,7 +42,6 @@ export function applyItemAbilityBonuses(
   return next;
 }
 
-/** Soma efeitos permanentes só dos itens ativos (equipados + sintonizados se preciso). */
 export function resolveActivePermanentItemEffects(
   items: readonly InventoryItemForEffects[],
 ): ResolvedPermanentItemEffects {

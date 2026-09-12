@@ -27,7 +27,6 @@ export async function loadClassWeaponMasteryProgression(
   return loadWeaponMasteryProgression(dataSource, classSlug);
 }
 
-/** Níveis com ASI/talento para a classe (`phb_class_progression.asi_or_feat`). */
 export async function loadAsiOrFeatLevels(
   dataSource: DataSource,
   classSlug: string,
@@ -64,7 +63,6 @@ export async function loadMaxSpellLevelForCharacter(
   return maxSpellLevelForCharacter(dataSource, classSlug, level, subclassSlug);
 }
 
-/** Características de classe que desbloqueiam exatamente neste nível. */
 export async function loadClassFeaturesAtLevel(
   dataSource: DataSource,
   classSlug: string,
@@ -83,7 +81,6 @@ export async function loadClassFeaturesAtLevel(
   }));
 }
 
-/** Características de subclasse que desbloqueiam exatamente neste nível. */
 export async function loadSubclassFeaturesAtLevel(
   dataSource: DataSource,
   subclassSlug: string | null,

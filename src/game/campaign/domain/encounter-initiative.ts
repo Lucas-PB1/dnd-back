@@ -6,7 +6,6 @@ export type InitiativeSortable = {
   isActive: boolean;
 };
 
-/** Ordem de iniciativa PHB: total desc → modificador desc → nome asc. Inativos no fim. */
 export function compareInitiativeOrder(
   a: InitiativeSortable,
   b: InitiativeSortable,

@@ -30,7 +30,6 @@ export type {
 
 @Injectable()
 export class LoadCombatMechanicalCatalog {
-  /** TTL do cache em memória (warm instance / vários loads no mesmo request). */
   static readonly CACHE_TTL_MS = 60_000;
 
   private cache: CombatMechanicalCatalog | null = null;
@@ -91,7 +90,6 @@ export class LoadCombatMechanicalCatalog {
     return this.inflight;
   }
 
-  /** Invalida cache (testes / após reseed na mesma instância). */
   clearCache(): void {
     this.cache = null;
     this.cacheAtMs = 0;

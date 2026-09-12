@@ -4,21 +4,14 @@ export type ClassEconomyActionRecord = {
   id: string;
   name: string;
   economy: ActionEconomyBucket;
-  /** Classe dona; omitido/null em linhas de espécie. */
   classSlug?: string | null;
   minLevel: number;
   subclassSlug?: string;
-  /** Espécie dona; omitido/null em linhas de classe/talento. */
   speciesSlug?: string | null;
-  /** Talento dono; omitido/null em linhas de classe/espécie. */
   featSlug?: string | null;
-  /** Item mágico dono; omitido/null em linhas de classe/espécie/talento. */
   itemSlug?: string | null;
-  /** Traço de herança GH; omitido/null em linhas de classe/espécie. */
   heritageTraitSlug?: string | null;
-  /** Character Thread (Northlands); omitido/null fora de threads. */
   threadSlug?: string | null;
-  /** Mínimo de picks do mesmo traço para liberar a ação. */
   minTraitTakes?: number;
   requiresOptionKey?: string;
   requiresOptionValue?: string;
@@ -29,7 +22,6 @@ export type ClassEconomyActionRecord = {
   description?: string;
   tableAction?: string;
   spendAmount?: number;
-  /** Magia vinculada (cast de item / consulta UI). */
   spellSlug?: string;
 };
 
@@ -41,12 +33,7 @@ export type ClassPanelActionRecord = {
   subclassSlug?: string;
   slug: string;
   name: string;
-  /** Resumo curto (C010 `title`) — fallback se não houver description. */
   title?: string;
-  /**
-   * Texto jogável completo. Preferência: C009 `description` quando
-   * `table_action` = slug do painel (mesmo classSlug); senão ausente.
-   */
   description?: string;
   minLevel: number;
   resourceSlug?: string;

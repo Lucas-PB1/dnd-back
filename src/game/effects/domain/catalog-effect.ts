@@ -192,7 +192,6 @@ export type CatalogEffect = {
     maxTargetSize: string | null;
   } | null;
   dice: EffectDiceSatellite | null;
-  /** Ausente em fixtures legados; load do catálogo sempre preenche. */
   combatFlag?: EffectCombatFlagSatellite | null;
   companion?: EffectCompanionSatellite | null;
 };

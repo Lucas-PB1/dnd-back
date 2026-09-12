@@ -7,7 +7,6 @@ import type { CharacterTransformation } from './validate-transformation';
 
 export type ValidateTransformationChoicesInput = {
   transformation: CharacterTransformation;
-  /** option_key → value_ids permitidos no catálogo */
   allowedValuesByKey: ReadonlyMap<string, ReadonlySet<string>>;
   rules?: Cap6TransformationRule;
 };
@@ -99,7 +98,6 @@ export function validateTransformationChoices(
 
   for (const kind of byKind.keys()) {
     if (requiredKeys.has(kind)) continue;
-    // Future-stage keys not yet unlocked
     const keyStage = stageOfKey(kind);
     if (keyStage != null && keyStage > stage) {
       throw new BadRequestException(
@@ -123,7 +121,6 @@ function assertAllowed(
   }
 }
 
-/** stage1Boon / stage2Boon2 → 1 / 2; subOptions → null */
 function stageOfKey(key: string): number | null {
   const match = /^stage(\d+)Boon(?:2)?$/.exec(key);
   if (!match) return null;

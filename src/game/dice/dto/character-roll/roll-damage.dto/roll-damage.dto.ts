@@ -2,7 +2,6 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsInt, IsOptional, Max, Min } from 'class-validator';
 import { RollDamageBaseDto } from './base.dto';
 
-/** Flags de Assassino, Paladino, Patrulheiro e Clérigo. */
 export class RollDamageDto extends RollDamageBaseDto {
   @ApiPropertyOptional({
     default: false,

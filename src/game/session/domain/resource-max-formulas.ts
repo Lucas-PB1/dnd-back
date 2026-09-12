@@ -1,6 +1,4 @@
-/**
- * Fórmulas nomeadas de max de recurso (PHB) — SSOT em combat/domain.
- */
+
 
 import {
   psiEnergyDiceCount,
@@ -43,7 +41,6 @@ export function resolveFormulaMax(
   }
   const ability = abilityModFromFormula(row.maxFormula, mods);
   if (ability != null) {
-    // Sabujo de Sangue: pool = 1 + CON (mín. 1). Enum só tem constitution_mod.
     if (
       row.resourceSlug === 'blood-strike' &&
       row.maxFormula === 'constitution_mod'

@@ -84,7 +84,6 @@ export class ResolveActivePermanentItemEffects {
       > | null;
       const coverage = parseItemCoverage(props);
       if (!coverage) continue;
-      // Bônus de arma/munição ficam por peça no resolve de ataques.
       if (coverage.appliesTo === 'weapon' || coverage.appliesTo === 'ammunition') {
         continue;
       }

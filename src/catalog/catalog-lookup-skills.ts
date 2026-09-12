@@ -36,7 +36,6 @@ export async function validateClassSkillChoices(input: {
 
   assertUnique(skillSlugs, 'Duplicate skill choices are not allowed');
 
-  // Bard (e similares): pool aberto — qualquer perícia do catálogo.
   if (phbClass.skillChoiceFrom === 'any') {
     for (const slug of skillSlugs) {
       await assertSkillInCatalog(input.skillsRepo, slug);

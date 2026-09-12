@@ -1,7 +1,6 @@
 import { DataSource } from 'typeorm';
 import type { CharacterTransformation } from '@game/sheet/domain/transformation/validate-transformation';
 
-/** `null` remove a transformação; valor grava 1:1 + choices. */
 export async function syncTransformation(
   dataSource: DataSource,
   characterId: string,

@@ -26,15 +26,10 @@ export type ManeuverResolveResult = {
   maneuverName: string;
   effectKind: GunslingerManeuver['effectKind'];
   riskRoll: ResourceDieRoll;
-  /** PV temporários concedidos (Morda a Bala). */
   tempHpGained?: number;
-  /** Dano no erro (Tiro Rasante). */
   missDamage?: number;
-  /** Bônus de CA (Por um Triz). */
   acBonus?: number;
-  /** Bônus a somar ao teste (Espírito Independente). */
   checkBonus?: number;
-  /** Texto descritivo para a mesa. */
   note: string;
 };
 

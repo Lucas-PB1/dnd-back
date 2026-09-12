@@ -1,4 +1,4 @@
-/** Moedas D&D — parse de catálogo + câmbio PHB (Coin Values). */
+
 
 export type { CoinPurse, CoinPurseColumns } from './types';
 export {

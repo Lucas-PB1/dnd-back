@@ -1,7 +1,4 @@
-/**
- * Regras numéricas de combate do Bárbaro (PHB 2024): Fúria, Golpe Brutal e Fanático.
- * Números: SSOT `phb_class_feature_schedule` (bands obrigatórios).
- */
+
 
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -29,7 +26,6 @@ export function rageDamageBonus(
   );
 }
 
-/** Golpe Brutal: Nd10 — count em `brutal_strike_dice_count`. */
 export function brutalStrikeDice(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -42,7 +38,6 @@ export function brutalStrikeDice(
   return count == null || count <= 0 ? null : `${count}d10`;
 }
 
-/** Tipos de dano com Resistência enquanto a Fúria está ativa. */
 export const RAGE_DAMAGE_RESISTANCES = [
   'Contundente',
   'Cortante',
@@ -69,7 +64,6 @@ export function appliesRageDamageBonus(input: {
   return rageDamageBonus(input.level, input.featureSchedules);
 }
 
-/** Movimento Rápido (nv.5+): +3 m enquanto sem armadura pesada (não modelamos armadura aqui). */
 export function fastMovementBonusMeters(input: {
   classSlug?: string | null;
   level?: number;
@@ -78,7 +72,6 @@ export function fastMovementBonusMeters(input: {
   return 3;
 }
 
-/** Fúria Divina (Fanático): 1d6 + metade do nível, uma vez por turno enquanto enfurecido. */
 export function divineFuryExtraDice(level: number): string {
   const half = Math.floor(level / 2);
   return half > 0 ? `1d6+${half}` : '1d6';

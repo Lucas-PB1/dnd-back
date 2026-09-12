@@ -1,7 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { parseItemCoverage, type ItemCoverage } from './item-coverage';
 
-/** Coberturas não entram soltas na mochila — só presas a uma peça base. */
 export function assertNotStandaloneCoverageItem(
   itemSlug: string,
   properties: Record<string, unknown> | null | undefined,
@@ -13,7 +12,6 @@ export function assertNotStandaloneCoverageItem(
   }
 }
 
-/** Linha cujo itemSlug é a cobertura — exige destino. */
 export function assertCoverageLineHasTarget(
   coverageSlug: string,
   line: {

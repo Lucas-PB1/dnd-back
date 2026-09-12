@@ -20,7 +20,6 @@ function choiceSlugForOptionKey(
   );
 }
 
-/** Default culture/lineage when the player has not picked yet (PHB baseline). */
 export function withDefaultSpeciesChoices(
   speciesSlug: string | null | undefined,
   choices: readonly EffectChoiceRef[],
@@ -36,7 +35,6 @@ export function withDefaultSpeciesChoices(
   return [...choices];
 }
 
-/** Drop effects whose requires_option_* gate does not match species choices. */
 export function filterEffectsByOptionGates(
   effects: readonly CatalogEffect[],
   choices: readonly EffectChoiceRef[],

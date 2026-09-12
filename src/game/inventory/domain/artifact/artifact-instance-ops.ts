@@ -42,7 +42,6 @@ export function getRolledPropEffect(
   return effect as ArtifactRandomEffect;
 }
 
-/** Soma penalidades de todas as peças (independe de sintonia). */
 export function collectAbilityPenaltiesFromInventory(
   rows: readonly { instanceProperties?: unknown }[],
 ): ArtifactAbilityPenalties {
@@ -93,7 +92,6 @@ export function clearAbilityPenaltiesFromInstance(
   return rest;
 }
 
-/** Marca/recupera usos de magias roladas (1× até DL). */
 export function mapArtifactSpellSpendFlags(
   instance: unknown,
   spentUntilLongRest: boolean,

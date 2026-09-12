@@ -20,7 +20,6 @@ export type CharacterThreadMilestoneRow = {
   benefits: CharacterThreadBenefitRow[];
 };
 
-/** Bundle thread Northlands. Consome MV `mv_phb_character_thread_bundle`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_character_thread_bundle' })
 export class VPhbCharacterThreadBundle {
   @ViewColumn()

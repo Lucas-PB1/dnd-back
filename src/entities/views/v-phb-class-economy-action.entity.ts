@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Economy actions multi-owner. Consome MV `mv_phb_class_economy_action`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_class_economy_action' })
 export class VPhbClassEconomyAction {
   @ViewColumn({ name: 'action_id' })

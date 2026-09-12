@@ -1,4 +1,4 @@
-/** Bônus contínuos de itens mágicos (phb_item.properties.permanentEffects). */
+
 
 export type {
   AbilityScoreCaps,

@@ -15,7 +15,6 @@ function bands(
   }));
 }
 
-/** Fixtures espelhando seeds piloto + wave2–4 (specs / harness). */
 export const FEATURE_SCHEDULE_FIXTURES_BY_CLASS: ReadonlyMap<
   string,
   readonly FeatureScheduleBand[]

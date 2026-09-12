@@ -1,4 +1,4 @@
-/** Cursemarked (Northlands) — brackets d20 + anti-overlap (mesa). */
+
 
 export const CURSEMARKED_THREAD_SLUG = 'cursemarked';
 export const CURSEMARKED_BRACKET_LOCK = 'cursemarked-bracket-lock';

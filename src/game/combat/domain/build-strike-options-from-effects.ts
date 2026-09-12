@@ -1,6 +1,4 @@
-/**
- * Monta StrikeOption[] a partir de pacotes phb_effect (requires_option_value = slug).
- */
+
 
 import type { CatalogEffect } from '@game/effects/domain/catalog-effect';
 import {
@@ -8,7 +6,6 @@ import {
   type StrikeOption,
 } from './strike-option';
 
-/** Chave sintética de agrupamento (não é bloodStrike1..7 da ficha). */
 export const STRIKE_OPTION_REQUIRES_KEY = 'strikeOption';
 
 const SECONDARY_LABEL = 'secondary';
@@ -134,7 +131,6 @@ function buildOneStrikeOption(
   };
 }
 
-/** Agrupa effects de strike packages em StrikeOption[]. */
 export function buildStrikeOptionsFromEffects(input: {
   effects: readonly CatalogEffect[];
   optionLabels?: ReadonlyMap<string, string>;

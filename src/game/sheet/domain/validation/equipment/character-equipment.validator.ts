@@ -71,7 +71,6 @@ export class CharacterEquipmentValidator {
     }
   }
 
-  /** PO inicial das escolhas de equipamento (criação). */
   async resolveStartingGold(
     equipment: CharacterSheetInput['equipment'],
     ctx: Pick<CharacterSheetContext, 'classSlug' | 'backgroundSlug'>,

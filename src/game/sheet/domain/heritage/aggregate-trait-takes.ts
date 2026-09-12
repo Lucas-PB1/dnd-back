@@ -70,7 +70,6 @@ export function collectHeritageTraitPicks(
   return choices.filter((choice) => isHeritageTraitSlot(choice.choiceKind));
 }
 
-/** Slots 1..N consecutivos com base nos picks enviados (suporta builds de 7 ou 8 traços). */
 export function requiredHeritageTraitSlotKinds(
   picks: readonly HeritageTraitPick[],
 ): readonly string[] {

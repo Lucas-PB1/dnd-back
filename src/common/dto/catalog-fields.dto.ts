@@ -9,7 +9,7 @@ function parseTruthy(value: unknown): boolean | undefined {
   return undefined;
 }
 
-/** Mixin de query: `fields=summary` para listagens de catálogo. */
+
 export class CatalogFieldsQueryDto {
   @ApiPropertyOptional({
     description: 'summary = payload leve (sem description). Omit = DTO completo.',

@@ -23,10 +23,6 @@ import {
 } from './catalog-lookup-species';
 import * as skills from './catalog-lookup-skills';
 
-/**
- * SSOT de “existe este slug?” para escrita de ficha / inventário / sessão.
- * `find*OrFail` → 404; `assert*` / `assert*InCatalog` → 400.
- */
 @Injectable()
 export class CatalogLookupService {
   constructor(

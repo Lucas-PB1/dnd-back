@@ -21,7 +21,6 @@ export type ResolvedCompanionConfig = {
   variantLabel: string;
 };
 
-/** Resolve template a partir das regras do catálogo + opções da ficha. */
 export function resolveCompanionConfig(
   profile: CompanionProfile | null | undefined,
   maps: readonly CompanionTemplateMapRow[],

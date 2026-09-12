@@ -1,6 +1,4 @@
-/**
- * Tipos de recursos de classe (PHB 2024).
- */
+
 
 export type ResourceMaxFormula =
   | 'fixed'
@@ -22,7 +20,6 @@ export type ClassResourceScheduleRow = {
   recoverOneOnShort: boolean;
   recoverAllOnShort: boolean;
   recoverAllOnLong: boolean;
-  /** Ex.: 1d6+1 — recupera N cargas no long rest (cap no max). */
   recoverOnLongDice: string | null;
 };
 

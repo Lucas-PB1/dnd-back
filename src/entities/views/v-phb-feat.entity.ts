@@ -16,10 +16,6 @@ export interface FeatOptionPrerequisite {
   valueId: string;
 }
 
-/**
- * Read model de talentos (agregado).
- * Consome MV `mv_phb_feat` — refresh pós-seed. Definição: `v_phb_feat`.
- */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_feat' })
 export class VPhbFeat {
   @ViewColumn({ name: 'feat_slug' })
@@ -61,23 +57,18 @@ export class VPhbFeat {
   @ViewColumn({ name: 'requires_weapon_mastery' })
   requiresWeaponMastery!: boolean;
 
-  /** Slugs de talentos que o personagem precisa já ter. */
   @ViewColumn({ name: 'required_feat_slugs' })
   requiredFeatSlugs!: string[];
 
-  /** Perícias exigidas (todas). */
   @ViewColumn({ name: 'required_skill_slugs' })
   requiredSkillSlugs!: string[];
 
-  /** Espécies aceitas (qualquer uma). */
   @ViewColumn({ name: 'required_species_slugs' })
   requiredSpeciesSlugs!: string[];
 
-  /** Proficiências de arma exigidas (todas). */
   @ViewColumn({ name: 'required_weapon_proficiency_slugs' })
   requiredWeaponProficiencySlugs!: string[];
 
-  /** Opções de talento já adquirido exigidas (ex.: Adepto Elemental / cold). */
   @ViewColumn({ name: 'required_feat_options' })
   requiredFeatOptions!: FeatOptionPrerequisite[];
 

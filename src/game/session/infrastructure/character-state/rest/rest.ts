@@ -64,7 +64,6 @@ export async function applyLongRestState(input: {
   state.starryFormActive = false;
   state.stellarConstellation = null;
   state.aberrantMutationActive = null;
-  // personaMasks: mantidas no descanso longo (escolha de máscaras conhecidas/vestidas)
   state.hitDiceCurrent = restoreHitDiceOnLongRest(
     state.hitDiceCurrent,
     character.level,
@@ -185,7 +184,6 @@ export async function applyShortRestState(input: {
     resources,
   );
 
-  // Magia de Pacto: slots recarregam no Descanso Curto (pattern pact).
   if (isWarlockClass(character.classSlug)) {
     state.spellSlotsUsed = {};
   }

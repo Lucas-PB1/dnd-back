@@ -42,7 +42,6 @@ export class CharacterBackgroundValidator {
     );
   }
 
-  /** PHB: se já tem a perícia do antecedente, escolha outra na classe. */
   async assertClassSkillsDoNotOverlapBackground(
     backgroundSlug: string,
     classSkillSlugs: string[],
@@ -124,10 +123,7 @@ export class CharacterBackgroundValidator {
     }
   }
 
-  /**
-   * PHB 2024: idiomas fixos do antecedente + escolhas + extras de classe.
-   * Escolhas = idiomas padrão (não raros), exceto Druídico/Gíria dos Ladrões.
-   */
+
   async validateBackgroundLanguages(
     backgroundSlug: string,
     languageSlugs: string[] | undefined,

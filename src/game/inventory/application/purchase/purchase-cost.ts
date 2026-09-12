@@ -25,7 +25,6 @@ function maybeDiscount(
 ): CoinPurse {
   if (!discount) return purse;
   if (discount.nonMagicOnly && props?.magic === true) {
-    // Poções = bebida no filtro Brewer mesmo sendo mágicas.
     if (!(discount.foodDrinkOnly && isFoodDrinkPurchaseItem(itemSlug, props))) {
       return purse;
     }

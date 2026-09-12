@@ -27,7 +27,6 @@ export type ArmorClassContext = {
   unarmoredDefenses?: readonly UnarmoredDefenseRow[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
-  /** Preset de CA de espécie (ex.: Manikin) do catálogo. */
   speciesArmorPreset?: SpeciesArmorPresetRow | null;
 };
 

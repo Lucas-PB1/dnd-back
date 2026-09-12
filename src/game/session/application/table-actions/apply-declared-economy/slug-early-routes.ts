@@ -7,10 +7,7 @@ import type {
   DeclaredEconomyTableActionOptions,
 } from './types';
 
-/**
- * Slug-based validations before effect lookup.
- * Throws on invalid input; always returns null to continue routing.
- */
+
 export async function trySlugEarlyRoute(
   _deps: DeclaredEconomyTableActionDeps,
   character: PlayerCharacter,

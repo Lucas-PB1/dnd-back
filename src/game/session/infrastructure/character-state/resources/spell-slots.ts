@@ -39,7 +39,6 @@ export function computeRemaining(
   return remaining;
 }
 
-/** Mutates `state.spellSlotsUsed`; returns the slot level consumed. */
 export function consumeSpellSlot(
   state: PlayerCharacterState,
   maxSlots: Record<string, number>,
@@ -73,7 +72,6 @@ export function consumeSpellSlot(
   return slotLevel;
 }
 
-/** Recupa/desfaz o gasto de um espaço de magia. */
 export function recoverSpellSlot(
   state: PlayerCharacterState,
   slotLevel: number,

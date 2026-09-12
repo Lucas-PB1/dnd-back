@@ -1,6 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-/** Leitura mínima de `phb_class` para joins por slug (validação de ficha). */
 @Entity({ schema: 'rpg', name: 'phb_class' })
 export class PhbClassRef {
   @PrimaryGeneratedColumn({ type: 'bigint' })

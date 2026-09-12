@@ -54,7 +54,6 @@ export class CharacterSpellDto {
   @IsIn(['known', 'prepared', 'always_prepared'])
   listType!: 'known' | 'prepared' | 'always_prepared';
 
-  /** Derivado na resposta: origem da magia na ficha (ignorado no input). */
   @ApiPropertyOptional({
     enum: ['class', 'subclass', 'feat', 'species'],
     description: 'Fonte da magia (preenchido na resposta)',
@@ -63,28 +62,21 @@ export class CharacterSpellDto {
   @IsIn(['class', 'subclass', 'feat', 'species'])
   source?: 'class' | 'subclass' | 'feat' | 'species';
 
-  /** Derivado: atributo de conjuração efetivo desta magia (ignorado no input). */
   @ApiPropertyOptional({ example: 'inteligencia' })
   @IsOptional()
   @IsString()
   spellcastingAbilitySlug?: string;
 
-  /** Derivado: CD desta magia (ignorado no input). */
   @ApiPropertyOptional({ example: 13 })
   @IsOptional()
   @IsInt()
   spellSaveDc?: number;
 
-  /** Derivado: bônus de ataque mágico desta magia (ignorado no input). */
   @ApiPropertyOptional({ example: 5 })
   @IsOptional()
   @IsInt()
   spellAttackBonus?: number;
 
-  /**
-   * Derivado: economia de conjuração concedida (ignorado no input).
-   * `at_will` | `once_per_long_rest` | `slot_only`
-   */
   @ApiPropertyOptional({
     enum: ['at_will', 'once_per_long_rest', 'slot_only'],
   })

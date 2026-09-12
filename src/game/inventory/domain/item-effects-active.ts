@@ -1,4 +1,4 @@
-/** Efeitos permanentes só contam com item equipado e sintonizado quando exigido. */
+
 
 export function itemEffectsActive(input: {
   location: 'equipped' | 'backpack';

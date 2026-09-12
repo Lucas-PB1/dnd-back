@@ -1,4 +1,3 @@
-/** Parseia restrição de sintonia a partir do texto DMG em `properties.attunement`. */
 
 export const SPELLCASTER_CLASS_SLUGS = [
   'bard',
@@ -38,7 +37,6 @@ export type AttunementRestriction =
       classSlugs: string[];
       speciesSlugs: string[];
       allowAnySpellcaster: boolean;
-      /** Texto original da cláusula "por …" (para mensagem de erro). */
       clause: string;
     };
 
@@ -62,10 +60,7 @@ function attunementText(
   return header.trim();
 }
 
-/**
- * Extrai restrição de classe/espécie/conjurador.
- * Narrativo sem tokens conhecidos (ex. Lunâmina) → unrestricted.
- */
+
 export function parseAttunementRestriction(
   properties: Record<string, unknown> | null | undefined,
 ): AttunementRestriction {
@@ -113,7 +108,6 @@ export function parseAttunementRestriction(
       continue;
     }
 
-    // "Criatura da Escolha…", "Criatura Sintonizada a um Cinturão…"
     if (token.startsWith('criatura')) {
       return { kind: 'unrestricted' };
     }

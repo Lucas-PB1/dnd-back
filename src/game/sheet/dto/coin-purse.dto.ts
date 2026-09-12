@@ -19,7 +19,6 @@ export class CoinPurseDto {
   platinum!: number;
 }
 
-/** Campos opcionais para set parcial. */
 export class CoinPursePartialDto {
   @ApiPropertyOptional({ example: 10 })
   @IsOptional()

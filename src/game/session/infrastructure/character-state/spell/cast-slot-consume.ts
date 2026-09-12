@@ -31,7 +31,6 @@ export type SlotConsumeResult = {
   usedEldritchFreeCast: EldritchFreeCastResolution | null;
 };
 
-/** Gasta free cast / mastery / slot (não item). */
 export async function consumeNonItemCastCost(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;
@@ -129,7 +128,6 @@ export async function consumeNonItemCastCost(input: {
       effectCatalog,
     );
     if (grantedBudget.economy === 'at_will') {
-      // Revelações Santas / grants à vontade — sem espaço.
     } else {
     const maxSlots = await loadMaxSlots(
       classSlots,

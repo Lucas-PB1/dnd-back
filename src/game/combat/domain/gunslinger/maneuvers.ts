@@ -1,7 +1,4 @@
-/**
- * Manobras do Pistoleiro (Valdas) — tipos e lookups.
- * Catálogo: `rpg.phb_gunslinger_maneuver`.
- */
+
 
 export type ManeuverEffectKind =
   | 'temp_hp'
@@ -18,7 +15,6 @@ export type GunslingerManeuver = {
   effectKind: ManeuverEffectKind;
   riskCost: number;
   fromLevel: number;
-  /** Subclasse que concede (omitido = classe base). */
   subclassSlug?: string;
 };
 

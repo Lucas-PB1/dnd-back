@@ -11,7 +11,6 @@ export type SentientConflictResolution = {
   note: string;
 };
 
-/** Conflito senciente: CD = 12 + mod. Carisma do item (Treasure). */
 export function resolveSentientConflict(input: {
   itemSlug: string;
   instanceProperties: unknown;

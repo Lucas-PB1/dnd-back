@@ -2,13 +2,7 @@ import Module from 'module';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-/**
- * Resolve path aliases (@/, @entities/, …) em runtime no bundle Vercel / dist.
- * Deve ser o primeiro import de main.ts.
- *
- * Usa hook em Module._resolveFilename (mais confiável que tsconfig-paths no
- * runtime serverless, onde o entry pode não espelhar o layout do nest build).
- */
+
 const ALIAS_PREFIXES: ReadonlyArray<readonly [string, string]> = [
   ['@entities/', 'entities/'],
   ['@common/', 'common/'],

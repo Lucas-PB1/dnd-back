@@ -27,9 +27,6 @@ export function collectEldritchFreeCastSpellSlugs(
   return spells;
 }
 
-/**
- * Resolve free cast de Invocação Mística para a magia (se o personagem a conhece via pick).
- */
 export function resolveEldritchInvocationFreeCast(input: {
   spellSlug: string;
   pickedSlugs: readonly string[];
@@ -55,7 +52,6 @@ export function resolveEldritchInvocationFreeCast(input: {
   return null;
 }
 
-/** Notas de combate ao conjurar o truque vinculado a Explosão Agonizante / Repulsiva / Lança. */
 export function buildEldritchCantripCastNote(input: {
   spellLevel: number;
   spellSlug: string;
@@ -85,10 +81,6 @@ export function buildEldritchCantripCastNote(input: {
   return parts.length > 0 ? parts.join(' · ') : null;
 }
 
-/**
- * Escolhe até `limit` invocações válidas aleatoriamente (greedy + shuffle).
- * Útil para seeds / fichas de review.
- */
 export function pickRandomValidEldritchInvocations(input: {
   level: number;
   catalog: readonly EldritchInvocationCatalogRow[];

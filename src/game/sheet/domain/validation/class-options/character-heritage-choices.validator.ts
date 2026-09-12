@@ -40,11 +40,9 @@ export class CharacterHeritageChoicesValidator {
     const catalogRows = rows
       .filter((row) => {
         if (!row.choiceKind.startsWith('heritage_trait_')) return true;
-        // Produto: só build tradicional (sem pool custom).
         return traditionalTraitSlugs.has(row.traitSlug) && row.isTraditional;
       })
       .filter((row) => {
-        // Sem 9º traço via troca de deslocamento no fluxo padrão.
         if (row.choiceKind === 'heritage_trait_9') return false;
         if (
           row.choiceKind === 'heritage_speed_trade' &&

@@ -1,10 +1,5 @@
 import { poundsToKg } from '@game/shared/domain/metric';
 
-/**
- * Carga (PHB 2024 PT): capacidade = Força × 7,5 kg
- * (equivalente métrico de STR × 15 lb).
- */
-
 export function parseItemWeightKg(weight: string | null | undefined): number {
   if (!weight?.trim()) return 0;
   const trimmed = weight.trim();
@@ -56,7 +51,6 @@ export function computeEncumbrance(
   };
 }
 
-/** Peso projetado após adicionar `deltaQuantity` unidades de `itemWeightKg`. */
 export function projectedTotalWeightKg(
   current: EncumbranceSummary,
   itemWeightKg: number,

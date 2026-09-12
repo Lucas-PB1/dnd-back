@@ -2,7 +2,6 @@ import type { AdvantageMode } from './dice';
 
 export type AdvantageContribution = 'advantage' | 'disadvantage';
 
-/** PHB: vantagem + desvantagem → normal; múltiplas do mesmo lado não acumulam. */
 export function resolveNetAdvantageMode(
   contributions: readonly AdvantageContribution[],
 ): AdvantageMode {

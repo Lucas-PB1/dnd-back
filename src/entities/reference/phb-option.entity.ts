@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-// Lote C: unified option_scope enum
 export type OptionScope = 'subclass' | 'species' | 'feat' | 'class';
 
 @Entity({ schema: 'rpg', name: 'phb_option_def' })
@@ -83,7 +82,6 @@ export class PhbOptionValue {
   @Column({ name: 'spell_2_id', type: 'bigint', nullable: true })
   spell2Id!: string | null;
 
-  /** NULL = inherits parent species; set when option comes from another edition. */
   @Column({ name: 'edition_slug', type: 'text', nullable: true })
   editionSlug!: string | null;
 }

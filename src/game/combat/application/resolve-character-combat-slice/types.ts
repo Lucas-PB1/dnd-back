@@ -4,9 +4,7 @@ import type { ResolveEquipmentCompliance } from '../resolve-equipment-compliance
 export type MappedCombatSlice = {
   armorClass: number;
   armorClassNote: string;
-  /** Soma tipada de `ac_bonus` (sticky/gate — front aplica com toggle). */
   featAcBonus: number;
-  /** Fontes do bônus sticky de CA (slug + valor) para a UI nomear o talento. */
   featAcBonusSources: readonly { featSlug: string; bonus: number }[];
   weaponAttacks: Awaited<ReturnType<ResolveEquippedWeaponAttacks['resolve']>>;
   equipmentWarnings: Awaited<
@@ -23,7 +21,6 @@ export type MappedCombatSlice = {
   classCombatNotes: string[];
   attacksPerAction: number;
   savingThrowAuraBonus: number;
-  /** Flags de efeitos de talento p/ UI de roll/cast. */
   featEffectFlags: {
     inspirationRefundOnFail: boolean;
     damageDieFloor: boolean;

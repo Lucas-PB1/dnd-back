@@ -16,9 +16,7 @@ type FlatOverrideInput = {
   scheduleDieFaces?: number;
 };
 
-/**
- * Resolve flatOverride based on effect formula, class, and action context.
- */
+
 export function resolveFlatOverride(input: FlatOverrideInput): { flatOverride?: number } {
   const { effect, character, actionSlug, strMod, intMod, castingMod } = input;
   const dexMod = abilityModifier(character.abilityScores?.destreza ?? 10);
@@ -122,9 +120,7 @@ export function resolveFlatOverride(input: FlatOverrideInput): { flatOverride?: 
   return {};
 }
 
-/**
- * Compute ability modifiers from character ability scores.
- */
+
 export function computeAbilityMods(character: PlayerCharacter): {
   strMod: number;
   intMod: number;

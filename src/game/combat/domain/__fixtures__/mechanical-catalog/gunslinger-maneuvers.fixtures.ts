@@ -1,6 +1,5 @@
 import type { ManeuverEffectKind, GunslingerManeuver } from '../../gunslinger/maneuvers';
 
-/** Seeds `combat/C00*` — Gunslinger maneuvers. */
 export const FIXTURE_GUNSLINGER_MANEUVERS: readonly GunslingerManeuver[] = [
   {
     slug: 'bite-the-bullet',

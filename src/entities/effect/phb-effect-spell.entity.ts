@@ -9,7 +9,6 @@ export class PhbEffectSpell {
   @Column({ type: 'bigint', name: 'spell_id', nullable: true })
   spellId!: string | null;
 
-  /** Resolvido no LoadEffectCatalog (não é coluna SQL). */
   spellSlug?: string | null;
 
   @Column({ type: 'text', name: 'option_key', nullable: true })

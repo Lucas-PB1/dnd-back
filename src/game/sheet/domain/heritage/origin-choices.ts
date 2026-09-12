@@ -1,6 +1,5 @@
 import type { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 
-/** Normaliza kinds antigos `gh_heritage_*` → `heritage_*` (pós J039). */
 export function normalizeHeritageChoiceKind(choiceKind: string): string {
   return choiceKind.startsWith('gh_heritage_')
     ? `heritage_${choiceKind.slice('gh_heritage_'.length)}`

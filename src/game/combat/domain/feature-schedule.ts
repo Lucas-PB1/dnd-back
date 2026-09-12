@@ -1,4 +1,3 @@
-/** Chaves de schedule nível→valor (`phb_class_feature_schedule`). */
 export const FEATURE_SCHEDULE_KEYS = {
   attacksPerAction: 'attacks_per_action',
   martialArtsDieFaces: 'martial_arts_die_faces',
@@ -37,10 +36,7 @@ export type FeatureScheduleBand = {
   valueNum: number;
 };
 
-/**
- * Maior faixa com unlock_level <= level.
- * Retorna null se não houver banda aplicável.
- */
+
 export function scheduleValueAtLevel(
   bands: readonly FeatureScheduleBand[],
   featureKey: string,
@@ -70,7 +66,6 @@ export function scheduleIntAtLevel(
   return raw == null ? fallback : Math.trunc(raw);
 }
 
-/** Como scheduleIntAtLevel, mas null quando não há banda. */
 export function scheduleIntOrNullAtLevel(
   bands: readonly FeatureScheduleBand[],
   featureKey: string,
@@ -97,7 +92,6 @@ export function mergeFeatureSchedules(
   return out;
 }
 
-/** Extrai bands de classe+subclasse do catálogo mecânico. */
 export function featureSchedulesFromCatalog(
   catalog: {
     featureSchedulesByClassSlug: ReadonlyMap<

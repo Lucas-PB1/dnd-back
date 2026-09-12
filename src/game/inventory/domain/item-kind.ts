@@ -1,4 +1,4 @@
-/** Helpers de classificação de item via properties (SSOT leve para shop/purchase). */
+
 
 export function itemPropertiesKind(
   properties: Record<string, unknown> | null | undefined,
@@ -24,7 +24,6 @@ export function isTransportItemKind(kind: string | null): boolean {
   );
 }
 
-/** Itens que podem virar game_actor vehicle/mount via Vincular. */
 export function isBoardableTransportItemKind(kind: string | null): boolean {
   return (
     kind === 'mount' || kind === 'drawn-vehicle' || kind === 'large-vehicle'
@@ -39,10 +38,6 @@ export function isContainerItem(
   return /^(mochila|saca|cesta|algibeira|bolsa|estojo|aljava)/i.test(itemSlug);
 }
 
-/**
- * Comida/bebida p/ desconto Brewer (tag `foodDrink` ou heurística de slug).
- * Poções entram como bebida (decisão Fase 5).
- */
 export function isFoodDrinkPurchaseItem(
   itemSlug: string,
   properties: Record<string, unknown> | null | undefined,

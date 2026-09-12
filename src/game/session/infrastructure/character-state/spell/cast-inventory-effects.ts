@@ -28,7 +28,6 @@ export async function clearInventoryAbilityPenalties(
   }
 }
 
-/** Remover Maldição: quebra sintonia de itens cursed e marca curseBroken. */
 export async function breakCursedItemAttunements(
   dataSource: DataSource,
   catalogLookup: CatalogLookupService,

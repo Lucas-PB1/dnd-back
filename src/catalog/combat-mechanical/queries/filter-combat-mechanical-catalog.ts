@@ -35,7 +35,7 @@ function gunslingerManeuversForFilters(
   );
 }
 
-/** Aplica filtros opcionais sem alterar o catálogo completo quando omitidos. */
+
 export function filterCombatMechanicalCatalog(
   catalog: CombatMechanicalCatalogResponseDto,
   filters: CombatMechanicalCatalogFilters,

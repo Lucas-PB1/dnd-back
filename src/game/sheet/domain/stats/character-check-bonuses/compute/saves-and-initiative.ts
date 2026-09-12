@@ -2,7 +2,6 @@ import type { AbilityKey } from '@game/build/domain/ability-generation';
 import { RESILIENT_FEAT_SLUG } from '../../../validation/feats/resilient-feat-options';
 import type { FeatOptionLike } from '../types';
 
-/** Salvaguardas: classe + Resiliente (abilityIncrease). */
 export function collectSaveProficiencyAbilities(
   classSavingThrowSlugs: readonly string[],
   featOptions: readonly FeatOptionLike[] | undefined,

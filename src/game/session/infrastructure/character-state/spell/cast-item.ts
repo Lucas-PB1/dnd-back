@@ -23,7 +23,6 @@ export type ItemCastSpendResult = {
   artifactSpellSaveDc: number | null;
 };
 
-/** Gasta carga / free / artefato e resolve círculo do cast de item. */
 export async function spendItemCast(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;

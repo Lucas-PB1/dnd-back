@@ -315,7 +315,6 @@ export async function attack(
     await deps.domain.getProficiencyBonus(attackerPc.level),
   );
 
-  // Bloodshard: DEX save em vez de attack roll
   if (strikePkg?.replacesAttackWithSave) {
     return resolveBloodshardAttack(bloodDeps(deps), {
       duel,

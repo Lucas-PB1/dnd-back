@@ -1,6 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
 
-/** Lança 404 se o valor for null/undefined. */
 export function requireFound<T>(
   value: T | null | undefined,
   message: string,
@@ -11,7 +10,6 @@ export function requireFound<T>(
   return value;
 }
 
-/** Lança 404 se a lista estiver vazia. */
 export function requireNonEmpty<T>(
   values: T[],
   message: string,

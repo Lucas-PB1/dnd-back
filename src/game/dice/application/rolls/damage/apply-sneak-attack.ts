@@ -13,7 +13,6 @@ import {
 } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Ataque Furtivo, Golpe Astuto e opções de Assassino (inclui dobra do Golpe Mortal). */
 export const applySneakAttack: DamageEffect = async (ctx, acc) => {
   const { attack, dto, character, domain } = ctx;
   const cunningStrikeEffects = dto.cunningStrikeEffects ?? [];

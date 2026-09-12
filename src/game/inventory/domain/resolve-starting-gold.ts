@@ -18,10 +18,7 @@ type BackgroundEquipmentGoldRow = {
   packageGold: number | null;
 };
 
-/**
- * Soma PO inicial a partir das escolhas de equipamento (pacote ouro do
- * antecedente + gold_amount / package_gold dos pacotes).
- */
+
 export function resolveStartingGoldPieces(input: {
   equipment: EquipmentRow[] | undefined;
   background: BackgroundGoldCatalog;

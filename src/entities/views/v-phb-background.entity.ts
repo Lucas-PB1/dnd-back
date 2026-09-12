@@ -1,6 +1,5 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-/** Read model de antecedentes. Consome MV `mv_phb_background` (definição: `v_phb_background`). */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_background' })
 export class VPhbBackground {
   @ViewColumn({ name: 'background_slug' })
@@ -45,7 +44,6 @@ export class VPhbBackground {
   @ViewColumn({ name: 'feat_name' })
   featName!: string | null;
 
-  /** Slugs de talento de origem quando o antecedente permite escolha. */
   @ViewColumn({ name: 'origin_feat_choice_slugs' })
   originFeatChoiceSlugs!: string[] | null;
 

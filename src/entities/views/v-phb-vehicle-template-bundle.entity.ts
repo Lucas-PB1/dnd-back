@@ -5,7 +5,6 @@ import type {
   TemplateTraitRow,
 } from './v-phb-creature-template-bundle.entity';
 
-/** Bundle veículo. Consome MV `mv_phb_vehicle_template_bundle`. */
 @ViewEntity({ schema: 'rpg', name: 'mv_phb_vehicle_template_bundle' })
 export class VPhbVehicleTemplateBundle {
   @ViewColumn()

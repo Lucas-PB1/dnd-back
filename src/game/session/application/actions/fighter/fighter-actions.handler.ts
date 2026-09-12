@@ -26,7 +26,6 @@ export class FighterActionsHandler {
     private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
-  /** Read-model: picker do botão `use-maneuver` (não é apply). */
   async listBattleMasterManeuvers(userId: string, characterId: string) {
     const character = await this.access.findAccessibleOrFail(
       userId,

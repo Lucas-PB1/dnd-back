@@ -14,7 +14,6 @@ type ApplyFeatEconomyEffectResult = {
   expression?: string;
 };
 
-/** Maior mod entre INT/SAB/CAR — proxy de atributo de conjuração na mesa. */
 export function spellcastingAbilityModifier(
   scores: PlayerCharacter['abilityScores'] | undefined,
 ): number {
@@ -26,7 +25,6 @@ export function spellcastingAbilityModifier(
   );
 }
 
-/** Aplica heal / temp_hp / inspiration / note tipados no resultado da table-action. */
 export async function applyFeatEconomyExecutedEffect(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;

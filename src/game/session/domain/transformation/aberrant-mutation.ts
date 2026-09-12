@@ -1,4 +1,4 @@
-/** Mutações Aberrantes (Horror Aberrante Cap. 6) — SSOT de slugs/notas de mesa. */
+
 
 export const ABERRANT_MUTATION_SLUGS = [
   'chitinous-shell',

@@ -117,7 +117,6 @@ export async function loadItemResourceSchedule(
   return fromEffects.map(mapResourceScheduleRow);
 }
 
-/** Recursos de traços de herança GH — takes >= min_trait_takes do efeito. */
 export async function loadHeritageResourceSchedule(
   dataSource: DataSource,
   characterId: string,
@@ -152,7 +151,6 @@ export async function loadHeritageResourceSchedule(
   return rows.map(mapResourceScheduleRow);
 }
 
-/** Recursos de Character Thread — só milestones alcançados no thread ativo. */
 export async function loadThreadResourceSchedule(
   dataSource: DataSource,
   characterId: string,

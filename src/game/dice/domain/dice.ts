@@ -25,7 +25,6 @@ export type DamageRollResult = {
   dice: DieRollDetail[];
 };
 
-/** Uma face: 1..sides inclusive. */
 export function rollDie(sides: number, rng: Rng = Math.random): number {
   if (!Number.isInteger(sides) || sides < 2) {
     throw new Error(`Invalid die sides: ${sides}`);
@@ -44,10 +43,6 @@ export function rollDice(
   return Array.from({ length: count }, () => rollDie(sides, rng));
 }
 
-/**
- * Parseia expressões simples: NdM, NdM+K, NdM-K (ex.: 2d6+3, 1d8, 1d10-1).
- * Não cobre dados compostos tipo 2d6+1d4.
- */
 export function parseDiceExpression(expression: string): {
   count: number;
   sides: number;
@@ -94,13 +89,9 @@ export function rollDamageParts(
   options: {
     critical?: boolean;
     rng?: Rng;
-    /** PHB 2024 GWF: tratar 1 ou 2 como 3. */
     treatOnesAndTwosAsThree?: boolean;
-    /** Elemental Adept: faces 1 viram 2. */
     treatOnesAsTwos?: boolean;
-    /** Marksman's Luck: virar o menor dado elegível (lados > 4). */
     flipLowestDie?: boolean;
-    /** Pyromaniac: face máxima gera um dado extra (1×). */
     explodeOnMax?: boolean;
   } = {},
 ): DamageRollResult {

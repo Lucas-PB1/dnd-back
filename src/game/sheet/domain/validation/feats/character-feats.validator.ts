@@ -54,7 +54,6 @@ export class CharacterFeatsValidator {
     }
   }
 
-  /** Facade estável — delega para CharacterFeatOptionsValidator. */
   async validateFeatOptions(
     characterFeats: CharacterFeatDto[],
     options: FeatOptionDto[],

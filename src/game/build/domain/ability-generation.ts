@@ -5,7 +5,6 @@ export type AbilityGenerationMethodSlug = 'standard-array' | 'roll' | 'point-buy
 
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8] as const;
 
-/** Custo PHB point-buy (score final 8–15 antes de bônus raciais). */
 export const POINT_BUY_COST: Record<number, number> = {
   8: 0,
   9: 1,
@@ -32,7 +31,6 @@ export const ABILITY_KEYS: AbilityKey[] = [
   'carisma',
 ];
 
-/** Soma dos 6 atributos na rolagem (4d6 drop lowest) — faixa equilibrada para mesa. */
 export const ROLL_TOTAL_MIN = 72;
 export const ROLL_TOTAL_MAX = 80;
 export const ROLL_OPTION_COUNT = 3;

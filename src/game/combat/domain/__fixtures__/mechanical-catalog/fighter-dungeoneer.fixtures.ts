@@ -1,6 +1,5 @@
 import type { PrecautionSpell } from '../../fighter/dungeoneer-catalog';
 
-/** Seeds `combat/C00*` — Dungeoneer slayer labels. */
 export const FIXTURE_DUNGEONEER_SLAYER_LABELS = [
   'Aberração',
   'Dragão',
@@ -11,7 +10,6 @@ export const FIXTURE_DUNGEONEER_SLAYER_LABELS = [
   'Morto-vivo',
 ] as const;
 
-/** Seeds `combat/C00*` — Dungeoneer precaution spells. */
 export const FIXTURE_DUNGEONEER_PRECAUTION_SPELLS: readonly PrecautionSpell[] = [
   { slug: 'alarme', name: 'Alarme' },
   { slug: 'compreender-idiomas', name: 'Compreender Idiomas' },

@@ -6,14 +6,12 @@ import {
 } from '@game/effects';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 
-/** Gasta inspiração no d20; reembolsa se falhou e o personagem tem IH. */
 export async function applyInspirationSpend(input: {
   resourceSpender: CharacterResourceSpender;
   sheet: CharacterSheetRepository;
   effectCatalog: LoadEffectCatalog;
   character: PlayerCharacter;
   spentInspiration: boolean;
-  /** null = CD/CA não informada — gasta sem avaliar refund. */
   failed: boolean | null;
   notes: string[];
 }): Promise<void> {

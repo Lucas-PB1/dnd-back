@@ -18,7 +18,6 @@ const CUNNING_STRIKE_EFFECTS = [
   'paralyze',
 ] as const;
 
-/** Campos base + flags marciais/gerais do roll de dano. */
 export class RollDamageBaseDto {
   @ApiProperty({ example: 'longsword' })
   @IsString()

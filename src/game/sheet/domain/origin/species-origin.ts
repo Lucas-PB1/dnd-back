@@ -3,7 +3,6 @@ import { nextFeatInstanceIndex } from '../validation/feats/character-feat';
 import type { CatalogEffect } from '@game/effects';
 import { featSlugsFromEffects } from '@game/effects';
 
-/** Talentos de origem do traço Versátil — só `grant_feat` do catálogo. */
 export function resolveHumanOriginCharacterFeats(
   speciesSlug: string,
   speciesChoices: SpeciesChoiceDto[] | undefined,

@@ -4,7 +4,6 @@ import type { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 
 const HIGH_ELF_CANTRIP = 'high_elf_cantrip';
 
-/** Detecta troca do truque de Alto Elfo e consome a flag pós-descanso longo. */
 export async function assertAndConsumeHighElfCantripSwap(
   dataSource: DataSource,
   characterId: string,

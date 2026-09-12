@@ -10,7 +10,6 @@ import type { Request, Response } from 'express';
 
 const SLOW_MS = 500;
 
-/** Mede duração HTTP; header `X-Response-Time` + log se > 500ms. */
 @Injectable()
 export class RequestTimingInterceptor implements NestInterceptor {
   private readonly logger = new Logger(RequestTimingInterceptor.name);

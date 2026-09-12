@@ -1,6 +1,4 @@
-/**
- * Regras numéricas de combate do Mago (PHB 2024): Recuperação Arcana, Mísseis e recursos.
- */
+
 
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -20,12 +18,10 @@ export const ILLUSORY_SELF_RESOURCE = 'illusory-self';
 
 export const SCULPT_SPELLS_UNLOCK_LEVEL = 6;
 
-/** classOptions: Dominância de Magias (nv. 18). */
 export const SPELL_MASTERY_LEVEL_1_KEY = 'spellMastery1';
 export const SPELL_MASTERY_LEVEL_2_KEY = 'spellMastery2';
 export const SPELL_MASTERY_UNLOCK_LEVEL = 18;
 
-/** Dardos base da magia PHB (antes de upcast / extras da subclasse). */
 export const MAGIC_MISSILE_BASE_DARTS = 3;
 
 export function isWizardClass(classSlug: string | null | undefined): boolean {
@@ -80,7 +76,6 @@ export function arcaneRecoveryMaxSlotLevels(level: number): number {
   return Math.ceil(level / 2);
 }
 
-/** Dardos extras do Sábio dos Mísseis (nv. 3/6/10/14 → 1/2/3/4). */
 export function magicMissileExtraDarts(level: number): number {
   if (level >= 14) return 4;
   if (level >= 10) return 3;
@@ -89,9 +84,6 @@ export function magicMissileExtraDarts(level: number): number {
   return 0;
 }
 
-/**
- * Total de dardos: 3 base + 1 por círculo acima do 1º + extras da subclasse.
- */
 export function magicMissileDartCount(
   level: number,
   slotLevelUsed: number | null,

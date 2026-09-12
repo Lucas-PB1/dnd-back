@@ -146,7 +146,6 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
   thread!: CharacterThreadBundleDto | null;
 }
 
-/** Resumo para GET /characters — sem sheet/combat/magias. */
 export class CharacterSummaryResponseDto extends PickType(CharacterResponseDto, [
   'id',
   'name',

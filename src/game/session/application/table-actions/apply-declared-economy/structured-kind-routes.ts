@@ -40,10 +40,7 @@ export function findStructuredEffect(
   );
 }
 
-/**
- * Effect-kind-based structured routes.
- * Returns response or null to continue to generic effect loop.
- */
+
 export async function tryStructuredKindRoute(
   deps: DeclaredEconomyTableActionDeps,
   character: PlayerCharacter,

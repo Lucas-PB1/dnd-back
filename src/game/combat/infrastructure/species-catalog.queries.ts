@@ -31,7 +31,6 @@ export async function loadSpeciesArmorPresets(
   }));
 }
 
-/** Mapa `optionKey:valueId` → damage_type slug EN. */
 export async function loadSpeciesOptionDamageTypes(
   dataSource: DataSource,
   speciesSlug: string | null | undefined,

@@ -9,7 +9,6 @@ type ScheduleSqlRow = {
   value_num: string | number;
 };
 
-/** Carrega todos os schedules (classe + subclasse) para o catálogo mecânico. */
 export async function loadAllFeatureSchedules(
   dataSource: DataSource,
 ): Promise<{
@@ -62,7 +61,6 @@ function mapBandRows(
   }));
 }
 
-/** Schedules de uma classe (ficha / aggregate). */
 export async function loadClassFeatureSchedules(
   dataSource: DataSource,
   classSlug: string | null | undefined,
@@ -82,7 +80,6 @@ export async function loadClassFeatureSchedules(
   return mapBandRows(raw);
 }
 
-/** Schedules de uma subclasse. */
 export async function loadSubclassFeatureSchedules(
   dataSource: DataSource,
   subclassSlug: string | null | undefined,
@@ -102,7 +99,6 @@ export async function loadSubclassFeatureSchedules(
   return mapBandRows(raw);
 }
 
-/** Classe + subclasse mesclados (ficha / aggregate). */
 export async function loadMergedFeatureSchedules(
   dataSource: DataSource,
   classSlug: string | null | undefined,

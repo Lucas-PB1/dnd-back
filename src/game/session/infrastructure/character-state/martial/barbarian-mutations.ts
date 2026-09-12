@@ -14,7 +14,6 @@ export async function applyToggleRage(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;
   active?: boolean;
-  /** When false, enter Rage without spending a use (ex.: Magia indiscutível). Default true. */
   spendResource?: boolean;
   stateRepo: Repository<PlayerCharacterState>;
   dataSource: DataSource;
@@ -75,7 +74,6 @@ export async function applyToggleReckless(input: {
   return buildResponse(character, state);
 }
 
-/** Fúria Persistente (nv.15): recupera todos os usos de Fúria na iniciativa. */
 export async function applyRecoverAllRage(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;

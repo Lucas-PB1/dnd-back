@@ -47,7 +47,6 @@ export class FindWeaponsQuery {
       .orderBy('item.name', 'ASC')
       .addOrderBy('item.slug', 'ASC');
 
-    // Lâmina psíquica etc. — mesa/ataques, não picker de Maestria em Arma / loja.
     qb.andWhere(EXCLUDE_CLASS_GRANTED_ITEMS_SQL);
 
     applyIlikeSearch(qb, [

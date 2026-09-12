@@ -85,8 +85,6 @@ export async function addInventoryItemRow(
     );
   }
 
-  // Upsert em um único statement (compatível com PgBouncer transaction mode).
-  // Evita TX TypeORM + findOne em outra conexão do pool.
   const returned = (await items.query(
     `INSERT INTO rpg.player_character_item (
        character_id, item_slug, quantity, location

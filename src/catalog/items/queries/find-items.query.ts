@@ -155,8 +155,6 @@ export class FindItemsQuery {
       );
     }
 
-    // Cursor keys follow name+slug ASC (default sort). Cost/name_desc keep
-    // their ORDER BY for the first page; subsequent cursors use name/slug.
     const { rows, meta } = await paginateQbCursor(qb, {
       cursor,
       limit,

@@ -4,7 +4,6 @@ import {
   type InitiativeRollContext,
 } from './resolve-initiative-roll';
 
-/** Compat: bônus fixo exibido na ficha (sem d10 situacional). */
 export function initiativeBonus(
   dexterityModifier: number,
   proficiencyBonus: number,

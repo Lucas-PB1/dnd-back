@@ -13,7 +13,6 @@ export function destroyUndeadDice(wisdomScore: number): string {
   return `${Math.max(1, abilityModifier(wisdomScore))}d8`;
 }
 
-/** Golpe Divino: N d8 — SSOT `divine_strike_dice_count`. */
 export function divineStrikeDice(
   level: number,
   bands: readonly FeatureScheduleBand[],
@@ -26,7 +25,6 @@ export function divineStrikeDice(
   return count == null || count < 1 ? null : `${count}d8`;
 }
 
-/** Luz Divina (spark): N d8 — SSOT `divine_spark_dice_count`. */
 export function divineSparkDiceCount(
   level: number,
   bands: readonly FeatureScheduleBand[],

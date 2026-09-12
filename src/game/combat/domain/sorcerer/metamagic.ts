@@ -1,4 +1,4 @@
-/** Opções de Metamagia — regras de picks (catálogo vive em `rpg.phb_metamagic`). */
+
 
 import {
   FEATURE_SCHEDULE_KEYS,
@@ -16,7 +16,6 @@ export type MetamagicCatalogRow = {
   stacksWithOther: boolean;
 };
 
-/** L2: 2 · L10: 4 · L17: 6 — SSOT `sorcerer_metamagic_limit`. */
 export function sorcererMetamagicLimit(
   level: number,
   bands: readonly FeatureScheduleBand[],

@@ -1,6 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
 
-/** Itens manifestados por classe/subclasse — visíveis na mesa, não na loja/mochila. */
 export function isClassGrantedCatalogItem(
   properties: Record<string, unknown> | null | undefined,
 ): boolean {
@@ -11,7 +10,6 @@ export function isClassGrantedCatalogItem(
   );
 }
 
-/** Filtro SQL para listagens de catálogo (loja, pickers). */
 export const EXCLUDE_CLASS_GRANTED_ITEMS_SQL = `(item.properties->>'grantedBySubclass' IS NULL AND item.properties->>'grantedByClass' IS NULL)`;
 
 export const EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL = `(i.properties->>'grantedBySubclass' IS NULL AND i.properties->>'grantedByClass' IS NULL)`;

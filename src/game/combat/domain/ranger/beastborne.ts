@@ -1,7 +1,6 @@
 const BESTIAL_ASPECT_MIN = 0;
 const BESTIAL_ASPECT_MAX = 5;
 
-/** Aspecto ≥1: Carnificina +2; Fúria Sedenta (nv.11): +3. */
 export function carnificinaDamageBonus(input: {
   subclassSlug?: string | null;
   characterLevel: number;
@@ -21,7 +20,6 @@ export function clampBestialAspectLevel(n: number): number {
   );
 }
 
-/** Notas de benefícios acumulados até o nível (catálogo injetado). */
 export function bestialAspectBenefits(
   catalog: readonly { level: number; note: string }[],
   level: number,
