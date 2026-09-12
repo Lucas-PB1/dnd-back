@@ -11,6 +11,7 @@ import {
   getEnspelledSpellStats,
   isEnspelledEconomyItemSlug,
 } from '@game/inventory/domain/coverage/enspelled-weapon';
+import { despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import {
   CastSpellDto,
 } from '@game/session/dto/core/session-commands.dto';
@@ -94,6 +95,13 @@ export async function appendItemCastTreasureNotes(input: {
   }
 
   if (spell.concentration) {
+    const previousConcentration = state.concentratingOn;
+    await despawnSpiritsOnConcentrationChange(
+      dataSource,
+      character.id,
+      previousConcentration,
+      dto.spellSlug,
+    );
     state.concentratingOn = dto.spellSlug;
   }
 

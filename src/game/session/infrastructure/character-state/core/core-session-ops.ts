@@ -56,6 +56,7 @@ export async function patchStateOp(
     stateRepo: deps.stateRepo,
     conditions: deps.conditions,
     catalogLookup: deps.catalogLookup,
+    dataSource: deps.dataSource,
     buildResponse: deps.buildResponse,
   });
 }

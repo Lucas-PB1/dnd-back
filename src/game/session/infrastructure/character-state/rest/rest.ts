@@ -24,6 +24,7 @@ import { isWarlockClass } from '@game/combat/domain/warlock';
 import { mapArtifactSpellSpendFlags } from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { dissolveArtisanCraftedItems } from '@game/session/domain/dissolve-artisan-crafted';
+import { despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
@@ -53,6 +54,13 @@ export async function applyLongRestState(input: {
   const used = { ...recovery.used };
   delete used[CURSEMARKED_BRACKET_LOCK];
   state.resourcesUsed = used;
+  const previousConcentration = state.concentratingOn;
+  await despawnSpiritsOnConcentrationChange(
+    dataSource,
+    character.id,
+    previousConcentration,
+    null,
+  );
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;

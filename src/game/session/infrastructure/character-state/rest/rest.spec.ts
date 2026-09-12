@@ -77,7 +77,14 @@ describe('rest', () => {
   const catalogLookup = {
     findClassOrFail: jest.fn().mockResolvedValue({ hitDie: 'd10' }),
   } as unknown as CatalogLookupService;
-  const dataSource = {} as DataSource;
+  const dataSource = {
+    getRepository: jest.fn().mockReturnValue({
+      find: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(null),
+      save: jest.fn().mockResolvedValue(undefined),
+      remove: jest.fn().mockResolvedValue(undefined),
+    }),
+  } as unknown as DataSource;
 
   beforeEach(() => {
     jest.clearAllMocks();

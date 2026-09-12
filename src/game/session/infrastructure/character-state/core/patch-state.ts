@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { clampDeathSaveCount } from '@game/session/domain/death-saves';
@@ -15,6 +15,7 @@ import {
 } from '@game/session/dto/core/session-commands.dto';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import { despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import { assertValidConditions } from './conditions';
 import type { BuildResponse } from './mutation-types';
 
@@ -25,6 +26,7 @@ export async function applyPatchState(input: {
   stateRepo: Repository<PlayerCharacterState>;
   conditions: Repository<PhbCondition>;
   catalogLookup: CatalogLookupService;
+  dataSource: DataSource;
   buildResponse: BuildResponse;
 }): Promise<CharacterStateResponseDto> {
   const {
@@ -34,6 +36,7 @@ export async function applyPatchState(input: {
     stateRepo,
     conditions,
     catalogLookup,
+    dataSource,
     buildResponse,
   } = input;
 
@@ -55,6 +58,13 @@ export async function applyPatchState(input: {
         );
       }
     }
+    const previousConcentration = state.concentratingOn;
+    await despawnSpiritsOnConcentrationChange(
+      dataSource,
+      character.id,
+      previousConcentration,
+      dto.concentratingOn,
+    );
     state.concentratingOn = dto.concentratingOn;
   }
 

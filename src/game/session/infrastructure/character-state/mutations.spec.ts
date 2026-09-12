@@ -54,7 +54,13 @@ describe('mutations', () => {
   const catalogLookup = {
     assertSpellInCatalog: jest.fn(),
   } as unknown as CatalogLookupService;
-  const dataSource = {} as DataSource;
+  const dataSource = {
+    getRepository: jest.fn(() => ({
+      findOne: jest.fn().mockResolvedValue(null),
+      find: jest.fn().mockResolvedValue([]),
+      remove: jest.fn(),
+    })),
+  } as unknown as DataSource;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,6 +77,7 @@ describe('mutations', () => {
         stateRepo,
         conditions,
         catalogLookup,
+        dataSource,
         buildResponse,
       });
 
@@ -90,6 +97,7 @@ describe('mutations', () => {
           stateRepo,
           conditions,
           catalogLookup,
+          dataSource,
           buildResponse,
         }),
       ).rejects.toBeInstanceOf(BadRequestException);
@@ -106,6 +114,7 @@ describe('mutations', () => {
         stateRepo,
         conditions,
         catalogLookup,
+        dataSource,
         buildResponse,
       });
       expect(state.concentratingOn).toBe('bless');
@@ -123,6 +132,7 @@ describe('mutations', () => {
           stateRepo,
           conditions,
           catalogLookup,
+          dataSource,
           buildResponse,
         }),
       ).rejects.toThrow(/not a concentration spell/);

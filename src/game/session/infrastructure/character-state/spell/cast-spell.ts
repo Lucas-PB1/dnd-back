@@ -1,3 +1,4 @@
+import { despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
@@ -196,6 +197,13 @@ export async function applyCastSpell(input: {
     character,
   });
   if (spell.concentration) {
+    const previousConcentration = state.concentratingOn;
+    await despawnSpiritsOnConcentrationChange(
+      dataSource,
+      character.id,
+      previousConcentration,
+      dto.spellSlug,
+    );
     state.concentratingOn = dto.spellSlug;
   }
   await applyPostCastInventoryEffects(

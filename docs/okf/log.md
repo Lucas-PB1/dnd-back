@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-12 — Animar Objetos: ficha alinhada ao scrap
+
+- Fonte: `docs/source/scrap/Animate Objects - Spells - D&D Beyond.html`.
+- Traits/ações dos `objeto-animado-*` completados (imunidades, sentidos, idiomas, PB do conjurador, Pancada).
+- Orçamento (mod × custo 1/2/3) documentado; multi-token continua opcional.
+
+## 2026-09-12 — Summon rest + despawn concentração
+
+- Seeds: Aberração / Constructo / Dragão / Ínfero / Morto-Vivo / Inseto Gigante / Animar Objetos (`seed.summon-spirit-rest.sql`).
+- Despawn de spirit actors ao trocar/encerrar concentração (cast, patch, long rest).
+- Fora: Familiar CR0, Wild Shape, MM genérico; Conjure\* sem ficha.
+
 ## 2026-09-12 — Template: escala fora da identidade
 
 - Concept: [creature-template-scale-control.md](/creature-template-scale-control.md) — identidade / variante / escala / controle.
@@ -11,7 +23,7 @@
 - Schema/migration: `spirit_*` em `phb_creature_template`; `phb_spell_spirit` + variantes.
 - Domain: `scaleSpiritCombatStats` + `SyncSpellSpiritHandler`; cast exige `spiritVariantKey`.
 - Seeds: Montaria Sobrenatural ×3; espíritos Bestial/Feérico/Elemental/Celestial + mapas.
-- Doc: [summon-vs-conjure.md](/summon-vs-conjure.md) status parcialmente migrado.
+- Doc: [summon-vs-conjure.md](/summon-vs-conjure.md) — core mapeado; rest + despawn na entrada do topo.
 
 ## 2026-09-12 — Summon vs Conjure (nomenclatura)
 
