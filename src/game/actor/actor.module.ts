@@ -6,9 +6,18 @@ import {
   PhbCompanionTemplateMap,
 } from '@entities/companion/phb-companion-profile.entity';
 import { PhbCompanionCommand } from '@entities/companion/phb-companion-command.entity';
+import {
+  PhbSpellSpirit,
+  PhbSpellSpiritVariant,
+} from '@entities/spirit/phb-spell-spirit.entity';
 import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
+import {
+  PhbCreatureScaleByLevel,
+  PhbCreatureScaleBySlot,
+} from '@entities/template/phb-creature-scale.entity';
 import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 import { CatalogModule } from '@catalog/catalog.module';
+import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { PhbCondition } from '../session/infrastructure/phb-condition.entity';
@@ -60,10 +69,14 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
       PlayerCharacterItem,
       PlayerCharacterState,
       PhbCreatureTemplate,
+      PhbCreatureScaleByLevel,
+      PhbCreatureScaleBySlot,
       PhbVehicleTemplate,
       PhbCompanionProfile,
       PhbCompanionTemplateMap,
       PhbCompanionCommand,
+      PhbSpellSpirit,
+      PhbSpellSpiritVariant,
       PhbSubclassRef,
     ]),
   ],
@@ -94,6 +107,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     LinkCharacterVehicleHandler,
     BoardCharacterVehicleHandler,
     SyncCharacterCompanionHandler,
+    SyncSpellSpiritHandler,
     TemplateImageResolver,
   ],
   exports: [
@@ -101,6 +115,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     GameActorAccessService,
     ActorPersistenceService,
     SyncCharacterCompanionHandler,
+    SyncSpellSpiritHandler,
     TypeOrmModule,
   ],
 })

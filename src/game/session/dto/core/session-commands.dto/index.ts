@@ -13,6 +13,7 @@ export {
 export {
   ArtifactRandomCastDto,
   CastSpellDto,
+  CastSpellSpiritDto,
   CastSpellResponseDto,
 } from './cast-spell.dto';
 export { TransferInspirationDto } from './transfer-inspiration.dto';

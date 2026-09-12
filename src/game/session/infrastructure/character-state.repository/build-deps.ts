@@ -1,3 +1,4 @@
+import type { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import type { DataSource, Repository } from 'typeorm';
 import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import type { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
@@ -39,6 +40,7 @@ export type CharacterStateRepoPorts = {
   effectCatalog: LoadEffectCatalog;
   mechanicalCatalog: LoadCombatMechanicalCatalog;
   dataSource: DataSource;
+  syncSpellSpirit: SyncSpellSpiritHandler;
   findOrCreate: CharacterStateFindOrCreate;
   buildResponse: CharacterStateBuildResponse;
 };
@@ -56,6 +58,7 @@ export function buildCoreDeps(ports: CharacterStateRepoPorts): CoreSessionDeps {
     grantedSpellCatalog: ports.grantedSpellCatalog,
     effectCatalog: ports.effectCatalog,
     dataSource: ports.dataSource,
+    syncSpellSpirit: ports.syncSpellSpirit,
     findOrCreate: ports.findOrCreate,
     buildResponse: ports.buildResponse,
   };

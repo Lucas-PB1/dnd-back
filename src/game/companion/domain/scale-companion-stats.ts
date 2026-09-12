@@ -1,11 +1,12 @@
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { AbilityScores } from '@game/shared/domain/ability-scores';
 
-export type CompanionScaleTemplate = {
+/** Parâmetros de `phb_creature_scale_by_level` + CA base do template. */
+export type ScaleByLevel = {
   armorClass: number | null;
-  companionHpBase: number | null;
-  companionHpPerLevel: number | null;
-  companionAcAbilitySlug: string | null;
+  hpBase: number;
+  hpPerLevel: number;
+  acAbilitySlug: string | null;
 };
 
 export type ScaledCompanionCombatStats = {
@@ -23,22 +24,15 @@ const ABILITY_KEYS: ReadonlySet<keyof AbilityScores> = new Set([
 ]);
 
 export function scaleCompanionCombatStats(
-  template: CompanionScaleTemplate,
+  scale: ScaleByLevel,
   characterLevel: number,
   abilityScores: AbilityScores,
 ): ScaledCompanionCombatStats {
   const level = Math.max(1, characterLevel);
-  let hitPointsMax: number | null = null;
-  if (
-    template.companionHpBase != null &&
-    template.companionHpPerLevel != null
-  ) {
-    hitPointsMax =
-      template.companionHpBase + template.companionHpPerLevel * level;
-  }
+  const hitPointsMax = scale.hpBase + scale.hpPerLevel * level;
 
-  let armorClass = template.armorClass;
-  const abilitySlug = template.companionAcAbilitySlug;
+  let armorClass = scale.armorClass;
+  const abilitySlug = scale.acAbilitySlug;
   if (
     armorClass != null &&
     abilitySlug &&

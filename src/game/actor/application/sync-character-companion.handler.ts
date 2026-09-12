@@ -15,6 +15,7 @@ import {
   loadCompanionTemplateMaps,
 } from '@game/companion/infrastructure/companion-profile.queries';
 import { loadCharacterSheet } from '@game/sheet/infrastructure/character-sheet/load-character-sheet';
+import { loadScaleByLevel } from '../infrastructure/creature-scale.queries';
 import { ActorMapper } from '../infrastructure/actor.mapper';
 import { ActorPersistenceService } from '../infrastructure/actor-persistence.service';
 import { GameActor } from '../infrastructure/game-actor.entity';
@@ -83,6 +84,12 @@ export class SyncCharacterCompanionHandler {
     const template = await this.catalogLookup.findCreatureTemplateOrFail(
       config.templateSlug,
     );
+    const scale = await loadScaleByLevel(this.dataSource, config.templateSlug);
+    if (!scale) {
+      throw new BadRequestException(
+        `Template '${config.templateSlug}' sem phb_creature_scale_by_level`,
+      );
+    }
 
     const existing = await this.actors.find({
       where: {
@@ -96,7 +103,13 @@ export class SyncCharacterCompanionHandler {
       (actor) => actor.templateSlug === config.templateSlug,
     );
     if (sameTemplate) {
-      await this.applyScaledStats(sameTemplate, template, character, dto.restoreHp);
+      await this.applyScaledStats(
+        sameTemplate,
+        template.armorClass,
+        scale,
+        character,
+        dto.restoreHp,
+      );
       return {
         ...(await this.mapper.toDto(sameTemplate)),
         reused: true,
@@ -117,7 +130,13 @@ export class SyncCharacterCompanionHandler {
       parentCharacterId: characterId,
     });
     const actor = await this.actors.findOneOrFail({ where: { id: actorId } });
-    await this.applyScaledStats(actor, template, character, dto.restoreHp ?? true);
+    await this.applyScaledStats(
+      actor,
+      template.armorClass,
+      scale,
+      character,
+      dto.restoreHp ?? true,
+    );
 
     return {
       ...(await this.mapper.toDto(actor)),
@@ -130,17 +149,22 @@ export class SyncCharacterCompanionHandler {
 
   private async applyScaledStats(
     actor: GameActor,
-    template: {
-      armorClass: number | null;
-      companionHpBase: number | null;
-      companionHpPerLevel: number | null;
-      companionAcAbilitySlug: string | null;
+    templateArmorClass: number | null,
+    scale: {
+      hpBase: number;
+      hpPerLevel: number;
+      acAbilitySlug: string | null;
     },
     character: { level: number; abilityScores: GameActor['abilityScores'] },
     restoreHp?: boolean,
   ): Promise<void> {
     const scaled = scaleCompanionCombatStats(
-      template,
+      {
+        armorClass: templateArmorClass,
+        hpBase: scale.hpBase,
+        hpPerLevel: scale.hpPerLevel,
+        acAbilitySlug: scale.acAbilitySlug,
+      },
       character.level,
       character.abilityScores,
     );

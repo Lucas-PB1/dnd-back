@@ -20,6 +20,7 @@ const loadActiveItemSlugsMock = loadActiveItemSlugs as jest.MockedFunction<
 describe('applyCastSpell', () => {
   const character = {
     id: 'c1',
+    userId: 'u1',
     classSlug: 'fighter',
     subclassSlug: null as string | null,
     level: 3,
@@ -47,6 +48,8 @@ describe('applyCastSpell', () => {
   let subclassSlots: { findOne: jest.Mock };
   let stateRepo: { save: jest.Mock };
   let buildResponse: jest.Mock;
+
+  let syncSpellSpirit: { execute: jest.Mock };
 
   beforeEach(() => {
     state = {
@@ -88,6 +91,7 @@ describe('applyCastSpell', () => {
     subclassSlots = { findOne: jest.fn().mockResolvedValue(null) };
     stateRepo = { save: jest.fn().mockResolvedValue(state) };
     buildResponse = jest.fn().mockResolvedValue({ ok: true });
+    syncSpellSpirit = { execute: jest.fn().mockResolvedValue(null) };
     resolveClassResourcesMock.mockReset();
     resolveClassResourcesMock.mockResolvedValue([]);
     loadActiveItemSlugsMock.mockReset();
@@ -151,6 +155,7 @@ describe('applyCastSpell', () => {
       itemCastResourceSlug?: string;
       itemCastSpendAmount?: number;
       slotLevel?: number;
+      spiritVariantKey?: string;
     },
     characterOverride?: Record<string, unknown>,
     dataSourceOverride?: { query: jest.Mock },
@@ -170,9 +175,67 @@ describe('applyCastSpell', () => {
         load: jest.fn().mockResolvedValue([drowFairyFireEffect]),
       }),
       dataSource: asDep(dataSourceOverride ?? { query: jest.fn() }),
+      syncSpellSpirit: asDep(syncSpellSpirit),
       buildResponse,
     });
   }
+
+  it('exige spiritVariantKey quando o mapa spirit responde erro', async () => {
+    classSlots.findOne.mockResolvedValue({ spellSlots: { '2': 1 } });
+    catalogLookup.findSpellOrFail.mockResolvedValue({
+      level: 2,
+      concentration: false,
+    });
+    syncSpellSpirit.execute.mockRejectedValue(
+      new BadRequestException(
+        "spiritVariantKey é obrigatório para 'convocar-montaria' (opções: celestial, feerico, infero)",
+      ),
+    );
+
+    await expect(
+      cast(
+        { spellSlug: 'convocar-montaria', slotLevel: 2 },
+        { classSlug: 'paladin', level: 5 },
+      ),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('anexa spirit na resposta após cast bem-sucedido', async () => {
+    classSlots.findOne.mockResolvedValue({ spellSlots: { '2': 2 } });
+    catalogLookup.findSpellOrFail.mockResolvedValue({
+      level: 2,
+      concentration: false,
+    });
+    syncSpellSpirit.execute.mockResolvedValue({
+      actorId: 'actor-1',
+      templateSlug: 'montaria-sobrenatural-celestial',
+      variantKey: 'celestial',
+      variantLabel: 'Celestial',
+      reused: false,
+      armorClass: 12,
+      hitPointsMax: 25,
+    });
+
+    const result = await cast(
+      {
+        spellSlug: 'convocar-montaria',
+        slotLevel: 2,
+        spiritVariantKey: 'celestial',
+      },
+      { classSlug: 'paladin', level: 5 },
+    );
+
+    expect(syncSpellSpirit.execute).toHaveBeenCalledWith({
+      ownerUserId: 'u1',
+      characterId: 'c1',
+      spellSlug: 'convocar-montaria',
+      variantKey: 'celestial',
+      slotLevel: 2,
+    });
+    expect(result.spirit?.templateSlug).toBe('montaria-sobrenatural-celestial');
+    expect(result.spirit?.hitPointsMax).toBe(25);
+    expect(result.note).toMatch(/Espírito: Celestial/);
+  });
 
   it('casts via item charges without knowing the spell', async () => {
     spellLookup.hasSpell.mockResolvedValue(false);
@@ -534,6 +597,7 @@ describe('applyCastSpell', () => {
         dataSource: asDep({
           query: jest.fn().mockResolvedValue(catalogRows),
         }),
+        syncSpellSpirit: asDep(syncSpellSpirit),
         buildResponse,
       });
     }

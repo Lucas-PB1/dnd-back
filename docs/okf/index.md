@@ -13,6 +13,7 @@ Bundle de preparação: mapa de módulos, inventário de tooling Cursor e plano 
 - [Plano em ondas](/waves-plan.md) — convenções → SQL-first → legado
 - [Auditoria SQL-first](/sql-first-audit.md) — hardcodes em Game; piloto e dívida
 - [Summon vs Conjure](/summon-vs-conjure.md) — ficha vs aura; convenção PT/slugs PHB 2024
+- [Template / escala / controle](/creature-template-scale-control.md) — identidade, variante, scale binding, game_actor
 
 ## Docs canônicos (fora do OKF)
 

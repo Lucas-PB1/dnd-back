@@ -22,6 +22,15 @@ Runtime: `game_actor*` · Catálogo: `phb_creature_template*` / `phb_vehicle_tem
 | Magias inatas | `phb_creature_template_spell` | `game_actor_spell` |
 | Traços | `phb_creature_template_trait` | `notes` ou futuro |
 
+### Escala opcional (binding — fora da identidade)
+
+| Binding | Tabela | Runtime |
+|---------|--------|---------|
+| Nível do personagem | `phb_creature_scale_by_level` | sync companion |
+| Círculo do slot | `phb_creature_scale_by_slot` | sync spirit no cast |
+
+Ver OKF [creature-template-scale-control.md](../okf/creature-template-scale-control.md).
+
 ### Magia inata
 
 | Texto no bloco | `usage_kind` | Colunas extras |

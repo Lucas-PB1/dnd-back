@@ -448,6 +448,8 @@ notes/phb/phb_level_combat_note.remaining-dynamic-as-static.sql
 creature/phb/seed.nwb-longships.sql
 creature/phb/seed.nwb-bestiary.sql
 creature/phb/phb_mounts.all.sql
+creature/phb/seed.otherworldly-steed.sql
+creature/phb/seed.summon-spirit-core.sql
 creature/phb/phb_mount.images.02.sql
 effect/phb/phb_effect.phb.sql
 effect/steinhardt/phb_effect.steinhardt.sql

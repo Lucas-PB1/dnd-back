@@ -30,6 +30,7 @@ export class CastSpellHandler {
       note: result.note,
       spellSaveDcOverride: result.spellSaveDcOverride ?? null,
       spellAttackBonusOverride: result.spellAttackBonusOverride ?? null,
+      spirit: result.spirit ?? null,
       state: result.state,
     };
   }

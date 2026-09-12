@@ -6,6 +6,7 @@ import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lo
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { LoadEffectCatalog } from '@game/effects';
+import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { grantHitDiceOnLevelUp } from '@game/session/domain/hit-dice-rest';
@@ -23,6 +24,7 @@ import type { BuildResponse } from '../core/mutation-types';
 import { applyPatchState } from '../core/patch-state';
 import { applyLongRestState, applyShortRestState } from '../rest/rest';
 import { applyCastSpell } from '../spell/cast-spell';
+import type { SyncSpellSpiritResult } from '@game/spirit/application/sync-spell-spirit.handler';
 
 export type CoreSessionDeps = {
   stateRepo: Repository<PlayerCharacterState>;
@@ -36,6 +38,7 @@ export type CoreSessionDeps = {
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   effectCatalog: LoadEffectCatalog;
   dataSource: import('typeorm').DataSource;
+  syncSpellSpirit: SyncSpellSpiritHandler;
   findOrCreate: (characterId: string, level: number) => Promise<PlayerCharacterState>;
   buildResponse: BuildResponse;
 };
@@ -66,6 +69,7 @@ export async function castSpellOp(
   note: string | null;
   spellSaveDcOverride: number | null;
   spellAttackBonusOverride: number | null;
+  spirit: SyncSpellSpiritResult | null;
   state: CharacterStateResponseDto;
 }> {
   const state = await deps.findOrCreate(character.id, character.level);
@@ -82,6 +86,7 @@ export async function castSpellOp(
     grantedSpellCatalog: deps.grantedSpellCatalog,
     effectCatalog: deps.effectCatalog,
     dataSource: deps.dataSource,
+    syncSpellSpirit: deps.syncSpellSpirit,
     buildResponse: deps.buildResponse,
   });
 }

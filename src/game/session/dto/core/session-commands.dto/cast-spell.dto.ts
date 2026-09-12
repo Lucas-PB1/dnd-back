@@ -129,6 +129,38 @@ export class CastSpellDto {
   @IsOptional()
   @IsBoolean()
   flexReduce?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'celestial',
+    description:
+      'Variante tipada para magias spirit_actor / Find Steed (obrigatório se a magia estiver em phb_spell_spirit)',
+  })
+  @IsOptional()
+  @IsString()
+  spiritVariantKey?: string;
+}
+
+export class CastSpellSpiritDto {
+  @ApiProperty({ example: 'uuid-actor' })
+  actorId!: string;
+
+  @ApiProperty({ example: 'montaria-sobrenatural-celestial' })
+  templateSlug!: string;
+
+  @ApiProperty({ example: 'celestial' })
+  variantKey!: string;
+
+  @ApiProperty({ example: 'Celestial' })
+  variantLabel!: string;
+
+  @ApiProperty({ example: false })
+  reused!: boolean;
+
+  @ApiPropertyOptional({ example: 12 })
+  armorClass!: number | null;
+
+  @ApiPropertyOptional({ example: 25 })
+  hitPointsMax!: number | null;
 }
 
 export class CastSpellResponseDto {
@@ -154,6 +186,12 @@ export class CastSpellResponseDto {
     description: 'Bônus de ataque mágico do item, se houver',
   })
   spellAttackBonusOverride?: number | null;
+
+  @ApiPropertyOptional({
+    type: CastSpellSpiritDto,
+    description: 'Actor spirit/montaria sincronizado após o cast (se aplicável)',
+  })
+  spirit?: CastSpellSpiritDto | null;
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;

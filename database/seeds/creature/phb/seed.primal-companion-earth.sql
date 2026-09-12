@@ -1,13 +1,12 @@
 -- Companheiro Primal (Beast Master) — Terra / Mar / Céu (PHB 2024)
--- HP/AC de combate: companion_hp_* + companion_ac_ability_slug (aplicados no sync).
+-- HP/AC de combate: phb_creature_scale_by_level (aplicados no sync).
 -- hit_points_avg / armor_class = piso de nível 1 (Wis 10) para spawn genérico.
 
 -- Terra
 INSERT INTO rpg.phb_creature_template (
   slug, edition_slug, name, subtitle, alignment, creature_type, size_slug,
   challenge_rating, proficiency_bonus, armor_class, hit_points_avg, hit_points_formula,
-  initiative_modifier, ability_scores,
-  companion_hp_base, companion_hp_per_level, companion_ac_ability_slug
+  initiative_modifier, ability_scores
 ) VALUES (
   'primal-companion-earth',
   'phb-2024-pt',
@@ -22,10 +21,7 @@ INSERT INTO rpg.phb_creature_template (
   10,
   '5 + 5 × nível do patrulheiro',
   2,
-  '{"forca":14,"destreza":14,"constituicao":15,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb,
-  5,
-  5,
-  'sabedoria'
+  '{"forca":14,"destreza":14,"constituicao":15,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb
 ) ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   subtitle = EXCLUDED.subtitle,
@@ -37,10 +33,7 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_avg = EXCLUDED.hit_points_avg,
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier,
-  ability_scores = EXCLUDED.ability_scores,
-  companion_hp_base = EXCLUDED.companion_hp_base,
-  companion_hp_per_level = EXCLUDED.companion_hp_per_level,
-  companion_ac_ability_slug = EXCLUDED.companion_ac_ability_slug;
+  ability_scores = EXCLUDED.ability_scores;
 
 DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-earth';
 INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
@@ -70,8 +63,7 @@ INSERT INTO rpg.phb_creature_template_action (
 INSERT INTO rpg.phb_creature_template (
   slug, edition_slug, name, subtitle, alignment, creature_type, size_slug,
   challenge_rating, proficiency_bonus, armor_class, hit_points_avg, hit_points_formula,
-  initiative_modifier, ability_scores,
-  companion_hp_base, companion_hp_per_level, companion_ac_ability_slug
+  initiative_modifier, ability_scores
 ) VALUES (
   'primal-companion-sky',
   'phb-2024-pt',
@@ -86,10 +78,7 @@ INSERT INTO rpg.phb_creature_template (
   8,
   '4 + 4 × nível do patrulheiro',
   3,
-  '{"forca":6,"destreza":16,"constituicao":13,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb,
-  4,
-  4,
-  'sabedoria'
+  '{"forca":6,"destreza":16,"constituicao":13,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb
 ) ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   subtitle = EXCLUDED.subtitle,
@@ -101,10 +90,7 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_avg = EXCLUDED.hit_points_avg,
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier,
-  ability_scores = EXCLUDED.ability_scores,
-  companion_hp_base = EXCLUDED.companion_hp_base,
-  companion_hp_per_level = EXCLUDED.companion_hp_per_level,
-  companion_ac_ability_slug = EXCLUDED.companion_ac_ability_slug;
+  ability_scores = EXCLUDED.ability_scores;
 
 DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-sky';
 INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
@@ -135,8 +121,7 @@ INSERT INTO rpg.phb_creature_template_action (
 INSERT INTO rpg.phb_creature_template (
   slug, edition_slug, name, subtitle, alignment, creature_type, size_slug,
   challenge_rating, proficiency_bonus, armor_class, hit_points_avg, hit_points_formula,
-  initiative_modifier, ability_scores,
-  companion_hp_base, companion_hp_per_level, companion_ac_ability_slug
+  initiative_modifier, ability_scores
 ) VALUES (
   'primal-companion-sea',
   'phb-2024-pt',
@@ -151,10 +136,7 @@ INSERT INTO rpg.phb_creature_template (
   10,
   '5 + 5 × nível do patrulheiro',
   2,
-  '{"forca":14,"destreza":14,"constituicao":15,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb,
-  5,
-  5,
-  'sabedoria'
+  '{"forca":14,"destreza":14,"constituicao":15,"inteligencia":8,"sabedoria":14,"carisma":11}'::jsonb
 ) ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   subtitle = EXCLUDED.subtitle,
@@ -166,10 +148,7 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_avg = EXCLUDED.hit_points_avg,
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier,
-  ability_scores = EXCLUDED.ability_scores,
-  companion_hp_base = EXCLUDED.companion_hp_base,
-  companion_hp_per_level = EXCLUDED.companion_hp_per_level,
-  companion_ac_ability_slug = EXCLUDED.companion_ac_ability_slug;
+  ability_scores = EXCLUDED.ability_scores;
 
 DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-sea';
 INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
@@ -195,3 +174,12 @@ INSERT INTO rpg.phb_creature_template_action (
   'Ataque corpo a corpo: bônus = modificador de ataque de magia do patrulheiro, alcance 1,5 m. Acerto: 1d6+2 + modificador de Sabedoria (concussão ou perfurante); o alvo fica Agarrado (CD = CD de magia do patrulheiro).',
   1
 );
+
+INSERT INTO rpg.phb_creature_scale_by_level (template_slug, hp_base, hp_per_level, ac_ability_slug) VALUES
+  ('primal-companion-earth', 5, 5, 'sabedoria'),
+  ('primal-companion-sky', 4, 4, 'sabedoria'),
+  ('primal-companion-sea', 5, 5, 'sabedoria')
+ON CONFLICT (template_slug) DO UPDATE SET
+  hp_base = EXCLUDED.hp_base,
+  hp_per_level = EXCLUDED.hp_per_level,
+  ac_ability_slug = EXCLUDED.ac_ability_slug;

@@ -1,5 +1,18 @@
 # log
 
+## 2026-09-12 — Template: escala fora da identidade
+
+- Concept: [creature-template-scale-control.md](/creature-template-scale-control.md) — identidade / variante / escala / controle.
+- SQL: `phb_creature_scale_by_level` + `phb_creature_scale_by_slot`; colunas `companion_*` / `spirit_*` removidas do template.
+- Sync companion/spirit lê as tabelas de escala; seeds alinhados.
+
+## 2026-09-12 — spirit_actor fichas (Steed + Summon core)
+
+- Schema/migration: `spirit_*` em `phb_creature_template`; `phb_spell_spirit` + variantes.
+- Domain: `scaleSpiritCombatStats` + `SyncSpellSpiritHandler`; cast exige `spiritVariantKey`.
+- Seeds: Montaria Sobrenatural ×3; espíritos Bestial/Feérico/Elemental/Celestial + mapas.
+- Doc: [summon-vs-conjure.md](/summon-vs-conjure.md) status parcialmente migrado.
+
 ## 2026-09-12 — Summon vs Conjure (nomenclatura)
 
 - Convenção: Summon→**Invocar** (`spirit_actor`), Conjure→**Conjurar** (`area_effect`), Find→**Convocar**.

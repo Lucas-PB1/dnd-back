@@ -11,6 +11,7 @@ import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lo
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { LoadEffectCatalog } from '@game/effects';
+import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
 import {
   CastSpellDto,
   PatchCharacterStateDto,
@@ -67,6 +68,7 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     private readonly effectCatalog: LoadEffectCatalog,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly dataSource: DataSource,
+    private readonly syncSpellSpirit: SyncSpellSpiritHandler,
   ) {
     super();
     this.martial = new MartialSessionFacade(() => this.martialDeps());
@@ -87,6 +89,7 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
       effectCatalog: this.effectCatalog,
       mechanicalCatalog: this.mechanicalCatalog,
       dataSource: this.dataSource,
+      syncSpellSpirit: this.syncSpellSpirit,
       findOrCreate: (id, level) => this.findOrCreate(id, level),
       buildResponse: (c, s) => this.buildResponse(c, s),
     };

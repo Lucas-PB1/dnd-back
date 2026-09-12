@@ -76,5 +76,17 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 
 ## Dívida (fora desta onda)
 
-- Extrair blocos → `phb_creature_template` + sync no cast
-- Find Familiar CR0 / Wild Shape
+- Find Familiar CR0 / Wild Shape / MM genérico
+- Aberration / Construct / Dragon / Fiend / Undead / Giant Insect / Animate Objects
+- Despawn automático ao fim de concentração
+- spectral-summon / fey-reinforcements (reusam Summon; wire depois)
+- Conjure\* como actor (não — permanece `area_effect`)
+
+## Status `spirit_actor` (parcial)
+
+Infra + piloto **Find Steed** + **Summon core** (Beast / Fey / Elemental / Celestial):
+
+- Escala em `phb_creature_scale_by_slot` (ver [creature-template-scale-control.md](/creature-template-scale-control.md)); mapas `phb_spell_spirit*`
+- Escala por círculo do slot: `scaleSpiritCombatStats`; sync no cast via `SyncSpellSpiritHandler`
+- Seeds: `seed.otherworldly-steed.sql`, `seed.summon-spirit-core.sql`
+- Cast: `spiritVariantKey` obrigatório se a magia está no mapa; resposta inclui `spirit`

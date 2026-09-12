@@ -1,57 +1,42 @@
 import { scaleCompanionCombatStats } from './scale-companion-stats';
 
 describe('scaleCompanionCombatStats', () => {
-  const abilities = {
+  const scores = {
     forca: 10,
     destreza: 10,
     constituicao: 10,
     inteligencia: 10,
-    sabedoria: 16,
+    sabedoria: 14,
     carisma: 10,
   };
 
-  it('aplica HP base+nível e AC 13+Wis (Beast of the Land)', () => {
+  it('HP = base + per_level × nível; CA += mod do atributo', () => {
     expect(
       scaleCompanionCombatStats(
         {
           armorClass: 13,
-          companionHpBase: 5,
-          companionHpPerLevel: 5,
-          companionAcAbilitySlug: 'sabedoria',
+          hpBase: 5,
+          hpPerLevel: 5,
+          acAbilitySlug: 'sabedoria',
         },
         3,
-        abilities,
+        scores,
       ),
-    ).toEqual({ hitPointsMax: 20, armorClass: 16 });
+    ).toEqual({ hitPointsMax: 20, armorClass: 15 });
   });
 
-  it('usa fórmula do céu (4+4×nível)', () => {
+  it('sem atributo de CA: só HP escala', () => {
     expect(
       scaleCompanionCombatStats(
         {
-          armorClass: 13,
-          companionHpBase: 4,
-          companionHpPerLevel: 4,
-          companionAcAbilitySlug: 'sabedoria',
+          armorClass: 14,
+          hpBase: 4,
+          hpPerLevel: 4,
+          acAbilitySlug: null,
         },
-        5,
-        abilities,
+        2,
+        scores,
       ),
-    ).toEqual({ hitPointsMax: 24, armorClass: 16 });
-  });
-
-  it('sem colunas de escala não altera HP', () => {
-    expect(
-      scaleCompanionCombatStats(
-        {
-          armorClass: 13,
-          companionHpBase: null,
-          companionHpPerLevel: null,
-          companionAcAbilitySlug: null,
-        },
-        5,
-        abilities,
-      ),
-    ).toEqual({ hitPointsMax: null, armorClass: 13 });
+    ).toEqual({ hitPointsMax: 12, armorClass: 14 });
   });
 });

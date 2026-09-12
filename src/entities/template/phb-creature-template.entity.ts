@@ -35,15 +35,6 @@ export class PhbCreatureTemplate {
   @Column({ name: 'ability_scores', type: 'jsonb', nullable: true })
   abilityScores!: Record<string, number> | null;
 
-  @Column({ name: 'companion_hp_base', type: 'int', nullable: true })
-  companionHpBase!: number | null;
-
-  @Column({ name: 'companion_hp_per_level', type: 'int', nullable: true })
-  companionHpPerLevel!: number | null;
-
-  @Column({ name: 'companion_ac_ability_slug', type: 'text', nullable: true })
-  companionAcAbilitySlug!: string | null;
-
   @Column({ name: 'image_url', type: 'text', nullable: true })
   imageUrl!: string | null;
 }
