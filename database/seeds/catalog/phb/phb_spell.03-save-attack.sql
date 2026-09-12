@@ -164,17 +164,17 @@ WHERE slug = 'controlar-agua';
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = TRUE
-WHERE slug = 'convocar-celestial';
+WHERE slug = 'invocar-celestial';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = TRUE
-WHERE slug = 'convocar-elemental';
+WHERE slug = 'invocar-elemental';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = TRUE
-WHERE slug = 'convocar-feerico';
+WHERE slug = 'invocar-feerico';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
@@ -449,7 +449,7 @@ WHERE slug = 'invocar-aberracao';
 UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
     requires_attack_roll = FALSE
-WHERE slug = 'invocar-animais';
+WHERE slug = 'conjurar-animais';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
@@ -464,7 +464,7 @@ WHERE slug = 'invocar-dragao';
 UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
     requires_attack_roll = FALSE
-WHERE slug = 'invocar-elemental';
+WHERE slug = 'conjurar-elemental';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
@@ -479,12 +479,12 @@ WHERE slug = 'invocar-morto-vivo';
 UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
     requires_attack_roll = FALSE
-WHERE slug = 'invocar-saraivada';
+WHERE slug = 'conjurar-saraivada';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
     requires_attack_roll = FALSE
-WHERE slug = 'invocar-seres-da-floresta';
+WHERE slug = 'conjurar-seres-da-floresta';
 
 UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),

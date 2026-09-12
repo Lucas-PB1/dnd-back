@@ -18,5 +18,8 @@ CREATE TABLE rpg.phb_creature_template (
   alignment TEXT,
   initiative_modifier INT,
   ability_scores JSONB,
-  image_url TEXT
+  image_url TEXT,
+  companion_hp_base INT CHECK (companion_hp_base IS NULL OR companion_hp_base >= 0),
+  companion_hp_per_level INT CHECK (companion_hp_per_level IS NULL OR companion_hp_per_level >= 0),
+  companion_ac_ability_slug TEXT REFERENCES rpg.phb_ability(slug)
 );

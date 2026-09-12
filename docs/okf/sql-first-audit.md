@@ -43,6 +43,12 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | — | Fórmulas com mod/estado (`rageActive`, CD, smite por slot, magical cunning ceil) | **manter TS** |
 | — | Channel Divinity / Focus (ki) / Wild Shape usos | já em progression / grant_resource — **não** duplicar |
 | — | Handlers mesa `switch (actionSlug)` | **fechado** (todas as classes → economy) |
+| — | Veículos drawn-PHB + slug `barco-de-quilha` | **fechado** → `phb_vehicle_template` + item align |
+| — | Companions placeholder (BM) | **fechado** → stats PHB + `companion_hp_*` / sync scale |
+| baixa | MM/SRD bestiary genérico | extract existe; onda grande — **adiado** |
+| baixa | GH Primal Spirit bloco oficial | escala provisória; substituir quando extract chegar |
+| baixa | Wild Shape / familiar / steed como actor sync | ainda nota/mesa |
+| — | Summon vs Conjure nomenclatura PT/slugs | **fechado** → [summon-vs-conjure.md](/summon-vs-conjure.md) |
 
 ### Faxina P0 (2026-09-11) — mortos + wire dice
 

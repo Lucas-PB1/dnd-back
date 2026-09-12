@@ -226,7 +226,7 @@ INSERT INTO rpg.phb_class_economy_action (
 (
   'item-machado-senhores-elemental', NULL, NULL, NULL,
   (SELECT id FROM rpg.phb_item WHERE slug = 'machado-dos-senhores-anoes'), NULL,
-  'Machado · Invocar Elemental da Terra', 'action'::rpg.action_economy_bucket, 1,
+  'Machado · Conjurar Elemental da Terra', 'action'::rpg.action_economy_bucket, 1,
   'machadoElementalTerraUse', NULL, true,
   'Usar Magia: Elemental da Terra 24 h (1×/amanhecer)',
   '≤9 m; obedece; turno após o seu. Dispensar = Ação Bônus. MVP: DL.',

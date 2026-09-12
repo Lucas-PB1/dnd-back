@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import {
   PhbCompanionProfile,
   PhbCompanionTemplateMap,
 } from '@entities/companion/phb-companion-profile.entity';
 import { PhbCompanionCommand } from '@entities/companion/phb-companion-command.entity';
-import { PhbItem } from '@entities/equipment/phb-item.entity';
+import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 import { CatalogModule } from '@catalog/catalog.module';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
@@ -60,9 +59,8 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
       PhbCondition,
       PlayerCharacterItem,
       PlayerCharacterState,
-      PhbItem,
-      PhbVehicleTemplate,
       PhbCreatureTemplate,
+      PhbVehicleTemplate,
       PhbCompanionProfile,
       PhbCompanionTemplateMap,
       PhbCompanionCommand,

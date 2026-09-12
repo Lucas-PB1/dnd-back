@@ -285,10 +285,10 @@ INSERT INTO rpg.phb_class_economy_action (
 (
   'item-cajado-dos-magi-invocar-elemental', NULL, NULL, NULL,
   (SELECT id FROM rpg.phb_item WHERE slug = 'cajado-dos-magi'), NULL,
-  'Cajado · Invocar Elemental', 'action'::rpg.action_economy_bucket, 1,
+  'Cajado · Conjurar Elemental', 'action'::rpg.action_economy_bucket, 1,
   'cajadoMagiCharges', NULL, true,
-  'Gastar 7 cargas: Invocar Elemental',
-  'Gaste 7 cargas para conjurar Invocar Elemental (sua CD). Cargas: 50; MVP recupera no Descanso Longo.',
+  'Gastar 7 cargas: Conjurar Elemental',
+  'Gaste 7 cargas para conjurar Conjurar Elemental (sua CD). Cargas: 50; MVP recupera no Descanso Longo.',
   'spend-resource', 7, 750, NULL, NULL
 ),
 (

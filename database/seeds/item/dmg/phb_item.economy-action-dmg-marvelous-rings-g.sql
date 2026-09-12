@@ -20,7 +20,7 @@ INSERT INTO rpg.phb_class_economy_action (
 (
   'item-gema-elemental-usar', NULL, NULL, NULL,
   (SELECT id FROM rpg.phb_item WHERE slug = 'gema-elemental'), NULL,
-  'Gema · Invocar Elemental', 'action'::rpg.action_economy_bucket, 1,
+  'Gema · Conjurar Elemental', 'action'::rpg.action_economy_bucket, 1,
   NULL, NULL, false,
   'Quebrar: Elemental 1 h (consumir)',
   'Usar Objeto: quebre → Elemental (Fogo/Terra/Água/Ar conforme gema). Obedece; some em 1 h / 0 PV / dispensar (bônus). Remova o item.',

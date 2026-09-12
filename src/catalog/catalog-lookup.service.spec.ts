@@ -30,6 +30,8 @@ describe('CatalogLookupService', () => {
   let itemsRepo: RepoMocks;
   let spellsRepo: RepoMocks;
   let skillsRepo: RepoMocks;
+  let creatureTemplatesRepo: RepoMocks;
+  let vehicleTemplatesRepo: RepoMocks;
 
   beforeEach(() => {
     classesRepo = mockRepo();
@@ -45,6 +47,8 @@ describe('CatalogLookupService', () => {
     itemsRepo = mockRepo();
     spellsRepo = mockRepo();
     skillsRepo = mockRepo();
+    creatureTemplatesRepo = mockRepo();
+    vehicleTemplatesRepo = mockRepo();
 
     service = new CatalogLookupService(
       asMockRepo(classesRepo),
@@ -60,6 +64,8 @@ describe('CatalogLookupService', () => {
       asMockRepo(itemsRepo),
       asMockRepo(spellsRepo),
       asMockRepo(skillsRepo),
+      asMockRepo(creatureTemplatesRepo),
+      asMockRepo(vehicleTemplatesRepo),
     );
   });
 
@@ -172,6 +178,24 @@ describe('CatalogLookupService', () => {
     await expect(
       service.assertSubclassForClass('champion', 'wizard'),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('resolveTransportActorKind distingue vehicle vs mount', async () => {
+    vehicleTemplatesRepo.findOne.mockResolvedValue({ slug: 'carruagem' });
+    await expect(service.resolveTransportActorKind('carruagem')).resolves.toBe(
+      'vehicle',
+    );
+
+    vehicleTemplatesRepo.findOne.mockResolvedValue(null);
+    creatureTemplatesRepo.findOne.mockResolvedValue({ slug: 'cavalo' });
+    await expect(service.resolveTransportActorKind('cavalo')).resolves.toBe(
+      'mount',
+    );
+
+    creatureTemplatesRepo.findOne.mockResolvedValue(null);
+    await expect(service.resolveTransportActorKind('x')).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
   });
 
   it('validateCharacterCatalogRefs checks optional fields', async () => {

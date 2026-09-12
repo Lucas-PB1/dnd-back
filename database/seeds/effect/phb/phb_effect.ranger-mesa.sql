@@ -134,7 +134,7 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Reforços Feéricos: Convocar Feérico sem espaço e sem Concentração (duração 1 minuto nesta conjuração).'
+  'Reforços Feéricos: Invocar Feérico sem espaço e sem Concentração (duração 1 minuto nesta conjuração).'
 FROM ins;
 
 -- Fey Wanderer — Andarilho Nebuloso

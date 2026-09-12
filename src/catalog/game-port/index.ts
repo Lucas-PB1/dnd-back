@@ -1,4 +1,3 @@
-
 export { CatalogLookupService } from '../catalog-lookup.service';
 export { ClassProficienciesQuery } from '../classes/queries/class-proficiencies.query';
 export { RecordItemCatalogStatsService } from '../items/application/record-item-catalog-stats.service';
@@ -22,3 +21,10 @@ export {
   resolveTraitPackageSlug,
   type SpeciesChoiceRef,
 } from '../species/domain/species-culture';
+export {
+  assertCreatureTemplateInCatalog,
+  assertVehicleTemplateInCatalog,
+  findCreatureTemplateOrFail,
+  findVehicleTemplateOrFail,
+  resolveTransportActorKind,
+} from '../catalog-lookup-templates';

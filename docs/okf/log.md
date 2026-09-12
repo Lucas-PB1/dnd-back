@@ -1,5 +1,19 @@
 # log
 
+## 2026-09-12 — Summon vs Conjure (nomenclatura)
+
+- Convenção: Summon→**Invocar** (`spirit_actor`), Conjure→**Conjurar** (`area_effect`), Find→**Convocar**.
+- Doc: [summon-vs-conjure.md](/summon-vs-conjure.md); glossário alinhado; slugs `conjurar-*` / `invocar-*` + migration.
+- Seed: bloco Bestial Spirit devolvido a `invocar-fera` (estava colado em `invocar-infero`).
+
+## 2026-09-12 — Gaps veículos / companions / game-port
+
+- Item `barco-de-quilla` → `barco-de-quilha` (migration + seed align); drawn-vehicles PHB têm `phb_vehicle_template` + properties alinhadas.
+- Companions BM: ability scores / speeds / traits PHB 2024; colunas `companion_hp_base|per_level` + `companion_ac_ability_slug`; sync aplica escala.
+- GH Primal Spirit: stats melhores + escala provisória (dívida extract).
+- `@catalog/game-port`: assert/find creature/vehicle + `resolveTransportActorKind`; link vehicle/sync companion via `CatalogLookupService`.
+- SRD/MM genérico **adiado**.
+
 ## 2026-09-11 — bootstrap bundle
 
 - Criado bundle OKF de preparação (inventory, module-map, waves).

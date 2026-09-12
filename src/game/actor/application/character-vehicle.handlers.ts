@@ -5,9 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
-import { PhbItem } from '@entities/equipment/phb-item.entity';
-import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
+import { CatalogLookupService } from '@catalog/game-port';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   isBoardableTransportItemKind,
@@ -25,24 +23,17 @@ import {
   LinkCharacterVehicleDto,
 } from '../dto/character-vehicle.dto';
 
-type LinkableActorKind = 'vehicle' | 'mount';
-
 @Injectable()
 export class LinkCharacterVehicleHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly persistence: ActorPersistenceService,
     private readonly mapper: ActorMapper,
+    private readonly catalogLookup: CatalogLookupService,
     @InjectRepository(GameActor)
     private readonly actors: Repository<GameActor>,
     @InjectRepository(PlayerCharacterItem)
     private readonly inventoryItems: Repository<PlayerCharacterItem>,
-    @InjectRepository(PhbItem)
-    private readonly catalogItems: Repository<PhbItem>,
-    @InjectRepository(PhbVehicleTemplate)
-    private readonly vehicleTemplates: Repository<PhbVehicleTemplate>,
-    @InjectRepository(PhbCreatureTemplate)
-    private readonly creatureTemplates: Repository<PhbCreatureTemplate>,
   ) {}
 
   async execute(
@@ -53,7 +44,8 @@ export class LinkCharacterVehicleHandler {
     await this.access.findAccessibleOrFail(userId, characterId, 'write');
 
     const templateSlug = await this.resolveTemplateSlug(characterId, dto);
-    const actorKind = await this.resolveActorKind(templateSlug);
+    const actorKind =
+      await this.catalogLookup.resolveTransportActorKind(templateSlug);
 
     const existing = await this.actors.findOne({
       where: {
@@ -77,24 +69,6 @@ export class LinkCharacterVehicleHandler {
     return { ...(await this.mapper.toDto(actor)), reused: false };
   }
 
-  private async resolveActorKind(
-    templateSlug: string,
-  ): Promise<LinkableActorKind> {
-    const vehicle = await this.vehicleTemplates.findOne({
-      where: { slug: templateSlug },
-    });
-    if (vehicle) return 'vehicle';
-
-    const creature = await this.creatureTemplates.findOne({
-      where: { slug: templateSlug },
-    });
-    if (creature) return 'mount';
-
-    throw new NotFoundException(
-      `Transport template '${templateSlug}' not found`,
-    );
-  }
-
   private async resolveTemplateSlug(
     characterId: string,
     dto: LinkCharacterVehicleDto,
@@ -114,11 +88,9 @@ export class LinkCharacterVehicleHandler {
           `Item '${itemSlug}' not in character inventory`,
         );
       }
-      const catalog = await this.catalogItems.findOne({
-        where: { slug: itemSlug },
-      });
+      const catalog = await this.catalogLookup.findItemOrFail(itemSlug);
       const kind = itemPropertiesKind(
-        (catalog?.properties as Record<string, unknown> | null) ?? null,
+        (catalog.properties as Record<string, unknown> | null) ?? null,
       );
       if (!isBoardableTransportItemKind(kind)) {
         throw new BadRequestException(

@@ -1,15 +1,15 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
+import { CatalogLookupService } from '@catalog/game-port';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   resolveCompanionConfig,
 } from '@game/companion/domain/companion-profiles';
+import { scaleCompanionCombatStats } from '@game/companion/domain/scale-companion-stats';
 import {
   loadCompanionProfileBySubclass,
   loadCompanionTemplateMaps,
@@ -30,10 +30,9 @@ export class SyncCharacterCompanionHandler {
     private readonly persistence: ActorPersistenceService,
     private readonly mapper: ActorMapper,
     private readonly dataSource: DataSource,
+    private readonly catalogLookup: CatalogLookupService,
     @InjectRepository(GameActor)
     private readonly actors: Repository<GameActor>,
-    @InjectRepository(PhbCreatureTemplate)
-    private readonly creatureTemplates: Repository<PhbCreatureTemplate>,
   ) {}
 
   async execute(
@@ -81,14 +80,9 @@ export class SyncCharacterCompanionHandler {
       );
     }
 
-    const template = await this.creatureTemplates.findOne({
-      where: { slug: config.templateSlug },
-    });
-    if (!template) {
-      throw new NotFoundException(
-        `Template de companheiro '${config.templateSlug}' não encontrado`,
-      );
-    }
+    const template = await this.catalogLookup.findCreatureTemplateOrFail(
+      config.templateSlug,
+    );
 
     const existing = await this.actors.find({
       where: {
@@ -102,10 +96,7 @@ export class SyncCharacterCompanionHandler {
       (actor) => actor.templateSlug === config.templateSlug,
     );
     if (sameTemplate) {
-      if (dto.restoreHp && sameTemplate.hitPointsMax != null) {
-        sameTemplate.hitPointsCurrent = sameTemplate.hitPointsMax;
-        await this.actors.save(sameTemplate);
-      }
+      await this.applyScaledStats(sameTemplate, template, character, dto.restoreHp);
       return {
         ...(await this.mapper.toDto(sameTemplate)),
         reused: true,
@@ -126,10 +117,7 @@ export class SyncCharacterCompanionHandler {
       parentCharacterId: characterId,
     });
     const actor = await this.actors.findOneOrFail({ where: { id: actorId } });
-    if (dto.restoreHp && actor.hitPointsMax != null) {
-      actor.hitPointsCurrent = actor.hitPointsMax;
-      await this.actors.save(actor);
-    }
+    await this.applyScaledStats(actor, template, character, dto.restoreHp ?? true);
 
     return {
       ...(await this.mapper.toDto(actor)),
@@ -138,5 +126,44 @@ export class SyncCharacterCompanionHandler {
       variantLabel: config.variantLabel,
       profileId: config.profile.profileId,
     };
+  }
+
+  private async applyScaledStats(
+    actor: GameActor,
+    template: {
+      armorClass: number | null;
+      companionHpBase: number | null;
+      companionHpPerLevel: number | null;
+      companionAcAbilitySlug: string | null;
+    },
+    character: { level: number; abilityScores: GameActor['abilityScores'] },
+    restoreHp?: boolean,
+  ): Promise<void> {
+    const scaled = scaleCompanionCombatStats(
+      template,
+      character.level,
+      character.abilityScores,
+    );
+    let dirty = false;
+    if (scaled.hitPointsMax != null) {
+      const prevMax = actor.hitPointsMax;
+      actor.hitPointsMax = scaled.hitPointsMax;
+      if (restoreHp || actor.hitPointsCurrent == null) {
+        actor.hitPointsCurrent = scaled.hitPointsMax;
+      } else if (prevMax != null && actor.hitPointsCurrent > scaled.hitPointsMax) {
+        actor.hitPointsCurrent = scaled.hitPointsMax;
+      }
+      dirty = true;
+    } else if (restoreHp && actor.hitPointsMax != null) {
+      actor.hitPointsCurrent = actor.hitPointsMax;
+      dirty = true;
+    }
+    if (scaled.armorClass != null) {
+      actor.armorClass = scaled.armorClass;
+      dirty = true;
+    }
+    if (dirty) {
+      await this.actors.save(actor);
+    }
   }
 }

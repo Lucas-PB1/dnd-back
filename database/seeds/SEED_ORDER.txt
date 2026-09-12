@@ -32,6 +32,7 @@ subclass/phb/phb_subclass_prepared_spell.all.sql
 species/phb/phb_species.all.sql
 species/phb/phb_species_trait.all.sql
 item/phb/phb_item.all.sql
+item/phb/phb_item.vehicle-template-align.sql
 item/phb/phb_weapon.all.sql
 item/phb/phb_weapon_property_link.all.sql
 item/phb/phb_armor.all.sql

@@ -2,7 +2,7 @@
   "version": "5.1.26",
   "source": "Glossário de Termos Traduzidos (comunidade)",
   "note": "EN→PT. pattern 2014 = Padrão Velho; 2024 = Padrão Novo.",
-  "count": 7146,
+  "count": 7147,
   "entries": [
     {
       "pattern": "2024",
@@ -6257,52 +6257,52 @@
     {
       "pattern": "2014",
       "en": "conjure animals",
-      "pt": "Invocar Animais"
+      "pt": "Conjurar Animais"
     },
     {
       "pattern": "2014",
       "en": "Conjure Barrage",
-      "pt": "Invocar Barragem"
+      "pt": "Conjurar Barragem"
     },
     {
       "pattern": "2014",
       "en": "Conjure Celestial",
-      "pt": "Invocar Celestial"
+      "pt": "Conjurar Celestial"
     },
     {
       "pattern": "2014",
       "en": "Conjure Earth Elemental",
-      "pt": "Invocar Elemental da Terra"
+      "pt": "Conjurar Elemental da Terra"
     },
     {
       "pattern": "2014",
       "en": "Conjure Elemental",
-      "pt": "Invocar Elemental"
+      "pt": "Conjurar Elemental"
     },
     {
       "pattern": "2014",
       "en": "Conjure Fey",
-      "pt": "Invocar Feérico"
+      "pt": "Conjurar Feérico"
     },
     {
       "pattern": "2014",
       "en": "Conjure Minor Elementals",
-      "pt": "Invocar Elementais Menores"
+      "pt": "Conjurar Elementais Menores"
     },
     {
       "pattern": "2014",
       "en": "Conjure Volley",
-      "pt": "Invocar Saraivada"
+      "pt": "Conjurar Saraivada"
     },
     {
       "pattern": "2014",
       "en": "Conjure Woodland Beings",
-      "pt": "Invocar Seres da Floresta"
+      "pt": "Conjurar Seres da Floresta"
     },
     {
       "pattern": "2014",
       "en": "Conjure WoodlandBeings",
-      "pt": "Invocar Seres da Floresta"
+      "pt": "Conjurar Seres da Floresta"
     },
     {
       "pattern": "2024",
@@ -30192,7 +30192,7 @@
     {
       "pattern": "2014",
       "en": "Summon Celestial",
-      "pt": "Convocar Celestial"
+      "pt": "Conjurar Celestial"
     },
     {
       "pattern": "2014",
@@ -30212,12 +30212,12 @@
     {
       "pattern": "2014",
       "en": "Summon Elemental",
-      "pt": "Convocar Elemental"
+      "pt": "Conjurar Elemental"
     },
     {
       "pattern": "2014",
       "en": "Summon Fey",
-      "pt": "Convocar Feérico"
+      "pt": "Conjurar Feérico"
     },
     {
       "pattern": "2014",
@@ -35733,6 +35733,11 @@
       "pattern": "2014",
       "en": "Zybilna",
       "pt": "Zybilna"
+    },
+    {
+      "pattern": "2024",
+      "en": "Conjure Animals",
+      "pt": "Conjurar Animais"
     }
   ]
 }

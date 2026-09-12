@@ -75,10 +75,67 @@ VALUES
     NULL,
     10,
     2000
+  ),
+  -- Drawn-vehicles PHB Cap.6 (slug = item; stats alinhados a properties do item)
+  (
+    'carruagem',
+    'phb-2024-pt',
+    'Carruagem',
+    15,
+    100,
+    NULL,
+    1,
+    NULL
+  ),
+  (
+    'carroca',
+    'phb-2024-pt',
+    'Carroça',
+    15,
+    75,
+    NULL,
+    1,
+    NULL
+  ),
+  (
+    'carro-de-guerra',
+    'phb-2024-pt',
+    'Carro de Guerra',
+    16,
+    50,
+    NULL,
+    1,
+    NULL
+  ),
+  (
+    'treno',
+    'phb-2024-pt',
+    'Trenó',
+    15,
+    80,
+    NULL,
+    1,
+    NULL
+  ),
+  (
+    'vagao',
+    'phb-2024-pt',
+    'Vagão',
+    15,
+    120,
+    NULL,
+    1,
+    NULL
   )
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  armor_class = EXCLUDED.armor_class,
+  hit_points = EXCLUDED.hit_points,
+  damage_threshold = EXCLUDED.damage_threshold,
+  crew_capacity = EXCLUDED.crew_capacity,
+  cargo_capacity_lb = EXCLUDED.cargo_capacity_lb;
 
--- Deslocamentos (mph × 10 em speed_ft)
+-- Deslocamentos (mph × 10 em speed_ft; drawn = walk quando puxado)
 INSERT INTO rpg.phb_vehicle_template_speed (template_slug, movement_kind, speed_ft)
 VALUES
   ('bote', 'remo', 15),
@@ -89,7 +146,12 @@ VALUES
   ('navio-de-guerra', 'vela', 25),
   ('galera', 'vela', 40),
   ('galera', 'remo', 40),
-  ('aeronave', 'ar', 80)
+  ('aeronave', 'ar', 80),
+  ('carruagem', 'walk', 30),
+  ('carroca', 'walk', 30),
+  ('carro-de-guerra', 'walk', 40),
+  ('treno', 'walk', 30),
+  ('vagao', 'walk', 30)
 ON CONFLICT DO NOTHING;
 
 -- Ações genéricas de combate naval (DMG / mesa — placeholders até armas detalhadas)

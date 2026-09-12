@@ -12,6 +12,7 @@ Bundle de preparação: mapa de módulos, inventário de tooling Cursor e plano 
 - [Mapa de módulos](/module-map.md) — pastas Game/Catalog e papel
 - [Plano em ondas](/waves-plan.md) — convenções → SQL-first → legado
 - [Auditoria SQL-first](/sql-first-audit.md) — hardcodes em Game; piloto e dívida
+- [Summon vs Conjure](/summon-vs-conjure.md) — ficha vs aura; convenção PT/slugs PHB 2024
 
 ## Docs canônicos (fora do OKF)
 

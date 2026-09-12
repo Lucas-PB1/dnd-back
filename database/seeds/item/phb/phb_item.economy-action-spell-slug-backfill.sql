@@ -158,7 +158,7 @@ WHERE action_id = 'item-cajado-dos-magi-bola-fogo';
 UPDATE rpg.phb_class_economy_action SET spell_slug = 'relampago'
 WHERE action_id = 'item-cajado-dos-magi-relampago';
 
-UPDATE rpg.phb_class_economy_action SET spell_slug = 'invocar-elemental'
+UPDATE rpg.phb_class_economy_action SET spell_slug = 'conjurar-elemental'
 WHERE action_id = 'item-cajado-dos-magi-invocar-elemental';
 
 UPDATE rpg.phb_class_economy_action SET spell_slug = 'transicao-planar'

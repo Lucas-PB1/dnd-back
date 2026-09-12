@@ -384,7 +384,7 @@ Nível de Bruxo Magias
 Luz, Raio Guia, Restauração Menor
 5 Luz do Dia, Revivificar
 7 Defensor da Fé, Muralha de Fogo
-9 Convocar Celestial, Restauração Maior') ON CONFLICT (subclass_id, level, name) DO NOTHING;
+9 Invocar Celestial, Restauração Maior') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 6, 'Alma Radiante', 'Seu vínculo com seu patrono permite que você sirva
 como condutor de energia radiante. Você tem Resistência a Dano Radiante. Uma vez por turno, quando
@@ -757,7 +757,7 @@ Magias do Círculo da Lua
 Nível de Druida Magias de Círculo Druídico
 3 Curar Ferimentos, Fagulha Estelar,
 Raio Lunar
-5 Invocar Animais
+5 Conjurar Animais
 7 Fonte do Luar
 9 Curar Ferimentos em Massa') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
@@ -888,7 +888,7 @@ Obscurecente, Onda Trovejante, Raio
 de Gelo
 5 Relâmpago, Respirar na Água
 7 Controlar Água, Tempestade Glacial
-9 Invocar Elemental, Paralisar Monstro') ON CONFLICT (subclass_id, level, name) DO NOTHING;
+9 Conjurar Elemental, Paralisar Monstro') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 6, 'Afinidade Aquática', 'O tamanho da Emanação criada pela sua Ira do Mar
 aumenta para 3 metros.
@@ -1309,7 +1309,7 @@ Magias do Andarilho Feérico
 Nível de Patrulheiro Magias
 3 Enfeitiçar Pessoa
 5 Passo Nebuloso
-9 Convocar Feérico
+9 Invocar Feérico
 13 Porta Dimensional
 17 Despistar
 Você também possui uma bênção feérica. Escolha-a
@@ -1341,7 +1341,7 @@ o alvo tem a condição Amedrontado ou Enfeitiçado (à
 sua escolha) por 1 minuto. O alvo repete a salvaguarda no final de cada um dos turnos dele, encerrando o
 efeito em si em caso de sucesso.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 11, 'Reforços Feéricos', 'Você pode conjurar a magia Convocar Feérico sem um
+INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 11, 'Reforços Feéricos', 'Você pode conjurar a magia Invocar Feérico sem um
 componente Material. Você também pode conjurá-la
 uma vez sem um espaço de magia, e restaura a capacidade de conjurá-la deste modo ao completar um
 Descanso Longo.
@@ -2103,7 +2103,7 @@ espaços de magia nesta classe, você pode adicionar gratuitamente uma magia de 
 seu livro de magias. A magia escolhida deve ser de um
 círculo para o qual você tenha espaços de magia.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 6, 'Criaturas Espectrais', 'Você sempre tem as magias Convocar Feérico e Invocar
+INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 6, 'Criaturas Espectrais', 'Você sempre tem as magias Invocar Feérico e Invocar
 Fera preparadas. Ao conjurar qualquer uma das magias,
 você pode mudar sua escola para Ilusão, o que faz com
 que a criatura invocada pareça espectral. Você pode

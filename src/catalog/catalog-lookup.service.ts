@@ -14,6 +14,8 @@ import { PhbAbilityGenerationMethod } from '../entities/reference/phb-ability-ge
 import { PhbItem } from '../entities/equipment/phb-item.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
 import { PhbSkill } from '../entities/reference/phb-skill.entity';
+import { PhbCreatureTemplate } from '../entities/template/phb-creature-template.entity';
+import { PhbVehicleTemplate } from '../entities/template/phb-vehicle-template.entity';
 import * as assets from './catalog-lookup-assets';
 import * as feats from './catalog-lookup-feats';
 import * as origins from './catalog-lookup-origins';
@@ -22,6 +24,7 @@ import {
   assertSpeciesIsPlayable,
 } from './catalog-lookup-species';
 import * as skills from './catalog-lookup-skills';
+import * as templates from './catalog-lookup-templates';
 
 @Injectable()
 export class CatalogLookupService {
@@ -52,6 +55,10 @@ export class CatalogLookupService {
     private readonly spellsRepo: Repository<VPhbSpell>,
     @InjectRepository(PhbSkill)
     private readonly skillsRepo: Repository<PhbSkill>,
+    @InjectRepository(PhbCreatureTemplate)
+    private readonly creatureTemplatesRepo: Repository<PhbCreatureTemplate>,
+    @InjectRepository(PhbVehicleTemplate)
+    private readonly vehicleTemplatesRepo: Repository<PhbVehicleTemplate>,
   ) {}
 
   findClassOrFail(classSlug: string) {
@@ -154,6 +161,36 @@ export class CatalogLookupService {
 
   assertSkillInCatalog(skillSlug: string) {
     return skills.assertSkillInCatalog(this.skillsRepo, skillSlug);
+  }
+
+  findCreatureTemplateOrFail(slug: string) {
+    return templates.findCreatureTemplateOrFail(this.creatureTemplatesRepo, slug);
+  }
+
+  assertCreatureTemplateInCatalog(slug: string) {
+    return templates.assertCreatureTemplateInCatalog(
+      this.creatureTemplatesRepo,
+      slug,
+    );
+  }
+
+  findVehicleTemplateOrFail(slug: string) {
+    return templates.findVehicleTemplateOrFail(this.vehicleTemplatesRepo, slug);
+  }
+
+  assertVehicleTemplateInCatalog(slug: string) {
+    return templates.assertVehicleTemplateInCatalog(
+      this.vehicleTemplatesRepo,
+      slug,
+    );
+  }
+
+  resolveTransportActorKind(templateSlug: string) {
+    return templates.resolveTransportActorKind(
+      this.vehicleTemplatesRepo,
+      this.creatureTemplatesRepo,
+      templateSlug,
+    );
   }
 
   assertSubclassForClass(subclassSlug: string, classSlug: string) {

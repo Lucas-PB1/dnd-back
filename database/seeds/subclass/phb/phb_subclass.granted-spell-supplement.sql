@@ -7,7 +7,7 @@ VALUES
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glamour'), 6, (SELECT id FROM rpg.phb_spell WHERE slug = 'comando'), NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'stars'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'orientacao'), NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'stars'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-guia'), NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 6, (SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 6, (SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-feerico'), NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 6, (SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-fera'), NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-menor'), NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'elements'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'elementalismo'), NULL),

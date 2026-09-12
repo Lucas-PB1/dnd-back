@@ -40,7 +40,7 @@ WHERE s.slug = 'nornbound' AND sp.slug IN (
 )
 ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
--- Circle of Fenris (Conjure Animals → invocar-animais)
+-- Circle of Fenris (Conjure Animals → conjurar-animais)
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
 SELECT s.id, 3, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp
@@ -53,7 +53,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 SELECT s.id, 5, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp
 WHERE s.slug = 'circle-of-fenris' AND sp.slug IN (
-  'invocar-animais', 'medo'
+  'conjurar-animais', 'medo'
 )
 ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 

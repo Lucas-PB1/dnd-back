@@ -262,7 +262,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
            SELECT s.id, 5, sp.id, NULL
            FROM rpg.phb_subclass s, rpg.phb_spell sp
-           WHERE s.slug = 'moon' AND sp.slug = 'invocar-animais'
+           WHERE s.slug = 'moon' AND sp.slug = 'conjurar-animais'
            ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
@@ -334,7 +334,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
            SELECT s.id, 9, sp.id, NULL
            FROM rpg.phb_subclass s, rpg.phb_spell sp
-           WHERE s.slug = 'sea' AND sp.slug = 'invocar-elemental'
+           WHERE s.slug = 'sea' AND sp.slug = 'conjurar-elemental'
            ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
@@ -916,7 +916,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
            SELECT s.id, 9, sp.id, NULL
            FROM rpg.phb_subclass s, rpg.phb_spell sp
-           WHERE s.slug = 'celestial' AND sp.slug = 'convocar-celestial'
+           WHERE s.slug = 'celestial' AND sp.slug = 'invocar-celestial'
            ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
@@ -1007,7 +1007,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
            SELECT s.id, 9, sp.id, NULL
            FROM rpg.phb_subclass s, rpg.phb_spell sp
-           WHERE s.slug = 'fey-wanderer' AND sp.slug = 'convocar-feerico'
+           WHERE s.slug = 'fey-wanderer' AND sp.slug = 'invocar-feerico'
            ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)

@@ -553,11 +553,11 @@ FROM rpg.phb_subclass s WHERE s.slug = 'fey-wanderer'
   );
 
 INSERT INTO rpg.phb_level_combat_note (owner_kind, class_id, subclass_id, unlock_level, note, sort_order)
-SELECT 'subclass', NULL, s.id, 11, 'Reforços Feéricos: Convocar Feérico 1× sem espaço / longo (sem Concentração, 1 min)', 0
+SELECT 'subclass', NULL, s.id, 11, 'Reforços Feéricos: Invocar Feérico 1× sem espaço / longo (sem Concentração, 1 min)', 0
 FROM rpg.phb_subclass s WHERE s.slug = 'fey-wanderer'
   AND NOT EXISTS (
     SELECT 1 FROM rpg.phb_level_combat_note n
-    WHERE n.subclass_id = s.id AND n.unlock_level = 11 AND n.note = 'Reforços Feéricos: Convocar Feérico 1× sem espaço / longo (sem Concentração, 1 min)'
+    WHERE n.subclass_id = s.id AND n.unlock_level = 11 AND n.note = 'Reforços Feéricos: Invocar Feérico 1× sem espaço / longo (sem Concentração, 1 min)'
   );
 
 INSERT INTO rpg.phb_level_combat_note (owner_kind, class_id, subclass_id, unlock_level, note, sort_order)

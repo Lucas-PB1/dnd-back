@@ -13,6 +13,8 @@ import { PhbAbilityGenerationMethod } from '../entities/reference/phb-ability-ge
 import { PhbItem } from '../entities/equipment/phb-item.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
 import { PhbSkill } from '../entities/reference/phb-skill.entity';
+import { PhbCreatureTemplate } from '../entities/template/phb-creature-template.entity';
+import { PhbVehicleTemplate } from '../entities/template/phb-vehicle-template.entity';
 import { CatalogLookupService } from './catalog-lookup.service';
 
 @Module({
@@ -31,6 +33,8 @@ import { CatalogLookupService } from './catalog-lookup.service';
       PhbItem,
       VPhbSpell,
       PhbSkill,
+      PhbCreatureTemplate,
+      PhbVehicleTemplate,
     ]),
   ],
   providers: [CatalogLookupService],

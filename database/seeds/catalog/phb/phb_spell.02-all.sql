@@ -471,7 +471,7 @@ Estágio Condição Estágio Condição
 4 Fresco 4 Vendaval
 5 Frio 5 Tempestade
 6 Frio extremo', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('convocar-celestial', 'Convocar Celestial', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um relicário no valor de 500 ou mais PO', 'V, S, M (um relicário no valor de 500 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado
+  ('invocar-celestial', 'Invocar Celestial', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um relicário no valor de 500 ou mais PO', 'V, S, M (um relicário no valor de 500 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado
 à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Celestial. Ao conjurar a magia, escolha Defensor ou Vingador. Sua escolha determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Celestial
@@ -495,7 +495,7 @@ Maça Radiante (Apenas Defensor). Jogada de Ataque Corpo a
 Corpo: Bônus é igual ao seu modificador de ataque mágico,
 alcance 1,5 m. Dano: 1d10 + 3 + o círculo da magia pontos de dano Radiante, e o espírito pode escolher a si mesmo ou outra criatura à vista dele a até 3 metros do alvo. A criatura escolhida obtém 1d10 Pontos de Vida Temporários.
 Toque Curativo (1/Dia). O espírito toca outra criatura. O alvo recupera Pontos de Vida iguais a 2d8 + o círculo da magia.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('convocar-elemental', 'Convocar Elemental', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO', 'V, S, M (ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Elemental. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Elemental. Ao conjurar a magia, escolha um elemento:
+  ('invocar-elemental', 'Invocar Elemental', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO', 'V, S, M (ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Elemental. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Elemental. Ao conjurar a magia, escolha um elemento:
 Água, Ar, Fogo ou Terra. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certas características no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0
 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
@@ -537,7 +537,7 @@ Como alternativa, você pode descartá-lo para sempre.
 Como uma ação Usar Magia enquanto está temporariamente descartado, você pode fazer com que ele reapareça em um espaço desocupado a até 9 metros de você. Sempre que o familiar é reduzido a 0 Pontos de
 Vida ou desaparece na mini dimensão, ele deixa para trás no espaço que ocupava qualquer coisa que estivesse vestindo ou carregando.
 Apenas um Familiar. Você não pode ter mais de um familiar ao mesmo tempo. Ao conjurar esta magia enquanto você tem um familiar, você faz com que ele adote uma nova forma elegível.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('convocar-feerico', 'Convocar Feérico', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'uma flor dourada no valor de 300 ou mais PO', 'V, S, M (uma flor dourada no valor de 300 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Feérico. Ao conjurar a magia, escolha um humor: Alegre,
+  ('invocar-feerico', 'Invocar Feérico', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'uma flor dourada no valor de 300 ou mais PO', 'V, S, M (uma flor dourada no valor de 300 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Feérico. Ao conjurar a magia, escolha um humor: Alegre,
 Enfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
 mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
@@ -1201,7 +1201,7 @@ Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alca
 Raio Ocular (Somente Pseudo-observador). Jogada de Ataque à
 Distância: Bônus é igual ao seu modificador de ataque mágico,
 alcance 45 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-animais', 'Invocar Animais', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que aparecem como um grande bando de animais espectrais e intangíveis em um espaço desocupado à sua vista e no alcance da magia. O bando permanece pela duração da magia e você escolhe a forma animal dos espíritos, como lobos,
+  ('conjurar-animais', 'Conjurar Animais', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que aparecem como um grande bando de animais espectrais e intangíveis em um espaço desocupado à sua vista e no alcance da magia. O bando permanece pela duração da magia e você escolhe a forma animal dos espíritos, como lobos,
 serpentes ou pássaros.
 Você tem Vantagem em salvaguardas de Força enquanto estiver a até 1,5 metro do bando e, quando se mover no seu turno, também pode mover o bando até
 9 metros para um espaço desocupado à sua vista.
@@ -1209,10 +1209,10 @@ Sempre que o bando se mover até 3 metros de uma criatura à sua vista ou quando
 você pode forçá-la a realizar uma salvaguarda de Destreza. Se falhar, a criatura sofre 3d10 pontos de dano
 Cortante. Cada criatura só realiza essa salvaguarda uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d10 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-barragem', 'Invocar Barragem', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e invoca armas espectrais semelhantes (ou munição apropriada para a arma) que são lançadas adiante e depois desaparecem. Cada criatura à sua escolha à sua vista em um Cone de 18 metros realiza uma salvaguarda de
+  ('conjurar-barragem', 'Conjurar Barragem', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e invoca armas espectrais semelhantes (ou munição apropriada para a arma) que são lançadas adiante e depois desaparecem. Cada criatura à sua escolha à sua vista em um Cone de 18 metros realiza uma salvaguarda de
 Destreza, sofrendo 5d8 pontos de dano Energético se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d8 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-celestial', 'Invocar Celestial', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito dos Planos Superiores, que se manifesta como um pilar de luz em um Cilindro de
+  ('conjurar-celestial', 'Conjurar Celestial', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito dos Planos Superiores, que se manifesta como um pilar de luz em um Cilindro de
 3 metros de raio e 12 metros de altura centrado em um ponto no alcance da magia. Para cada criatura à sua vista no Cilindro, escolha qual dessas luzes brilha sobre ela:
 Luz Curativa. O alvo recupera Pontos de Vida iguais a 4d12 mais seu modificador de atributo de conjuração.
 Luz Ardente. O alvo realiza uma salvaguarda de
@@ -1270,18 +1270,18 @@ Ações
 Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo) e usa o Ataque de Sopro.
 Ataque de Sopro. Salvaguarda de Destreza: CD é igual a CD para evitar sua magia, cada criatura em um Cone de 9 metros. Falha: 2d6 pontos de dano de um tipo ao qual o espírito tem Resistência (à sua escolha quando você conjura a magia). Sucesso: Metade do dano.
 Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d6 + 4 + o círculo da magia pontos de dano Perfurante.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-elementais-menores', 'Invocar Elementais Menores', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos dos Planos Elementais que voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Até que a magia termine,
+  ('conjurar-elementais-menores', 'Conjurar Elementais Menores', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos dos Planos Elementais que voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Até que a magia termine,
 qualquer ataque que você realizar causa 2d8 pontos de dano adicional quando você atinge uma criatura na Emanação. Este dano é Ácido, Elétrico, Gélido ou
 Ígneo (à sua escolha quando realizar o ataque).
 Além disso, o terreno da Emanação é Terreno Difícil para seus inimigos.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-elemental', 'Invocar Elemental', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Grande e intangível dos Planos Elementais que aparece em um espaço desocupado no alcance da magia. Escolha o elemento do espírito,
+  ('conjurar-elemental', 'Conjurar Elemental', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Grande e intangível dos Planos Elementais que aparece em um espaço desocupado no alcance da magia. Escolha o elemento do espírito,
 que determina o tipo de dano que ele causa: água (Gélido), ar (Elétrico), fogo (Ígneo) ou terra (Trovejante). O
 espírito permanece pela duração da magia.
 Sempre que uma criatura à sua vista entrar no espaço do espírito ou iniciar o turno a até 1,5 metro do espírito, você pode forçá-la a realizar uma salvaguarda de Destreza se o espírito não tiver nenhuma criatura
 Contida. Se falhar, o alvo sofre 8d8 pontos de dano do tipo do espírito, e tem a condição Contido até que a magia termine. No início de cada um dos turnos do alvo Contido, ele repete a salvaguarda. Se falhar, o alvo sofre 4d8 pontos de dano do tipo do espírito. Em caso de sucesso, o alvo não é Contido pelo espírito.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d8 para cada círculo de espaço de magia acima de 5.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-feerico', 'Invocar Feérico', 6, '6º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Médio de Faéria em um espaço desocupado à sua vista e no alcance da magia.
+  ('conjurar-feerico', 'Conjurar Feérico', 6, '6º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Médio de Faéria em um espaço desocupado à sua vista e no alcance da magia.
 O espírito permanece pela duração da magia e se assemelha a uma criatura Feérica à sua escolha. Quando o espírito aparece, você pode realizar um ataque mágico corpo a corpo contra uma criatura a até 1,5 metro dele.
 Em caso de acerto, o alvo sofre dano Psíquico igual a
 3d12 mais o seu modificador de atributo de conjuração,
@@ -1293,12 +1293,33 @@ dano aumenta em 1d12 para cada círculo de espaço de magia acima de 6.', (SELEC
 Ao conjurar a magia, escolha um ambiente: Água, Ar ou Terra. A criatura se assemelha a um animal à sua escolha que é nativo do ambiente escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
 mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
-Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Espírito Bestial
+Fera Pequena, Neutra
+CA 11 + o círculo da magia
+PV 20 (apenas Ar) ou 30 (apenas Água e Terra) + 5 para cada círculo de magia acima de 2
+Deslocamento 9 m; Escalada 9 m (Apenas Terra); Natação 9 m
+(Apenas água); Voo 18 m (Apenas Ar)
+For 13 +1 +1 Des 16 +3 +3 Con 15 +2 +2
+Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
+Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
+Idiomas: Compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Respirar na Água (Apenas Água). O espírito só pode respirar debaixo d’água.
+Sobrevoo (Apenas Ar). O espírito não provoca Ataques de
+Oportunidade quando voa para fora do alcance de um inimigo.
+Táticas de Grupo (Apenas Água e Terra). O espírito tem
+Vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tem a condição Incapacitado.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo).
+Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 +
+4 mais o círculo da magia em pontos de dano Perfurante.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-infero', 'Invocar Ínfero', 6, '6º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um frasco com sangue no valor de 600 ou mais PO', 'V, S, M (um frasco com sangue no valor de 600 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Ínfero. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Ínfero. Ao conjurar a magia, escolha Demônio, Diabo ou Yugoloth.
 A criatura se assemelha a um Ínfero do tipo escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
 mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
-Esquivar e usa o movimento dela para evitar o perigo.
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Ínfero
 Ínfero Grande, Neutro
 CA 12 + o círculo da magia
@@ -1328,30 +1349,7 @@ Bônus é igual ao seu modificador de ataque mágico, alcance
 o espírito pode se teleportar até 9 metros para um espaço desocupado à vista dele.
 Mordida (Apenas Demônio). Jogada de Ataque Corpo a Corpo:
 Bônus é igual ao seu modificador de ataque mágico, alcance
-1,5 m. Dano: 1d12 + 3 mais o círculo da magia em pontos de dano Necrótico.
-Espírito Ínfero (Diabo)
-Espírito Bestial
-Fera Pequena, Neutra
-CA 11 + o círculo da magia
-PV 20 (apenas Ar) ou 30 (apenas Água e Terra) + 5 para cada círculo de magia acima de 2
-Deslocamento 9 m; Escalada 9 m (Apenas Terra); Natação 9 m
-(Apenas água); Voo 18 m (Apenas Ar)
-For 13 +1 +1 Des 16 +3 +3 Con 15 +2 +2
-Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
-Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
-Idiomas: Compreende os idiomas que você fala
-ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-Traços
-Respirar na Água (Apenas Água). O espírito só pode respirar debaixo d’água.
-Sobrevoo (Apenas Ar). O espírito não provoca Ataques de
-Oportunidade quando voa para fora do alcance de um inimigo.
-Táticas de Grupo (Apenas Água e Terra). O espírito tem
-Vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tem a condição Incapacitado.
-Ações
-Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo).
-Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 +
-4 mais o círculo da magia em pontos de dano Perfurante.
-', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+1,5 m. Dano: 1d12 + 3 mais o círculo da magia em pontos de dano Necrótico.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-morto-vivo', 'Invocar Morto-Vivo', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'necromancia'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um crânio dourado no valor de 300 ou mais PO', 'V, S, M (um crânio dourado no valor de 300 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Morto-Vivo. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Morto-
 -vivo. Ao conjurar a magia, escolha a forma da criatura: Esquelético, Fantasmagórico ou Pútrido. O espírito se assemelha a uma criatura Morta-viva com a forma escolhida, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
@@ -1384,10 +1382,10 @@ alcance 45 m. Dano: 2d4 + 3 mais o círculo da magia em pontos de dano Necrótic
 Toque Mortal (Apenas Fantasmagórico). Jogada de Ataque
 Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Necrótico, e o alvo tem a condição
 Amedrontado até o final do próximo turno dele.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-saraivada', 'Invocar Saraivada', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '45 metros', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e escolhe um ponto no alcance da magia. Centenas de armas espectrais similares (ou munição apropriada para a arma) caem em uma saraivada e depois desaparecem.
+  ('conjurar-saraivada', 'Conjurar Saraivada', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '45 metros', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e escolhe um ponto no alcance da magia. Centenas de armas espectrais similares (ou munição apropriada para a arma) caem em uma saraivada e depois desaparecem.
 Cada criatura à sua escolha à sua vista em um Cilindro de 12 metros de raio e 6 metros de altura, centrada nesse ponto, realiza uma salvaguarda de Destreza. Uma criatura sofre 8d8 pontos de dano Energético se falhar,
 ou metade desse dano em caso de sucesso.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-seres-da-floresta', 'Invocar Seres da Floresta', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que voam ao seu redor em uma Emanação de 3 metros pela duração da magia. Quando a Emanação invade o espaço de uma criatura à sua vista, ou quando uma criatura à sua vista entra ou termina o turno na Emanação, você pode forçá-la a realizar uma salvaguarda de Sabedoria. Se falhar, a criatura sofre 5d8 pontos de dano Energético ou metade desse dano se tiver sucesso. A criatura realiza essa salvaguarda apenas uma vez por turno.
+  ('conjurar-seres-da-floresta', 'Conjurar Seres da Floresta', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que voam ao seu redor em uma Emanação de 3 metros pela duração da magia. Quando a Emanação invade o espaço de uma criatura à sua vista, ou quando uma criatura à sua vista entra ou termina o turno na Emanação, você pode forçá-la a realizar uma salvaguarda de Sabedoria. Se falhar, a criatura sofre 5d8 pontos de dano Energético ou metade desse dano se tiver sucesso. A criatura realiza essa salvaguarda apenas uma vez por turno.
 Além disso, você pode executar a ação Desengajar como uma Ação Bônus pela duração da magia.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('labirinto', 'Labirinto', 8, '8º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você bane uma criatura à sua vista e no alcance da magia para um semiplano labiríntico. O alvo permanece lá pela duração ou até escapar do labirinto.

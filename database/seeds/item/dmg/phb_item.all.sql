@@ -2602,7 +2602,7 @@ Magia
 	2
 	Invisibilidade
 	2
-	Invocar Elemental
+	Conjurar Elemental
 	7
 	Luz
 	0
@@ -3554,9 +3554,9 @@ Uma vez que o cubo invoca uma criatura, ele não pode fazer isso novamente até 
 	4
 	Invocar Dragão
 	5
-	Convocar Elemental
+	Invocar Elemental
 	6
-	Convocar Feérico',
+	Invocar Feérico',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Item Maravilhoso, Raro"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -5519,7 +5519,7 @@ Fortaleza de Pedra. Sua Constituição aumenta em 2, até no máximo 20.
 Separação. Ao atingir um objeto com o machado, o objeto sofre o máximo de dano possível.
 Um com a Forja. Você tem Imunidade a dano Venenoso e Resistência a dano Ígneo.
 Visão no Escuro. Você adquire Visão no Escuro com um alcance de 18 metros. Se você já tem Visão no Escuro, seu alcance aumenta em 18 metros.
-Invocar Elemental da Terra. Enquanto segura o machado, você pode executar uma ação Usar Magia para invocar um Elemental da Terra. Ele aparece em um espaço desocupado à sua escolha a até 9 metros de você, entende seus idiomas, obedece aos seus comandos e realiza o turno imediatamente após a sua contagem de Iniciativa. O elemental desaparece após 24 horas, quando ele morre ou quando você o dispensa como uma Ação Bônus. Você restaura esta propriedade após o próximo amanhecer.
+Conjurar Elemental da Terra. Enquanto segura o machado, você pode executar uma ação Usar Magia para invocar um Elemental da Terra. Ele aparece em um espaço desocupado à sua escolha a até 9 metros de você, entende seus idiomas, obedece aos seus comandos e realiza o turno imediatamente após a sua contagem de Iniciativa. O elemental desaparece após 24 horas, quando ele morre ou quando você o dispensa como uma Ação Bônus. Você restaura esta propriedade após o próximo amanhecer.
 Propriedades Aleatórias. O machado tem as seguintes propriedades aleatórias (veja “Artefatos” neste capítulo):
 ● 2 propriedades benéficas menores
 ● 1 propriedade benéfica maior

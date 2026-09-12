@@ -260,7 +260,7 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Criaturas Espectrais: Ação — Convocar Feérico ou Invocar Fera (versão Ilusão) sem espaço; PV da criatura pela metade. Recupera no Descanso Longo.'
+  'Criaturas Espectrais: Ação — Invocar Feérico ou Invocar Fera (versão Ilusão) sem espaço; PV da criatura pela metade. Recupera no Descanso Longo.'
 FROM ins;
 
 -- Autoimagem Ilusória

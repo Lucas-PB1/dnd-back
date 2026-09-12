@@ -177,7 +177,7 @@ INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id
 SELECT s.id, 9, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp
 WHERE s.slug = 'frost-sorcery' AND sp.slug IN (
-  'cone-de-frio', 'invocar-elemental'
+  'cone-de-frio', 'conjurar-elemental'
 )
 ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 

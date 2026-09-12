@@ -69,7 +69,7 @@ VALUES
 
 Bônus em Força (Atletismo) e salvaguardas de Força = mod. Sabedoria (mín. 1). Pode trocar um ataque corpo a corpo por mordida espectral (mod. Sabedoria no ataque; 1d8 + mod. Sabedoria Força no acerto).'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 3, 'Magias do Círculo de Fenris',
-'Sempre preparadas: L3 Sentido Feral, Aprimorar Atributo, Golpe Constritor, Marca do Predador; L5 Invocar Animais, Medo; L7 Dominar Fera; L9 Comunhão com a Natureza.'),
+'Sempre preparadas: L3 Sentido Feral, Aprimorar Atributo, Golpe Constritor, Marca do Predador; L5 Conjurar Animais, Medo; L7 Dominar Fera; L9 Comunhão com a Natureza.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 6, 'Manto Aprimorado',
 'Com o Manto: Quebrar a Corrente — mordidas causam dano dobrado a objetos/estruturas (ignoram limiar); Visão no Escuro 18 m (ou +9 m); Velocidade +3 m.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 10, 'Defender a Alcateia',
