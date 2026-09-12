@@ -26,6 +26,7 @@ import {
 import { transformationCombatNotes } from '../../domain/notes/grim-hollow/transformation-combat-notes';
 import { loadTransformationBoonCombatNotes } from '../../domain/notes/grim-hollow/load-transformation-boon-combat-notes';
 import { loadTransformationHitPointsBonus } from '../../domain/notes/grim-hollow/load-transformation-hit-points-bonus';
+import { loadTransformationChoiceRule } from '@game/sheet/domain/transformation/load-transformation-choice-rule';
 import { paladinSavingThrowAuraBonus } from '../../domain/paladin';
 import { CLASS_GATE } from '../../domain/feature-gates';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
@@ -106,9 +107,18 @@ export async function assembleMappedCombatSlice(input: {
     'combat.transformationBoonNotes',
     () => loadTransformationBoonCombatNotes(input.dataSource),
   );
+  const transformationChoiceRules = input.transformation?.slug
+    ? await sheetProfile('combat.transformationChoiceRules', () =>
+        loadTransformationChoiceRule(
+          input.dataSource,
+          input.transformation!.slug,
+        ),
+      )
+    : null;
   const transformationNotes = transformationCombatNotes(
     input.transformation ?? null,
     transformationBoonNotes,
+    transformationChoiceRules,
   );
   const heritageHpBonus = await sheetProfile('combat.heritageHp', () =>
     loadHeritageHitPointsBonus(

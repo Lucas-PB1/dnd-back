@@ -1,4 +1,4 @@
-import { CAP6_CHOICE_RULES } from '@game/sheet/domain/transformation/cap6-choice-rules';
+import type { Cap6TransformationRule } from '@game/sheet/domain/transformation/cap6-choice-rules/types';
 import { CAP6_ECONOMY_LABEL_PT } from './transformation-combat-notes-data/economy-labels';
 import type { Cap6BoonCombatNote } from './transformation-combat-notes-data/types';
 
@@ -10,14 +10,14 @@ export type TransformationCombatInput = {
 
 export function transformationCombatNotes(
   input: TransformationCombatInput | null | undefined,
-  boonNotes: ReadonlyMap<string, Cap6BoonCombatNote> | Record<string, Cap6BoonCombatNote>,
+  boonNotes:
+    | ReadonlyMap<string, Cap6BoonCombatNote>
+    | Record<string, Cap6BoonCombatNote>,
+  rules: Cap6TransformationRule | null | undefined,
 ): string[] {
   if (!input?.slug?.trim()) return [];
-  const slug = input.slug.trim();
   const stage = Number(input.stage);
   if (!Number.isInteger(stage) || stage < 1) return [];
-
-  const rules = CAP6_CHOICE_RULES[slug];
   if (!rules) return [];
 
   const active = new Set<string>();

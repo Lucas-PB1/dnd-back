@@ -36,8 +36,8 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | Prioridade | Achado | Casa sugerida |
 | --- | --- | --- |
 | — | Transformation Cap.6 formulas + boon notes + heritage notes | **migrado** → `resource_max_formula` + `phb_transformation_boon_combat_note` + `phb_heritage_combat_note` |
+| — | Cap.6 choice rules (`CAP6_CHOICE_RULES`) | **migrado** → `phb_transformation_stage_*` / sub_option / require_match |
 | — | Threads Cursemarked brackets + Fatebound spend notes | **migrado** → colunas em `phb_character_thread_milestone_benefit` |
-| baixa | Cap.6 choice rules (`CAP6_CHOICE_RULES`) | tabelas stage/auto/pick (próxima onda) |
 | — | Gates booleanos `has*` (fighter/rogue/monk/paladin/ranger + subclass) | **migrado** → `phb_class_feature_gate` + `phb_subclass_feature_gate` |
 | — | Schedules menores (divine strike, masks, portent, aura, radiant) | **migrado** → wave4 `phb_class_feature_schedule` |
 | — | Fórmulas com mod/estado (`rageActive`, CD, smite por slot, magical cunning ceil) | **manter TS** |

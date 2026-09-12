@@ -242,3 +242,9 @@ Conclusão: **não remover**. Sem `*.module.ts` de propósito (domain library). 
 - Wire: heritage/transformation notes via catalog; Cursemarked brackets + Fatebound spend notes via SQL; motor HP Fatebound permanece TS.
 - Dívida: `CAP6_CHOICE_RULES` ainda em TS (batches).
 - Docs: audit + waves-plan mesa stale → fechado.
+
+## 2026-09-12 — Cap.6 choice rules → SQL
+
+- Schema: `transformation_stage_mode` + stage_rule / auto_boon / pick_key / sub_option / require_match(+pair).
+- Seed gerado: `phb_transformation_choice_rules.all.sql` (12 transformações).
+- Wire: `loadTransformationChoiceRule`; validator + combat notes sem `CAP6_CHOICE_RULES` runtime (batches só fixture/gerador).

@@ -24,7 +24,7 @@ describe('validateTransformationChoices', () => {
           stage1Boon: ['infernal-smite', 'devilish-contractor'],
           fiendDamageType: ['acid', 'cold', 'fire'],
         }),
-        rules: CAP6_CHOICE_RULES['gh-transformation-fiend'],
+        rules: CAP6_CHOICE_RULES['gh-transformation-fiend']!,
       }),
     ).not.toThrow();
   });
@@ -41,6 +41,7 @@ describe('validateTransformationChoices', () => {
           stage1Boon: ['infernal-smite'],
           fiendDamageType: ['fire'],
         }),
+        rules: CAP6_CHOICE_RULES['gh-transformation-fiend']!,
       }),
     ).toThrow(/fiendDamageType/);
   });
@@ -66,6 +67,7 @@ describe('validateTransformationChoices', () => {
           stage3Boon: ['mist-form', 'improved-fanged-bite', 'beguilers-charm'],
           stage3Boon2: ['mist-form', 'improved-fanged-bite', 'beguilers-charm'],
         }),
+        rules: CAP6_CHOICE_RULES['gh-transformation-vampire']!,
       }),
     ).not.toThrow();
   });
@@ -85,6 +87,7 @@ describe('validateTransformationChoices', () => {
           stage1Boon: ['hybrid-wolf-form'],
           stage2Boon: ['iron-pelt'],
         }),
+        rules: CAP6_CHOICE_RULES['gh-transformation-lycanthrope']!,
       }),
     ).toThrow(BadRequestException);
   });
@@ -112,6 +115,7 @@ describe('validateTransformationChoices', () => {
           stage3Boon2: ['mist-form', 'improved-fanged-bite'],
           stage4Boon: ['final-soman-bloodline', 'final-fzeg-bloodline'],
         }),
+        rules: CAP6_CHOICE_RULES['gh-transformation-vampire']!,
       }),
     ).toThrow(/final-soman-bloodline/);
   });
@@ -127,6 +131,7 @@ describe('validateTransformationChoices', () => {
         allowedValuesByKey: allow({
           elementalAffinity: ['air', 'earth', 'fire', 'water'],
         }),
+        rules: CAP6_CHOICE_RULES['gh-transformation-primordial']!,
       }),
     ).not.toThrow();
   });

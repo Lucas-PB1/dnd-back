@@ -308,6 +308,7 @@ transformation/grim-hollow/phb_feat_benefit.vampire.sql
 transformation/grim-hollow/phb_feat_option.gh-transformations.sql
 transformation/grim-hollow/phb_resource_definition.gh-transformations.sql
 transformation/grim-hollow/phb_transformation_boon_combat_note.all.sql
+transformation/grim-hollow/phb_transformation_choice_rules.all.sql
 catalog/dmg/phb_edition.base.sql
 item/dmg/phb_item.all.sql
 item/dmg/phb_item.consumable-flag.sql

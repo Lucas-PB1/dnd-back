@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { PhbOptionValue } from '@entities/reference/phb-option.entity';
@@ -10,6 +10,7 @@ import {
   validateTransformationShape,
 } from './validate-transformation';
 import { validateTransformationChoices } from './validate-transformation-choices';
+import { loadTransformationChoiceRule } from './load-transformation-choice-rule';
 
 @Injectable()
 export class CharacterTransformationValidator {
@@ -19,6 +20,8 @@ export class CharacterTransformationValidator {
     private readonly featRefRepo: Repository<PhbFeatRef>,
     @InjectRepository(PhbOptionValue)
     private readonly optionValueRepo: Repository<PhbOptionValue>,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   async validate(
@@ -50,9 +53,15 @@ export class CharacterTransformationValidator {
       allowedValuesByKey.set(row.optionKey, set);
     }
 
+    const rules = await loadTransformationChoiceRule(this.dataSource, slug);
+    if (!rules) {
+      throw new BadRequestException(`No Cap. 6 choice rules for '${slug}'`);
+    }
+
     validateTransformationChoices({
       transformation,
       allowedValuesByKey,
+      rules,
     });
   }
 }

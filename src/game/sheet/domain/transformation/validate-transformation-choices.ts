@@ -1,26 +1,19 @@
 import { BadRequestException } from '@nestjs/common';
-import {
-  CAP6_CHOICE_RULES,
-  type Cap6TransformationRule,
-} from './cap6-choice-rules';
+import type { Cap6TransformationRule } from './cap6-choice-rules/types';
 import type { CharacterTransformation } from './validate-transformation';
 
 export type ValidateTransformationChoicesInput = {
   transformation: CharacterTransformation;
   allowedValuesByKey: ReadonlyMap<string, ReadonlySet<string>>;
-  rules?: Cap6TransformationRule;
+  rules: Cap6TransformationRule;
 };
 
 export function validateTransformationChoices(
   input: ValidateTransformationChoicesInput,
 ): void {
-  const { transformation, allowedValuesByKey } = input;
+  const { transformation, allowedValuesByKey, rules } = input;
   const slug = transformation.slug.trim();
   const stage = Number(transformation.stage);
-  const rules = input.rules ?? CAP6_CHOICE_RULES[slug];
-  if (!rules) {
-    throw new BadRequestException(`No Cap. 6 choice rules for '${slug}'`);
-  }
 
   const byKind = new Map(
     transformation.choices.map((c) => [c.choiceKind.trim(), c.choiceSlug.trim()]),

@@ -1,5 +1,6 @@
 import { transformationCombatNotes } from './transformation-combat-notes';
 import { CAP6_BOON_COMBAT_NOTES } from './transformation-combat-notes-data';
+import { CAP6_CHOICE_RULES } from '@game/sheet/domain/transformation/cap6-choice-rules';
 
 describe('transformationCombatNotes', () => {
   it('includes auto + picked boons for vampire stage 1', () => {
@@ -10,6 +11,7 @@ describe('transformationCombatNotes', () => {
         choices: [{ choiceKind: 'stage1Boon', choiceSlug: 'soman-bloodline' }],
       },
       CAP6_BOON_COMBAT_NOTES,
+      CAP6_CHOICE_RULES['gh-transformation-vampire'],
     );
     expect(
       notes.some(
@@ -28,6 +30,7 @@ describe('transformationCombatNotes', () => {
         choices: [{ choiceKind: 'stage1Boon', choiceSlug: 'soman-bloodline' }],
       },
       CAP6_BOON_COMBAT_NOTES,
+      CAP6_CHOICE_RULES['gh-transformation-vampire'],
     );
     const s2 = transformationCombatNotes(
       {
@@ -40,15 +43,26 @@ describe('transformationCombatNotes', () => {
         ],
       },
       CAP6_BOON_COMBAT_NOTES,
+      CAP6_CHOICE_RULES['gh-transformation-vampire'],
     );
     expect(s2.length).toBeGreaterThan(s1.length);
     expect(s2.some((n) => /Eyes of the Night|Olhos/i.test(n))).toBe(true);
   });
 
   it('returns empty without transformation', () => {
-    expect(transformationCombatNotes(null, CAP6_BOON_COMBAT_NOTES)).toEqual([]);
     expect(
-      transformationCombatNotes({ slug: '', stage: 1 }, CAP6_BOON_COMBAT_NOTES),
+      transformationCombatNotes(
+        null,
+        CAP6_BOON_COMBAT_NOTES,
+        CAP6_CHOICE_RULES['gh-transformation-vampire'],
+      ),
+    ).toEqual([]);
+    expect(
+      transformationCombatNotes(
+        { slug: '', stage: 1 },
+        CAP6_BOON_COMBAT_NOTES,
+        CAP6_CHOICE_RULES['gh-transformation-vampire'],
+      ),
     ).toEqual([]);
   });
 
@@ -63,6 +77,7 @@ describe('transformationCombatNotes', () => {
         ],
       },
       CAP6_BOON_COMBAT_NOTES,
+      CAP6_CHOICE_RULES['gh-transformation-fiend'],
     );
     expect(notes.some((n) => n.includes('fire'))).toBe(false);
     expect(
@@ -84,6 +99,7 @@ describe('transformationCombatNotes', () => {
         ],
       },
       CAP6_BOON_COMBAT_NOTES,
+      CAP6_CHOICE_RULES['gh-transformation-lycanthrope'],
     );
     expect(notes.some((n) => /Bestial Vigor/i.test(n))).toBe(true);
     expect(notes.some((n) => /5 PV temp/i.test(n))).toBe(true);
