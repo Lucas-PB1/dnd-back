@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-12 — fey-reinforcements: sem timer de 1 min
+
+- Decisão: duração 1 min fica na mesa/nota; sem despawn automático por clock.
+
 ## 2026-09-12 — Multi-token Animar Objetos + wire spectral/fey
 
 - `budget_cost` em `phb_spell_spirit_variant`; cast aceita `spiritCount` / `spiritSelections`.

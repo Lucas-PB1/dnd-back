@@ -77,7 +77,6 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 ## Dívida (fora desta onda)
 
 - Find Familiar CR0 / Wild Shape / MM genérico
-- fey-reinforcements: sem concentração automática de 1 min (despawn manual / mesa)
 - Conjure\* como actor (não — permanece `area_effect`)
 
 ## Status `spirit_actor`
