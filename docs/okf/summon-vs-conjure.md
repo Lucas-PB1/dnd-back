@@ -76,9 +76,9 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 
 ## Dívida (fora desta onda)
 
-- Wild Shape / MM genérico
+- Wild Shape known forms / listagem — ver [wild-shape.md](/wild-shape.md)
+- MM genérico (mais Beast no catálogo alimentam Wild Shape automaticamente)
 - Conjure\* como actor (não — permanece `area_effect`)
-- Familiar Morcego: stats no seed (SRD); imagem ainda sem scrap Beyond
 
 ## Status `spirit_actor`
 

@@ -14,6 +14,7 @@ Bundle de preparação: mapa de módulos, inventário de tooling Cursor e plano 
 - [Auditoria SQL-first](/sql-first-audit.md) — hardcodes em Game; piloto e dívida
 - [Summon vs Conjure](/summon-vs-conjure.md) — ficha vs aura; convenção PT/slugs PHB 2024
 - [Template / escala / controle](/creature-template-scale-control.md) — identidade, variante, scale binding, game_actor
+- [Wild Shape modular](/wild-shape.md) — elegibilidade CR × bestiário; sem lista hardcodada
 
 ## Docs canônicos (fora do OKF)
 

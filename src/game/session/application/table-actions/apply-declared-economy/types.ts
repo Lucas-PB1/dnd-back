@@ -4,6 +4,7 @@ import type { LoadEffectCatalog, CatalogEffect } from '@game/effects';
 import type { ClassEconomyActionRecord } from '@game/combat/domain/class-action-ui-catalog';
 import type { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
 import type { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
+import type { SyncWildShapeActorHandler } from '@game/actor/application/sync-wild-shape-actor.handler';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
@@ -30,6 +31,7 @@ export type DeclaredEconomyTableActionDeps = {
     syncCompanion: SyncCharacterCompanionHandler;
   };
   syncSpellSpirit?: SyncSpellSpiritHandler;
+  syncWildShapeActor?: SyncWildShapeActorHandler;
 };
 
 export type DeclaredEconomyTableActionOptions = {
@@ -44,6 +46,9 @@ export type DeclaredEconomyTableActionOptions = {
   useRelentless?: boolean;
   spellSlug?: string;
   spiritVariantKey?: string;
+  templateSlug?: string;
+  templateSlugs?: string[];
+  replaceSlug?: string;
   optionSlug?: string;
   takeLowerBloodCost?: boolean;
   amount?: number;

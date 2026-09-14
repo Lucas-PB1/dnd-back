@@ -120,6 +120,14 @@ export type EffectExecution =
       note: string | null;
     }
   | {
+      kind: 'wild_shape';
+      note: string | null;
+    }
+  | {
+      kind: 'wild_companion';
+      note: string | null;
+    }
+  | {
       kind: 'restore_resource_from_slot';
       note: string | null;
     }

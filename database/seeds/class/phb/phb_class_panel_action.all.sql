@@ -7,12 +7,17 @@
 
 -- Legado Bardo (nome 2014).
 
--- Forma Selvagem (besta): pool ± só na Economia; seletor de ficha = futuro.
+-- Forma Selvagem: known forms + assumir / encerrar no painel.
 
 INSERT INTO rpg.phb_class_panel_action (
   panel_key, class_id, subclass_id, slug, name, title, unlock_level,
   resource_slug, section, spends_focus, sort_order
 ) VALUES
+('druid|set-wild-shape-known-forms', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), NULL, 'set-wild-shape-known-forms', 'Definir Formas Conhecidas', 'Lista inicial / preencher slots (templateSlugs)', 2, NULL, 'base'::rpg.panel_action_section, false, 0),
+('druid|replace-wild-shape-known-form', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), NULL, 'replace-wild-shape-known-form', 'Trocar Forma Conhecida', '1 troca após Descanso Longo', 2, NULL, 'base'::rpg.panel_action_section, false, 0),
+('druid|wild-companion', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), NULL, 'wild-companion', 'Companheiro Selvagem', 'Forma ou espaço → Familiar Fey (spiritVariantKey)', 2, NULL, 'base'::rpg.panel_action_section, false, 0),
+('druid|wild-shape', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), NULL, 'wild-shape', 'Forma Selvagem', 'Assuma besta conhecida (templateSlug)', 2, 'wildShape', 'base'::rpg.panel_action_section, false, 0),
+('druid|wild-shape-end', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), NULL, 'wild-shape-end', 'Encerrar Forma Selvagem', 'Sai da Forma Selvagem', 2, NULL, 'base'::rpg.panel_action_section, false, 0),
 ('barbarian|toggle-rage', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), NULL, 'toggle-rage', 'Fúria', 'Entrar ou encerrar Fúria (gasta 1 uso ao entrar)', 1, 'rage', 'base'::rpg.panel_action_section, false, 1),
 ('barbarian|toggle-reckless', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), NULL, 'toggle-reckless', 'Ataque Imprudente', 'Alternar Vantagem em ataques com Força (ataques contra você também)', 2, NULL, 'base'::rpg.panel_action_section, false, 2),
 ('barbarian|recover-all-rage', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), NULL, 'recover-all-rage', 'Fúria Persistente', 'Na iniciativa: recupera todas as Fúrias (nv. 15+)', 15, 'rage', 'base'::rpg.panel_action_section, false, 3),

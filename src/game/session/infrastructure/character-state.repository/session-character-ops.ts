@@ -9,6 +9,7 @@ import type { LoadEffectCatalog } from '@game/effects';
 import type { CharacterStateResponseDto } from '../../dto/core/character-state-response.dto';
 import { buildCharacterStateResponse } from '../character-state/core/build-response';
 import { applyStarryFormState } from '../character-state/druid/starry-form-mutations';
+import { applyWildShapeState, applyWildShapeKnownFormsState } from '../character-state/druid/wild-shape-mutations';
 import { applyAberrantMutationState } from '../character-state/transformation/aberrant-mutation-mutations';
 import type { AberrantMutationSlug } from '@game/session/domain/transformation/aberrant-mutation';
 import type { PlayerCharacterState } from '../player-character-state.entity';
@@ -154,6 +155,46 @@ export async function setStarryFormOp(
     state,
     active: input.active,
     constellation: input.constellation,
+    stateRepo: ports.stateRepo,
+    buildResponse: ports.buildResponse,
+  });
+}
+
+export async function setWildShapeOp(
+  ports: SessionCharacterPorts,
+  character: PlayerCharacter,
+  input: {
+    active: boolean;
+    templateSlug?: string | null;
+    actorId?: string | null;
+  },
+): Promise<CharacterStateResponseDto> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  return applyWildShapeState({
+    character,
+    state,
+    active: input.active,
+    templateSlug: input.templateSlug,
+    actorId: input.actorId,
+    stateRepo: ports.stateRepo,
+    buildResponse: ports.buildResponse,
+  });
+}
+
+export async function setWildShapeKnownFormsOp(
+  ports: SessionCharacterPorts,
+  character: PlayerCharacter,
+  input: {
+    knownSlugs: string[];
+    formSwapAvailable?: boolean;
+  },
+): Promise<CharacterStateResponseDto> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  return applyWildShapeKnownFormsState({
+    character,
+    state,
+    knownSlugs: input.knownSlugs,
+    formSwapAvailable: input.formSwapAvailable,
     stateRepo: ports.stateRepo,
     buildResponse: ports.buildResponse,
   });

@@ -7,7 +7,7 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+  SELECT 'wild_shape'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
          'on_table_action'::rpg.effect_trigger, 'wild-shape', 2, 1,
          'Forma Selvagem'
   FROM cls
@@ -15,7 +15,68 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Forma Selvagem: gastou 1 uso para assumir besta ou Companheiro Selvagem.'
+  'Forma Selvagem: assume besta elegível do catálogo (templateSlug).'
+FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'wild_shape'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'wild-shape-end', 2, 2,
+         'Encerrar Forma Selvagem'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Forma Selvagem encerrada na ficha.'
+FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'wild_shape'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'set-wild-shape-known-forms', 2, 3,
+         'Definir Formas Conhecidas'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Formas conhecidas definidas na ficha.'
+FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'wild_shape'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'replace-wild-shape-known-form', 2, 4,
+         'Trocar Forma Conhecida'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Trocou 1 forma conhecida (após Descanso Longo).'
+FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'wild_companion'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+         'on_table_action'::rpg.effect_trigger, 'wild-companion', 2, 5,
+         'Companheiro Selvagem'
+  FROM cls
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Companheiro Selvagem: Convocar Familiar (Fey) gastando Forma ou espaço; some no Descanso Longo.'
 FROM ins;
 
 -- Recuperação Natural (slots 1–5)

@@ -25,7 +25,7 @@ const forms = [
   { en: 'Hawk', key: 'falcao', label: 'Falcão', scrap: 'Hawk' },
   { en: 'Cat', key: 'gato', label: 'Gato', scrap: 'Cat' },
   { en: 'Lizard', key: 'lagarto', label: 'Lagarto', scrap: 'Lizard' },
-  { en: 'Bat', key: 'morcego', label: 'Morcego' },
+  { en: 'Bat', key: 'morcego', label: 'Morcego', scrap: 'Bat' },
   { en: 'Octopus', key: 'polvo', label: 'Polvo', scrap: 'Octopus' },
   { en: 'Rat', key: 'rato', label: 'Rato', scrap: 'Rat' },
   { en: 'Frog', key: 'sapo', label: 'Sapo', scrap: 'Frog' },

@@ -166,6 +166,8 @@ subclass/steinhardt/phb_subclass.all.sql
 class/steinhardt/phb_subclass.feature-gate.blood-hound.sql
 class/phb/phb_class.feature-gate.all.sql
 class/phb/phb_subclass.feature-gate.wave.sql
+class/phb/phb_wild_shape_cr_band.all.sql
+class/phb/phb_wild_shape_known_band.all.sql
 subclass/steinhardt/phb_subclass_feature.all.sql
 spell/steinhardt/phb_spell.all.sql
 subclass/steinhardt/phb_subclass_prepared_spell.all.sql

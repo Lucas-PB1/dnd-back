@@ -48,6 +48,8 @@ export function executeStructuredEffect(
     effect.kind === 'missile_mage_arm' ||
     effect.kind === 'resource_fallback_spend' ||
     effect.kind === 'moon_combat_wild_shape' ||
+    effect.kind === 'wild_shape' ||
+    effect.kind === 'wild_companion' ||
     effect.kind === 'restore_resource_from_slot' ||
     effect.kind === 'bind_pact_weapon' ||
     effect.kind === 'psychic_blade_attack' ||

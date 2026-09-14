@@ -24,7 +24,7 @@ import { isWarlockClass } from '@game/combat/domain/warlock';
 import { mapArtifactSpellSpendFlags } from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { dissolveArtisanCraftedItems } from '@game/session/domain/dissolve-artisan-crafted';
-import { despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
+import { despawnSpiritsForSpell, despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
@@ -61,6 +61,8 @@ export async function applyLongRestState(input: {
     previousConcentration,
     null,
   );
+  // Companheiro Selvagem / Convocar Familiar: some no Descanso Longo (PHB 2024).
+  await despawnSpiritsForSpell(dataSource, character.id, 'convocar-familiar');
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;
@@ -71,7 +73,17 @@ export async function applyLongRestState(input: {
   state.gigaMissileArmed = false;
   state.starryFormActive = false;
   state.stellarConstellation = null;
+  const previousWildShapeActorId = state.wildShapeActorId;
+  state.wildShapeActive = false;
+  state.wildShapeTemplateSlug = null;
+  state.wildShapeActorId = null;
+  state.wildShapeFormSwapAvailable = true;
   state.aberrantMutationActive = null;
+  if (previousWildShapeActorId) {
+    await dataSource.query(`DELETE FROM rpg.game_actor WHERE id = $1`, [
+      previousWildShapeActorId,
+    ]);
+  }
   state.hitDiceCurrent = restoreHitDiceOnLongRest(
     state.hitDiceCurrent,
     character.level,

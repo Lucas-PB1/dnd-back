@@ -43,6 +43,8 @@ import {
   setAberrantMutationOp,
   setMissileMageArmedFlagsOp,
   setStarryFormOp,
+  setWildShapeOp,
+  setWildShapeKnownFormsOp,
 } from './session-character-ops';
 import type { AberrantMutationSlug } from '@game/session/domain/transformation/aberrant-mutation';
 
@@ -159,6 +161,27 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     },
   ) {
     return setStarryFormOp(this.ports(), character, input);
+  }
+
+  setWildShape(
+    character: PlayerCharacter,
+    input: {
+      active: boolean;
+      templateSlug?: string | null;
+      actorId?: string | null;
+    },
+  ) {
+    return setWildShapeOp(this.ports(), character, input);
+  }
+
+  setWildShapeKnownForms(
+    character: PlayerCharacter,
+    input: {
+      knownSlugs: string[];
+      formSwapAvailable?: boolean;
+    },
+  ) {
+    return setWildShapeKnownFormsOp(this.ports(), character, input);
   }
 
   setAberrantMutation(

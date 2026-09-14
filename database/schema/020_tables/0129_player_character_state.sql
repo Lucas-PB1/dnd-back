@@ -20,6 +20,11 @@ CREATE TABLE rpg.player_character_state (
   giga_missile_armed BOOLEAN NOT NULL DEFAULT false,
   starry_form_active BOOLEAN NOT NULL DEFAULT FALSE,
   stellar_constellation TEXT NULL,
+  wild_shape_active BOOLEAN NOT NULL DEFAULT FALSE,
+  wild_shape_template_slug TEXT NULL,
+  wild_shape_known_slugs TEXT[] NOT NULL DEFAULT '{}',
+  wild_shape_form_swap_available BOOLEAN NOT NULL DEFAULT TRUE,
+  wild_shape_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,
   /** Mutação Aberrante ativa (Cap. 6): chitinous-shell | eldritch-limbs | slimy-form. */
   aberrant_mutation_active TEXT NULL,
   boarded_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,

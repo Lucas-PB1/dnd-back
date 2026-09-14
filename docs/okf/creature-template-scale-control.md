@@ -48,6 +48,7 @@ Ex.: dragão domesticado = identidade fixa + controle do player + **sem** scale 
 | Magia spirit / steed | `phb_spell_spirit` | `phb_spell_spirit_variant` | `scale_by_slot` |
 | Link montaria/veículo | endpoints character vehicles | — | — |
 | Spawn genérico / encontro | `spawn-from-template` | — | — |
+| Wild Shape (druida) | filtro CR × Beast no catálogo | — | — (stats da ficha; ver [wild-shape.md](/wild-shape.md)) |
 
 `spirit_actor` em [summon-vs-conjure.md](/summon-vs-conjure.md) = origem de spawn + escala por slot — **não** um tipo de criatura separado do bestiário.
 
@@ -60,4 +61,5 @@ Ex.: dragão domesticado = identidade fixa + controle do player + **sem** scale 
 ## Relacionados
 
 - [Summon vs Conjure](/summon-vs-conjure.md)
+- [Wild Shape modular](/wild-shape.md)
 - [`docs/architecture/creature-template-field-map.md`](../architecture/creature-template-field-map.md)

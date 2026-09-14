@@ -138,6 +138,37 @@ export class CharacterStateResponseDto {
   })
   stellarConstellation!: string | null;
 
+  @ApiProperty({
+    example: false,
+    description: 'Forma Selvagem ativa',
+  })
+  wildShapeActive!: boolean;
+
+  @ApiPropertyOptional({
+    example: 'gato',
+    description: 'Template Beast ativo na Forma Selvagem',
+  })
+  wildShapeTemplateSlug!: string | null;
+
+  @ApiProperty({
+    example: ['gato', 'coruja'],
+    description: 'Formas conhecidas (Wild Shape)',
+  })
+  wildShapeKnownSlugs!: string[];
+
+  @ApiProperty({
+    example: true,
+    description: 'Pode trocar 1 forma conhecida após Descanso Longo',
+  })
+  wildShapeFormSwapAvailable!: boolean;
+
+  @ApiPropertyOptional({
+    example: null,
+    nullable: true,
+    description: 'game_actor da Forma Selvagem ativa',
+  })
+  wildShapeActorId!: string | null;
+
   @ApiPropertyOptional({
     example: 'chitinous-shell',
     nullable: true,

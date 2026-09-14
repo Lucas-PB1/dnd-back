@@ -19,9 +19,18 @@ import {
   applyDragonWingsTableAction,
 } from '../kinds/caster/apply-sorcerer-fallback-table-action';
 import {
-  applyMoonCombatWildShapeTableAction,
+  applyWildResurgenceTableAction,
   applyRestoreLunarStepTableAction,
 } from '../kinds/form-state/apply-wild-resurgence-table-action';
+import {
+  applyWildShapeTableAction,
+  applyWildShapeEndTableAction,
+} from '../kinds/form-state/apply-wild-shape-table-action';
+import {
+  applySetWildShapeKnownFormsTableAction,
+  applyReplaceWildShapeKnownFormTableAction,
+} from '../kinds/form-state/apply-wild-shape-known-forms-table-action';
+import { applyWildCompanionTableAction } from '../kinds/form-state/apply-wild-companion-table-action';
 import { applyInvokePactWeaponTableAction } from '../kinds/caster/apply-invoke-pact-weapon-table-action';
 import { applyPsychicBladeTableAction } from '../kinds/attack/apply-psychic-blade-table-action';
 import type {
@@ -154,10 +163,77 @@ export async function handleStructuredCatalogKind(
     );
   }
 
-  if (structured.kind === 'moon_combat_wild_shape') {
-    return applyMoonCombatWildShapeTableAction({
+  if (
+    structured.kind === 'wild_shape' ||
+    structured.kind === 'moon_combat_wild_shape'
+  ) {
+    if (actionSlug === 'wild-shape-end') {
+      return applyWildShapeEndTableAction({
+        state: deps.state,
+        character,
+        syncWildShapeActor: deps.syncWildShapeActor,
+      });
+    }
+    if (actionSlug === 'set-wild-shape-known-forms') {
+      if (!deps.dataSource) {
+        throw new BadRequestException(
+          'DataSource indisponível para Forma Selvagem',
+        );
+      }
+      return applySetWildShapeKnownFormsTableAction({
+        state: deps.state,
+        character,
+        dataSource: deps.dataSource,
+        templateSlugs: options.templateSlugs,
+        moon: character.subclassSlug === 'moon',
+      });
+    }
+    if (actionSlug === 'replace-wild-shape-known-form') {
+      if (!deps.dataSource) {
+        throw new BadRequestException(
+          'DataSource indisponível para Forma Selvagem',
+        );
+      }
+      return applyReplaceWildShapeKnownFormTableAction({
+        state: deps.state,
+        character,
+        dataSource: deps.dataSource,
+        replaceSlug: options.replaceSlug,
+        templateSlug: options.templateSlug,
+        moon: character.subclassSlug === 'moon',
+      });
+    }
+    if (!deps.dataSource) {
+      throw new BadRequestException(
+        'DataSource indisponível para Forma Selvagem',
+      );
+    }
+    return applyWildShapeTableAction({
       state: deps.state,
       character,
+      dataSource: deps.dataSource,
+      templateSlug: options.templateSlug,
+      moon: structured.kind === 'moon_combat_wild_shape',
+      actionName: action.name,
+      ownerUserId: options.userId,
+      syncWildShapeActor: deps.syncWildShapeActor,
+    });
+  }
+
+  if (structured.kind === 'wild_companion') {
+    if (!deps.dataSource || !deps.syncSpellSpirit || !options.userId) {
+      throw new BadRequestException(
+        'Companheiro Selvagem exige DataSource, sync de espírito e userId',
+      );
+    }
+    return applyWildCompanionTableAction({
+      state: deps.state,
+      character,
+      dataSource: deps.dataSource,
+      syncSpellSpirit: deps.syncSpellSpirit,
+      ownerUserId: options.userId,
+      spiritVariantKey: options.spiritVariantKey,
+      slotLevel: options.slotLevel,
     });
   }
 

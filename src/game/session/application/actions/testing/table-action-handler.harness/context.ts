@@ -82,6 +82,20 @@ export function createTableActionHandlerTestContext(options?: {
         return { ...stateResponse };
       },
     );
+    state.setWildShape.mockImplementation(async (_c, input) => ({
+      ...stateResponse,
+      wildShapeActive: input.active,
+      wildShapeTemplateSlug: input.templateSlug ?? null,
+      wildShapeActorId: input.actorId ?? null,
+    }));
+    state.setWildShapeKnownForms.mockImplementation(async (_c, input) => ({
+      ...stateResponse,
+      wildShapeKnownSlugs: [...input.knownSlugs],
+      wildShapeFormSwapAvailable:
+        input.formSwapAvailable ??
+        stateResponse.wildShapeFormSwapAvailable ??
+        true,
+    }));
     domain.getProficiencyBonus.mockResolvedValue(proficiencyBonus);
     access.findAccessibleOrFail.mockResolvedValue(defaultCharacter as PlayerCharacter);
     mechanicalCatalog.load.mockResolvedValue(catalogLoad);

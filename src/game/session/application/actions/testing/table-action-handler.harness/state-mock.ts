@@ -49,6 +49,20 @@ export function createTableActionStateMock(
       starryFormActive: input.active,
       stellarConstellation: input.constellation ?? null,
     })),
+    setWildShape: jest.fn().mockImplementation(async (_c, input) => ({
+      ...stateResponse,
+      wildShapeActive: input.active,
+      wildShapeTemplateSlug: input.templateSlug ?? null,
+      wildShapeActorId: input.actorId ?? null,
+    })),
+    setWildShapeKnownForms: jest.fn().mockImplementation(async (_c, input) => ({
+      ...stateResponse,
+      wildShapeKnownSlugs: [...input.knownSlugs],
+      wildShapeFormSwapAvailable:
+        input.formSwapAvailable ??
+        stateResponse.wildShapeFormSwapAvailable ??
+        true,
+    })),
     martial: createMartialMock(stateResponse),
   };
   return state as TableActionStateMock;

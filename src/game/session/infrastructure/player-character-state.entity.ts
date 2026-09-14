@@ -69,6 +69,21 @@ export class PlayerCharacterState {
   @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
   stellarConstellation!: string | null;
 
+  @Column({ name: 'wild_shape_active', type: 'boolean', default: false })
+  wildShapeActive!: boolean;
+
+  @Column({ name: 'wild_shape_template_slug', type: 'text', nullable: true })
+  wildShapeTemplateSlug!: string | null;
+
+  @Column({ name: 'wild_shape_known_slugs', type: 'text', array: true, default: [] })
+  wildShapeKnownSlugs!: string[];
+
+  @Column({ name: 'wild_shape_form_swap_available', type: 'boolean', default: true })
+  wildShapeFormSwapAvailable!: boolean;
+
+  @Column({ name: 'wild_shape_actor_id', type: 'uuid', nullable: true })
+  wildShapeActorId!: string | null;
+
   @Column({ name: 'aberrant_mutation_active', type: 'text', nullable: true })
   aberrantMutationActive!: string | null;
 

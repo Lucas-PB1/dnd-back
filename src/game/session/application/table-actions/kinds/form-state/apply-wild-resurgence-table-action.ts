@@ -67,22 +67,3 @@ export async function applyRestoreLunarStepTableAction(input: {
     note: `Restaurou 1 uso de Passo Lunar gastando 1 espaço de ${level}º círculo.`,
   };
 }
-
-export async function applyMoonCombatWildShapeTableAction(input: {
-  state: CharacterStateRepository;
-  character: PlayerCharacter;
-}): Promise<TableActionResponseDto> {
-  const { moonWildShapeTempHp } = await import('@game/combat/domain/druid');
-  const tempHp = moonWildShapeTempHp(input.character.level);
-  const crMax = Math.floor(input.character.level / 3);
-  await input.state.useClassResource(input.character, 'wildShape', 1);
-  const state = await input.state.patch(input.character, { tempHp });
-
-  return {
-    state,
-    actionName: 'Forma Selvagem de Combate',
-    resourceSpent: true,
-    total: tempHp,
-    note: `Forma Selvagem de Combate: ${tempHp} PV temp. (ficha), CA 13+SAB se maior, ND máx. ${crMax}. Ficha de besta = futuro.`,
-  };
-}

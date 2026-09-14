@@ -30,6 +30,11 @@ export async function findOrCreateCharacterState(
       gigaMissileArmed: false,
       starryFormActive: false,
       stellarConstellation: null,
+      wildShapeActive: false,
+      wildShapeTemplateSlug: null,
+      wildShapeKnownSlugs: [],
+      wildShapeFormSwapAvailable: true,
+      wildShapeActorId: null,
       aberrantMutationActive: null,
       boardedActorId: null,
     });
@@ -67,6 +72,21 @@ export async function findOrCreateCharacterState(
   }
   if (row.stellarConstellation === undefined) {
     row.stellarConstellation = null;
+  }
+  if (row.wildShapeActive == null) {
+    row.wildShapeActive = false;
+  }
+  if (row.wildShapeTemplateSlug === undefined) {
+    row.wildShapeTemplateSlug = null;
+  }
+  if (!row.wildShapeKnownSlugs) {
+    row.wildShapeKnownSlugs = [];
+  }
+  if (row.wildShapeFormSwapAvailable == null) {
+    row.wildShapeFormSwapAvailable = true;
+  }
+  if (row.wildShapeActorId === undefined) {
+    row.wildShapeActorId = null;
   }
   if (row.aberrantMutationActive === undefined) {
     row.aberrantMutationActive = null;

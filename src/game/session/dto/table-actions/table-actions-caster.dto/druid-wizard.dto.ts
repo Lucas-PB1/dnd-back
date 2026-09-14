@@ -4,6 +4,10 @@ import { TableActionOptionsDto } from '../table-action-options.dto';
 
 const DRUID_TABLE_ACTION_SLUGS = [
   'wild-shape',
+  'wild-shape-end',
+  'wild-companion',
+  'set-wild-shape-known-forms',
+  'replace-wild-shape-known-form',
   'wild-resurgence-slot',
   'wild-resurgence-shape',
   'starry-form-archer',

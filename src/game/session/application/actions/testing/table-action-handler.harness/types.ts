@@ -55,6 +55,8 @@ export type TableActionStateMock = jest.Mocked<
 > & {
   consumeSpellSlotLevel: jest.Mock;
   setStarryForm: jest.Mock;
+  setWildShape: jest.Mock;
+  setWildShapeKnownForms: jest.Mock;
   martial: TableActionMartialMock;
 };
 

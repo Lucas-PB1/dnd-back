@@ -47,7 +47,7 @@ Varredura 2026-09-11. Critério: regra de catálogo (slug/nível/mapa) em TS que
 | — | Companions placeholder (BM) | **fechado** → stats PHB + `companion_hp_*` / sync scale |
 | baixa | MM/SRD bestiary genérico | extract existe; onda grande — **adiado** |
 | baixa | GH Primal Spirit bloco oficial | escala provisória; substituir quando extract chegar |
-| baixa | Wild Shape / familiar / steed como actor sync | ainda nota/mesa |
+| baixa | Wild Shape known forms / listagem / actor | onda 1 fechada → [wild-shape.md](/wild-shape.md) |
 | — | Summon vs Conjure nomenclatura PT/slugs | **fechado** → [summon-vs-conjure.md](/summon-vs-conjure.md) |
 
 ### Faxina P0 (2026-09-11) — mortos + wire dice

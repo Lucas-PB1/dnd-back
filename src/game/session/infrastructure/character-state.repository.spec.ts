@@ -51,6 +51,7 @@ describe('CharacterStateRepository', () => {
         }),
       }),
       {} as DataSource,
+      asDep({}),
     );
   });
 
@@ -77,6 +78,11 @@ describe('CharacterStateRepository', () => {
         missileShieldArmed: false,
         gigaMissileArmed: false,
         starryFormActive: false,
+        wildShapeActive: false,
+        wildShapeTemplateSlug: null,
+        wildShapeKnownSlugs: [],
+        wildShapeFormSwapAvailable: true,
+        wildShapeActorId: null,
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,
@@ -150,6 +156,11 @@ describe('CharacterStateRepository', () => {
         missileShieldArmed: false,
         gigaMissileArmed: false,
         starryFormActive: false,
+        wildShapeActive: false,
+        wildShapeTemplateSlug: null,
+        wildShapeKnownSlugs: [],
+        wildShapeFormSwapAvailable: true,
+        wildShapeActorId: null,
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,

@@ -27,6 +27,7 @@ import {
   LinkCharacterVehicleHandler,
 } from './application/character-vehicle.handlers';
 import { SyncCharacterCompanionHandler } from './application/sync-character-companion.handler';
+import { SyncWildShapeActorHandler } from './application/sync-wild-shape-actor.handler';
 import { TemplateImageResolver } from './application/template-image.resolver';
 import { CreateActorHandler } from './application/create-actor.handler';
 import { DeleteActorHandler } from './application/delete-actor.handler';
@@ -108,6 +109,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     BoardCharacterVehicleHandler,
     SyncCharacterCompanionHandler,
     SyncSpellSpiritHandler,
+    SyncWildShapeActorHandler,
     TemplateImageResolver,
   ],
   exports: [
@@ -116,6 +118,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ActorPersistenceService,
     SyncCharacterCompanionHandler,
     SyncSpellSpiritHandler,
+    SyncWildShapeActorHandler,
     TypeOrmModule,
   ],
 })

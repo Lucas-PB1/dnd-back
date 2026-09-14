@@ -1,5 +1,28 @@
 # log
 
+## 2026-09-14 — Companheiro Selvagem (Wild Companion)
+
+- Table-action `wild-companion`: gasta Forma ou espaço → `convocar-familiar` (Fey).
+- Despawn no Descanso Longo; script `apply-forward-migrations.mjs` para DB com schema já seedado.
+
+## 2026-09-14 — Wild Shape modular onda 2
+
+- Known forms (4/6/8) + 1 troca pós–Descanso Longo; gate no apply.
+- `GET …/druid/wild-shape/eligible`; painel/economy set/replace.
+- `SyncWildShapeActorHandler`: spawn/delete `game_actor` na Forma Selvagem.
+
+## 2026-09-14 — Wild Shape modular onda 1
+
+- Faixas CR SQL (`phb_wild_shape_cr_band`) + domínio elegibilidade; apply `wild_shape` / Moon com `templateSlug`.
+- Estado na ficha (`wild_shape_active`, `wild_shape_template_slug`); clear no long rest + `wild-shape-end`.
+- Dívida: known forms, listagem/painel, game_actor.
+
+## 2026-09-14 — Wild Shape: OKF modular + arte Morcego
+
+- Concept [wild-shape.md](/wild-shape.md): elegibilidade CR × Beast do catálogo; sem lista hardcodada.
+- Arte `public/catalog/beasts/morcego.png` a partir do scrap Bat; gerador com `scrap: 'Bat'`.
+- Sem implementação de eligibility/transform nesta onda.
+
 ## 2026-09-12 — Find Familiar: templates = monstros
 
 - Identidade: slugs de besta (`gato`, `coruja`…), não `familiar-*`.
@@ -8,7 +31,7 @@
 
 ## 2026-09-12 — Find Familiar (CR0)
 
-- Seed `seed.find-familiar.sql`: 11 formas listadas na magia (stats SRD 5.2.1; imagens Beyond no scrap, exceto Morcego).
+- Seed `seed.find-familiar.sql`: 11 formas listadas na magia (stats SRD 5.2.1; imagens Beyond no scrap).
 - Mapa `convocar-familiar` + escala flat; gerador `scripts/generate/seed-find-familiar.mjs`.
 
 ## 2026-09-12 — fey-reinforcements: sem timer de 1 min

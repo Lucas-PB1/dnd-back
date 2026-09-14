@@ -72,6 +72,29 @@ export class TableActionOptionsDto {
   @IsString()
   spiritVariantKey?: string;
 
+  @ApiPropertyOptional({
+    description: 'Template Beast (Forma Selvagem / moon-combat-wild-shape)',
+  })
+  @IsOptional()
+  @IsString()
+  templateSlug?: string;
+
+  @ApiPropertyOptional({
+    type: [String],
+    description: 'Lista de templates (set-wild-shape-known-forms)',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  templateSlugs?: string[];
+
+  @ApiPropertyOptional({
+    description: 'Slug a substituir (replace-wild-shape-known-form)',
+  })
+  @IsOptional()
+  @IsString()
+  replaceSlug?: string;
+
   @ApiPropertyOptional({ description: 'Opção tipada (ex.: Golpe de Sangue)' })
   @IsOptional()
   @IsString()

@@ -127,6 +127,8 @@ CREATE TYPE rpg.effect_kind AS ENUM (
   'missile_mage_arm',
   'resource_fallback_spend',
   'moon_combat_wild_shape',
+  'wild_shape',
+  'wild_companion',
   'restore_resource_from_slot',
   'bind_pact_weapon',
   'psychic_blade_attack'

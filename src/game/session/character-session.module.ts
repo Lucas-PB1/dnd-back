@@ -16,6 +16,7 @@ import { CharacterStateRepository } from './infrastructure/character-state.repos
 import { CharacterSessionController } from './controllers/character-session.controller';
 import { GunslingerBarbarianSessionController } from './controllers/gunslinger-barbarian-session.controller';
 import { FighterSessionController } from './controllers/fighter-session.controller';
+import { DruidSessionController } from './controllers/druid-session.controller';
 import { TableActionsController } from './controllers/table-actions.controller';
 import {
   GetCharacterStateQuery,
@@ -68,6 +69,7 @@ import { CampaignCharacter } from '../campaign/infrastructure/campaign-character
     CharacterSessionController,
     GunslingerBarbarianSessionController,
     FighterSessionController,
+    DruidSessionController,
     TableActionsController,
   ],
   providers: [

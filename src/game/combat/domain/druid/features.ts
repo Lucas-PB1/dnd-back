@@ -13,6 +13,18 @@ export function moonWildShapeTempHp(level: number): number {
   return 3 * level;
 }
 
+export {
+  allowsWildShapeFly,
+  baseWildShapeTempHp,
+  isBeastEligibleForWildShape,
+  maxWildShapeCr,
+  moonWildShapeArmorClassFloor,
+  parseChallengeRating,
+  resolveWildShapeBand,
+  WILD_SHAPE_BASE_CR_BANDS,
+} from './wild-shape-eligibility';
+export type { WildShapeCrBand } from './wild-shape-eligibility';
+
 export function landAidDice(level: number): number {
   if (level >= 14) return 4;
   if (level >= 10) return 3;
