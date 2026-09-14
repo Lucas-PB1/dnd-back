@@ -76,8 +76,8 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 
 ## Dívida (fora desta onda)
 
-- Wild Shape known forms / listagem — ver [wild-shape.md](/wild-shape.md)
-- MM genérico (mais Beast no catálogo alimentam Wild Shape automaticamente)
+- MM genérico adicional além do Appendix B PHB — ver [wild-shape.md](/wild-shape.md)
+- Conjure\* sem ficha.
 - Conjure\* como actor (não — permanece `area_effect`)
 
 ## Status `spirit_actor`

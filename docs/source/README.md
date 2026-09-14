@@ -30,7 +30,7 @@ docs/source/
 | `grim-hollow/` | `cap1-heritages.json` … `cap7-spells.json`, overlays PT | pack `grim-hollow` |
 | `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` |
 | `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
-| `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7 | M005–M006, S079 |
+| `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7, `creature-stat-blocks-beasts.json` | M005–M006, S079, `seed.phb-beasts.sql` |
 | `srd/` | `monsters-5.2.1.json` | criaturas SRD (CC-BY) |
 
 ## `_scrapes/` / `_assets/`

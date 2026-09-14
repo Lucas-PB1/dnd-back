@@ -1,0 +1,1831 @@
+{
+  "source": "PHB 2024 Appendix B — Creature Stat Blocks (D&D Beyond scrap)",
+  "scrapedFrom": "Creature Stat Blocks - Player’s Handbook - Dungeons & Dragons - Sources - D&D Beyond.html",
+  "count": 43,
+  "beasts": [
+    {
+      "slug": "alce",
+      "namePt": "Alce",
+      "nameEn": "Elk",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 11,
+      "hitPointsFormula": "2d10",
+      "speed": {
+        "walk": 50
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 16,
+        "dex": 10,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 6
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Ram",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Bludgeoning damage and has the Prone condition.",
+          "attack_bonus": 5,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "aranha",
+      "namePt": "Aranha",
+      "nameEn": "Spider",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 20,
+        "climb": 20
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 10",
+      "abilityScores": {
+        "str": 2,
+        "dex": 14,
+        "con": 8,
+        "int": 1,
+        "wis": 10,
+        "cha": 2
+      },
+      "traits": [
+        {
+          "name": "Spider Climb",
+          "description": "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        },
+        {
+          "name": "Web Walker",
+          "description": "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 2 (1d4) Poison damage.",
+          "attack_bonus": 4,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "aranha-gigante",
+      "namePt": "Aranha Gigante",
+      "nameEn": "Giant Spider",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "proficiencyBonus": 2,
+      "armorClass": 14,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 26,
+      "hitPointsFormula": "4d10 + 4",
+      "speed": {
+        "walk": 30,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 14",
+      "abilityScores": {
+        "str": 14,
+        "dex": 16,
+        "con": 12,
+        "int": 2,
+        "wis": 11,
+        "cha": 4
+      },
+      "traits": [
+        {
+          "name": "Spider Climb",
+          "description": "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        },
+        {
+          "name": "Web Walker",
+          "description": "The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 7 (2d6) Poison damage.",
+          "attack_bonus": 5,
+          "damage_expression": "7"
+        },
+        {
+          "name": "Web (Recharge 5–6)",
+          "description": "Dexterity Saving Throw: DC 13, one creature the spider can see within 60 feet. Failure: The target has the Restrained condition until the web is destroyed (AC 10; HP 5; Vulnerability to Fire damage; Immunity to Poison and Psychic damage).",
+          "attack_bonus": null,
+          "damage_expression": null
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cabra",
+      "namePt": "Cabra",
+      "nameEn": "Goat",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 4,
+      "hitPointsFormula": "1d8",
+      "speed": {
+        "walk": 40,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 11,
+        "dex": 10,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 5
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Ram",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Bludgeoning damage, or 2 (1d4) Bludgeoning damage if the goat moved 20+ feet straight toward the target immediately before the hit.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cabra-gigante",
+      "namePt": "Cabra Gigante",
+      "nameEn": "Giant Goat",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 19,
+      "hitPointsFormula": "3d10 + 3",
+      "speed": {
+        "walk": 40,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 17,
+        "dex": 13,
+        "con": 12,
+        "int": 3,
+        "wis": 12,
+        "cha": 6
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Ram",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the goat moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition.",
+          "attack_bonus": 5,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "camelo",
+      "namePt": "Camelo",
+      "nameEn": "Camel",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 17,
+      "hitPointsFormula": "2d10 + 6",
+      "speed": {
+        "walk": 50
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 10",
+      "abilityScores": {
+        "str": 15,
+        "dex": 8,
+        "con": 17,
+        "int": 2,
+        "wis": 11,
+        "cha": 5
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Bludgeoning damage.",
+          "attack_bonus": 4,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "caranguejo",
+      "namePt": "Caranguejo",
+      "nameEn": "Crab",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 3,
+      "hitPointsFormula": "1d4 + 1",
+      "speed": {
+        "walk": 20,
+        "swim": 20
+      },
+      "senses": "Blindsight 30 ft.; Passive Perception 9",
+      "abilityScores": {
+        "str": 6,
+        "dex": 11,
+        "con": 12,
+        "int": 1,
+        "wis": 8,
+        "cha": 2
+      },
+      "traits": [
+        {
+          "name": "Amphibious",
+          "description": "The crab can breathe air and water."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Claw",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Bludgeoning damage.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "caranguejo-gigante",
+      "namePt": "Caranguejo Gigante",
+      "nameEn": "Giant Crab",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 15,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "3d8",
+      "speed": {
+        "walk": 30,
+        "swim": 30
+      },
+      "senses": "Blindsight 30 ft.; Passive Perception 9",
+      "abilityScores": {
+        "str": 13,
+        "dex": 13,
+        "con": 11,
+        "int": 1,
+        "wis": 9,
+        "cha": 3
+      },
+      "traits": [
+        {
+          "name": "Amphibious",
+          "description": "The crab can breathe air and water."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Claw",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 11) from one of two claws.",
+          "attack_bonus": 3,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cavalo-de-guerra",
+      "namePt": "Cavalo de Guerra",
+      "nameEn": "Warhorse",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 19,
+      "hitPointsFormula": "3d10 + 3",
+      "speed": {
+        "walk": 60
+      },
+      "senses": "Passive Perception 11",
+      "abilityScores": {
+        "str": 18,
+        "dex": 12,
+        "con": 13,
+        "int": 2,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Hooves",
+          "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 9 (2d4 + 4) Bludgeoning damage. If the target is a Large or smaller creature and the horse moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition.",
+          "attack_bonus": 6,
+          "damage_expression": "9"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cavalo-de-montaria",
+      "namePt": "Cavalo de Montaria",
+      "nameEn": "Riding Horse",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "2d10 + 2",
+      "speed": {
+        "walk": 60
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 16,
+        "dex": 13,
+        "con": 12,
+        "int": 2,
+        "wis": 11,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Hooves",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Bludgeoning damage.",
+          "attack_bonus": 5,
+          "damage_expression": "7"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cavalo-de-tracao",
+      "namePt": "Cavalo de Tração",
+      "nameEn": "Draft Horse",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 15,
+      "hitPointsFormula": "2d10 + 4",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 18,
+        "dex": 10,
+        "con": 15,
+        "int": 2,
+        "wis": 11,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Hooves",
+          "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Bludgeoning damage.",
+          "attack_bonus": 6,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cavalo-marinho-gigante",
+      "namePt": "Cavalo-marinho Gigante",
+      "nameEn": "Giant Seahorse",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 14,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 16,
+      "hitPointsFormula": "3d10",
+      "speed": {
+        "walk": 5,
+        "swim": 40
+      },
+      "senses": "Passive Perception 11",
+      "abilityScores": {
+        "str": 15,
+        "dex": 12,
+        "con": 11,
+        "int": 2,
+        "wis": 12,
+        "cha": 5
+      },
+      "traits": [
+        {
+          "name": "Water Breathing",
+          "description": "The seahorse can breathe only underwater."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Ram",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Bludgeoning damage, or 11 (2d8 + 2) Bludgeoning damage if the seahorse moved 20+ feet straight toward the target immediately before the hit.",
+          "attack_bonus": 4,
+          "damage_expression": "9"
+        }
+      ],
+      "bonusActions": [
+        {
+          "name": "Bubble Dash",
+          "description": "While underwater, the seahorse moves up to half its Swim Speed without provoking Opportunity Attacks."
+        }
+      ],
+      "reactions": []
+    },
+    {
+      "slug": "cobra-constritora",
+      "namePt": "Cobra Constritora",
+      "nameEn": "Constrictor Snake",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "2d10 + 2",
+      "speed": {
+        "walk": 30,
+        "swim": 30
+      },
+      "senses": "Blindsight 10 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 15,
+        "dex": 14,
+        "con": 12,
+        "int": 1,
+        "wis": 10,
+        "cha": 3
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "6"
+        },
+        {
+          "name": "Constrict",
+          "description": "Strength Saving Throw: DC 12, one Medium or smaller creature the snake can see within 5 feet. Failure: 7 (3d4) Bludgeoning damage, and the target has the Grappled condition (escape DC 12).",
+          "attack_bonus": null,
+          "damage_expression": null
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "cobra-venenosa",
+      "namePt": "Cobra Venenosa",
+      "nameEn": "Venomous Snake",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 5,
+      "hitPointsFormula": "2d4",
+      "speed": {
+        "walk": 30,
+        "swim": 30
+      },
+      "senses": "Blindsight 10 ft.; Passive Perception 10",
+      "abilityScores": {
+        "str": 2,
+        "dex": 15,
+        "con": 11,
+        "int": 1,
+        "wis": 10,
+        "cha": 3
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Piercing damage plus 3 (1d6) Poison damage.",
+          "attack_bonus": 4,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "coruja",
+      "namePt": "Coruja",
+      "nameEn": "Owl",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 5,
+        "fly": 60
+      },
+      "senses": "Darkvision 120 ft.; Passive Perception 15",
+      "abilityScores": {
+        "str": 3,
+        "dex": 13,
+        "con": 8,
+        "int": 2,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [
+        {
+          "name": "Flyby",
+          "description": "The owl doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Talons",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 1 Slashing damage.",
+          "attack_bonus": 3,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "corvo",
+      "namePt": "Corvo",
+      "nameEn": "Raven",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 2,
+      "hitPointsFormula": "1d4",
+      "speed": {
+        "walk": 10,
+        "fly": 50
+      },
+      "senses": "Passive Perception 13",
+      "abilityScores": {
+        "str": 2,
+        "dex": 14,
+        "con": 10,
+        "int": 5,
+        "wis": 13,
+        "cha": 6
+      },
+      "traits": [
+        {
+          "name": "Mimicry",
+          "description": "The raven can mimic simple sounds it has heard, such as a whisper or chitter. A hearer can discern the sounds are imitations with a successful DC 10 Wisdom (Insight) check."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Beak",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "crocodilo",
+      "namePt": "Crocodilo",
+      "nameEn": "Crocodile",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "2d10 + 2",
+      "speed": {
+        "walk": 20,
+        "swim": 30
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 15,
+        "dex": 10,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5
+      },
+      "traits": [
+        {
+          "name": "Hold Breath",
+          "description": "The crocodile can hold its breath for 1 hour."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 12). While Grappled, the target has the Restrained condition.",
+          "attack_bonus": 4,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "doninha",
+      "namePt": "Doninha",
+      "nameEn": "Weasel",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 30,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 3,
+        "dex": 16,
+        "con": 8,
+        "int": 2,
+        "wis": 12,
+        "cha": 3
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "doninha-gigante",
+      "namePt": "Doninha Gigante",
+      "nameEn": "Giant Weasel",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 9,
+      "hitPointsFormula": "2d8",
+      "speed": {
+        "walk": 40,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 11,
+        "dex": 17,
+        "con": 10,
+        "int": 4,
+        "wis": 12,
+        "cha": 5
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "5"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "elefante",
+      "namePt": "Elefante",
+      "nameEn": "Elephant",
+      "size": "Huge",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "4",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 76,
+      "hitPointsFormula": "8d12 + 24",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 22,
+        "dex": 9,
+        "con": 17,
+        "int": 3,
+        "wis": 11,
+        "cha": 6
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Multiattack",
+          "description": "The elephant makes two Gore attacks.",
+          "attack_bonus": null,
+          "damage_expression": null
+        },
+        {
+          "name": "Gore",
+          "description": "Melee Attack Roll: +8, reach 5 ft. Hit: 15 (2d8 + 6) Piercing damage. If the target is a Huge or smaller creature and the elephant moved 20+ feet straight toward it immediately before the hit, the target has the Prone condition.",
+          "attack_bonus": 8,
+          "damage_expression": "15"
+        }
+      ],
+      "bonusActions": [
+        {
+          "name": "Trample",
+          "description": "Dexterity Saving Throw: DC 16, one creature within 5 feet that has the Prone condition. Failure: 17 (2d10 + 6) Bludgeoning damage. Success: Half damage."
+        }
+      ],
+      "reactions": []
+    },
+    {
+      "slug": "escorpiao",
+      "namePt": "Escorpião",
+      "nameEn": "Scorpion",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 10
+      },
+      "senses": "Blindsight 10 ft.; Passive Perception 9",
+      "abilityScores": {
+        "str": 2,
+        "dex": 11,
+        "con": 8,
+        "int": 1,
+        "wis": 8,
+        "cha": 2
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Sting",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage plus 3 (1d6) Poison damage.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "falcao",
+      "namePt": "Falcão",
+      "nameEn": "Hawk",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 10,
+        "fly": 60
+      },
+      "senses": "Passive Perception 16",
+      "abilityScores": {
+        "str": 5,
+        "dex": 16,
+        "con": 8,
+        "int": 2,
+        "wis": 14,
+        "cha": 6
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Talons",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 1 Slashing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "gato",
+      "namePt": "Gato",
+      "nameEn": "Cat",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 2,
+      "hitPointsFormula": "1d4",
+      "speed": {
+        "walk": 40,
+        "climb": 40
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 3,
+        "dex": 15,
+        "con": 10,
+        "int": 3,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [
+        {
+          "name": "Jumper",
+          "description": "The cat’s jump distance is determined using its Dexterity rather than its Strength."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Scratch",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Slashing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "javali",
+      "namePt": "Javali",
+      "nameEn": "Boar",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "2d8 + 4",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Passive Perception 9",
+      "abilityScores": {
+        "str": 13,
+        "dex": 11,
+        "con": 14,
+        "int": 2,
+        "wis": 9,
+        "cha": 5
+      },
+      "traits": [
+        {
+          "name": "Bloodied Fury",
+          "description": "While Bloodied, the boar has Advantage on attack rolls."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Gore",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Piercing damage. If the target is a Medium or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Piercing damage and has the Prone condition.",
+          "attack_bonus": 3,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "lagarto",
+      "namePt": "Lagarto",
+      "nameEn": "Lizard",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 2,
+      "hitPointsFormula": "1d4",
+      "speed": {
+        "walk": 20,
+        "climb": 20
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 9",
+      "abilityScores": {
+        "str": 2,
+        "dex": 11,
+        "con": 10,
+        "int": 1,
+        "wis": 8,
+        "cha": 3
+      },
+      "traits": [
+        {
+          "name": "Spider Climb",
+          "description": "The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "leao",
+      "namePt": "Leão",
+      "nameEn": "Lion",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "4d10",
+      "speed": {
+        "walk": 50
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 17,
+        "dex": 15,
+        "con": 11,
+        "int": 3,
+        "wis": 12,
+        "cha": 8
+      },
+      "traits": [
+        {
+          "name": "Pack Tactics",
+          "description": "The lion has Advantage on an attack roll against a creature if at least one of the lion’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+        },
+        {
+          "name": "Running Leap",
+          "description": "With a 10-foot running start, the lion can Long Jump up to 25 feet."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Multiattack",
+          "description": "The lion makes two Rend attacks. It can replace one attack with a use of Roar.",
+          "attack_bonus": null,
+          "damage_expression": null
+        },
+        {
+          "name": "Rend",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "7"
+        },
+        {
+          "name": "Roar",
+          "description": "Wisdom Saving Throw: DC 11, one creature within 15 feet. Failure: The target has the Frightened condition until the start of the lion’s next turn.",
+          "attack_bonus": null,
+          "damage_expression": null
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "lobo",
+      "namePt": "Lobo",
+      "nameEn": "Wolf",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 11,
+      "hitPointsFormula": "2d8 + 2",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 15",
+      "abilityScores": {
+        "str": 14,
+        "dex": 15,
+        "con": 12,
+        "int": 3,
+        "wis": 12,
+        "cha": 6
+      },
+      "traits": [
+        {
+          "name": "Pack Tactics",
+          "description": "The wolf has Advantage on attack rolls against a creature if at least one of the wolf’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Prone condition.",
+          "attack_bonus": 4,
+          "damage_expression": "5"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "lobo-terrivel",
+      "namePt": "Lobo Terrível",
+      "nameEn": "Dire Wolf",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "proficiencyBonus": 2,
+      "armorClass": 14,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "3d10 + 6",
+      "speed": {
+        "walk": 50
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 15",
+      "abilityScores": {
+        "str": 17,
+        "dex": 15,
+        "con": 15,
+        "int": 3,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [
+        {
+          "name": "Pack Tactics",
+          "description": "The wolf has Advantage on an attack roll against a creature if at least one of the wolf’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Piercing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "attack_bonus": 5,
+          "damage_expression": "8"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "macaco",
+      "namePt": "Macaco",
+      "nameEn": "Ape",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 19,
+      "hitPointsFormula": "3d8 + 6",
+      "speed": {
+        "walk": 30,
+        "climb": 30
+      },
+      "senses": "Passive Perception 13",
+      "abilityScores": {
+        "str": 16,
+        "dex": 14,
+        "con": 14,
+        "int": 6,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Multiattack",
+          "description": "The ape makes two Fist attacks.",
+          "attack_bonus": null,
+          "damage_expression": null
+        },
+        {
+          "name": "Fist",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Bludgeoning damage.",
+          "attack_bonus": 5,
+          "damage_expression": "5"
+        },
+        {
+          "name": "Rock (Recharge 6)",
+          "description": "Ranged Attack Roll: +5, range 25/50 ft. Hit: 10 (2d6 + 3) Bludgeoning damage.",
+          "attack_bonus": 5,
+          "damage_expression": "10"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "mastim",
+      "namePt": "Mastim",
+      "nameEn": "Mastiff",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 5,
+      "hitPointsFormula": "1d8 + 1",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 15",
+      "abilityScores": {
+        "str": 13,
+        "dex": 14,
+        "con": 12,
+        "int": 3,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Piercing damage. If the target is a Medium or smaller creature, it has the Prone condition.",
+          "attack_bonus": 3,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "morcego",
+      "namePt": "Morcego",
+      "nameEn": "Bat",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 5,
+        "fly": 30
+      },
+      "senses": "Blindsight 60 ft.; Passive Perception 11",
+      "abilityScores": {
+        "str": 2,
+        "dex": 15,
+        "con": 8,
+        "int": 2,
+        "wis": 12,
+        "cha": 4
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "mula",
+      "namePt": "Mula",
+      "nameEn": "Mule",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 11,
+      "hitPointsFormula": "2d8 + 2",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 14,
+        "dex": 10,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5
+      },
+      "traits": [
+        {
+          "name": "Beast of Burden",
+          "description": "The mule counts as one size larger for the purpose of determining its carrying capacity."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Hooves",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Bludgeoning damage.",
+          "attack_bonus": 4,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "pantera",
+      "namePt": "Pantera",
+      "nameEn": "Panther",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 13,
+      "hitPointsFormula": "3d8",
+      "speed": {
+        "walk": 50,
+        "climb": 40
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 14",
+      "abilityScores": {
+        "str": 14,
+        "dex": 16,
+        "con": 10,
+        "int": 3,
+        "wis": 14,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Rend",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Slashing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [
+        {
+          "name": "Nimble Escape",
+          "description": "The panther takes the Disengage or Hide action."
+        }
+      ],
+      "reactions": []
+    },
+    {
+      "slug": "polvo",
+      "namePt": "Polvo",
+      "nameEn": "Octopus",
+      "size": "Small",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 3,
+      "hitPointsFormula": "1d6",
+      "speed": {
+        "walk": 5,
+        "swim": 30
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 4,
+        "dex": 15,
+        "con": 11,
+        "int": 3,
+        "wis": 10,
+        "cha": 4
+      },
+      "traits": [
+        {
+          "name": "Compression",
+          "description": "The octopus can move through a space as narrow as 1 inch without expending extra movement to do so."
+        },
+        {
+          "name": "Water Breathing",
+          "description": "The octopus can breathe only underwater."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Tentacles",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Bludgeoning damage.",
+          "attack_bonus": 4,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": [
+        {
+          "name": "Ink Cloud (1/Day)",
+          "description": "Trigger: A creature ends its turn within 5 feet of the octopus while underwater. Response: The octopus releases ink that fills a 5-foot Cube centered on itself, and the octopus moves up to its Swim Speed. The Cube is Heavily Obscured for 1 minute or until a strong current or similar effect disperses the ink."
+        }
+      ]
+    },
+    {
+      "slug": "ponei",
+      "namePt": "Pônei",
+      "nameEn": "Pony",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 11,
+      "hitPointsFormula": "2d8 + 2",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Passive Perception 10",
+      "abilityScores": {
+        "str": 15,
+        "dex": 10,
+        "con": 13,
+        "int": 2,
+        "wis": 11,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Hooves",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Bludgeoning damage.",
+          "attack_bonus": 4,
+          "damage_expression": "4"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "rato",
+      "namePt": "Rato",
+      "nameEn": "Rat",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 10,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 20,
+        "climb": 20
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 2,
+        "dex": 11,
+        "con": 9,
+        "int": 2,
+        "wis": 10,
+        "cha": 4
+      },
+      "traits": [
+        {
+          "name": "Agile",
+          "description": "The rat doesn’t provoke an Opportunity Attack when it moves out of an enemy’s reach."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "sapo",
+      "namePt": "Sapo",
+      "nameEn": "Frog",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 1,
+      "hitPointsFormula": "1d4 − 1",
+      "speed": {
+        "walk": 20,
+        "swim": 20
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 11",
+      "abilityScores": {
+        "str": 1,
+        "dex": 13,
+        "con": 8,
+        "int": 1,
+        "wis": 8,
+        "cha": 3
+      },
+      "traits": [
+        {
+          "name": "Amphibious",
+          "description": "The frog can breathe air and water."
+        },
+        {
+          "name": "Standing Leap",
+          "description": "The frog’s Long Jump is up to 10 feet and its High Jump is up to 5 feet with or without a running start."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 3,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "texugo",
+      "namePt": "Texugo",
+      "nameEn": "Badger",
+      "size": "Tiny",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "0",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 5,
+      "hitPointsFormula": "1d4 + 3",
+      "speed": {
+        "walk": 20,
+        "burrow": 5
+      },
+      "senses": "Darkvision 30 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 10,
+        "dex": 11,
+        "con": 16,
+        "int": 2,
+        "wis": 12,
+        "cha": 5
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage.",
+          "attack_bonus": 2,
+          "damage_expression": "1"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "texugo-gigante",
+      "namePt": "Texugo Gigante",
+      "nameEn": "Giant Badger",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 0,
+      "hitPointsAvg": 15,
+      "hitPointsFormula": "2d8 + 6",
+      "speed": {
+        "walk": 30,
+        "burrow": 10
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 13,
+        "dex": 10,
+        "con": 17,
+        "int": 2,
+        "wis": 12,
+        "cha": 5
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Piercing damage.",
+          "attack_bonus": 3,
+          "damage_expression": "6"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "tigre",
+      "namePt": "Tigre",
+      "nameEn": "Tiger",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "proficiencyBonus": 2,
+      "armorClass": 13,
+      "initiativeModifier": 3,
+      "hitPointsAvg": 30,
+      "hitPointsFormula": "4d10 + 8",
+      "speed": {
+        "walk": 40
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 17,
+        "dex": 16,
+        "con": 14,
+        "int": 3,
+        "wis": 12,
+        "cha": 8
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Rend",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "attack_bonus": 5,
+          "damage_expression": "10"
+        }
+      ],
+      "bonusActions": [
+        {
+          "name": "Nimble Escape",
+          "description": "The tiger takes the Disengage or Hide action."
+        }
+      ],
+      "reactions": []
+    },
+    {
+      "slug": "tubarao-de-recife",
+      "namePt": "Tubarão de Recife",
+      "nameEn": "Reef Shark",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 12,
+      "initiativeModifier": 2,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "4d8 + 4",
+      "speed": {
+        "walk": 5,
+        "swim": 30
+      },
+      "senses": "Blindsight 30 ft.; Passive Perception 12",
+      "abilityScores": {
+        "str": 14,
+        "dex": 15,
+        "con": 13,
+        "int": 1,
+        "wis": 10,
+        "cha": 4
+      },
+      "traits": [
+        {
+          "name": "Pack Tactics",
+          "description": "The shark has Advantage on an attack roll against a creature if at least one of the shark’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+        },
+        {
+          "name": "Water Breathing",
+          "description": "The shark can breathe only underwater."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 7 (2d4 + 2) Piercing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "7"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "urso-negro",
+      "namePt": "Urso Negro",
+      "nameEn": "Black Bear",
+      "size": "Medium",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1/2",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 19,
+      "hitPointsFormula": "3d8 + 6",
+      "speed": {
+        "walk": 30,
+        "swim": 30,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 15",
+      "abilityScores": {
+        "str": 15,
+        "dex": 12,
+        "con": 14,
+        "int": 2,
+        "wis": 12,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Multiattack",
+          "description": "The bear makes two Rend attacks.",
+          "attack_bonus": null,
+          "damage_expression": null
+        },
+        {
+          "name": "Rend",
+          "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Slashing damage.",
+          "attack_bonus": 4,
+          "damage_expression": "5"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    },
+    {
+      "slug": "urso-pardo",
+      "namePt": "Urso Pardo",
+      "nameEn": "Brown Bear",
+      "size": "Large",
+      "alignment": "Unaligned",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "proficiencyBonus": 2,
+      "armorClass": 11,
+      "initiativeModifier": 1,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "3d10 + 6",
+      "speed": {
+        "walk": 40,
+        "climb": 30
+      },
+      "senses": "Darkvision 60 ft.; Passive Perception 13",
+      "abilityScores": {
+        "str": 17,
+        "dex": 12,
+        "con": 15,
+        "int": 2,
+        "wis": 13,
+        "cha": 7
+      },
+      "traits": [],
+      "actions": [
+        {
+          "name": "Multiattack",
+          "description": "The bear makes one Bite attack and one Claw attack.",
+          "attack_bonus": null,
+          "damage_expression": null
+        },
+        {
+          "name": "Bite",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage.",
+          "attack_bonus": 5,
+          "damage_expression": "7"
+        },
+        {
+          "name": "Claw",
+          "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "attack_bonus": 5,
+          "damage_expression": "5"
+        }
+      ],
+      "bonusActions": [],
+      "reactions": []
+    }
+  ]
+}

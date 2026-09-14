@@ -1,9 +1,14 @@
 # log
 
+## 2026-09-14 — PHB Appendix B Beasts → catálogo
+
+- Extract + seed `seed.phb-beasts.sql` (43 Beasts) a partir do scrap Beyond.
+- Wild Shape passa a ter CR > 0 no catálogo (ex.: lobo 1/4, urso-pardo 1).
+
 ## 2026-09-14 — Companheiro Selvagem (Wild Companion)
 
 - Table-action `wild-companion`: gasta Forma ou espaço → `convocar-familiar` (Fey).
-- Despawn no Descanso Longo; script `apply-forward-migrations.mjs` para DB com schema já seedado.
+- Despawn no Descanso Longo.
 
 ## 2026-09-14 — Wild Shape modular onda 2
 
