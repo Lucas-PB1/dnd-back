@@ -1,0 +1,257 @@
+# Fontes de imagem — criaturas sem `image_url`
+
+Total: **240** · com nameEn: **183** · sem nameEn: **57**
+
+## Achados web (MM 2024)
+
+| Fonte | O que tem | Usável no catálogo? |
+|-------|-----------|---------------------|
+| [Roll20 Art Packs 1–3](https://marketplace.roll20.net/browse/bundle/31886/dandd-monster-manual-2024) | Tokens + portraits oficiais de quase todos os monstros | **Não** (licença VTT-only) |
+| [D&D Beyond MM 2024](https://www.dndbeyond.com/sources/dnd/mm-2024) | Arte por monstro com compra | Só com entitlement; sem CDN anônima |
+| [EN World Monstrosities](https://www.enworld.org/threads/2024-monster-manual-monstrosities-art.709635/) / [art dump](https://www.enworld.org/threads/so-much-art-from-the-2025-monster-manual.709490/) | Previews promocionais | Parcial / marketing |
+
+## Sem nameEn no extract (90)
+
+- Espírito Aberrante (Devorador) — `espirito-aberrante-devorador`
+- Espírito Aberrante (Pseudo-observador) — `espirito-aberrante-pseudo-observador`
+- Espírito Aberrante (Slaad) — `espirito-aberrante-slaad`
+- Alce — `alce`
+- Atacante Primal (Céu) — `primal-companion-striker-sky`
+- Atacante Primal (Mar) — `primal-companion-striker-sea`
+- Atacante Primal (Terra) — `primal-companion-striker-land`
+- Cabra — `cabra`
+- Caranguejo — `caranguejo`
+- Cavalo de Tração — `cavalo-de-tracao`
+- Cavalo-marinho Gigante — `cavalo-marinho-gigante`
+- Cobra Venenosa — `cobra-venenosa`
+- Companheiro Primal (Céu) — `primal-companion-sky`
+- Companheiro Primal (Mar) — `primal-companion-sea`
+- Companheiro Primal (Terra) — `primal-companion-earth`
+- Espírito Bestial (Água) — `espirito-bestial-agua`
+- Espírito Bestial (Ar) — `espirito-bestial-ar`
+- Espírito Bestial (Terra) — `espirito-bestial-terra`
+- Guardião Primal (Céu) — `primal-companion-guardian-sky`
+- Guardião Primal (Mar) — `primal-companion-guardian-sea`
+- Guardião Primal (Terra) — `primal-companion-guardian-land`
+- Inseto Gigante (Aranha) — `inseto-gigante-aranha`
+- Inseto Gigante (Centopeia) — `inseto-gigante-centopeia`
+- Inseto Gigante (Vespa) — `inseto-gigante-vespa`
+- Javali — `javali`
+- Macaco — `macaco`
+- Pantera — `pantera`
+- Texugo — `texugo`
+- Tigre — `tigre`
+- Tubarão de Recife — `tubarao-de-recife`
+- Urso Negro — `urso-negro`
+- Urso Pardo — `urso-pardo`
+- Espírito Celestial (Defensor) — `espirito-celestial-defensor`
+- Espírito Celestial (Vingador) — `espirito-celestial-vingador`
+- Montaria Sobrenatural (Celestial) — `montaria-sobrenatural-celestial`
+- Espírito do Constructo (Argila) — `espirito-constructo-argila`
+- Espírito do Constructo (Metal) — `espirito-constructo-metal`
+- Espírito do Constructo (Pedra) — `espirito-constructo-pedra`
+- Objeto Animado (Enorme) — `objeto-animado-enorme`
+- Objeto Animado (Grande) — `objeto-animado-grande`
+- Objeto Animado (Médio ou menor) — `objeto-animado-medio`
+- Espírito Dracônico — `espirito-draconico`
+- Espírito Elemental (Água) — `espirito-elemental-agua`
+- Espírito Elemental (Ar) — `espirito-elemental-ar`
+- Espírito Elemental (Fogo) — `espirito-elemental-fogo`
+- Espírito Elemental (Terra) — `espirito-elemental-terra`
+- Espírito Feérico (Alegre) — `espirito-feerico-alegre`
+- Espírito Feérico (Enfurecido) — `espirito-feerico-enfurecido`
+- Espírito Feérico (Malandro) — `espirito-feerico-malandro`
+- Montaria Sobrenatural (Feérico) — `montaria-sobrenatural-feerico`
+- Espírito Ínfero (Demônio) — `espirito-infero-demonio`
+- Espírito Ínfero (Diabo) — `espirito-infero-diabo`
+- Espírito Ínfero (Yugoloth) — `espirito-infero-yugoloth`
+- Montaria Sobrenatural (Ínfero) — `montaria-sobrenatural-infero`
+- Espírito Morto-Vivo (Esquelético) — `espirito-morto-vivo-esqueletico`
+- Espírito Morto-Vivo (Fantasmagórico) — `espirito-morto-vivo-fantasmagorico`
+- Espírito Morto-Vivo (Pútrido) — `espirito-morto-vivo-putrido`
+
+## Com nameEn — candidatas MM 2024 (150)
+
+- **Githyanki Cavaleiro** ↔ *Githyanki Knight* — `githyanki-cavaleiro`
+- **Githyanki Dracomante** ↔ *Githyanki Dracomancer* — `githyanki-dracomante`
+- **Githyanki Guerreiro** ↔ *Githyanki Warrior* — `githyanki-guerreiro`
+- **Githzerai Monge** ↔ *Githzerai Monk* — `githzerai-monge`
+- **Githzerai Psiônico** ↔ *Githzerai Psion* — `githzerai-psion`
+- **Githzerai Zerth** ↔ *Githzerai Zerth* — `githzerai-zerth`
+- **Grick Ancião** ↔ *Grick Ancient* — `grick-anciano`
+- **Mentesugadora Arcanista** ↔ *Mind Flayer Arcanist* — `mentesugadora-arcanista`
+- **Slaad Azul** ↔ *Blue Slaad* — `slaad-azul`
+- **Slaad Cinzento** ↔ *Gray Slaad* — `slaad-cinzento`
+- **Slaad Girino** ↔ *Slaad Tadpole* — `slaad-girino`
+- **Slaad Verde** ↔ *Green Slaad* — `slaad-verde`
+- **Abutre** ↔ *Vulture* — `abutre`
+- **Abutre Gigante** ↔ *Giant Vulture* — `abutre-gigante`
+- **Águia** ↔ *Eagle* — `aguia`
+- **Águia Gigante** ↔ *Giant Eagle* — `aguia-gigante`
+- **Alce Gigante** ↔ *Giant Elk* — `alce-gigante`
+- **Anquilossauro** ↔ *Ankylosaurus* — `anquilossauro`
+- **Aranha-lobo Gigante** ↔ *Giant Wolf Spider* — `aranha-lobo-gigante`
+- **Babuíno** ↔ *Baboon* — `babuino`
+- **Besouro de Fogo Gigante** ↔ *Giant Fire Beetle* — `besouro-de-fogo-gigante`
+- **Cavalo-marinho** ↔ *Seahorse* — `cavalo-marinho`
+- **Centopeia Gigante** ↔ *Giant Centipede* — `centopeia-gigante`
+- **Cervo** ↔ *Deer* — `cervo`
+- **Chacal** ↔ *Jackal* — `chacal`
+- **Cobra Constritora Gigante** ↔ *Giant Constrictor Snake* — `cobra-constritora-gigante`
+- **Cobra Venenosa Gigante** ↔ *Giant Venomous Snake* — `cobra-venenosa-gigante`
+- **Cobra Voadora** ↔ *Flying Snake* — `cobra-voadora`
+- **Coruja Gigante** ↔ *Giant Owl* — `coruja-gigante`
+- **Crocodilo Gigante** ↔ *Giant Crocodile* — `crocodilo-gigante`
+- **Enxame de Cobras Venenosas** ↔ *Swarm of Venomous Snakes* — `enxame-de-cobras-venenosas`
+- **Enxame de Corvos** ↔ *Swarm of Ravens* — `enxame-de-corvos`
+- **Enxame de Insetos** ↔ *Swarm of Insects* — `enxame-de-insetos`
+- **Enxame de Morcegos** ↔ *Swarm of Bats* — `enxame-de-morcegos`
+- **Enxame de Piranhas** ↔ *Swarm of Piranhas* — `enxame-de-piranhas`
+- **Enxame de Ratos** ↔ *Swarm of Rats* — `enxame-de-ratos`
+- **Escorpião Gigante** ↔ *Giant Scorpion* — `escorpiao-gigante`
+- **Falcão Sangrento** ↔ *Blood Hawk* — `falcao-sangrento`
+- **Hiena** ↔ *Hyena* — `hiena`
+- **Hiena Gigante** ↔ *Giant Hyena* — `hiena-gigante`
+- **Hipopótamo** ↔ *Hippopotamus* — `hipopotamo`
+- **Mamute** ↔ *Mammoth* — `mamute`
+- **Morcego Gigante** ↔ *Giant Bat* — `morcego-gigante`
+- **Orca** ↔ *Killer Whale* — `orca`
+- **Piranha** ↔ *Piranha* — `piranha`
+- **Plessiossauro** ↔ *Plesiosaurus* — `plessiossauro`
+- **Polvo Gigante** ↔ *Giant Octopus* — `polvo-gigante`
+- **Pteranodonte** ↔ *Pteranodon* — `pteranodonte`
+- **Rã Gigante** ↔ *Giant Frog* — `ra-gigante`
+- **Rato Gigante** ↔ *Giant Rat* — `rato-gigante`
+- **Sapo Gigante** ↔ *Giant Toad* — `sapo-gigante`
+- **Tigre-dentes-de-sabre** ↔ *Saber-Toothed Tiger* — `tigre-dentes-de-sabre`
+- **Tricerátops** ↔ *Triceratops* — `triceratops`
+- **Tubarão Caçador** ↔ *Hunter Shark* — `tubarao-cacador`
+- **Tubarão Gigante** ↔ *Giant Shark* — `tubarao-gigante`
+- **Urso Polar** ↔ *Polar Bear* — `urso-polar`
+- **Couatl** ↔ *Couatl* — `couatl`
+- **Empírico Iota** ↔ *Empyrean Iota* — `empirico-iota`
+- **Armadura Animada** ↔ *Animated Armor* — `armadura-animada`
+- **Espada Voadora Animada** ↔ *Animated Flying Sword* — `espada-voadora-animada`
+- **Gorgone de Bronze** ↔ *Brazen Gorgon* — `gorgone-de-bronze`
+- **Tapete Sufocante Animado** ↔ *Animated Rug of Smothering* — `tapete-sufocante-animado`
+- **Vassoura Animada** ↔ *Animated Broom* — `vassoura-animada`
+- **Dragão Azul Jovem** ↔ *Young Blue Dragon* — `dragao-azul-jovem`
+- **Dragão Branco Jovem** ↔ *Young White Dragon* — `dragao-branco-jovem`
+- **Dragão de Bronze Jovem** ↔ *Young Bronze Dragon* — `dragao-de-bronze-jovem`
+- **Dragão de Cobre Jovem** ↔ *Young Copper Dragon* — `dragao-de-cobre-jovem`
+- **Dragão de Latão Jovem** ↔ *Young Brass Dragon* — `dragao-de-latao-jovem`
+- **Dragão Dourado Jovem** ↔ *Young Gold Dragon* — `dragao-dourado-jovem`
+- **Dragão Negro Jovem** ↔ *Young Black Dragon* — `dragao-negro-jovem`
+- **Dragão Prateado Jovem** ↔ *Young Silver Dragon* — `dragao-prateado-jovem`
+- **Dragão Verde Jovem** ↔ *Young Green Dragon* — `dragao-verde-jovem`
+- **Dragão Vermelho Jovem** ↔ *Young Red Dragon* — `dragao-vermelho-jovem`
+- **Dragão-Fada Adulto** ↔ *Faerie Dragon Adult* — `dragao-fada-adulto`
+- **Dragão-Fada Jovem** ↔ *Faerie Dragon Youth* — `dragao-fada-jovem`
+- **Dragão-Sombra Juvenil** ↔ *Juvenile Shadow Dragon* — `dragao-sombra-juvenil`
+- **Kobold Alado** ↔ *Winged Kobold* — `kobold-alado`
+- **Kobold Guerreiro** ↔ *Kobold Warrior* — `kobold-guerreiro`
+- **Aarakocra Aeromante** ↔ *Aarakocra Aeromancer* — `aarakocra-aeromante`
+- **Aarakocra Escaramuçador** ↔ *Aarakocra Skirmisher* — `aarakocra-escaramucador`
+- **Azer Piromante** ↔ *Azer Pyromancer* — `azer-piromante`
+- **Azer Sentinela** ↔ *Azer Sentinel* — `azer-sentinela`
+- **Dust Mephit** ↔ *Dust Mephit* — `dust-mephit`
+- **Homem-Lagarto Geomante** ↔ *Lizardfolk Geomancer* — `homem-lagarto-geomante`
+- **Homem-Lagarto Soberano** ↔ *Lizardfolk Sovereign* — `homem-lagarto-soberano`
+- **Magma Mephit** ↔ *Magma Mephit* — `magma-mephit`
+- **Salamandra Cobra de Fogo** ↔ *Salamander Fire Snake* — `salamandra-cobra-de-fogo`
+- **Salamandra Mestre do Inferno** ↔ *Salamander Inferno Master* — `salamandra-mestre-do-inferno`
+- **Smoke Mephit** ↔ *Smoke Mephit* — `smoke-mephit`
+- **Steam Mephit** ↔ *Steam Mephit* — `steam-mephit`
+- **Tritão Skirmisher** ↔ *Merfolk Skirmisher* — `tritao-skirmisher`
+- **Tritão Wavebender** ↔ *Merfolk Wavebender* — `tritao-wavebender`
+- **Bugbear Caçador** ↔ *Bugbear Stalker* — `bugbear-cacador`
+- **Bugbear Guerreiro** ↔ *Bugbear Warrior* — `bugbear-guerreiro`
+- **Bullywug Guerreiro** ↔ *Bullywug Warrior* — `bullywug-guerreiro`
+- **Bullywug Sábio do Pântano** ↔ *Bullywug Bog Sage* — `bullywug-sabio-do-pantano`
+- **Centauro Guardião** ↔ *Centaur Warden* — `centauro-guardiao`
+- **Centauro Soldado** ↔ *Centaur Trooper* — `centauro-soldado`
+- **Goblin Amaldiçoador** ↔ *Goblin Hexer* — `goblin-amaldicoador`
+- **Goblin Chefe** ↔ *Goblin Boss* — `goblin-chefe`
+- **Goblin Guerreiro** ↔ *Goblin Warrior* — `goblin-guerreiro`
+- **Goblin Lacaio** ↔ *Goblin Minion* — `goblin-lacaio`
+- **Hobgoblin Capitão** ↔ *Hobgoblin Captain* — `hobgoblin-capitao`
+- **Hobgoblin Guerreiro** ↔ *Hobgoblin Warrior* — `hobgoblin-guerreiro`
+- **Hobgoblin Senhor da Guerra** ↔ *Hobgoblin Warlord* — `hobgoblin-senhor-da-guerra`
+- **Pixie Wonderbringer** ↔ *Pixie Wonderbringer* — `pixie-wonderbringer`
+- **Sátiro Mestre da Festa** ↔ *Satyr Revelmaster* — `satir-mestre-da-festa`
+- **Worg Dire** ↔ *Dire Worg* — `worg-dire`
+- **Gnoll Demoníaco** ↔ *Gnoll Demoniac* — `gnoll-demoniaco`
+- **Gnoll Guerreiro** ↔ *Gnoll Warrior* — `gnoll-guerreiro`
+- **Gnoll Presa de Yeenoghu** ↔ *Gnoll Fang of Yeenoghu* — `gnoll-presa-de-yeenoghu`
+- **Gnoll Senhor da Matilha** ↔ *Gnoll Pack Lord* — `gnoll-senhor-da-matilha`
+- **Manes Vaporspawn** ↔ *Manes Vaporspawn* — `manes-vaporspawn`
+- **Sahuagin Barão** ↔ *Sahuagin Baron* — `sahuagin-barao`
+- **Sahuagin Guerreiro** ↔ *Sahuagin Warrior* — `sahuagin-guerreiro`
+- **Sahuagin Sacerdote** ↔ *Sahuagin Priest* — `sahuagin-sacerdote`
+- **Ultrolote** ↔ *Ultroloth* — `ultrolote`
+- **Ciclope Oráculo** ↔ *Cyclops Oracle* — `ciclope-oraculo`
+- **Ciclope Sentinela** ↔ *Cyclops Sentry* — `ciclope-sentinela`
+- **Membro de Troll** ↔ *Troll Limb* — `membro-de-troll`
+- **Ogrillon Ogro** ↔ *Ogrillon Ogre* — `ogrillon-ogro`
+- **Archpriest** ↔ *Archpriest* — `archpriest`
+- **Arquimago** ↔ *Archmage* — `arquimago`
+- **Bandido Enganador** ↔ *Bandit Deceiver* — `bandido-enganador`
+- **Batedor Capitão** ↔ *Scout Captain* — `batedor-capitao`
+- **Berserker Comandante** ↔ *Berserker Commander* — `berserker-comandante`
+- **Capitão Bandido** ↔ *Bandit Captain* — `capitao-bandido`
+- **Capitão da Guarda** ↔ *Guard Captain* — `capitao-da-guarda`
+- **Cavaleiro em Missão** ↔ *Questing Knight* — `cavaleiro-em-missao`
+- **Cultista Diabólico** ↔ *Fiend Cultist* — `cultista-diabolico`
+- **Cultista Fanático** ↔ *Cultist Fanatic* — `cultista-fanatico`
+- **Cultista Hierofante** ↔ *Cultist Hierophant* — `cultista-hierofante`
+- **Druida** ↔ *Druid* — `druida`
+- **Espião Mestre** ↔ *Spy Master* — `espiao-mestre`
+- **Guerreiro Comandante** ↔ *Warrior Commander* — `guerreiro-comandante`
+- **Guerreiro de Infantaria** ↔ *Warrior Infantry* — `guerreiro-infantaria`
+- **Guerreiro Veterano** ↔ *Warrior Veteran* — `guerreiro-veterano`
+- **Lorde do Crime Bandido** ↔ *Bandit Crime Lord* — `lorde-do-crime-bandido`
+- **Mago Apprentice** ↔ *Mage Apprentice* — `mago-apprentice`
+- **Nobre Prodigy** ↔ *Noble Prodigy* — `nobre-prodigy`
+- **Performer Legend** ↔ *Performer Legend* — `performer-legend`
+- **Performer Maestro** ↔ *Performer Maestro* — `performer-maestro`
+- **Pirate Admiral** ↔ *Pirate Admiral* — `pirate-admiral`
+- **Pirate Captain** ↔ *Pirate Captain* — `pirate-captain`
+- **Rufião Chefe** ↔ *Tough Boss* — `rufiao-chefe`
+- **Sacerdote Acolyte** ↔ *Priest Acolyte* — `sacerdote-acolyte`
+- **Bico-de-machado Gigante** ↔ *Giant Axe Beak* — `bico-de-machado-gigante`
+- **Cocatrice Regente** ↔ *Cockatrice Regent* — `cocatrice-regente`
+- **Harpia** ↔ *Harpy* — `harpia`
+- **Javali-homem** ↔ *Wereboar* — `javali-homem`
+- **Jovem Remorhaz** ↔ *Young Remorhaz* — `jovem-remorhaz`
+- **Minotauro de Baphomet** ↔ *Minotaur of Baphomet* — `minotauro-de-baphomet`
+- **Primeval Urso-coruja** ↔ *Primeval Owlbear* — `primeval-urso-coruja`
+- **Quaggoth Thonot** ↔ *Quaggoth Thonot* — `quaggoth-thonot`
+- **Rato-homem** ↔ *Wererat* — `rato-homem`
+- **Thri-kreen Psiônico** ↔ *Thri-kreen Psion* — `thri-kreen-psion`
+- **Thri-kreen Saqueador** ↔ *Thri-kreen Marauder* — `thri-kreen-saqueador`
+- **Urso-homem** ↔ *Werebear* — `urso-homem`
+- **Lodo Cinzento Psíquico** ↔ *Psychic Gray Ooze* — `lodo-cinzento-psiquico`
+- **Arbusto Despertado** ↔ *Awakened Shrub* — `arbusto-despertado`
+- **Árvore Despertada** ↔ *Awakened Tree* — `arvore-despertada`
+- **Fungo Esporo de Gás** ↔ *Gas Spore Fungus* — `fungo-esporo-de-gas`
+- **Fungo Gritador** ↔ *Shrieker Fungus* — `fungo-gritador`
+- **Micônideo Adulto** ↔ *Myconid Adult* — `miconideo-adulto`
+- **Micônideo Broto** ↔ *Myconid Sprout* — `miconideo-broto`
+- **Micônideo Soberano** ↔ *Myconid Sovereign* — `miconideo-soberano`
+- **Micônideo Spore Servant** ↔ *Myconid Spore Servant* — `miconideo-spore-servant`
+- **Praga de Galho** ↔ *Twig Blight* — `praga-de-galho`
+- **Enxame de Lemures** ↔ *Swarm of Lemures* — `enxame-de-lemures`
+- **Enxame de Dretches** ↔ *Swarm of Dretches* — `enxame-de-dretches`
+- **Enxame de Stirges** ↔ *Swarm of Stirges* — `enxame-de-stirges`
+- **Enxame de Garras Rastejantes** ↔ *Swarm of Crawling Claws* — `enxame-de-garras-rastejantes`
+- **Aspirante a Cavaleiro da Morte** ↔ *Death Knight Aspirant* — `aspirante-cavaleiro-da-morte`
+- **Crânio Flamejante** ↔ *Flameskull* — `cranio-flamejante`
+- **Esqueleto de Cavalo de Guerra** ↔ *Warhorse Skeleton* — `esqueleto-de-cavalo-de-guerra`
+- **Esqueleto de Minotauro** ↔ *Minotaur Skeleton* — `esqueleto-de-minotauro`
+- **Esqueleto Flamejante** ↔ *Flaming Skeleton* — `esqueleto-flamejante`
+- **Ghast Chamador de Túmulos** ↔ *Ghast Gravecaller* — `ghast-chamador-de-tumulos`
+- **Ghoul Lacedon** ↔ *Lacedon Ghoul* — `ghoul-lacedon`
+- **Graveyard Revenante** ↔ *Graveyard Revenant* — `graveyard-revenante`
+- **Vampiro Traz-Noite** ↔ *Vampire Nightbringer* — `vampiro-traz-noite`
+- **Zumbi de Beholder** ↔ *Beholder Zombie* — `zumbi-de-beholder`
+- **Zumbi de Ogro** ↔ *Ogre Zombie* — `zumbi-de-ogro`

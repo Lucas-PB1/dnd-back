@@ -1,0 +1,305 @@
+{
+  "updated": 10,
+  "results": [
+    {
+      "file": "03-001.cambion.png",
+      "dest": "cambiao.png",
+      "applied": [
+        {
+          "slug": "cambiao",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-002.carrion-crawlers.png",
+      "dest": "rastejante-carniceiro.png",
+      "applied": [
+        {
+          "slug": "rastejante-carniceiro",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-003.centaurs.png",
+      "dest": "centauros.png",
+      "applied": [
+        {
+          "slug": "centauro-guardiao",
+          "status": "updated",
+          "name": "Centauro Guardião"
+        },
+        {
+          "slug": "centauro-soldado",
+          "status": "updated",
+          "name": "Centauro Soldado"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-004.chain-devil.png",
+      "dest": "diabo-acorrentado.png",
+      "applied": [
+        {
+          "slug": "diabo-acorrentado",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-005.chasme.png",
+      "dest": "chasme.png",
+      "applied": [
+        {
+          "slug": "chasme",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-006.chimera.png",
+      "dest": "quimera.png",
+      "applied": [
+        {
+          "slug": "quimera",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-007.chuul.png",
+      "dest": "chuul.png",
+      "applied": [
+        {
+          "slug": "chuul",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-008.clay-golem.png",
+      "dest": "golem-de-argila.png",
+      "applied": [
+        {
+          "slug": "golem-de-argila",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-009.cloaker.png",
+      "dest": "manto.png",
+      "applied": [
+        {
+          "slug": "manto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-010.cloud-giants.png",
+      "dest": "gigante-das-nuvens.png",
+      "applied": [
+        {
+          "slug": "gigante-das-nuvens",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-011.cockatrice.png",
+      "dest": "cocatrice.png",
+      "applied": [
+        {
+          "slug": "cocatrice",
+          "status": "already"
+        },
+        {
+          "slug": "cocatrice-regente",
+          "status": "updated",
+          "name": "Cocatrice Regente"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-012.colossus.png",
+      "dest": "colosso.png",
+      "applied": [
+        {
+          "slug": "colosso",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-013.commoners.png",
+      "dest": "plebeu.png",
+      "applied": [
+        {
+          "slug": "plebeu",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-014.copper-dragon-wyrmling.png",
+      "dest": "dragonete-dragao-de-cobre.png",
+      "applied": [
+        {
+          "slug": "dragonete-dragao-de-cobre",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-015.adult-copper-dragon.png",
+      "dest": "dragao-de-cobre-adulto.png",
+      "applied": [
+        {
+          "slug": "dragao-de-cobre-adulto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-016.ancient-copper-dragon.png",
+      "dest": "dragao-de-cobre-anciano.png",
+      "applied": [
+        {
+          "slug": "dragao-de-cobre-anciano",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-017.cuoatl.png",
+      "dest": "couatl.png",
+      "applied": [
+        {
+          "slug": "couatl",
+          "status": "updated",
+          "name": "Couatl"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-018.crawling-claws.png",
+      "dest": "garra-rastejante.png",
+      "applied": [
+        {
+          "slug": "garra-rastejante",
+          "status": "already"
+        },
+        {
+          "slug": "enxame-de-garras-rastejantes",
+          "status": "updated",
+          "name": "Enxame de Garras Rastejantes"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "03-019.death-cultists.png",
+      "dest": "cultistas-morte.png",
+      "applied": [
+        {
+          "slug": "cultista-fanatico",
+          "status": "updated",
+          "name": "Cultista Fanático"
+        },
+        {
+          "slug": "cultista-hierofante",
+          "status": "updated",
+          "name": "Cultista Hierofante"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "cultista-da-morte",
+          "existing": "/catalog/monsters/cultista-da-morte.png"
+        },
+        {
+          "slug": "cultista",
+          "existing": "/catalog/monsters/cultista.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "03-020.elemental-aberrant-cultists.png",
+      "dest": "cultistas-variados.png",
+      "applied": [
+        {
+          "slug": "cultista-diabolico",
+          "status": "updated",
+          "name": "Cultista Diabólico"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "cultista-elemental",
+          "existing": "/catalog/monsters/cultista-elemental.png"
+        },
+        {
+          "slug": "cultista-aberrante",
+          "existing": "/catalog/monsters/cultista-aberrante.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "03-021.cyclops.png",
+      "dest": "ciclopes.png",
+      "applied": [
+        {
+          "slug": "ciclope-oraculo",
+          "status": "updated",
+          "name": "Ciclope Oráculo"
+        },
+        {
+          "slug": "ciclope-sentinela",
+          "status": "updated",
+          "name": "Ciclope Sentinela"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    }
+  ]
+}

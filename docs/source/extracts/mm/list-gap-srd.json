@@ -1,0 +1,551 @@
+{
+  "source": "SRD 5.2.1 (CC-BY) — gaps da Monster Lists MM 2024",
+  "note": "Nomes EN alinhados à lista MM (Venomous Snakes / Piranhas). Águia Gigante = Beast no SRD.",
+  "count": 11,
+  "monsters": [
+    {
+      "slug": "cobra-voadora",
+      "namePt": "Cobra Voadora",
+      "nameEn": "Flying Snake",
+      "srdName": "Flying Snake",
+      "size": "Tiny",
+      "creatureType": "Beast",
+      "challengeRating": "1/8",
+      "armorClass": 14,
+      "hitPointsAvg": 5,
+      "hitPointsFormula": "2d4",
+      "initiativeModifier": 4,
+      "speed": {
+        "fly": 60,
+        "swim": 30,
+        "walk": 30
+      },
+      "abilityScores": {
+        "cha": 5,
+        "con": 11,
+        "dex": 18,
+        "int": 2,
+        "str": 4,
+        "wis": 12
+      },
+      "traits": [
+        {
+          "description": "The snake doesn't provoke opportunity attacks when it flies out of an enemy's reach.",
+          "name": "Flyby"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 6,
+          "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 1 piercing damage plus 7 (3d4) poison damage.",
+          "name": "Bite"
+        }
+      ]
+    },
+    {
+      "slug": "coruja-gigante",
+      "namePt": "Coruja Gigante",
+      "nameEn": "Giant Owl",
+      "srdName": "Giant Owl",
+      "size": "Large",
+      "creatureType": "Beast",
+      "challengeRating": "1/4",
+      "armorClass": 12,
+      "hitPointsAvg": 19,
+      "hitPointsFormula": "3d10+3",
+      "initiativeModifier": 2,
+      "speed": {
+        "fly": 60,
+        "walk": 5
+      },
+      "abilityScores": {
+        "cha": 10,
+        "con": 12,
+        "dex": 15,
+        "int": 8,
+        "str": 13,
+        "wis": 13
+      },
+      "traits": [
+        {
+          "description": "The owl doesn't provoke opportunity attacks when it flies out of an enemy's reach.",
+          "name": "Flyby"
+        },
+        {
+          "description": "The owl has advantage on Wisdom (Perception) checks that rely on hearing or sight.",
+          "name": "Keen Hearing and Sight"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 3,
+          "damage": [
+            {
+              "dice": "2d6+1",
+              "type": "slashing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 8 (2d6 + 1) slashing damage.",
+          "name": "Talons"
+        }
+      ]
+    },
+    {
+      "slug": "aguia-gigante",
+      "namePt": "Águia Gigante",
+      "nameEn": "Giant Eagle",
+      "srdName": "Giant Eagle",
+      "size": "Large",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "armorClass": 13,
+      "hitPointsAvg": 26,
+      "hitPointsFormula": "4d10+4",
+      "initiativeModifier": 3,
+      "speed": {
+        "fly": 80,
+        "walk": 10
+      },
+      "abilityScores": {
+        "cha": 10,
+        "con": 13,
+        "dex": 17,
+        "int": 8,
+        "str": 16,
+        "wis": 14
+      },
+      "traits": [
+        {
+          "description": "The eagle has advantage on Wisdom (Perception) checks that rely on sight.",
+          "name": "Keen Sight"
+        }
+      ],
+      "actions": [
+        {
+          "description": "The eagle makes two attacks: one with its beak and one with its talons.",
+          "name": "Multiattack"
+        },
+        {
+          "attack_bonus": 5,
+          "damage": [
+            {
+              "dice": "1d6+3",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+          "name": "Beak"
+        },
+        {
+          "attack_bonus": 5,
+          "damage": [
+            {
+              "dice": "2d6+3",
+              "type": "slashing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage.",
+          "name": "Talons"
+        }
+      ]
+    },
+    {
+      "slug": "alce-gigante",
+      "namePt": "Alce Gigante",
+      "nameEn": "Giant Elk",
+      "srdName": "Giant Elk",
+      "size": "Huge",
+      "creatureType": "Beast",
+      "challengeRating": "2",
+      "armorClass": 15,
+      "hitPointsAvg": 42,
+      "hitPointsFormula": "5d12+10",
+      "initiativeModifier": 3,
+      "speed": {
+        "walk": 60
+      },
+      "abilityScores": {
+        "cha": 10,
+        "con": 14,
+        "dex": 16,
+        "int": 7,
+        "str": 19,
+        "wis": 14
+      },
+      "traits": [
+        {
+          "description": "If the elk moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 7 (2d6) damage. If the target is a creature, it must succeed on a DC 14 Strength saving throw or be knocked prone.",
+          "name": "Charge"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 6,
+          "damage": [
+            {
+              "dice": "2d6+4",
+              "type": "bludgeoning"
+            }
+          ],
+          "description": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+          "name": "Ram"
+        },
+        {
+          "attack_bonus": 6,
+          "damage": [
+            {
+              "dice": "4d8+4",
+              "type": "bludgeoning"
+            }
+          ],
+          "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one prone creature. Hit: 22 (4d8 + 4) bludgeoning damage.",
+          "name": "Hooves"
+        }
+      ]
+    },
+    {
+      "slug": "abutre-gigante",
+      "namePt": "Abutre Gigante",
+      "nameEn": "Giant Vulture",
+      "srdName": "Giant Vulture",
+      "size": "Large",
+      "creatureType": "Beast",
+      "challengeRating": "1",
+      "armorClass": 10,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "3d10+6",
+      "initiativeModifier": 0,
+      "speed": {
+        "fly": 60,
+        "walk": 10
+      },
+      "abilityScores": {
+        "cha": 7,
+        "con": 15,
+        "dex": 10,
+        "int": 6,
+        "str": 15,
+        "wis": 12
+      },
+      "traits": [
+        {
+          "description": "The vulture has advantage on Wisdom (Perception) checks that rely on sight or smell.",
+          "name": "Keen Sight and Smell"
+        },
+        {
+          "description": "The vulture has advantage on an attack roll against a creature if at least one of the vulture's allies is within 5 ft. of the creature and the ally isn't incapacitated.",
+          "name": "Pack Tactics"
+        }
+      ],
+      "actions": [
+        {
+          "description": "The vulture makes two attacks: one with its beak and one with its talons.",
+          "name": "Multiattack"
+        },
+        {
+          "attack_bonus": 4,
+          "damage": [
+            {
+              "dice": "2d4+2",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage.",
+          "name": "Beak"
+        },
+        {
+          "attack_bonus": 4,
+          "damage": [
+            {
+              "dice": "2d6+2",
+              "type": "slashing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) slashing damage.",
+          "name": "Talons"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-morcegos",
+      "namePt": "Enxame de Morcegos",
+      "nameEn": "Swarm of Bats",
+      "srdName": "Swarm of Bats",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "1/4",
+      "armorClass": 12,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "5d8",
+      "initiativeModifier": 2,
+      "speed": {
+        "fly": 30
+      },
+      "abilityScores": {
+        "cha": 4,
+        "con": 10,
+        "dex": 15,
+        "int": 2,
+        "str": 5,
+        "wis": 12
+      },
+      "traits": [
+        {
+          "description": "The swarm can't use its blindsight while deafened.",
+          "name": "Echolocation"
+        },
+        {
+          "description": "The swarm has advantage on Wisdom (Perception) checks that rely on hearing.",
+          "name": "Keen Hearing"
+        },
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny bat. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 4,
+          "damage": [
+            {
+              "dice": "2d4+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +4 to hit, reach 0 ft., one creature in the swarm's space. Hit: 5 (2d4) piercing damage, or 2 (1d4) piercing damage if the swarm has half of its hit points or fewer.",
+          "name": "Bites"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-ratos",
+      "namePt": "Enxame de Ratos",
+      "nameEn": "Swarm of Rats",
+      "srdName": "Swarm of Rats",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "1/4",
+      "armorClass": 10,
+      "hitPointsAvg": 24,
+      "hitPointsFormula": "7d8-7",
+      "initiativeModifier": 0,
+      "speed": {
+        "walk": 30
+      },
+      "abilityScores": {
+        "cha": 3,
+        "con": 9,
+        "dex": 11,
+        "int": 2,
+        "str": 9,
+        "wis": 10
+      },
+      "traits": [
+        {
+          "description": "The swarm has advantage on Wisdom (Perception) checks that rely on smell.",
+          "name": "Keen Smell"
+        },
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 2,
+          "damage": [
+            {
+              "dice": "2d6+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +2 to hit, reach 0 ft., one target in the swarm's space. Hit: 7 (2d6) piercing damage, or 3 (1d6) piercing damage if the swarm has half of its hit points or fewer.",
+          "name": "Bites"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-corvos",
+      "namePt": "Enxame de Corvos",
+      "nameEn": "Swarm of Ravens",
+      "srdName": "Swarm of Ravens",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "1/4",
+      "armorClass": 12,
+      "hitPointsAvg": 24,
+      "hitPointsFormula": "7d8-7",
+      "initiativeModifier": 2,
+      "speed": {
+        "fly": 50,
+        "walk": 10
+      },
+      "abilityScores": {
+        "cha": 6,
+        "con": 8,
+        "dex": 14,
+        "int": 3,
+        "str": 6,
+        "wis": 12
+      },
+      "traits": [
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny raven. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 4,
+          "damage": [
+            {
+              "dice": "2d6+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target in the swarm's space. Hit: 7 (2d6) piercing damage, or 3 (1d6) piercing damage if the swarm has half of its hit points or fewer.",
+          "name": "Beaks"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-insetos",
+      "namePt": "Enxame de Insetos",
+      "nameEn": "Swarm of Insects",
+      "srdName": "Swarm of Insects",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "1/2",
+      "armorClass": 12,
+      "hitPointsAvg": 22,
+      "hitPointsFormula": "5d8",
+      "initiativeModifier": 1,
+      "speed": {
+        "climb": 20,
+        "walk": 20
+      },
+      "abilityScores": {
+        "cha": 1,
+        "con": 10,
+        "dex": 13,
+        "int": 1,
+        "str": 3,
+        "wis": 7
+      },
+      "traits": [
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 3,
+          "damage": [
+            {
+              "dice": "4d4+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +3 to hit, reach 0 ft., one target in the swarm's space. Hit: 10 (4d4) piercing damage, or 5 (2d4) piercing damage if the swarm has half of its hit points or fewer.",
+          "name": "Bites"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-cobras-venenosas",
+      "namePt": "Enxame de Cobras Venenosas",
+      "nameEn": "Swarm of Venomous Snakes",
+      "srdName": "Swarm of Poisonous Snakes",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "2",
+      "armorClass": 14,
+      "hitPointsAvg": 36,
+      "hitPointsFormula": "8d8",
+      "initiativeModifier": 4,
+      "speed": {
+        "swim": 30,
+        "walk": 30
+      },
+      "abilityScores": {
+        "cha": 3,
+        "con": 11,
+        "dex": 18,
+        "int": 1,
+        "str": 8,
+        "wis": 10
+      },
+      "traits": [
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny snake. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 6,
+          "damage": [
+            {
+              "dice": "2d6+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +6 to hit, reach 0 ft., one creature in the swarm's space. Hit: 7 (2d6) piercing damage, or 3 (1d6) piercing damage if the swarm has half of its hit points or fewer. The target must make a DC 10 Constitution saving throw, taking 14 (4d6) poison damage on a failed save, or half as much damage on a successful one.",
+          "name": "Bites"
+        }
+      ]
+    },
+    {
+      "slug": "enxame-de-piranhas",
+      "namePt": "Enxame de Piranhas",
+      "nameEn": "Swarm of Piranhas",
+      "srdName": "Swarm of Quippers",
+      "size": "Medium",
+      "creatureType": "Swarm of Tiny Beasts",
+      "challengeRating": "1",
+      "armorClass": 13,
+      "hitPointsAvg": 28,
+      "hitPointsFormula": "8d8-8",
+      "initiativeModifier": 3,
+      "speed": {
+        "swim": 40
+      },
+      "abilityScores": {
+        "cha": 2,
+        "con": 9,
+        "dex": 16,
+        "int": 1,
+        "str": 13,
+        "wis": 7
+      },
+      "traits": [
+        {
+          "description": "The swarm has advantage on melee attack rolls against any creature that doesn't have all its hit points.",
+          "name": "Blood Frenzy"
+        },
+        {
+          "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny quipper. The swarm can't regain hit points or gain temporary hit points.",
+          "name": "Swarm"
+        },
+        {
+          "description": "The swarm can breathe only underwater.",
+          "name": "Water Breathing"
+        }
+      ],
+      "actions": [
+        {
+          "attack_bonus": 5,
+          "damage": [
+            {
+              "dice": "4d6+0",
+              "type": "piercing"
+            }
+          ],
+          "description": "Melee Weapon Attack: +5 to hit, reach 0 ft., one creature in the swarm's space. Hit: 14 (4d6) piercing damage, or 7 (2d6) piercing damage if the swarm has half of its hit points or fewer.",
+          "name": "Bites"
+        }
+      ]
+    }
+  ]
+}

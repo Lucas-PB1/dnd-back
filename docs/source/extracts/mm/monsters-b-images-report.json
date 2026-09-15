@@ -1,0 +1,479 @@
+{
+  "updated": 9,
+  "results": [
+    {
+      "file": "02-001.balor.png",
+      "dest": "balor.png",
+      "imageUrl": "/catalog/monsters/balor.png",
+      "applied": [
+        {
+          "slug": "balor",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-002.group-of-bandits.png",
+      "dest": "bandidos.png",
+      "imageUrl": "/catalog/monsters/bandidos.png",
+      "applied": [
+        {
+          "slug": "capitao-bandido",
+          "status": "updated",
+          "name": "Capitão Bandido"
+        },
+        {
+          "slug": "bandido-enganador",
+          "status": "updated",
+          "name": "Bandido Enganador"
+        },
+        {
+          "slug": "lorde-do-crime-bandido",
+          "status": "updated",
+          "name": "Lorde do Crime Bandido"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "bandido",
+          "existing": "/catalog/monsters/bandido.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "02-003.banshees.png",
+      "dest": "banshee.png",
+      "imageUrl": "/catalog/monsters/banshee.png",
+      "applied": [
+        {
+          "slug": "banshee",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-004.barbed-devil.png",
+      "dest": "diabo-espinhoso.png",
+      "imageUrl": "/catalog/monsters/diabo-espinhoso.png",
+      "applied": [
+        {
+          "slug": "diabo-espinhoso",
+          "status": "already"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "diabo-espinhudo",
+          "existing": "/catalog/monsters/diabo-espinhudo.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "02-005.barlgura.png",
+      "dest": "barlgura.png",
+      "imageUrl": "/catalog/monsters/barlgura.png",
+      "applied": [
+        {
+          "slug": "barlgura",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-006.basilisk.png",
+      "dest": "basilisco.png",
+      "imageUrl": "/catalog/monsters/basilisco.png",
+      "applied": [
+        {
+          "slug": "basilisco",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-007.bearded-devil.png",
+      "dest": "diabo-barbudo.png",
+      "imageUrl": "/catalog/monsters/diabo-barbudo.png",
+      "applied": [
+        {
+          "slug": "diabo-barbudo",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-008.behir.png",
+      "dest": "behir.png",
+      "imageUrl": "/catalog/monsters/behir.png",
+      "applied": [
+        {
+          "slug": "behir",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-009.beholder.png",
+      "dest": "beholder.png",
+      "imageUrl": "/catalog/monsters/beholder.png",
+      "applied": [
+        {
+          "slug": "beholder",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-010.group-of-berserkers.png",
+      "dest": "berserkers.png",
+      "imageUrl": "/catalog/monsters/berserkers.png",
+      "applied": [
+        {
+          "slug": "berserker-comandante",
+          "status": "updated",
+          "name": "Berserker Comandante"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "berserker",
+          "existing": "/catalog/monsters/berserker.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "02-011.black-dragon-wyrmling.png",
+      "dest": "dragonete-dragao-negro.png",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-negro.png",
+      "applied": [
+        {
+          "slug": "dragonete-dragao-negro",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-012.adult-black-dragon.png",
+      "dest": "dragao-negro-adulto.png",
+      "imageUrl": "/catalog/monsters/dragao-negro-adulto.png",
+      "applied": [
+        {
+          "slug": "dragao-negro-adulto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-013.ancient-black-dragon.jpg",
+      "dest": "dragao-negro-anciano.jpg",
+      "imageUrl": "/catalog/monsters/dragao-negro-anciano.jpg",
+      "applied": [
+        {
+          "slug": "dragao-negro-anciano",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-014.black-pudding.png",
+      "dest": "pudim-negro.png",
+      "imageUrl": "/catalog/monsters/pudim-negro.png",
+      "applied": [
+        {
+          "slug": "pudim-negro",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-016.vine-tree-needle-blights.png",
+      "dest": "pragas.png",
+      "imageUrl": "/catalog/monsters/pragas.png",
+      "applied": [
+        {
+          "slug": "praga-de-galho",
+          "status": "updated",
+          "name": "Praga de Galho"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "praga-de-agulha",
+          "existing": "/catalog/monsters/praga-de-agulha.png"
+        },
+        {
+          "slug": "praga-de-videira",
+          "existing": "/catalog/monsters/praga-de-videira.png"
+        },
+        {
+          "slug": "praga-de-arvore",
+          "existing": "/catalog/monsters/praga-de-arvore.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "02-017.gulthias-blight.png",
+      "dest": "praga-de-gulthias.png",
+      "imageUrl": "/catalog/monsters/praga-de-gulthias.png",
+      "applied": [
+        {
+          "slug": "praga-de-gulthias",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-018.blink-dog.png",
+      "dest": "cao-piscante.png",
+      "imageUrl": "/catalog/monsters/cao-piscante.png",
+      "applied": [
+        {
+          "slug": "cao-piscante",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-019.blob-of-annihilation.png",
+      "dest": "bola-de-aniquilacao.png",
+      "imageUrl": "/catalog/monsters/bola-de-aniquilacao.png",
+      "applied": [
+        {
+          "slug": "bola-de-aniquilacao",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-020.blue-dragon-wyrmling.png",
+      "dest": "dragonete-dragao-azul.png",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-azul.png",
+      "applied": [
+        {
+          "slug": "dragonete-dragao-azul",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-021.adult-blue-dragon.png",
+      "dest": "dragao-azul-adulto.png",
+      "imageUrl": "/catalog/monsters/dragao-azul-adulto.png",
+      "applied": [
+        {
+          "slug": "dragao-azul-adulto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-022.ancient-blue-dragon.jpg",
+      "dest": "dragao-azul-anciano.jpg",
+      "imageUrl": "/catalog/monsters/dragao-azul-anciano.jpg",
+      "applied": [
+        {
+          "slug": "dragao-azul-anciano",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-023.bone-devil.png",
+      "dest": "diabo-de-ossos.png",
+      "imageUrl": "/catalog/monsters/diabo-de-ossos.png",
+      "applied": [
+        {
+          "slug": "diabo-de-ossos",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-024.bone-naga.png",
+      "dest": "naga-de-ossos.png",
+      "imageUrl": "/catalog/monsters/naga-de-ossos.png",
+      "applied": [
+        {
+          "slug": "naga-de-ossos",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-025.brass-dragon-wyrmling.png",
+      "dest": "dragonete-dragao-de-latao.png",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-de-latao.png",
+      "applied": [
+        {
+          "slug": "dragonete-dragao-de-latao",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-026.adult-brass-dragon.png",
+      "dest": "dragao-de-latao-adulto.png",
+      "imageUrl": "/catalog/monsters/dragao-de-latao-adulto.png",
+      "applied": [
+        {
+          "slug": "dragao-de-latao-adulto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-027.ancient-brass-dragon.jpg",
+      "dest": "dragao-de-latao-anciano.jpg",
+      "imageUrl": "/catalog/monsters/dragao-de-latao-anciano.jpg",
+      "applied": [
+        {
+          "slug": "dragao-de-latao-anciano",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-028.bronze-dragon-wyrmling.png",
+      "dest": "dragonete-dragao-de-bronze.png",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-de-bronze.png",
+      "applied": [
+        {
+          "slug": "dragonete-dragao-de-bronze",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-029.adult-bronze-dragon.png",
+      "dest": "dragao-de-bronze-adulto.png",
+      "imageUrl": "/catalog/monsters/dragao-de-bronze-adulto.png",
+      "applied": [
+        {
+          "slug": "dragao-de-bronze-adulto",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-030.ancient-bronze-dragon.jpg",
+      "dest": "dragao-de-bronze-anciano.jpg",
+      "imageUrl": "/catalog/monsters/dragao-de-bronze-anciano.jpg",
+      "applied": [
+        {
+          "slug": "dragao-de-bronze-anciano",
+          "status": "already"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-031.bugbears.png",
+      "dest": "bugbears.png",
+      "imageUrl": "/catalog/monsters/bugbears.png",
+      "applied": [
+        {
+          "slug": "bugbear-cacador",
+          "status": "updated",
+          "name": "Bugbear Caçador"
+        },
+        {
+          "slug": "bugbear-guerreiro",
+          "status": "updated",
+          "name": "Bugbear Guerreiro"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    },
+    {
+      "file": "02-032.bulettes.png",
+      "dest": "bulette.png",
+      "imageUrl": "/catalog/monsters/bulette.png",
+      "applied": [
+        {
+          "slug": "bulette",
+          "status": "already"
+        }
+      ],
+      "skipped": [
+        {
+          "slug": "bulette-filhote",
+          "existing": "/catalog/monsters/bulette-filhote.png"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "file": "02-033.bullywugs.png",
+      "dest": "bullywugs.png",
+      "imageUrl": "/catalog/monsters/bullywugs.png",
+      "applied": [
+        {
+          "slug": "bullywug-guerreiro",
+          "status": "updated",
+          "name": "Bullywug Guerreiro"
+        },
+        {
+          "slug": "bullywug-sabio-do-pantano",
+          "status": "updated",
+          "name": "Bullywug Sábio do Pântano"
+        }
+      ],
+      "skipped": [],
+      "missing": []
+    }
+  ]
+}

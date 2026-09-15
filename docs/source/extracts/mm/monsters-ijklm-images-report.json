@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "I": {
+      "updated": 0,
+      "filled": [],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "J": {
+      "updated": 0,
+      "filled": [],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "K": {
+      "updated": 3,
+      "filled": [
+        "cavaleiro-em-missao",
+        "kobold-guerreiro",
+        "kobold-alado"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "L": {
+      "updated": 3,
+      "filled": [
+        "enxame-de-lemures",
+        "homem-lagarto-geomante",
+        "homem-lagarto-soberano"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "M": {
+      "updated": 15,
+      "filled": [
+        "mago-apprentice",
+        "arquimago",
+        "manes-vaporspawn",
+        "dust-mephit",
+        "magma-mephit",
+        "smoke-mephit",
+        "steam-mephit",
+        "tritao-skirmisher",
+        "tritao-wavebender",
+        "mentesugadora-arcanista",
+        "minotauro-de-baphomet",
+        "miconideo-broto",
+        "miconideo-adulto",
+        "miconideo-soberano",
+        "miconideo-spore-servant"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    }
+  },
+  "counts": {
+    "no_img": 153,
+    "with_img": 394
+  }
+}

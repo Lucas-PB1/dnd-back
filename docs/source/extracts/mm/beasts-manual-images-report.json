@@ -1,0 +1,462 @@
+{
+  "filledCount": 42,
+  "filled": [
+    {
+      "slug": "anquilossauro",
+      "name": "Anquilossauro",
+      "imageUrl": "/catalog/beasts/anquilossauro.png",
+      "from": "anquilossauro.png"
+    },
+    {
+      "slug": "besouro-de-fogo-gigante",
+      "name": "Besouro de Fogo Gigante",
+      "imageUrl": "/catalog/beasts/besouro-de-fogo-gigante.png",
+      "from": "besouro de fogo gigante.png"
+    },
+    {
+      "slug": "cavalo-de-tracao",
+      "name": "Cavalo de Tração",
+      "imageUrl": "/catalog/beasts/cavalo-de-tracao.png",
+      "from": "cavalo de tração.png"
+    },
+    {
+      "slug": "cavalo-marinho-gigante",
+      "name": "Cavalo-marinho Gigante",
+      "imageUrl": "/catalog/beasts/cavalo-marinho-gigante.png",
+      "from": "cavalo marinho gigante.png"
+    },
+    {
+      "slug": "cavalo-marinho",
+      "name": "Cavalo-marinho",
+      "imageUrl": "/catalog/beasts/cavalo-marinho.jpg",
+      "from": "cavalo marinho.jpeg"
+    },
+    {
+      "slug": "centopeia-gigante",
+      "name": "Centopeia Gigante",
+      "imageUrl": "/catalog/beasts/centopeia-gigante.png",
+      "from": "centopeia gigante.png"
+    },
+    {
+      "slug": "cervo",
+      "name": "Cervo",
+      "imageUrl": "/catalog/beasts/cervo.png",
+      "from": "cervo.png"
+    },
+    {
+      "slug": "chacal",
+      "name": "Chacal",
+      "imageUrl": "/catalog/beasts/chacal.png",
+      "from": "chacal.png"
+    },
+    {
+      "slug": "cobra-venenosa-gigante",
+      "name": "Cobra Venenosa Gigante",
+      "imageUrl": "/catalog/beasts/cobra-venenosa-gigante.jpg",
+      "from": "cobra venenosa gigante.jpeg"
+    },
+    {
+      "slug": "cobra-venenosa",
+      "name": "Cobra Venenosa",
+      "imageUrl": "/catalog/beasts/cobra-venenosa.jpg",
+      "from": "cobra venenosa.jpeg"
+    },
+    {
+      "slug": "alce",
+      "name": "Alce",
+      "imageUrl": "/catalog/beasts/alce.png",
+      "from": "elk.png"
+    },
+    {
+      "slug": "enxame-de-cobras-venenosas",
+      "name": "Enxame de Cobras Venenosas",
+      "imageUrl": "/catalog/beasts/enxame-de-cobras-venenosas.png",
+      "from": "enxame de cobras.png"
+    },
+    {
+      "slug": "enxame-de-insetos",
+      "name": "Enxame de Insetos",
+      "imageUrl": "/catalog/beasts/enxame-de-insetos.png",
+      "from": "enxame de insetos.png"
+    },
+    {
+      "slug": "enxame-de-morcegos",
+      "name": "Enxame de Morcegos",
+      "imageUrl": "/catalog/beasts/enxame-de-morcegos.png",
+      "from": "enxame de morcegos.png"
+    },
+    {
+      "slug": "enxame-de-piranhas",
+      "name": "Enxame de Piranhas",
+      "imageUrl": "/catalog/beasts/enxame-de-piranhas.png",
+      "from": "enxame de piranhas.png"
+    },
+    {
+      "slug": "aguia-gigante",
+      "name": "Águia Gigante",
+      "imageUrl": "/catalog/beasts/aguia-gigante.jpg",
+      "from": "giant eagle.jpeg"
+    },
+    {
+      "slug": "alce-gigante",
+      "name": "Alce Gigante",
+      "imageUrl": "/catalog/beasts/alce-gigante.jpg",
+      "from": "giant elk.jpeg"
+    },
+    {
+      "slug": "abutre-gigante",
+      "name": "Abutre Gigante",
+      "imageUrl": "/catalog/beasts/abutre-gigante.png",
+      "from": "giant vuture.png"
+    },
+    {
+      "slug": "hiena-gigante",
+      "name": "Hiena Gigante",
+      "imageUrl": "/catalog/beasts/hiena-gigante.jpg",
+      "from": "hiena gigante.jpeg"
+    },
+    {
+      "slug": "hiena",
+      "name": "Hiena",
+      "imageUrl": "/catalog/beasts/hiena.jpg",
+      "from": "hiena.jpeg"
+    },
+    {
+      "slug": "hipopotamo",
+      "name": "Hipopótamo",
+      "imageUrl": "/catalog/beasts/hipopotamo.png",
+      "from": "hipopotamus.png"
+    },
+    {
+      "slug": "inseto-gigante-centopeia",
+      "name": "Inseto Gigante (Centopeia)",
+      "imageUrl": "/catalog/beasts/inseto-gigante-centopeia.png",
+      "from": "inseto gigante.png"
+    },
+    {
+      "slug": "mamute",
+      "name": "Mamute",
+      "imageUrl": "/catalog/beasts/mamute.png",
+      "from": "mamute.png"
+    },
+    {
+      "slug": "morcego-gigante",
+      "name": "Morcego Gigante",
+      "imageUrl": "/catalog/beasts/morcego-gigante.png",
+      "from": "morcgo gigante.png"
+    },
+    {
+      "slug": "orca",
+      "name": "Orca",
+      "imageUrl": "/catalog/beasts/orca.jpg",
+      "from": "orca.jpeg"
+    },
+    {
+      "slug": "pantera",
+      "name": "Pantera",
+      "imageUrl": "/catalog/beasts/pantera.jpg",
+      "from": "pantera.jpeg"
+    },
+    {
+      "slug": "piranha",
+      "name": "Piranha",
+      "imageUrl": "/catalog/beasts/piranha.png",
+      "from": "piranha.png"
+    },
+    {
+      "slug": "plessiossauro",
+      "name": "Plessiossauro",
+      "imageUrl": "/catalog/beasts/plessiossauro.png",
+      "from": "plessiossauros.png"
+    },
+    {
+      "slug": "pteranodonte",
+      "name": "Pteranodonte",
+      "imageUrl": "/catalog/beasts/pteranodonte.png",
+      "from": "pteradonte.png"
+    },
+    {
+      "slug": "sapo-gigante",
+      "name": "Sapo Gigante",
+      "imageUrl": "/catalog/beasts/sapo-gigante.jpg",
+      "from": "sapo gigante.jpeg"
+    },
+    {
+      "slug": "ra-gigante",
+      "name": "Rã Gigante",
+      "imageUrl": "/catalog/beasts/sapo-gigante.jpg",
+      "from": "sapo gigante.jpeg"
+    },
+    {
+      "slug": "texugo",
+      "name": "Texugo",
+      "imageUrl": "/catalog/beasts/texugo.png",
+      "from": "texugo.png"
+    },
+    {
+      "slug": "tigre-dentes-de-sabre",
+      "name": "Tigre-dentes-de-sabre",
+      "imageUrl": "/catalog/beasts/tigre-dentes-de-sabre.png",
+      "from": "tigre dentro de sabre.png"
+    },
+    {
+      "slug": "tigre",
+      "name": "Tigre",
+      "imageUrl": "/catalog/beasts/tigre.png",
+      "from": "tigre.png"
+    },
+    {
+      "slug": "triceratops",
+      "name": "Tricerátops",
+      "imageUrl": "/catalog/beasts/triceratops.png",
+      "from": "triceratops.png"
+    },
+    {
+      "slug": "tubarao-gigante",
+      "name": "Tubarão Gigante",
+      "imageUrl": "/catalog/beasts/tubarao-gigante.jpg",
+      "from": "tubarao gigante.jpeg"
+    },
+    {
+      "slug": "tubarao-cacador",
+      "name": "Tubarão Caçador",
+      "imageUrl": "/catalog/beasts/tubarao-cacador.png",
+      "from": "tubarão caçador.png"
+    },
+    {
+      "slug": "tubarao-de-recife",
+      "name": "Tubarão de Recife",
+      "imageUrl": "/catalog/beasts/tubarao-de-recife.png",
+      "from": "tubarão de recife.png"
+    },
+    {
+      "slug": "urso-negro",
+      "name": "Urso Negro",
+      "imageUrl": "/catalog/beasts/urso-negro.png",
+      "from": "urso negro.png"
+    },
+    {
+      "slug": "urso-pardo",
+      "name": "Urso Pardo",
+      "imageUrl": "/catalog/beasts/urso-pardo.png",
+      "from": "urso pardo.png"
+    },
+    {
+      "slug": "urso-polar",
+      "name": "Urso Polar",
+      "imageUrl": "/catalog/beasts/urso-polar.png",
+      "from": "urso polar.png"
+    },
+    {
+      "slug": "abutre",
+      "name": "Abutre",
+      "imageUrl": "/catalog/beasts/abutre.png",
+      "from": "vulture.png"
+    }
+  ],
+  "skippedHasImg": 0,
+  "unmatched": [],
+  "missingSlug": [],
+  "counts": {
+    "no_img": 49,
+    "with_img": 498
+  },
+  "stillNoImg": [
+    {
+      "slug": "primal-companion-striker-sky",
+      "name": "Atacante Primal (Céu)"
+    },
+    {
+      "slug": "primal-companion-striker-sea",
+      "name": "Atacante Primal (Mar)"
+    },
+    {
+      "slug": "primal-companion-striker-land",
+      "name": "Atacante Primal (Terra)"
+    },
+    {
+      "slug": "cobra-voadora",
+      "name": "Cobra Voadora"
+    },
+    {
+      "slug": "primal-companion-sky",
+      "name": "Companheiro Primal (Céu)"
+    },
+    {
+      "slug": "primal-companion-sea",
+      "name": "Companheiro Primal (Mar)"
+    },
+    {
+      "slug": "primal-companion-earth",
+      "name": "Companheiro Primal (Terra)"
+    },
+    {
+      "slug": "crocodilo-gigante",
+      "name": "Crocodilo Gigante"
+    },
+    {
+      "slug": "dragao-azul-jovem",
+      "name": "Dragão Azul Jovem"
+    },
+    {
+      "slug": "dragao-branco-jovem",
+      "name": "Dragão Branco Jovem"
+    },
+    {
+      "slug": "dragao-de-bronze-jovem",
+      "name": "Dragão de Bronze Jovem"
+    },
+    {
+      "slug": "dragao-de-cobre-jovem",
+      "name": "Dragão de Cobre Jovem"
+    },
+    {
+      "slug": "dragao-de-latao-jovem",
+      "name": "Dragão de Latão Jovem"
+    },
+    {
+      "slug": "dragao-dourado-jovem",
+      "name": "Dragão Dourado Jovem"
+    },
+    {
+      "slug": "dragao-negro-jovem",
+      "name": "Dragão Negro Jovem"
+    },
+    {
+      "slug": "dragao-prateado-jovem",
+      "name": "Dragão Prateado Jovem"
+    },
+    {
+      "slug": "dragao-verde-jovem",
+      "name": "Dragão Verde Jovem"
+    },
+    {
+      "slug": "dragao-vermelho-jovem",
+      "name": "Dragão Vermelho Jovem"
+    },
+    {
+      "slug": "espirito-aberrante-devorador",
+      "name": "Espírito Aberrante (Devorador)"
+    },
+    {
+      "slug": "espirito-aberrante-pseudo-observador",
+      "name": "Espírito Aberrante (Pseudo-observador)"
+    },
+    {
+      "slug": "espirito-aberrante-slaad",
+      "name": "Espírito Aberrante (Slaad)"
+    },
+    {
+      "slug": "espirito-bestial-agua",
+      "name": "Espírito Bestial (Água)"
+    },
+    {
+      "slug": "espirito-bestial-ar",
+      "name": "Espírito Bestial (Ar)"
+    },
+    {
+      "slug": "espirito-bestial-terra",
+      "name": "Espírito Bestial (Terra)"
+    },
+    {
+      "slug": "espirito-celestial-defensor",
+      "name": "Espírito Celestial (Defensor)"
+    },
+    {
+      "slug": "espirito-celestial-vingador",
+      "name": "Espírito Celestial (Vingador)"
+    },
+    {
+      "slug": "espirito-constructo-argila",
+      "name": "Espírito do Constructo (Argila)"
+    },
+    {
+      "slug": "espirito-constructo-metal",
+      "name": "Espírito do Constructo (Metal)"
+    },
+    {
+      "slug": "espirito-constructo-pedra",
+      "name": "Espírito do Constructo (Pedra)"
+    },
+    {
+      "slug": "espirito-draconico",
+      "name": "Espírito Dracônico"
+    },
+    {
+      "slug": "espirito-elemental-agua",
+      "name": "Espírito Elemental (Água)"
+    },
+    {
+      "slug": "espirito-elemental-ar",
+      "name": "Espírito Elemental (Ar)"
+    },
+    {
+      "slug": "espirito-elemental-fogo",
+      "name": "Espírito Elemental (Fogo)"
+    },
+    {
+      "slug": "espirito-elemental-terra",
+      "name": "Espírito Elemental (Terra)"
+    },
+    {
+      "slug": "espirito-feerico-alegre",
+      "name": "Espírito Feérico (Alegre)"
+    },
+    {
+      "slug": "espirito-feerico-enfurecido",
+      "name": "Espírito Feérico (Enfurecido)"
+    },
+    {
+      "slug": "espirito-feerico-malandro",
+      "name": "Espírito Feérico (Malandro)"
+    },
+    {
+      "slug": "espirito-infero-demonio",
+      "name": "Espírito Ínfero (Demônio)"
+    },
+    {
+      "slug": "espirito-infero-diabo",
+      "name": "Espírito Ínfero (Diabo)"
+    },
+    {
+      "slug": "espirito-infero-yugoloth",
+      "name": "Espírito Ínfero (Yugoloth)"
+    },
+    {
+      "slug": "espirito-morto-vivo-esqueletico",
+      "name": "Espírito Morto-Vivo (Esquelético)"
+    },
+    {
+      "slug": "espirito-morto-vivo-fantasmagorico",
+      "name": "Espírito Morto-Vivo (Fantasmagórico)"
+    },
+    {
+      "slug": "espirito-morto-vivo-putrido",
+      "name": "Espírito Morto-Vivo (Pútrido)"
+    },
+    {
+      "slug": "primal-companion-guardian-sky",
+      "name": "Guardião Primal (Céu)"
+    },
+    {
+      "slug": "primal-companion-guardian-sea",
+      "name": "Guardião Primal (Mar)"
+    },
+    {
+      "slug": "primal-companion-guardian-land",
+      "name": "Guardião Primal (Terra)"
+    },
+    {
+      "slug": "montaria-sobrenatural-celestial",
+      "name": "Montaria Sobrenatural (Celestial)"
+    },
+    {
+      "slug": "montaria-sobrenatural-feerico",
+      "name": "Montaria Sobrenatural (Feérico)"
+    },
+    {
+      "slug": "montaria-sobrenatural-infero",
+      "name": "Montaria Sobrenatural (Ínfero)"
+    }
+  ]
+}

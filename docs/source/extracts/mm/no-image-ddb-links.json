@@ -1,0 +1,231 @@
+{
+  "generatedAt": "2026-09-15T22:26:06.135Z",
+  "total": 37,
+  "note": "Beyond só tem símbolo; Google Imagens por variante",
+  "groups": {
+    "summons": [
+      {
+        "slug": "primal-companion-striker-sky",
+        "namePt": "Atacante Primal (Céu)",
+        "query": "\"Beast of the Sky\" Primal Companion D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sky%22%20Primal%20Companion%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-striker-sea",
+        "namePt": "Atacante Primal (Mar)",
+        "query": "\"Beast of the Sea\" Primal Companion D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sea%22%20Primal%20Companion%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-striker-land",
+        "namePt": "Atacante Primal (Terra)",
+        "query": "\"Beast of the Land\" Primal Companion D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Land%22%20Primal%20Companion%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-sky",
+        "namePt": "Companheiro Primal (Céu)",
+        "query": "\"Beast of the Sky\" ranger D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sky%22%20ranger%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-sea",
+        "namePt": "Companheiro Primal (Mar)",
+        "query": "\"Beast of the Sea\" ranger D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sea%22%20ranger%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-earth",
+        "namePt": "Companheiro Primal (Terra)",
+        "query": "\"Beast of the Land\" ranger D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Land%22%20ranger%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-guardian-sky",
+        "namePt": "Guardião Primal (Céu)",
+        "query": "\"Beast of the Sky\" guardian D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sky%22%20guardian%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-guardian-sea",
+        "namePt": "Guardião Primal (Mar)",
+        "query": "\"Beast of the Sea\" guardian D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Sea%22%20guardian%20D%26D%20art"
+      },
+      {
+        "slug": "primal-companion-guardian-land",
+        "namePt": "Guardião Primal (Terra)",
+        "query": "\"Beast of the Land\" guardian D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=%22Beast%20of%20the%20Land%22%20guardian%20D%26D%20art"
+      },
+      {
+        "slug": "montaria-sobrenatural-celestial",
+        "namePt": "Montaria Sobrenatural (Celestial)",
+        "query": "Otherworldly Steed celestial Find Steed D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Otherworldly%20Steed%20celestial%20Find%20Steed%20D%26D%20art"
+      },
+      {
+        "slug": "montaria-sobrenatural-feerico",
+        "namePt": "Montaria Sobrenatural (Feérico)",
+        "query": "Otherworldly Steed fey Find Steed D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Otherworldly%20Steed%20fey%20Find%20Steed%20D%26D%20art"
+      },
+      {
+        "slug": "montaria-sobrenatural-infero",
+        "namePt": "Montaria Sobrenatural (Ínfero)",
+        "query": "Otherworldly Steed fiend Find Steed D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Otherworldly%20Steed%20fiend%20Find%20Steed%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-aberrante-devorador",
+        "namePt": "Espírito Aberrante (Devorador)",
+        "query": "Aberrant Spirit Star Spawn D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Aberrant%20Spirit%20Star%20Spawn%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-aberrante-pseudo-observador",
+        "namePt": "Espírito Aberrante (Pseudo-observador)",
+        "query": "Aberrant Spirit Beholderkin D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Aberrant%20Spirit%20Beholderkin%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-aberrante-slaad",
+        "namePt": "Espírito Aberrante (Slaad)",
+        "query": "Aberrant Spirit Slaad D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Aberrant%20Spirit%20Slaad%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-bestial-agua",
+        "namePt": "Espírito Bestial (Água)",
+        "query": "Bestial Spirit Water D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Bestial%20Spirit%20Water%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-bestial-ar",
+        "namePt": "Espírito Bestial (Ar)",
+        "query": "Bestial Spirit Air D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Bestial%20Spirit%20Air%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-bestial-terra",
+        "namePt": "Espírito Bestial (Terra)",
+        "query": "Bestial Spirit Land D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Bestial%20Spirit%20Land%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-celestial-defensor",
+        "namePt": "Espírito Celestial (Defensor)",
+        "query": "Celestial Spirit Defender D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Celestial%20Spirit%20Defender%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-celestial-vingador",
+        "namePt": "Espírito Celestial (Vingador)",
+        "query": "Celestial Spirit Avenger D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Celestial%20Spirit%20Avenger%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-constructo-argila",
+        "namePt": "Espírito do Constructo (Argila)",
+        "query": "Construct Spirit Clay D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Construct%20Spirit%20Clay%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-constructo-metal",
+        "namePt": "Espírito do Constructo (Metal)",
+        "query": "Construct Spirit Metal D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Construct%20Spirit%20Metal%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-constructo-pedra",
+        "namePt": "Espírito do Constructo (Pedra)",
+        "query": "Construct Spirit Stone D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Construct%20Spirit%20Stone%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-draconico",
+        "namePt": "Espírito Dracônico",
+        "query": "Draconic Spirit Fizban D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Draconic%20Spirit%20Fizban%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-elemental-agua",
+        "namePt": "Espírito Elemental (Água)",
+        "query": "Elemental Spirit Water D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Elemental%20Spirit%20Water%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-elemental-ar",
+        "namePt": "Espírito Elemental (Ar)",
+        "query": "Elemental Spirit Air D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Elemental%20Spirit%20Air%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-elemental-fogo",
+        "namePt": "Espírito Elemental (Fogo)",
+        "query": "Elemental Spirit Fire D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Elemental%20Spirit%20Fire%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-elemental-terra",
+        "namePt": "Espírito Elemental (Terra)",
+        "query": "Elemental Spirit Earth D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Elemental%20Spirit%20Earth%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-feerico-alegre",
+        "namePt": "Espírito Feérico (Alegre)",
+        "query": "Fey Spirit Mirthful D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fey%20Spirit%20Mirthful%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-feerico-enfurecido",
+        "namePt": "Espírito Feérico (Enfurecido)",
+        "query": "Fey Spirit Fuming D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fey%20Spirit%20Fuming%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-feerico-malandro",
+        "namePt": "Espírito Feérico (Malandro)",
+        "query": "Fey Spirit Tricksy D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fey%20Spirit%20Tricksy%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-infero-demonio",
+        "namePt": "Espírito Ínfero (Demônio)",
+        "query": "Fiendish Spirit Demon D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fiendish%20Spirit%20Demon%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-infero-diabo",
+        "namePt": "Espírito Ínfero (Diabo)",
+        "query": "Fiendish Spirit Devil D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fiendish%20Spirit%20Devil%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-infero-yugoloth",
+        "namePt": "Espírito Ínfero (Yugoloth)",
+        "query": "Fiendish Spirit Yugoloth D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Fiendish%20Spirit%20Yugoloth%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-morto-vivo-esqueletico",
+        "namePt": "Espírito Morto-Vivo (Esquelético)",
+        "query": "Undead Spirit Skeletal D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Undead%20Spirit%20Skeletal%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-morto-vivo-fantasmagorico",
+        "namePt": "Espírito Morto-Vivo (Fantasmagórico)",
+        "query": "Undead Spirit Ghostly D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Undead%20Spirit%20Ghostly%20D%26D%20art"
+      },
+      {
+        "slug": "espirito-morto-vivo-putrido",
+        "namePt": "Espírito Morto-Vivo (Pútrido)",
+        "query": "Undead Spirit Putrid D&D art",
+        "googleImagesUrl": "https://www.google.com/search?tbm=isch&q=Undead%20Spirit%20Putrid%20D%26D%20art"
+      }
+    ]
+  }
+}

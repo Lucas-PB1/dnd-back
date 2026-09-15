@@ -32,7 +32,7 @@ docs/source/
 | `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
 | `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7, `creature-stat-blocks-beasts.json` | M005–M006, S079, `seed.phb-beasts.sql` |
 | `srd/` | `monsters-5.2.1.json` | criaturas SRD (CC-BY) |
-| `mm/` | `animals-beasts.json`, `monsters-ab.json`, `monsters-cl.json`, `monsters-mz.json`, `monster-lists.json` | `seed.mm-animals.sql`, `seed.mm-monsters-ab.sql`, `seed.mm-monsters-cl.sql`, `seed.mm-monsters-mz.sql`, `seed.mm-monster-lists.sql` |
+| `mm/` | `animals-beasts.json`, `monsters-ab.json`, `monsters-cl.json`, `monsters-mz.json`, `monster-lists.json`, `list-gap-srd.json` | `seed.mm-animals.sql`, `seed.mm-monsters-ab.sql`, `seed.mm-monsters-cl.sql`, `seed.mm-monsters-mz.sql`, `seed.mm-list-gap-srd.sql`, `seed.mm-monster-lists.sql` |
 
 ## `_scrapes/` / `_assets/`
 

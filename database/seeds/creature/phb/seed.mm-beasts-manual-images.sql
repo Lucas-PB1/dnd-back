@@ -1,0 +1,47 @@
+-- Manual beast portraits from Beyond individual sheets
+-- Source: docs/source/scrap/*.png|jpeg
+
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/anquilossauro.png' WHERE slug = 'anquilossauro' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/besouro-de-fogo-gigante.png' WHERE slug = 'besouro-de-fogo-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cavalo-de-tracao.png' WHERE slug = 'cavalo-de-tracao' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cavalo-marinho-gigante.png' WHERE slug = 'cavalo-marinho-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cavalo-marinho.jpg' WHERE slug = 'cavalo-marinho' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/centopeia-gigante.png' WHERE slug = 'centopeia-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cervo.png' WHERE slug = 'cervo' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/chacal.png' WHERE slug = 'chacal' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cobra-venenosa-gigante.jpg' WHERE slug = 'cobra-venenosa-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cobra-venenosa.jpg' WHERE slug = 'cobra-venenosa' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/alce.png' WHERE slug = 'alce' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/enxame-de-cobras-venenosas.png' WHERE slug = 'enxame-de-cobras-venenosas' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/enxame-de-insetos.png' WHERE slug = 'enxame-de-insetos' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/enxame-de-morcegos.png' WHERE slug = 'enxame-de-morcegos' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/enxame-de-piranhas.png' WHERE slug = 'enxame-de-piranhas' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/aguia-gigante.jpg' WHERE slug = 'aguia-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/alce-gigante.jpg' WHERE slug = 'alce-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/abutre-gigante.png' WHERE slug = 'abutre-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/hiena-gigante.jpg' WHERE slug = 'hiena-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/hiena.jpg' WHERE slug = 'hiena' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/hipopotamo.png' WHERE slug = 'hipopotamo' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/inseto-gigante-centopeia.png' WHERE slug = 'inseto-gigante-centopeia' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/mamute.png' WHERE slug = 'mamute' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/morcego-gigante.png' WHERE slug = 'morcego-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/orca.jpg' WHERE slug = 'orca' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/pantera.jpg' WHERE slug = 'pantera' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/piranha.png' WHERE slug = 'piranha' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/plessiossauro.png' WHERE slug = 'plessiossauro' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/pteranodonte.png' WHERE slug = 'pteranodonte' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/sapo-gigante.jpg' WHERE slug = 'sapo-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/sapo-gigante.jpg' WHERE slug = 'ra-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/texugo.png' WHERE slug = 'texugo' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/tigre-dentes-de-sabre.png' WHERE slug = 'tigre-dentes-de-sabre' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/tigre.png' WHERE slug = 'tigre' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/triceratops.png' WHERE slug = 'triceratops' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/tubarao-gigante.jpg' WHERE slug = 'tubarao-gigante' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/tubarao-cacador.png' WHERE slug = 'tubarao-cacador' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/tubarao-de-recife.png' WHERE slug = 'tubarao-de-recife' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/urso-negro.png' WHERE slug = 'urso-negro' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/urso-pardo.png' WHERE slug = 'urso-pardo' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/urso-polar.png' WHERE slug = 'urso-polar' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/abutre.png' WHERE slug = 'abutre' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/cobra-voadora.png' WHERE slug = 'cobra-voadora' AND edition_slug = 'phb-2024-pt';
+UPDATE rpg.phb_creature_template SET image_url = '/catalog/beasts/crocodilo-gigante.png' WHERE slug = 'crocodilo-gigante' AND edition_slug = 'phb-2024-pt';

@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "U": {
+      "updated": 1,
+      "filled": [
+        "ultrolote"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "V": {
+      "updated": 1,
+      "filled": [
+        "vampiro-traz-noite"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "W": {
+      "updated": 7,
+      "filled": [
+        "guerreiro-infantaria",
+        "guerreiro-veterano",
+        "guerreiro-comandante",
+        "urso-homem",
+        "javali-homem",
+        "rato-homem",
+        "worg-dire"
+      ],
+      "missingFiles": [],
+      "missingSlugs": [
+        "lobo-invernal"
+      ]
+    },
+    "X": {
+      "updated": 0,
+      "filled": [],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "Y": {
+      "updated": 0,
+      "filled": [],
+      "missingFiles": [],
+      "missingSlugs": []
+    },
+    "Z": {
+      "updated": 2,
+      "filled": [
+        "zumbi-de-ogro",
+        "zumbi-de-beholder"
+      ],
+      "missingFiles": [],
+      "missingSlugs": []
+    }
+  },
+  "counts": {
+    "no_img": 108,
+    "with_img": 439
+  }
+}

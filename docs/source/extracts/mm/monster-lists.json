@@ -1244,5 +1244,5 @@
     "conversions": 59,
     "nameMapSize": 492
   },
-  "note": "Tags no DB ignoram agrupadores \"(all)\". Swarms / Giant Eagle (etc.) / Yuan-ti Malison genérico ficam só no extract até haver template."
+  "note": "Tags no DB ignoram agrupadores \"(all)\". Yuan-ti Malison liga aos 3 tipos. Gaps (swarms/águia etc.) via list-gap-srd (SRD 5.2.1)."
 }

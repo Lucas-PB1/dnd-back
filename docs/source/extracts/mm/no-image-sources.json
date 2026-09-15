@@ -1,0 +1,1941 @@
+{
+  "total": 240,
+  "withNameEn": [
+    {
+      "slug": "githyanki-cavaleiro",
+      "namePt": "Githyanki Cavaleiro",
+      "nameEn": "Githyanki Knight",
+      "type": "Aberration",
+      "cr": "8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "githyanki-dracomante",
+      "namePt": "Githyanki Dracomante",
+      "nameEn": "Githyanki Dracomancer",
+      "type": "Aberration",
+      "cr": "16",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "githyanki-guerreiro",
+      "namePt": "Githyanki Guerreiro",
+      "nameEn": "Githyanki Warrior",
+      "type": "Aberration",
+      "cr": "3",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "githzerai-monge",
+      "namePt": "Githzerai Monge",
+      "nameEn": "Githzerai Monk",
+      "type": "Aberration",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "githzerai-psion",
+      "namePt": "Githzerai Psiônico",
+      "nameEn": "Githzerai Psion",
+      "type": "Aberration",
+      "cr": "12",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "githzerai-zerth",
+      "namePt": "Githzerai Zerth",
+      "nameEn": "Githzerai Zerth",
+      "type": "Aberration",
+      "cr": "6",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "grick-anciano",
+      "namePt": "Grick Ancião",
+      "nameEn": "Grick Ancient",
+      "type": "Aberration",
+      "cr": "7",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "mentesugadora-arcanista",
+      "namePt": "Mentesugadora Arcanista",
+      "nameEn": "Mind Flayer Arcanist",
+      "type": "Aberration",
+      "cr": "11",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "slaad-azul",
+      "namePt": "Slaad Azul",
+      "nameEn": "Blue Slaad",
+      "type": "Aberration",
+      "cr": "7",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "slaad-cinzento",
+      "namePt": "Slaad Cinzento",
+      "nameEn": "Gray Slaad",
+      "type": "Aberration",
+      "cr": "9",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "slaad-girino",
+      "namePt": "Slaad Girino",
+      "nameEn": "Slaad Tadpole",
+      "type": "Aberration",
+      "cr": "1/8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "slaad-verde",
+      "namePt": "Slaad Verde",
+      "nameEn": "Green Slaad",
+      "type": "Aberration",
+      "cr": "8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "abutre",
+      "namePt": "Abutre",
+      "nameEn": "Vulture",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "abutre-gigante",
+      "namePt": "Abutre Gigante",
+      "nameEn": "Giant Vulture",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "aguia",
+      "namePt": "Águia",
+      "nameEn": "Eagle",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "aguia-gigante",
+      "namePt": "Águia Gigante",
+      "nameEn": "Giant Eagle",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "alce-gigante",
+      "namePt": "Alce Gigante",
+      "nameEn": "Giant Elk",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "anquilossauro",
+      "namePt": "Anquilossauro",
+      "nameEn": "Ankylosaurus",
+      "type": "Beast",
+      "cr": "3",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "aranha-lobo-gigante",
+      "namePt": "Aranha-lobo Gigante",
+      "nameEn": "Giant Wolf Spider",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "babuino",
+      "namePt": "Babuíno",
+      "nameEn": "Baboon",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "besouro-de-fogo-gigante",
+      "namePt": "Besouro de Fogo Gigante",
+      "nameEn": "Giant Fire Beetle",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "cavalo-marinho",
+      "namePt": "Cavalo-marinho",
+      "nameEn": "Seahorse",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "centopeia-gigante",
+      "namePt": "Centopeia Gigante",
+      "nameEn": "Giant Centipede",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "cervo",
+      "namePt": "Cervo",
+      "nameEn": "Deer",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "chacal",
+      "namePt": "Chacal",
+      "nameEn": "Jackal",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "cobra-constritora-gigante",
+      "namePt": "Cobra Constritora Gigante",
+      "nameEn": "Giant Constrictor Snake",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "cobra-venenosa-gigante",
+      "namePt": "Cobra Venenosa Gigante",
+      "nameEn": "Giant Venomous Snake",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "cobra-voadora",
+      "namePt": "Cobra Voadora",
+      "nameEn": "Flying Snake",
+      "type": "Beast",
+      "cr": "1/8",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "coruja-gigante",
+      "namePt": "Coruja Gigante",
+      "nameEn": "Giant Owl",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "crocodilo-gigante",
+      "namePt": "Crocodilo Gigante",
+      "nameEn": "Giant Crocodile",
+      "type": "Beast",
+      "cr": "5",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "enxame-de-cobras-venenosas",
+      "namePt": "Enxame de Cobras Venenosas",
+      "nameEn": "Swarm of Venomous Snakes",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "enxame-de-corvos",
+      "namePt": "Enxame de Corvos",
+      "nameEn": "Swarm of Ravens",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "enxame-de-insetos",
+      "namePt": "Enxame de Insetos",
+      "nameEn": "Swarm of Insects",
+      "type": "Beast",
+      "cr": "1/2",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "enxame-de-morcegos",
+      "namePt": "Enxame de Morcegos",
+      "nameEn": "Swarm of Bats",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "enxame-de-piranhas",
+      "namePt": "Enxame de Piranhas",
+      "nameEn": "Swarm of Piranhas",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "enxame-de-ratos",
+      "namePt": "Enxame de Ratos",
+      "nameEn": "Swarm of Rats",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "list-gap-srd.json"
+    },
+    {
+      "slug": "escorpiao-gigante",
+      "namePt": "Escorpião Gigante",
+      "nameEn": "Giant Scorpion",
+      "type": "Beast",
+      "cr": "3",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "falcao-sangrento",
+      "namePt": "Falcão Sangrento",
+      "nameEn": "Blood Hawk",
+      "type": "Beast",
+      "cr": "1/8",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "hiena",
+      "namePt": "Hiena",
+      "nameEn": "Hyena",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "hiena-gigante",
+      "namePt": "Hiena Gigante",
+      "nameEn": "Giant Hyena",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "hipopotamo",
+      "namePt": "Hipopótamo",
+      "nameEn": "Hippopotamus",
+      "type": "Beast",
+      "cr": "4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "mamute",
+      "namePt": "Mamute",
+      "nameEn": "Mammoth",
+      "type": "Beast",
+      "cr": "6",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "morcego-gigante",
+      "namePt": "Morcego Gigante",
+      "nameEn": "Giant Bat",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "orca",
+      "namePt": "Orca",
+      "nameEn": "Killer Whale",
+      "type": "Beast",
+      "cr": "3",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "piranha",
+      "namePt": "Piranha",
+      "nameEn": "Piranha",
+      "type": "Beast",
+      "cr": "0",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "plessiossauro",
+      "namePt": "Plessiossauro",
+      "nameEn": "Plesiosaurus",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "polvo-gigante",
+      "namePt": "Polvo Gigante",
+      "nameEn": "Giant Octopus",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "pteranodonte",
+      "namePt": "Pteranodonte",
+      "nameEn": "Pteranodon",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "ra-gigante",
+      "namePt": "Rã Gigante",
+      "nameEn": "Giant Frog",
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "rato-gigante",
+      "namePt": "Rato Gigante",
+      "nameEn": "Giant Rat",
+      "type": "Beast",
+      "cr": "1/8",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "sapo-gigante",
+      "namePt": "Sapo Gigante",
+      "nameEn": "Giant Toad",
+      "type": "Beast",
+      "cr": "1",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "tigre-dentes-de-sabre",
+      "namePt": "Tigre-dentes-de-sabre",
+      "nameEn": "Saber-Toothed Tiger",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "triceratops",
+      "namePt": "Tricerátops",
+      "nameEn": "Triceratops",
+      "type": "Beast",
+      "cr": "5",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "tubarao-cacador",
+      "namePt": "Tubarão Caçador",
+      "nameEn": "Hunter Shark",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "tubarao-gigante",
+      "namePt": "Tubarão Gigante",
+      "nameEn": "Giant Shark",
+      "type": "Beast",
+      "cr": "5",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "urso-polar",
+      "namePt": "Urso Polar",
+      "nameEn": "Polar Bear",
+      "type": "Beast",
+      "cr": "2",
+      "extract": "animals-beasts.json"
+    },
+    {
+      "slug": "couatl",
+      "namePt": "Couatl",
+      "nameEn": "Couatl",
+      "type": "Celestial",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "empirico-iota",
+      "namePt": "Empírico Iota",
+      "nameEn": "Empyrean Iota",
+      "type": "Celestial or Fiend",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "armadura-animada",
+      "namePt": "Armadura Animada",
+      "nameEn": "Animated Armor",
+      "type": "Construct",
+      "cr": "1",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "espada-voadora-animada",
+      "namePt": "Espada Voadora Animada",
+      "nameEn": "Animated Flying Sword",
+      "type": "Construct",
+      "cr": "1/4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "gorgone-de-bronze",
+      "namePt": "Gorgone de Bronze",
+      "nameEn": "Brazen Gorgon",
+      "type": "Construct",
+      "cr": "9",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "tapete-sufocante-animado",
+      "namePt": "Tapete Sufocante Animado",
+      "nameEn": "Animated Rug of Smothering",
+      "type": "Construct",
+      "cr": "2",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "vassoura-animada",
+      "namePt": "Vassoura Animada",
+      "nameEn": "Animated Broom",
+      "type": "Construct",
+      "cr": "1/4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dragao-azul-jovem",
+      "namePt": "Dragão Azul Jovem",
+      "nameEn": "Young Blue Dragon",
+      "type": "Dragon",
+      "cr": "9",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dragao-branco-jovem",
+      "namePt": "Dragão Branco Jovem",
+      "nameEn": "Young White Dragon",
+      "type": "Dragon",
+      "cr": "6",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "dragao-de-bronze-jovem",
+      "namePt": "Dragão de Bronze Jovem",
+      "nameEn": "Young Bronze Dragon",
+      "type": "Dragon",
+      "cr": "8",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dragao-de-cobre-jovem",
+      "namePt": "Dragão de Cobre Jovem",
+      "nameEn": "Young Copper Dragon",
+      "type": "Dragon",
+      "cr": "7",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "dragao-de-latao-jovem",
+      "namePt": "Dragão de Latão Jovem",
+      "nameEn": "Young Brass Dragon",
+      "type": "Dragon",
+      "cr": "6",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dragao-dourado-jovem",
+      "namePt": "Dragão Dourado Jovem",
+      "nameEn": "Young Gold Dragon",
+      "type": "Dragon",
+      "cr": "10",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "dragao-negro-jovem",
+      "namePt": "Dragão Negro Jovem",
+      "nameEn": "Young Black Dragon",
+      "type": "Dragon",
+      "cr": "7",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dragao-prateado-jovem",
+      "namePt": "Dragão Prateado Jovem",
+      "nameEn": "Young Silver Dragon",
+      "type": "Dragon",
+      "cr": "9",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "dragao-verde-jovem",
+      "namePt": "Dragão Verde Jovem",
+      "nameEn": "Young Green Dragon",
+      "type": "Dragon",
+      "cr": "8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "dragao-vermelho-jovem",
+      "namePt": "Dragão Vermelho Jovem",
+      "nameEn": "Young Red Dragon",
+      "type": "Dragon",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "dragao-fada-adulto",
+      "namePt": "Dragão-Fada Adulto",
+      "nameEn": "Faerie Dragon Adult",
+      "type": "Dragon",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "dragao-fada-jovem",
+      "namePt": "Dragão-Fada Jovem",
+      "nameEn": "Faerie Dragon Youth",
+      "type": "Dragon",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "dragao-sombra-juvenil",
+      "namePt": "Dragão-Sombra Juvenil",
+      "nameEn": "Juvenile Shadow Dragon",
+      "type": "Dragon",
+      "cr": "4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "kobold-alado",
+      "namePt": "Kobold Alado",
+      "nameEn": "Winged Kobold",
+      "type": "Dragon",
+      "cr": "1/4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "kobold-guerreiro",
+      "namePt": "Kobold Guerreiro",
+      "nameEn": "Kobold Warrior",
+      "type": "Dragon",
+      "cr": "1/8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "aarakocra-aeromante",
+      "namePt": "Aarakocra Aeromante",
+      "nameEn": "Aarakocra Aeromancer",
+      "type": "Elemental",
+      "cr": "4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "aarakocra-escaramucador",
+      "namePt": "Aarakocra Escaramuçador",
+      "nameEn": "Aarakocra Skirmisher",
+      "type": "Elemental",
+      "cr": "1/4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "azer-piromante",
+      "namePt": "Azer Piromante",
+      "nameEn": "Azer Pyromancer",
+      "type": "Elemental",
+      "cr": "6",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "azer-sentinela",
+      "namePt": "Azer Sentinela",
+      "nameEn": "Azer Sentinel",
+      "type": "Elemental",
+      "cr": "2",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "dust-mephit",
+      "namePt": "Dust Mephit",
+      "nameEn": "Dust Mephit",
+      "type": "Elemental",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "homem-lagarto-geomante",
+      "namePt": "Homem-Lagarto Geomante",
+      "nameEn": "Lizardfolk Geomancer",
+      "type": "Elemental",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "homem-lagarto-soberano",
+      "namePt": "Homem-Lagarto Soberano",
+      "nameEn": "Lizardfolk Sovereign",
+      "type": "Elemental",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "magma-mephit",
+      "namePt": "Magma Mephit",
+      "nameEn": "Magma Mephit",
+      "type": "Elemental",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "salamandra-cobra-de-fogo",
+      "namePt": "Salamandra Cobra de Fogo",
+      "nameEn": "Salamander Fire Snake",
+      "type": "Elemental",
+      "cr": "1",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "salamandra-mestre-do-inferno",
+      "namePt": "Salamandra Mestre do Inferno",
+      "nameEn": "Salamander Inferno Master",
+      "type": "Elemental",
+      "cr": "15",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "smoke-mephit",
+      "namePt": "Smoke Mephit",
+      "nameEn": "Smoke Mephit",
+      "type": "Elemental",
+      "cr": "1/4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "steam-mephit",
+      "namePt": "Steam Mephit",
+      "nameEn": "Steam Mephit",
+      "type": "Elemental",
+      "cr": "1/4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "tritao-skirmisher",
+      "namePt": "Tritão Skirmisher",
+      "nameEn": "Merfolk Skirmisher",
+      "type": "Elemental",
+      "cr": "1/8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "tritao-wavebender",
+      "namePt": "Tritão Wavebender",
+      "nameEn": "Merfolk Wavebender",
+      "type": "Elemental",
+      "cr": "6",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "bugbear-cacador",
+      "namePt": "Bugbear Caçador",
+      "nameEn": "Bugbear Stalker",
+      "type": "Fey",
+      "cr": "3",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "bugbear-guerreiro",
+      "namePt": "Bugbear Guerreiro",
+      "nameEn": "Bugbear Warrior",
+      "type": "Fey",
+      "cr": "1",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "bullywug-guerreiro",
+      "namePt": "Bullywug Guerreiro",
+      "nameEn": "Bullywug Warrior",
+      "type": "Fey",
+      "cr": "1/4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "bullywug-sabio-do-pantano",
+      "namePt": "Bullywug Sábio do Pântano",
+      "nameEn": "Bullywug Bog Sage",
+      "type": "Fey",
+      "cr": "4",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "centauro-guardiao",
+      "namePt": "Centauro Guardião",
+      "nameEn": "Centaur Warden",
+      "type": "Fey",
+      "cr": "7",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "centauro-soldado",
+      "namePt": "Centauro Soldado",
+      "nameEn": "Centaur Trooper",
+      "type": "Fey",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "goblin-amaldicoador",
+      "namePt": "Goblin Amaldiçoador",
+      "nameEn": "Goblin Hexer",
+      "type": "Fey",
+      "cr": "3",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "goblin-chefe",
+      "namePt": "Goblin Chefe",
+      "nameEn": "Goblin Boss",
+      "type": "Fey",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "goblin-guerreiro",
+      "namePt": "Goblin Guerreiro",
+      "nameEn": "Goblin Warrior",
+      "type": "Fey",
+      "cr": "1/4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "goblin-lacaio",
+      "namePt": "Goblin Lacaio",
+      "nameEn": "Goblin Minion",
+      "type": "Fey",
+      "cr": "1/8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "hobgoblin-capitao",
+      "namePt": "Hobgoblin Capitão",
+      "nameEn": "Hobgoblin Captain",
+      "type": "Fey",
+      "cr": "3",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "hobgoblin-guerreiro",
+      "namePt": "Hobgoblin Guerreiro",
+      "nameEn": "Hobgoblin Warrior",
+      "type": "Fey",
+      "cr": "1/2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "hobgoblin-senhor-da-guerra",
+      "namePt": "Hobgoblin Senhor da Guerra",
+      "nameEn": "Hobgoblin Warlord",
+      "type": "Fey",
+      "cr": "6",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "pixie-wonderbringer",
+      "namePt": "Pixie Wonderbringer",
+      "nameEn": "Pixie Wonderbringer",
+      "type": "Fey",
+      "cr": "5",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "satir-mestre-da-festa",
+      "namePt": "Sátiro Mestre da Festa",
+      "nameEn": "Satyr Revelmaster",
+      "type": "Fey",
+      "cr": "6",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "worg-dire",
+      "namePt": "Worg Dire",
+      "nameEn": "Dire Worg",
+      "type": "Fey",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "gnoll-demoniaco",
+      "namePt": "Gnoll Demoníaco",
+      "nameEn": "Gnoll Demoniac",
+      "type": "Fiend",
+      "cr": "8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "gnoll-guerreiro",
+      "namePt": "Gnoll Guerreiro",
+      "nameEn": "Gnoll Warrior",
+      "type": "Fiend",
+      "cr": "1/2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "gnoll-presa-de-yeenoghu",
+      "namePt": "Gnoll Presa de Yeenoghu",
+      "nameEn": "Gnoll Fang of Yeenoghu",
+      "type": "Fiend",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "gnoll-senhor-da-matilha",
+      "namePt": "Gnoll Senhor da Matilha",
+      "nameEn": "Gnoll Pack Lord",
+      "type": "Fiend",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "manes-vaporspawn",
+      "namePt": "Manes Vaporspawn",
+      "nameEn": "Manes Vaporspawn",
+      "type": "Fiend",
+      "cr": "1",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "sahuagin-barao",
+      "namePt": "Sahuagin Barão",
+      "nameEn": "Sahuagin Baron",
+      "type": "Fiend",
+      "cr": "5",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "sahuagin-guerreiro",
+      "namePt": "Sahuagin Guerreiro",
+      "nameEn": "Sahuagin Warrior",
+      "type": "Fiend",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "sahuagin-sacerdote",
+      "namePt": "Sahuagin Sacerdote",
+      "nameEn": "Sahuagin Priest",
+      "type": "Fiend",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "ultrolote",
+      "namePt": "Ultrolote",
+      "nameEn": "Ultroloth",
+      "type": "Fiend",
+      "cr": "13",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "ciclope-oraculo",
+      "namePt": "Ciclope Oráculo",
+      "nameEn": "Cyclops Oracle",
+      "type": "Giant",
+      "cr": "10",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "ciclope-sentinela",
+      "namePt": "Ciclope Sentinela",
+      "nameEn": "Cyclops Sentry",
+      "type": "Giant",
+      "cr": "6",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "membro-de-troll",
+      "namePt": "Membro de Troll",
+      "nameEn": "Troll Limb",
+      "type": "Giant",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "ogrillon-ogro",
+      "namePt": "Ogrillon Ogro",
+      "nameEn": "Ogrillon Ogre",
+      "type": "Giant",
+      "cr": "1",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "archpriest",
+      "namePt": "Archpriest",
+      "nameEn": "Archpriest",
+      "type": "Humanoid",
+      "cr": "12",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "arquimago",
+      "namePt": "Arquimago",
+      "nameEn": "Archmage",
+      "type": "Humanoid",
+      "cr": "12",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "bandido-enganador",
+      "namePt": "Bandido Enganador",
+      "nameEn": "Bandit Deceiver",
+      "type": "Humanoid",
+      "cr": "7",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "batedor-capitao",
+      "namePt": "Batedor Capitão",
+      "nameEn": "Scout Captain",
+      "type": "Humanoid",
+      "cr": "3",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "berserker-comandante",
+      "namePt": "Berserker Comandante",
+      "nameEn": "Berserker Commander",
+      "type": "Humanoid",
+      "cr": "8",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "capitao-bandido",
+      "namePt": "Capitão Bandido",
+      "nameEn": "Bandit Captain",
+      "type": "Humanoid",
+      "cr": "2",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "capitao-da-guarda",
+      "namePt": "Capitão da Guarda",
+      "nameEn": "Guard Captain",
+      "type": "Humanoid",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "cavaleiro-em-missao",
+      "namePt": "Cavaleiro em Missão",
+      "nameEn": "Questing Knight",
+      "type": "Humanoid",
+      "cr": "12",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "cultista-diabolico",
+      "namePt": "Cultista Diabólico",
+      "nameEn": "Fiend Cultist",
+      "type": "Humanoid",
+      "cr": "8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "cultista-fanatico",
+      "namePt": "Cultista Fanático",
+      "nameEn": "Cultist Fanatic",
+      "type": "Humanoid",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "cultista-hierofante",
+      "namePt": "Cultista Hierofante",
+      "nameEn": "Cultist Hierophant",
+      "type": "Humanoid",
+      "cr": "10",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "druida",
+      "namePt": "Druida",
+      "nameEn": "Druid",
+      "type": "Humanoid",
+      "cr": "2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "espiao-mestre",
+      "namePt": "Espião Mestre",
+      "nameEn": "Spy Master",
+      "type": "Humanoid",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "guerreiro-comandante",
+      "namePt": "Guerreiro Comandante",
+      "nameEn": "Warrior Commander",
+      "type": "Humanoid",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "guerreiro-infantaria",
+      "namePt": "Guerreiro de Infantaria",
+      "nameEn": "Warrior Infantry",
+      "type": "Humanoid",
+      "cr": "1/8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "guerreiro-veterano",
+      "namePt": "Guerreiro Veterano",
+      "nameEn": "Warrior Veteran",
+      "type": "Humanoid",
+      "cr": "3",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "lorde-do-crime-bandido",
+      "namePt": "Lorde do Crime Bandido",
+      "nameEn": "Bandit Crime Lord",
+      "type": "Humanoid",
+      "cr": "11",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "mago-apprentice",
+      "namePt": "Mago Apprentice",
+      "nameEn": "Mage Apprentice",
+      "type": "Humanoid",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "nobre-prodigy",
+      "namePt": "Nobre Prodigy",
+      "nameEn": "Noble Prodigy",
+      "type": "Humanoid",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "performer-legend",
+      "namePt": "Performer Legend",
+      "nameEn": "Performer Legend",
+      "type": "Humanoid",
+      "cr": "10",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "performer-maestro",
+      "namePt": "Performer Maestro",
+      "nameEn": "Performer Maestro",
+      "type": "Humanoid",
+      "cr": "6",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "pirate-admiral",
+      "namePt": "Pirate Admiral",
+      "nameEn": "Pirate Admiral",
+      "type": "Humanoid",
+      "cr": "12",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "pirate-captain",
+      "namePt": "Pirate Captain",
+      "nameEn": "Pirate Captain",
+      "type": "Humanoid",
+      "cr": "6",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "rufiao-chefe",
+      "namePt": "Rufião Chefe",
+      "nameEn": "Tough Boss",
+      "type": "Humanoid",
+      "cr": "4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "sacerdote-acolyte",
+      "namePt": "Sacerdote Acolyte",
+      "nameEn": "Priest Acolyte",
+      "type": "Humanoid",
+      "cr": "1/4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "bico-de-machado-gigante",
+      "namePt": "Bico-de-machado Gigante",
+      "nameEn": "Giant Axe Beak",
+      "type": "Monstrosity",
+      "cr": "5",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "cocatrice-regente",
+      "namePt": "Cocatrice Regente",
+      "nameEn": "Cockatrice Regent",
+      "type": "Monstrosity",
+      "cr": "8",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "harpia",
+      "namePt": "Harpia",
+      "nameEn": "Harpy",
+      "type": "Monstrosity",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "javali-homem",
+      "namePt": "Javali-homem",
+      "nameEn": "Wereboar",
+      "type": "Monstrosity",
+      "cr": "4",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "jovem-remorhaz",
+      "namePt": "Jovem Remorhaz",
+      "nameEn": "Young Remorhaz",
+      "type": "Monstrosity",
+      "cr": "5",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "minotauro-de-baphomet",
+      "namePt": "Minotauro de Baphomet",
+      "nameEn": "Minotaur of Baphomet",
+      "type": "Monstrosity",
+      "cr": "3",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "primeval-urso-coruja",
+      "namePt": "Primeval Urso-coruja",
+      "nameEn": "Primeval Owlbear",
+      "type": "Monstrosity",
+      "cr": "7",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "quaggoth-thonot",
+      "namePt": "Quaggoth Thonot",
+      "nameEn": "Quaggoth Thonot",
+      "type": "Monstrosity",
+      "cr": "3",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "rato-homem",
+      "namePt": "Rato-homem",
+      "nameEn": "Wererat",
+      "type": "Monstrosity",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "thri-kreen-psion",
+      "namePt": "Thri-kreen Psiônico",
+      "nameEn": "Thri-kreen Psion",
+      "type": "Monstrosity",
+      "cr": "8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "thri-kreen-saqueador",
+      "namePt": "Thri-kreen Saqueador",
+      "nameEn": "Thri-kreen Marauder",
+      "type": "Monstrosity",
+      "cr": "1",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "urso-homem",
+      "namePt": "Urso-homem",
+      "nameEn": "Werebear",
+      "type": "Monstrosity",
+      "cr": "5",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "lodo-cinzento-psiquico",
+      "namePt": "Lodo Cinzento Psíquico",
+      "nameEn": "Psychic Gray Ooze",
+      "type": "Ooze",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "arbusto-despertado",
+      "namePt": "Arbusto Despertado",
+      "nameEn": "Awakened Shrub",
+      "type": "Plant",
+      "cr": "0",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "arvore-despertada",
+      "namePt": "Árvore Despertada",
+      "nameEn": "Awakened Tree",
+      "type": "Plant",
+      "cr": "2",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "fungo-esporo-de-gas",
+      "namePt": "Fungo Esporo de Gás",
+      "nameEn": "Gas Spore Fungus",
+      "type": "Plant",
+      "cr": "1/2",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "fungo-gritador",
+      "namePt": "Fungo Gritador",
+      "nameEn": "Shrieker Fungus",
+      "type": "Plant",
+      "cr": "0",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "miconideo-adulto",
+      "namePt": "Micônideo Adulto",
+      "nameEn": "Myconid Adult",
+      "type": "Plant",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "miconideo-broto",
+      "namePt": "Micônideo Broto",
+      "nameEn": "Myconid Sprout",
+      "type": "Plant",
+      "cr": "0",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "miconideo-soberano",
+      "namePt": "Micônideo Soberano",
+      "nameEn": "Myconid Sovereign",
+      "type": "Plant",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "miconideo-spore-servant",
+      "namePt": "Micônideo Spore Servant",
+      "nameEn": "Myconid Spore Servant",
+      "type": "Plant",
+      "cr": "1",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "praga-de-galho",
+      "namePt": "Praga de Galho",
+      "nameEn": "Twig Blight",
+      "type": "Plant",
+      "cr": "1/8",
+      "extract": "monsters-ab.json"
+    },
+    {
+      "slug": "enxame-de-lemures",
+      "namePt": "Enxame de Lemures",
+      "nameEn": "Swarm of Lemures",
+      "type": "Swarm of Medium Fiends",
+      "cr": "3",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "enxame-de-dretches",
+      "namePt": "Enxame de Dretches",
+      "nameEn": "Swarm of Dretches",
+      "type": "Swarm of Small Fiends",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "enxame-de-stirges",
+      "namePt": "Enxame de Stirges",
+      "nameEn": "Swarm of Stirges",
+      "type": "Swarm of Tiny Monstrosities",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "enxame-de-garras-rastejantes",
+      "namePt": "Enxame de Garras Rastejantes",
+      "nameEn": "Swarm of Crawling Claws",
+      "type": "Swarm of Tiny Undead",
+      "cr": "3",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "aspirante-cavaleiro-da-morte",
+      "namePt": "Aspirante a Cavaleiro da Morte",
+      "nameEn": "Death Knight Aspirant",
+      "type": "Undead",
+      "cr": "11",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "cranio-flamejante",
+      "namePt": "Crânio Flamejante",
+      "nameEn": "Flameskull",
+      "type": "Undead",
+      "cr": "4",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "esqueleto-de-cavalo-de-guerra",
+      "namePt": "Esqueleto de Cavalo de Guerra",
+      "nameEn": "Warhorse Skeleton",
+      "type": "Undead",
+      "cr": "1/2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "esqueleto-de-minotauro",
+      "namePt": "Esqueleto de Minotauro",
+      "nameEn": "Minotaur Skeleton",
+      "type": "Undead",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "esqueleto-flamejante",
+      "namePt": "Esqueleto Flamejante",
+      "nameEn": "Flaming Skeleton",
+      "type": "Undead",
+      "cr": "3",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "ghast-chamador-de-tumulos",
+      "namePt": "Ghast Chamador de Túmulos",
+      "nameEn": "Ghast Gravecaller",
+      "type": "Undead",
+      "cr": "6",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "ghoul-lacedon",
+      "namePt": "Ghoul Lacedon",
+      "nameEn": "Lacedon Ghoul",
+      "type": "Undead",
+      "cr": "1",
+      "extract": "monsters-cl.json"
+    },
+    {
+      "slug": "graveyard-revenante",
+      "namePt": "Graveyard Revenante",
+      "nameEn": "Graveyard Revenant",
+      "type": "Undead",
+      "cr": "7",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "vampiro-traz-noite",
+      "namePt": "Vampiro Traz-Noite",
+      "nameEn": "Vampire Nightbringer",
+      "type": "Undead",
+      "cr": "8",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "zumbi-de-beholder",
+      "namePt": "Zumbi de Beholder",
+      "nameEn": "Beholder Zombie",
+      "type": "Undead",
+      "cr": "5",
+      "extract": "monsters-mz.json"
+    },
+    {
+      "slug": "zumbi-de-ogro",
+      "namePt": "Zumbi de Ogro",
+      "nameEn": "Ogre Zombie",
+      "type": "Undead",
+      "cr": "2",
+      "extract": "monsters-mz.json"
+    }
+  ],
+  "withoutNameEn": [
+    {
+      "slug": "espirito-aberrante-devorador",
+      "namePt": "Espírito Aberrante (Devorador)",
+      "nameEn": null,
+      "type": "Aberration",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-aberrante-pseudo-observador",
+      "namePt": "Espírito Aberrante (Pseudo-observador)",
+      "nameEn": null,
+      "type": "Aberration",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-aberrante-slaad",
+      "namePt": "Espírito Aberrante (Slaad)",
+      "nameEn": null,
+      "type": "Aberration",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "alce",
+      "namePt": "Alce",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-striker-sky",
+      "namePt": "Atacante Primal (Céu)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-striker-sea",
+      "namePt": "Atacante Primal (Mar)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-striker-land",
+      "namePt": "Atacante Primal (Terra)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "cabra",
+      "namePt": "Cabra",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "0",
+      "extract": null
+    },
+    {
+      "slug": "caranguejo",
+      "namePt": "Caranguejo",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "0",
+      "extract": null
+    },
+    {
+      "slug": "cavalo-de-tracao",
+      "namePt": "Cavalo de Tração",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": null
+    },
+    {
+      "slug": "cavalo-marinho-gigante",
+      "namePt": "Cavalo-marinho Gigante",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/2",
+      "extract": null
+    },
+    {
+      "slug": "cobra-venenosa",
+      "namePt": "Cobra Venenosa",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/8",
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-sky",
+      "namePt": "Companheiro Primal (Céu)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-sea",
+      "namePt": "Companheiro Primal (Mar)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-earth",
+      "namePt": "Companheiro Primal (Terra)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-bestial-agua",
+      "namePt": "Espírito Bestial (Água)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-bestial-ar",
+      "namePt": "Espírito Bestial (Ar)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-bestial-terra",
+      "namePt": "Espírito Bestial (Terra)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-guardian-sky",
+      "namePt": "Guardião Primal (Céu)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-guardian-sea",
+      "namePt": "Guardião Primal (Mar)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "primal-companion-guardian-land",
+      "namePt": "Guardião Primal (Terra)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "inseto-gigante-aranha",
+      "namePt": "Inseto Gigante (Aranha)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "inseto-gigante-centopeia",
+      "namePt": "Inseto Gigante (Centopeia)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "inseto-gigante-vespa",
+      "namePt": "Inseto Gigante (Vespa)",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "javali",
+      "namePt": "Javali",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": null
+    },
+    {
+      "slug": "macaco",
+      "namePt": "Macaco",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/2",
+      "extract": null
+    },
+    {
+      "slug": "pantera",
+      "namePt": "Pantera",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/4",
+      "extract": null
+    },
+    {
+      "slug": "texugo",
+      "namePt": "Texugo",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "0",
+      "extract": null
+    },
+    {
+      "slug": "tigre",
+      "namePt": "Tigre",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1",
+      "extract": null
+    },
+    {
+      "slug": "tubarao-de-recife",
+      "namePt": "Tubarão de Recife",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/2",
+      "extract": null
+    },
+    {
+      "slug": "urso-negro",
+      "namePt": "Urso Negro",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1/2",
+      "extract": null
+    },
+    {
+      "slug": "urso-pardo",
+      "namePt": "Urso Pardo",
+      "nameEn": null,
+      "type": "Beast",
+      "cr": "1",
+      "extract": null
+    },
+    {
+      "slug": "espirito-celestial-defensor",
+      "namePt": "Espírito Celestial (Defensor)",
+      "nameEn": null,
+      "type": "Celestial",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-celestial-vingador",
+      "namePt": "Espírito Celestial (Vingador)",
+      "nameEn": null,
+      "type": "Celestial",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "montaria-sobrenatural-celestial",
+      "namePt": "Montaria Sobrenatural (Celestial)",
+      "nameEn": null,
+      "type": "Celestial",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-constructo-argila",
+      "namePt": "Espírito do Constructo (Argila)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-constructo-metal",
+      "namePt": "Espírito do Constructo (Metal)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-constructo-pedra",
+      "namePt": "Espírito do Constructo (Pedra)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "objeto-animado-enorme",
+      "namePt": "Objeto Animado (Enorme)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "objeto-animado-grande",
+      "namePt": "Objeto Animado (Grande)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "objeto-animado-medio",
+      "namePt": "Objeto Animado (Médio ou menor)",
+      "nameEn": null,
+      "type": "Construct",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-draconico",
+      "namePt": "Espírito Dracônico",
+      "nameEn": null,
+      "type": "Dragon",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-elemental-agua",
+      "namePt": "Espírito Elemental (Água)",
+      "nameEn": null,
+      "type": "Elemental",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-elemental-ar",
+      "namePt": "Espírito Elemental (Ar)",
+      "nameEn": null,
+      "type": "Elemental",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-elemental-fogo",
+      "namePt": "Espírito Elemental (Fogo)",
+      "nameEn": null,
+      "type": "Elemental",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-elemental-terra",
+      "namePt": "Espírito Elemental (Terra)",
+      "nameEn": null,
+      "type": "Elemental",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-feerico-alegre",
+      "namePt": "Espírito Feérico (Alegre)",
+      "nameEn": null,
+      "type": "Fey",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-feerico-enfurecido",
+      "namePt": "Espírito Feérico (Enfurecido)",
+      "nameEn": null,
+      "type": "Fey",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-feerico-malandro",
+      "namePt": "Espírito Feérico (Malandro)",
+      "nameEn": null,
+      "type": "Fey",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "montaria-sobrenatural-feerico",
+      "namePt": "Montaria Sobrenatural (Feérico)",
+      "nameEn": null,
+      "type": "Fey",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-infero-demonio",
+      "namePt": "Espírito Ínfero (Demônio)",
+      "nameEn": null,
+      "type": "Fiend",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-infero-diabo",
+      "namePt": "Espírito Ínfero (Diabo)",
+      "nameEn": null,
+      "type": "Fiend",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-infero-yugoloth",
+      "namePt": "Espírito Ínfero (Yugoloth)",
+      "nameEn": null,
+      "type": "Fiend",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "montaria-sobrenatural-infero",
+      "namePt": "Montaria Sobrenatural (Ínfero)",
+      "nameEn": null,
+      "type": "Fiend",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-morto-vivo-esqueletico",
+      "namePt": "Espírito Morto-Vivo (Esquelético)",
+      "nameEn": null,
+      "type": "Undead",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-morto-vivo-fantasmagorico",
+      "namePt": "Espírito Morto-Vivo (Fantasmagórico)",
+      "nameEn": null,
+      "type": "Undead",
+      "cr": null,
+      "extract": null
+    },
+    {
+      "slug": "espirito-morto-vivo-putrido",
+      "namePt": "Espírito Morto-Vivo (Pútrido)",
+      "nameEn": null,
+      "type": "Undead",
+      "cr": null,
+      "extract": null
+    }
+  ],
+  "webFindings": [
+    "Roll20 MM2024 Art Packs 1–3: arte oficial (tokens+portraits); licença tipicamente só no VTT — não baixar para o catálogo.",
+    "D&D Beyond /monsters/* sem entitlement redireciona para shop — sem CDN pública.",
+    "EN World: previews promocionais (Monstrosities art, Everything You Need video stills) — parcial.",
+    "Scrap Beyond local já limpo; sem URLs de img no repo."
+  ],
+  "links": {
+    "roll20Pack1": "https://marketplace.roll20.net/browse/set/33671/dandd-monster-manual-2024-art-pack-1",
+    "roll20Pack2": "https://marketplace.roll20.net/browse/set/35920/dandd-monster-manual-2024-art-pack-2",
+    "roll20Pack3": "https://marketplace.roll20.net/browse/set/35921/dandd-monster-manual-2024-art-pack-3",
+    "enworldMonstrosities": "https://www.enworld.org/threads/2024-monster-manual-monstrosities-art.709635/",
+    "enworldArtDump": "https://www.enworld.org/threads/so-much-art-from-the-2025-monster-manual.709490/",
+    "ddbMm2024": "https://www.dndbeyond.com/sources/dnd/mm-2024"
+  }
+}

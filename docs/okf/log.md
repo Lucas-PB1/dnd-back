@@ -1,5 +1,76 @@
 # log
 
+## 2026-09-15 — Links Google Imagens para summons
+
+* **Update** (22:35 UTC): Beyond só tem símbolo nas magias; doc com busca Google Imagens por família e por variante — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: caçar arte fora do Beyond.
+
+## 2026-09-15 — Docs sem-imagem só summons
+
+* **Update** (22:30 UTC): `no-image-list.md` + `no-image-ddb-links.json` alinhados — total **37** summons; bestas/jovens removidos da lista aberta — refs: [`no-image-list.md`](../source/extracts/mm/no-image-list.md), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: doc batia com estado real pós import cobra/crocodilo.
+
+## 2026-09-15 — Últimas bestas + lista só summons
+
+* **Update** (22:25 UTC): `cobra-voadora` + `crocodilo-gigante` → `public/catalog/beasts/` + seed; lista sem imagem agora só **37** summons — refs: [`seed.mm-beasts-manual-images.sql`](../../database/seeds/creature/phb/seed.mm-beasts-manual-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: fechar gaps MM/beasts; usuário caça summons nas magias.
+
+## 2026-09-15 — Lista sem imagem atualizada
+
+* **Update** (22:20 UTC): após bestas manuais + jovens→adulto, restam **2** fichas para caçar (Flying Snake, Giant Crocodile) + summons sem arte — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: orientar scrap residual.
+
+## 2026-09-15 — Dragões jovens reusam arte do adulto
+
+* **Update** (22:15 UTC): 10 `*-jovem` + `dragao-sombra-juvenil` → mesmo `image_url` do adulto correspondente — refs: [`seed.mm-dragons-young-reuse-adult-images.sql`](../../database/seeds/creature/phb/seed.mm-dragons-young-reuse-adult-images.sql) — motivo: Beyond não publica arte Young; usuário pediu reutilizar a do Adulto.
+
+## 2026-09-15 — Retratos manuais de bestas (fichas Beyond)
+
+* **Update** (20:10 UTC): 41 arquivos em `scrap/` → `public/catalog/beasts/` + **42** `image_url` — refs: [`seed.mm-beasts-manual-images.sql`](../../database/seeds/creature/phb/seed.mm-beasts-manual-images.sql) — motivo: arte baixada das fichas individuais; restam ~49 (summons + young dragons + poucos gaps).
+
+## 2026-09-15 — Links Beyond para fichas sem imagem
+
+* **Update** (17:45 UTC): lista navegável com busca DDB das criaturas sem `image_url` — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: acelerar download manual da arte nas fichas individuais.
+
+## 2026-09-15 — Imagens Animals do scrap Beyond
+
+* **Update** (17:35 UTC): capítulo Animals → `public/catalog/beasts/`; **17** `image_url` novos (variantes/gigantes + enxames que compartilham arte do capítulo) — refs: [`seed.mm-animals-images.sql`](../../database/seeds/creature/phb/seed.mm-animals-images.sql) — motivo: Beyond só tem ~24 artes no capítulo Animals; restante ainda sem ilustração própria.
+
+## 2026-09-15 — Imagens Monsters (U–Z) do scrap Beyond
+
+* **Update** (17:25 UTC): artes U–Z → `public/catalog/monsters/`; **~12** `image_url` novos (ultrolote, vampiro traz-noite, guerreiros, licantropos, worg dire, zumbis) — refs: `seed.mm-monsters-{u..z}-images.sql` — motivo: fechar alfabeto MM 2024; A–Z completo no scrap.
+
+## 2026-09-15 — Imagens Monsters (N–T) do scrap Beyond
+
+* **Update** (17:20 UTC): artes N–T → `public/catalog/monsters/`; **~36** `image_url` novos (sahuagin, slaadi, esqueletos, pirates, performers, thri-kreen, etc.) — refs: `seed.mm-monsters-{n..t}-images.sql` — motivo: continuar lote MM 2024; restam ~119 sem imagem (beasts/summons/jovens dragão).
+
+## 2026-09-15 — Imagens Monsters (I–M) do scrap Beyond
+
+* **Update** (17:15 UTC): artes I–M → `public/catalog/monsters/`; **21** `image_url` novos (kobolds, cavaleiro em missão, homens-lagarto, mephits, tritões, micônideos, etc.) — refs: `seed.mm-monsters-{i..m}-images.sql` — motivo: continuar lote MM 2024.
+
+## 2026-09-15 — Imagens Monsters (E–H) do scrap Beyond
+
+* **Update** (17:10 UTC): artes E–H → `public/catalog/monsters/`; **30** `image_url` novos (gith, gnolls, goblins, hobgoblins, dragões-fada, fungos, etc.) — refs: `seed.mm-monsters-{e,f,g,h}-images.sql` — motivo: continuar lote MM 2024; micônideos ainda sem arte no scrap F.
+
+## 2026-09-15 — Imagens Monsters (C–D) do scrap Beyond
+
+* **Update** (17:00 UTC): artes C (21) + D (16) → `public/catalog/monsters/`; **13** `image_url` novos (centauros, cocatrice regente, couatl, enxames, cultistas, ciclopes, aspirante cav. morte, druida) — refs: [`seed.mm-monsters-c-images.sql`](../../database/seeds/creature/phb/seed.mm-monsters-c-images.sql), [`seed.mm-monsters-d-images.sql`](../../database/seeds/creature/phb/seed.mm-monsters-d-images.sql) — motivo: continuar lote de imagens MM 2024; jovens dragão cobre ainda sem arte.
+
+## 2026-09-15 — Imagens Monsters (B) do scrap Beyond
+
+* **Update** (16:55 UTC): 33 artes do scrap `Monsters (B)` → `public/catalog/monsters/` + 9 `image_url` novos (bandidos variantes, berserker comandante, praga de galho, bugbears, bullywugs) — refs: [`seed.mm-monsters-b-images.sql`](../../database/seeds/creature/phb/seed.mm-monsters-b-images.sql) — motivo: arte MM 2024; jovens dragões B ainda sem arte própria no scrap (só wyrmling/adulto/ancião).
+
+## 2026-09-15 — Imagens Monsters (A) do scrap Beyond
+
+* **Update** (16:50 UTC): 12 artes do scrap `Monsters (A)` → `public/catalog/monsters/` + `image_url` em 14 templates que estavam NULL (aarakocra, objetos animados, plantas despertadas, azer, bico-de-machado gigante) — refs: [`seed.mm-monsters-a-images.sql`](../../database/seeds/creature/phb/seed.mm-monsters-a-images.sql), [`monsters-a-images-report.json`](../source/extracts/mm/monsters-a-images-report.json) — motivo: preencher arte MM 2024 a partir do HTML salvo; PNGs já existentes (abolete, ankheg…) só atualizados no arquivo.
+
+## 2026-09-15 — Nomes UTF-8 + inventário sem imagem
+
+* **Fix** (16:30 UTC): 29 nomes com `??` no DB (espíritos/companions/montarias/objeto animado) corrigidos para acentos PT — refs: [`no-image-list.md`](../source/extracts/mm/no-image-list.md) — motivo: encoding corrompido na apply anterior; seeds SQL já estavam corretas.
+* **Update** (16:30 UTC): inventário 240 sem `image_url` + busca web de fontes MM 2024 — refs: [`no-image-sources.md`](../source/extracts/mm/no-image-sources.md) — motivo: arte oficial está em Roll20/DDB (sem CDN pública); scrap local já limpo.
+
+## 2026-09-15 — Gaps da lista via SRD
+
+- 11 templates do SRD 5.2.1 (swarms, Giant Owl/Eagle/Elk/Vulture, Flying Snake) → `list-gap-srd.json` / `seed.mm-list-gap-srd.sql`.
+- Nomes EN alinhados à lista MM (Venomous Snakes / Piranhas).
+- Alias `Yuan-ti Malison` → 3 tipos no relink de tags; agrupadores `(all)` continuam ignorados.
+
 ## 2026-09-15 — Lists: bestas faltantes + ignorar agrupadores
 
 - Aplicou `seed.phb-beasts.sql` + `seed.mm-animals.sql` (25 slugs da lista que faltavam no DB).

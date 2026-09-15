@@ -1,0 +1,99 @@
+{
+  "filled": [
+    {
+      "slug": "cobra-constritora-gigante",
+      "name": "Cobra Constritora Gigante",
+      "imageUrl": "/catalog/beasts/cobra-constritora.png"
+    },
+    {
+      "slug": "macaco",
+      "name": "Macaco",
+      "imageUrl": "/catalog/beasts/macaco-gigante.png"
+    },
+    {
+      "slug": "babuino",
+      "name": "Babuíno",
+      "imageUrl": "/catalog/beasts/macaco-gigante.png"
+    },
+    {
+      "slug": "javali",
+      "name": "Javali",
+      "imageUrl": "/catalog/beasts/javali-gigante.png"
+    },
+    {
+      "slug": "caranguejo",
+      "name": "Caranguejo",
+      "imageUrl": "/catalog/beasts/caranguejo-gigante.png"
+    },
+    {
+      "slug": "cabra",
+      "name": "Cabra",
+      "imageUrl": "/catalog/beasts/cabra-gigante.png"
+    },
+    {
+      "slug": "inseto-gigante-vespa",
+      "name": "Inseto Gigante (Vespa)",
+      "imageUrl": "/catalog/beasts/vespa-gigante.png"
+    },
+    {
+      "slug": "aranha-lobo-gigante",
+      "name": "Aranha-lobo Gigante",
+      "imageUrl": "/catalog/beasts/aranha-gigante.png"
+    },
+    {
+      "slug": "inseto-gigante-aranha",
+      "name": "Inseto Gigante (Aranha)",
+      "imageUrl": "/catalog/beasts/aranha-gigante.png"
+    },
+    {
+      "slug": "falcao-sangrento",
+      "name": "Falcão Sangrento",
+      "imageUrl": "/catalog/beasts/falcao.png"
+    },
+    {
+      "slug": "aguia",
+      "name": "Águia",
+      "imageUrl": "/catalog/beasts/falcao.png"
+    },
+    {
+      "slug": "polvo-gigante",
+      "name": "Polvo Gigante",
+      "imageUrl": "/catalog/beasts/polvo.png"
+    },
+    {
+      "slug": "coruja-gigante",
+      "name": "Coruja Gigante",
+      "imageUrl": "/catalog/beasts/coruja.png"
+    },
+    {
+      "slug": "rato-gigante",
+      "name": "Rato Gigante",
+      "imageUrl": "/catalog/beasts/rato.png"
+    },
+    {
+      "slug": "enxame-de-ratos",
+      "name": "Enxame de Ratos",
+      "imageUrl": "/catalog/beasts/rato.png"
+    },
+    {
+      "slug": "escorpiao-gigante",
+      "name": "Escorpião Gigante",
+      "imageUrl": "/catalog/beasts/escorpiao.png"
+    },
+    {
+      "slug": "enxame-de-corvos",
+      "name": "Enxame de Corvos",
+      "imageUrl": "/catalog/beasts/enxame-de-corvos.png"
+    }
+  ],
+  "refreshed": 22,
+  "missingSlugs": [
+    "archelon",
+    "arquelao"
+  ],
+  "missingFiles": [],
+  "counts": {
+    "no_img": 91,
+    "with_img": 456
+  }
+}
