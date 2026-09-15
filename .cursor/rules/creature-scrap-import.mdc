@@ -20,3 +20,4 @@ Ao importar scrap Beyond (`docs/source/scrap/monster/…`) para extract/seed:
 3. Comparar por **nome EN do scrap** ↔ mapa PT/slug e ↔ templates existentes antes de gerar seed.
 4. Após extract + seed + apply: **limpar o scrap** e remover geradores one-off (padrão do repo).
 5. MM 2024: muitas criaturas **não** têm Lair Actions separadas; covil costuma ser `Legendary Action Uses: N (M in Lair)`.
+6. **Monster Lists** (Appendix B): habitats/grupos/conversões → extract `monster-lists.json` + `phb_creature_template_list_tag` / `phb_creature_stat_block_conversion`. Tags só para slugs que existem no DB.

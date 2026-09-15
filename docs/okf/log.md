@@ -1,5 +1,18 @@
 # log
 
+## 2026-09-15 — Lists: bestas faltantes + ignorar agrupadores
+
+- Aplicou `seed.phb-beasts.sql` + `seed.mm-animals.sql` (25 slugs da lista que faltavam no DB).
+- Relink tags: habitats 935→998; agrupadores `(all)` ignorados de propósito.
+- Sem template ainda (só no extract): swarms, Giant Eagle/Owl/Elk/Vulture, Flying Snake, Yuan-ti Malison genérico.
+
+## 2026-09-14 — MM Monsters M–Z + Monster Lists
+
+- Extract/seed `monsters-mz.json` / `seed.mm-monsters-mz.sql` (**186** templates; delta).
+- Habitat/Treasure dos stat blocks + listagens Appendix B em `monster-lists.json` / `seed.mm-monster-lists.sql`.
+- Schema: `phb_creature_template_list_tag` (habitat|treasure|group) + `phb_creature_stat_block_conversion` (2014→2024).
+- Scrap `docs/source/scrap/` limpo após import.
+
 ## 2026-09-14 — MM Monsters C–L → catálogo
 
 - Extract `monsters-cl.json` + seed `seed.mm-monsters-cl.sql` (**156** templates; delta, sem repetir A–B/Animals/PHB).

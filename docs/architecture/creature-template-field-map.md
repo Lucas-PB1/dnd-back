@@ -21,6 +21,8 @@ Runtime: `game_actor*` · Catálogo: `phb_creature_template*` / `phb_vehicle_tem
 | Ações / ataques | `phb_creature_template_action` | `game_actor_action` |
 | Magias inatas | `phb_creature_template_spell` | `game_actor_spell` |
 | Traços | `phb_creature_template_trait` | `notes` ou futuro |
+| Habitat / treasure / grupo (listas MM) | `phb_creature_template_list_tag` (`kind` + `value`) | — |
+| Conversão stat block 2014→2024 | `phb_creature_stat_block_conversion` | — |
 
 ### Escala opcional (binding — fora da identidade)
 
