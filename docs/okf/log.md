@@ -1,5 +1,21 @@
 # log
 
+## 2026-09-14 — MM A–B: usos lendários
+
+- Completou `Legendary Action Uses` nas 13 criaturas lendárias (extract + seed).
+- MM 2024: sem Lair Actions separadas; covil = usos extras (ex. 3 → 4 in Lair) + Legendary Resistance.
+- Próximas fichas scrap: **não repetir** slugs já no catálogo (só deltas). Ver rule `creature-scrap-import`.
+
+## 2026-09-14 — MM Monsters A–B → catálogo
+
+- Extract `docs/source/extracts/mm/monsters-ab.json` + seed `seed.mm-monsters-ab.sql` (65 templates A–B).
+- Scrap `docs/source/scrap/monster/alfabeto/` limpo após import; artes em `public/catalog/monsters/`.
+
+## 2026-09-14 — MM Animals → catálogo Beast
+
+- Extract + seed `seed.mm-animals.sql` (42 Beasts novas; skip Swarm / Celestial / Monstrosity).
+- Artes MM também atualizam algumas bestas já no PHB App. B.
+
 ## 2026-09-14 — PHB Appendix B Beasts → catálogo
 
 - Extract + seed `seed.phb-beasts.sql` (43 Beasts) a partir do scrap Beyond.

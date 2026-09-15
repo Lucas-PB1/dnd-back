@@ -1,0 +1,22 @@
+---
+description: >-
+  Import de fichas MM/Beyond: não duplicar criaturas já no catálogo;
+  só inserir slugs novos e limpar scrap depois.
+globs:
+  - docs/source/scrap/monster/**/*
+  - docs/source/extracts/mm/**/*
+  - database/seeds/creature/**/*
+alwaysApply: false
+---
+
+# Creature scrap → catálogo (sem repetir)
+
+Ao importar scrap Beyond (`docs/source/scrap/monster/…`) para extract/seed:
+
+1. **Não repetir criaturas** — pular qualquer monstro cujo `slug` (ou `nameEn` já mapeado) já exista em:
+   - `rpg.phb_creature_template` / seeds em `database/seeds/creature/`
+   - extracts `docs/source/extracts/mm/*.json` e `docs/source/extracts/phb/creature-*.json`
+2. Novas fichas = **só deltas** (letras C–Z, capítulos novos, etc.). `ON CONFLICT DO UPDATE` só para corrigir o mesmo lote em re-run, não para reimportar bestiário já coberto.
+3. Comparar por **nome EN do scrap** ↔ mapa PT/slug e ↔ templates existentes antes de gerar seed.
+4. Após extract + seed + apply: **limpar o scrap** e remover geradores one-off (padrão do repo).
+5. MM 2024: muitas criaturas **não** têm Lair Actions separadas; covil costuma ser `Legendary Action Uses: N (M in Lair)`.

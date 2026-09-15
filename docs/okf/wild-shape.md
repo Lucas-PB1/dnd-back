@@ -43,10 +43,10 @@ Quando o catálogo ganhar bestas com ND maior, elas entram **sozinhas** se coube
 
 - _(nenhuma imediata para Wild Shape / Companion)_
 
-## Catálogo Beast (PHB 2024 App. B)
+## Catálogo Beast (PHB 2024 App. B + MM Animals)
 
-- Scrap → extract `docs/source/extracts/phb/creature-stat-blocks-beasts.json` (43 Beasts).
-- Seed `database/seeds/creature/phb/seed.phb-beasts.sql` + extract JSON.
+- PHB App. B: extract `docs/source/extracts/phb/creature-stat-blocks-beasts.json` + `seed.phb-beasts.sql` (43).
+- MM Animals: extract `docs/source/extracts/mm/animals-beasts.json` + `seed.mm-animals.sql` (42 novas; sem Swarm/não-Beast).
 - Reusa slugs do Find Familiar; CR/fly alimentam elegibilidade automaticamente.
 
 ## Companheiro Selvagem (feita)
