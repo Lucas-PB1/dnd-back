@@ -457,6 +457,7 @@ creature/phb/seed.find-familiar.sql
 creature/phb/seed.phb-beasts.sql
 creature/phb/seed.mm-animals.sql
 creature/phb/seed.mm-monsters-ab.sql
+creature/phb/seed.mm-monsters-cl.sql
 creature/phb/phb_mount.images.02.sql
 effect/phb/phb_effect.phb.sql
 effect/steinhardt/phb_effect.steinhardt.sql

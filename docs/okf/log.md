@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-14 — MM Monsters C–L → catálogo
+
+- Extract `monsters-cl.json` + seed `seed.mm-monsters-cl.sql` (**156** templates; delta, sem repetir A–B/Animals/PHB).
+- 15 lendárias com `Legendary Action Uses` (incl. Empírico, Kraken, Lich, Dracolich).
+- Scrap `docs/source/scrap/monster/` limpo após import.
+
 ## 2026-09-14 — MM A–B: usos lendários
 
 - Completou `Legendary Action Uses` nas 13 criaturas lendárias (extract + seed).
