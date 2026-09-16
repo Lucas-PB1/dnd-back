@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-16 — Veículos PHB com imagem (12/12)
+
+* **Update** (12:25 UTC): 12 artes → `public/catalog/vehicles/` + `seed.mm-vehicles-images.sql` (`phb_vehicle_template`); backlog imagens **0** — refs: [`seed.mm-vehicles-images.sql`](../../database/seeds/creature/phb/seed.mm-vehicles-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: fechar veículos após rename Navio a Remo.
+
+## 2026-09-16 — Galley: Galera → Navio a Remo
+
+* **Update** (12:15 UTC): slug `galera` → `navio-a-remo`; nome **Navio a Remo** (item + veículo + glossário) — refs: [`phb_vehicles.all.sql`](../../database/seeds/creature/phb/phb_vehicles.all.sql), [`20260916_galera_to_navio_a_remo.sql`](../../database/migrations/20260916_galera_to_navio_a_remo.sql) — motivo: “Galera” soa gíria em PT-BR; alinhar a `Navio a Vela` / `Navio Longo`.
+
+## 2026-09-16 — Backlog real: wire 286 + 12 veículos
+
+* **Update** (12:05 UTC): audit seeds mostrou ~298 sem `image_url`; **286** já tinham arquivo em `public/catalog/` e foram ligados (`seed.mm-catalog-wire-images.sql`); restam **12 veículos** PHB — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md), [`seed.mm-catalog-wire-images.sql`](../../database/seeds/creature/phb/seed.mm-catalog-wire-images.sql) — motivo: lista “fechada” ignorava arte órfã sem UPDATE.
+
 ## 2026-09-16 — Summons fechados (37/37)
 
 * **Update** (12:00 UTC): lote final elemental+skeletal+montaria+primal → `public/catalog/summons/`; lista sem imagem **0** — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: usuário entregou o resto (nomes com typo mapeados).

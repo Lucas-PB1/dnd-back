@@ -57,9 +57,9 @@ VALUES
     400000
   ),
   (
-    'galera',
+    'navio-a-remo',
     'phb-2024-pt',
-    'Galera',
+    'Navio a Remo',
     15,
     500,
     20,
@@ -144,8 +144,8 @@ VALUES
   ('navio-longo', 'remo', 30),
   ('navio-a-vela', 'vela', 20),
   ('navio-de-guerra', 'vela', 25),
-  ('galera', 'vela', 40),
-  ('galera', 'remo', 40),
+  ('navio-a-remo', 'vela', 40),
+  ('navio-a-remo', 'remo', 40),
   ('aeronave', 'ar', 80),
   ('carruagem', 'walk', 30),
   ('carroca', 'walk', 30),
@@ -162,7 +162,7 @@ SELECT v.slug, v.name, v.bucket::rpg.actor_action_bucket, v.bonus::int, v.damage
 FROM (VALUES
   ('navio-longo', 'Aríete', 'action', NULL::int, '4d10+6', 1),
   ('navio-de-guerra', 'Aríete', 'action', NULL::int, '4d10+10', 1),
-  ('galera', 'Aríete', 'action', NULL::int, '4d10+10', 1)
+  ('navio-a-remo', 'Aríete', 'action', NULL::int, '4d10+10', 1)
 ) AS v(slug, name, bucket, bonus, damage, ord)
 WHERE NOT EXISTS (
   SELECT 1 FROM rpg.phb_vehicle_template_action a

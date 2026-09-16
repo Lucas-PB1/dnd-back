@@ -265,7 +265,7 @@ pessoa (CD 15) ou duplicar um selo de cera (CD 20)', '{"attribute":"Destreza","c
 
   -- Veículos grandes (ar / água)
   ('aeronave', 'other'::rpg.item_type, 'Aeronave', '{"text":"40.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"8 mph","crew":10,"passengers":20,"cargoTons":1,"ac":13,"hp":300}'::jsonb),
-  ('galera', 'other'::rpg.item_type, 'Galera', '{"text":"30.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"4 mph","crew":80,"cargoTons":150,"ac":15,"hp":500,"damageThreshold":20}'::jsonb),
+  ('navio-a-remo', 'other'::rpg.item_type, 'Navio a Remo', '{"text":"30.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"4 mph","crew":80,"cargoTons":150,"ac":15,"hp":500,"damageThreshold":20}'::jsonb),
   ('barco-de-quilha', 'other'::rpg.item_type, 'Barco de Quilha', '{"text":"3.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"1 mph","crew":1,"passengers":6,"cargoTons":0.5,"ac":15,"hp":100,"damageThreshold":10}'::jsonb),
   ('navio-longo', 'other'::rpg.item_type, 'Navio Longo', '{"text":"10.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"3 mph","crew":40,"passengers":150,"cargoTons":10,"ac":15,"hp":300,"damageThreshold":15}'::jsonb),
   ('bote', 'other'::rpg.item_type, 'Bote', '{"text":"50 PO"}'::jsonb, '50 kg', 'Veículo grande (pode ser carregado).', '{"kind":"large-vehicle","speed":"1.5 mph","crew":1,"passengers":3,"ac":11,"hp":50}'::jsonb),

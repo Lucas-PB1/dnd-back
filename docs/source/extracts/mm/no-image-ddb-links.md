@@ -1,11 +1,8 @@
-# Sem `image_url` — summons
+# Sem `image_url`
 
 Gerado: 2026-09-16 (seeds SSOT)
 
-**Fechado.** Todos os **37** templates de summons/companions têm `image_url`.
+**Fechado.** Criaturas e veículos PHB com `image_url`.
 
-- Arte: `public/catalog/summons/`
-- Seed: `database/seeds/creature/phb/seed.mm-summons-images.sql`
-- Primal: 1 arte por ambiente (Land/Sea/Sky) nos 3 roles
-
-MM A–Z, Animals/Beasts e dragões jovens já estavam fechados.
+- Criaturas: wire + summons + MM/beasts  
+- Veículos (12): `public/catalog/vehicles/` + `seed.mm-vehicles-images.sql` → `phb_vehicle_template`

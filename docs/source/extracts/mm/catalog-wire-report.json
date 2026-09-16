@@ -1,0 +1,1435 @@
+{
+  "generatedAt": "2026-09-16T12:01:38.610Z",
+  "wired": [
+    {
+      "slug": "abolete",
+      "name": "Abolete",
+      "imageUrl": "/catalog/monsters/abolete.png"
+    },
+    {
+      "slug": "abominable-yeti",
+      "name": "Abominable Yeti",
+      "imageUrl": "/catalog/monsters/abominable-yeti.png"
+    },
+    {
+      "slug": "alossauro",
+      "name": "Alossauro",
+      "imageUrl": "/catalog/beasts/alossauro.png"
+    },
+    {
+      "slug": "ankheg",
+      "name": "Ankheg",
+      "imageUrl": "/catalog/monsters/ankheg.png"
+    },
+    {
+      "slug": "aranha",
+      "name": "Aranha",
+      "imageUrl": "/catalog/beasts/aranha.png"
+    },
+    {
+      "slug": "arcanalote",
+      "name": "Arcanalote",
+      "imageUrl": "/catalog/monsters/arcanalote.png"
+    },
+    {
+      "slug": "arquelon",
+      "name": "Arquelon",
+      "imageUrl": "/catalog/beasts/arquelon.png"
+    },
+    {
+      "slug": "arquibruxa",
+      "name": "Arquibruxa",
+      "imageUrl": "/catalog/monsters/arquibruxa.png"
+    },
+    {
+      "slug": "arvorente",
+      "name": "Arvorente",
+      "imageUrl": "/catalog/monsters/arvorente.png"
+    },
+    {
+      "slug": "assassino",
+      "name": "Assassino",
+      "imageUrl": "/catalog/monsters/assassino.png"
+    },
+    {
+      "slug": "balor",
+      "name": "Balor",
+      "imageUrl": "/catalog/monsters/balor.png"
+    },
+    {
+      "slug": "bandido",
+      "name": "Bandido",
+      "imageUrl": "/catalog/monsters/bandido.png"
+    },
+    {
+      "slug": "banshee",
+      "name": "Banshee",
+      "imageUrl": "/catalog/monsters/banshee.png"
+    },
+    {
+      "slug": "barlgura",
+      "name": "Barlgura",
+      "imageUrl": "/catalog/monsters/barlgura.png"
+    },
+    {
+      "slug": "basilisco",
+      "name": "Basilisco",
+      "imageUrl": "/catalog/monsters/basilisco.png"
+    },
+    {
+      "slug": "batedor",
+      "name": "Batedor",
+      "imageUrl": "/catalog/monsters/batedor.png"
+    },
+    {
+      "slug": "behir",
+      "name": "Behir",
+      "imageUrl": "/catalog/monsters/behir.png"
+    },
+    {
+      "slug": "beholder",
+      "name": "Beholder",
+      "imageUrl": "/catalog/monsters/beholder.png"
+    },
+    {
+      "slug": "berserker",
+      "name": "Berserker",
+      "imageUrl": "/catalog/monsters/berserker.png"
+    },
+    {
+      "slug": "bico-de-machado",
+      "name": "Bico-de-machado",
+      "imageUrl": "/catalog/monsters/bico-de-machado.png"
+    },
+    {
+      "slug": "boca-delirante",
+      "name": "Boca Delirante",
+      "imageUrl": "/catalog/monsters/boca-delirante.png"
+    },
+    {
+      "slug": "bola-de-aniquilacao",
+      "name": "Bola de Aniquilação",
+      "imageUrl": "/catalog/monsters/bola-de-aniquilacao.png"
+    },
+    {
+      "slug": "bruxa-do-mar",
+      "name": "Bruxa do Mar",
+      "imageUrl": "/catalog/monsters/bruxa-do-mar.png"
+    },
+    {
+      "slug": "bruxa-verde",
+      "name": "Bruxa Verde",
+      "imageUrl": "/catalog/monsters/bruxa-verde.png"
+    },
+    {
+      "slug": "bulette",
+      "name": "Bulette",
+      "imageUrl": "/catalog/monsters/bulette.png"
+    },
+    {
+      "slug": "bulette-filhote",
+      "name": "Bulette Filhote",
+      "imageUrl": "/catalog/monsters/bulette-filhote.png"
+    },
+    {
+      "slug": "cambiao",
+      "name": "Cambião",
+      "imageUrl": "/catalog/monsters/cambiao.png"
+    },
+    {
+      "slug": "cao-da-morte",
+      "name": "Cão da Morte",
+      "imageUrl": "/catalog/monsters/cao-da-morte.png"
+    },
+    {
+      "slug": "cao-infernal",
+      "name": "Cão Infernal",
+      "imageUrl": "/catalog/monsters/cao-infernal.png"
+    },
+    {
+      "slug": "cao-piscante",
+      "name": "Cão Piscante",
+      "imageUrl": "/catalog/monsters/cao-piscante.png"
+    },
+    {
+      "slug": "cataclismo-elemental",
+      "name": "Cataclismo Elemental",
+      "imageUrl": "/catalog/monsters/cataclismo-elemental.png"
+    },
+    {
+      "slug": "cavaleiro",
+      "name": "Cavaleiro",
+      "imageUrl": "/catalog/monsters/cavaleiro.png"
+    },
+    {
+      "slug": "cavaleiro-da-morte",
+      "name": "Cavaleiro da Morte",
+      "imageUrl": "/catalog/monsters/cavaleiro-da-morte.png"
+    },
+    {
+      "slug": "chacal-homem",
+      "name": "Chacal-homem",
+      "imageUrl": "/catalog/monsters/chacal-homem.png"
+    },
+    {
+      "slug": "chasme",
+      "name": "Chasme",
+      "imageUrl": "/catalog/monsters/chasme.png"
+    },
+    {
+      "slug": "chuul",
+      "name": "Chuul",
+      "imageUrl": "/catalog/monsters/chuul.png"
+    },
+    {
+      "slug": "cocatrice",
+      "name": "Cocatrice",
+      "imageUrl": "/catalog/monsters/cocatrice.png"
+    },
+    {
+      "slug": "colosso",
+      "name": "Colosso",
+      "imageUrl": "/catalog/monsters/colosso.png"
+    },
+    {
+      "slug": "corvo",
+      "name": "Corvo",
+      "imageUrl": "/catalog/beasts/corvo.png"
+    },
+    {
+      "slug": "crocodilo",
+      "name": "Crocodilo",
+      "imageUrl": "/catalog/beasts/crocodilo.png"
+    },
+    {
+      "slug": "cubo-gelatinoso",
+      "name": "Cubo Gelatinoso",
+      "imageUrl": "/catalog/monsters/cubo-gelatinoso.png"
+    },
+    {
+      "slug": "cultista",
+      "name": "Cultista",
+      "imageUrl": "/catalog/monsters/cultista.png"
+    },
+    {
+      "slug": "cultista-aberrante",
+      "name": "Cultista Aberrante",
+      "imageUrl": "/catalog/monsters/cultista-aberrante.png"
+    },
+    {
+      "slug": "cultista-da-morte",
+      "name": "Cultista da Morte",
+      "imageUrl": "/catalog/monsters/cultista-da-morte.png"
+    },
+    {
+      "slug": "cultista-elemental",
+      "name": "Cultista Elemental",
+      "imageUrl": "/catalog/monsters/cultista-elemental.png"
+    },
+    {
+      "slug": "dao",
+      "name": "Dao",
+      "imageUrl": "/catalog/monsters/dao.png"
+    },
+    {
+      "slug": "demonio-das-sombras",
+      "name": "Demônio das Sombras",
+      "imageUrl": "/catalog/monsters/demonio-das-sombras.png"
+    },
+    {
+      "slug": "deva",
+      "name": "Deva",
+      "imageUrl": "/catalog/monsters/deva.png"
+    },
+    {
+      "slug": "devorador-de-intelecto",
+      "name": "Devorador de Intelecto",
+      "imageUrl": "/catalog/monsters/devorador-de-intelecto.png"
+    },
+    {
+      "slug": "diabo-acorrentado",
+      "name": "Diabo Acorrentado",
+      "imageUrl": "/catalog/monsters/diabo-acorrentado.png"
+    },
+    {
+      "slug": "diabo-barbudo",
+      "name": "Diabo Barbudo",
+      "imageUrl": "/catalog/monsters/diabo-barbudo.png"
+    },
+    {
+      "slug": "diabo-cornudo",
+      "name": "Diabo Cornudo",
+      "imageUrl": "/catalog/monsters/diabo-cornudo.png"
+    },
+    {
+      "slug": "diabo-de-ossos",
+      "name": "Diabo de Ossos",
+      "imageUrl": "/catalog/monsters/diabo-de-ossos.png"
+    },
+    {
+      "slug": "diabo-do-gelo",
+      "name": "Diabo do Gelo",
+      "imageUrl": "/catalog/monsters/diabo-do-gelo.png"
+    },
+    {
+      "slug": "diabo-espinhoso",
+      "name": "Diabo Espinhoso",
+      "imageUrl": "/catalog/monsters/diabo-espinhoso.png"
+    },
+    {
+      "slug": "diabo-espinhudo",
+      "name": "Diabo Espinhudo",
+      "imageUrl": "/catalog/monsters/diabo-espinhudo.png"
+    },
+    {
+      "slug": "diabrete",
+      "name": "Diabrete",
+      "imageUrl": "/catalog/monsters/diabrete.png"
+    },
+    {
+      "slug": "djinn",
+      "name": "Djinn",
+      "imageUrl": "/catalog/monsters/djinn.png"
+    },
+    {
+      "slug": "doninha",
+      "name": "Doninha",
+      "imageUrl": "/catalog/beasts/doninha.png"
+    },
+    {
+      "slug": "doppelganger",
+      "name": "Doppelganger",
+      "imageUrl": "/catalog/monsters/doppelganger.png"
+    },
+    {
+      "slug": "dracolich",
+      "name": "Dracolich",
+      "imageUrl": "/catalog/monsters/dracolich.png"
+    },
+    {
+      "slug": "dragao-azul-adulto",
+      "name": "Dragão Azul Adulto",
+      "imageUrl": "/catalog/monsters/dragao-azul-adulto.png"
+    },
+    {
+      "slug": "dragao-azul-anciano",
+      "name": "Dragão Azul Ancião",
+      "imageUrl": "/catalog/monsters/dragao-azul-anciano.jpg"
+    },
+    {
+      "slug": "dragao-branco-adulto",
+      "name": "Dragão Branco Adulto",
+      "imageUrl": "/catalog/monsters/dragao-branco-adulto.png"
+    },
+    {
+      "slug": "dragao-branco-anciano",
+      "name": "Dragão Branco Ancião",
+      "imageUrl": "/catalog/monsters/dragao-branco-anciano.jpg"
+    },
+    {
+      "slug": "dragao-de-bronze-adulto",
+      "name": "Dragão de Bronze Adulto",
+      "imageUrl": "/catalog/monsters/dragao-de-bronze-adulto.png"
+    },
+    {
+      "slug": "dragao-de-bronze-anciano",
+      "name": "Dragão de Bronze Ancião",
+      "imageUrl": "/catalog/monsters/dragao-de-bronze-anciano.jpg"
+    },
+    {
+      "slug": "dragao-de-cobre-adulto",
+      "name": "Dragão de Cobre Adulto",
+      "imageUrl": "/catalog/monsters/dragao-de-cobre-adulto.png"
+    },
+    {
+      "slug": "dragao-de-cobre-anciano",
+      "name": "Dragão de Cobre Ancião",
+      "imageUrl": "/catalog/monsters/dragao-de-cobre-anciano.png"
+    },
+    {
+      "slug": "dragao-de-latao-adulto",
+      "name": "Dragão de Latão Adulto",
+      "imageUrl": "/catalog/monsters/dragao-de-latao-adulto.png"
+    },
+    {
+      "slug": "dragao-de-latao-anciano",
+      "name": "Dragão de Latão Ancião",
+      "imageUrl": "/catalog/monsters/dragao-de-latao-anciano.jpg"
+    },
+    {
+      "slug": "dragao-dourado-adulto",
+      "name": "Dragão Dourado Adulto",
+      "imageUrl": "/catalog/monsters/dragao-dourado-adulto.png"
+    },
+    {
+      "slug": "dragao-dourado-anciano",
+      "name": "Dragão Dourado Ancião",
+      "imageUrl": "/catalog/monsters/dragao-dourado-anciano.png"
+    },
+    {
+      "slug": "dragao-negro-adulto",
+      "name": "Dragão Negro Adulto",
+      "imageUrl": "/catalog/monsters/dragao-negro-adulto.png"
+    },
+    {
+      "slug": "dragao-negro-anciano",
+      "name": "Dragão Negro Ancião",
+      "imageUrl": "/catalog/monsters/dragao-negro-anciano.jpg"
+    },
+    {
+      "slug": "dragao-prateado-adulto",
+      "name": "Dragão Prateado Adulto",
+      "imageUrl": "/catalog/monsters/dragao-prateado-adulto.png"
+    },
+    {
+      "slug": "dragao-prateado-anciano",
+      "name": "Dragão Prateado Ancião",
+      "imageUrl": "/catalog/monsters/dragao-prateado-anciano.jpg"
+    },
+    {
+      "slug": "dragao-sombra",
+      "name": "Dragão-Sombra",
+      "imageUrl": "/catalog/monsters/dragao-sombra.png"
+    },
+    {
+      "slug": "dragao-verde-adulto",
+      "name": "Dragão Verde Adulto",
+      "imageUrl": "/catalog/monsters/dragao-verde-adulto.png"
+    },
+    {
+      "slug": "dragao-verde-anciano",
+      "name": "Dragão Verde Ancião",
+      "imageUrl": "/catalog/monsters/dragao-verde-anciano.png"
+    },
+    {
+      "slug": "dragao-vermelho-adulto",
+      "name": "Dragão Vermelho Adulto",
+      "imageUrl": "/catalog/monsters/dragao-vermelho-adulto.png"
+    },
+    {
+      "slug": "dragao-vermelho-anciano",
+      "name": "Dragão Vermelho Ancião",
+      "imageUrl": "/catalog/monsters/dragao-vermelho-anciano.jpg"
+    },
+    {
+      "slug": "dragonete-dragao-azul",
+      "name": "Dragonete Dragão Azul",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-azul.png"
+    },
+    {
+      "slug": "dragonete-dragao-branco",
+      "name": "Dragonete Dragão Branco",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-branco.png"
+    },
+    {
+      "slug": "dragonete-dragao-de-bronze",
+      "name": "Dragonete Dragão de Bronze",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-de-bronze.png"
+    },
+    {
+      "slug": "dragonete-dragao-de-cobre",
+      "name": "Dragonete Dragão de Cobre",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-de-cobre.png"
+    },
+    {
+      "slug": "dragonete-dragao-de-latao",
+      "name": "Dragonete Dragão de Latão",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-de-latao.png"
+    },
+    {
+      "slug": "dragonete-dragao-dourado",
+      "name": "Dragonete Dragão Dourado",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-dourado.png"
+    },
+    {
+      "slug": "dragonete-dragao-negro",
+      "name": "Dragonete Dragão Negro",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-negro.png"
+    },
+    {
+      "slug": "dragonete-dragao-prateado",
+      "name": "Dragonete Dragão Prateado",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-prateado.png"
+    },
+    {
+      "slug": "dragonete-dragao-verde",
+      "name": "Dragonete Dragão Verde",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-verde.png"
+    },
+    {
+      "slug": "dragonete-dragao-vermelho",
+      "name": "Dragonete Dragão Vermelho",
+      "imageUrl": "/catalog/monsters/dragonete-dragao-vermelho.png"
+    },
+    {
+      "slug": "dretch",
+      "name": "Dretch",
+      "imageUrl": "/catalog/monsters/dretch.png"
+    },
+    {
+      "slug": "driade",
+      "name": "Dríade",
+      "imageUrl": "/catalog/monsters/driade.png"
+    },
+    {
+      "slug": "drider",
+      "name": "Drider",
+      "imageUrl": "/catalog/monsters/drider.png"
+    },
+    {
+      "slug": "efrite",
+      "name": "Efrite",
+      "imageUrl": "/catalog/monsters/efrite.png"
+    },
+    {
+      "slug": "elemental-da-agua",
+      "name": "Elemental da Água",
+      "imageUrl": "/catalog/monsters/elemental-da-agua.png"
+    },
+    {
+      "slug": "elemental-da-terra",
+      "name": "Elemental da Terra",
+      "imageUrl": "/catalog/monsters/elemental-da-terra.png"
+    },
+    {
+      "slug": "elemental-do-ar",
+      "name": "Elemental do Ar",
+      "imageUrl": "/catalog/monsters/elemental-do-ar.png"
+    },
+    {
+      "slug": "elemental-do-fogo",
+      "name": "Elemental do Fogo",
+      "imageUrl": "/catalog/monsters/elemental-do-fogo.png"
+    },
+    {
+      "slug": "empirico",
+      "name": "Empírico",
+      "imageUrl": "/catalog/monsters/empirico.png"
+    },
+    {
+      "slug": "enxame-de-larvas",
+      "name": "Enxame de Larvas",
+      "imageUrl": "/catalog/monsters/enxame-de-larvas.png"
+    },
+    {
+      "slug": "erinia",
+      "name": "Erínia",
+      "imageUrl": "/catalog/monsters/erinia.png"
+    },
+    {
+      "slug": "esfinge-do-assombro",
+      "name": "Esfinge do Assombro",
+      "imageUrl": "/catalog/monsters/esfinge-do-assombro.png"
+    },
+    {
+      "slug": "esfinge-do-saber",
+      "name": "Esfinge do Saber",
+      "imageUrl": "/catalog/monsters/esfinge-do-saber.png"
+    },
+    {
+      "slug": "esfinge-do-valor",
+      "name": "Esfinge do Valor",
+      "imageUrl": "/catalog/monsters/esfinge-do-valor.png"
+    },
+    {
+      "slug": "esfinge-dos-segredos",
+      "name": "Esfinge dos Segredos",
+      "imageUrl": "/catalog/monsters/esfinge-dos-segredos.png"
+    },
+    {
+      "slug": "espantalho",
+      "name": "Espantalho",
+      "imageUrl": "/catalog/monsters/espantalho.png"
+    },
+    {
+      "slug": "espectador",
+      "name": "Espectador",
+      "imageUrl": "/catalog/monsters/espectador.png"
+    },
+    {
+      "slug": "espectro",
+      "name": "Espectro",
+      "imageUrl": "/catalog/monsters/espectro.png"
+    },
+    {
+      "slug": "espiao",
+      "name": "Espião",
+      "imageUrl": "/catalog/monsters/espiao.png"
+    },
+    {
+      "slug": "esqueleto",
+      "name": "Esqueleto",
+      "imageUrl": "/catalog/monsters/esqueleto.png"
+    },
+    {
+      "slug": "estranho-da-agua",
+      "name": "Estranho da Água",
+      "imageUrl": "/catalog/monsters/estranho-da-agua.png"
+    },
+    {
+      "slug": "ettercap",
+      "name": "Ettercap",
+      "imageUrl": "/catalog/monsters/ettercap.png"
+    },
+    {
+      "slug": "ettin",
+      "name": "Ettin",
+      "imageUrl": "/catalog/monsters/ettin.png"
+    },
+    {
+      "slug": "familiar-de-vampiro",
+      "name": "Familiar de Vampiro",
+      "imageUrl": "/catalog/monsters/familiar-de-vampiro.png"
+    },
+    {
+      "slug": "fantasma",
+      "name": "Fantasma",
+      "imageUrl": "/catalog/monsters/fantasma.png"
+    },
+    {
+      "slug": "fera-deslocadora",
+      "name": "Fera Deslocadora",
+      "imageUrl": "/catalog/monsters/fera-deslocadora.png"
+    },
+    {
+      "slug": "ferrugem-monstro",
+      "name": "Ferrugem Monstro",
+      "imageUrl": "/catalog/monsters/ferrugem-monstro.png"
+    },
+    {
+      "slug": "flumph",
+      "name": "Flumph",
+      "imageUrl": "/catalog/monsters/flumph.png"
+    },
+    {
+      "slug": "fogo-fatuo",
+      "name": "Fogo-Fátuo",
+      "imageUrl": "/catalog/monsters/fogo-fatuo.png"
+    },
+    {
+      "slug": "fomore",
+      "name": "Fomore",
+      "imageUrl": "/catalog/monsters/fomore.png"
+    },
+    {
+      "slug": "fungo-violeta",
+      "name": "Fungo Violeta",
+      "imageUrl": "/catalog/monsters/fungo-violeta.png"
+    },
+    {
+      "slug": "fungo-violeta-necrohulk",
+      "name": "Fungo Violeta Necrohulk",
+      "imageUrl": "/catalog/monsters/fungo-violeta-necrohulk.png"
+    },
+    {
+      "slug": "galeb-duhr",
+      "name": "Galeb Duhr",
+      "imageUrl": "/catalog/monsters/galeb-duhr.png"
+    },
+    {
+      "slug": "gargula",
+      "name": "Gárgula",
+      "imageUrl": "/catalog/monsters/gargula.png"
+    },
+    {
+      "slug": "garra-rastejante",
+      "name": "Garra Rastejante",
+      "imageUrl": "/catalog/monsters/garra-rastejante.png"
+    },
+    {
+      "slug": "gato",
+      "name": "Gato",
+      "imageUrl": "/catalog/beasts/gato.png"
+    },
+    {
+      "slug": "ghast",
+      "name": "Ghast",
+      "imageUrl": "/catalog/monsters/ghast.png"
+    },
+    {
+      "slug": "ghoul",
+      "name": "Ghoul",
+      "imageUrl": "/catalog/monsters/ghoul.png"
+    },
+    {
+      "slug": "gigante-da-pedra",
+      "name": "Gigante da Pedra",
+      "imageUrl": "/catalog/monsters/gigante-da-pedra.png"
+    },
+    {
+      "slug": "gigante-da-tempestade",
+      "name": "Gigante da Tempestade",
+      "imageUrl": "/catalog/monsters/gigante-da-tempestade.png"
+    },
+    {
+      "slug": "gigante-das-colinas",
+      "name": "Gigante das Colinas",
+      "imageUrl": "/catalog/monsters/gigante-das-colinas.png"
+    },
+    {
+      "slug": "gigante-das-nuvens",
+      "name": "Gigante das Nuvens",
+      "imageUrl": "/catalog/monsters/gigante-das-nuvens.png"
+    },
+    {
+      "slug": "gigante-do-fogo",
+      "name": "Gigante do Fogo",
+      "imageUrl": "/catalog/monsters/gigante-do-fogo.png"
+    },
+    {
+      "slug": "gigante-do-gelo",
+      "name": "Gigante do Gelo",
+      "imageUrl": "/catalog/monsters/gigante-do-gelo.png"
+    },
+    {
+      "slug": "glabrezu",
+      "name": "Glabrezu",
+      "imageUrl": "/catalog/monsters/glabrezu.png"
+    },
+    {
+      "slug": "gladiador",
+      "name": "Gladiador",
+      "imageUrl": "/catalog/monsters/gladiador.png"
+    },
+    {
+      "slug": "golem-de-argila",
+      "name": "Golem de Argila",
+      "imageUrl": "/catalog/monsters/golem-de-argila.png"
+    },
+    {
+      "slug": "golem-de-carne",
+      "name": "Golem de Carne",
+      "imageUrl": "/catalog/monsters/golem-de-carne.png"
+    },
+    {
+      "slug": "golem-de-ferro",
+      "name": "Golem de Ferro",
+      "imageUrl": "/catalog/monsters/golem-de-ferro.png"
+    },
+    {
+      "slug": "golem-de-pedra",
+      "name": "Golem de Pedra",
+      "imageUrl": "/catalog/monsters/golem-de-pedra.png"
+    },
+    {
+      "slug": "gorgone",
+      "name": "Gorgone",
+      "imageUrl": "/catalog/monsters/gorgone.png"
+    },
+    {
+      "slug": "goristro",
+      "name": "Goristro",
+      "imageUrl": "/catalog/monsters/goristro.png"
+    },
+    {
+      "slug": "grell",
+      "name": "Grell",
+      "imageUrl": "/catalog/monsters/grell.png"
+    },
+    {
+      "slug": "grick",
+      "name": "Grick",
+      "imageUrl": "/catalog/monsters/grick.png"
+    },
+    {
+      "slug": "grifo",
+      "name": "Grifo",
+      "imageUrl": "/catalog/monsters/grifo.png"
+    },
+    {
+      "slug": "grimlock",
+      "name": "Grimlock",
+      "imageUrl": "/catalog/monsters/grimlock.png"
+    },
+    {
+      "slug": "guarda",
+      "name": "Guarda",
+      "imageUrl": "/catalog/monsters/guarda.png"
+    },
+    {
+      "slug": "guardiao-de-escudo",
+      "name": "Guardião de Escudo",
+      "imageUrl": "/catalog/monsters/guardiao-de-escudo.png"
+    },
+    {
+      "slug": "haunting-revenante",
+      "name": "Haunting Revenante",
+      "imageUrl": "/catalog/monsters/haunting-revenante.png"
+    },
+    {
+      "slug": "hezrou",
+      "name": "Hezrou",
+      "imageUrl": "/catalog/monsters/hezrou.png"
+    },
+    {
+      "slug": "hidra",
+      "name": "Hidra",
+      "imageUrl": "/catalog/monsters/hidra.png"
+    },
+    {
+      "slug": "hipogrifo",
+      "name": "Hipogrifo",
+      "imageUrl": "/catalog/monsters/hipogrifo.png"
+    },
+    {
+      "slug": "homunculo",
+      "name": "Homúnculo",
+      "imageUrl": "/catalog/monsters/homunculo.png"
+    },
+    {
+      "slug": "horror-de-elmo",
+      "name": "Horror de Elmo",
+      "imageUrl": "/catalog/monsters/horror-de-elmo.png"
+    },
+    {
+      "slug": "horror-de-gancho",
+      "name": "Horror de Gancho",
+      "imageUrl": "/catalog/monsters/horror-de-gancho.png"
+    },
+    {
+      "slug": "ice-mephit",
+      "name": "Ice Mephit",
+      "imageUrl": "/catalog/monsters/ice-mephit.png"
+    },
+    {
+      "slug": "incubo",
+      "name": "Íncubo",
+      "imageUrl": "/catalog/monsters/incubo.png"
+    },
+    {
+      "slug": "javali-gigante",
+      "name": "Javali Gigante",
+      "imageUrl": "/catalog/beasts/javali-gigante.png"
+    },
+    {
+      "slug": "kenku",
+      "name": "Kenku",
+      "imageUrl": "/catalog/monsters/kenku.png"
+    },
+    {
+      "slug": "kraken",
+      "name": "Kraken",
+      "imageUrl": "/catalog/monsters/kraken.png"
+    },
+    {
+      "slug": "kuo-toa",
+      "name": "Kuo-toa",
+      "imageUrl": "/catalog/monsters/kuo-toa.png"
+    },
+    {
+      "slug": "kuo-toa-arquipreste",
+      "name": "Kuo-toa Arquipreste",
+      "imageUrl": "/catalog/monsters/kuo-toa-arquipreste.png"
+    },
+    {
+      "slug": "kuo-toa-chicote",
+      "name": "Kuo-toa Chicote",
+      "imageUrl": "/catalog/monsters/kuo-toa-chicote.png"
+    },
+    {
+      "slug": "kuo-toa-monitor",
+      "name": "Kuo-toa Monitor",
+      "imageUrl": "/catalog/monsters/kuo-toa-monitor.png"
+    },
+    {
+      "slug": "lagarto",
+      "name": "Lagarto",
+      "imageUrl": "/catalog/beasts/lagarto.jpg"
+    },
+    {
+      "slug": "lagarto-gigante",
+      "name": "Lagarto Gigante",
+      "imageUrl": "/catalog/beasts/lagarto-gigante.png"
+    },
+    {
+      "slug": "lamia",
+      "name": "Lâmia",
+      "imageUrl": "/catalog/monsters/lamia.png"
+    },
+    {
+      "slug": "larva",
+      "name": "Larva",
+      "imageUrl": "/catalog/monsters/larva.png"
+    },
+    {
+      "slug": "lemure",
+      "name": "Lemure",
+      "imageUrl": "/catalog/monsters/lemure.png"
+    },
+    {
+      "slug": "lich",
+      "name": "Lich",
+      "imageUrl": "/catalog/monsters/lich.png"
+    },
+    {
+      "slug": "lobo",
+      "name": "Lobo",
+      "imageUrl": "/catalog/beasts/lobo.png"
+    },
+    {
+      "slug": "lobo-homem",
+      "name": "Lobo-homem",
+      "imageUrl": "/catalog/monsters/lobo-homem.png"
+    },
+    {
+      "slug": "lodo-cinzento",
+      "name": "Lodo Cinzento",
+      "imageUrl": "/catalog/monsters/lodo-cinzento.png"
+    },
+    {
+      "slug": "lorde-animal",
+      "name": "Lorde Animal",
+      "imageUrl": "/catalog/monsters/lorde-animal.png"
+    },
+    {
+      "slug": "lula-gigante",
+      "name": "Lula Gigante",
+      "imageUrl": "/catalog/beasts/lula-gigante.png"
+    },
+    {
+      "slug": "macaco-gigante",
+      "name": "Macaco Gigante",
+      "imageUrl": "/catalog/beasts/macaco-gigante.png"
+    },
+    {
+      "slug": "magmin",
+      "name": "Magmin",
+      "imageUrl": "/catalog/monsters/magmin.png"
+    },
+    {
+      "slug": "mago",
+      "name": "Mago",
+      "imageUrl": "/catalog/monsters/mago.png"
+    },
+    {
+      "slug": "manes",
+      "name": "Manes",
+      "imageUrl": "/catalog/monsters/manes.png"
+    },
+    {
+      "slug": "manticora",
+      "name": "Mantícora",
+      "imageUrl": "/catalog/monsters/manticora.png"
+    },
+    {
+      "slug": "manto",
+      "name": "Manto",
+      "imageUrl": "/catalog/monsters/manto.png"
+    },
+    {
+      "slug": "manto-sombrio",
+      "name": "Manto Sombrio",
+      "imageUrl": "/catalog/monsters/manto-sombrio.png"
+    },
+    {
+      "slug": "marid",
+      "name": "Marid",
+      "imageUrl": "/catalog/monsters/marid.png"
+    },
+    {
+      "slug": "marilith",
+      "name": "Marilith",
+      "imageUrl": "/catalog/monsters/marilith.png"
+    },
+    {
+      "slug": "medusa",
+      "name": "Medusa",
+      "imageUrl": "/catalog/monsters/medusa.png"
+    },
+    {
+      "slug": "meio-dragao",
+      "name": "Meio-Dragão",
+      "imageUrl": "/catalog/monsters/meio-dragao.png"
+    },
+    {
+      "slug": "mentesugadora",
+      "name": "Mentesugadora",
+      "imageUrl": "/catalog/monsters/mentesugadora.png"
+    },
+    {
+      "slug": "merrow",
+      "name": "Merrow",
+      "imageUrl": "/catalog/monsters/merrow.png"
+    },
+    {
+      "slug": "mezolote",
+      "name": "Mezolote",
+      "imageUrl": "/catalog/monsters/mezolote.png"
+    },
+    {
+      "slug": "mimico",
+      "name": "Mímico",
+      "imageUrl": "/catalog/monsters/mimico.png"
+    },
+    {
+      "slug": "modron-duodrone",
+      "name": "Modron Duodrone",
+      "imageUrl": "/catalog/monsters/modron-duodrone.png"
+    },
+    {
+      "slug": "modron-monodrone",
+      "name": "Modron Monodrone",
+      "imageUrl": "/catalog/monsters/modron-monodrone.png"
+    },
+    {
+      "slug": "modron-pentadrone",
+      "name": "Modron Pentadrone",
+      "imageUrl": "/catalog/monsters/modron-pentadrone.png"
+    },
+    {
+      "slug": "modron-quadrone",
+      "name": "Modron Quadrone",
+      "imageUrl": "/catalog/monsters/modron-quadrone.png"
+    },
+    {
+      "slug": "modron-tridrone",
+      "name": "Modron Tridrone",
+      "imageUrl": "/catalog/monsters/modron-tridrone.png"
+    },
+    {
+      "slug": "monte-cambaleante",
+      "name": "Monte Cambaleante",
+      "imageUrl": "/catalog/monsters/monte-cambaleante.png"
+    },
+    {
+      "slug": "morcego",
+      "name": "Morcego",
+      "imageUrl": "/catalog/beasts/morcego.png"
+    },
+    {
+      "slug": "mud-mephit",
+      "name": "Mud Mephit",
+      "imageUrl": "/catalog/monsters/mud-mephit.png"
+    },
+    {
+      "slug": "mumia",
+      "name": "Múmia",
+      "imageUrl": "/catalog/monsters/mumia.png"
+    },
+    {
+      "slug": "mumia-lorde",
+      "name": "Múmia Lorde",
+      "imageUrl": "/catalog/monsters/mumia-lorde.png"
+    },
+    {
+      "slug": "naga-de-ossos",
+      "name": "Naga de Ossos",
+      "imageUrl": "/catalog/monsters/naga-de-ossos.png"
+    },
+    {
+      "slug": "naga-espiritual",
+      "name": "Naga Espiritual",
+      "imageUrl": "/catalog/monsters/naga-espiritual.png"
+    },
+    {
+      "slug": "naga-guardia",
+      "name": "Naga Guardiã",
+      "imageUrl": "/catalog/monsters/naga-guardia.png"
+    },
+    {
+      "slug": "nalfeshnee",
+      "name": "Nalfeshnee",
+      "imageUrl": "/catalog/monsters/nalfeshnee.png"
+    },
+    {
+      "slug": "nicalote",
+      "name": "Nicalote",
+      "imageUrl": "/catalog/monsters/nicalote.png"
+    },
+    {
+      "slug": "nobre",
+      "name": "Nobre",
+      "imageUrl": "/catalog/monsters/nobre.png"
+    },
+    {
+      "slug": "noite-bruxa",
+      "name": "Noite Bruxa",
+      "imageUrl": "/catalog/monsters/noite-bruxa.png"
+    },
+    {
+      "slug": "notico",
+      "name": "Nótico",
+      "imageUrl": "/catalog/monsters/notico.png"
+    },
+    {
+      "slug": "ocre-geleia",
+      "name": "Ocre Geleia",
+      "imageUrl": "/catalog/monsters/ocre-geleia.png"
+    },
+    {
+      "slug": "ogro",
+      "name": "Ogro",
+      "imageUrl": "/catalog/monsters/ogro.png"
+    },
+    {
+      "slug": "oni",
+      "name": "Oni",
+      "imageUrl": "/catalog/monsters/oni.png"
+    },
+    {
+      "slug": "otyugh",
+      "name": "Otyugh",
+      "imageUrl": "/catalog/monsters/otyugh.png"
+    },
+    {
+      "slug": "pegaso",
+      "name": "Pégaso",
+      "imageUrl": "/catalog/monsters/pegaso.png"
+    },
+    {
+      "slug": "performer",
+      "name": "Performer",
+      "imageUrl": "/catalog/monsters/performer.png"
+    },
+    {
+      "slug": "perfurador",
+      "name": "Perfurador",
+      "imageUrl": "/catalog/monsters/perfurador.png"
+    },
+    {
+      "slug": "peritao",
+      "name": "Peritão",
+      "imageUrl": "/catalog/monsters/peritao.png"
+    },
+    {
+      "slug": "perseguidor-invisivel",
+      "name": "Perseguidor Invisível",
+      "imageUrl": "/catalog/monsters/perseguidor-invisivel.png"
+    },
+    {
+      "slug": "pesadelo",
+      "name": "Pesadelo",
+      "imageUrl": "/catalog/monsters/pesadelo.png"
+    },
+    {
+      "slug": "phase-spider",
+      "name": "Phase Spider",
+      "imageUrl": "/catalog/monsters/phase-spider.png"
+    },
+    {
+      "slug": "pirate",
+      "name": "Pirate",
+      "imageUrl": "/catalog/monsters/pirate.png"
+    },
+    {
+      "slug": "pit-fiend",
+      "name": "Pit Fiend",
+      "imageUrl": "/catalog/monsters/pit-fiend.png"
+    },
+    {
+      "slug": "pixie",
+      "name": "Pixie",
+      "imageUrl": "/catalog/monsters/pixie.png"
+    },
+    {
+      "slug": "planetar",
+      "name": "Planetar",
+      "imageUrl": "/catalog/monsters/planetar.png"
+    },
+    {
+      "slug": "plebeu",
+      "name": "Plebeu",
+      "imageUrl": "/catalog/monsters/plebeu.png"
+    },
+    {
+      "slug": "poltergeist",
+      "name": "Poltergeist",
+      "imageUrl": "/catalog/monsters/poltergeist.png"
+    },
+    {
+      "slug": "praga-de-agulha",
+      "name": "Praga de Agulha",
+      "imageUrl": "/catalog/monsters/praga-de-agulha.png"
+    },
+    {
+      "slug": "praga-de-arvore",
+      "name": "Praga de Árvore",
+      "imageUrl": "/catalog/monsters/praga-de-arvore.png"
+    },
+    {
+      "slug": "praga-de-gulthias",
+      "name": "Praga de Gulthias",
+      "imageUrl": "/catalog/monsters/praga-de-gulthias.png"
+    },
+    {
+      "slug": "praga-de-videira",
+      "name": "Praga de Videira",
+      "imageUrl": "/catalog/monsters/praga-de-videira.png"
+    },
+    {
+      "slug": "prole-de-vampiro",
+      "name": "Prole de Vampiro",
+      "imageUrl": "/catalog/monsters/prole-de-vampiro.png"
+    },
+    {
+      "slug": "pseudodragao",
+      "name": "Pseudodragão",
+      "imageUrl": "/catalog/monsters/pseudodragao.png"
+    },
+    {
+      "slug": "pudim-negro",
+      "name": "Pudim Negro",
+      "imageUrl": "/catalog/monsters/pudim-negro.png"
+    },
+    {
+      "slug": "purpura-verme",
+      "name": "Púrpura Verme",
+      "imageUrl": "/catalog/monsters/purpura-verme.png"
+    },
+    {
+      "slug": "quaggoth",
+      "name": "Quaggoth",
+      "imageUrl": "/catalog/monsters/quaggoth.png"
+    },
+    {
+      "slug": "quasit",
+      "name": "Quasit",
+      "imageUrl": "/catalog/monsters/quasit.png"
+    },
+    {
+      "slug": "quimera",
+      "name": "Quimera",
+      "imageUrl": "/catalog/monsters/quimera.png"
+    },
+    {
+      "slug": "rakshasa",
+      "name": "Rakshasa",
+      "imageUrl": "/catalog/monsters/rakshasa.png"
+    },
+    {
+      "slug": "rastejante-carniceiro",
+      "name": "Rastejante Carniceiro",
+      "imageUrl": "/catalog/monsters/rastejante-carniceiro.png"
+    },
+    {
+      "slug": "remorhaz",
+      "name": "Remorhaz",
+      "imageUrl": "/catalog/monsters/remorhaz.png"
+    },
+    {
+      "slug": "revenante",
+      "name": "Revenante",
+      "imageUrl": "/catalog/monsters/revenante.png"
+    },
+    {
+      "slug": "rinoceronte",
+      "name": "Rinoceronte",
+      "imageUrl": "/catalog/beasts/rinoceronte.png"
+    },
+    {
+      "slug": "roc",
+      "name": "Roc",
+      "imageUrl": "/catalog/monsters/roc.png"
+    },
+    {
+      "slug": "roper",
+      "name": "Roper",
+      "imageUrl": "/catalog/monsters/roper.png"
+    },
+    {
+      "slug": "rufiao",
+      "name": "Rufião",
+      "imageUrl": "/catalog/monsters/rufiao.png"
+    },
+    {
+      "slug": "sacerdote",
+      "name": "Sacerdote",
+      "imageUrl": "/catalog/monsters/sacerdote.png"
+    },
+    {
+      "slug": "salamandra",
+      "name": "Salamandra",
+      "imageUrl": "/catalog/monsters/salamandra.png"
+    },
+    {
+      "slug": "sapo",
+      "name": "Sapo",
+      "imageUrl": "/catalog/beasts/sapo.png"
+    },
+    {
+      "slug": "satiro",
+      "name": "Sátiro",
+      "imageUrl": "/catalog/monsters/satiro.png"
+    },
+    {
+      "slug": "semilich",
+      "name": "Semilich",
+      "imageUrl": "/catalog/monsters/semilich.png"
+    },
+    {
+      "slug": "slaad-da-morte",
+      "name": "Slaad da Morte",
+      "imageUrl": "/catalog/monsters/slaad-da-morte.png"
+    },
+    {
+      "slug": "slaad-vermelho",
+      "name": "Slaad Vermelho",
+      "imageUrl": "/catalog/monsters/slaad-vermelho.png"
+    },
+    {
+      "slug": "solar",
+      "name": "Solar",
+      "imageUrl": "/catalog/monsters/solar.png"
+    },
+    {
+      "slug": "sombra",
+      "name": "Sombra",
+      "imageUrl": "/catalog/monsters/sombra.png"
+    },
+    {
+      "slug": "sprite",
+      "name": "Sprite",
+      "imageUrl": "/catalog/monsters/sprite.png"
+    },
+    {
+      "slug": "stirge",
+      "name": "Stirge",
+      "imageUrl": "/catalog/monsters/stirge.png"
+    },
+    {
+      "slug": "sucubo",
+      "name": "Súcubo",
+      "imageUrl": "/catalog/monsters/sucubo.png"
+    },
+    {
+      "slug": "tarrasque",
+      "name": "Tarrasque",
+      "imageUrl": "/catalog/monsters/tarrasque.png"
+    },
+    {
+      "slug": "tartaruga-dragao",
+      "name": "Tartaruga-Dragão",
+      "imageUrl": "/catalog/monsters/tartaruga-dragao.png"
+    },
+    {
+      "slug": "texugo-gigante",
+      "name": "Texugo Gigante",
+      "imageUrl": "/catalog/beasts/texugo-gigante.png"
+    },
+    {
+      "slug": "tigre-homem",
+      "name": "Tigre-homem",
+      "imageUrl": "/catalog/monsters/tigre-homem.png"
+    },
+    {
+      "slug": "tirano-da-morte",
+      "name": "Tirano da Morte",
+      "imageUrl": "/catalog/monsters/tirano-da-morte.png"
+    },
+    {
+      "slug": "tiranossauro",
+      "name": "Tiranossauro Rex",
+      "imageUrl": "/catalog/beasts/tiranossauro.png"
+    },
+    {
+      "slug": "troglodita",
+      "name": "Troglodita",
+      "imageUrl": "/catalog/monsters/troglodita.png"
+    },
+    {
+      "slug": "troll",
+      "name": "Troll",
+      "imageUrl": "/catalog/monsters/troll.png"
+    },
+    {
+      "slug": "umber-hulk",
+      "name": "Umber Hulk",
+      "imageUrl": "/catalog/monsters/umber-hulk.png"
+    },
+    {
+      "slug": "unicornio",
+      "name": "Unicórnio",
+      "imageUrl": "/catalog/monsters/unicornio.png"
+    },
+    {
+      "slug": "urso-coruja",
+      "name": "Urso-coruja",
+      "imageUrl": "/catalog/monsters/urso-coruja.png"
+    },
+    {
+      "slug": "vampiro",
+      "name": "Vampiro",
+      "imageUrl": "/catalog/monsters/vampiro.png"
+    },
+    {
+      "slug": "vampiro-lorde-umbral",
+      "name": "Vampiro Lorde Umbral",
+      "imageUrl": "/catalog/monsters/vampiro-lorde-umbral.png"
+    },
+    {
+      "slug": "vespa-gigante",
+      "name": "Vespa Gigante",
+      "imageUrl": "/catalog/beasts/vespa-gigante.png"
+    },
+    {
+      "slug": "vrock",
+      "name": "Vrock",
+      "imageUrl": "/catalog/monsters/vrock.png"
+    },
+    {
+      "slug": "wight",
+      "name": "Wight",
+      "imageUrl": "/catalog/monsters/wight.png"
+    },
+    {
+      "slug": "worg",
+      "name": "Worg",
+      "imageUrl": "/catalog/monsters/worg.png"
+    },
+    {
+      "slug": "wraith",
+      "name": "Wraith",
+      "imageUrl": "/catalog/monsters/wraith.png"
+    },
+    {
+      "slug": "wyvern",
+      "name": "Wyvern",
+      "imageUrl": "/catalog/monsters/wyvern.png"
+    },
+    {
+      "slug": "xorn",
+      "name": "Xorn",
+      "imageUrl": "/catalog/monsters/xorn.png"
+    },
+    {
+      "slug": "yeti",
+      "name": "Yeti",
+      "imageUrl": "/catalog/monsters/yeti.png"
+    },
+    {
+      "slug": "yochlol",
+      "name": "Yochlol",
+      "imageUrl": "/catalog/monsters/yochlol.png"
+    },
+    {
+      "slug": "yuan-ti-abominacao",
+      "name": "Yuan-ti Abominação",
+      "imageUrl": "/catalog/monsters/yuan-ti-abominacao.png"
+    },
+    {
+      "slug": "yuan-ti-infiltrador",
+      "name": "Yuan-ti Infiltrador",
+      "imageUrl": "/catalog/monsters/yuan-ti-infiltrador.png"
+    },
+    {
+      "slug": "yuan-ti-malison-tipo-1",
+      "name": "Yuan-ti Malison (Tipo 1)",
+      "imageUrl": "/catalog/monsters/yuan-ti-malison-tipo-1.png"
+    },
+    {
+      "slug": "yuan-ti-malison-tipo-2",
+      "name": "Yuan-ti Malison (Tipo 2)",
+      "imageUrl": "/catalog/monsters/yuan-ti-malison-tipo-2.png"
+    },
+    {
+      "slug": "yuan-ti-malison-tipo-3",
+      "name": "Yuan-ti Malison (Tipo 3)",
+      "imageUrl": "/catalog/monsters/yuan-ti-malison-tipo-3.png"
+    },
+    {
+      "slug": "zumbi",
+      "name": "Zumbi",
+      "imageUrl": "/catalog/monsters/zumbi.png"
+    }
+  ]
+}
