@@ -147,6 +147,23 @@ describe('executeCatalogEffect', () => {
     expect(note).toEqual({ kind: 'table_note', note: 'Declare' });
   });
 
+  it('executes survive_at_zero as 1 HP without numeric', () => {
+    const result = executeCatalogEffect(
+      baseEffect({
+        kind: 'survive_at_zero',
+        trigger: 'on_resource_spend',
+        resourceSlug: 'relentlessEndurance',
+        note: { note: '1 PV' },
+      }),
+      { level: 5 },
+    );
+    expect(result).toEqual({
+      kind: 'survive_at_zero',
+      amount: 1,
+      note: '1 PV',
+    });
+  });
+
   it('executes grant_inspiration', () => {
     const result = executeCatalogEffect(
       baseEffect({

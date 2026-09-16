@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { applyHealHitPoints } from '../primitives/apply-heal-hit-points';
+import { applySurviveAtZero } from '../primitives/apply-survive-at-zero';
 import { applyTemporaryHitPoints } from '../primitives/apply-temporary-hit-points';
 import type { EffectExecution } from '@game/effects';
 import type { ApplyCtx } from './types';
@@ -41,14 +42,15 @@ export async function applyResourceEffect(
   }
 
   if (executed.kind === 'survive_at_zero') {
-    nextState = await deps.state.patch(character, {
-      deathSaveSuccesses: 0,
-      deathSaveFailures: 0,
-    });
+    nextState = await applySurviveAtZero(
+      deps.state,
+      character,
+      executed.amount,
+    );
     total = executed.amount;
     nextNote =
       executed.note?.trim() ||
-      `Sentinela Imortal: defina seus PV atuais em ${executed.amount} (1 + 3 × nível, teto = PV máximos) e limpe salvaguardas contra morte.`;
+      `PV atuais definidos em ${executed.amount}; salvaguardas contra morte zeradas.`;
     nextNote = nextNote.replace(/\{total\}/g, String(executed.amount));
     return { state: nextState, note: nextNote, total, resourceSpent };
   }

@@ -12,11 +12,11 @@ Como usar: escolha a **fonte** → percorra as células → marque gaps no § da
 
 | Fonte | Seeds / área | Categorias a varrer | Audit / detalhe já existente |
 |-------|--------------|---------------------|------------------------------|
-| **PHB** | `phb/` · `effects/E001` · `E007` · `E009` · combat `C00*` core | B C D H I N O | — |
+| **PHB** | `phb/` · `effects/E001` · `E007` · `E009` · combat `C00*` core | B C H I N O | — |
 | **DMG / Treasure** | `dmg/` · item economy `C013`–`C045` | **H** (mágico, prop., maestria, cast) | [`dmg-item-mesa.md`](../architecture/dmg-item-mesa.md) · [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md) |
 | **Grim Hollow** | `grim-hollow/` · `transformation/` · `economy/grim-hollow/` · Cap.1–6 | B C E H I · K (Primordial) | residual fino → [`backlog.md`](backlog.md) Adiado |
-| **Northlands** | `northlands-heroes/` · `E004` · `C052`–`C056` · threads | B C D I · L (veículos NL) | [`northlands-character-threads.md`](northlands-character-threads.md) · residual → [`backlog.md`](backlog.md) Adiado |
-| **Steinhardt (SEH)** | `steinhardt-eldritch-hunt/` · `E002` · `C046`–`C050` | B C D I | — |
+| **Northlands** | `northlands-heroes/` · `E004` · `C052`–`C056` · threads | B C I · L (veículos NL) | [`northlands-character-threads.md`](northlands-character-threads.md) · residual → [`backlog.md`](backlog.md) Adiado |
+| **Steinhardt (SEH)** | `steinhardt-eldritch-hunt/` · `E002` · `C046`–`C050` | B C I | — |
 | **Valda / Gunslinger** | `valdas*` · `E005` · `G021` | B C H I | — |
 | **Griffon’s Saddlebag** | seeds Griffon · `C058`–`C061` | B C H | — |
 | **Creatures / vehicles** | `creatures/` · templates | **J K L M** · P | [`creature-template-field-map.md`](../architecture/creature-template-field-map.md) |

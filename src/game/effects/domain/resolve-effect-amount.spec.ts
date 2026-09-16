@@ -28,6 +28,13 @@ describe('resolveEffectAmount', () => {
     ).toBe(8);
     expect(
       resolveEffectAmount({
+        amountFormula: 'one_plus_3_times_level',
+        flat: null,
+        level: 15,
+      }).amount,
+    ).toBe(46);
+    expect(
+      resolveEffectAmount({
         amountFormula: 'level_div_2',
         flat: null,
         level: 5,

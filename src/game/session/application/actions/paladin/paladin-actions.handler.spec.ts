@@ -510,6 +510,7 @@ describe('PaladinActionsHandler', () => {
         ownerKind: 'subclass',
         ownerSlug: 'ancients',
         unlockLevel: 15,
+        numeric: { amountFormula: 'one_plus_3_times_level', flat: null },
         note: { note: 'Sentinela Imortal: {total} PV.' },
       }),
     ]);
@@ -523,9 +524,16 @@ describe('PaladinActionsHandler', () => {
       'undying-sentinel',
       1,
     );
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      46,
+    );
     expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
-      { deathSaveSuccesses: 0, deathSaveFailures: 0 },
+      expect.objectContaining({
+        deathSaveSuccesses: 0,
+        deathSaveFailures: 0,
+      }),
     );
     expect(result.actionName).toBe('Sentinela Imortal');
     expect(result.total).toBe(46);

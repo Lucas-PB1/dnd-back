@@ -228,8 +228,20 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Sentinela Imortal (−1 uso): defina seus PV atuais em {total} (1 + 3 × nível de Paladino, teto = PV máximos) e limpe salvaguardas contra morte. Ajuste o contador de PV na ficha.'
+  'Sentinela Imortal (−1 uso): PV atuais em {total} (1 + 3 × nível de Paladino, teto = PV máximos); salvaguardas contra morte zeradas.'
 FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'),
+fx AS (
+  SELECT e.id
+  FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.owner_kind = 'subclass'
+    AND e.kind = 'survive_at_zero'
+    AND e.action_slug = 'undying-sentinel'
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'one_plus_3_times_level'::rpg.effect_amount_formula, NULL FROM fx;
 
 -- Vingança — Voto de Inimizade
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'),

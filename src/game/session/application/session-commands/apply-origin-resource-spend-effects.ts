@@ -3,6 +3,7 @@ import { executeCatalogEffect } from '@game/effects';
 import type { CatalogEffect } from '@game/effects';
 import { filterEffectsByResourceSpend } from '@game/effects';
 import { applyHealHitPoints } from '../table-actions/primitives/apply-heal-hit-points';
+import { applySurviveAtZero } from '../table-actions/primitives/apply-survive-at-zero';
 import { applyTemporaryHitPoints } from '../table-actions/primitives/apply-temporary-hit-points';
 import type { ResourceDieRollDto } from '@game/session/dto/core/session-commands.dto';
 import type { CharacterStateResponseDto } from '@game/session/dto/core/character-state-response.dto';
@@ -27,7 +28,12 @@ export async function applyOriginResourceSpendEffects(input: {
   const fromCatalog = filterEffectsByResourceSpend(
     input.effects ?? [],
     resourceSlug,
-  ).find((effect) => effect.kind === 'temp_hp' || effect.kind === 'heal');
+  ).find(
+    (effect) =>
+      effect.kind === 'temp_hp' ||
+      effect.kind === 'heal' ||
+      effect.kind === 'survive_at_zero',
+  );
 
   if (!fromCatalog) {
     return { state: currentState, note: null };
@@ -37,7 +43,11 @@ export async function applyOriginResourceSpendEffects(input: {
     level: character.level,
     rng,
   });
-  if (executed.kind !== 'temp_hp' && executed.kind !== 'heal') {
+  if (
+    executed.kind !== 'temp_hp' &&
+    executed.kind !== 'heal' &&
+    executed.kind !== 'survive_at_zero'
+  ) {
     return { state: currentState, note: null };
   }
 
@@ -45,7 +55,7 @@ export async function applyOriginResourceSpendEffects(input: {
     executed.note ??
     `${fromCatalog.label ?? resourceSlug}: ${executed.amount}`;
   const roll =
-    executed.expression != null
+    executed.kind !== 'survive_at_zero' && executed.expression != null
       ? {
           resourceSlug,
           faces: executed.faces ?? 0,
@@ -59,6 +69,10 @@ export async function applyOriginResourceSpendEffects(input: {
       character,
       executed.amount,
     );
+    return { state: next, note, roll };
+  }
+  if (executed.kind === 'survive_at_zero') {
+    const next = await applySurviveAtZero(state, character, executed.amount);
     return { state: next, note, roll };
   }
   const healed = await applyHealHitPoints(

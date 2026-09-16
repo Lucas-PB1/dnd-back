@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §D Espécie: Vigor Implacável na ficha
+
+* **Update** (13:35 UTC): spend de `relentlessEndurance` aplica 1 PV, limpa Inconsciente e death saves; `survive_at_zero` deixa de usar a fórmula de Paladino por omissão; §D saiu da fila — refs: [`apply-origin-resource-spend-effects.ts`](../../src/game/session/application/session-commands/apply-origin-resource-spend-effects.ts), [`apply-survive-at-zero.ts`](../../src/game/session/application/table-actions/primitives/apply-survive-at-zero.ts), [`phb_effect.species.sql`](../../database/seeds/effect/phb/phb_effect.species.sql), [`backlog.md`](../plans/backlog.md) — motivo: único apply de ficha da espécie que ainda era só nota (Adrenalina/Mãos/Werekin já existiam; sopro/ancestralidade são combate).
+
 ## 2026-09-16 — §F Thread: apply de ficha
 
 * **Update** (13:25 UTC): Tenacidade limpa condições; Lealdade Extrema tira Enfeitiçado + dano = nível; Lealdade Imortal (recurso novo) PV = nível; Fatebound já aplicava Ruína/Último Ato; §F saiu da fila — refs: [`apply-thread-sheet-spend.ts`](../../src/game/session/application/session-commands/apply-thread-sheet-spend.ts), [`phb_effect.thread.sql`](../../database/seeds/effect/northlands/phb_effect.thread.sql), [`backlog.md`](../plans/backlog.md) — motivo: spend de thread que mexe na ficha não pode ficar só em nota.

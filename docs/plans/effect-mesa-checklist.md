@@ -34,7 +34,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 |---|-----------|--------|--------|
 | **B** | Classe | `effect/phb/phb_effect.class.sql` · `economy/phb/` · `class/phb/` | Pool/economy ok; apply **ficha** (Rally/`tempHp`, Proteção Arcana, curas tipadas monge/clérigo/druida/bruxo); residual fino; combate → [`combat-real-deferred.md`](combat-real-deferred.md) |
 | **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
-| **D** | Espécie | `effect/phb/` espécie | Pool ok; economy; apply ficha |
 | **E** | Heritage | heritage seeds | Pool ok; economy/smoke; apply ficha; UI |
 | **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
 | **I** | Feat / boon / estilo | feat effects | Wire + economies; apply ficha; estilo no roll de ataque → lista combate real |

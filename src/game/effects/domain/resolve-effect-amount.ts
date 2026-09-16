@@ -35,6 +35,8 @@ export function resolveEffectAmount(input: {
       return { amount: input.level };
     case 'level_times_2':
       return { amount: 2 * input.level + (input.flat ?? 0) };
+    case 'one_plus_3_times_level':
+      return { amount: 1 + 3 * input.level };
     case 'level_div_2':
       return { amount: Math.max(1, Math.floor(input.level / 2)) };
     case 'dice_pb_d4': {

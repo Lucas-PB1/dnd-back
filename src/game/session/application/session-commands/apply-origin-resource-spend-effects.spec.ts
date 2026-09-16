@@ -4,9 +4,10 @@ import { asDep } from '@common/testing/as-dep';
 import type { CatalogEffect } from '@game/effects';
 
 function spendEffect(input: {
-  kind: 'temp_hp' | 'heal';
+  kind: 'temp_hp' | 'heal' | 'survive_at_zero';
   resourceSlug: string;
-  amountFormula: NonNullable<CatalogEffect['numeric']>['amountFormula'];
+  amountFormula?: NonNullable<CatalogEffect['numeric']>['amountFormula'];
+  flat?: number | null;
   note: string;
   label: string;
 }): CatalogEffect {
@@ -27,7 +28,9 @@ function spendEffect(input: {
     requiresOptionValue: null,
     spell: null,
     castEconomy: null,
-    numeric: { amountFormula: input.amountFormula, flat: null },
+    numeric: input.amountFormula
+      ? { amountFormula: input.amountFormula, flat: input.flat ?? null }
+      : null,
     note: { note: input.note },
     resource: null,
     combatMod: null,
@@ -58,6 +61,7 @@ describe('applyOriginResourceSpendEffects', () => {
     classResources: [],
     tempHp: 0,
     hitPointsCurrent: 8,
+    conditions: [] as string[],
   };
   const state = {
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
@@ -211,6 +215,55 @@ describe('applyOriginResourceSpendEffects', () => {
       { tempHp: 4 },
     );
     expect(result.note).toMatch(/Wyrd Duradouro/);
+  });
+
+  it('sets 1 HP and clears death saves for orc relentless endurance', async () => {
+    const currentState = {
+      ...stateResponse,
+      hitPointsCurrent: 0,
+      conditions: ['unconscious'],
+    };
+    state.applyCurrentHitPoints.mockImplementation(async (_c, hp) => ({
+      ...currentState,
+      hitPointsCurrent: hp,
+    }));
+
+    const result = await applyOriginResourceSpendEffects({
+      state: asDep(state),
+      character: asDep({
+        id: 'pc-1',
+        speciesSlug: 'orc',
+        level: 5,
+        hitPointsCurrent: 0,
+        hitPointsMax: 40,
+      }),
+      resourceSlug: 'relentlessEndurance',
+      currentState: asDep(currentState),
+      effects: [
+        spendEffect({
+          kind: 'survive_at_zero',
+          resourceSlug: 'relentlessEndurance',
+          amountFormula: 'fixed',
+          flat: 1,
+          label: 'Vigor Implacável',
+          note: 'Ao cair a 0 PV (sem morte imediata): fica com 1 PV (gasta 1 uso).',
+        }),
+      ],
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      {
+        deathSaveSuccesses: 0,
+        deathSaveFailures: 0,
+        conditions: [],
+      },
+    );
+    expect(result.note).toMatch(/1 PV/);
   });
 
   it('ignores other resources', async () => {

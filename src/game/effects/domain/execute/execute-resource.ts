@@ -8,10 +8,16 @@ export function executeResourceEffect(
   context: ExecuteCatalogEffectContext,
 ): EffectExecution | null {
   if (effect.kind === 'survive_at_zero') {
-    const amount = 1 + 3 * context.level;
+    const amount = effect.numeric
+      ? resolveEffectAmount({
+          amountFormula: effect.numeric.amountFormula,
+          flat: effect.numeric.flat,
+          level: context.level,
+        }).amount
+      : 1;
     return {
       kind: 'survive_at_zero',
-      amount,
+      amount: Math.max(1, amount),
       note: effect.note?.note ?? null,
     };
   }

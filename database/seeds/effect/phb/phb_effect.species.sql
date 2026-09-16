@@ -842,6 +842,18 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, 'Ao cair a 0 PV (sem morte imediata): fica com 1 PV (gasta 1 uso).'
 FROM ins;
 
+WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'orc'),
+fx AS (
+  SELECT e.id
+  FROM rpg.phb_effect e
+  JOIN species ON species.id = e.owner_id
+  WHERE e.owner_kind = 'species'
+    AND e.kind = 'survive_at_zero'
+    AND e.resource_slug = 'relentlessEndurance'
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
+
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Halfling
 -- ═══════════════════════════════════════════════════════════════════════════

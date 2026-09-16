@@ -4,6 +4,7 @@ CREATE TYPE rpg.effect_amount_formula AS ENUM (
   'proficiency_bonus_times_2',
   'level',
   'level_times_2',
+  'one_plus_3_times_level',
   'level_div_2',
   'dice_pb_d4',
   'dice_pb_d6',
