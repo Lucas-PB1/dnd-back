@@ -98,16 +98,25 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+  SELECT 'temp_hp'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
          'on_table_action'::rpg.effect_trigger, 'arcane-ward-recharge', 3, 1,
          'Recarregar Proteção Arcana'
   FROM sc
   RETURNING id
 )
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 0 FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'arcane-ward-recharge' AND e.kind = 'temp_hp'
+)
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Recarregar Proteção: Ação Bônus — gaste 1 espaço de magia; a Proteção recupera PV iguais ao dobro do círculo do espaço.'
-FROM ins;
+  'Recarregar Proteção: gaste 1 espaço; a barreira recupera 2× o círculo (aplicado na ficha como PV temp., teto = 2×nível + INT).'
+FROM fx;
 
 -- Proteção Projetada
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),

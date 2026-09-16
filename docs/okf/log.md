@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §B Classe: apply de ficha PHB
+
+* **Update** (15:10 UTC): Pool de dados (Zelote/Celestial) cura na ficha; recarga da Proteção Arcana gasta slot e soma PV temp. (teto 2×nível+INT); Rally, Recuperar Fôlego, Mãos, Centelha, Incansável já aplicavam — refs: [`apply-one-effect-resources.ts`](../../src/game/session/application/table-actions/apply-declared-economy/apply-one-effect-resources.ts), [`phb_effect.wizard-mesa.sql`](../../database/seeds/effect/phb/phb_effect.wizard-mesa.sql), [`backlog.md`](../plans/backlog.md) — motivo: spend+nota não fecha mesa quando a regra mexe em PV/PV temp. na ficha.
+
 ## 2026-09-16 — §C Subclass: apply de ficha em packs
 
 * **Update** (14:55 UTC): Table-actions de pack que curam/PV temp./recuperam pool/limpam Amedrontado na ficha; Caçador passa a carregar `phb_effect`; Escudo Mágico gasta Canalizar; dano/aliado/forma ficam no combate — refs: [`phb_effect.subclass-pack-mesa.sql`](../../database/seeds/effect/phb/phb_effect.subclass-pack-mesa.sql), [`monster-hunter-actions.handler.ts`](../../src/game/session/application/actions/monster-hunter/monster-hunter-actions.handler.ts), [`flat-override.ts`](../../src/game/session/application/table-actions/apply-declared-economy/flat-override.ts), [`backlog.md`](../plans/backlog.md) — motivo: spend+nota não fecha mesa quando a regra mexe em PV/pool na ficha.

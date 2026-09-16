@@ -262,6 +262,8 @@ describe('BarbarianActionsHandler', () => {
     );
     expect(result.expression).toMatch(/2d12/);
     expect(result.total).toBeGreaterThan(0);
+    expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.note).toContain('ficha');
   });
 
   it('routes note-only retaliation via declared economy', async () => {

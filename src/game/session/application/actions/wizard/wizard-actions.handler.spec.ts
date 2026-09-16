@@ -36,6 +36,19 @@ const WIZARD_ECONOMY = [
     description: 'Ward.',
   },
   {
+    id: 'wizard-arcane-ward-recharge',
+    name: 'Recarregar Proteção Arcana',
+    economy: 'bonus' as const,
+    classSlug: 'wizard',
+    subclassSlug: 'abjurer',
+    minLevel: 3,
+    alwaysSpendsResource: false,
+    tableAction: 'arcane-ward-recharge',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Recarregar ward.',
+  },
+  {
     id: 'wizard-sculpt-spells',
     name: 'Esculpir Magias',
     economy: 'free' as const,
@@ -212,6 +225,39 @@ describe('WizardActionsHandler', () => {
       expect.objectContaining({ id: 'wiz-1' }),
       expect.objectContaining({ tempHp: 14 }),
     );
+  });
+
+  it('recharges Arcane Ward from a spent spell slot', async () => {
+    ctx.state.buildResponse.mockResolvedValue({
+      ...ctx.stateResponse,
+      tempHp: 4,
+    });
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'temp_hp',
+        actionSlug: 'arcane-ward-recharge',
+        ownerKind: 'subclass',
+        ownerSlug: 'abjurer',
+        numeric: { amountFormula: 'fixed', flat: 0 },
+        note: { note: 'Recarregar Proteção.' },
+      }),
+    ]);
+
+    const result = await handler.useTableAction('user-1', 'wiz-1', {
+      actionSlug: 'arcane-ward-recharge',
+      slotLevel: 3,
+    });
+
+    expect(ctx.state.consumeSpellSlotLevel).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'wiz-1' }),
+      3,
+    );
+    expect(ctx.state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'wiz-1' }),
+      expect.objectContaining({ tempHp: 10 }),
+    );
+    expect(result.total).toBe(6);
+    expect(result.resourceSpent).toBe(true);
   });
 
   it('requires level 6 for Sculpt Spells', async () => {

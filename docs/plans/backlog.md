@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §C Subclass saiu (apply de ficha em packs GH/GSB; combate de subclass permanece fora).
+**Última revisão:** 2026-09-16 — §B Classe saiu (cura de pool, Proteção Arcana + recarga, Rally/`tempHp` já aplicavam; combate de classe permanece fora).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -17,7 +17,6 @@ Detalhe por categoria: [`effect-mesa-checklist.md`](effect-mesa-checklist.md) ·
 
 | Área | Status |
 |------|--------|
-| Classes mesa PHB (13) | **Ativo** — grosso do apply de ficha (§B) |
 | Itens DMG mesa | **Ativo** — grosso de charges/cast de ficha (§H) |
 
 A ordem abaixo é por **custo**, não por importância. Pegue o próximo da faixa Ativo; Adiado só com pedido explícito.
@@ -30,9 +29,8 @@ Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
-| 2 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
-| 3 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
+| 1 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
+| 2 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
 
 §M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
 
@@ -73,7 +71,7 @@ Treasure (mágico, propriedades, maestria) no ciclo Ativo = **§H**. Detalhe de 
 
 ## Como usar
 
-1. Faixa Ativo: pegar o **menor # ainda aberto**. Não pular para §H só porque o snapshot o destaca.
+1. Faixa Ativo: pegar o **menor # ainda aberto**.
 2. Adiado: mesmo critério, **só** com pedido explícito.
 3. Item **feito e testado** → remover daqui (não acumular histórico).
 4. Gap exige **alvo/dano/save de combate** → [`combat-real-deferred.md`](combat-real-deferred.md), não aqui.

@@ -78,7 +78,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Satélite:** `phb_effect_numeric` (+ note)
 - **Trigger:** `on_resource_spend` / `on_table_action`
 - **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`); `dice_1d10_plus_level` (Recuperar Fôlego); `schedule_die_plus_flat` (Campo Protetor — faces do schedule + flatOverride INT); satélite `phb_effect_dice` + `ability_mod` (Regeneração da Armadura / Fortaleza Gelada — CON via `flatOverride` de ação)
-- **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy
+- **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy. Recarga de Proteção Arcana (`arcane-ward-recharge`) soma `2×slotLevel` em PV temp. (teto = 2×nível + INT).
 
 ### `check_boost`
 
@@ -403,7 +403,7 @@ Seeds: `database/seeds/effects/E001`/`E003`/`E004`. ENUM no baseline. Residual g
 | `bonus_action_disengage` | BA Desengajar (+fim Imobilizado) | seed Speed |
 | `slow_fall` | Cap taxa de queda | seed Perfect Flight |
 | `extra_damage_on_nat20` | Nat20 → +dano (fórmula attr) | seed Irresistible |
-| `heal_from_dice_pool` | Gastar N dados do pool → cura = soma | seed Recovery; reuso Zelote / Celestial |
+| `heal_from_dice_pool` | Gastar N dados do pool → cura = soma na ficha | seed Recovery; Zelote / Celestial; `applyHealHitPoints` |
 | `damage_die_floor` + `flat` | Piso de face (GWF = 3) | seed GWF; wire DTO ainda 1→2 |
 
 FS: **sem** kind novo exclusivo — reuso `attack_bonus` / `ac_bonus` / `light_bonus_ability_mod` / …

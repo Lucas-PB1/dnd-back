@@ -1,7 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { applyHealHitPoints } from '../primitives/apply-heal-hit-points';
 import { applySurviveAtZero } from '../primitives/apply-survive-at-zero';
-import { applyTemporaryHitPoints } from '../primitives/apply-temporary-hit-points';
+import {
+  addTemporaryHitPoints,
+  applyTemporaryHitPoints,
+} from '../primitives/apply-temporary-hit-points';
 import type { EffectExecution } from '@game/effects';
 import type { ApplyCtx } from './types';
 import type { ApplyOneEffectResult } from './apply-one-effect.types';
@@ -10,7 +13,8 @@ export async function applyResourceEffect(
   ctx: ApplyCtx,
   executed: EffectExecution,
 ): Promise<Partial<ApplyOneEffectResult>> {
-  const { deps, character, actionSlug, effect, options, state, note } = ctx;
+  const { deps, character, actionSlug, effect, options, state, note, intMod } =
+    ctx;
   let { total, expression, resourceSpent } = ctx;
   let nextState = state;
   let nextNote = note;
@@ -53,6 +57,35 @@ export async function applyResourceEffect(
       `PV atuais definidos em ${executed.amount}; salvaguardas contra morte zeradas.`;
     nextNote = nextNote.replace(/\{total\}/g, String(executed.amount));
     return { state: nextState, note: nextNote, total, resourceSpent };
+  }
+
+  if (executed.kind === 'temp_hp' && actionSlug === 'arcane-ward-recharge') {
+    const slotLevel = options.slotLevel;
+    if (slotLevel == null || slotLevel < 1) {
+      throw new BadRequestException(
+        'slotLevel é obrigatório para Recarregar Proteção Arcana',
+      );
+    }
+    await deps.state.consumeSpellSlotLevel(character, slotLevel);
+    const recovered = 2 * slotLevel;
+    const cap = 2 * character.level + Math.max(1, intMod);
+    nextState = await addTemporaryHitPoints(
+      deps.state,
+      character,
+      recovered,
+      cap,
+    );
+    total = recovered;
+    expression = `2×${slotLevel}`;
+    nextNote = [
+      note,
+      executed.note?.trim(),
+      `Proteção Arcana recuperou ${recovered} PV (espaço de ${slotLevel}º).`,
+    ]
+      .filter(Boolean)
+      .join(' ');
+    resourceSpent = true;
+    return { state: nextState, note: nextNote, total, expression, resourceSpent };
   }
 
   if (executed.kind === 'temp_hp') {
@@ -136,21 +169,19 @@ export async function applyResourceEffect(
     resourceSpent = true;
     total = executed.amount;
     expression = executed.expression;
+    const healed = await applyHealHitPoints(
+      deps.state,
+      character,
+      executed.amount,
+    );
+    nextState = healed.state;
     nextNote =
       executed.note?.trim() ||
       `Campeão dos Deuses: Ação Bônus — recupere ${executed.amount} PV (${executed.expression}). Aplique na ficha.`;
     nextNote = nextNote
       .replace(/\{total\}/g, String(executed.amount))
       .replace(/\{expression\}/g, executed.expression);
-    if (executed.resourceSlug === 'healing-light') {
-      const healed = await applyHealHitPoints(
-        deps.state,
-        character,
-        executed.amount,
-      );
-      nextState = healed.state;
-      nextNote = `${nextNote} (+${healed.healed} na ficha — ajuste se for aliado).`;
-    }
+    nextNote = `${nextNote} (+${healed.healed} na ficha — ajuste se for aliado).`;
     return {
       state: nextState,
       note: nextNote,
