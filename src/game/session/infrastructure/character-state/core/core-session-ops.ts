@@ -87,6 +87,7 @@ export async function castSpellOp(
     sheetRepository: deps.sheetRepository,
     grantedSpellCatalog: deps.grantedSpellCatalog,
     effectCatalog: deps.effectCatalog,
+    characters: deps.characters,
     dataSource: deps.dataSource,
     syncSpellSpirit: deps.syncSpellSpirit,
     buildResponse: deps.buildResponse,

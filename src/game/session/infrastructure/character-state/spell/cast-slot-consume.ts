@@ -20,6 +20,7 @@ import {
   loadMaxSlots,
   recoverSpellSlot,
 } from '../resources/spell-slots';
+import { applySlotRefundOnCast } from './apply-slot-refund-on-cast';
 import {
   resolveGrantedFreeCastBudget,
 } from './cast-granted-economy';
@@ -29,6 +30,7 @@ export type SlotConsumeResult = {
   usedFreeResource: boolean;
   usedSpellMastery: boolean;
   usedEldritchFreeCast: EldritchFreeCastResolution | null;
+  slotRefunded: boolean;
 };
 
 export async function consumeNonItemCastCost(input: {
@@ -44,6 +46,7 @@ export async function consumeNonItemCastCost(input: {
   classSlots: Repository<VClassSpellSlots>;
   subclassSlots: Repository<VSubclassSpellSlots>;
   spendFreeCastResource: () => Promise<void>;
+  rng?: () => number;
 }): Promise<SlotConsumeResult> {
   const {
     character,
@@ -63,6 +66,7 @@ export async function consumeNonItemCastCost(input: {
   let usedFreeResource = false;
   let usedSpellMastery = false;
   let usedEldritchFreeCast: EldritchFreeCastResolution | null = null;
+  let slotRefunded = false;
 
   if (dto.freeCastResourceSlug) {
     await input.spendFreeCastResource();
@@ -181,10 +185,22 @@ export async function consumeNonItemCastCost(input: {
     }
   }
 
+  if (slotLevelUsed != null) {
+    slotRefunded = await applySlotRefundOnCast({
+      character,
+      state,
+      slotLevelUsed,
+      sheetRepository,
+      effectCatalog,
+      rng: input.rng,
+    });
+  }
+
   return {
     slotLevelUsed,
     usedFreeResource,
     usedSpellMastery,
     usedEldritchFreeCast,
+    slotRefunded,
   };
 }

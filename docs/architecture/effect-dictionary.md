@@ -15,7 +15,7 @@ Preferir reusar kind existente ou `combat_note`/`table_note`. Kind novo exige EN
 | Campo | Uso |
 |-------|-----|
 | `kind` | Verbo |
-| `owner_kind` + `owner_id` | Dono (feat, species, class, subclass, item, heritage, character_thread) |
+| `owner_kind` + `owner_id` | Dono (feat, species, class, subclass, item, heritage, character_thread, weapon_mastery, **spell**) |
 | `trigger` | Quando o runtime considera o efeito |
 | Satélite | Params tipados; CHECK amarra ao `kind` |
 
@@ -395,7 +395,7 @@ Seeds: `database/seeds/effects/E001`/`E003`/`E004`. ENUM no baseline. Residual g
 | `grant_all_skill_proficiencies` | Todas as perícias | seed Skill Proficiency |
 | `miss_becomes_hit` | Erro→acerto; offer+toggle | seed Combat Prowess |
 | `heal_bonus` | Extra PV ao recuperar | seed Fortitude |
-| `slot_refund_on_die_match` | dX = círculo → não gasta slot | seed Spell Recall |
+| `slot_refund_on_die_match` | dX = círculo → não gasta slot | seed Spell Recall; `applySlotRefundOnCast` |
 | `survive_at_zero` | A 0 PV: define PV atuais (default 1; Paladino `one_plus_3_times_level`; Recovery `one_plus_half_hp_max`) e zera death saves | orc / Sentinela Imortal / Recovery |
 | `teleport_after_action` | Teleporte após Atacar/Magia | seed Dimensional |
 | `modify_d20_roll` | ±dados no Teste D20 | seed Fate |

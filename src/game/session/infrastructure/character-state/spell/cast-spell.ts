@@ -5,6 +5,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { isSpellMasterySpell } from '@game/combat/domain/wizard';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
@@ -28,6 +29,7 @@ import { applyPostCastInventoryEffects } from './cast-inventory-effects';
 import { applyMagicMissileMageOnCast } from './cast-magic-missile';
 import { resolveEldritchFreeCastForSpell } from './cast-eldritch-prelude';
 import { appendNonItemCastNotes } from './cast-notes';
+import { applyCastSheetEffects } from './apply-cast-sheet-effects';
 import {
   assertItemCastDtoExclusive,
   resolveCastSpend,
@@ -50,6 +52,7 @@ export async function applyCastSpell(input: {
   sheetRepository: CharacterSheetRepository;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   effectCatalog: LoadEffectCatalog;
+  characters: CharacterRepository;
   dataSource: DataSource;
   syncSpellSpirit: SyncSpellSpiritHandler;
   buildResponse: BuildResponse;
@@ -74,6 +77,7 @@ export async function applyCastSpell(input: {
     sheetRepository,
     grantedSpellCatalog,
     effectCatalog,
+    characters,
     dataSource,
     syncSpellSpirit,
     buildResponse,
@@ -139,6 +143,23 @@ export async function applyCastSpell(input: {
   if (spend.usedSpellMastery) {
     const masteryNote = 'Dominância de Magias: conjurada sem espaço.';
     note = note ? `${note} · ${masteryNote}` : masteryNote;
+  }
+  if (spend.slotRefunded) {
+    const recallNote = 'Recordação: o espaço não foi gasto.';
+    note = note ? `${note} · ${recallNote}` : recallNote;
+  }
+  const sheetNote = await applyCastSheetEffects({
+    character,
+    state,
+    characters,
+    effectCatalog,
+    dataSource,
+    spellSlug: dto.spellSlug,
+    spellLevel: spell.level,
+    slotLevelUsed: spend.slotLevelUsed,
+  });
+  if (sheetNote) {
+    note = note ? `${note} · ${sheetNote}` : sheetNote;
   }
 
   const finishSpirit = async (

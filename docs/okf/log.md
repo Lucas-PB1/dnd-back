@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §N Magias / cast: apply de ficha
+
+* **Update** (15:05 UTC): Slots, concentração e cast de item já existiam; Recordação reembolsa espaço 1–4 no 1d4; Curar Ferimentos / Palavra Curativa curam a ficha e Vitalidade Vazia dá PV temp. (ajuste se aliado); dano/alvo ficam no combate — refs: [`apply-cast-sheet-effects.ts`](../../src/game/session/infrastructure/character-state/spell/apply-cast-sheet-effects.ts), [`apply-slot-refund-on-cast.ts`](../../src/game/session/infrastructure/character-state/spell/apply-slot-refund-on-cast.ts), [`phb_effect.spell-mesa.sql`](../../database/seeds/effect/phb/phb_effect.spell-mesa.sql), [`backlog.md`](../plans/backlog.md) — motivo: o cast precisa fechar PV/slots na ficha, não só gastar espaço.
+
 ## 2026-09-16 — §B Classe: apply de ficha PHB
 
 * **Update** (15:10 UTC): Pool de dados (Zelote/Celestial) cura na ficha; recarga da Proteção Arcana gasta slot e soma PV temp. (teto 2×nível+INT); Rally, Recuperar Fôlego, Mãos, Centelha, Incansável já aplicavam — refs: [`apply-one-effect-resources.ts`](../../src/game/session/application/table-actions/apply-declared-economy/apply-one-effect-resources.ts), [`phb_effect.wizard-mesa.sql`](../../database/seeds/effect/phb/phb_effect.wizard-mesa.sql), [`backlog.md`](../plans/backlog.md) — motivo: spend+nota não fecha mesa quando a regra mexe em PV/PV temp. na ficha.

@@ -1,4 +1,4 @@
-import { rollDamageParts } from '@game/dice/domain/dice';
+import { parseDiceExpression, rollDamageParts } from '@game/dice/domain/dice';
 import type { CatalogEffect } from '../catalog-effect';
 import { resolveEffectAmount } from '../resolve-effect-amount';
 import type { EffectExecution, ExecuteCatalogEffectContext } from './types';
@@ -157,7 +157,10 @@ export function executeTableEffect(
   }
 
   if (effect.dice?.die) {
-    const rolled = rollDamageParts(effect.dice.die, flat ?? 0, {
+    const parsed = parseDiceExpression(effect.dice.die);
+    const extraDice = context.diceCount ?? 0;
+    const die = `${parsed.count + extraDice}d${parsed.sides}`;
+    const rolled = rollDamageParts(die, flat ?? 0, {
       rng: context.rng,
     });
     return {

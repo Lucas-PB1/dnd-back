@@ -22,6 +22,7 @@ export type CastSpendResult = {
   usedFreeResource: boolean;
   usedSpellMastery: boolean;
   usedEldritchFreeCast: EldritchFreeCastResolution | null;
+  slotRefunded: boolean;
   itemCastItemSlug: string | null;
   artifactSpellNote: string | null;
   artifactSpellSaveDc: number | null;
@@ -85,6 +86,7 @@ export async function resolveCastSpend(input: {
       usedFreeResource: false,
       usedSpellMastery: false,
       usedEldritchFreeCast: null,
+      slotRefunded: false,
       itemCastItemSlug: spent.itemCastItemSlug,
       artifactSpellNote: spent.artifactSpellNote,
       artifactSpellSaveDc: spent.artifactSpellSaveDc,

@@ -169,7 +169,8 @@ export type EffectOwnerKind =
   | 'item'
   | 'heritage'
   | 'character_thread'
-  | 'weapon_mastery';
+  | 'weapon_mastery'
+  | 'spell';
 
 export type EffectTrigger =
   | 'passive'

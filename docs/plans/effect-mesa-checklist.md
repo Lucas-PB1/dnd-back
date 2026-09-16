@@ -42,12 +42,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 |---|-----------|--------|
 | **M** | Monstro / criatura | catálogo/template agora; **spawn/combate** → lista combate real |
 
-## Magia / mesa
-
-| § | Categoria | Fazer |
-|---|-----------|--------|
-| **N** | Magias / cast | slots · concentração · cast item (ficha); resolução de dano no alvo → lista combate real |
-
 ## Transversal
 
 - [ ] Economies — slug a slug **dentro** do § do dono (**apply ficha**)

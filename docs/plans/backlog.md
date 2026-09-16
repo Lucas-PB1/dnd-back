@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §B Classe saiu (cura de pool, Proteção Arcana + recarga, Rally/`tempHp` já aplicavam; combate de classe permanece fora).
+**Última revisão:** 2026-09-16 — §N Magias/cast saiu (slots, concentração, item na ficha, Spell Recall, cura/PV temp. de Curar Ferimentos / Palavra Curativa / Vitalidade Vazia; dano no alvo permanece fora).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -29,8 +29,7 @@ Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
-| 2 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
+| 1 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
 
 §M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
 

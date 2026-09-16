@@ -157,6 +157,12 @@ export class LoadEffectCatalog {
       });
       return rows.map((row) => row.id);
     }
+    if (filter.ownerKind === 'spell') {
+      const rows = await this.spells.find({
+        where: { slug: In(filter.ownerSlugs) },
+      });
+      return rows.map((row) => row.id);
+    }
 
     return [];
   }
@@ -187,6 +193,11 @@ export class LoadEffectCatalog {
         rows.filter((r) => r.ownerKind === 'subclass').map((r) => r.ownerId),
       ),
     ];
+    const spellOwnerIds = [
+      ...new Set(
+        rows.filter((r) => r.ownerKind === 'spell').map((r) => r.ownerId),
+      ),
+    ];
     if (featIds.length) {
       const feats = await this.feats.find({ where: { id: In(featIds) } });
       for (const feat of feats) {
@@ -215,6 +226,14 @@ export class LoadEffectCatalog {
       });
       for (const row of subclasses) {
         map.set(`subclass:${row.id}`, row.slug);
+      }
+    }
+    if (spellOwnerIds.length) {
+      const ownedSpells = await this.spells.find({
+        where: { id: In(spellOwnerIds) },
+      });
+      for (const row of ownedSpells) {
+        map.set(`spell:${row.id}`, row.slug);
       }
     }
     return map;

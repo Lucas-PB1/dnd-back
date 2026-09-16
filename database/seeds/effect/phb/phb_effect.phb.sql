@@ -1153,7 +1153,25 @@ ins AS (
   FROM feat RETURNING id
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
-SELECT id, 'Slots 1–4: rola 1d4; se = círculo do espaço, não gasta. Wire no cast.' FROM ins;
+SELECT id, 'Slots 1–4: rola 1d4; se = círculo do espaço, não gasta.' FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-spell-recall'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.kind = 'slot_refund_on_die_match' AND e.owner_kind = 'feat'
+)
+INSERT INTO rpg.phb_effect_dice (effect_id, die)
+SELECT id, '1d4' FROM fx;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-spell-recall'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.kind = 'slot_refund_on_die_match' AND e.owner_kind = 'feat'
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 4 FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'boonDeathWard'),

@@ -147,6 +147,28 @@ describe('executeCatalogEffect', () => {
     expect(note).toEqual({ kind: 'table_note', note: 'Declare' });
   });
 
+  it('soma dados extras de upcast em heal com dice', () => {
+    const result = executeCatalogEffect(
+      baseEffect({
+        kind: 'heal',
+        trigger: 'on_cast',
+        dice: {
+          die: '2d8',
+          dieAtLevel: null,
+          atLevel: null,
+          damageTypeSlug: null,
+        },
+        numeric: { amountFormula: 'ability_mod', flat: null },
+      }),
+      { level: 5, diceCount: 2, flatOverride: 3, rng: () => 0.999 },
+    );
+    expect(result).toMatchObject({
+      kind: 'heal',
+      amount: 35,
+      expression: '4d8+3',
+    });
+  });
+
   it('executes survive_at_zero as 1 HP without numeric', () => {
     const result = executeCatalogEffect(
       baseEffect({

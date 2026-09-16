@@ -188,6 +188,7 @@ describe('applyCastSpell', () => {
       effectCatalog: asDep({
         load: jest.fn().mockResolvedValue([drowFairyFireEffect]),
       }),
+      characters: asDep({ save: jest.fn(async (row) => row) }),
       dataSource: asDep(dataSourceOverride ?? { query: jest.fn() }),
       syncSpellSpirit: asDep(syncSpellSpirit),
       buildResponse,
@@ -624,6 +625,7 @@ describe('applyCastSpell', () => {
         sheetRepository: asDep(sheetRepository),
         grantedSpellCatalog: asDep(grantedSpellCatalog),
         effectCatalog: asDep({ load: jest.fn().mockResolvedValue([]) }),
+        characters: asDep({ save: jest.fn(async (row) => row) }),
         dataSource: asDep({
           query: jest.fn().mockResolvedValue(catalogRows),
         }),
