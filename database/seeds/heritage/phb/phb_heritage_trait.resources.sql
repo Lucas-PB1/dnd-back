@@ -497,3 +497,19 @@ ON CONFLICT (slug) DO UPDATE SET
   heritage_trait_id = EXCLUDED.heritage_trait_id;
 
 
+-- unparalleled-endurance @1× → gh-unparalleled-endurance
+INSERT INTO rpg.phb_resource_definition (slug, name, scope, heritage_trait_id, min_level)
+SELECT
+  'gh-unparalleled-endurance',
+  'Resistência Incomparável',
+  'heritage'::rpg.resource_scope,
+  ht.id,
+  1
+FROM rpg.phb_heritage_trait ht
+WHERE ht.slug = 'unparalleled-endurance'
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  scope = EXCLUDED.scope,
+  heritage_trait_id = EXCLUDED.heritage_trait_id;
+
+

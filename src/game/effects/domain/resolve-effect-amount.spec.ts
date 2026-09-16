@@ -35,6 +35,14 @@ describe('resolveEffectAmount', () => {
     ).toBe(46);
     expect(
       resolveEffectAmount({
+        amountFormula: 'dice_1d6_plus_pb',
+        flat: null,
+        level: 5,
+        rng: () => 0,
+      }),
+    ).toEqual({ amount: 4, expression: '1d6+3', faces: 6 });
+    expect(
+      resolveEffectAmount({
         amountFormula: 'level_div_2',
         flat: null,
         level: 5,

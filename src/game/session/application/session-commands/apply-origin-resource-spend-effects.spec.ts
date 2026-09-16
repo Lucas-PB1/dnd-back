@@ -8,6 +8,7 @@ function spendEffect(input: {
   resourceSlug: string;
   amountFormula?: NonNullable<CatalogEffect['numeric']>['amountFormula'];
   flat?: number | null;
+  minTraitTakes?: number;
   note: string;
   label: string;
 }): CatalogEffect {
@@ -20,7 +21,7 @@ function spendEffect(input: {
     trigger: 'on_resource_spend',
     unlockLevel: 1,
     sortOrder: 0,
-    minTraitTakes: 1,
+    minTraitTakes: input.minTraitTakes ?? 1,
     actionSlug: null,
     resourceSlug: input.resourceSlug,
     label: input.label,
@@ -162,6 +163,36 @@ describe('applyOriginResourceSpendEffects', () => {
     expect(result.note).toMatch(/Fio Concentrado/);
   });
 
+  it('applies PB d4 temp HP for stalwart edge', async () => {
+    const result = await applyOriginResourceSpendEffects({
+      state: asDep(state),
+      character: asDep({ id: 'pc-1', speciesSlug: 'human', level: 5 }),
+      resourceSlug: 'gh-stalwart-edge',
+      currentState: asDep(stateResponse),
+      rng: () => 0,
+      effects: [
+        spendEffect({
+          kind: 'temp_hp',
+          resourceSlug: 'gh-stalwart-edge',
+          amountFormula: 'dice_pb_d4',
+          label: 'Fio Inabalável',
+          note: 'Fio Inabalável: PV temp. (PBd4) aplicados na ficha.',
+        }),
+      ],
+    });
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      { tempHp: 3 },
+    );
+    expect(result.roll).toEqual({
+      resourceSlug: 'gh-stalwart-edge',
+      faces: 4,
+      value: 3,
+      expression: '3d4',
+    });
+    expect(result.note).toMatch(/Fio Inabalável/);
+  });
+
   it('rolls PB d4 heal for aasimar healing hands', async () => {
     const character = {
       id: 'pc-1',
@@ -264,6 +295,114 @@ describe('applyOriginResourceSpendEffects', () => {
       },
     );
     expect(result.note).toMatch(/1 PV/);
+  });
+
+  it('sets 1 HP for unparalleled endurance at 1 take', async () => {
+    const currentState = {
+      ...stateResponse,
+      hitPointsCurrent: 0,
+      conditions: ['unconscious'],
+    };
+    state.applyCurrentHitPoints.mockImplementation(async (_c, hp) => ({
+      ...currentState,
+      hitPointsCurrent: hp,
+    }));
+
+    const result = await applyOriginResourceSpendEffects({
+      state: asDep(state),
+      character: asDep({
+        id: 'pc-1',
+        heritageSlug: 'orc',
+        level: 5,
+        hitPointsCurrent: 0,
+        hitPointsMax: 40,
+      }),
+      resourceSlug: 'gh-unparalleled-endurance',
+      currentState: asDep(currentState),
+      traitTakes: 1,
+      effects: [
+        spendEffect({
+          kind: 'survive_at_zero',
+          resourceSlug: 'gh-unparalleled-endurance',
+          amountFormula: 'fixed',
+          flat: 1,
+          minTraitTakes: 1,
+          label: 'Resistência Incomparável',
+          note: 'Ao cair a 0 PV: fica com 1 PV (gasta 1 uso).',
+        }),
+        spendEffect({
+          kind: 'survive_at_zero',
+          resourceSlug: 'gh-unparalleled-endurance',
+          amountFormula: 'dice_1d6_plus_pb',
+          minTraitTakes: 2,
+          label: 'Resistência Incomparável',
+          note: 'Ao cair a 0 PV: 1d6 + PB PV.',
+        }),
+      ],
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      1,
+    );
+    expect(result.note).toMatch(/1 PV/);
+  });
+
+  it('rolls 1d6+PB HP for unparalleled endurance at 2 takes', async () => {
+    const currentState = {
+      ...stateResponse,
+      hitPointsCurrent: 0,
+      conditions: ['unconscious'],
+    };
+    state.applyCurrentHitPoints.mockImplementation(async (_c, hp) => ({
+      ...currentState,
+      hitPointsCurrent: hp,
+    }));
+
+    const result = await applyOriginResourceSpendEffects({
+      state: asDep(state),
+      character: asDep({
+        id: 'pc-1',
+        heritageSlug: 'orc',
+        level: 5,
+        hitPointsCurrent: 0,
+        hitPointsMax: 40,
+      }),
+      resourceSlug: 'gh-unparalleled-endurance',
+      currentState: asDep(currentState),
+      traitTakes: 2,
+      rng: () => 0,
+      effects: [
+        spendEffect({
+          kind: 'survive_at_zero',
+          resourceSlug: 'gh-unparalleled-endurance',
+          amountFormula: 'fixed',
+          flat: 1,
+          minTraitTakes: 1,
+          label: 'Resistência Incomparável',
+          note: 'Ao cair a 0 PV: fica com 1 PV (gasta 1 uso).',
+        }),
+        spendEffect({
+          kind: 'survive_at_zero',
+          resourceSlug: 'gh-unparalleled-endurance',
+          amountFormula: 'dice_1d6_plus_pb',
+          minTraitTakes: 2,
+          label: 'Resistência Incomparável',
+          note: 'Ao cair a 0 PV: {total} PV (1d6 + PB).',
+        }),
+      ],
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      4,
+    );
+    expect(result.roll).toEqual({
+      resourceSlug: 'gh-unparalleled-endurance',
+      faces: 6,
+      value: 4,
+      expression: '1d6+3',
+    });
   });
 
   it('ignores other resources', async () => {

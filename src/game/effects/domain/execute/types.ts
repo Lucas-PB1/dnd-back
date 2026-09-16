@@ -148,6 +148,8 @@ export type EffectExecution =
       kind: 'survive_at_zero';
       amount: number;
       note: string | null;
+      expression?: string;
+      faces?: number;
     }
   | {
       kind: 'recover_spell_slot';

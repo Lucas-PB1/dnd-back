@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §D Espécie saiu (Vigor Implacável aplica 1 PV no spend).
+**Última revisão:** 2026-09-16 — §E Heritage saiu (Fio Inabalável + Resistência Incomparável aplicam ficha).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -30,17 +30,16 @@ Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] **§E** Heritage — apply ficha + UI | Igual espécie, pack GH |
-| 2 | [ ] **§O** Condições — declare/nota na mesa | Sem tipar alvo (isso é combate) |
-| 3 | [ ] **§I** Feat / boon / estilo — wire + economies | Apply ficha; estilo no roll → combate |
-| 4 | [ ] **§P** Campanha / encontro — combatentes leves | Board já existe; simulado → combate |
-| 5 | [ ] **§J** Montaria — template, board, ações de ficha | Um actor; sem combate |
-| 6 | [ ] **§L** Veículo — bundle, métrica, ações | Actor + métrica |
-| 7 | [ ] **§K** Companheiro — tracker leve / summon / command | Estado persistido; combate da fera fora |
-| 8 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
-| 9 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
-| 10 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
-| 11 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
+| 1 | [ ] **§O** Condições — declare/nota na mesa | Sem tipar alvo (isso é combate) |
+| 2 | [ ] **§I** Feat / boon / estilo — wire + economies | Apply ficha; estilo no roll → combate |
+| 3 | [ ] **§P** Campanha / encontro — combatentes leves | Board já existe; simulado → combate |
+| 4 | [ ] **§J** Montaria — template, board, ações de ficha | Um actor; sem combate |
+| 5 | [ ] **§L** Veículo — bundle, métrica, ações | Actor + métrica |
+| 6 | [ ] **§K** Companheiro — tracker leve / summon / command | Estado persistido; combate da fera fora |
+| 7 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
+| 8 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
+| 9 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
+| 10 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
 
 §M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
 

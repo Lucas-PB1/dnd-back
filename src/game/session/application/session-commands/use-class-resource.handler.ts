@@ -8,7 +8,10 @@ import {
   UseClassResourceDto,
   UseClassResourceResponseDto,
 } from '@game/session/dto/core/session-commands.dto';
-import { applyOriginResourceSpendEffects } from './apply-origin-resource-spend-effects';
+import {
+  applyOriginResourceSpendEffects,
+  loadHeritageTraitTakesForResource,
+} from './apply-origin-resource-spend-effects';
 import { applyThreadResourceSpendSideEffects } from './apply-thread-resource-spend-side-effects';
 
 @Injectable()
@@ -41,12 +44,18 @@ export class UseClassResourceHandler {
       resourceSlug,
       triggers: ['on_resource_spend'],
     });
+    const traitTakes = await loadHeritageTraitTakesForResource(
+      this.dataSource,
+      character.id,
+      resourceSlug,
+    );
     const origin = await applyOriginResourceSpendEffects({
       state: this.state,
       character,
       resourceSlug,
       currentState: spent.state,
       effects,
+      traitTakes,
     });
     const thread = await applyThreadResourceSpendSideEffects({
       dataSource: this.dataSource,

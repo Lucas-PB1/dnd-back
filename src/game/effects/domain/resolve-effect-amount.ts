@@ -64,6 +64,14 @@ export function resolveEffectAmount(input: {
         faces,
       };
     }
+    case 'dice_1d6_plus_pb': {
+      const rolled = rollDamageParts('1d6', pb, { rng });
+      return {
+        amount: rolled.total,
+        expression: rolled.expression,
+        faces: 6,
+      };
+    }
     case 'dice_1d4': {
       const rolled = rollDamageParts('1d4', 0, { rng });
       return {

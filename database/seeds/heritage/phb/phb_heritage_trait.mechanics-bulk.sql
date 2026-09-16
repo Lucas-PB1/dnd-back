@@ -1258,6 +1258,36 @@ INSERT INTO rpg.phb_class_economy_action (
   resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
 )
 SELECT
+  'heritage-unparalleled-endurance',
+  ht.id,
+  'Resistência Incomparável',
+  'free'::rpg.action_economy_bucket,
+  1,
+  'gh-unparalleled-endurance',
+  TRUE,
+  'Ao cair a 0 PV: fica com 1 PV (2×: 1d6 + PB)',
+  'Quando é reduzido a 0 PV sem morrer imediatamente, fica com 1 PV. 1×/LR. Com o traço duas vezes: 1d6 + PB PV.',
+  'spend-resource',
+  750,
+  1
+FROM rpg.phb_heritage_trait ht
+WHERE ht.slug = 'unparalleled-endurance'
+ON CONFLICT (action_id) DO UPDATE SET
+  heritage_trait_id = EXCLUDED.heritage_trait_id,
+  name = EXCLUDED.name,
+  economy = EXCLUDED.economy,
+  resource_slug = EXCLUDED.resource_slug,
+  always_spends_resource = EXCLUDED.always_spends_resource,
+  summary = EXCLUDED.summary,
+  description = EXCLUDED.description,
+  table_action = EXCLUDED.table_action,
+  min_trait_takes = EXCLUDED.min_trait_takes;
+
+INSERT INTO rpg.phb_class_economy_action (
+  action_id, heritage_trait_id, name, economy, unlock_level,
+  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
+)
+SELECT
   'heritage-unparalleled-endurance-reaction-x2',
   ht.id,
   'Resistência Incomparável (2×)',

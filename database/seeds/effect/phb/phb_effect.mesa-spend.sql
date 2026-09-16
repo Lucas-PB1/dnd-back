@@ -98,6 +98,82 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, 'Fio Concentrado: PV temp. (PBd6) aplicados na ficha.'
 FROM fx;
 
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'stalwart-edge'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, resource_slug, unlock_level, sort_order, label
+  )
+  SELECT 'temp_hp'::rpg.effect_kind, 'heritage'::rpg.effect_owner_kind, ht.id,
+         'on_resource_spend'::rpg.effect_trigger, 'gh-stalwart-edge', 1, 1,
+         'Fio Inabalável'
+  FROM ht
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'dice_pb_d4'::rpg.effect_amount_formula, NULL FROM ins;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'stalwart-edge'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN ht ON ht.id = e.owner_id
+  WHERE e.owner_kind = 'heritage' AND e.resource_slug = 'gh-stalwart-edge'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Fio Inabalável: PV temp. (PBd4) aplicados na ficha.'
+FROM fx;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, resource_slug, unlock_level, sort_order, min_trait_takes, label
+  )
+  SELECT 'survive_at_zero'::rpg.effect_kind, 'heritage'::rpg.effect_owner_kind, ht.id,
+         'on_resource_spend'::rpg.effect_trigger, 'gh-unparalleled-endurance', 1, 1, 1,
+         'Resistência Incomparável'
+  FROM ht
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN ht ON ht.id = e.owner_id
+  WHERE e.owner_kind = 'heritage'
+    AND e.resource_slug = 'gh-unparalleled-endurance'
+    AND e.min_trait_takes = 1
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Ao cair a 0 PV (sem morte imediata): fica com 1 PV (gasta 1 uso).'
+FROM fx;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, resource_slug, unlock_level, sort_order, min_trait_takes, label
+  )
+  SELECT 'survive_at_zero'::rpg.effect_kind, 'heritage'::rpg.effect_owner_kind, ht.id,
+         'on_resource_spend'::rpg.effect_trigger, 'gh-unparalleled-endurance', 1, 2, 2,
+         'Resistência Incomparável'
+  FROM ht
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'dice_1d6_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN ht ON ht.id = e.owner_id
+  WHERE e.owner_kind = 'heritage'
+    AND e.resource_slug = 'gh-unparalleled-endurance'
+    AND e.min_trait_takes = 2
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Ao cair a 0 PV (sem morte imediata): {total} PV (1d6 + PB).'
+FROM fx;
+
 WITH th AS (SELECT id FROM rpg.phb_character_thread WHERE slug = 'fatebound'),
 ins AS (
   INSERT INTO rpg.phb_effect (

@@ -8,17 +8,25 @@ export function executeResourceEffect(
   context: ExecuteCatalogEffectContext,
 ): EffectExecution | null {
   if (effect.kind === 'survive_at_zero') {
-    const amount = effect.numeric
-      ? resolveEffectAmount({
-          amountFormula: effect.numeric.amountFormula,
-          flat: effect.numeric.flat,
-          level: context.level,
-        }).amount
-      : 1;
+    if (!effect.numeric) {
+      return {
+        kind: 'survive_at_zero',
+        amount: 1,
+        note: effect.note?.note ?? null,
+      };
+    }
+    const resolved = resolveEffectAmount({
+      amountFormula: effect.numeric.amountFormula,
+      flat: effect.numeric.flat,
+      level: context.level,
+      rng: context.rng,
+    });
     return {
       kind: 'survive_at_zero',
-      amount: Math.max(1, amount),
+      amount: Math.max(1, resolved.amount),
       note: effect.note?.note ?? null,
+      expression: resolved.expression,
+      faces: resolved.faces,
     };
   }
 

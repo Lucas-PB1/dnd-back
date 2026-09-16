@@ -1,6 +1,6 @@
 -- seed-mode: truncate-scoped (phb_effect CTE; re-seed via truncate)
 -- Heritage GH Cap. 1 — grant_resource (SSOT; C072 só defs)
--- 31 efeitos; min_trait_takes em phb_effect
+-- 32 efeitos; min_trait_takes em phb_effect
 
 WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'born-lucky'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'gh-born-lucky'),
@@ -619,6 +619,26 @@ INSERT INTO rpg.phb_effect_resource (
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
 SELECT ins.id, rd.id, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+       FALSE, FALSE, TRUE
+FROM ins CROSS JOIN rd;
+
+WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
+rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'gh-unparalleled-endurance'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, min_trait_takes, label
+  )
+  SELECT 'grant_resource'::rpg.effect_kind, 'heritage'::rpg.effect_owner_kind, ht.id,
+         'on_build'::rpg.effect_trigger, 1, 32, 1,
+         'Resistência Incomparável'
+  FROM ht
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_resource (
+  effect_id, resource_id, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT ins.id, rd.id, 'fixed'::rpg.resource_max_formula, 1,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
