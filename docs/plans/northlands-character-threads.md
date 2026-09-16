@@ -5,7 +5,7 @@ Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no rep
 
 ## Status de implementação
 
-Mesa threads **MVP feito** (catálogo, ficha, economy 1/DL, Fatebound, Cursemarked brackets). Residual fino → [`backlog.md`](backlog.md) Adiado.
+Mesa threads **MVP feito** (catálogo, ficha, economy 1/DL, Fatebound, Cursemarked brackets, apply de ficha Tenacidade/Lealdades). Residual fino → [`backlog.md`](backlog.md) Adiado.
 
 | Fatia | Status |
 |-------|--------|

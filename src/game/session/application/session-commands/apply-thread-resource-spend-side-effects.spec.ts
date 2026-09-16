@@ -1,8 +1,11 @@
 import {
   applyThreadResourceSpendSideEffects,
   DOOM_DELAYED_RESOURCE,
+  EXTREME_LOYALTY_RESOURCE,
   GLORIOUS_END_RESOURCE,
   LAST_ACT_OF_FATE_RESOURCE,
+  TENACITY_RESOURCE,
+  UNDYING_LOYALTY_RESOURCE,
 } from './apply-thread-resource-spend-side-effects';
 import { asDep } from '@common/testing/as-dep';
 
@@ -144,6 +147,105 @@ describe('applyThreadResourceSpendSideEffects', () => {
     expect(result.note).toMatch(/Último Ato/);
     expect(result.note).toMatch(/Fim Glorioso/);
     expect(result.state).toEqual(afterPatch);
+  });
+
+  it('clears tenacity conditions on the sheet', async () => {
+    const afterPatch = {
+      ...baseState,
+      conditions: ['prone'],
+    };
+    const state = {
+      applyCurrentHitPoints: jest.fn(),
+      patch: jest.fn().mockResolvedValue(afterPatch),
+    };
+
+    const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(dataSourceWithNote('Tenacidade')),
+      state: asDep(state),
+      character,
+      resourceSlug: TENACITY_RESOURCE,
+      currentState: asDep({
+        ...baseState,
+        conditions: ['frightened', 'prone', 'stunned'],
+      }),
+    });
+
+    expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();
+    expect(state.patch).toHaveBeenCalledWith(character, {
+      conditions: ['prone'],
+    });
+    expect(result.note).toMatch(/Tenacidade/);
+    expect(result.state).toEqual(afterPatch);
+  });
+
+  it('clears charmed and pays level HP for extreme-loyalty', async () => {
+    const afterHp = {
+      ...baseState,
+      hitPointsCurrent: 7,
+      conditions: ['charmed', 'prone'],
+    };
+    const afterPatch = {
+      ...afterHp,
+      conditions: ['prone'],
+    };
+    const leveled = asDep({ id: 'pc-1', hitPointsCurrent: 12, level: 5 });
+    const state = {
+      applyCurrentHitPoints: jest.fn().mockResolvedValue(afterHp),
+      patch: jest.fn().mockResolvedValue(afterPatch),
+    };
+
+    const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(dataSourceWithNote('Lealdade Extrema')),
+      state: asDep(state),
+      character: leveled,
+      resourceSlug: EXTREME_LOYALTY_RESOURCE,
+      currentState: asDep({
+        ...baseState,
+        hitPointsCurrent: 12,
+        conditions: ['charmed', 'prone'],
+      }),
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(leveled, 7);
+    expect(state.patch).toHaveBeenCalledWith(leveled, {
+      conditions: ['prone'],
+    });
+    expect(result.note).toMatch(/Lealdade Extrema/);
+  });
+
+  it('sets HP to level for undying-loyalty', async () => {
+    const afterHp = {
+      ...baseState,
+      hitPointsCurrent: 5,
+      conditions: ['unconscious', 'prone'],
+    };
+    const afterPatch = {
+      ...afterHp,
+      conditions: ['prone'],
+    };
+    const leveled = asDep({ id: 'pc-1', hitPointsCurrent: 0, level: 5 });
+    const state = {
+      applyCurrentHitPoints: jest.fn().mockResolvedValue(afterHp),
+      patch: jest.fn().mockResolvedValue(afterPatch),
+    };
+
+    const result = await applyThreadResourceSpendSideEffects({
+      dataSource: asDep(dataSourceWithNote('Lealdade Imortal')),
+      state: asDep(state),
+      character: leveled,
+      resourceSlug: UNDYING_LOYALTY_RESOURCE,
+      currentState: asDep({
+        ...baseState,
+        hitPointsCurrent: 0,
+        conditions: ['unconscious', 'prone'],
+      }),
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(leveled, 5);
+    expect(state.patch).toHaveBeenCalledWith(leveled, {
+      conditions: ['prone'],
+    });
+    expect(result.note).toMatch(/Lealdade Imortal/);
   });
 
   it('returns note only for glorious-end', async () => {

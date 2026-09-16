@@ -433,3 +433,27 @@ SELECT ins.id, rd.id, 'fixed'::rpg.resource_max_formula, 1,
        FALSE, FALSE, TRUE
 FROM ins CROSS JOIN rd;
 
+WITH t AS (SELECT id FROM rpg.phb_character_thread WHERE slug = 'sworn-huskarl'),
+rd AS (
+  SELECT id FROM rpg.phb_resource_definition
+  WHERE slug = 'undying-loyalty' AND scope = 'character_thread'::rpg.resource_scope
+    AND thread_slug = 'sworn-huskarl'
+),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label
+  )
+  SELECT 'grant_resource'::rpg.effect_kind, 'character_thread'::rpg.effect_owner_kind, t.id,
+         'on_build'::rpg.effect_trigger, 1, 19,
+         'Lealdade Imortal'
+  FROM t
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_resource (
+  effect_id, resource_id, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT ins.id, rd.id, 'fixed'::rpg.resource_max_formula, 1,
+       FALSE, FALSE, FALSE
+FROM ins CROSS JOIN rd;
+

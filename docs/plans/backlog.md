@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §G Antecedente saiu (idiomas concedidos no create).
+**Última revisão:** 2026-09-16 — §F Thread saiu (Tenacidade / Lealdade Extrema / Imortal aplicam ficha).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -30,19 +30,18 @@ Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] **§F** Thread — apply + UI residual | MVP Fatebound/Cursemarked já existe |
-| 2 | [ ] **§D** Espécie — economy + apply ficha | Pool ok; superfície menor que classe |
-| 3 | [ ] **§E** Heritage — apply ficha + UI | Igual espécie, pack GH |
-| 4 | [ ] **§O** Condições — declare/nota na mesa | Sem tipar alvo (isso é combate) |
-| 5 | [ ] **§I** Feat / boon / estilo — wire + economies | Apply ficha; estilo no roll → combate |
-| 6 | [ ] **§P** Campanha / encontro — combatentes leves | Board já existe; simulado → combate |
-| 7 | [ ] **§J** Montaria — template, board, ações de ficha | Um actor; sem combate |
-| 8 | [ ] **§L** Veículo — bundle, métrica, ações | Actor + métrica |
-| 9 | [ ] **§K** Companheiro — tracker leve / summon / command | Estado persistido; combate da fera fora |
-| 10 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
-| 11 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
-| 12 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
-| 13 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
+| 1 | [ ] **§D** Espécie — economy + apply ficha | Pool ok; superfície menor que classe |
+| 2 | [ ] **§E** Heritage — apply ficha + UI | Igual espécie, pack GH |
+| 3 | [ ] **§O** Condições — declare/nota na mesa | Sem tipar alvo (isso é combate) |
+| 4 | [ ] **§I** Feat / boon / estilo — wire + economies | Apply ficha; estilo no roll → combate |
+| 5 | [ ] **§P** Campanha / encontro — combatentes leves | Board já existe; simulado → combate |
+| 6 | [ ] **§J** Montaria — template, board, ações de ficha | Um actor; sem combate |
+| 7 | [ ] **§L** Veículo — bundle, métrica, ações | Actor + métrica |
+| 8 | [ ] **§K** Companheiro — tracker leve / summon / command | Estado persistido; combate da fera fora |
+| 9 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
+| 10 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
+| 11 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
+| 12 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
 
 §M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
 

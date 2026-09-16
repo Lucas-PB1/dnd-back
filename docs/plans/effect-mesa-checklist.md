@@ -36,7 +36,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 | **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
 | **D** | Espécie | `effect/phb/` espécie | Pool ok; economy; apply ficha |
 | **E** | Heritage | heritage seeds | Pool ok; economy/smoke; apply ficha; UI |
-| **F** | Thread | thread seeds | Pool ok; Fatebound/Cursemarked; apply ficha + UI |
 | **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
 | **I** | Feat / boon / estilo | feat effects | Wire + economies; apply ficha; estilo no roll de ataque → lista combate real |
 

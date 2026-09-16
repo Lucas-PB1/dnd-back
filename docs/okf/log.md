@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §F Thread: apply de ficha
+
+* **Update** (13:25 UTC): Tenacidade limpa condições; Lealdade Extrema tira Enfeitiçado + dano = nível; Lealdade Imortal (recurso novo) PV = nível; Fatebound já aplicava Ruína/Último Ato; §F saiu da fila — refs: [`apply-thread-sheet-spend.ts`](../../src/game/session/application/session-commands/apply-thread-sheet-spend.ts), [`phb_effect.thread.sql`](../../database/seeds/effect/northlands/phb_effect.thread.sql), [`backlog.md`](../plans/backlog.md) — motivo: spend de thread que mexe na ficha não pode ficar só em nota.
+
 ## 2026-09-16 — §G Antecedente: idiomas concedidos no create
 
 * **Update** (13:20 UTC): create passa a mesclar idiomas fixos do antecedente + concedidos de classe (`common`, Gíria dos Ladrões, Druídico) como o talento de origem; §G saiu da fila Ativo — refs: [`background-origin.ts`](../../src/game/sheet/domain/origin/background-origin.ts), [`resolve-create-origin.ts`](../../src/game/sheet/application/create-character/resolve-create-origin.ts), [`backlog.md`](../plans/backlog.md) — motivo: último gap de ficha do antecedente (pacote/perícia/ferramenta já estavam).

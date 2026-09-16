@@ -26,7 +26,8 @@ VALUES
   ('reliable-senses', 'Sentidos Confiáveis', 'character_thread'::rpg.resource_scope, 'legend-hunter', 1),
   ('finish-the-fight', 'Terminar a Luta', 'character_thread'::rpg.resource_scope, 'legend-hunter', 1),
   ('jarls-authority', 'Autoridade do Jarl', 'character_thread'::rpg.resource_scope, 'sworn-huskarl', 1),
-  ('extreme-loyalty', 'Lealdade Extrema', 'character_thread'::rpg.resource_scope, 'sworn-huskarl', 1)
+  ('extreme-loyalty', 'Lealdade Extrema', 'character_thread'::rpg.resource_scope, 'sworn-huskarl', 1),
+  ('undying-loyalty', 'Lealdade Imortal', 'character_thread'::rpg.resource_scope, 'sworn-huskarl', 1)
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   scope = EXCLUDED.scope,

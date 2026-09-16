@@ -46,6 +46,18 @@ FROM (
     (
       'glorious-end',
       'Fim Glorioso: aliados testemunhas — vantagem em testes d20 por 24 horas.'
+    ),
+    (
+      'tenacity',
+      'Tenacidade: encerra Assustado, Incapacitado, Paralisado ou Atordoado na ficha.'
+    ),
+    (
+      'extreme-loyalty',
+      'Lealdade Extrema: encerra Enfeitiçado e aplica dano psíquico = nível na ficha.'
+    ),
+    (
+      'undying-loyalty',
+      'Lealdade Imortal: PV = nível; remove Inconsciente. 1/7 dias (honor).'
     )
 ) AS v(benefit_key, note)
 WHERE b.benefit_key = v.benefit_key;

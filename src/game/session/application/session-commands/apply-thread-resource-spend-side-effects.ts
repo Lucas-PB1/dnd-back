@@ -1,21 +1,29 @@
 import type { DataSource } from 'typeorm';
-import { applyCurrentHitPoints } from '../table-actions/primitives/apply-current-hit-points';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import type {
-  CharacterStateResponseDto,
-} from '@game/session/dto/core/character-state-response.dto';
+import type { CharacterStateResponseDto } from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import {
+  applyDoomDelayedSheet,
+  applyExtremeLoyaltySheet,
+  applyLastActOfFateSheet,
+  applyTenacitySheet,
+  applyUndyingLoyaltySheet,
+} from './apply-thread-sheet-spend';
 
 export const DOOM_DELAYED_RESOURCE = 'doom-delayed';
 export const LAST_ACT_OF_FATE_RESOURCE = 'last-act-of-fate';
 export const GLORIOUS_END_RESOURCE = 'glorious-end';
+export const TENACITY_RESOURCE = 'tenacity';
+export const EXTREME_LOYALTY_RESOURCE = 'extreme-loyalty';
+export const UNDYING_LOYALTY_RESOURCE = 'undying-loyalty';
 
-const UNCONSCIOUS = 'unconscious';
-
-const FATEBOUND_SPEND_RESOURCES = new Set([
+const SHEET_SPEND_RESOURCES = new Set([
   DOOM_DELAYED_RESOURCE,
   LAST_ACT_OF_FATE_RESOURCE,
   GLORIOUS_END_RESOURCE,
+  TENACITY_RESOURCE,
+  EXTREME_LOYALTY_RESOURCE,
+  UNDYING_LOYALTY_RESOURCE,
 ]);
 
 export async function loadThreadSpendSideEffectNote(
@@ -42,48 +50,33 @@ export async function applyThreadResourceSpendSideEffects(input: {
 }): Promise<{ state: CharacterStateResponseDto; note: string | null }> {
   const { dataSource, state, character, resourceSlug, currentState } = input;
 
-  if (!FATEBOUND_SPEND_RESOURCES.has(resourceSlug)) {
+  if (!SHEET_SPEND_RESOURCES.has(resourceSlug)) {
     return { state: currentState, note: null };
   }
 
   const note = await loadThreadSpendSideEffectNote(dataSource, resourceSlug);
 
   if (resourceSlug === DOOM_DELAYED_RESOURCE) {
-    const next = await applyDoomDelayed(state, character);
-    return { state: next, note };
+    return { state: await applyDoomDelayedSheet(state, character), note };
   }
   if (resourceSlug === LAST_ACT_OF_FATE_RESOURCE) {
-    const next = await applyLastActOfFate(state, character);
-    return { state: next, note };
+    return { state: await applyLastActOfFateSheet(state, character), note };
+  }
+  if (resourceSlug === TENACITY_RESOURCE) {
+    return {
+      state: await applyTenacitySheet(state, character, currentState),
+      note,
+    };
+  }
+  if (resourceSlug === EXTREME_LOYALTY_RESOURCE) {
+    return {
+      state: await applyExtremeLoyaltySheet(state, character, currentState),
+      note,
+    };
+  }
+  if (resourceSlug === UNDYING_LOYALTY_RESOURCE) {
+    return { state: await applyUndyingLoyaltySheet(state, character), note };
   }
 
   return { state: currentState, note };
-}
-
-async function applyDoomDelayed(
-  state: CharacterStateRepository,
-  character: PlayerCharacter,
-): Promise<CharacterStateResponseDto> {
-  const afterHp = await applyCurrentHitPoints(state, character, 0);
-  const conditions = afterHp.conditions.includes(UNCONSCIOUS)
-    ? afterHp.conditions
-    : [...afterHp.conditions, UNCONSCIOUS];
-
-  return state.patch(character, {
-    deathSaveSuccesses: 3,
-    deathSaveFailures: 0,
-    conditions,
-  });
-}
-
-async function applyLastActOfFate(
-  state: CharacterStateRepository,
-  character: PlayerCharacter,
-): Promise<CharacterStateResponseDto> {
-  await applyCurrentHitPoints(state, character, 1);
-  return state.patch(character, {
-    deathSaveSuccesses: 0,
-    deathSaveFailures: 0,
-    conditions: [],
-  });
 }

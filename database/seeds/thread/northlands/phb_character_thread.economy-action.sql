@@ -149,6 +149,14 @@ INSERT INTO rpg.phb_class_economy_action (
   'Encerrar Enfeitiçado (dano psíquico = nível)',
   'Encerre a condição Enfeitiçado pagando dano Psíquico igual ao seu nível. 1 uso / Descanso Longo.',
   'spend-resource', NULL, 761
+),
+(
+  'thread-undying-loyalty', NULL, NULL, NULL, NULL, NULL, NULL, 'sworn-huskarl',
+  'Lealdade Imortal', 'free'::rpg.action_economy_bucket, 1,
+  'undying-loyalty', NULL, true,
+  'A 0 PV → PV = nível',
+  'Quando cair a 0 PV (não vs morte instantânea sem dano): PV = seu nível. 1 uso / 7 dias (sem recarga no Descanso Longo).',
+  'spend-resource', NULL, 762
 )
 ON CONFLICT (action_id) DO UPDATE SET
   thread_slug = EXCLUDED.thread_slug,
