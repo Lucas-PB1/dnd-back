@@ -490,6 +490,7 @@ creature/phb/seed.mm-monsters-z-images.sql
 creature/phb/seed.mm-animals-images.sql
 creature/phb/seed.mm-beasts-manual-images.sql
 creature/phb/seed.mm-dragons-young-reuse-adult-images.sql
+creature/phb/seed.mm-summons-images.sql
 creature/phb/phb_mount.images.02.sql
 effect/phb/phb_effect.phb.sql
 effect/steinhardt/phb_effect.steinhardt.sql

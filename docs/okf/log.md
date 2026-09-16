@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-16 — Summons fechados (37/37)
+
+* **Update** (12:00 UTC): lote final elemental+skeletal+montaria+primal → `public/catalog/summons/`; lista sem imagem **0** — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: usuário entregou o resto (nomes com typo mapeados).
+
+## 2026-09-16 — 20 artes de summons importadas
+
+* **Update** (11:40 UTC): 20 retratos → `public/catalog/summons/` + `seed.mm-summons-images.sql`; restam elemental×4, skeletal, montaria×3, primal×9 — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: lote Google por forma (aberration→undead parcial).
+
+## 2026-09-15 — Summons caça por forma EN
+
+* **Update** (22:40 UTC): doc reorganizado magia→forma (Beholderkin/Slaad/Star Spawn, Mirthful/Fuming/Tricksy, etc.) + Google por nome da forma; primal = 3 ambientes — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md), [`summon-vs-conjure.md`](./summon-vs-conjure.md) — motivo: Beyond só tem símbolo; forma tem nome pesquisável.
+
 ## 2026-09-15 — Links Google Imagens para summons
 
 * **Update** (22:35 UTC): Beyond só tem símbolo nas magias; doc com busca Google Imagens por família e por variante — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: caçar arte fora do Beyond.
