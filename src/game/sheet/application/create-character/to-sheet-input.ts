@@ -5,6 +5,7 @@ import { CharacterSheetInput } from '../../domain/character-sheet.types';
 export function toCreateSheetInput(
   dto: CreateCharacterDto,
   characterFeats?: CharacterFeatDto[],
+  languageSlugs?: string[],
 ): CharacterSheetInput {
   return {
     classSkillSlugs: dto.classSkillSlugs,
@@ -17,7 +18,7 @@ export function toCreateSheetInput(
     featOptions: dto.featOptions,
     characterSpells: dto.characterSpells,
     equipment: dto.equipment,
-    languageSlugs: dto.languageSlugs,
+    languageSlugs: languageSlugs ?? dto.languageSlugs,
     abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug,
   };
 }

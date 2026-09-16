@@ -1,5 +1,13 @@
 # log
 
+## 2026-09-16 — §G Antecedente: idiomas concedidos no create
+
+* **Update** (13:20 UTC): create passa a mesclar idiomas fixos do antecedente + concedidos de classe (`common`, Gíria dos Ladrões, Druídico) como o talento de origem; §G saiu da fila Ativo — refs: [`background-origin.ts`](../../src/game/sheet/domain/origin/background-origin.ts), [`resolve-create-origin.ts`](../../src/game/sheet/application/create-character/resolve-create-origin.ts), [`backlog.md`](../plans/backlog.md) — motivo: último gap de ficha do antecedente (pacote/perícia/ferramenta já estavam).
+
+## 2026-09-16 — Backlog fácil → difícil
+
+* **Update** (13:10 UTC): `backlog.md` passou a fila numerada por custo (Ativo §G…§H, Adiado Ulfberht…Companheiro Primal, combate por último); checklist só aponta a ordem — refs: [`backlog.md`](../plans/backlog.md), [`effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) — motivo: pegar o próximo barato sem misturar Adiado nem combate.
+
 ## 2026-09-16 — Backlog: saiu o concluído
 
 * **Update** (13:05 UTC): `backlog.md` ficou só o aberto (snapshot Ativo §B/C + §H; Adiado Motor/UI e Qualidade vazios removidos); §A saiu do checklist mesa; link morto `dmg-wiring-status.md` — refs: [`backlog.md`](../plans/backlog.md), [`effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) — motivo: política do plano — concluído não acumula histórico.

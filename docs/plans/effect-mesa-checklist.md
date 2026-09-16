@@ -24,6 +24,8 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 
 **Não** é critério de § completo: dano no alvo, acerto vs CA, saves de combate, condições no inimigo, tabuleiro. Isso vai para [`combat-real-deferred.md`](combat-real-deferred.md) — feature futura, **fora** deste checklist.
 
+**Fila de trabalho (fácil → difícil):** [`backlog.md`](backlog.md). Letras (§B…) são identidade, não ordem.
+
 ---
 
 ## PC — donos
@@ -35,7 +37,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 | **D** | Espécie | `effect/phb/` espécie | Pool ok; economy; apply ficha |
 | **E** | Heritage | heritage seeds | Pool ok; economy/smoke; apply ficha; UI |
 | **F** | Thread | thread seeds | Pool ok; Fatebound/Cursemarked; apply ficha + UI |
-| **G** | Antecedente | `phb_background*` | Packages/skills/tools/idiomas; efeitos se couber |
 | **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
 | **I** | Feat / boon / estilo | feat effects | Wire + economies; apply ficha; estilo no roll de ataque → lista combate real |
 

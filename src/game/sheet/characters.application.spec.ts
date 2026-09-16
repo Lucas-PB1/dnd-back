@@ -159,6 +159,22 @@ describe('Characters application layer', () => {
               }
               return Promise.resolve([]);
             }),
+            getRepository: jest.fn().mockReturnValue({
+              find: jest.fn().mockResolvedValue([{ languageSlug: 'common' }]),
+              findOne: jest.fn().mockResolvedValue(null),
+              createQueryBuilder: jest.fn().mockReturnValue({
+                innerJoin: jest.fn().mockReturnThis(),
+                leftJoin: jest.fn().mockReturnThis(),
+                where: jest.fn().mockReturnThis(),
+                andWhere: jest.fn().mockReturnThis(),
+                select: jest.fn().mockReturnThis(),
+                addSelect: jest.fn().mockReturnThis(),
+                orderBy: jest.fn().mockReturnThis(),
+                getMany: jest.fn().mockResolvedValue([]),
+                getOne: jest.fn().mockResolvedValue(null),
+                getRawMany: jest.fn().mockResolvedValue([]),
+              }),
+            }),
           },
         },
         { provide: getRepositoryToken(PlayerCharacter), useValue: repo },
@@ -347,6 +363,22 @@ describe('Characters application layer', () => {
       expect.objectContaining({ classSkillSlugs: ['athletics', 'perception'] }),
     );
     expect(result.classSkillSlugs).toEqual([]);
+  });
+
+  it('create merges granted background languages when omitted', async () => {
+    await createHandler.execute(userId, {
+      name: 'Thorin',
+      classSlug: 'fighter',
+      speciesSlug: 'dwarf',
+      backgroundSlug: 'acolyte',
+      backgroundAbilityBoostPlus2Slug: 'sabedoria',
+      backgroundAbilityBoostPlus1Slug: 'carisma',
+    });
+
+    expect(sheetRepo.sync).toHaveBeenCalledWith(
+      sample.id,
+      expect.objectContaining({ languageSlugs: ['common'] }),
+    );
   });
 
   it('findOwnedOrFail throws ForbiddenException for other user', async () => {

@@ -1,25 +1,31 @@
+import { DataSource } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { LoadEffectCatalog } from '@game/effects';
 import { CharacterSheetValidator } from '../../domain/validation/character-sheet.validator';
 import { CreateCharacterDto } from '../../dto/create-character.dto';
 import { CharacterFeatDto } from '../../dto/character-sheet.dto';
 import {
+  mergeGrantedLanguageSlugs,
   resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from '../../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../../domain/origin/species-origin';
 import { resolveLessonsOriginCharacterFeats } from '../../domain/origin/lessons-origin';
+import { classLanguageGrant } from '../../domain/validation/class-options/class-language-grant';
+import { loadBackgroundLanguageSlugs } from '../../infrastructure/queries/background-origin.queries';
 
 export async function resolveCreateOrigin(input: {
   catalogLookup: CatalogLookupService;
   sheetValidator: CharacterSheetValidator;
+  dataSource: DataSource;
   dto: CreateCharacterDto;
   effectCatalog?: LoadEffectCatalog;
 }): Promise<{
   characterFeats: CharacterFeatDto[] | undefined;
   backgroundToolItemSlug: string | null;
+  languageSlugs: string[];
 }> {
-  const { catalogLookup, sheetValidator, dto, effectCatalog } = input;
+  const { catalogLookup, sheetValidator, dataSource, dto, effectCatalog } = input;
 
   const background = await catalogLookup.findBackgroundOrFail(dto.backgroundSlug);
   let characterFeats = resolveBackgroundOriginCharacterFeats(
@@ -56,5 +62,15 @@ export async function resolveCreateOrigin(input: {
   );
   await sheetValidator.validateBackgroundOriginFeat(background, characterFeats);
 
-  return { characterFeats, backgroundToolItemSlug };
+  const fixedLanguages = await loadBackgroundLanguageSlugs(
+    dataSource,
+    dto.backgroundSlug,
+  );
+  const classLanguages = classLanguageGrant(dto.classSlug, dto.level ?? 1);
+  const languageSlugs = mergeGrantedLanguageSlugs(dto.languageSlugs, [
+    ...fixedLanguages,
+    ...classLanguages.grantedSlugs,
+  ]);
+
+  return { characterFeats, backgroundToolItemSlug, languageSlugs };
 }

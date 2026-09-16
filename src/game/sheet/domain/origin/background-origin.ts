@@ -31,3 +31,18 @@ export function resolveBackgroundToolItemSlug(
   }
   return null;
 }
+
+export function mergeGrantedLanguageSlugs(
+  provided: string[] | undefined,
+  granted: readonly string[],
+): string[] {
+  const unique: string[] = [];
+  const seen = new Set<string>();
+  for (const slug of [...granted, ...(provided ?? [])]) {
+    const trimmed = slug.trim();
+    if (!trimmed || seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    unique.push(trimmed);
+  }
+  return unique;
+}

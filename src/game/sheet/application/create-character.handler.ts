@@ -70,14 +70,16 @@ export class CreateCharacterHandler {
       plus1Slugs: dto.backgroundAbilityBoostPlus1Slugs,
     });
 
-    const { characterFeats, backgroundToolItemSlug } = await resolveCreateOrigin({
-      catalogLookup: this.catalogLookup,
-      sheetValidator: this.sheetValidator,
-      dto,
-      effectCatalog: this.effectCatalog,
-    });
+    const { characterFeats, backgroundToolItemSlug, languageSlugs } =
+      await resolveCreateOrigin({
+        catalogLookup: this.catalogLookup,
+        sheetValidator: this.sheetValidator,
+        dataSource: this.dataSource,
+        dto,
+        effectCatalog: this.effectCatalog,
+      });
 
-    const sheetInput = toCreateSheetInput(dto, characterFeats);
+    const sheetInput = toCreateSheetInput(dto, characterFeats, languageSlugs);
     await mergeCreateCharacterSpells({
       dto,
       sheetInput,

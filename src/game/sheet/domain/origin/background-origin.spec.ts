@@ -1,5 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import {
+  mergeGrantedLanguageSlugs,
   resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from './background-origin';
@@ -42,5 +43,17 @@ describe('background-origin', () => {
         'kit-de-jogos',
       ),
     ).toBe('kit-de-jogos');
+  });
+
+  it('prepends granted languages without duplicating player picks', () => {
+    expect(mergeGrantedLanguageSlugs(['elvish', 'common'], ['common', 'thieves-cant'])).toEqual([
+      'common',
+      'thieves-cant',
+      'elvish',
+    ]);
+  });
+
+  it('fills granted languages when the client omits languageSlugs', () => {
+    expect(mergeGrantedLanguageSlugs(undefined, ['common'])).toEqual(['common']);
   });
 });
