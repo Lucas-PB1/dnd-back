@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §N Magias/cast saiu (slots, concentração, item na ficha, Spell Recall, cura/PV temp. de Curar Ferimentos / Palavra Curativa / Vitalidade Vazia; dano no alvo permanece fora).
+**Última revisão:** 2026-09-16 — §H Item saiu (charges na ficha, DL ≈ amanhecer, cast de item, poções de cura/heroísmo/saúde).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -17,7 +17,7 @@ Detalhe por categoria: [`effect-mesa-checklist.md`](effect-mesa-checklist.md) ·
 
 | Área | Status |
 |------|--------|
-| Itens DMG mesa | **Ativo** — grosso de charges/cast de ficha (§H) |
+| Ficha PC (donos A–P) | **Fechado** no apply de mesa; Adiado = polish |
 
 A ordem abaixo é por **custo**, não por importância. Pegue o próximo da faixa Ativo; Adiado só com pedido explícito.
 
@@ -25,13 +25,7 @@ A ordem abaixo é por **custo**, não por importância. Pegue o próximo da faix
 
 ## Ativo (fácil → difícil)
 
-Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
-
-| # | Item | Por quê nesta posição |
-|---|------|------------------------|
-| 1 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
-
-§M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
+Nada nesta faixa. Próximo trabalho de mesa = Adiado **só com pedido explícito**, ou combate real na lista futura.
 
 Economies slug a slug e efeito sem apply de ficha fecham **no PR do §**, não como fila extra.
 
@@ -54,11 +48,11 @@ Só retomar com pedido explícito. **Não** é combate real.
 | 9 | [ ] GH Cap. 2 features: EN residual (~166 → meta <30) | Volume, não desenho |
 | 10 | [ ] Mísseis Mágicos: Escudo/Giga no cast — [`mm-cast-options-modal.md`](mm-cast-options-modal.md) | API + modal, um fluxo |
 | 11 | [ ] Evento `dawn` real ≠ Descanso Longo (MVP: DL ≈ amanhecer) | Relógio de mesa novo |
-| 12 | [ ] Cast de item: concentração / componentes / CD override | Cruza §H + §N |
+| 12 | [ ] Cast de item: concentração / componentes / CD overlay | Cruza item + magia |
 | 13 | [ ] GH: Skinrider's Trance (estado/actor vinculado) | Actor extra na ficha |
 | 14 | [ ] Senhor das Feras: Companheiro Primal na mesa — [`beast-master-primal-companion.md`](beast-master-primal-companion.md) | Estado persistido + painel + §K |
 
-Treasure (mágico, propriedades, maestria) no ciclo Ativo = **§H**. Detalhe de regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
+Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
 
 ---
 

@@ -31,6 +31,7 @@ import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { PhbSpecies } from '@entities/species/phb-species.entity';
 import { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
 import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import { LoadEffectCatalog } from './application/load-effect-catalog';
 
 @Module({
@@ -67,6 +68,7 @@ import { LoadEffectCatalog } from './application/load-effect-catalog';
       PhbSpellRef,
       PhbWeaponMastery,
       PhbSubclassRef,
+      PhbItem,
     ]),
   ],
   providers: [LoadEffectCatalog],

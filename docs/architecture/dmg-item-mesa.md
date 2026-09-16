@@ -85,9 +85,10 @@ D010 (item)
 
 - Uma única row “usar item” que junta 4 poderes.
 - Mecânica só no texto da descrição, sem economy/resource/passivo.
-- `POST …/item/table-action` no MVP (classes têm table-action; itens Valdas usam `spend-resource` + lembrete).
 - Overlay inventário (charm / coverage / artifact-regen): um `POST …/inventory/actions` com `actionSlug` — sem micro-rotas dedicadas.
 - Hardcode de slugs de item no TypeScript — seed + catálogo.
+
+`POST …/item/table-action` aplica charges (`spend-resource`) e poções de ficha; o resto continua lembrete.
 
 ---
 

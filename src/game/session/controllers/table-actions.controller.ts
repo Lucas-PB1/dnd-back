@@ -21,14 +21,15 @@ import { GunslingerActionsHandler } from '../application/actions/gunslinger/guns
 import { MonsterHunterActionsHandler } from '../application/actions/monster-hunter/monster-hunter-actions.handler';
 import { TransformationActionsHandler } from '../application/actions/transformation/transformation-actions.handler';
 import { FeatEconomyActionsHandler } from '../application/actions/feat/feat-economy-actions.handler';
-import { TableActionsHost } from './table-actions/feat.routes';
+import { ItemEconomyActionsHandler } from '../application/actions/item/item-economy-actions.handler';
+import { ItemTableActionsHost } from './table-actions/item.routes';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({ description: 'Missing or invalid Bearer token' })
 @UseGuards(SupabaseAuthGuard)
 @Controller('characters')
-export class TableActionsController extends TableActionsHost {
+export class TableActionsController extends ItemTableActionsHost {
   constructor(
     readonly rogue: RogueActionsHandler,
     readonly monk: MonkActionsHandler,
@@ -46,6 +47,7 @@ export class TableActionsController extends TableActionsHost {
     readonly monsterHunter: MonsterHunterActionsHandler,
     readonly transformation: TransformationActionsHandler,
     readonly featEconomy: FeatEconomyActionsHandler,
+    readonly itemEconomy: ItemEconomyActionsHandler,
   ) {
     super();
   }

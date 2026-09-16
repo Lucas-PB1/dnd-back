@@ -7,6 +7,7 @@ import type { PhbSpecies } from '@entities/species/phb-species.entity';
 import type { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
 import type { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import type { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
+import type { PhbItem } from '@entities/equipment/phb-item.entity';
 
 describe('LoadEffectCatalog', () => {
   it('maps repository rows to catalog effects with owner slug', async () => {
@@ -65,6 +66,7 @@ describe('LoadEffectCatalog', () => {
     };
     const masteryRepo = { find: jest.fn().mockResolvedValue([]) };
     const subclassRepo = { find: jest.fn().mockResolvedValue([]) };
+    const itemsRepo = { find: jest.fn().mockResolvedValue([]) };
 
     const loader = new LoadEffectCatalog(
       asDep<Repository<PhbEffect>>(effectsRepo),
@@ -73,6 +75,7 @@ describe('LoadEffectCatalog', () => {
       asDep<Repository<PhbSpellRef>>(spellsRepo),
       asDep<Repository<PhbWeaponMastery>>(masteryRepo),
       asDep<Repository<PhbSubclassRef>>(subclassRepo),
+      asDep<Repository<PhbItem>>(itemsRepo),
     );
 
     const catalog = await loader.load({
@@ -113,6 +116,7 @@ describe('LoadEffectCatalog', () => {
       asDep<Repository<PhbSpellRef>>({ find: jest.fn() }),
       asDep<Repository<PhbWeaponMastery>>({ find: jest.fn() }),
       asDep<Repository<PhbSubclassRef>>({ find: jest.fn() }),
+      asDep<Repository<PhbItem>>({ find: jest.fn() }),
     );
 
     const catalog = await loader.load({

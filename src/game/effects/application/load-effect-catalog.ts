@@ -7,6 +7,7 @@ import { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
 import { PhbSpecies } from '@entities/species/phb-species.entity';
 import { PhbWeaponMastery } from '@entities/equipment/phb-weapon-mastery.entity';
 import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
+import { PhbItem } from '@entities/equipment/phb-item.entity';
 import type { CatalogEffect, EffectOwnerKind } from '../domain/catalog-effect';
 import { mapPhbEffectToCatalog } from '../infrastructure/map-phb-effect';
 
@@ -35,6 +36,8 @@ export class LoadEffectCatalog {
     private readonly weaponMasteries: Repository<PhbWeaponMastery>,
     @InjectRepository(PhbSubclassRef)
     private readonly subclasses: Repository<PhbSubclassRef>,
+    @InjectRepository(PhbItem)
+    private readonly items: Repository<PhbItem>,
   ) {}
 
   async load(filter: LoadEffectsFilter = {}): Promise<CatalogEffect[]> {
@@ -163,6 +166,12 @@ export class LoadEffectCatalog {
       });
       return rows.map((row) => row.id);
     }
+    if (filter.ownerKind === 'item') {
+      const rows = await this.items.find({
+        where: { slug: In(filter.ownerSlugs) },
+      });
+      return rows.map((row) => row.id);
+    }
 
     return [];
   }
@@ -196,6 +205,11 @@ export class LoadEffectCatalog {
     const spellOwnerIds = [
       ...new Set(
         rows.filter((r) => r.ownerKind === 'spell').map((r) => r.ownerId),
+      ),
+    ];
+    const itemIds = [
+      ...new Set(
+        rows.filter((r) => r.ownerKind === 'item').map((r) => r.ownerId),
       ),
     ];
     if (featIds.length) {
@@ -234,6 +248,14 @@ export class LoadEffectCatalog {
       });
       for (const row of ownedSpells) {
         map.set(`spell:${row.id}`, row.slug);
+      }
+    }
+    if (itemIds.length) {
+      const ownedItems = await this.items.find({
+        where: { id: In(itemIds) },
+      });
+      for (const row of ownedItems) {
+        map.set(`item:${row.id}`, row.slug);
       }
     }
     return map;

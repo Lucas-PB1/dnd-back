@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §H Item: charges, dawn MVP, poções de ficha
+
+* **Update** (15:20 UTC): `POST …/item/table-action` gasta cargas de item ativo; poções de cura/heroísmo/saúde aplicam PV/PV temp./condições e consomem qty; DL já recarrega pools; cast de item já existia; arma/alvo e dawn real ficam fora — refs: [`apply-item-economy-table-action.ts`](../../src/game/session/application/table-actions/item/apply-item-economy-table-action.ts), [`phb_effect.item-mesa.sql`](../../database/seeds/effect/dmg/phb_effect.item-mesa.sql), [`item.routes.ts`](../../src/game/session/controllers/table-actions/item.routes.ts), [`backlog.md`](../plans/backlog.md) — motivo: economy de item sem rota de apply deixava charges e poções só como lembrete.
+
 ## 2026-09-16 — §N Magias / cast: apply de ficha
 
 * **Update** (15:05 UTC): Slots, concentração e cast de item já existiam; Recordação reembolsa espaço 1–4 no 1d4; Curar Ferimentos / Palavra Curativa curam a ficha e Vitalidade Vazia dá PV temp. (ajuste se aliado); dano/alvo ficam no combate — refs: [`apply-cast-sheet-effects.ts`](../../src/game/session/infrastructure/character-state/spell/apply-cast-sheet-effects.ts), [`apply-slot-refund-on-cast.ts`](../../src/game/session/infrastructure/character-state/spell/apply-slot-refund-on-cast.ts), [`phb_effect.spell-mesa.sql`](../../database/seeds/effect/phb/phb_effect.spell-mesa.sql), [`backlog.md`](../plans/backlog.md) — motivo: o cast precisa fechar PV/slots na ficha, não só gastar espaço.

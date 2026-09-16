@@ -42,6 +42,7 @@ import { WizardActionsHandler } from './application/actions/wizard/wizard-action
 import { MonsterHunterActionsHandler } from './application/actions/monster-hunter/monster-hunter-actions.handler';
 import { TransformationActionsHandler } from './application/actions/transformation/transformation-actions.handler';
 import { FeatEconomyActionsHandler } from './application/actions/feat/feat-economy-actions.handler';
+import { ItemEconomyActionsHandler } from './application/actions/item/item-economy-actions.handler';
 import { TransferInspirationHandler } from './application/session-commands';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { CampaignCharacter } from '../campaign/infrastructure/campaign-character.entity';
@@ -96,6 +97,7 @@ import { CampaignCharacter } from '../campaign/infrastructure/campaign-character
     MonsterHunterActionsHandler,
     TransformationActionsHandler,
     FeatEconomyActionsHandler,
+    ItemEconomyActionsHandler,
     TransferInspirationHandler,
   ],
   exports: [CharacterStateRepository],

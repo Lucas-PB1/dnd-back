@@ -30,9 +30,7 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 
 ## PC — donos
 
-| § | Categoria | Âncora | Fazer |
-|---|-----------|--------|--------|
-| **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
+Fila Ativo **vazia** (apply de ficha dos donos A–P fechado nesta revisão). Combate de arma/item → [`combat-real-deferred.md`](combat-real-deferred.md).
 
 Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar no **§ do concedente**, não como categoria própria.
 
