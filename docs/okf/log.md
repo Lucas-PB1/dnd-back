@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §K Companheiro: tracker / summon / command
+
+* **Update** (14:50 UTC): Tracker leve no estado da ficha e GET companions; sync/restore já existiam; command exige fera viva; dismiss remove o actor; Golpe da Fera e combate ficam fora — refs: [`companion-tracker.ts`](../../src/game/companion/domain/companion-tracker.ts), [`character-companions.controller.ts`](../../src/game/actor/controllers/character-companions.controller.ts), [`companion-table-actions.ts`](../../src/game/session/application/actions/shared/companion-table-actions.ts), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa ver PV da fera e comandar só declare, não o ataque.
+
 ## 2026-09-16 — §L Veículo: bundle, board, métrica
 
 * **Update** (14:40 UTC): Estado ao vivo de tripulação/passageiros/carga no actor; PATCH + sheet-actions (board, métricas, leme); aríete/atropelo ficam no combate — refs: [`apply-vehicle-sheet-action.handler.ts`](../../src/game/actor/application/apply-vehicle-sheet-action.handler.ts), [`actor-state.dto.ts`](../../src/game/actor/dto/actor-state.dto.ts), [`20260916_game_actor_state_vehicle_metrics.sql`](../../database/migrations/20260916_game_actor_state_vehicle_metrics.sql), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa de ficha do veículo e ocupação, não de combate naval.

@@ -17,6 +17,8 @@ import {
 import { loadCharacterSheet } from '@game/sheet/infrastructure/character-sheet/load-character-sheet';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
+import { loadCompanionTrackers } from '@game/companion/infrastructure/companion-tracker.queries';
+import { pickCommandCompanion } from '@game/companion/domain/companion-tracker';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -91,6 +93,18 @@ export async function applyCompanionCommand(
     sheet.subclassOptions,
   );
   const commands = await loadCompanionCommands(deps.dataSource);
+  const trackers = await loadCompanionTrackers(deps.dataSource, character.id);
+  const chosen = pickCommandCompanion(trackers, config?.templateSlug ?? null);
+  if (!chosen) {
+    throw new BadRequestException(
+      'Invoca o companheiro (sync) antes de comandar',
+    );
+  }
+  if (chosen.defeated) {
+    throw new BadRequestException(
+      'Companheiro derrotado: restaure PV (sync com restoreHp) antes de comandar',
+    );
+  }
 
   return {
     state: await deps.state.buildResponse(character),

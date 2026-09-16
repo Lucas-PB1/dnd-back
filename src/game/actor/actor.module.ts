@@ -29,6 +29,8 @@ import {
   LinkCharacterVehicleHandler,
 } from './application/character-vehicle.handlers';
 import { SyncCharacterCompanionHandler } from './application/sync-character-companion.handler';
+import { DismissCharacterCompanionHandler } from './application/dismiss-character-companion.handler';
+import { ListCharacterCompanionsQuery } from './application/list-character-companions.query';
 import { SyncWildShapeActorHandler } from './application/sync-wild-shape-actor.handler';
 import { TemplateImageResolver } from './application/template-image.resolver';
 import { CreateActorHandler } from './application/create-actor.handler';
@@ -101,6 +103,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ActorStateRepository,
     ListActorsQuery,
     ListCharacterActorsQuery,
+    ListCharacterCompanionsQuery,
     GetActorQuery,
     CreateActorHandler,
     UpdateActorHandler,
@@ -114,6 +117,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ApplyVehicleSheetActionHandler,
     ApplyMountSheetActionHandler,
     SyncCharacterCompanionHandler,
+    DismissCharacterCompanionHandler,
     SyncSpellSpiritHandler,
     SyncWildShapeActorHandler,
     TemplateImageResolver,

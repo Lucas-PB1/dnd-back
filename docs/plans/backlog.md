@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §L Veículo saiu (bundle, board, métricas ao vivo, leme; combate naval/colisão permanece fora).
+**Última revisão:** 2026-09-16 — §K Companheiro saiu (tracker, summon/sync, command declare, dismiss; combate da fera permanece fora).
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -30,11 +30,10 @@ Só o que **movimenta ficha/estado** (cura, PV temp., CA, pools, toggles).
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] **§K** Companheiro — tracker leve / summon / command | Estado persistido; combate da fera fora |
-| 2 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
-| 3 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
-| 4 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
-| 5 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
+| 1 | [ ] **§C** Subclass — table-action + apply ficha | Muitos packs; mesmo padrão |
+| 2 | [ ] **§B** Classe — apply ficha (Rally/`tempHp`, curas, Proteção Arcana) | 13 classes; grosso do snapshot |
+| 3 | [ ] **§N** Magias / cast — slots, concentração, cast de item na ficha | Cruza ficha + item; dano no alvo fora |
+| 4 | [ ] **§H** Item — charges, dawn, cast de ficha | Superfície Treasure; grosso do snapshot |
 
 §M (monstro): catálogo já está; spawn/combate → lista futura, não entra aqui.
 

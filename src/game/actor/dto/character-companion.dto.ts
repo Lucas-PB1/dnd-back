@@ -1,6 +1,32 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsOptional } from 'class-validator';
+import { IsBoolean, IsOptional, IsUUID } from 'class-validator';
 import { ActorResponseDto } from './actor.dto';
+
+export class CompanionTrackerDto {
+  @ApiProperty()
+  actorId!: string;
+
+  @ApiProperty()
+  name!: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  templateSlug!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  hitPointsCurrent!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  hitPointsMax!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  armorClass!: number | null;
+
+  @ApiProperty({ description: 'true se PV atuais ≤ 0' })
+  defeated!: boolean;
+
+  @ApiProperty({ type: [String] })
+  conditions!: string[];
+}
 
 export class SyncCharacterCompanionDto {
   @ApiPropertyOptional({
@@ -36,4 +62,13 @@ export class CharacterCompanionSyncResponseDto extends ActorResponseDto {
     description: 'ID do perfil de companheiro',
   })
   profileId!: string;
+}
+
+export class DismissCharacterCompanionDto {
+  @ApiPropertyOptional({
+    description: 'Actor a dispensar; omite para o único companheiro vinculado',
+  })
+  @IsOptional()
+  @IsUUID()
+  actorId?: string;
 }

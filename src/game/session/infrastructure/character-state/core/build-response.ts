@@ -14,6 +14,7 @@ import { buildClassResourceState } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 import { computeRemaining, loadMaxSlots } from '../resources/spell-slots';
 import { buildGrantedSpellCastOptions } from './build-response/granted-spell-cast-options';
+import { loadCompanionTrackers } from '@game/companion/infrastructure/companion-tracker.queries';
 
 export async function buildCharacterStateResponse(input: {
   character: PlayerCharacter;
@@ -64,6 +65,7 @@ export async function buildCharacterStateResponse(input: {
     dataSource,
     effectCatalog,
   );
+  const companions = await loadCompanionTrackers(dataSource, character.id);
 
   return {
     spellSlotsMax,
@@ -101,5 +103,6 @@ export async function buildCharacterStateResponse(input: {
     aberrantMutationActive: state.aberrantMutationActive ?? null,
     boardedActorId: state.boardedActorId ?? null,
     mesaCircumstances: state.mesaCircumstances ?? [],
+    companions,
   };
 }

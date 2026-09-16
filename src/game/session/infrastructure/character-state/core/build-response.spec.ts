@@ -100,7 +100,13 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
       classSlots: asDep({ find: jest.fn() }),
       subclassSlots: asDep({ find: jest.fn() }),
       catalogLookup: asDep(catalogLookup),
-      dataSource: asDep({ query: jest.fn() }),
+      dataSource: asDep({
+        query: jest.fn(),
+        getRepository: jest.fn().mockReturnValue({
+          find: jest.fn().mockResolvedValue([]),
+          findOne: jest.fn().mockResolvedValue(null),
+        }),
+      }),
       sheetRepository: asDep(sheetRepository),
       grantedSpellCatalog: asDep(grantedSpellCatalog),
       effectCatalog: asDep({ load: jest.fn().mockResolvedValue([]) }),
@@ -119,6 +125,7 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
     expect(
       result.grantedSpellCastOptions.some((o) => o.spellSlug === 'disguise-self'),
     ).toBe(true);
+    expect(result.companions).toEqual([]);
   });
 
   it('non-warlock: also skips full sheet load', async () => {

@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { CompanionTrackerDto } from '@game/actor/dto/character-companion.dto';
 import { ClassResourceStateDto } from './resources.dto';
 
 export class CharacterStateResponseDto {
@@ -190,4 +191,10 @@ export class CharacterStateResponseDto {
       'Circunstâncias ativas na mesa (snow_ice | in_water | extreme_cold)',
   })
   mesaCircumstances!: string[];
+
+  @ApiProperty({
+    type: [CompanionTrackerDto],
+    description: 'Companheiros vinculados (tracker leve: PV / derrotado / condições)',
+  })
+  companions!: CompanionTrackerDto[];
 }
