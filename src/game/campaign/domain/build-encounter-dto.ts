@@ -4,7 +4,7 @@ import {
   hitPointsPercent,
   sortCombatantsByInitiative,
 } from './encounter-initiative';
-import type { CampaignEncounterDto } from '../dto/encounter.dto';
+import type { CampaignEncounterDto, EncounterCombatantDto } from '../dto/encounter.dto';
 import type { ActorCombatantEnrichment } from '../application/enrich-encounter-actors';
 
 export type EncounterViewer = 'dm' | 'player';
@@ -14,6 +14,7 @@ export type PcCombatantEnrichment = {
   armorClass: number;
   hpCurrent: number | null;
   hpMax: number | null;
+  tempHp: number;
   featSlugs: string[];
   conditions: string[];
   inspiration: boolean;
@@ -114,6 +115,8 @@ function mapCombatantDto(input: {
     hpCurrent: null as number | null,
     hpMax: null as number | null,
     hpPercent: null as number | null,
+    tempHp: null as number | null,
+    actorKind: null as EncounterCombatantDto['actorKind'],
     featSlugs: [] as string[],
     conditions: [] as string[],
     inspiration: null as boolean | null,
@@ -130,6 +133,7 @@ function mapCombatantDto(input: {
         input.pcEnrichment.hpCurrent,
         input.pcEnrichment.hpMax,
       ),
+      tempHp: input.pcEnrichment.tempHp,
       featSlugs: input.pcEnrichment.featSlugs,
       conditions: input.pcEnrichment.conditions,
       inspiration: input.pcEnrichment.inspiration,
@@ -140,10 +144,12 @@ function mapCombatantDto(input: {
     return {
       ...base,
       armorClass: input.actorEnrichment.armorClass,
+      actorKind: input.actorEnrichment.actorKind,
       conditions: input.actorEnrichment.conditions,
       ...creatureHpFields({
         hpCurrent: input.actorEnrichment.hpCurrent,
         hpMax: input.actorEnrichment.hpMax,
+        tempHp: input.actorEnrichment.tempHp,
         viewer: input.viewer,
         visibility: input.creatureHpVisibility,
       }),
@@ -156,17 +162,19 @@ function mapCombatantDto(input: {
 function creatureHpFields(input: {
   hpCurrent: number | null;
   hpMax: number | null;
+  tempHp: number;
   viewer: EncounterViewer;
   visibility: CampaignEncounter['creatureHpVisibility'];
 }): Pick<
   CampaignEncounterDto['combatants'][number],
-  'hpCurrent' | 'hpMax' | 'hpPercent'
+  'hpCurrent' | 'hpMax' | 'hpPercent' | 'tempHp'
 > {
   if (input.viewer === 'dm' || input.visibility === 'exact') {
     return {
       hpCurrent: input.hpCurrent,
       hpMax: input.hpMax,
       hpPercent: hitPointsPercent(input.hpCurrent, input.hpMax),
+      tempHp: input.tempHp,
     };
   }
   if (input.visibility === 'percent') {
@@ -174,7 +182,8 @@ function creatureHpFields(input: {
       hpCurrent: null,
       hpMax: null,
       hpPercent: hitPointsPercent(input.hpCurrent, input.hpMax),
+      tempHp: null,
     };
   }
-  return { hpCurrent: null, hpMax: null, hpPercent: null };
+  return { hpCurrent: null, hpMax: null, hpPercent: null, tempHp: null };
 }

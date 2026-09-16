@@ -118,6 +118,9 @@ describe('encounter-combatant-ops', () => {
       expect(() => applyCombatantPatch(pc, { hpCurrent: 10 })).toThrow(
         BadRequestException,
       );
+      expect(() => applyCombatantPatch(pc, { tempHp: 5 })).toThrow(
+        BadRequestException,
+      );
       expect(() => applyCombatantPatch(pc, { displayName: 'X' })).toThrow(
         BadRequestException,
       );

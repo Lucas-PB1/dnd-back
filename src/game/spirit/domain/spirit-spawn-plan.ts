@@ -50,6 +50,11 @@ export function planSpiritSpawns(input: {
   variants: SpiritVariantBudget[];
   castingAbilityMod?: number | null;
 }): ResolvedSpiritSpawn[] {
+  if (input.selections.length === 0 && input.variants.length === 1) {
+    const only = input.variants[0];
+    return [{ ...only, count: 1 }];
+  }
+
   if (input.selections.length === 0) {
     const keys = input.variants.map((v) => v.variantKey).join(', ');
     throw new BadRequestException(

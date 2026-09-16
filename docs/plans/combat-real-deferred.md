@@ -56,7 +56,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 ### Encontro / atores
 
-- [ ] §M / §P: monstro catálogo · spawn · combate no encontro
+- [ ] Combate no encontro (acerto/dano/saves). Board/spawn/tracker leve de combatentes já é mesa.
 - [ ] Tracker fino de companheiro / summon em combate (além de nota/uso)
 
 ---

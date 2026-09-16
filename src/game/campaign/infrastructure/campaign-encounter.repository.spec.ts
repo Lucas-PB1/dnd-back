@@ -87,6 +87,7 @@ describe('CampaignEncounterRepository', () => {
   describe('addActor', () => {
     it('appends actor combatant with next sort order', async () => {
       combatants.count.mockResolvedValue(2);
+      combatants.findOne.mockResolvedValue(null);
       const row = await repository.addActor({
         encounterId: 'enc1',
         actorId: 'actor-1',
@@ -100,6 +101,32 @@ describe('CampaignEncounterRepository', () => {
         }),
       );
       expect(row.actorId).toBe('actor-1');
+    });
+
+    it('rejects duplicate actor in the same encounter', async () => {
+      combatants.findOne.mockResolvedValue(combatant());
+      await expect(
+        repository.addActor({
+          encounterId: 'enc1',
+          actorId: 'actor1',
+          initiativeModifier: 0,
+        }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
+  });
+
+  describe('addPc', () => {
+    it('appends pc combatant', async () => {
+      combatants.findOne.mockResolvedValue(null);
+      combatants.count.mockResolvedValue(1);
+      const row = await repository.addPc({
+        encounterId: 'enc1',
+        characterId: 'ch-new',
+      });
+      expect(combatants.create).toHaveBeenCalledWith(
+        expect.objectContaining({ kind: 'pc', characterId: 'ch-new', sortOrder: 1 }),
+      );
+      expect(row.characterId).toBe('ch-new');
     });
   });
 

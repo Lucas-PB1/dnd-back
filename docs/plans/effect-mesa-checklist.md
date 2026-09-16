@@ -35,7 +35,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 | **B** | Classe | `effect/phb/phb_effect.class.sql` · `economy/phb/` · `class/phb/` | Pool/economy ok; apply **ficha** (Rally/`tempHp`, Proteção Arcana, curas tipadas monge/clérigo/druida/bruxo); residual fino; combate → [`combat-real-deferred.md`](combat-real-deferred.md) |
 | **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
 | **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
-| **I** | Feat / boon / estilo | feat effects | Wire + economies; apply ficha; estilo no roll de ataque → lista combate real |
 
 Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar no **§ do concedente**, não como categoria própria.
 
@@ -43,7 +42,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 
 | § | Categoria | Fazer |
 |---|-----------|--------|
-| **J** | Montaria | template · board · ações de ficha/UI |
 | **K** | Companheiro / animal | tracker leve · summon/command; **combate** → [`combat-real-deferred.md`](combat-real-deferred.md) |
 | **L** | Veículo / barco | bundle · board · métrica · ações |
 | **M** | Monstro / criatura | catálogo/template agora; **spawn/combate** → lista combate real |
@@ -53,7 +51,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 | § | Categoria | Fazer |
 |---|-----------|--------|
 | **N** | Magias / cast | slots · concentração · cast item (ficha); resolução de dano no alvo → lista combate real |
-| **P** | Campanha / encontro | combatentes leves; combate simulado → lista combate real |
 
 ## Transversal
 

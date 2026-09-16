@@ -147,6 +147,9 @@ export class BoardCharacterVehicleHandler {
         'Only vehicle or mount actors can be boarded',
       );
     }
+    if (actor.hitPointsCurrent === 0) {
+      throw new BadRequestException('Cannot board a transport at 0 hit points');
+    }
 
     state.boardedActorId = actorId;
     await this.states.save(state);

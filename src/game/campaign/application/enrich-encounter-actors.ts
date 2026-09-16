@@ -9,7 +9,9 @@ export type ActorCombatantEnrichment = {
   armorClass: number | null;
   hpCurrent: number | null;
   hpMax: number | null;
+  tempHp: number;
   conditions: string[];
+  actorKind: GameActor['actorKind'];
 };
 
 @Injectable()
@@ -38,7 +40,9 @@ export class EnrichEncounterActors {
         armorClass: actor.armorClass,
         hpCurrent: actor.hitPointsCurrent,
         hpMax: actor.hitPointsMax,
+        tempHp: state?.tempHp ?? 0,
         conditions: state?.conditions ?? [],
+        actorKind: actor.actorKind,
       });
     }
     return map;

@@ -49,7 +49,7 @@ export class TransformationActionsHandler {
       transformation.slug,
       dto.actionSlug,
       transformation,
-      { mutationSlug: dto.mutationSlug },
+      { mutationSlug: dto.mutationSlug, diceCount: dto.diceCount },
     );
   }
 }

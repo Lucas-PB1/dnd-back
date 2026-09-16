@@ -41,10 +41,12 @@ export function applyCombatantPatch(
       dto.displayName !== undefined ||
       dto.hpCurrent !== undefined ||
       dto.hpMax !== undefined ||
-      dto.armorClass !== undefined
+      dto.armorClass !== undefined ||
+      dto.tempHp !== undefined ||
+      dto.conditions !== undefined
     ) {
       throw new BadRequestException(
-        'displayName/hp/armorClass patches apply only to actor combatants',
+        'displayName/hp/armorClass/tempHp/conditions patches apply only to actor combatants',
       );
     }
     return;

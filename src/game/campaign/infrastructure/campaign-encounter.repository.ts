@@ -95,6 +95,12 @@ export class CampaignEncounterRepository {
     actorId: string;
     initiativeModifier: number | null;
   }): Promise<CampaignEncounterCombatant> {
+    const existing = await this.combatants.findOne({
+      where: { encounterId: input.encounterId, actorId: input.actorId },
+    });
+    if (existing) {
+      throw new BadRequestException('Actor is already in this encounter');
+    }
     const count = await this.combatants.count({
       where: { encounterId: input.encounterId },
     });
@@ -110,6 +116,42 @@ export class CampaignEncounterRepository {
         isActive: true,
       }),
     );
+  }
+
+  async addPc(input: {
+    encounterId: string;
+    characterId: string;
+  }): Promise<CampaignEncounterCombatant> {
+    const existing = await this.combatants.findOne({
+      where: { encounterId: input.encounterId, characterId: input.characterId },
+    });
+    if (existing) {
+      throw new BadRequestException('Character is already in this encounter');
+    }
+    const count = await this.combatants.count({
+      where: { encounterId: input.encounterId },
+    });
+    return this.combatants.save(
+      this.combatants.create({
+        encounterId: input.encounterId,
+        kind: 'pc',
+        characterId: input.characterId,
+        actorId: null,
+        initiativeTotal: null,
+        initiativeModifier: null,
+        sortOrder: count,
+        isActive: true,
+      }),
+    );
+  }
+
+  async findCombatantByActorId(
+    encounterId: string,
+    actorId: string,
+  ): Promise<CampaignEncounterCombatant | null> {
+    return this.combatants.findOne({
+      where: { encounterId, actorId },
+    });
   }
 
   async listCombatants(

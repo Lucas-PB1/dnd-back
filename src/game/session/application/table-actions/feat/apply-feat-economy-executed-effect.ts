@@ -1,11 +1,13 @@
-import type { CatalogEffect } from '@game/effects';
+import { BadRequestException } from '@nestjs/common';
 import { executeCatalogEffect } from '@game/effects';
+import type { CatalogEffect } from '@game/effects';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { applyHealHitPoints } from '../primitives/apply-heal-hit-points';
 import { applySheetConditions } from '../primitives/apply-sheet-conditions';
+import { applySurviveAtZero } from '../primitives/apply-survive-at-zero';
 import { applyTemporaryHitPoints } from '../primitives/apply-temporary-hit-points';
 
 type ApplyFeatEconomyEffectResult = {
@@ -13,6 +15,7 @@ type ApplyFeatEconomyEffectResult = {
   note: string;
   total?: number;
   expression?: string;
+  resourceSpent?: boolean;
 };
 
 export function spellcastingAbilityModifier(
@@ -26,6 +29,16 @@ export function spellcastingAbilityModifier(
   );
 }
 
+export function wisOrChaModifier(
+  scores: PlayerCharacter['abilityScores'] | undefined,
+): number {
+  if (!scores) return 0;
+  return Math.max(
+    abilityModifier(scores.sabedoria ?? 10),
+    abilityModifier(scores.carisma ?? 10),
+  );
+}
+
 export async function applyFeatEconomyExecutedEffect(input: {
   state: CharacterStateRepository;
   character: PlayerCharacter;
@@ -33,17 +46,26 @@ export async function applyFeatEconomyExecutedEffect(input: {
   baseNote: string;
   hitDieFaces: number;
   currentState: TableActionResponseDto['state'];
+  diceCount?: number;
 }): Promise<ApplyFeatEconomyEffectResult> {
-  const needsCastingFlat =
-    input.effect.numeric?.amountFormula === 'dice_2d4_plus_flat';
+  const formula = input.effect.numeric?.amountFormula;
+  const needsCastingFlat = formula === 'dice_2d4_plus_flat';
+  const needsWisOrChaFlat = formula === 'level_plus_flat';
   const executed = executeCatalogEffect(input.effect, {
     level: input.character.level,
     hitDieFaces: input.hitDieFaces,
+    hitPointMax: input.character.hitPointsMax ?? undefined,
+    ...(input.diceCount != null ? { diceCount: input.diceCount } : {}),
     ...(needsCastingFlat
       ? {
           flatOverride: spellcastingAbilityModifier(
             input.character.abilityScores,
           ),
+        }
+      : {}),
+    ...(needsWisOrChaFlat
+      ? {
+          flatOverride: wisOrChaModifier(input.character.abilityScores),
         }
       : {}),
   });
@@ -92,6 +114,50 @@ export async function applyFeatEconomyExecutedEffect(input: {
       executed.note
         ? null
         : `Recuperados ${executed.amount} uso(s) de ${executed.resourceSlug}.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
+  } else if (executed.kind === 'heal_from_dice_pool') {
+    if (!executed.resourceSlug) {
+      throw new BadRequestException('heal_from_dice_pool exige resource_slug');
+    }
+    state = (
+      await input.state.useClassResource(
+        input.character,
+        executed.resourceSlug,
+        executed.diceCount,
+      )
+    ).state;
+    const healed = await applyHealHitPoints(
+      input.state,
+      input.character,
+      executed.amount,
+    );
+    state = healed.state;
+    total = executed.amount;
+    expression = executed.expression;
+    note = [
+      note,
+      executed.note
+        ?.replace(/\{total\}/g, String(executed.amount))
+        .replace(/\{expression\}/g, executed.expression),
+      `Cura aplicada neste PC: ${executed.amount} (${executed.expression}). Aliado: ajuste PV na mesa.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
+    return { state, note, total, expression, resourceSpent: true };
+  } else if (executed.kind === 'survive_at_zero') {
+    state = await applySurviveAtZero(
+      input.state,
+      input.character,
+      executed.amount,
+    );
+    total = executed.amount;
+    expression = executed.expression;
+    note = [
+      note,
+      executed.note,
+      `PV definidos em ${executed.amount} (ficha a 0 PV).`,
     ]
       .filter(Boolean)
       .join(' ');

@@ -103,6 +103,38 @@ const economyActions: ClassEconomyActionRecord[] = [
     tableAction: 'gh-transformation-aberrant-horror/aberrant-mutation',
     summary: 'Mutação Aberrante',
   },
+  {
+    id: 'feat-boon-recovery-vitality',
+    name: 'Recuperar Vitalidade',
+    economy: 'bonus',
+    featSlug: 'boon-of-recovery',
+    minLevel: 1,
+    resourceSlug: 'boonVitalityDice',
+    alwaysSpendsResource: false,
+    tableAction: 'feat-boon-recovery-vitality',
+    summary: 'Recuperar Vitalidade',
+  },
+  {
+    id: 'feat-boon-recovery-death',
+    name: 'Até a Morte',
+    economy: 'free',
+    featSlug: 'boon-of-recovery',
+    minLevel: 1,
+    resourceSlug: 'boonDeathWard',
+    alwaysSpendsResource: true,
+    tableAction: 'feat-boon-recovery-death',
+    summary: 'Até a Morte',
+  },
+  {
+    id: 'feat-chef-treat',
+    name: 'Guloseima Revigorante',
+    economy: 'bonus',
+    featSlug: 'chef',
+    minLevel: 1,
+    alwaysSpendsResource: false,
+    tableAction: 'feat-chef-treat',
+    summary: 'Guloseima',
+  },
 ];
 
 describe('applyFeatEconomyTableAction', () => {
@@ -111,12 +143,22 @@ describe('applyFeatEconomyTableAction', () => {
   };
   const state = {
     useClassResource: jest.fn(async () => ({
-      state: { resources: [] },
+      state: { resources: [], conditions: [] },
     })),
-    buildResponse: jest.fn(async () => ({ resources: [] })),
+    buildResponse: jest.fn(async () => ({
+      resources: [],
+      tempHp: 0,
+      conditions: ['unconscious'],
+    })),
     applyCurrentHitPoints: jest.fn(async () => ({
       resources: [],
       hitPointsCurrent: 12,
+      conditions: ['unconscious'],
+    })),
+    patch: jest.fn(async (_c, dto) => ({
+      resources: [],
+      conditions: [],
+      ...dto,
     })),
     setAberrantMutation: jest.fn(async (_c, slug) => ({
       resources: [],
@@ -465,5 +507,108 @@ describe('applyFeatEconomyTableAction', () => {
     expect(state.setAberrantMutation).toHaveBeenCalledWith(horror, null);
     expect(result.resourceSpent).toBe(false);
     expect(result.note).toContain('encerrada');
+  });
+
+  it('cura Recuperar Vitalidade gastando diceCount da reserva', async () => {
+    const pc = {
+      id: 'c-rec',
+      level: 20,
+      hitPointsCurrent: 10,
+      hitPointsMax: 40,
+    } as PlayerCharacter;
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'heal_from_dice_pool',
+          resourceSlug: 'boonVitalityDice',
+          dice: { die: '1d10' },
+          note: { note: 'Vitalidade: {total} ({expression})' },
+        },
+      ]),
+    };
+
+    const result = await applyFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      pc,
+      'boon-of-recovery',
+      'feat-boon-recovery-vitality',
+      undefined,
+      { diceCount: 3 },
+    );
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      pc,
+      'boonVitalityDice',
+      3,
+    );
+    expect(state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.resourceSpent).toBe(true);
+    expect(result.expression).toMatch(/3d10/);
+    expect(result.total).toBeGreaterThan(0);
+  });
+
+  it('aplica Até a Morte com 1 + metade do máximo', async () => {
+    const pc = {
+      id: 'c-death',
+      level: 20,
+      hitPointsCurrent: 0,
+      hitPointsMax: 40,
+    } as PlayerCharacter;
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'survive_at_zero',
+          resourceSlug: 'boonDeathWard',
+          numeric: { amountFormula: 'one_plus_half_hp_max', flat: null },
+          note: { note: 'Até a Morte.' },
+        },
+      ]),
+    };
+
+    const result = await applyFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      pc,
+      'boon-of-recovery',
+      'feat-boon-recovery-death',
+    );
+
+    expect(state.useClassResource).toHaveBeenCalledWith(pc, 'boonDeathWard', 1);
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(pc, 21);
+    expect(result.total).toBe(21);
+  });
+
+  it('aplica PV temporários da guloseima do Chef', async () => {
+    const pc = { id: 'c-chef', level: 5 } as PlayerCharacter;
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'temp_hp',
+          numeric: { amountFormula: 'proficiency_bonus', flat: null },
+          note: { note: 'Guloseima.' },
+        },
+      ]),
+    };
+
+    const result = await applyFeatEconomyTableAction(
+      {
+        state: state as never,
+        mechanicalCatalog: mechanicalCatalog as never,
+        effectCatalog: effectCatalog as never,
+      },
+      pc,
+      'chef',
+      'feat-chef-treat',
+    );
+
+    expect(state.patch).toHaveBeenCalledWith(pc, { tempHp: 3 });
+    expect(result.total).toBe(3);
   });
 });

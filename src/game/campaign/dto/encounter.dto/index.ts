@@ -4,6 +4,8 @@ export {
   RollEncounterInitiativeDto,
   AddEncounterCreatureDto,
   PatchEncounterCombatantDto,
+  AddEncounterPcDto,
+  AddEncounterLinkedActorDto,
 } from './commands.dto';
 export {
   EncounterCombatantDto,

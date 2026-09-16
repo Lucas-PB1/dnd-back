@@ -1,10 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsBoolean,
   IsIn,
   IsInt,
   IsOptional,
   IsString,
+  IsUUID,
   Max,
   MaxLength,
   Min,
@@ -154,4 +156,35 @@ export class PatchEncounterCombatantDto {
   @Min(1)
   @Max(40)
   armorClass?: number;
+
+  @ApiPropertyOptional({ example: 5, description: 'PV temporários (só criaturas/actors)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(9999)
+  tempHp?: number;
+
+  @ApiPropertyOptional({
+    example: ['poisoned'],
+    description: 'Substitui condições do actor (só criaturas). PC: PATCH da ficha.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  conditions?: string[];
+}
+
+export class AddEncounterPcDto {
+  @ApiProperty({ example: '11111111-1111-1111-1111-111111111111' })
+  @IsUUID()
+  characterId!: string;
+}
+
+export class AddEncounterLinkedActorDto {
+  @ApiProperty({
+    example: '22222222-2222-2222-2222-222222222222',
+    description: 'Actor já existente na campanha (montaria, companheiro, criatura).',
+  })
+  @IsUUID()
+  actorId!: string;
 }

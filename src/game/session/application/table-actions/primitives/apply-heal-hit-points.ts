@@ -2,6 +2,12 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { CharacterStateResponseDto } from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
+type VitalBondShare = {
+  shareVitalBondHeal?: (
+    characterId: string,
+    amount: number,
+  ) => Promise<void>;
+};
 
 export async function applyHealHitPoints(
   stateRepo: CharacterStateRepository,
@@ -20,5 +26,12 @@ export async function applyHealHitPoints(
   const after = Math.min(character.hitPointsMax, before + amount);
   const healed = after - before;
   const state = await stateRepo.applyCurrentHitPoints(character, after);
+  if (healed > 0) {
+    const share = (stateRepo as CharacterStateRepository & VitalBondShare)
+      .shareVitalBondHeal;
+    if (share) {
+      await share.call(stateRepo, character.id, healed);
+    }
+  }
   return { state, healed };
 }

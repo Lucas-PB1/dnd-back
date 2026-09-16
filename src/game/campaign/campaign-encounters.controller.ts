@@ -24,6 +24,8 @@ import { CampaignEncounterService } from './application/campaign-encounter.servi
 import { CampaignEncounterInitiativeService } from './application/campaign-encounter-initiative.service';
 import {
   AddEncounterCreatureDto,
+  AddEncounterLinkedActorDto,
+  AddEncounterPcDto,
   CampaignEncounterDto,
   CreateCampaignEncounterDto,
   PatchCampaignEncounterDto,
@@ -101,6 +103,32 @@ export class CampaignEncountersController {
     @Body() dto: AddEncounterCreatureDto,
   ): Promise<CampaignEncounterDto> {
     return this.encounters.addCreature(user.id, campaignId, encounterId, dto);
+  }
+
+  @Post(':encounterId/pcs')
+  @ApiOperation({ summary: 'Add linked campaign PC to the encounter (dm)' })
+  @ApiCreatedResponse({ type: CampaignEncounterDto })
+  addPc(
+    @CurrentUser() user: AuthUser,
+    @Param('campaignId', ParseUUIDPipe) campaignId: string,
+    @Param('encounterId', ParseUUIDPipe) encounterId: string,
+    @Body() dto: AddEncounterPcDto,
+  ): Promise<CampaignEncounterDto> {
+    return this.encounters.addPc(user.id, campaignId, encounterId, dto);
+  }
+
+  @Post(':encounterId/actors')
+  @ApiOperation({
+    summary: 'Add existing campaign actor (mount/companion/creature) (dm)',
+  })
+  @ApiCreatedResponse({ type: CampaignEncounterDto })
+  addLinkedActor(
+    @CurrentUser() user: AuthUser,
+    @Param('campaignId', ParseUUIDPipe) campaignId: string,
+    @Param('encounterId', ParseUUIDPipe) encounterId: string,
+    @Body() dto: AddEncounterLinkedActorDto,
+  ): Promise<CampaignEncounterDto> {
+    return this.encounters.addLinkedActor(user.id, campaignId, encounterId, dto);
   }
 
   @Post(':encounterId/roll-all-initiative')

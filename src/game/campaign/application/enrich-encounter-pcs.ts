@@ -46,6 +46,7 @@ export class EnrichEncounterPcs {
         armorClass,
         hpCurrent: character.hitPointsCurrent,
         hpMax: character.hitPointsMax,
+        tempHp: state?.tempHp ?? 0,
         featSlugs,
         conditions: state?.conditions ?? [],
         inspiration: state?.inspiration ?? false,

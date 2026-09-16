@@ -31,7 +31,9 @@ const actorEnrichment = (): Map<string, ActorCombatantEnrichment> =>
         armorClass: 15,
         hpCurrent: 3,
         hpMax: 7,
+        tempHp: 4,
         conditions: [],
+        actorKind: 'creature',
       },
     ],
   ]);
@@ -50,6 +52,8 @@ describe('buildCampaignEncounterDto', () => {
     expect(dto.combatants[0].hpMax).toBeNull();
     expect(dto.combatants[0].hpPercent).toBe(43);
     expect(dto.combatants[0].armorClass).toBe(15);
+    expect(dto.combatants[0].tempHp).toBeNull();
+    expect(dto.combatants[0].actorKind).toBe('creature');
   });
 
   it('shows exact creature HP for dm', () => {
@@ -64,5 +68,6 @@ describe('buildCampaignEncounterDto', () => {
     expect(dto.combatants[0].hpCurrent).toBe(3);
     expect(dto.combatants[0].hpMax).toBe(7);
     expect(dto.combatants[0].hpPercent).toBe(43);
+    expect(dto.combatants[0].tempHp).toBe(4);
   });
 });

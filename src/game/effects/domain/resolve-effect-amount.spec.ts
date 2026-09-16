@@ -35,6 +35,21 @@ describe('resolveEffectAmount', () => {
     ).toBe(46);
     expect(
       resolveEffectAmount({
+        amountFormula: 'one_plus_half_hp_max',
+        flat: null,
+        level: 20,
+        hitPointMax: 40,
+      }).amount,
+    ).toBe(21);
+    expect(
+      resolveEffectAmount({
+        amountFormula: 'level_plus_flat',
+        flat: 3,
+        level: 8,
+      }).amount,
+    ).toBe(11);
+    expect(
+      resolveEffectAmount({
         amountFormula: 'dice_1d6_plus_pb',
         flat: null,
         level: 5,

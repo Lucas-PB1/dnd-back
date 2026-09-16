@@ -1176,14 +1176,24 @@ FROM ins CROSS JOIN rd;
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'),
 ins AS (
   INSERT INTO rpg.phb_effect (
-    kind, owner_kind, owner_id, trigger, resource_slug, unlock_level, sort_order, label
+    kind, owner_kind, owner_id, trigger, action_slug, resource_slug, unlock_level, sort_order, label
   )
   SELECT 'survive_at_zero'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
-         'passive'::rpg.effect_trigger, 'boonDeathWard', 1, 2, 'Até a Morte'
+         'on_table_action'::rpg.effect_trigger, 'feat-boon-recovery-death',
+         'boonDeathWard', 1, 2, 'Até a Morte'
   FROM feat RETURNING id
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, 'A 0 PV: 1 PV + cura metade do máximo; gasta boonDeathWard.' FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat' AND e.action_slug = 'feat-boon-recovery-death'
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'one_plus_half_hp_max'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'boonVitalityDice'),
@@ -1218,6 +1228,17 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'BA: escolher N dados (d10) da reserva, gastar N, curar = soma. Mesmo verbo do Zelote Campeão dos Deuses (d12).'
 FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat'
+    AND e.action_slug = 'feat-boon-recovery-vitality'
+    AND e.kind = 'heal_from_dice_pool'
+)
+INSERT INTO rpg.phb_effect_dice (effect_id, die)
+SELECT id, '1d10' FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-energy-resistance'),
 ins AS (
@@ -1374,3 +1395,51 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, 'Gate Meia-luz/Escuridão: Res. a tudo exceto Psíquico/Radiante.' FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'chef'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'temp_hp'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_table_action'::rpg.effect_trigger, 'feat-chef-treat', 1, 1,
+         'Guloseima Revigorante'
+  FROM feat RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'chef'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat' AND e.action_slug = 'feat-chef-treat'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'PV temporários = PB neste PC. Aliado que comer guloseima: declare na mesa.'
+FROM fx;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'inspiring-leader'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'temp_hp'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_table_action'::rpg.effect_trigger, 'inspiring-leader-speech', 1, 1,
+         'Atuação Encorajadora'
+  FROM feat RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'level_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'inspiring-leader'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN feat ON feat.id = e.owner_id
+  WHERE e.owner_kind = 'feat' AND e.action_slug = 'inspiring-leader-speech'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'PV temporários = nível + maior entre SAB/CAR neste PC. Até 6 aliados a 9 m: declare na mesa.'
+FROM fx;

@@ -20,6 +20,7 @@ export function executeResourceEffect(
       flat: effect.numeric.flat,
       level: context.level,
       rng: context.rng,
+      hitPointMax: context.hitPointMax,
     });
     return {
       kind: 'survive_at_zero',

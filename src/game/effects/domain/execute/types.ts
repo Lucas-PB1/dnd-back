@@ -179,4 +179,5 @@ export type ExecuteCatalogEffectContext = {
   scheduleCount?: number;
   pactSlotLevel?: number;
   pactSlotsRecoveryCount?: number;
+  hitPointMax?: number;
 };

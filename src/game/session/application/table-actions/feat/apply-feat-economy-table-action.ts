@@ -42,6 +42,7 @@ export async function applyFeatEconomyTableAction(
     mutationSlug?: string | null;
     itemSlug?: string;
     enabled?: boolean;
+    diceCount?: number;
   },
 ): Promise<TableActionResponseDto> {
   const catalog = await deps.mechanicalCatalog.load();
@@ -92,8 +93,17 @@ export async function applyFeatEconomyTableAction(
   }
 
   const spendAmount = resolveSpendAmount(action);
+  const effect = await loadFeatTableActionEffect(deps.effectCatalog, {
+    featSlug,
+    tableAction: action.tableAction ?? actionSlug,
+    actionId: action.id,
+  });
+  const spendFromAction =
+    effect?.kind !== 'heal_from_dice_pool' &&
+    spendAmount > 0 &&
+    !!action.resourceSlug;
   let state =
-    spendAmount > 0 && action.resourceSlug
+    spendFromAction && action.resourceSlug
       ? (
           await deps.state.useClassResource(
             character,
@@ -118,12 +128,8 @@ export async function applyFeatEconomyTableAction(
     `${action.name}: declare o efeito na mesa.`;
   let total: number | undefined;
   let expression: string | undefined;
+  let resourceSpent = spendFromAction;
 
-  const effect = await loadFeatTableActionEffect(deps.effectCatalog, {
-    featSlug,
-    tableAction: action.tableAction ?? actionSlug,
-    actionId: action.id,
-  });
   if (effect) {
     const applied = await applyFeatEconomyExecutedEffect({
       state: deps.state,
@@ -132,17 +138,19 @@ export async function applyFeatEconomyTableAction(
       baseNote: note,
       hitDieFaces: deps.hitDieFaces ?? 8,
       currentState: state,
+      diceCount: options?.diceCount,
     });
     state = applied.state;
     note = applied.note;
     total = applied.total;
     expression = applied.expression;
+    resourceSpent = resourceSpent || applied.resourceSpent === true;
   }
 
   return {
     state,
     actionName: action.name,
-    resourceSpent: spendAmount > 0,
+    resourceSpent,
     note,
     ...(total != null ? { total } : {}),
     ...(expression ? { expression } : {}),

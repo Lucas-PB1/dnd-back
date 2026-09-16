@@ -1,6 +1,8 @@
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import type { Repository } from 'typeorm';
 import type { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import type { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
+import type { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { CampaignRepository } from '../../infrastructure/campaign.repository';
 import type { CampaignEncounterRepository } from '../../infrastructure/campaign-encounter.repository';
@@ -11,6 +13,8 @@ import {
 } from '../encounter-combatant-ops';
 import type {
   AddEncounterCreatureDto,
+  AddEncounterLinkedActorDto,
+  AddEncounterPcDto,
   CampaignEncounterDto,
   PatchEncounterCombatantDto,
 } from '../../dto/encounter.dto';
@@ -23,6 +27,7 @@ export type EncounterCombatantDeps = {
   actorPersistence: ActorPersistenceService;
   actors: Repository<GameActor>;
   creatureTemplates: Repository<PhbCreatureTemplate>;
+  actorState: ActorStateRepository;
 };
 
 export async function addEncounterCreature(
@@ -82,6 +87,16 @@ export async function patchEncounterCombatant(
   applyCombatantPatch(combatant, dto, linkedActor);
   if (linkedActor) {
     await deps.actors.save(linkedActor);
+    if (dto.tempHp !== undefined || dto.conditions !== undefined) {
+      await deps.actorState.patch(
+        linkedActor,
+        {
+          ...(dto.tempHp !== undefined ? { tempHp: dto.tempHp } : {}),
+          ...(dto.conditions !== undefined ? { conditions: dto.conditions } : {}),
+        },
+        deps.actors,
+      );
+    }
   }
   await deps.encounters.saveCombatant(combatant);
   await deps.encounters.refreshSortOrders(
@@ -114,4 +129,76 @@ export async function removeEncounterCombatant(
   await deps.encounters.deleteCombatant(combatant);
   await deps.encounters.refreshSortOrders(encounter.id);
   return deps.loadDto.load(encounter, 'dm');
+}
+
+export async function addEncounterPc(
+  deps: EncounterCombatantDeps,
+  userId: string,
+  campaignId: string,
+  encounterId: string,
+  dto: AddEncounterPcDto,
+): Promise<CampaignEncounterDto> {
+  await deps.campaigns.requireRole(campaignId, userId, ['dm', 'assistant']);
+  const encounter = await requireActiveEncounter(
+    deps.encounters,
+    campaignId,
+    encounterId,
+  );
+  const links = await deps.campaigns.listLinkedCharacters(campaignId);
+  if (!links.some((link) => link.characterId === dto.characterId)) {
+    throw new BadRequestException('Character is not linked to this campaign');
+  }
+  await deps.encounters.addPc({
+    encounterId: encounter.id,
+    characterId: dto.characterId,
+  });
+  await deps.encounters.refreshSortOrders(encounter.id);
+  return deps.loadDto.load(encounter, 'dm');
+}
+
+export async function addEncounterLinkedActor(
+  deps: EncounterCombatantDeps,
+  userId: string,
+  campaignId: string,
+  encounterId: string,
+  dto: AddEncounterLinkedActorDto,
+): Promise<CampaignEncounterDto> {
+  await deps.campaigns.requireRole(campaignId, userId, ['dm', 'assistant']);
+  const encounter = await requireActiveEncounter(
+    deps.encounters,
+    campaignId,
+    encounterId,
+  );
+  const actor = await deps.actors.findOne({ where: { id: dto.actorId } });
+  if (!actor) {
+    throw new NotFoundException('Actor not found');
+  }
+  const links = await deps.campaigns.listLinkedCharacters(campaignId);
+  const linkedCharacterIds = links.map((link) => link.characterId);
+  assertActorBelongsToCampaign(actor, campaignId, linkedCharacterIds);
+  await deps.encounters.addActor({
+    encounterId: encounter.id,
+    actorId: actor.id,
+    initiativeModifier: actor.initiativeModifier,
+  });
+  await deps.encounters.refreshSortOrders(
+    encounter.id,
+    new Map([[actor.id, actor.name]]),
+  );
+  return deps.loadDto.load(encounter, 'dm');
+}
+
+function assertActorBelongsToCampaign(
+  actor: GameActor,
+  campaignId: string,
+  linkedCharacterIds: readonly string[],
+): void {
+  if (actor.campaignId === campaignId) return;
+  if (
+    actor.parentCharacterId &&
+    linkedCharacterIds.includes(actor.parentCharacterId)
+  ) {
+    return;
+  }
+  throw new BadRequestException('Actor is not part of this campaign');
 }

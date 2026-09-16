@@ -268,7 +268,17 @@ INSERT INTO rpg.phb_class_economy_action (
   NULL, NULL, false,
   'Ação Bônus: comer guloseima (PV temporários = PB)',
   'Ação Bônus: comer uma guloseima preparada (válida 8 h) e obter PV temporários iguais ao seu PB.',
-  NULL, NULL, 321, NULL, NULL
+  'feat-chef-treat', NULL, 321, NULL, NULL
+),
+-- Inspiring Leader
+(
+  'feat-inspiring-leader-speech', NULL, NULL,
+  (SELECT id FROM rpg.phb_feat WHERE slug = 'inspiring-leader'), NULL,
+  'Atuação Encorajadora', 'free'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'Após descanso: PV temp. = nível + SAB ou CAR (você + até 6)',
+  'Ao completar Descanso Curto ou Longo, atuação encorajadora: PV temporários iguais ao nível + o modificador de Sabedoria ou Carisma (o maior). Aplica neste PC; aliados (até 6 a 9 m): declare na mesa.',
+  'inspiring-leader-speech', NULL, 3215, NULL, NULL
 ),
 -- Poisoner
 (
@@ -297,16 +307,16 @@ INSERT INTO rpg.phb_class_economy_action (
   'boonDeathWard', NULL, true,
   'Ao cair a 0 PV: ficar com 1 + metade do máximo (1×/LR)',
   'Quando reduzido a 0 PV, escolha ficar com 1 PV e recuperar metade dos PV máximos. 1× por Descanso Longo.',
-  'spend-resource', NULL, 331, NULL, NULL
+  'feat-boon-recovery-death', NULL, 331, NULL, NULL
 ),
 (
   'feat-boon-recovery-vitality', NULL, NULL,
   (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), NULL,
   'Recuperar Vitalidade', 'bonus'::rpg.action_economy_bucket, 1,
-  'boonVitalityDice', NULL, true,
+  'boonVitalityDice', NULL, false,
   'Ação Bônus: gastar d10s da reserva (10/LR)',
-  'Ação Bônus: gaste dados da reserva de dez d10s, role-os e recupere PV iguais ao total. Reserva restaura no Descanso Longo.',
-  'spend-resource', NULL, 332, NULL, NULL
+  'Ação Bônus: gaste dados da reserva de dez d10s, role-os e recupere PV iguais ao total. Body: diceCount. Reserva restaura no Descanso Longo.',
+  'feat-boon-recovery-vitality', NULL, 332, NULL, NULL
 ),
 (
   'feat-boon-energy-redirect', NULL, NULL,

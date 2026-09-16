@@ -24,6 +24,7 @@ import { isWarlockClass } from '@game/combat/domain/warlock';
 import { mapArtifactSpellSpendFlags } from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { dissolveArtisanCraftedItems } from '@game/session/domain/dissolve-artisan-crafted';
+import { resetLinkedMountLongRestUses } from '@game/actor/application/reset-mount-long-rest-uses';
 import { despawnSpiritsForSpell, despawnSpiritsOnConcentrationChange } from '@game/spirit/application/despawn-spell-spirits';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
@@ -63,6 +64,7 @@ export async function applyLongRestState(input: {
   );
   // Companheiro Selvagem / Convocar Familiar: some no Descanso Longo (PHB 2024).
   await despawnSpiritsForSpell(dataSource, character.id, 'convocar-familiar');
+  await resetLinkedMountLongRestUses(dataSource, character.id);
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;

@@ -90,6 +90,7 @@ describe('EnrichEncounterPcs', () => {
       armorClass: 18,
       hpCurrent: 38,
       hpMax: 44,
+      tempHp: 0,
       featSlugs: ['alert', 'tough'],
       conditions: ['poisoned'],
       inspiration: true,
@@ -105,6 +106,7 @@ describe('EnrichEncounterPcs', () => {
       conditions: [],
       inspiration: false,
       featSlugs: [],
+      tempHp: 0,
     });
   });
 });

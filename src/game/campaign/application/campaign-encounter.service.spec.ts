@@ -52,6 +52,7 @@ describe('CampaignEncounterService', () => {
       | 'findEncounterInCampaignOrFail'
       | 'saveEncounter'
       | 'addActor'
+      | 'addPc'
       | 'refreshSortOrders'
       | 'findCombatantByIdOrFail'
       | 'saveCombatant'
@@ -81,6 +82,7 @@ describe('CampaignEncounterService', () => {
       findEncounterInCampaignOrFail: jest.fn().mockResolvedValue(enc()),
       saveEncounter: jest.fn().mockResolvedValue(undefined),
       addActor: jest.fn().mockResolvedValue(undefined),
+      addPc: jest.fn().mockResolvedValue(undefined),
       refreshSortOrders: jest.fn().mockResolvedValue(undefined),
       findCombatantByIdOrFail: jest.fn(),
       saveCombatant: jest.fn().mockResolvedValue(undefined),
@@ -118,6 +120,7 @@ describe('CampaignEncounterService', () => {
       actors as unknown as Repository<GameActor>,
       creatureTemplates as unknown as Repository<PhbCreatureTemplate>,
       asDep(characterStateMock),
+      asDep({ patch: jest.fn().mockResolvedValue({}) }),
     );
   });
 
@@ -205,6 +208,39 @@ describe('CampaignEncounterService', () => {
     });
     expect(actorPersistence.spawnFromTemplate).toHaveBeenCalledTimes(2);
     expect(encounters.addActor).toHaveBeenCalledTimes(2);
+  });
+
+  it('addPc links a campaign character into the encounter', async () => {
+    campaigns.listLinkedCharacters.mockResolvedValue([
+      { characterId: 'char1' },
+      { characterId: 'char2' },
+    ] as never);
+    await service.addPc('u1', 'c1', 'e1', { characterId: 'char2' });
+    expect(encounters.addPc).toHaveBeenCalledWith({
+      encounterId: 'e1',
+      characterId: 'char2',
+    });
+  });
+
+  it('addPc rejects a character that is not linked', async () => {
+    await expect(
+      service.addPc('u1', 'c1', 'e1', { characterId: 'stranger' }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('addLinkedActor attaches an existing campaign actor', async () => {
+    actors.findOne.mockResolvedValue({
+      id: 'mount-1',
+      name: 'Corcel',
+      campaignId: 'c1',
+      initiativeModifier: 1,
+    } as GameActor);
+    await service.addLinkedActor('u1', 'c1', 'e1', { actorId: 'mount-1' });
+    expect(encounters.addActor).toHaveBeenCalledWith({
+      encounterId: 'e1',
+      actorId: 'mount-1',
+      initiativeModifier: 1,
+    });
   });
 
   it('patchCombatant and removeCombatant mutate combatants', async () => {

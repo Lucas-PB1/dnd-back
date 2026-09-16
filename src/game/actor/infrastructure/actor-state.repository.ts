@@ -5,11 +5,14 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { GameActor } from './game-actor.entity';
 import { GameActorState } from './game-actor-state.entity';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { assertValidConditions } from '@game/session/infrastructure/character-state/core/conditions';
 import type { PatchActorStateDto } from '../dto/actor-state.dto';
 import type { ActorStateResponseDto } from '../dto/actor-state.dto';
 import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { clampHitPointsCurrent } from '@game/shared/domain/combat-vitals';
+import { clearBoardedIfActor } from '../application/clear-boarded-actor';
+import { isPhantomSteedTemplate } from '../domain/mount-sheet';
 
 @Injectable()
 export class ActorStateRepository {
@@ -18,6 +21,8 @@ export class ActorStateRepository {
     private readonly stateRepo: Repository<GameActorState>,
     @InjectRepository(PhbCondition)
     private readonly conditions: Repository<PhbCondition>,
+    @InjectRepository(PlayerCharacterState)
+    private readonly pcStates: Repository<PlayerCharacterState>,
     private readonly catalogLookup: CatalogLookupService,
   ) {}
 
@@ -50,6 +55,7 @@ export class ActorStateRepository {
     actorRepo: Repository<GameActor>,
   ): Promise<ActorStateResponseDto> {
     const state = await this.ensureState(actor.id);
+    const previousHp = actor.hitPointsCurrent;
 
     if (dto.conditions !== undefined) {
       await assertValidConditions(this.conditions, dto.conditions);
@@ -95,6 +101,30 @@ export class ActorStateRepository {
       dto.armorClass !== undefined
     ) {
       await actorRepo.save(actor);
+    }
+
+    const damaged =
+      dto.hitPointsCurrent !== undefined &&
+      previousHp != null &&
+      actor.hitPointsCurrent != null &&
+      actor.hitPointsCurrent < previousHp;
+
+    if (isPhantomSteedTemplate(actor.templateSlug) && damaged) {
+      await clearBoardedIfActor(
+        this.pcStates,
+        actor.parentCharacterId,
+        actor.id,
+      );
+      await actorRepo.remove(actor);
+      return this.buildResponse(actor, state);
+    }
+
+    if (actor.hitPointsCurrent === 0) {
+      await clearBoardedIfActor(
+        this.pcStates,
+        actor.parentCharacterId,
+        actor.id,
+      );
     }
 
     return this.buildResponse(actor, state);

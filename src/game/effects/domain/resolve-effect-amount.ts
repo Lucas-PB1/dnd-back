@@ -19,6 +19,7 @@ export function resolveEffectAmount(input: {
   rageBonus?: number;
   rageActive?: boolean;
   pactSlotsRecoveryCount?: number;
+  hitPointMax?: number;
 }): ResolvedAmount {
   const pb = proficiencyBonusForLevel(input.level);
   const rng = input.rng ?? Math.random;
@@ -208,6 +209,12 @@ export function resolveEffectAmount(input: {
       return {
         amount: Math.max(1, input.pactSlotsRecoveryCount ?? 1),
       };
+    case 'one_plus_half_hp_max':
+      return {
+        amount: 1 + Math.floor(Math.max(0, input.hitPointMax ?? 0) / 2),
+      };
+    case 'level_plus_flat':
+      return { amount: input.level + (input.flat ?? 0) };
     case 'portent_d20_count': {
       const count = Math.max(1, input.scheduleCount ?? 2);
       const rolls = Array.from(

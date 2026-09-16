@@ -52,6 +52,30 @@ describe('spirit-spawn-plan', () => {
     ).toThrow(/custo 6/);
   });
 
+  it('escolhe a única variante quando spiritVariantKey omite', () => {
+    const planned = planSpiritSpawns({
+      spellSlug: 'montaria-fantasmagorica',
+      selections: [],
+      variants: [
+        {
+          variantKey: 'padrao',
+          templateSlug: 'montaria-fantasmagorica',
+          label: 'Montaria Fantasmagórica',
+          budgetCost: 1,
+        },
+      ],
+    });
+    expect(planned).toEqual([
+      {
+        variantKey: 'padrao',
+        templateSlug: 'montaria-fantasmagorica',
+        label: 'Montaria Fantasmagórica',
+        budgetCost: 1,
+        count: 1,
+      },
+    ]);
+  });
+
   it('rejeita multi em summon sem budget', () => {
     expect(() =>
       planSpiritSpawns({

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.entity';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
+import { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { CampaignRepository } from '../../infrastructure/campaign.repository';
@@ -12,6 +13,8 @@ import { requireActiveEncounter } from '../require-active-encounter';
 import { clearCursemarkedLockForCurrentPc } from '../clear-cursemarked-lock-on-turn';
 import {
   AddEncounterCreatureDto,
+  AddEncounterLinkedActorDto,
+  AddEncounterPcDto,
   CampaignEncounterDto,
   CreateCampaignEncounterDto,
   PatchCampaignEncounterDto,
@@ -19,6 +22,8 @@ import {
 } from '../../dto/encounter.dto';
 import {
   addEncounterCreature,
+  addEncounterLinkedActor,
+  addEncounterPc,
   patchEncounterCombatant,
   removeEncounterCombatant,
 } from './combatant-ops';
@@ -42,6 +47,7 @@ export class CampaignEncounterService {
     @InjectRepository(PhbCreatureTemplate)
     private readonly creatureTemplates: Repository<PhbCreatureTemplate>,
     private readonly characterState: CharacterStateRepository,
+    private readonly actorState: ActorStateRepository,
   ) {}
 
   private lifecycleDeps() {
@@ -58,6 +64,7 @@ export class CampaignEncounterService {
       actorPersistence: this.actorPersistence,
       actors: this.actors,
       creatureTemplates: this.creatureTemplates,
+      actorState: this.actorState,
     };
   }
 
@@ -99,6 +106,36 @@ export class CampaignEncounterService {
     dto: AddEncounterCreatureDto,
   ): Promise<CampaignEncounterDto> {
     return addEncounterCreature(
+      this.combatantDeps(),
+      userId,
+      campaignId,
+      encounterId,
+      dto,
+    );
+  }
+
+  addPc(
+    userId: string,
+    campaignId: string,
+    encounterId: string,
+    dto: AddEncounterPcDto,
+  ): Promise<CampaignEncounterDto> {
+    return addEncounterPc(
+      this.combatantDeps(),
+      userId,
+      campaignId,
+      encounterId,
+      dto,
+    );
+  }
+
+  addLinkedActor(
+    userId: string,
+    campaignId: string,
+    encounterId: string,
+    dto: AddEncounterLinkedActorDto,
+  ): Promise<CampaignEncounterDto> {
+    return addEncounterLinkedActor(
       this.combatantDeps(),
       userId,
       campaignId,

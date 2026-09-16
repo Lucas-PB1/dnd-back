@@ -52,6 +52,19 @@ export class EncounterCombatantDto {
   })
   hpPercent!: number | null;
 
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'PV temporários (oculto para jogador se HP da criatura não for exact)',
+  })
+  tempHp!: number | null;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    enum: ['creature', 'mount', 'vehicle', 'companion'],
+    description: 'Só actors',
+  })
+  actorKind!: 'creature' | 'mount' | 'vehicle' | 'companion' | null;
+
   @ApiPropertyOptional({ type: [String], description: 'Talentos (PC)' })
   featSlugs!: string[];
 

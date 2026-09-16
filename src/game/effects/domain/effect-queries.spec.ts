@@ -164,6 +164,23 @@ describe('executeCatalogEffect', () => {
     });
   });
 
+  it('executes survive_at_zero as 1 plus half hit point max', () => {
+    const result = executeCatalogEffect(
+      baseEffect({
+        kind: 'survive_at_zero',
+        trigger: 'on_table_action',
+        actionSlug: 'feat-boon-recovery-death',
+        numeric: { amountFormula: 'one_plus_half_hp_max', flat: null },
+        note: { note: 'Até a Morte.' },
+      }),
+      { level: 20, hitPointMax: 40 },
+    );
+    expect(result).toMatchObject({
+      kind: 'survive_at_zero',
+      amount: 21,
+    });
+  });
+
   it('executes apply_condition and clear_condition', () => {
     const applied = executeCatalogEffect(
       baseEffect({

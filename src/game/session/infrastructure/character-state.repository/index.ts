@@ -12,6 +12,8 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { LoadEffectCatalog } from '@game/effects';
 import { SyncSpellSpiritHandler } from '@game/spirit/application/sync-spell-spirit.handler';
+import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import { shareHealWithVitalBondMount } from '@game/actor/domain/share-heal-with-vital-bond';
 import {
   CastSpellDto,
   PatchCharacterStateDto,
@@ -129,6 +131,15 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     hitPointsCurrent: number,
   ): Promise<CharacterStateResponseDto> {
     return applyCurrentHitPointsOp(this.ports(), character, hitPointsCurrent);
+  }
+
+  async shareVitalBondHeal(characterId: string, amount: number): Promise<void> {
+    const row = await this.findOrCreate(characterId);
+    await shareHealWithVitalBondMount(
+      this.dataSource.getRepository(GameActor),
+      row.boardedActorId ?? null,
+      amount,
+    );
   }
 
   castSpell(character: PlayerCharacter, dto: CastSpellDto) {

@@ -53,7 +53,11 @@ export class FeatEconomyActionsHandler {
       dto.featSlug,
       dto.actionSlug,
       null,
-      { itemSlug: dto.itemSlug, enabled: dto.enabled },
+      {
+        itemSlug: dto.itemSlug,
+        enabled: dto.enabled,
+        diceCount: dto.diceCount,
+      },
     );
   }
 

@@ -22,6 +22,7 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { PhbCondition } from '../session/infrastructure/phb-condition.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { ApplyMountSheetActionHandler } from './application/apply-mount-sheet-action.handler';
 import {
   BoardCharacterVehicleHandler,
   LinkCharacterVehicleHandler,
@@ -42,6 +43,7 @@ import { UpdateActorHandler } from './application/update-actor.handler';
 import { ActorsController } from './controllers/actors.controller';
 import { ActorSessionController } from './controllers/actor-session.controller';
 import { CharacterActorsController } from './controllers/character-actors.controller';
+import { CharacterMountsController } from './controllers/character-mounts.controller';
 import { CharacterVehiclesController } from './controllers/character-vehicles.controller';
 import { CharacterCompanionsController } from './controllers/character-companions.controller';
 import { GameActorAccessService } from './game-actor-access.service';
@@ -86,6 +88,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ActorSessionController,
     CharacterActorsController,
     CharacterVehiclesController,
+    CharacterMountsController,
     CharacterCompanionsController,
   ],
   providers: [
@@ -107,6 +110,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     RollActorAttackHandler,
     LinkCharacterVehicleHandler,
     BoardCharacterVehicleHandler,
+    ApplyMountSheetActionHandler,
     SyncCharacterCompanionHandler,
     SyncSpellSpiritHandler,
     SyncWildShapeActorHandler,
@@ -116,9 +120,12 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ActorRepository,
     GameActorAccessService,
     ActorPersistenceService,
+    ActorStateRepository,
     SyncCharacterCompanionHandler,
     SyncSpellSpiritHandler,
     SyncWildShapeActorHandler,
+    LinkCharacterVehicleHandler,
+    BoardCharacterVehicleHandler,
     TypeOrmModule,
   ],
 })

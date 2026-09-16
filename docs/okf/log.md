@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-16 — §J Montaria: template, board, ficha
+
+* **Update** (14:25 UTC): Link/board de montaria; Vínculo Vital na cura da ficha; Toque Curativo 1/DL; declare Passo Feérico/Derrubar Brilho; spawn de Montaria Fantasmagórica no cast; 0 PV desmonta; dano na fantasma despawna; combate montado fica fora — refs: [`character-mounts.controller.ts`](../../src/game/actor/controllers/character-mounts.controller.ts), [`apply-mount-sheet-action.handler.ts`](../../src/game/actor/application/apply-mount-sheet-action.handler.ts), [`apply-heal-hit-points.ts`](../../src/game/session/application/table-actions/primitives/apply-heal-hit-points.ts), [`seed.phantom-steed.sql`](../../database/seeds/creature/phb/seed.phantom-steed.sql), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa de actor + estado de embarque e curas da ficha, não de combate montado.
+
+## 2026-09-16 — §P Campanha / encontro: combatentes leves
+
+* **Update** (14:20 UTC): DTO com PV temp. e tipo de actor; PATCH de temp HP/condições em criatura; incluir PC ligado e actor existente no board; combate simulado fica fora — refs: [`combatant-ops.ts`](../../src/game/campaign/application/campaign-encounter.service/combatant-ops.ts), [`campaign-encounters.controller.ts`](../../src/game/campaign/campaign-encounters.controller.ts), [`backlog.md`](../plans/backlog.md) — motivo: encontro de mesa precisa de roster e tracker, não de motor de acerto.
+
+## 2026-09-16 — §I Feat / boon: apply de ficha
+
+* **Update** (14:10 UTC): Recuperar Vitalidade gasta `diceCount` e cura; Até a Morte define 1+metade do máximo; Chef e Líder Inspirador aplicam PV temp.; Healer/Músico/Eir/Clemência já aplicavam; estilo no ataque fica no combate — refs: [`apply-feat-economy-executed-effect.ts`](../../src/game/session/application/table-actions/feat/apply-feat-economy-executed-effect.ts), [`phb_feat.economy-action.sql`](../../database/seeds/feat/phb/phb_feat.economy-action.sql), [`phb_effect.phb.sql`](../../database/seeds/effect/phb/phb_effect.phb.sql), [`backlog.md`](../plans/backlog.md) — motivo: table-action de feat que mexe em PV/PV temp. não pode ficar só em spend-resource genérico.
+
 ## 2026-09-16 — §O Condições: declare na ficha
 
 * **Update** (13:55 UTC): PATCH incremental `addConditions`/`removeConditions`; table-action `apply_condition`/`clear_condition` na ficha do PC; Curar Veneno, Resguardo Mental, véus de Invisível; alvo/duração no inimigo ficam no combate — refs: [`apply-sheet-conditions.ts`](../../src/game/session/application/table-actions/primitives/apply-sheet-conditions.ts), [`patch-state.ts`](../../src/game/session/infrastructure/character-state/core/patch-state.ts), [`backlog.md`](../plans/backlog.md) — motivo: declare de condição na mesa é estado da ficha, não combate.

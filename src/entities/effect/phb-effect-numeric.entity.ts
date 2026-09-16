@@ -34,7 +34,9 @@ export type EffectAmountFormula =
   | 'dice_2d_schedule'
   | 'dice_3d_schedule'
   | 'pact_slots_recovery_count'
-  | 'portent_d20_count';
+  | 'portent_d20_count'
+  | 'one_plus_half_hp_max'
+  | 'level_plus_flat';
 
 @Entity({ schema: 'rpg', name: 'phb_effect_numeric' })
 export class PhbEffectNumeric {

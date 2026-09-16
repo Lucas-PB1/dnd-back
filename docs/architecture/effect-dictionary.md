@@ -396,7 +396,7 @@ Seeds: `database/seeds/effects/E001`/`E003`/`E004`. ENUM no baseline. Residual g
 | `miss_becomes_hit` | Erro→acerto; offer+toggle | seed Combat Prowess |
 | `heal_bonus` | Extra PV ao recuperar | seed Fortitude |
 | `slot_refund_on_die_match` | dX = círculo → não gasta slot | seed Spell Recall |
-| `survive_at_zero` | A 0 PV: define PV atuais (default 1; Paladino `one_plus_3_times_level`) e zera death saves | orc / Sentinela Imortal / Recovery |
+| `survive_at_zero` | A 0 PV: define PV atuais (default 1; Paladino `one_plus_3_times_level`; Recovery `one_plus_half_hp_max`) e zera death saves | orc / Sentinela Imortal / Recovery |
 | `teleport_after_action` | Teleporte após Atacar/Magia | seed Dimensional |
 | `modify_d20_roll` | ±dados no Teste D20 | seed Fate |
 | `redirect_damage_reaction` | Reação redireciona dano | seed Energy |
