@@ -41,9 +41,12 @@ Ilustrações de **cena** (`07-001`, `07-003`, `07-005`, `07-006`) — não reco
 
 | Fonte | Destino público | SSOT |
 |-------|-----------------|------|
+| MM 2024 + summons PHB | `public/catalog/monsters/`, `beasts/`, `summons/` | seeds `seed.mm-*-images.sql` + wire |
+| Veículos PHB | `public/catalog/vehicles/` | `seed.mm-vehicles-images.sql` |
 | `extracts/northlands/stat-blocks.json` | `public/catalog/creatures/` | stat block + `imageUrl` |
 | DMG itens mágicos | `public/catalog/magic-items/` | `extracts/dmg/items-az.json` |
-| Veículos | `public/catalog/vehicles/` | templates em seeds |
+
+**MM / summons / veículos PHB:** lote de imagens **fechado** (listas `no-image-*` e reports de import removidos).
 
 ## Regeneração
 

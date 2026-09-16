@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — Limpeza pós-lote de imagens
+
+* **Update** (12:55 UTC): removidos `no-image-*` e `*-images-report.json` / wire-report em `extracts/mm/` (caça concluída); SSOT permanece seeds + `public/catalog/` + extracts de monstro — refs: [`catalog-images.md`](../source/catalog-images.md) — motivo: artefatos de backlog/import não são mais necessários.
+
 ## 2026-09-16 — Veículos PHB com imagem (12/12)
 
 * **Update** (12:25 UTC): 12 artes → `public/catalog/vehicles/` + `seed.mm-vehicles-images.sql` (`phb_vehicle_template`); backlog imagens **0** — refs: [`seed.mm-vehicles-images.sql`](../../database/seeds/creature/phb/seed.mm-vehicles-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: fechar veículos após rename Navio a Remo.
