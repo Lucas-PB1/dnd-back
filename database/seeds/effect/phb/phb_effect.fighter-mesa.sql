@@ -110,7 +110,7 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+  SELECT 'clear_condition'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
          'on_table_action'::rpg.effect_trigger, 'psi:mental-guard', 10, 1,
          'Resguardo Mental'
   FROM sc
@@ -118,8 +118,31 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-       'Resguardo Mental: encerre em você todos os efeitos que causam Amedrontado ou Enfeitiçado.'
+       'Resguardo Mental: encerre em você Amedrontado e Enfeitiçado.'
 FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.owner_kind = 'subclass' AND e.action_slug = 'psi:mental-guard'
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'frightened'::rpg.condition_slug, NULL FROM fx;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'clear_condition'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'psi:mental-guard', 10, 2,
+         'Resguardo Mental — Enfeitiçado'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'charmed'::rpg.condition_slug, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'),
 ins AS (

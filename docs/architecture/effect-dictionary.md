@@ -178,6 +178,20 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Trigger:** `on_table_action` (Músico) ou **`on_rest_long`** (Humano Eficiente)
 - **Exemplo:** Músico — canção; Humano — ao completar DL
 
+### `apply_condition` (mesa / combate)
+
+- **Semântica mesa:** `on_table_action` adiciona o slug na ficha do PC (declare; duração na nota).
+- **Semântica combate:** `on_hit` / `on_save_fail` no alvo → [`combat-real-deferred.md`](../plans/combat-real-deferred.md).
+- **Satélite:** `phb_effect_condition`
+- **Apply mesa:** `applySheetConditions`
+
+### `clear_condition` (mesa)
+
+- **Semântica:** remove o slug da ficha do PC (Curar Veneno, Resguardo Mental).
+- **Satélite:** `phb_effect_condition`
+- **Trigger:** `on_table_action`
+- **Apply:** `applySheetConditions`
+
 ### `grant_feat` (espécie)
 
 - **Semântica:** no build, concede feat escolhido (`option_key` ↔ speciesChoice / featOptions); filtro `feat_category` (ex. `origin`).

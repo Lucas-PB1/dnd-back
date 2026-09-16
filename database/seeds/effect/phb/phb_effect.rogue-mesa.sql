@@ -62,21 +62,39 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
-         'on_table_action'::rpg.effect_trigger, v.action_slug, v.unlock_level, 1, v.label
+  SELECT 'apply_condition'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'psychic-veil', 13, 1,
+         'Véu Psíquico'
   FROM sc
-  CROSS JOIN (VALUES
-    ('psychic-veil', 13, 'Véu Psíquico'),
-    ('rend-mind', 17, 'Rasgar Mente')
-  ) AS v(action_slug, unlock_level, label)
-  RETURNING id, action_slug
+  RETURNING id
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  CASE action_slug
-    WHEN 'psychic-veil' THEN 'Véu Psíquico: Invisível por 1 h ou até causar dano/forçar salvaguarda.'
-    ELSE 'Rasgar Mente: salvaguarda SAB CD {saveDc}; falha = Atordoado.'
-  END
+  'Véu Psíquico: Invisível por 1 h ou até causar dano/forçar salvaguarda.'
+FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.owner_kind = 'subclass' AND e.action_slug = 'psychic-veil'
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'invisible'::rpg.condition_slug, NULL FROM fx;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'rend-mind', 17, 1,
+         'Rasgar Mente'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Rasgar Mente: salvaguarda SAB CD {saveDc}; falha = Atordoado.'
 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),

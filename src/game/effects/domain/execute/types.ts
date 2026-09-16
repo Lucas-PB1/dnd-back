@@ -140,6 +140,11 @@ export type EffectExecution =
       note: string | null;
     }
   | {
+      kind: 'apply_condition' | 'clear_condition';
+      conditionSlug: string;
+      note: string | null;
+    }
+  | {
       kind: 'start_concentration';
       spellSlug: string;
       note: string | null;

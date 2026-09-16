@@ -43,6 +43,19 @@ export async function applyPatchState(input: {
   if (dto.conditions !== undefined) {
     await assertValidConditions(conditions, dto.conditions);
     state.conditions = dto.conditions;
+  } else if (
+    dto.addConditions !== undefined ||
+    dto.removeConditions !== undefined
+  ) {
+    const add = dto.addConditions ?? [];
+    const remove = dto.removeConditions ?? [];
+    await assertValidConditions(conditions, [...add, ...remove]);
+    const drop = new Set(remove);
+    const next = state.conditions.filter((slug) => !drop.has(slug));
+    for (const slug of add) {
+      if (slug && !next.includes(slug)) next.push(slug);
+    }
+    state.conditions = next;
   }
 
   if (dto.tempHp !== undefined) {

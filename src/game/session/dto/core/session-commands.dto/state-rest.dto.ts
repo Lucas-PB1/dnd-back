@@ -18,6 +18,24 @@ export class PatchCharacterStateDto {
   @IsString({ each: true })
   conditions?: string[];
 
+  @ApiPropertyOptional({
+    example: ['invisible'],
+    description: 'Acrescenta slugs (declare na mesa). Ignorado se `conditions` vier preenchido.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  addConditions?: string[];
+
+  @ApiPropertyOptional({
+    example: ['poisoned'],
+    description: 'Remove slugs. Ignorado se `conditions` vier preenchido.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  removeConditions?: string[];
+
   @ApiPropertyOptional({ example: 5 })
   @IsOptional()
   @IsInt()

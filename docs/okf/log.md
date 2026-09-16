@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §O Condições: declare na ficha
+
+* **Update** (13:55 UTC): PATCH incremental `addConditions`/`removeConditions`; table-action `apply_condition`/`clear_condition` na ficha do PC; Curar Veneno, Resguardo Mental, véus de Invisível; alvo/duração no inimigo ficam no combate — refs: [`apply-sheet-conditions.ts`](../../src/game/session/application/table-actions/primitives/apply-sheet-conditions.ts), [`patch-state.ts`](../../src/game/session/infrastructure/character-state/core/patch-state.ts), [`backlog.md`](../plans/backlog.md) — motivo: declare de condição na mesa é estado da ficha, não combate.
+
 ## 2026-09-16 — §E Heritage: apply de ficha GH
 
 * **Update** (13:45 UTC): Fio Inabalável aplica PBd4 de PV temp.; Resistência Incomparável ganhou pool + 1 PV (2×: 1d6+PB); Fio Concentrado já existia; §E saiu da fila — refs: [`apply-origin-resource-spend-effects.ts`](../../src/game/session/application/session-commands/apply-origin-resource-spend-effects.ts), [`phb_effect.mesa-spend.sql`](../../database/seeds/effect/phb/phb_effect.mesa-spend.sql), [`phb_effect.heritage.sql`](../../database/seeds/effect/grim-hollow/phb_effect.heritage.sql), [`backlog.md`](../plans/backlog.md) — motivo: spends de heritage que mexem em PV/PV temp. não podem ficar só em nota (sopro/ataque/HD extra 2× ficam no combate).

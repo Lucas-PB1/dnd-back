@@ -164,6 +164,40 @@ describe('executeCatalogEffect', () => {
     });
   });
 
+  it('executes apply_condition and clear_condition', () => {
+    const applied = executeCatalogEffect(
+      baseEffect({
+        kind: 'apply_condition',
+        trigger: 'on_table_action',
+        actionSlug: 'natures-veil',
+        condition: { conditionSlug: 'invisible', pendingKind: null },
+        note: { note: 'Invisível.' },
+      }),
+      { level: 14 },
+    );
+    expect(applied).toEqual({
+      kind: 'apply_condition',
+      conditionSlug: 'invisible',
+      note: 'Invisível.',
+    });
+
+    const cleared = executeCatalogEffect(
+      baseEffect({
+        kind: 'clear_condition',
+        trigger: 'on_table_action',
+        actionSlug: 'cure-poison',
+        condition: { conditionSlug: 'poisoned', pendingKind: null },
+        note: { note: 'Encerrar Envenenado.' },
+      }),
+      { level: 1 },
+    );
+    expect(cleared).toEqual({
+      kind: 'clear_condition',
+      conditionSlug: 'poisoned',
+      note: 'Encerrar Envenenado.',
+    });
+  });
+
   it('executes grant_inspiration', () => {
     const result = executeCatalogEffect(
       baseEffect({

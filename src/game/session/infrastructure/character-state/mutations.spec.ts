@@ -93,6 +93,27 @@ describe('mutations', () => {
       expect(buildResponse).toHaveBeenCalledWith(character, state);
     });
 
+    it('adds and removes conditions without replacing the list', async () => {
+      state.conditions = ['prone', 'poisoned'];
+      (conditions.find as jest.Mock).mockResolvedValueOnce([
+        { slug: 'invisible' },
+        { slug: 'poisoned' },
+      ]);
+
+      await applyPatchState({
+        character,
+        state,
+        dto: { addConditions: ['invisible'], removeConditions: ['poisoned'] },
+        stateRepo,
+        conditions,
+        catalogLookup,
+        dataSource,
+        buildResponse,
+      });
+
+      expect(state.conditions).toEqual(['prone', 'invisible']);
+    });
+
     it('rejects unknown conditions', async () => {
       await expect(
         applyPatchState({

@@ -24,7 +24,7 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+  SELECT 'clear_condition'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
          'on_table_action'::rpg.effect_trigger, 'cure-poison', 1, 1,
          'Mãos Consagradas — Curar Veneno'
   FROM cls
@@ -32,8 +32,17 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Mãos Consagradas: gaste 5 PV da reserva para remover a condição Envenenado.'
+  'Mãos Consagradas: gaste 5 PV da reserva para remover a condição Envenenado (aplicado nesta ficha; aliado: declare na mesa).'
 FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN cls ON cls.id = e.owner_id
+  WHERE e.owner_kind = 'class' AND e.action_slug = 'cure-poison'
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'poisoned'::rpg.condition_slug, NULL FROM fx;
 
 -- Sentido Divino
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'),

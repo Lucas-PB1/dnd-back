@@ -25,6 +25,8 @@ export const EXECUTABLE_KINDS = new Set<EffectKind>([
   'set_tracker',
   'start_concentration',
   'survive_at_zero',
+  'apply_condition',
+  'clear_condition',
   'recover_spell_slot',
   'missile_mage_arm',
   'resource_fallback_spend',

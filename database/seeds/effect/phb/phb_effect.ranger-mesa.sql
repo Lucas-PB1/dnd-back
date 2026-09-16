@@ -75,7 +75,7 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
+  SELECT 'apply_condition'::rpg.effect_kind, 'class'::rpg.effect_owner_kind, cls.id,
          'on_table_action'::rpg.effect_trigger, 'natures-veil', 14, 1,
          'Véu da Natureza'
   FROM cls
@@ -83,8 +83,17 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Véu da Natureza: Ação Bônus — você fica Invisível até o fim do seu próximo turno.'
+  'Véu da Natureza: Invisível até o fim do seu próximo turno (ficha).'
 FROM ins;
+
+WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN cls ON cls.id = e.owner_id
+  WHERE e.owner_kind = 'class' AND e.action_slug = 'natures-veil'
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'invisible'::rpg.condition_slug, NULL FROM fx;
 
 -- Hunter — Defesa do Caçador Superior
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'),

@@ -121,6 +121,8 @@ export async function applyOneEffect(ctx: ApplyCtx): Promise<ApplyOneEffectResul
       'table_note',
       'grant_inspiration',
       'start_concentration',
+      'apply_condition',
+      'clear_condition',
     ]);
     const companionKinds = new Set(['sync_companion', 'companion_command']);
 

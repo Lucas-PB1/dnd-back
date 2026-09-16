@@ -175,7 +175,7 @@ function effect(
     reach: null,
     restQuirk: null,
     environmentalImmunity: null,
-    condition: null,
+    condition: partial.condition ?? null,
     save: null,
     forcedMovement: null,
     kind: partial.kind,
@@ -213,7 +213,7 @@ describe('PaladinActionsHandler', () => {
     }),
   });
   const ctx = createTableActionHandlerTestContext({
-    stateResponse: { tempHp: 0 },
+    stateResponse: { tempHp: 0, conditions: ['poisoned', 'prone'] },
     defaultCharacter: paladin,
     proficiencyBonus: 3,
     mechanicalCatalogLoad: { economyActions: PALADIN_ECONOMY },
@@ -259,17 +259,18 @@ describe('PaladinActionsHandler', () => {
     expect(ctx.state.applyCurrentHitPoints).toHaveBeenCalled();
   });
 
-  it('spends 5 points to cure poison', async () => {
+  it('spends 5 points to cure poison and clears poisoned on the sheet', async () => {
     effectCatalog.load.mockResolvedValueOnce([
       effect({
-        kind: 'table_note',
+        kind: 'clear_condition',
         actionSlug: 'cure-poison',
         ownerKind: 'class',
+        condition: { conditionSlug: 'poisoned', pendingKind: null },
         note: { note: 'Curar veneno.' },
       }),
     ]);
 
-    await handler.useTableAction('user-1', 'pal-1', {
+    const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'cure-poison',
     });
 
@@ -278,6 +279,11 @@ describe('PaladinActionsHandler', () => {
       'layOnHands',
       5,
     );
+    expect(ctx.state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      { conditions: ['prone'] },
+    );
+    expect(result.note).toMatch(/veneno/i);
   });
 
   it('spends a Channel Divinity use on Divine Sense', async () => {

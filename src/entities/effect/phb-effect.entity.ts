@@ -151,6 +151,7 @@ export type EffectKind =
   | 'speed_set'
   | 'attack_disadvantage'
   | 'apply_condition'
+  | 'clear_condition'
   | 'forced_movement'
   | 'feature_save'
   | 'ability_mod_damage'

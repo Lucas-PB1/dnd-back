@@ -15,6 +15,14 @@ export function executeStructuredEffect(
     };
   }
 
+  if (effect.kind === 'apply_condition' || effect.kind === 'clear_condition') {
+    return {
+      kind: effect.kind,
+      conditionSlug: effect.condition?.conditionSlug ?? '',
+      note: effect.note?.note ?? null,
+    };
+  }
+
   if (effect.kind === 'check_boost') {
     return {
       kind: 'check_boost',

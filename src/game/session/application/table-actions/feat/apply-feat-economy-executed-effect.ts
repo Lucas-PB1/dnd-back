@@ -5,6 +5,7 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { TableActionResponseDto } from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { applyHealHitPoints } from '../primitives/apply-heal-hit-points';
+import { applySheetConditions } from '../primitives/apply-sheet-conditions';
 import { applyTemporaryHitPoints } from '../primitives/apply-temporary-hit-points';
 
 type ApplyFeatEconomyEffectResult = {
@@ -97,6 +98,31 @@ export async function applyFeatEconomyExecutedEffect(input: {
   } else if (executed.kind === 'grant_inspiration') {
     state = await input.state.patch(input.character, { inspiration: true });
     note = [note, executed.note].filter(Boolean).join(' ');
+  } else if (
+    (executed.kind === 'apply_condition' ||
+      executed.kind === 'clear_condition') &&
+    executed.conditionSlug
+  ) {
+    state = await applySheetConditions(
+      input.state,
+      input.character,
+      input.currentState,
+      {
+        add:
+          executed.kind === 'apply_condition' ? [executed.conditionSlug] : [],
+        remove:
+          executed.kind === 'clear_condition' ? [executed.conditionSlug] : [],
+      },
+    );
+    note = [
+      note,
+      executed.note,
+      executed.kind === 'apply_condition'
+        ? `Condição na ficha: ${executed.conditionSlug}.`
+        : `Condição encerrada na ficha: ${executed.conditionSlug}.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
   } else if (executed.kind === 'table_note' && executed.note) {
     note = `${note} ${executed.note}`;
     if (executed.amount != null) {

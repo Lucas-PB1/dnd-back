@@ -53,7 +53,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 | § | Categoria | Fazer |
 |---|-----------|--------|
 | **N** | Magias / cast | slots · concentração · cast item (ficha); resolução de dano no alvo → lista combate real |
-| **O** | Condições / duração | declare/nota na mesa; tipagem no alvo → lista combate real |
 | **P** | Campanha / encontro | combatentes leves; combate simulado → lista combate real |
 
 ## Transversal

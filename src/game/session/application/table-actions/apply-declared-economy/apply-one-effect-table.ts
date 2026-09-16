@@ -1,6 +1,7 @@
 import type { EffectExecution } from '@game/effects';
 import type { ApplyCtx } from './types';
 import type { ApplyOneEffectResult } from './apply-one-effect.types';
+import { applySheetConditions } from '../primitives/apply-sheet-conditions';
 
 export async function applyTableEffect(
   ctx: ApplyCtx,
@@ -79,6 +80,24 @@ export async function applyTableEffect(
   if (executed.kind === 'grant_inspiration') {
     nextState = await deps.state.patch(character, { inspiration: true });
     if (executed.note) nextNote = `${note} ${executed.note}`;
+    return { state: nextState, note: nextNote };
+  }
+
+  if (
+    (executed.kind === 'apply_condition' ||
+      executed.kind === 'clear_condition') &&
+    executed.conditionSlug
+  ) {
+    nextState = await applySheetConditions(deps.state, character, state, {
+      add: executed.kind === 'apply_condition' ? [executed.conditionSlug] : [],
+      remove:
+        executed.kind === 'clear_condition' ? [executed.conditionSlug] : [],
+    });
+    nextNote =
+      executed.note?.trim() ||
+      (executed.kind === 'apply_condition'
+        ? `Condição na ficha: ${executed.conditionSlug}.`
+        : `Condição encerrada na ficha: ${executed.conditionSlug}.`);
     return { state: nextState, note: nextNote };
   }
 

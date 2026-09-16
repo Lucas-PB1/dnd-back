@@ -428,7 +428,7 @@ ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+  SELECT 'apply_condition'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
          'on_table_action'::rpg.effect_trigger, 'cloak-of-shadows', 17, 1,
          'Manto da Sombra'
   FROM sc
@@ -436,8 +436,17 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Manto da Sombra: em Meia-luz/Escuridão, Usar Magia, gaste 3 Foco (1 min ou até Incapacitado / terminar turno em Luz Plena). Invisível; atravessa espaços ocupados; Torrente sem gastar Foco.'
+  'Manto da Sombra: Invisível 1 min (Meia-luz/Escuridão; encerra se Incapacitado ou turno em Luz Plena).'
 FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'shadow'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.owner_kind = 'subclass' AND e.action_slug = 'cloak-of-shadows'
+)
+INSERT INTO rpg.phb_effect_condition (effect_id, condition_slug, pending_kind)
+SELECT id, 'invisible'::rpg.condition_slug, NULL FROM fx;
 
 -- Street — Combinação
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
