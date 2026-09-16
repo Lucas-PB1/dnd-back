@@ -431,7 +431,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 |------|--------|
 | `D010` catálogo (~338) | Feito |
 | Taxonomia + economy consumíveis | Feito (`D011` + `C016`) |
-| Taxonomia coberturas (§3.1) | Feito (`D013`; status em `dmg-wiring-status.md`) |
+| Taxonomia coberturas (§3.1) | Feito (`D013`; status em [`wiring-status.md`](../source/extracts/dmg/wiring-status.md)) |
 | Compêndio `/equipment?tab=magic` | Feito (`GET /items?magic=true`) |
 | `permanentEffects` DMG (lote §0 #2) | Feito (`D012` — anel/manto de proteção) |
 | Edição `dmg-2024-pt` (Fontes) | Feito (`D001`) |

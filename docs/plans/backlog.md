@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-07 — limpeza planos concluídos (GH Cap.2/1, NL Waves, DROP motor)
+**Última revisão:** 2026-09-16 — saíram do SSOT as áreas já prontas (ficha, GH, NL/Steinhardt, motor, qualidade) e as seções Adiado vazias.
 
 **Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
 
@@ -15,15 +15,8 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 | Área | Status |
 |------|--------|
-| Ficha / inventário / sessão / campanha / encontro (board leve) | Pronto |
 | Classes mesa PHB (13) | **Ativo** — apply **só ficha** no checklist §B/C; combate → lista combate real |
-| Steinhardt + Northlands (Waves 1–4 + Cap. 5 + veículos + threads) | Pronto — residual opcional em Adiado |
 | Itens DMG mesa | **Ativo** — grants+economy+apply **de ficha** no checklist §H |
-| Grim Hollow Cap. 2 mesa + Cap. 1 heranças | Pronto — residual fino em Adiado |
-| Grim Hollow Cap. 4 talentos | Pronto |
-| Grim Hollow Cap. 6 transformações | Pronto (§A mesa) |
-| Saúde do código (Fases 0–4) | Pronto — dívida residual em Adiado |
-| Motor de efeitos (`phb_effect`) DROP / dual-read | Pronto — residual mesa = checklist |
 
 ---
 
@@ -36,10 +29,6 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 ## Adiado — polish / ops
 
 Só retomar com pedido explícito. **Não** é combate real.
-
-### Motor / UI (mesa)
-
-_(vazio — craft Artesão, transferir inspiração e toggles snow/frio feitos)_
 
 ### Classe / UI
 
@@ -55,14 +44,6 @@ Detalhe: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sist
 
 - [ ] Cast de item: concentração / componentes / CD override do item (mesa)
 - [ ] Evento `dawn` real ≠ Descanso Longo (MVP: DL ≈ amanhecer)
-
-### Qualidade (pós Fase 4)
-
-Rules: `dry-quality` · `typescript-quality` · `file-size`. Skills: `audit-code-health` · `split-large-module` · `unify-game-stats`.
-
-_(vazio — hard files >200 e `as never` em specs feitos)_
-
-Scripts essenciais: só DB + smoke + measure — [`scripts/README.md`](../../scripts/README.md).
 
 ### Editorial / residual fino (não bloqueia mesa)
 

@@ -1,7 +1,7 @@
 # Treasure (DMG 2024) × lacunas do sistema
 
 Fonte: regras gerais do Cap. 7 Treasure (DMG 2024 / Beyond).  
-Modelo mesa: [`dmg-item-mesa.md`](./dmg-item-mesa.md) · wiring: [`docs/source/extracts/dmg/wiring-status.md`](../source/dmg-wiring-status.md).
+Modelo mesa: [`dmg-item-mesa.md`](./dmg-item-mesa.md) · wiring: [`wiring-status.md`](../source/extracts/dmg/wiring-status.md).
 
 Objetivo: regras do capítulo (não o A–Z de itens) que **explicam falhas** ou **faltam** no wiring atual.
 

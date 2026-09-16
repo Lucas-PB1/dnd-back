@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — Backlog: saiu o concluído
+
+* **Update** (13:05 UTC): `backlog.md` ficou só o aberto (snapshot Ativo §B/C + §H; Adiado Motor/UI e Qualidade vazios removidos); §A saiu do checklist mesa; link morto `dmg-wiring-status.md` — refs: [`backlog.md`](../plans/backlog.md), [`effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) — motivo: política do plano — concluído não acumula histórico.
+
 ## 2026-09-16 — Limpeza pós-lote de imagens
 
 * **Update** (12:55 UTC): removidos `no-image-*` e `*-images-report.json` / wire-report em `extracts/mm/` (caça concluída); SSOT permanece seeds + `public/catalog/` + extracts de monstro — refs: [`catalog-images.md`](../source/catalog-images.md) — motivo: artefatos de backlog/import não são mais necessários.

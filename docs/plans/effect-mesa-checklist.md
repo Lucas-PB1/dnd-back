@@ -30,7 +30,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 
 | § | Categoria | Âncora | Fazer |
 |---|-----------|--------|--------|
-| **A** | Transformações | `transformation/grim-hollow/` · `economy/grim-hollow/` | **§A fechado** (mesa) |
 | **B** | Classe | `effect/phb/phb_effect.class.sql` · `economy/phb/` · `class/phb/` | Pool/economy ok; apply **ficha** (Rally/`tempHp`, Proteção Arcana, curas tipadas monge/clérigo/druida/bruxo); residual fino; combate → [`combat-real-deferred.md`](combat-real-deferred.md) |
 | **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
 | **D** | Espécie | `effect/phb/` espécie | Pool ok; economy; apply ficha |

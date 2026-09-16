@@ -67,4 +67,3 @@ Specs: `*.queries.spec.ts` (smoke TypeORM); validators mockam queries ou `getRep
 
 - [`code-standards.md`](./code-standards.md) — layout `validation/` + queries
 - [`catalog-patterns.md` §10](./catalog-patterns.md#10-runtime-game-reads)
-- Dívida residual: [`backlog.md`](../plans/backlog.md) (Adiado — qualidade)

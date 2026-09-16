@@ -13,8 +13,8 @@ Como usar: escolha a **fonte** → percorra as células → marque gaps no § da
 | Fonte | Seeds / área | Categorias a varrer | Audit / detalhe já existente |
 |-------|--------------|---------------------|------------------------------|
 | **PHB** | `phb/` · `effects/E001` · `E007` · `E009` · combat `C00*` core | B C D G H I N O | — |
-| **DMG / Treasure** | `dmg/` · item economy `C013`–`C045` | **H** (mágico, prop., maestria, cast) | [`dmg-item-mesa.md`](../architecture/dmg-item-mesa.md) · [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md) · [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
-| **Grim Hollow** | `grim-hollow/` · `transformation/` · `economy/grim-hollow/` · Cap.1–6 | A B C E H I · K (Primordial) | residual fino → [`backlog.md`](backlog.md) Adiado |
+| **DMG / Treasure** | `dmg/` · item economy `C013`–`C045` | **H** (mágico, prop., maestria, cast) | [`dmg-item-mesa.md`](../architecture/dmg-item-mesa.md) · [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md) |
+| **Grim Hollow** | `grim-hollow/` · `transformation/` · `economy/grim-hollow/` · Cap.1–6 | B C E H I · K (Primordial) | residual fino → [`backlog.md`](backlog.md) Adiado |
 | **Northlands** | `northlands-heroes/` · `E004` · `C052`–`C056` · threads | B C D F I · L (veículos NL) | [`northlands-character-threads.md`](northlands-character-threads.md) · residual → [`backlog.md`](backlog.md) Adiado |
 | **Steinhardt (SEH)** | `steinhardt-eldritch-hunt/` · `E002` · `C046`–`C050` | B C D I | — |
 | **Valda / Gunslinger** | `valdas*` · `E005` · `G021` | B C H I | — |
