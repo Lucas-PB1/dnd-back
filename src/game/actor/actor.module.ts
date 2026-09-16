@@ -22,6 +22,7 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { PhbCondition } from '../session/infrastructure/phb-condition.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { ApplyVehicleSheetActionHandler } from './application/apply-vehicle-sheet-action.handler';
 import { ApplyMountSheetActionHandler } from './application/apply-mount-sheet-action.handler';
 import {
   BoardCharacterVehicleHandler,
@@ -110,6 +111,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     RollActorAttackHandler,
     LinkCharacterVehicleHandler,
     BoardCharacterVehicleHandler,
+    ApplyVehicleSheetActionHandler,
     ApplyMountSheetActionHandler,
     SyncCharacterCompanionHandler,
     SyncSpellSpiritHandler,

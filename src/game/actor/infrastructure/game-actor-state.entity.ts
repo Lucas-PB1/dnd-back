@@ -17,6 +17,15 @@ export class GameActorState {
   @Column({ name: 'innate_spell_uses', type: 'jsonb', default: {} })
   innateSpellUses!: Record<string, number>;
 
+  @Column({ name: 'crew_current', type: 'int', default: 0 })
+  crewCurrent!: number;
+
+  @Column({ name: 'passenger_current', type: 'int', default: 0 })
+  passengerCurrent!: number;
+
+  @Column({ name: 'cargo_current_lb', type: 'int', default: 0 })
+  cargoCurrentLb!: number;
+
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 }

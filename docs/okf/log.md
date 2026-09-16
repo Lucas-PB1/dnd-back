@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §L Veículo: bundle, board, métrica
+
+* **Update** (14:40 UTC): Estado ao vivo de tripulação/passageiros/carga no actor; PATCH + sheet-actions (board, métricas, leme); aríete/atropelo ficam no combate — refs: [`apply-vehicle-sheet-action.handler.ts`](../../src/game/actor/application/apply-vehicle-sheet-action.handler.ts), [`actor-state.dto.ts`](../../src/game/actor/dto/actor-state.dto.ts), [`20260916_game_actor_state_vehicle_metrics.sql`](../../database/migrations/20260916_game_actor_state_vehicle_metrics.sql), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa de ficha do veículo e ocupação, não de combate naval.
+
 ## 2026-09-16 — §J Montaria: template, board, ficha
 
 * **Update** (14:25 UTC): Link/board de montaria; Vínculo Vital na cura da ficha; Toque Curativo 1/DL; declare Passo Feérico/Derrubar Brilho; spawn de Montaria Fantasmagórica no cast; 0 PV desmonta; dano na fantasma despawna; combate montado fica fora — refs: [`character-mounts.controller.ts`](../../src/game/actor/controllers/character-mounts.controller.ts), [`apply-mount-sheet-action.handler.ts`](../../src/game/actor/application/apply-mount-sheet-action.handler.ts), [`apply-heal-hit-points.ts`](../../src/game/session/application/table-actions/primitives/apply-heal-hit-points.ts), [`seed.phantom-steed.sql`](../../database/seeds/creature/phb/seed.phantom-steed.sql), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa de actor + estado de embarque e curas da ficha, não de combate montado.

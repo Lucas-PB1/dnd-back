@@ -13,6 +13,7 @@ import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { clampHitPointsCurrent } from '@game/shared/domain/combat-vitals';
 import { clearBoardedIfActor } from '../application/clear-boarded-actor';
 import { isPhantomSteedTemplate } from '../domain/mount-sheet';
+import { clampVehicleMetric } from '../domain/vehicle-sheet';
 
 @Injectable()
 export class ActorStateRepository {
@@ -29,7 +30,12 @@ export class ActorStateRepository {
   async ensureState(actorId: string): Promise<GameActorState> {
     let state = await this.stateRepo.findOne({ where: { actorId } });
     if (!state) {
-      state = this.stateRepo.create({ actorId });
+      state = this.stateRepo.create({
+        actorId,
+        crewCurrent: 0,
+        passengerCurrent: 0,
+        cargoCurrentLb: 0,
+      });
       state = await this.stateRepo.save(state);
     }
     return state;
@@ -46,6 +52,13 @@ export class ActorStateRepository {
       tempHp: state.tempHp,
       concentratingOn: state.concentratingOn,
       innateSpellUses: state.innateSpellUses ?? {},
+      damageThreshold: actor.damageThreshold ?? null,
+      crewCapacity: actor.crewCapacity ?? null,
+      passengerCapacity: actor.passengerCapacity ?? null,
+      cargoCapacityLb: actor.cargoCapacityLb ?? null,
+      crewCurrent: state.crewCurrent ?? 0,
+      passengerCurrent: state.passengerCurrent ?? 0,
+      cargoCurrentLb: state.cargoCurrentLb ?? 0,
     };
   }
 
@@ -79,6 +92,24 @@ export class ActorStateRepository {
     }
     if (dto.innateSpellUses !== undefined) {
       state.innateSpellUses = dto.innateSpellUses;
+    }
+    if (dto.crewCurrent !== undefined) {
+      state.crewCurrent = clampVehicleMetric(
+        dto.crewCurrent,
+        actor.crewCapacity,
+      );
+    }
+    if (dto.passengerCurrent !== undefined) {
+      state.passengerCurrent = clampVehicleMetric(
+        dto.passengerCurrent,
+        actor.passengerCapacity,
+      );
+    }
+    if (dto.cargoCurrentLb !== undefined) {
+      state.cargoCurrentLb = clampVehicleMetric(
+        dto.cargoCurrentLb,
+        actor.cargoCapacityLb,
+      );
     }
     if (dto.hitPointsCurrent !== undefined) {
       actor.hitPointsCurrent = dto.hitPointsCurrent;

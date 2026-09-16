@@ -43,7 +43,6 @@ Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar n
 | § | Categoria | Fazer |
 |---|-----------|--------|
 | **K** | Companheiro / animal | tracker leve · summon/command; **combate** → [`combat-real-deferred.md`](combat-real-deferred.md) |
-| **L** | Veículo / barco | bundle · board · métrica · ações |
 | **M** | Monstro / criatura | catálogo/template agora; **spawn/combate** → lista combate real |
 
 ## Magia / mesa

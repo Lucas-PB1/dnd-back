@@ -102,6 +102,9 @@ export class ActorResponseDto extends ActorSummaryResponseDto {
     tempHp: number;
     concentratingOn: string | null;
     innateSpellUses: Record<string, number>;
+    crewCurrent?: number;
+    passengerCurrent?: number;
+    cargoCurrentLb?: number;
   } | null;
 }
 

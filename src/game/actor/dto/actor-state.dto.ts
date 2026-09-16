@@ -53,6 +53,27 @@ export class PatchActorStateDto {
   @Min(1)
   @Max(40)
   armorClass?: number;
+
+  @ApiPropertyOptional({ example: 4, description: 'Tripulação atual (veículo)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(9999)
+  crewCurrent?: number;
+
+  @ApiPropertyOptional({ example: 2, description: 'Passageiros atuais (veículo)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(9999)
+  passengerCurrent?: number;
+
+  @ApiPropertyOptional({ example: 500, description: 'Carga atual em lb (veículo)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(99_999_999)
+  cargoCurrentLb?: number;
 }
 
 export class ActorStateResponseDto {
@@ -82,4 +103,25 @@ export class ActorStateResponseDto {
 
   @ApiProperty()
   innateSpellUses!: Record<string, number>;
+
+  @ApiPropertyOptional({ nullable: true })
+  damageThreshold!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  crewCapacity!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  passengerCapacity!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  cargoCapacityLb!: number | null;
+
+  @ApiProperty()
+  crewCurrent!: number;
+
+  @ApiProperty()
+  passengerCurrent!: number;
+
+  @ApiProperty()
+  cargoCurrentLb!: number;
 }

@@ -1,3 +1,23 @@
+-- Métricas ao vivo de veículo na ficha do actor (tripulação / passageiros / carga).
+
+ALTER TABLE rpg.game_actor_state
+  ADD COLUMN IF NOT EXISTS crew_current INT NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS passenger_current INT NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS cargo_current_lb INT NOT NULL DEFAULT 0;
+
+ALTER TABLE rpg.game_actor_state
+  DROP CONSTRAINT IF EXISTS game_actor_state_crew_current_check;
+ALTER TABLE rpg.game_actor_state
+  ADD CONSTRAINT game_actor_state_crew_current_check CHECK (crew_current >= 0);
+ALTER TABLE rpg.game_actor_state
+  DROP CONSTRAINT IF EXISTS game_actor_state_passenger_current_check;
+ALTER TABLE rpg.game_actor_state
+  ADD CONSTRAINT game_actor_state_passenger_current_check CHECK (passenger_current >= 0);
+ALTER TABLE rpg.game_actor_state
+  DROP CONSTRAINT IF EXISTS game_actor_state_cargo_current_lb_check;
+ALTER TABLE rpg.game_actor_state
+  ADD CONSTRAINT game_actor_state_cargo_current_lb_check CHECK (cargo_current_lb >= 0);
+
 CREATE OR REPLACE FUNCTION rpg.get_game_actor_bundle(p_actor_id uuid)
 RETURNS jsonb
 LANGUAGE sql
@@ -62,5 +82,3 @@ AS $$
     )
   );
 $$;
-
--- Character Threads — estado na ficha (1 ativo por personagem)

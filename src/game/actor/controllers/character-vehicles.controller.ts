@@ -20,11 +20,14 @@ import {
   BoardCharacterVehicleHandler,
   LinkCharacterVehicleHandler,
 } from '../application/character-vehicle.handlers';
+import { ApplyVehicleSheetActionHandler } from '../application/apply-vehicle-sheet-action.handler';
 import {
   BoardCharacterVehicleDto,
   CharacterVehicleBoardResponseDto,
   CharacterVehicleLinkResponseDto,
   LinkCharacterVehicleDto,
+  VehicleSheetActionDto,
+  VehicleSheetActionResponseDto,
 } from '../dto/character-vehicle.dto';
 
 @ApiTags('game-character-vehicles')
@@ -36,6 +39,7 @@ export class CharacterVehiclesController {
   constructor(
     private readonly linkVehicle: LinkCharacterVehicleHandler,
     private readonly boardVehicle: BoardCharacterVehicleHandler,
+    private readonly sheetAction: ApplyVehicleSheetActionHandler,
   ) {}
 
   @Post('link')
@@ -63,5 +67,19 @@ export class CharacterVehiclesController {
     @Body() dto: BoardCharacterVehicleDto,
   ): Promise<CharacterVehicleBoardResponseDto> {
     return this.boardVehicle.execute(user.id, characterId, dto);
+  }
+
+  @Post('sheet-actions')
+  @ApiOperation({
+    summary:
+      'Ações de ficha do veículo: embarcar/desembarcar, métricas (tripulação/carga) e leme',
+  })
+  @ApiOkResponse({ type: VehicleSheetActionResponseDto })
+  sheetActions(
+    @CurrentUser() user: AuthUser,
+    @Param('characterId', ParseUUIDPipe) characterId: string,
+    @Body() dto: VehicleSheetActionDto,
+  ): Promise<VehicleSheetActionResponseDto> {
+    return this.sheetAction.execute(user.id, characterId, dto);
   }
 }

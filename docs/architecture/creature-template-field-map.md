@@ -46,12 +46,13 @@ Ver OKF [creature-template-scale-control.md](../okf/creature-template-scale-cont
 
 ## Veículo (`phb_vehicle_template`)
 
-| Campo | Coluna |
-|-------|--------|
-| Nome | `name` |
-| CA / PV / limiar | `armor_class`, `hit_points`, `damage_threshold` |
-| Tripulação / carga | `crew_capacity`, `cargo_capacity_lb` |
-| Deslocamentos (sail/row) | `phb_vehicle_template_speed` |
-| Armas | `phb_vehicle_template_action` |
+| Campo | Catálogo | Runtime (`game_actor` / state) |
+|-------|----------|--------------------------------|
+| Nome | `name` | `name` |
+| CA / PV / limiar | `armor_class`, `hit_points`, `damage_threshold` | `armor_class`, `hit_points_*`, `damage_threshold` |
+| Tripulação / carga | `crew_capacity`, `cargo_capacity_lb` | teto no actor; `game_actor_state.crew_current` / `cargo_current_lb` |
+| Passageiros | `passenger_capacity` | `game_actor_state.passenger_current` |
+| Deslocamentos (sail/row) | `phb_vehicle_template_speed` | `game_actor_speed` |
+| Armas | `phb_vehicle_template_action` | `game_actor_action` (combate naval fora da mesa) |
 
 Seeds: `database/seeds/creatures/` — criaturas (M001+), veículos PHB (M002), montarias PHB (M005, fonte: `phb-cap6-mounts-extract.json`).

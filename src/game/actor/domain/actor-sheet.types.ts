@@ -29,6 +29,9 @@ export type ActorStateDto = {
   tempHp: number;
   concentratingOn: string | null;
   innateSpellUses: Record<string, number>;
+  crewCurrent?: number;
+  passengerCurrent?: number;
+  cargoCurrentLb?: number;
 };
 
 export type ActorSheetData = {
