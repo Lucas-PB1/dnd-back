@@ -18,6 +18,10 @@ const FIGHTER_TABLE_ACTION_SLUGS = [
   'blood-explosion',
   'marauders-reprisal',
   'unstoppable-assault',
+  'peaceful-ward',
+  'benevolent-presence',
+  'merciless-strike',
+  'paragon',
 ] as const;
 
 export class UseFighterTableActionDto extends TableActionOptionsDto {

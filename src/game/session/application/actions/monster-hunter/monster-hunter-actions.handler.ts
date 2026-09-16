@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isMonsterHunterClass } from '@game/combat/domain/monster-hunter/class';
+import { LoadEffectCatalog } from '@game/effects';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
@@ -17,6 +18,7 @@ export class MonsterHunterActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly effectCatalog: LoadEffectCatalog,
   ) {}
 
   async useTableAction(
@@ -36,7 +38,11 @@ export class MonsterHunterActionsHandler {
     }
 
     return applyDeclaredEconomyTableAction(
-      { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+      {
+        state: this.state,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+      },
       character,
       dto.actionSlug,
     ) as Promise<TableActionResponseDto>;

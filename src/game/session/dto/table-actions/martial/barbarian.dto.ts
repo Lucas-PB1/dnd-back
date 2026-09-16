@@ -41,6 +41,11 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'shape-of-the-wild',
   'shape-of-the-wild-action',
   'shape-of-the-wild-rage-recover',
+  'glacier-rage-extension',
+  'frostbite',
+  'cold-fortress-entry',
+  'cold-fortress-renew',
+  'avalanche-stomp',
 ] as const;
 
 export class UseBarbarianTableActionDto extends TableActionOptionsDto {

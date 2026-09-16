@@ -517,6 +517,7 @@ effect/phb/phb_effect.rogue-mesa.sql
 effect/phb/phb_effect.sorcerer-mesa.sql
 effect/phb/phb_effect.gunslinger-mesa.sql
 effect/phb/phb_effect.druid-mesa.sql
+effect/phb/phb_effect.subclass-pack-mesa.sql
 effect/phb/phb_effect.species.sql
 transformation/grim-hollow/phb_effect.grant-resource.gh-transformations.sql
 effect/phb/phb_effect.class.sql

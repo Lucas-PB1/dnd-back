@@ -33,7 +33,6 @@ efeitos/pool · economy/ações · **apply de ficha** · front · gaps vs regras
 | § | Categoria | Âncora | Fazer |
 |---|-----------|--------|--------|
 | **B** | Classe | `effect/phb/phb_effect.class.sql` · `economy/phb/` · `class/phb/` | Pool/economy ok; apply **ficha** (Rally/`tempHp`, Proteção Arcana, curas tipadas monge/clérigo/druida/bruxo); residual fino; combate → [`combat-real-deferred.md`](combat-real-deferred.md) |
-| **C** | Subclass | packs / economy subclass | table-action; apply **ficha**; combate → lista combate real |
 | **H** | Item | Treasure | Pool ok; charges/dawn/cast **de ficha**; combate de arma → lista combate real |
 
 Payload (perícia, idioma, ferramenta, magia concedida, inspiração): revisar no **§ do concedente**, não como categoria própria.

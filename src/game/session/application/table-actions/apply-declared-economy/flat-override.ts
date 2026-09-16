@@ -20,6 +20,27 @@ type FlatOverrideInput = {
 export function resolveFlatOverride(input: FlatOverrideInput): { flatOverride?: number } {
   const { effect, character, actionSlug, strMod, intMod, castingMod } = input;
   const dexMod = abilityModifier(character.abilityScores?.destreza ?? 10);
+  const conMod = abilityModifier(character.abilityScores?.constituicao ?? 10);
+  const chaMod = abilityModifier(character.abilityScores?.carisma ?? 10);
+
+  if (actionSlug === 'armor-regen' || actionSlug.startsWith('cold-fortress')) {
+    return { flatOverride: conMod };
+  }
+  if (
+    actionSlug === 'wild-recovery' &&
+    effect.numeric?.amountFormula === 'dice_2d6_plus_flat'
+  ) {
+    return { flatOverride: character.level };
+  }
+  if (actionSlug === 'wild-recovery' && !effect.numeric) {
+    return {};
+  }
+  if (
+    actionSlug === 'peaceful-ward' ||
+    actionSlug === 'inspirational-dance'
+  ) {
+    return { flatOverride: chaMod };
+  }
 
   const usesEightPlusModPb =
     effect.numeric?.amountFormula === 'eight_plus_mod_plus_pb';
@@ -40,8 +61,8 @@ export function resolveFlatOverride(input: FlatOverrideInput): { flatOverride?: 
     !usesScheduleDieFormula &&
     !wardIntFlat &&
     !usesEightPlusModPb &&
-    (effect.kind === 'heal' ||
-      effect.kind === 'temp_hp' ||
+    (((effect.kind === 'heal' || effect.kind === 'temp_hp') &&
+      effect.numeric != null) ||
       effect.kind === 'table_roll' ||
       (effect.kind === 'table_note' &&
         effect.numeric?.amountFormula === 'ability_mod') ||

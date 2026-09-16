@@ -25,6 +25,7 @@ const CLERIC_TABLE_ACTION_SLUGS = [
   'adjust-the-skein',
   'pluck-the-threads',
   'intertwined-fate',
+  'spell-shield',
 ] as const;
 
 export class UseClericTableActionDto extends TableActionOptionsDto {
@@ -54,6 +55,9 @@ const BARD_TABLE_ACTION_SLUGS = [
   'set-persona-masks',
   'bragi-rune',
   'battle-sagas',
+  'inspirational-dance',
+  'endless-dance-attack',
+  'endless-dodge',
 ] as const;
 
 export class UseBardTableActionDto extends TableActionOptionsDto {

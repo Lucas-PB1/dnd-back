@@ -140,6 +140,41 @@ describe('applyDeclaredEconomyTableAction', () => {
       tableAction: 'action-surge',
       description: 'Ação adicional.',
     },
+    {
+      id: 'mh-trapper-armor-regen',
+      name: 'Regeneração da Armadura',
+      economy: 'bonus' as const,
+      classSlug: 'monster-hunter',
+      minLevel: 15,
+      subclassSlug: 'trapper-guild',
+      resourceSlug: 'trapper-regen-dice',
+      alwaysSpendsResource: true,
+      tableAction: 'armor-regen',
+      description: 'AB: 1d10 + CON em PV.',
+    },
+    {
+      id: 'mh-devourer-harvest',
+      name: 'Colher Porção',
+      economy: 'action' as const,
+      classSlug: 'monster-hunter',
+      minLevel: 3,
+      subclassSlug: 'devourer-guild',
+      alwaysSpendsResource: false,
+      tableAction: 'harvest-portion',
+      description: 'Ação: colhe porção.',
+    },
+    {
+      id: 'druid-unbroken-wild-recovery',
+      name: 'Recuperação Selvagem',
+      economy: 'bonus' as const,
+      classSlug: 'druid',
+      minLevel: 3,
+      subclassSlug: 'the-unbroken-circle',
+      resourceSlug: 'wildShape',
+      alwaysSpendsResource: true,
+      tableAction: 'wild-recovery',
+      description: 'AB: gasta Forma → cura.',
+    },
   ];
 
   const mechanicalCatalog = {
@@ -481,5 +516,135 @@ describe('applyDeclaredEconomyTableAction', () => {
     );
     expect(result.note).toContain('Surto de Ação');
     expect(result.note).not.toContain('Investida Mística');
+  });
+
+  it('heals from armor-regen (1d10 + CON) and spends regen dice', async () => {
+    const hunter = {
+      id: 'mh-1',
+      classSlug: 'monster-hunter',
+      subclassSlug: 'trapper-guild',
+      level: 15,
+      hitPointsCurrent: 40,
+      hitPointsMax: 80,
+      abilityScores: { constituicao: 16 },
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'heal',
+          trigger: 'on_table_action',
+          actionSlug: 'armor-regen',
+          unlockLevel: 15,
+          ownerKind: 'subclass',
+          ownerSlug: 'trapper-guild',
+          dice: { die: '1d10' },
+          numeric: { amountFormula: 'ability_mod', flat: null },
+          note: {
+            note: 'Regeneração da Armadura: recupere {total} PV ({expression}).',
+          },
+        },
+      ]),
+    };
+    const result = await applyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
+      asDep(hunter),
+      'armor-regen',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'mh-1' }),
+      'trapper-regen-dice',
+      1,
+    );
+    expect(state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.total).toBeGreaterThanOrEqual(4);
+    expect(result.expression).toContain('d10');
+  });
+
+  it('recovers devourer-portion on harvest-portion', async () => {
+    const hunter = {
+      id: 'mh-dev',
+      classSlug: 'monster-hunter',
+      subclassSlug: 'devourer-guild',
+      level: 3,
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'recover_resource',
+          trigger: 'on_table_action',
+          actionSlug: 'harvest-portion',
+          resourceSlug: 'devourer-portion',
+          unlockLevel: 3,
+          ownerKind: 'subclass',
+          ownerSlug: 'devourer-guild',
+          numeric: { amountFormula: 'fixed', flat: 1 },
+          note: { note: 'Colheu 1 porção de monstro.' },
+        },
+      ]),
+    };
+    const result = await applyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
+      asDep(hunter),
+      'harvest-portion',
+    );
+    expect(state.recoverClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'mh-dev' }),
+      'devourer-portion',
+      1,
+    );
+    expect(result.note).toContain('porção');
+  });
+
+  it('heals wild-recovery with 2d6 + druid level', async () => {
+    const druid = {
+      id: 'druid-unbroken',
+      classSlug: 'druid',
+      subclassSlug: 'the-unbroken-circle',
+      level: 8,
+      hitPointsCurrent: 20,
+      hitPointsMax: 50,
+      abilityScores: { sabedoria: 16 },
+    };
+    const effectCatalog = {
+      load: jest.fn().mockResolvedValue([
+        {
+          kind: 'heal',
+          trigger: 'on_table_action',
+          actionSlug: 'wild-recovery',
+          unlockLevel: 3,
+          ownerKind: 'subclass',
+          ownerSlug: 'the-unbroken-circle',
+          numeric: { amountFormula: 'dice_2d6_plus_flat', flat: null },
+          note: {
+            note: 'Recuperação Selvagem: recupere {total} PV ({expression}).',
+          },
+        },
+      ]),
+    };
+    const result = await applyTableAction(
+      {
+        state: asDep(state),
+        mechanicalCatalog: asDep(mechanicalCatalog),
+        effectCatalog: asDep(effectCatalog),
+      },
+      asDep(druid),
+      'wild-recovery',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-unbroken' }),
+      'wildShape',
+      1,
+    );
+    expect(state.applyCurrentHitPoints).toHaveBeenCalled();
+    expect(result.total).toBeGreaterThanOrEqual(10);
+    expect(result.expression).toContain('d6');
   });
 });

@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-16 — §C Subclass: apply de ficha em packs
+
+* **Update** (14:55 UTC): Table-actions de pack que curam/PV temp./recuperam pool/limpam Amedrontado na ficha; Caçador passa a carregar `phb_effect`; Escudo Mágico gasta Canalizar; dano/aliado/forma ficam no combate — refs: [`phb_effect.subclass-pack-mesa.sql`](../../database/seeds/effect/phb/phb_effect.subclass-pack-mesa.sql), [`monster-hunter-actions.handler.ts`](../../src/game/session/application/actions/monster-hunter/monster-hunter-actions.handler.ts), [`flat-override.ts`](../../src/game/session/application/table-actions/apply-declared-economy/flat-override.ts), [`backlog.md`](../plans/backlog.md) — motivo: spend+nota não fecha mesa quando a regra mexe em PV/pool na ficha.
+
 ## 2026-09-16 — §K Companheiro: tracker / summon / command
 
 * **Update** (14:50 UTC): Tracker leve no estado da ficha e GET companions; sync/restore já existiam; command exige fera viva; dismiss remove o actor; Golpe da Fera e combate ficam fora — refs: [`companion-tracker.ts`](../../src/game/companion/domain/companion-tracker.ts), [`character-companions.controller.ts`](../../src/game/actor/controllers/character-companions.controller.ts), [`companion-table-actions.ts`](../../src/game/session/application/actions/shared/companion-table-actions.ts), [`backlog.md`](../plans/backlog.md) — motivo: mesa precisa ver PV da fera e comandar só declare, não o ataque.

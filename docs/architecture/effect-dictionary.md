@@ -77,7 +77,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** cura PV na ficha.
 - **Satélite:** `phb_effect_numeric` (+ note)
 - **Trigger:** `on_resource_spend` / `on_table_action`
-- **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`); `dice_1d10_plus_level` (Recuperar Fôlego); `schedule_die_plus_flat` (Campo Protetor — faces do schedule + flatOverride INT)
+- **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`); `dice_1d10_plus_level` (Recuperar Fôlego); `schedule_die_plus_flat` (Campo Protetor — faces do schedule + flatOverride INT); satélite `phb_effect_dice` + `ability_mod` (Regeneração da Armadura / Fortaleza Gelada — CON via `flatOverride` de ação)
 - **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy
 
 ### `check_boost`

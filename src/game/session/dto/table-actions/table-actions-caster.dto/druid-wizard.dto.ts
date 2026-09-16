@@ -34,6 +34,7 @@ const DRUID_TABLE_ACTION_SLUGS = [
   'wolf-mantle',
   'defend-the-pack',
   'children-of-great-wolf',
+  'wild-recovery',
 ] as const;
 
 export class UseDruidTableActionDto extends TableActionOptionsDto {
