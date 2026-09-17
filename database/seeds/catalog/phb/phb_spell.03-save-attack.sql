@@ -895,3 +895,48 @@ UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = FALSE
 WHERE slug IN ('curar-ferimentos', 'palavra-curativa');
+
+-- PVE-1c: meta save/attack magias Nv 2–3 ofensivas/cura
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = TRUE
+WHERE slug IN (
+  'arma-espiritual',
+  'flecha-acida-de-melf',
+  'lamina-flamejante',
+  'raio-ardente',
+  'toque-vampirico'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'bola-de-fogo',
+  'relampago',
+  'esfera-flamejante',
+  'sopro-de-dragao',
+  'conjurar-barragem',
+  'convocar-relampagos',
+  'fome-de-hadar'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'),
+    requires_attack_roll = FALSE
+WHERE slug IN ('despedacar', 'esquentar-metal', 'raio-lunar');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
+    requires_attack_roll = FALSE
+WHERE slug IN ('espinho-mental', 'guardioes-espirituais');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'nuvem-de-adagas',
+  'oracao-de-cura',
+  'palavra-curativa-em-massa',
+  'aura-de-vitalidade'
+);

@@ -162,6 +162,29 @@ describe('resolveCombatSpell', () => {
     }
   });
 
+  it('auto_damage scales units from spell_level (Cloud of Daggers)', () => {
+    const r = resolveCombatSpell({
+      row: baseRow({
+        spellSlug: 'nuvem-de-adagas',
+        resolution: 'auto_damage',
+        label: 'Nuvem de Adagas',
+        damageDie: 4,
+        autoUnitBase: 4,
+        autoUnitPerSlotAboveBase: 2,
+        spellLevel: 2,
+      }),
+      slotLevel: 3,
+      characterLevel: 5,
+      ...common,
+    });
+    expect(r.kind).toBe('auto_damage');
+    if (r.kind === 'auto_damage') {
+      // 4 + (3-2)*2 = 6 dados d4
+      expect(r.damage).toBe(6 * 4);
+      expect(r.label).toContain('6');
+    }
+  });
+
   it('arena_darkness from catalog', () => {
     const r = resolveCombatSpell({
       row: baseRow({

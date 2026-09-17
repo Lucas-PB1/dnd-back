@@ -66,6 +66,7 @@ catalog/phb/phb_spell.03-save-attack.sql
 spell/phb/phb_spell_combat.pilot.sql
 spell/phb/phb_spell_combat.cantrips.sql
 spell/phb/phb_spell_combat.level-1.sql
+spell/phb/phb_spell_combat.level-2-3.sql
 species/phb/phb_species_trait.choice-kind.sql
 class/phb/phb_class.weapon-mastery-eligibility.sql
 class/phb/phb_class_progression.weapon-mastery.sql

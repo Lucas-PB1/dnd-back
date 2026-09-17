@@ -171,7 +171,8 @@ export function resolveCombatSpell(input: {
   if (row.resolution === 'auto_damage') {
     const base = row.autoUnitBase ?? 1;
     const perSlot = row.autoUnitPerSlotAboveBase ?? 0;
-    const units = base + Math.max(0, input.slotLevel - 1) * perSlot;
+    const units =
+      base + Math.max(0, input.slotLevel - row.spellLevel) * perSlot;
     const damage = withSpellcastingMod(
       row,
       rollDiceTotal(die, units, row.flatPerDie),

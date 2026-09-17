@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-1c magias Nv 2–3
+
+* **Update** (19:40 UTC): Seed `phb_spell_combat.level-2-3.sql` (21 magias: Bola de Fogo, Relâmpago, Despedaçar, Raio Ardente…); `auto_damage` usa `spell_level` na escala; meta save/attack. Condições puras (Paralisar Pessoa) ficam `slot_only` → PVE-3b. — refs: [`phb_spell_combat.level-2-3.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-2-3.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: ofensivas 2º–3º círculo tipadas no skirmish.
+
 ## 2026-09-17 — PVE-1b magias Nv 1
 
 * **Update** (19:15 UTC): Colunas `dice_count_*` / `spell_level` / `include_spellcasting_mod`; seed `phb_spell_combat.level-1.sql` (cura, ataques e saves Nv 1 PHB). — refs: [`phb_spell_combat.level-1.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-1.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: magias de 1º círculo tipadas no skirmish.
