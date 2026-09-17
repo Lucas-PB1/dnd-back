@@ -48,6 +48,9 @@ export class Skirmish {
   })
   arenaEffectSourceCharacterId!: string | null;
 
+  @Column({ name: 'pc_reaction_available', type: 'boolean', default: true })
+  pcReactionAvailable!: boolean;
+
   @Column({ name: 'winner_kind', type: 'text', nullable: true })
   winnerKind!: SkirmishWinnerKind | null;
 

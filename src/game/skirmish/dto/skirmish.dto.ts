@@ -25,6 +25,18 @@ export class CreateSkirmishDto {
   templateSlug!: string;
 }
 
+/** Declaração de reação do PC antes do turno automático da criatura. */
+export class EndSkirmishTurnDto {
+  @ApiPropertyOptional({
+    enum: ['shield', 'uncanny_dodge'],
+    description:
+      'Reação no próximo ataque que acertar você: Escudo Arcano (+5 CA) ou Esquiva Sobrenatural (metade do dano)',
+  })
+  @IsOptional()
+  @IsIn(['shield', 'uncanny_dodge'])
+  defenderReaction?: 'shield' | 'uncanny_dodge';
+}
+
 export class ResolveSkirmishAttackDto {
   @ApiProperty()
   @IsUUID()
@@ -306,6 +318,11 @@ export class SkirmishDetailDto extends SkirmishSummaryDto {
 
   @ApiProperty({ type: [String], default: [] })
   arenaEffects!: string[];
+
+  @ApiProperty({
+    description: 'PC ainda tem reação disponível nesta rodada',
+  })
+  pcReactionAvailable!: boolean;
 
   @ApiProperty({ type: [SkirmishLogEntryDto] })
   combatLog!: SkirmishLogEntryDto[];

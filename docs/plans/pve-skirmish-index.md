@@ -101,6 +101,8 @@ flowchart LR
 
 **PVE-3b fechado (2026-09-17):** `arena_effects` no skirmish + visão como duelo; `apply_condition` (Paralisar Pessoa / Medo); Escuridão altera vantagem.
 
+**PVE-4a fechado (2026-09-17):** `resolveIncomingHit` (Escudo Arcano +5 CA / Esquiva Sobrenatural metade); `pc_reaction_available`; `end-turn` aceita `defenderReaction`.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -113,7 +115,7 @@ flowchart LR
 | PVE-2b | ~~Seeds Nv 7–9 + auditoria~~ **feito** | — | M | PVE-2a |
 | PVE-3a | ~~Quebra de concentração~~ **feito** | — | M | PVE-0 |
 | PVE-3b | ~~Arena escuridão + conditions~~ **feito** | — | M | PVE-3a |
-| PVE-4a | Hook `resolveIncomingHit` + Escudo/Uncanny | [`pve-4a-incoming-hit-defenses.md`](pve-4a-incoming-hit-defenses.md) | M | PVE-0 |
+| PVE-4a | ~~Incoming hit Escudo/Uncanny~~ **feito** | — | M | PVE-0 |
 | PVE-4b | OA sem mapa + endpoint react | [`pve-4b-opportunity-attack.md`](pve-4b-opportunity-attack.md) | S | PVE-4a |
 | PVE-5a | DTO parity + smites | [`pve-5a-attack-flags-smites.md`](pve-5a-attack-flags-smites.md) | M | PVE-0 |
 | PVE-5b | Battle Master no acerto | [`pve-5b-battle-master.md`](pve-5b-battle-master.md) | M | PVE-5a |

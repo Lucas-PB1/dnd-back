@@ -150,6 +150,7 @@ export async function toSkirmishDetail(input: {
     mySpells: input.spells,
     fighter: input.fighter,
     arenaEffects: input.skirmish.arenaEffects ?? [],
+    pcReactionAvailable: input.skirmish.pcReactionAvailable ?? true,
     combatLog: input.skirmish.combatLog,
   };
 }

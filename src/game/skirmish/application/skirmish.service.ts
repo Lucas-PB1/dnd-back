@@ -72,6 +72,7 @@ import {
 import {
   CastSkirmishSpellDto,
   CreateSkirmishDto,
+  EndSkirmishTurnDto,
   PatchSkirmishConditionDto,
   ResolveSkirmishAttackDto,
   SkirmishAttackResultDto,
@@ -84,6 +85,12 @@ import {
   toSkirmishDetail,
   toSkirmishSummary,
 } from './to-dto';
+import {
+  canUseUncannyDodge,
+  resolveIncomingHit,
+  SHIELD_SPELL_SLUG,
+  type IncomingHitDefenseKind,
+} from '@game/combat/domain/resolve-incoming-hit';
 
 @Injectable()
 export class SkirmishService {
@@ -175,6 +182,7 @@ export class SkirmishService {
       currentCombatantId: null,
       arenaEffects: [],
       arenaEffectSourceCharacterId: null,
+      pcReactionAvailable: true,
       combatLog: [
         {
           at: new Date().toISOString(),
@@ -279,14 +287,22 @@ export class SkirmishService {
     };
   }
 
-  async endTurn(userId: string, id: string): Promise<SkirmishDetailDto> {
+  async endTurn(
+    userId: string,
+    id: string,
+    dto: EndSkirmishTurnDto = {},
+  ): Promise<SkirmishDetailDto> {
     const skirmish = await this.requireOwned(userId, id);
     this.assertActive(skirmish);
     const current = await this.currentCombatant(skirmish);
     if (current.kind === 'pc') {
       await this.advanceTurn(skirmish);
     }
-    await this.resolvePendingActorTurns(userId, skirmish);
+    await this.resolvePendingActorTurns(
+      userId,
+      skirmish,
+      dto.defenderReaction ?? null,
+    );
     await this.syncPcAttackBudget(skirmish);
     return this.detailOf(skirmish);
   }
@@ -568,13 +584,21 @@ export class SkirmishService {
   private async resolvePendingActorTurns(
     userId: string,
     skirmish: Skirmish,
+    defenderReaction: IncomingHitDefenseKind | null = null,
   ): Promise<void> {
+    let defenseForNextHit = defenderReaction;
     await runAutomaticActorTurns({
       isFinished: () => skirmish.status !== 'active',
       currentKind: async () => (await this.currentCombatant(skirmish)).kind,
       resolveActorTurn: async () => {
         const current = await this.currentCombatant(skirmish);
-        await this.resolveActorTurn(userId, skirmish, current);
+        await this.resolveActorTurn(
+          userId,
+          skirmish,
+          current,
+          defenseForNextHit,
+        );
+        defenseForNextHit = null;
       },
       advanceTurn: () => this.advanceTurn(skirmish),
     });
@@ -584,6 +608,7 @@ export class SkirmishService {
     userId: string,
     skirmish: Skirmish,
     attacker: SkirmishCombatant,
+    defenderReaction: IncomingHitDefenseKind | null,
   ): Promise<void> {
     const combatants = await this.repo.listCombatants(skirmish.id);
     const target = combatants.find((row) => row.kind === 'pc');
@@ -603,6 +628,7 @@ export class SkirmishService {
       attacker,
       target,
       {},
+      defenderReaction,
     );
     await this.appendLog(
       skirmish,
@@ -617,6 +643,7 @@ export class SkirmishService {
     attacker: SkirmishCombatant,
     target: SkirmishCombatant,
     dto: ResolveSkirmishAttackDto | Record<string, never>,
+    defenderReaction: IncomingHitDefenseKind | null = null,
   ): Promise<CombatAttackRoll & { targetAc: number }> {
     const targetAc = await resolveCombatantArmorClass({
       loadPc: (characterId) =>
@@ -642,7 +669,7 @@ export class SkirmishService {
           ? dto.advantage
           : visionAdvantage,
     };
-    const rolled =
+    let rolled =
       attacker.kind === 'pc' && attacker.characterId
         ? await rollPcCombatAttack({
             rolls: this.rolls,
@@ -658,7 +685,49 @@ export class SkirmishService {
             dto: attackDto,
             targetAc,
           });
-    if (rolled.damageTotal != null && rolled.damageTotal > 0) {
+
+    let effectiveAc = targetAc;
+    if (target.kind === 'pc' && target.characterId && defenderReaction) {
+      const character = await this.characters.findOwnedOrFail(
+        userId,
+        target.characterId,
+      );
+      const incoming = resolveIncomingHit({
+        attackTotal: rolled.attackTotal,
+        naturalD20: rolled.naturalD20,
+        targetAc,
+        provisionalHit: rolled.hit,
+        provisionalCritical: rolled.critical,
+        damageTotal: rolled.damageTotal,
+        reactionAvailable: skirmish.pcReactionAvailable ?? true,
+        defense: defenderReaction,
+        uncannyEligible: canUseUncannyDodge({
+          classSlug: character.classSlug,
+          level: character.level,
+        }),
+      });
+      if (incoming.spendShieldSlot) {
+        await this.characterState.castSpell(character, {
+          spellSlug: SHIELD_SPELL_SLUG,
+          slotLevel: 1,
+        });
+      }
+      if (incoming.reactionSpent) {
+        skirmish.pcReactionAvailable = false;
+        await this.repo.saveSkirmish(skirmish);
+      }
+      effectiveAc = incoming.effectiveAc;
+      const noteParts = [rolled.note, ...incoming.notes].filter(Boolean);
+      rolled = {
+        ...rolled,
+        hit: incoming.hit,
+        critical: incoming.critical,
+        damageTotal: incoming.damageTotal,
+        note: noteParts.join(' · ') || null,
+      };
+    }
+
+    if (rolled.damageTotal != null && rolled.damageTotal > 0 && rolled.hit) {
       const applied = await applyCombatantHpDamage({
         loadCharacter: (characterId) =>
           this.characters
@@ -680,7 +749,7 @@ export class SkirmishService {
         await this.appendLog(skirmish, concNote);
       }
     }
-    return { ...rolled, targetAc };
+    return { ...rolled, targetAc: effectiveAc };
   }
 
   private async resolveVisionAdvantage(
@@ -747,6 +816,9 @@ export class SkirmishService {
       skirmish.round += 1;
     }
     skirmish.currentCombatantId = active[nextIndex].id;
+    if (active[nextIndex].kind === 'pc') {
+      skirmish.pcReactionAvailable = true;
+    }
     await this.repo.saveSkirmish(skirmish);
   }
 
@@ -783,17 +855,27 @@ export class SkirmishService {
     targetName: string,
     rolled: CombatAttackRoll & { targetAc: number },
   ): string {
-    return formatSkirmishAttackLogLine(attackerName, targetName, {
+    const base = formatSkirmishAttackLogLine(attackerName, targetName, {
       critical: rolled.critical,
       hit: rolled.hit,
       attackExpression: rolled.attackExpression,
       attackRolls: rolled.attackRolls,
       attackTotal: rolled.attackTotal,
       targetAc: rolled.targetAc,
-      damageTotal: rolled.damageTotal,
-      damageExpression: rolled.damageExpression,
-      damageRolls: rolled.damageRolls,
+      damageTotal: rolled.hit ? rolled.damageTotal : null,
+      damageExpression: rolled.hit ? rolled.damageExpression : null,
+      damageRolls: rolled.hit ? rolled.damageRolls : [],
     });
+    if (!rolled.note) return base;
+    const defenseBits = rolled.note
+      .split(' · ')
+      .filter(
+        (part) =>
+          /Escudo Arcano|Esquiva Sobrenatural|Reação indisponível/i.test(part),
+      );
+    return defenseBits.length > 0
+      ? `${base} · ${defenseBits.join(' · ')}`
+      : base;
   }
 
   private assertActive(skirmish: Skirmish): void {

@@ -17,6 +17,7 @@ export type CombatAttackRoll = {
   attackTotal: number;
   attackExpression: string;
   attackRolls: number[];
+  naturalD20: number;
   damageTotal: number | null;
   damageExpression: string | null;
   damageRolls: number[];
@@ -141,6 +142,7 @@ export async function rollPcCombatAttack(input: {
         attackTotal: attack.total,
         attackExpression: attack.expression,
         attackRolls: attack.rolls,
+        naturalD20: natural,
         damageTotal: graze.total,
         damageExpression: graze.expression,
         damageRolls: graze.rolls ?? [],
@@ -153,6 +155,7 @@ export async function rollPcCombatAttack(input: {
       attackTotal: attack.total,
       attackExpression: attack.expression,
       attackRolls: attack.rolls,
+      naturalD20: natural,
       damageTotal: null,
       damageExpression: null,
       damageRolls: [],
@@ -192,6 +195,7 @@ export async function rollPcCombatAttack(input: {
     attackTotal: attack.total,
     attackExpression: attack.expression,
     attackRolls: attack.rolls,
+    naturalD20: natural,
     damageTotal: damage.total,
     damageExpression: damage.expression,
     damageRolls: damage.rolls ?? [],
@@ -229,6 +233,7 @@ export async function rollActorCombatAttack(input: {
       attackTotal: roll.total,
       attackExpression: roll.expression,
       attackRolls: roll.d20.rolls,
+      naturalD20: natural,
       damageTotal: null,
       damageExpression: null,
       damageRolls: [],
@@ -246,6 +251,7 @@ export async function rollActorCombatAttack(input: {
     attackTotal: roll.total,
     attackExpression: roll.expression,
     attackRolls: roll.d20.rolls,
+    naturalD20: natural,
     damageTotal: damage?.total ?? 0,
     damageExpression: damage?.expression ?? null,
     damageRolls: damage?.dice.flatMap((die) => die.kept) ?? [],

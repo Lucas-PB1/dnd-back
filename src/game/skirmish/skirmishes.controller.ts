@@ -27,6 +27,7 @@ import {
   AppendSkirmishLogDto,
   CastSkirmishSpellDto,
   CreateSkirmishDto,
+  EndSkirmishTurnDto,
   PatchSkirmishConditionDto,
   ResolveSkirmishAttackDto,
   SkirmishAttackResultDto,
@@ -84,14 +85,16 @@ export class SkirmishesController {
   @Post(':id/end-turn')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
-    summary: 'End the PC turn; resolves the creature turn automatically',
+    summary:
+      'End the PC turn; resolves the creature turn (optional defender reaction)',
   })
   @ApiOkResponse({ type: SkirmishDetailDto })
   endTurn(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: EndSkirmishTurnDto,
   ): Promise<SkirmishDetailDto> {
-    return this.skirmishes.endTurn(user.id, id);
+    return this.skirmishes.endTurn(user.id, id, dto ?? {});
   }
 
   @Post(':id/finish')

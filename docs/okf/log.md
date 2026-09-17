@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-4a incoming hit (Escudo / Uncanny)
+
+* **Update** (21:20 UTC): `resolveIncomingHit` (+5 CA Escudo Arcano / metade Esquiva Sobrenatural); `pc_reaction_available` no skirmish; `POST end-turn` com `defenderReaction`; specs. — refs: [`resolve-incoming-hit.ts`](../../src/game/combat/domain/resolve-incoming-hit.ts), [`skirmish.service.ts`](../../src/game/skirmish/application/skirmish.service.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: reações de defesa tipadas no skirmish com CA/HP corretos.
+
 ## 2026-09-17 — PVE-3b arena + conditions
 
 * **Update** (21:00 UTC): `arena_effects` no skirmish (paridade duelo); Escuridão altera visão/vantagem; `apply_condition` + seeds Paralisar Pessoa / Medo; specs. — refs: [`0166_skirmish.sql`](../../database/schema/020_tables/0166_skirmish.sql), [`phb_spell_combat.conditions.sql`](../../database/seeds/spell/phb/phb_spell_combat.conditions.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: escuridão e condições tipadas no skirmish sem hardcode.
