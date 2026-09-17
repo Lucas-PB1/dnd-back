@@ -92,6 +92,7 @@ import {
   SHIELD_SPELL_SLUG,
   type IncomingHitDefenseKind,
 } from '@game/combat/domain/resolve-incoming-hit';
+import { pickCombatAttackCommand } from '@game/combat/application/pick-combat-attack-command';
 import {
   OPPORTUNITY_ATTACK_REACTION_SLUG,
   resolveOpportunityAttackGate,
@@ -747,13 +748,13 @@ export class SkirmishService {
       attacker.characterId,
       target.characterId,
     );
-    const attackDto = {
+    const attackCmd = pickCombatAttackCommand({
       ...dto,
       advantage:
         'advantage' in dto && dto.advantage != null && dto.advantage !== 'normal'
           ? dto.advantage
           : visionAdvantage,
-    };
+    });
     let rolled =
       attacker.kind === 'pc' && attacker.characterId
         ? await rollPcCombatAttack({
@@ -761,13 +762,13 @@ export class SkirmishService {
             inventoryItems: this.inventoryItems,
             userId,
             characterId: attacker.characterId,
-            dto: attackDto,
+            dto: attackCmd,
             targetAc,
           })
         : await rollActorCombatAttack({
             actorActions: this.actorActions,
             actorId: attacker.actorId!,
-            dto: attackDto,
+            dto: attackCmd,
             targetAc,
           });
 

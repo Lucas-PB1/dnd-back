@@ -44,6 +44,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`architecture/effect-dictionary.md`](architecture/effect-dictionary.md) | Dicionário vivo de `effect_kind` |
 | [`architecture/effect-engine-read-path.md`](architecture/effect-engine-read-path.md) | DX — seed → load → query → DTO (+ exemplos) |
 | [`architecture/spell-combat.md`](architecture/spell-combat.md) | Magia tipada em combate (`phb_spell_combat`) |
+| [`architecture/combat-attack-flags.md`](architecture/combat-attack-flags.md) | Flags de ataque skirmish/encontro ↔ `CombatAttackCommand` |
 | [`architecture/spell-combat-audit.md`](architecture/spell-combat-audit.md) | Auditoria PHB tipada vs utilitária / deferida |
 
 Contrato REST: Swagger em `/api`.

@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-5a DTO parity + smites
+
+* **Update** (21:35 UTC): `CombatAttackFlagsDto` + `pickCombatAttackCommand`; skirmish/encontro estendem o DTO; Destruição Divina já gasta slot no roll. Doc [`combat-attack-flags.md`](../architecture/combat-attack-flags.md). — refs: [`combat-attack-flags.dto.ts`](../../src/game/combat/dto/combat-attack-flags.dto.ts), [`pick-combat-attack-command.ts`](../../src/game/combat/application/pick-combat-attack-command.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: front declara as mesmas flags do motor sem drift.
+
 ## 2026-09-17 — PVE-4b opportunity attack
 
 * **Update** (21:25 UTC): Gate OA sem mapa; `pc_oa_available`; `POST /skirmishes/:id/react` (`opportunity_attack`); end-turn pausa no turno da criatura. Specs + Swagger. — refs: [`resolve-opportunity-attack-gate.ts`](../../src/game/skirmish/domain/resolve-opportunity-attack-gate.ts), [`skirmishes.controller.ts`](../../src/game/skirmish/skirmishes.controller.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: reação tipada de OA no skirmish sem grade.

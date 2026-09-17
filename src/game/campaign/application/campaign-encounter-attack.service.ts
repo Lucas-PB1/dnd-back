@@ -11,6 +11,7 @@ import {
   rollActorCombatAttack,
   rollPcCombatAttack,
 } from '@game/combat/application/roll-combat-attack';
+import { pickCombatAttackCommand } from '@game/combat/application/pick-combat-attack-command';
 import { resolveCombatantArmorClass } from '@game/combat/application/resolve-combatant-armor-class';
 import { CampaignRepository } from '../infrastructure/campaign.repository';
 import { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
@@ -78,6 +79,7 @@ export class CampaignEncounterAttackService {
     });
 
     const targetAc = await this.resolveTargetArmorClass(target);
+    const attackCmd = pickCombatAttackCommand(dto);
     const rolled =
       attacker.kind === 'pc' && attacker.characterId
         ? await rollPcCombatAttack({
@@ -85,10 +87,10 @@ export class CampaignEncounterAttackService {
             inventoryItems: this.inventoryItems,
             userId,
             characterId: attacker.characterId,
-            dto,
+            dto: attackCmd,
             targetAc,
           })
-        : await this.rollActorAttack(attacker, dto, targetAc);
+        : await this.rollActorAttack(attacker, attackCmd, targetAc);
 
     if (rolled.hit && rolled.damageTotal != null && rolled.damageTotal > 0) {
       await applyEncounterAttackDamage({
@@ -146,7 +148,7 @@ export class CampaignEncounterAttackService {
 
   private async rollActorAttack(
     attacker: CampaignEncounterCombatant,
-    dto: ResolveEncounterAttackDto,
+    dto: ReturnType<typeof pickCombatAttackCommand>,
     targetAc: number,
   ) {
     if (!attacker.actorId) {

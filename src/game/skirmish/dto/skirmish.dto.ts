@@ -1,7 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray,
-  IsBoolean,
   IsIn,
   IsInt,
   IsOptional,
@@ -12,6 +10,7 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
+import { CombatAttackFlagsDto } from '@game/combat/dto/combat-attack-flags.dto';
 
 export class CreateSkirmishDto {
   @ApiProperty()
@@ -61,7 +60,7 @@ export class SkirmishReactDto {
   mode?: 'melee' | 'ranged';
 }
 
-export class ResolveSkirmishAttackDto {
+export class ResolveSkirmishAttackDto extends CombatAttackFlagsDto {
   @ApiProperty()
   @IsUUID()
   attackerCombatantId!: string;
@@ -69,96 +68,6 @@ export class ResolveSkirmishAttackDto {
   @ApiProperty()
   @IsUUID()
   targetCombatantId!: string;
-
-  @ApiPropertyOptional({ enum: ['normal', 'advantage', 'disadvantage'] })
-  @IsOptional()
-  @IsIn(['normal', 'advantage', 'disadvantage'])
-  advantage?: 'normal' | 'advantage' | 'disadvantage';
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(120)
-  itemSlug?: string;
-
-  @ApiPropertyOptional({ enum: ['melee', 'ranged'] })
-  @IsOptional()
-  @IsIn(['melee', 'ranged'])
-  mode?: 'melee' | 'ranged';
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  spentInspiration?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  sneakAttack?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  divineSmite?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  smiteSlotLevel?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  smiteVsUndeadOrFiend?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  huntersMark?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  colossusSlayer?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  divineStrike?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  graze?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  steadyAim?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  strokeOfLuck?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  assassinate?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  brutalStrike?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  cunningStrikeEffects?: string[];
 }
 
 export class CastSkirmishSpellDto {
