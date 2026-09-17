@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-2a magias Nv 4–6
+
+* **Update** (19:50 UTC): Seed `phb_spell_combat.level-4-6.sql` (23 ofensivas/cura: Cone de Frio, Coluna de Chamas, Círculo da Morte, Corrente de Relâmpagos…); meta save/attack. Summons e smites-addon ficam fora. — refs: [`phb_spell_combat.level-4-6.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-4-6.sql), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: magias médias tipadas no skirmish.
+
 ## 2026-09-17 — PVE-1c magias Nv 2–3
 
 * **Update** (19:40 UTC): Seed `phb_spell_combat.level-2-3.sql` (21 magias: Bola de Fogo, Relâmpago, Despedaçar, Raio Ardente…); `auto_damage` usa `spell_level` na escala; meta save/attack. Condições puras (Paralisar Pessoa) ficam `slot_only` → PVE-3b. — refs: [`phb_spell_combat.level-2-3.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-2-3.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: ofensivas 2º–3º círculo tipadas no skirmish.

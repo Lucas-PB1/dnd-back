@@ -93,6 +93,8 @@ flowchart LR
 
 **PVE-1c fechado (2026-09-17):** seed `level-2-3.sql` (Fireball, Lightning, Shatter, Scorching Ray…); `auto_damage` escala por `spell_level`; meta save/attack Nv 2–3.
 
+**PVE-2a fechado (2026-09-17):** seed `level-4-6.sql` (23 magias: Cone de Frio, Coluna de Chamas, Círculo da Morte…); summons ficam slot_only → PVE-7.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -101,7 +103,7 @@ flowchart LR
 | PVE-1a | ~~Seeds cantrips combate~~ **feito** | — | M | PVE-0 |
 | PVE-1b | ~~Seeds magias Nv 1~~ **feito** | — | M | PVE-1a |
 | PVE-1c | ~~Seeds magias Nv 2–3~~ **feito** | — | M | PVE-1b |
-| PVE-2a | Seeds magias Nv 4–6 | [`pve-2a-spell-level-4-6.md`](pve-2a-spell-level-4-6.md) | M | PVE-1c |
+| PVE-2a | ~~Seeds magias Nv 4–6~~ **feito** | — | M | PVE-1c |
 | PVE-2b | Seeds magias Nv 7–9 + auditoria | [`pve-2b-spell-level-7-9.md`](pve-2b-spell-level-7-9.md) | M | PVE-2a |
 | PVE-3a | Quebra de concentração | [`pve-3a-concentration-break.md`](pve-3a-concentration-break.md) | M | PVE-0 |
 | PVE-3b | Arena escuridão + conditions no alvo | [`pve-3b-arena-conditions.md`](pve-3b-arena-conditions.md) | M | PVE-3a |

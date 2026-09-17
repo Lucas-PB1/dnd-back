@@ -940,3 +940,58 @@ WHERE slug IN (
   'palavra-curativa-em-massa',
   'aura-de-vitalidade'
 );
+
+-- PVE-2a: meta save/attack magias Nv 4–6 ofensivas/cura
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = TRUE
+WHERE slug IN ('vinha-agarradora', 'golpe-de-arco');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'esfera-vitriolica',
+  'muralha-de-fogo',
+  'tempestade-glacial',
+  'coluna-de-chamas',
+  'conjurar-saraivada',
+  'barreira-de-laminas',
+  'corrente-de-relampagos',
+  'muralha-de-espinhos',
+  'muralha-de-gelo'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'malogro',
+  'cone-de-frio',
+  'nevoa-mortal',
+  'onda-destrutiva',
+  'praga-de-insetos',
+  'circulo-da-morte',
+  'esfera-congelante-de-otiluke',
+  'raio-solar'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
+    requires_attack_roll = FALSE
+WHERE slug = 'assassino-fantasmagorico';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'),
+    requires_attack_roll = FALSE
+WHERE slug = 'estatica-sinaptica';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'),
+    requires_attack_roll = FALSE
+WHERE slug = 'tentaculos-negros-de-evard';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug = 'curar-ferimentos-em-massa';
