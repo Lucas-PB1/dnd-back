@@ -119,6 +119,29 @@ export class DuelCastSpellDto {
   @IsOptional()
   @IsString()
   metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'varinhaMisseisCharges',
+    description: 'Cast via carga de item ativo',
+  })
+  @IsOptional()
+  @IsString()
+  itemCastResourceSlug?: string;
+
+  @ApiPropertyOptional({ example: 2, minimum: 1, maximum: 20 })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  itemCastSpendAmount?: number;
+
+  @ApiPropertyOptional({
+    example: 'anel-de-invisibilidade',
+    description: 'Cast gratuito de item ativo (sem pool)',
+  })
+  @IsOptional()
+  @IsString()
+  itemCastItemSlug?: string;
 }
 
 export class DuelConditionDto {

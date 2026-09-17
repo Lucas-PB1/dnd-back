@@ -113,6 +113,8 @@ flowchart LR
 
 **PVE-6a fechado (2026-09-17):** Metamagia tipada `heightened-spell` / `seeking-spell` no cast skirmish/duelo; Eldritch Smite no dano de arma. Doc [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md).
 
+**PVE-6b fechado (2026-09-17):** Cast com carga de item no skirmish/duelo (`itemCastResourceSlug` + overrides CD/ataque). Piloto: Varinha de Mísseis. Doc [`item-charge-combat.md`](../architecture/item-charge-combat.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -131,7 +133,7 @@ flowchart LR
 | PVE-5b | ~~Battle Master no acerto~~ **feito** | — | M | PVE-5a |
 | PVE-5c | ~~Estilos GWF/TWF/Charger~~ **feito** (PAM→10a) | — | M | PVE-5a |
 | PVE-6a | ~~Metamagia + Eldritch Smite~~ **feito** | — | M | PVE-1c |
-| PVE-6b | Itens charges combate | [`pve-6b-item-charges-combat.md`](pve-6b-item-charges-combat.md) | M | PVE-0 |
+| PVE-6b | ~~Itens charges combate~~ **feito** | — | M | PVE-0 |
 | PVE-6c | Resist/vuln/imune no HP | [`pve-6c-damage-resistances.md`](pve-6c-damage-resistances.md) | M | PVE-0 |
 | PVE-7a | Spirits/companion na iniciativa | [`pve-7a-spirits-initiative.md`](pve-7a-spirits-initiative.md) | M | PVE-3a |
 | PVE-7b | Arma Espiritual + Conjure 1-actor | [`pve-7b-spiritual-conjure.md`](pve-7b-spiritual-conjure.md) | M | PVE-7a |

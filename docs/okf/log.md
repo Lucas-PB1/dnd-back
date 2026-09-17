@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-6b itens charges combate
+
+* **Update** (22:20 UTC): `itemCastResourceSlug` / `itemCastSpendAmount` / `itemCastItemSlug` no cast skirmish/duelo; overrides CD/ataque do Treasure no resolve. Piloto Varinha de Mísseis → `auto_damage`. — refs: [`pick-combat-surface-cast-command.ts`](../../src/game/combat/application/pick-combat-surface-cast-command.ts), [`spell-combat-bonuses-from-cast.ts`](../../src/game/combat/application/spell-combat-bonuses-from-cast.ts), [`item-charge-combat.md`](../architecture/item-charge-combat.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: charges de item disparam o mesmo motor tipado de magia no combatente.
+
 ## 2026-09-17 — PVE-6a Metamagia + Eldritch Smite
 
 * **Update** (22:10 UTC): `heightened-spell` / `seeking-spell` no `resolveCombatSpell` + gasto SP no cast skirmish/duelo; `eldritchSmite` no pipeline de dano (Nv8/círculo, invocação). Doc [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md). — refs: [`spend-combat-metamagic.ts`](../../src/game/combat/application/spend-combat-metamagic.ts), [`apply-warlock.ts`](../../src/game/dice/application/rolls/damage/apply-warlock.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: metamagia e smite de bruxo tipados no combate, não só nota de mesa.

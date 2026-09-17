@@ -7,8 +7,10 @@ import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-deri
 import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
+import { pickCombatSurfaceCastCommand } from '@game/combat/application/pick-combat-surface-cast-command';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
 import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
+import { spellCombatBonusesFromCast } from '@game/combat/application/spell-combat-bonuses-from-cast';
 import {
   abilityModifierFromSlug,
   spellSaveDcFromMods,
@@ -103,7 +105,14 @@ export async function castSpell(
   deps: SpellsDeps,
   userId: string,
   duelId: string,
-  input: { spellSlug: string; slotLevel?: number; metamagicSlug?: string },
+  input: {
+    spellSlug: string;
+    slotLevel?: number;
+    metamagicSlug?: string;
+    itemCastResourceSlug?: string;
+    itemCastSpendAmount?: number;
+    itemCastItemSlug?: string;
+  },
 ): Promise<{ duel: Duel; members: DuelMember[] }> {
   const { duel, members } = await deps.repo.getForMember(userId, duelId);
   deps.repo.assertStatus(duel, ['active']);
@@ -130,10 +139,10 @@ export async function castSpell(
     userId,
     caster.characterId,
   );
-  const cast = await deps.state.castSpell(casterPc, {
-    spellSlug: input.spellSlug,
-    slotLevel: input.slotLevel,
-  });
+  const cast = await deps.state.castSpell(
+    casterPc,
+    pickCombatSurfaceCastCommand(input),
+  );
 
   let metamagicNote: string | null = null;
   if (input.metamagicSlug?.trim()) {
@@ -178,12 +187,18 @@ export async function castSpell(
     defenderMods,
     combatRow?.saveAbilitySlug,
   );
+  const bonuses = spellCombatBonusesFromCast({
+    spellAttackBonus: casterStats.attackBonus,
+    spellSaveDc: casterStats.saveDc,
+    spellSaveDcOverride: cast.spellSaveDcOverride,
+    spellAttackBonusOverride: cast.spellAttackBonusOverride,
+  });
   const resolution = resolveCombatSpell({
     row: combatRow,
     slotLevel: cast.slotLevelUsed ?? input.slotLevel ?? 0,
     characterLevel: casterPc.level,
-    spellAttackBonus: casterStats.attackBonus,
-    spellSaveDc: casterStats.saveDc,
+    spellAttackBonus: bonuses.spellAttackBonus,
+    spellSaveDc: bonuses.spellSaveDc,
     spellcastingAbilityMod: casterStats.abilityMod,
     targetAc: armorMap.get(defenderPc.id) ?? 10,
     targetSaveBonus,

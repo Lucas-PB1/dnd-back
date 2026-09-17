@@ -30,7 +30,9 @@ import {
 import { pickActorAttackAction } from '@game/combat/application/combat-attack-weapons';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
+import { pickCombatSurfaceCastCommand } from '@game/combat/application/pick-combat-surface-cast-command';
 import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
+import { spellCombatBonusesFromCast } from '@game/combat/application/spell-combat-bonuses-from-cast';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
 import {
   abilityModifierFromSlug,
@@ -430,10 +432,10 @@ export class SkirmishService {
     if (!actor || !actorRow) {
       throw new BadRequestException('Creature missing');
     }
-    const cast = await this.characterState.castSpell(character, {
-      spellSlug: dto.spellSlug,
-      slotLevel: dto.slotLevel,
-    });
+    const cast = await this.characterState.castSpell(
+      character,
+      pickCombatSurfaceCastCommand(dto),
+    );
     let metamagicNote: string | null = null;
     if (dto.metamagicSlug?.trim()) {
       const spent = await spendCombatMetamagic({
@@ -460,8 +462,12 @@ export class SkirmishService {
     );
     const mods = computeAbilityModifiers(character.abilityScores);
     const castingMod = abilityModifierFromSlug(mods, abilitySlug);
-    const spellAttackBonus = pb + castingMod;
-    const spellSaveDc = spellSaveDcFromMods(pb, castingMod);
+    const bonuses = spellCombatBonusesFromCast({
+      spellAttackBonus: pb + castingMod,
+      spellSaveDc: spellSaveDcFromMods(pb, castingMod),
+      spellSaveDcOverride: cast.spellSaveDcOverride,
+      spellAttackBonusOverride: cast.spellAttackBonusOverride,
+    });
     const targetAc = actor.armorClass ?? 10;
     const actorMods = computeAbilityModifiers(actor.abilityScores);
     const combatRow = await this.spellCombat.bySlug(dto.spellSlug);
@@ -478,8 +484,8 @@ export class SkirmishService {
       row: combatRow,
       slotLevel: cast.slotLevelUsed ?? dto.slotLevel ?? 0,
       characterLevel: character.level,
-      spellAttackBonus,
-      spellSaveDc,
+      spellAttackBonus: bonuses.spellAttackBonus,
+      spellSaveDc: bonuses.spellSaveDc,
       spellcastingAbilityMod: castingMod,
       targetAc,
       targetSaveBonus,

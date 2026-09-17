@@ -104,6 +104,38 @@ export class CastSkirmishSpellDto {
   @MinLength(1)
   @MaxLength(120)
   metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'varinhaMisseisCharges',
+    description:
+      'Cast via carga de item ativo (ex. Varinha de Mísseis Mágicos); gasta o resource do item',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemCastResourceSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Cargas gastas no cast de item (padrão 1 no motor de ficha)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  itemCastSpendAmount?: number;
+
+  @ApiPropertyOptional({
+    example: 'anel-de-invisibilidade',
+    description:
+      'Cast gratuito de item ativo (sem pool de cargas; economy com spell_slug)',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemCastItemSlug?: string;
 }
 
 export class PatchSkirmishConditionDto {

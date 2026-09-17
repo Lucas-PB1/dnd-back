@@ -47,6 +47,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`architecture/combat-attack-flags.md`](architecture/combat-attack-flags.md) | Flags de ataque skirmish/encontro ↔ `CombatAttackCommand` |
 | [`architecture/fighting-style-combat.md`](architecture/fighting-style-combat.md) | GWF / TWF / Charger no path de dano |
 | [`architecture/metamagic-eldritch-combat.md`](architecture/metamagic-eldritch-combat.md) | Metamagia tipada + Eldritch Smite |
+| [`architecture/item-charge-combat.md`](architecture/item-charge-combat.md) | Cast com carga de item no skirmish |
 | [`architecture/spell-combat-audit.md`](architecture/spell-combat-audit.md) | Auditoria PHB tipada vs utilitária / deferida |
 
 Contrato REST: Swagger em `/api`.
