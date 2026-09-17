@@ -5,7 +5,8 @@ Tabela tipada para resolução de magias em skirmish / duelo / encontro (sem har
 | Camada | Onde |
 |--------|------|
 | Schema | `database/schema/020_tables/0167_phb_spell_combat.sql` |
-| Seeds | `pilot` · `cantrips` · `level-1` · `level-2-3` · `level-4-6` |
+| Seeds | `pilot` · `cantrips` · `level-1` · `level-2-3` · `level-4-6` · `level-7-9` · `gaps-backfill` |
+| Auditoria | [`spell-combat-audit.md`](spell-combat-audit.md) |
 | Domain | `src/game/combat/domain/resolve-combat-spell.ts` |
 | Load | `LoadSpellCombat` (`src/game/combat/application/load-spell-combat.ts`) |
 

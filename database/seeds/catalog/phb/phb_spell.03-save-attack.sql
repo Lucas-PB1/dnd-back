@@ -995,3 +995,62 @@ UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = FALSE
 WHERE slug = 'curar-ferimentos-em-massa';
+
+-- PVE-2b: meta Nv 7–9 + gaps backfill
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = TRUE
+WHERE slug IN ('faca-de-gelo', 'mao-de-bigby');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'tempestade-de-fogo',
+  'rajada-prismatica',
+  'nuvem-incendiaria',
+  'terremoto',
+  'chuva-de-meteoros',
+  'cordao-de-flechas'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'explosao-solar',
+  'contagio',
+  'tempestade-radiante-de-jallarzi',
+  'tempestade-da-vinganca',
+  'muralha-prismatica'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'simbolo',
+  'encarnacao-fantasmagorica',
+  'presenca-regia-de-yolande'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'),
+    requires_attack_roll = FALSE
+WHERE slug IN ('suplicio', 'forca-espectral');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'),
+    requires_attack_roll = FALSE
+WHERE slug IN ('tsunami', 'muralha-de-vento', 'controlar-agua');
+
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug IN (
+  'regeneracao',
+  'conjurar-celestial',
+  'palavra-de-poder-matar',
+  'crescer-espinhos',
+  'proibicao'
+);

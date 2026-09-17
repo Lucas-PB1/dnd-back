@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-2b Nv 7–9 + auditoria
+
+* **Update** (20:05 UTC): Seeds `level-7-9.sql` + `gaps-backfill.sql` → 102 rows combate; auditoria PHB: ~139 com dados, ~40 residual (smite/summon/condição/exploração). — refs: [`phb_spell_combat.level-7-9.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-7-9.sql), [`spell-combat-audit.md`](../architecture/spell-combat-audit.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: fechar ofensivas de cast direto no skirmish e responder o gap residual.
+
 ## 2026-09-17 — PVE-2a magias Nv 4–6
 
 * **Update** (19:50 UTC): Seed `phb_spell_combat.level-4-6.sql` (23 ofensivas/cura: Cone de Frio, Coluna de Chamas, Círculo da Morte, Corrente de Relâmpagos…); meta save/attack. Summons e smites-addon ficam fora. — refs: [`phb_spell_combat.level-4-6.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-4-6.sql), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: magias médias tipadas no skirmish.
