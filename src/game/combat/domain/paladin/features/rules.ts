@@ -51,6 +51,17 @@ export function auraOfProtectionBonus(charismaModifier: number): number {
   return Math.max(1, charismaModifier);
 }
 
+export function sacredWeaponAttackBonus(input: {
+  sacredWeaponActive?: boolean;
+  mode: 'melee' | 'ranged';
+  charismaModifier: number;
+}): number {
+  if (!input.sacredWeaponActive || input.mode !== 'melee') {
+    return 0;
+  }
+  return Math.max(1, input.charismaModifier);
+}
+
 export function paladinSavingThrowAuraBonus(input: {
   classSlug?: string | null;
   level: number;

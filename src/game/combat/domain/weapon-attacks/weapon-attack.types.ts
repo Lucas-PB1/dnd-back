@@ -41,6 +41,7 @@ export type WeaponAttackContext = {
   subclassSlug?: string | null;
   rageActive?: boolean;
   recklessActive?: boolean;
+  sacredWeaponActive?: boolean;
   unarmedDamageDie?: string | null;
   featEffects?: readonly import("@game/effects").CatalogEffect[];
 };

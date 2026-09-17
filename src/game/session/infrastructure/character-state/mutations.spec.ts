@@ -33,6 +33,7 @@ describe('mutations', () => {
     firearmChambers: {},
     rageActive: false,
     recklessActive: false,
+    sacredWeaponActive: false,
     personaMasks: [],
     bestialAspectLevel: 0,
     missileShieldArmed: false,

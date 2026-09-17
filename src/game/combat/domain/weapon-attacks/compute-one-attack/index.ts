@@ -1,4 +1,5 @@
 import type { AbilityScores } from "@game/shared/infrastructure/player-character.entity";
+import { abilityModifier } from "@game/shared/domain/ability-scores";
 import {
   MONK_UNARMED_ITEM_SLUG,
   isMonkClass,
@@ -43,6 +44,7 @@ export function computeOneAttack(
     proficient,
     mode,
     context,
+    charismaModifier: abilityModifier(scores.carisma),
   });
   const damage = resolveDamageBonuses({
     scores,

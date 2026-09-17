@@ -10,6 +10,7 @@ import { GameSharedModule } from './shared/game-shared.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { ActorModule } from './actor/actor.module';
 import { DuelModule } from './duel/duel.module';
+import { SkirmishModule } from './skirmish/skirmish.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { DuelModule } from './duel/duel.module';
     CampaignModule,
     ActorModule,
     DuelModule,
+    SkirmishModule,
   ],
 })
 export class GameModule {}

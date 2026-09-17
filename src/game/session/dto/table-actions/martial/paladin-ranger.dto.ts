@@ -8,6 +8,7 @@ const PALADIN_TABLE_ACTION_SLUGS = [
   'divine-sense',
   'abjure-enemies',
   'oath-channel',
+  'end-sacred-weapon',
   'inspiring-smite',
   'peerless-athlete',
   'glorious-defense',

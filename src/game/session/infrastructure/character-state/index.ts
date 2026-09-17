@@ -16,3 +16,4 @@ export {
   applyToggleReckless,
   applyRecoverAllRage,
 } from './martial/barbarian-mutations';
+export { applyToggleSacredWeapon } from './martial/paladin-mutations';

@@ -16,6 +16,7 @@ export type WeaponAttackResolveContext = {
   subclassSlug?: string | null;
   rageActive?: boolean;
   recklessActive?: boolean;
+  sacredWeaponActive?: boolean;
   unarmedDamageDie?: string | null;
   equippedItems?: PlayerCharacterItem[];
   featEffects?: readonly import('@game/effects').CatalogEffect[];

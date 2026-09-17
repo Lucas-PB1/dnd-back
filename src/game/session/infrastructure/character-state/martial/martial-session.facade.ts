@@ -15,6 +15,7 @@ import {
   setPersonaMasksOp,
   toggleRageOp,
   toggleRecklessOp,
+  toggleSacredWeaponOp,
   useManeuverOp,
 } from './index';
 
@@ -60,6 +61,13 @@ export class MartialSessionFacade {
     active?: boolean,
   ): Promise<CharacterStateResponseDto> {
     return toggleRecklessOp(this.getDeps(), character, active);
+  }
+
+  toggleSacredWeapon(
+    character: PlayerCharacter,
+    active?: boolean,
+  ): Promise<CharacterStateResponseDto> {
+    return toggleSacredWeaponOp(this.getDeps(), character, active);
   }
 
   setPersonaMasks(

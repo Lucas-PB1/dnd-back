@@ -24,6 +24,7 @@ export async function findOrCreateCharacterState(
       firearmChambers: {},
       rageActive: false,
       recklessActive: false,
+      sacredWeaponActive: false,
       personaMasks: [],
       bestialAspectLevel: 0,
       missileShieldArmed: false,
@@ -54,6 +55,9 @@ export async function findOrCreateCharacterState(
   }
   if (row.recklessActive == null) {
     row.recklessActive = false;
+  }
+  if (row.sacredWeaponActive == null) {
+    row.sacredWeaponActive = false;
   }
   if (!row.personaMasks) {
     row.personaMasks = [];

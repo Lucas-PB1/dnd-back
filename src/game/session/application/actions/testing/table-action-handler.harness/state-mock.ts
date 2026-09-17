@@ -13,6 +13,10 @@ function createMartialMock(
       ...stateResponse,
       recklessActive: active ?? true,
     })),
+    toggleSacredWeapon: jest.fn().mockImplementation(async (_c, active?: boolean) => ({
+      ...stateResponse,
+      sacredWeaponActive: active ?? true,
+    })),
     recoverAllRage: jest.fn().mockResolvedValue(stateResponse),
     listManeuvers: jest.fn(),
     useManeuver: jest.fn().mockResolvedValue({ state: stateResponse }),

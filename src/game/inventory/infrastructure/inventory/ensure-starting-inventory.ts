@@ -1,10 +1,14 @@
+import { BadRequestException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { Repository } from 'typeorm';
+import { EquipmentSlotResolver } from '../equipment-slot-resolver';
 import { PlayerCharacterItem } from '../player-character-item.entity';
+import { clearEquippedSlotIfOccupied } from './inventory-item-ops';
 
 export async function ensureFromStartingEquipment(
   items: Repository<PlayerCharacterItem>,
   catalogLookup: CatalogLookupService,
+  slotResolver: EquipmentSlotResolver,
   characterId: string,
   equipment: Array<{ itemSlug?: string; quantity?: number }>,
 ): Promise<void> {
@@ -16,6 +20,8 @@ export async function ensureFromStartingEquipment(
     totals.set(slug, (totals.get(slug) ?? 0) + qty);
   }
 
+  const created: PlayerCharacterItem[] = [];
+
   for (const [itemSlug, quantity] of totals) {
     const existing = await items.findOne({
       where: { characterId, itemSlug },
@@ -23,7 +29,7 @@ export async function ensureFromStartingEquipment(
     if (existing) continue;
 
     await catalogLookup.assertItemInCatalog(itemSlug);
-    await items.save(
+    const saved = await items.save(
       items.create({
         characterId,
         itemSlug,
@@ -35,5 +41,24 @@ export async function ensureFromStartingEquipment(
         attachedCharmSlug: null,
       }),
     );
+    created.push(saved);
+  }
+
+  for (const row of created) {
+    try {
+      const slot = await slotResolver.resolve(characterId, row.itemSlug);
+      await clearEquippedSlotIfOccupied(
+        items,
+        characterId,
+        slot,
+        row.itemSlug,
+      );
+      row.location = 'equipped';
+      row.equipmentSlot = slot;
+      await items.save(row);
+    } catch (error) {
+      if (error instanceof BadRequestException) continue;
+      throw error;
+    }
   }
 }

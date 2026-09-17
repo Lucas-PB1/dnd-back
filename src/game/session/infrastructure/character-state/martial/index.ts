@@ -12,3 +12,4 @@ export {
   setPersonaMasksOp,
   setBestialAspectLevelOp,
 } from './barbarian-ops';
+export { toggleSacredWeaponOp } from './paladin-ops';

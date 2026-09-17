@@ -1,4 +1,5 @@
 import { ownedStyleOrFeatSlugs, styleOrFeatNumericBonus } from "@game/effects";
+import { sacredWeaponAttackBonus } from "../paladin/features";
 import { abilityShortLabel } from "./weapon-attack-predicates";
 import type { WeaponAttackContext } from "./weapon-attack.types";
 
@@ -25,6 +26,7 @@ export function resolveAttackBonuses(input: {
   proficient: boolean;
   mode: "melee" | "ranged";
   context: WeaponAttackContext;
+  charismaModifier: number;
 }): AttackBonusResult {
   const attackParts: string[] = [abilityShortLabel(input.ability.slug)];
   let attackBonus = input.ability.mod;
@@ -52,6 +54,16 @@ export function resolveAttackBonuses(input: {
   if (itemAttackBonus !== 0) {
     attackBonus += itemAttackBonus;
     attackParts.push("item");
+  }
+
+  const sacred = sacredWeaponAttackBonus({
+    sacredWeaponActive: input.context.sacredWeaponActive,
+    mode: input.mode,
+    charismaModifier: input.charismaModifier,
+  });
+  if (sacred !== 0) {
+    attackBonus += sacred;
+    attackParts.push("Arma Sagrada");
   }
 
   return { attackBonus, attackParts };

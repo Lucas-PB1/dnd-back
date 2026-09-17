@@ -39,6 +39,7 @@ export const IDLE_COMBAT_FLAGS: DamageCombatFlags = {
   rageActive: false,
   recklessActive: false,
   bestialAspectLevel: 0,
+  sacredWeaponActive: false,
 };
 
 export function testScores(partial: Partial<AbilityScores> = {}): AbilityScores {

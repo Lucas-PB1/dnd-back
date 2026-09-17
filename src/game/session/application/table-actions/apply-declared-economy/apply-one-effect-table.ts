@@ -74,6 +74,15 @@ export async function applyTableEffect(
       .replace(/\{total\}/g, total != null ? String(total) : '—')
       .replace(/\{expression\}/g, expression != null ? String(expression) : '—')
       .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
+    if (
+      actionSlug === 'oath-channel' &&
+      character.subclassSlug === 'devotion'
+    ) {
+      nextState = await deps.state.martial.toggleSacredWeapon(character, true);
+      if (!nextNote.includes('Arma Sagrada ativa')) {
+        nextNote = `${nextNote} Arma Sagrada ativa (+Carisma no ataque corpo a corpo).`;
+      }
+    }
     return { state: nextState, note: nextNote, total, expression };
   }
 

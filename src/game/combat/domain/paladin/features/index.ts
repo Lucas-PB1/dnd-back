@@ -7,6 +7,7 @@ export {
   radiantStrikesDie,
   hasAuraOfProtection,
   auraOfProtectionBonus,
+  sacredWeaponAttackBonus,
   paladinSavingThrowAuraBonus,
   auraRangeMeters,
   paladinAttacksPerAction,

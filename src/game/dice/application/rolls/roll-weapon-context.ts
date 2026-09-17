@@ -103,6 +103,7 @@ export async function findEquippedWeaponAttack(
     itemDamageBonus: itemEffects?.damageBonus,
     rageActive: combatFlags.rageActive,
     recklessActive: combatFlags.recklessActive,
+    sacredWeaponActive: combatFlags.sacredWeaponActive,
   });
   const attack = attacks.find(
     (row) => row.itemSlug === itemSlug && row.mode === mode,

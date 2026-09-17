@@ -89,6 +89,7 @@ export async function buildCharacterStateResponse(input: {
     firearmChambers: state.firearmChambers ?? {},
     rageActive: state.rageActive ?? false,
     recklessActive: state.recklessActive ?? false,
+    sacredWeaponActive: state.sacredWeaponActive ?? false,
     personaMasks: state.personaMasks ?? [],
     bestialAspectLevel: state.bestialAspectLevel ?? 0,
     missileShieldArmed: state.missileShieldArmed ?? false,

@@ -7,6 +7,7 @@ import {
   paladinAttacksPerAction,
   paladinSavingThrowAuraBonus,
   radiantStrikesDie,
+  sacredWeaponAttackBonus,
 } from './features';
 import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
@@ -43,6 +44,39 @@ describe('paladin-features', () => {
     it('grants 1d8 only at level 11+', () => {
       expect(radiantStrikesDie(10, paladinBands)).toBeNull();
       expect(radiantStrikesDie(11, paladinBands)).toBe('1d8');
+    });
+  });
+
+  describe('Sacred Weapon', () => {
+    it('adds Charisma (min +1) only while active on melee attacks', () => {
+      expect(
+        sacredWeaponAttackBonus({
+          sacredWeaponActive: true,
+          mode: 'melee',
+          charismaModifier: 3,
+        }),
+      ).toBe(3);
+      expect(
+        sacredWeaponAttackBonus({
+          sacredWeaponActive: true,
+          mode: 'melee',
+          charismaModifier: 0,
+        }),
+      ).toBe(1);
+      expect(
+        sacredWeaponAttackBonus({
+          sacredWeaponActive: true,
+          mode: 'ranged',
+          charismaModifier: 3,
+        }),
+      ).toBe(0);
+      expect(
+        sacredWeaponAttackBonus({
+          sacredWeaponActive: false,
+          mode: 'melee',
+          charismaModifier: 3,
+        }),
+      ).toBe(0);
     });
   });
 

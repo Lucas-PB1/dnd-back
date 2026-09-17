@@ -70,6 +70,7 @@ export async function applyLongRestState(input: {
   state.tempHp = 0;
   state.rageActive = false;
   state.recklessActive = false;
+  state.sacredWeaponActive = false;
   state.bestialAspectLevel = 0;
   state.missileShieldArmed = false;
   state.gigaMissileArmed = false;

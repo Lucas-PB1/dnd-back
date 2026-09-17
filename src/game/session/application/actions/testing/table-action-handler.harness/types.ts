@@ -33,6 +33,7 @@ export type TableActionSheetMock = jest.Mocked<
 export type TableActionMartialMock = {
   toggleRage: jest.Mock;
   toggleReckless: jest.Mock;
+  toggleSacredWeapon: jest.Mock;
   recoverAllRage: jest.Mock;
   listManeuvers: jest.Mock;
   useManeuver: jest.Mock;

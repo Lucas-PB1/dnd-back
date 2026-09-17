@@ -190,6 +190,7 @@ export class ResolveEquippedWeaponAttacks {
       subclassSlug: context.subclassSlug,
       rageActive: context.rageActive,
       recklessActive: context.recklessActive,
+      sacredWeaponActive: context.sacredWeaponActive,
       unarmedDamageDie: context.unarmedDamageDie,
       featEffects: context.featEffects,
     });

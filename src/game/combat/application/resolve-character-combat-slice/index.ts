@@ -19,6 +19,7 @@ import type { AbilityScores } from '@game/shared/infrastructure/player-character
 import type { SizeCategory } from '../../domain/equipment';
 import { sheetProfile } from '@common/perf/sheet-profile';
 import { unarmedDamageDieFromEffects } from '@game/effects';
+import { loadWeaponCombatFlags } from '@game/session/infrastructure/queries/character-combat-flags.queries';
 import { assembleMappedCombatSlice } from './assemble-slice';
 import { loadCombatScoresAndEffects } from './load-scores-and-effects';
 import type { MappedCombatSlice } from './types';
@@ -92,6 +93,7 @@ export async function resolveCharacterCombatSlice(input: {
   const armorPresets = await loadSpeciesArmorPresets(dataSource, speciesSlug);
   const presetSlug = armorPresetSlugFromChoices(armorPresets, speciesChoices);
   const speciesArmorPreset = findArmorPreset(armorPresets, presetSlug);
+  const combatFlags = await loadWeaponCombatFlags(dataSource, characterId);
 
   const armor = await sheetProfile('combat.armor', () =>
     equippedArmorClass.resolve(characterId, combatScores, {
@@ -126,6 +128,9 @@ export async function resolveCharacterCombatSlice(input: {
         equippedItems,
         unarmedDamageDie: unarmedDamageDieFromEffects(featEffects ?? []),
         featEffects,
+        rageActive: combatFlags.rageActive,
+        recklessActive: combatFlags.recklessActive,
+        sacredWeaponActive: combatFlags.sacredWeaponActive,
       }),
     ),
     sheetProfile('combat.compliance', () =>

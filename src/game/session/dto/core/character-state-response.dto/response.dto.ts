@@ -104,6 +104,12 @@ export class CharacterStateResponseDto {
   recklessActive!: boolean;
 
   @ApiProperty({
+    example: false,
+    description: 'Arma Sagrada (Canalizar Divindade) ativa',
+  })
+  sacredWeaponActive!: boolean;
+
+  @ApiProperty({
     example: ['persona-mask-angel'],
     description: 'Máscaras de Persona equipadas (Colégio das Máscaras)',
   })

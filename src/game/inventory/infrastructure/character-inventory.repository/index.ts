@@ -95,6 +95,7 @@ export class CharacterInventoryRepository {
     return ensureFromStartingEquipment(
       this.items,
       this.catalogLookup,
+      this.slotResolver,
       characterId,
       equipment,
     );

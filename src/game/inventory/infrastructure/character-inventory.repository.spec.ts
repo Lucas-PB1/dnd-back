@@ -28,6 +28,7 @@ describe('CharacterInventoryRepository', () => {
     save: jest.Mock;
     remove: jest.Mock;
     count: jest.Mock;
+    query: jest.Mock;
   };
   let catalogItems: { find: jest.Mock; findOne: jest.Mock };
   let catalogLookup: { assertItemInCatalog: jest.Mock };
@@ -42,6 +43,13 @@ describe('CharacterInventoryRepository', () => {
       save: jest.fn(async (row) => row),
       remove: jest.fn(),
       count: jest.fn().mockResolvedValue(0),
+      query: jest.fn(async (_sql: string, params: unknown[]) => [
+        itemRow({
+          characterId: String(params[0]),
+          itemSlug: String(params[1]),
+          quantity: Number(params[2]),
+        }),
+      ]),
     };
     catalogItems = {
       find: jest.fn().mockResolvedValue([
@@ -100,18 +108,26 @@ describe('CharacterInventoryRepository', () => {
       items.findOne.mockResolvedValue(null);
       const dto = await repository.add('ch1', { itemSlug: 'rope' }, 16);
       expect(catalogLookup.assertItemInCatalog).toHaveBeenCalledWith('rope');
-      expect(items.create).toHaveBeenCalledWith(
-        expect.objectContaining({ location: 'backpack', quantity: 1 }),
+      expect(items.query).toHaveBeenCalledWith(
+        expect.stringContaining('INSERT INTO rpg.player_character_item'),
+        ['ch1', 'rope', 1],
       );
       expect(dto.itemSlug).toBe('rope');
     });
 
     it('increments quantity on existing backpack item', async () => {
-      const existing = itemRow({ quantity: 1 });
-      items.findOne.mockResolvedValue(existing);
-      await repository.add('ch1', { itemSlug: 'rope', quantity: 2 }, 16);
-      expect(existing.quantity).toBe(3);
-      expect(items.save).toHaveBeenCalledWith(existing);
+      items.findOne.mockResolvedValue(itemRow({ quantity: 1 }));
+      items.query.mockResolvedValueOnce([itemRow({ quantity: 3 })]);
+      const dto = await repository.add(
+        'ch1',
+        { itemSlug: 'rope', quantity: 2 },
+        16,
+      );
+      expect(items.query).toHaveBeenCalledWith(
+        expect.stringContaining('INSERT INTO rpg.player_character_item'),
+        ['ch1', 'rope', 2],
+      );
+      expect(dto.quantity).toBe(3);
     });
 
     it('rejects add when item is equipped', async () => {
@@ -125,6 +141,9 @@ describe('CharacterInventoryRepository', () => {
   describe('ensureFromStartingEquipment', () => {
     it('seeds backpack rows for new slugs and aggregates quantity', async () => {
       items.findOne.mockResolvedValue(null);
+      slotResolver.resolve.mockRejectedValue(
+        new BadRequestException('equipmentSlot is required when equipping this item'),
+      );
       await repository.ensureFromStartingEquipment('ch1', [
         { itemSlug: ' rope ', quantity: 2 },
         { itemSlug: 'rope', quantity: 1 },
@@ -135,6 +154,22 @@ describe('CharacterInventoryRepository', () => {
         expect.objectContaining({ itemSlug: 'rope', quantity: 3, location: 'backpack' }),
       );
       expect(items.save).toHaveBeenCalledTimes(1);
+    });
+
+    it('equips catalog weapons into the resolved slot', async () => {
+      items.findOne.mockResolvedValue(null);
+      slotResolver.resolve.mockResolvedValue('main_hand');
+      await repository.ensureFromStartingEquipment('ch1', [
+        { itemSlug: 'longsword', quantity: 1 },
+      ]);
+      expect(slotResolver.resolve).toHaveBeenCalledWith('ch1', 'longsword');
+      expect(items.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          itemSlug: 'longsword',
+          location: 'equipped',
+          equipmentSlot: 'main_hand',
+        }),
+      );
     });
 
     it('skips slugs that already exist in inventory', async () => {

@@ -51,6 +51,9 @@ export class PlayerCharacterState {
   @Column({ name: 'reckless_active', type: 'boolean', default: false })
   recklessActive!: boolean;
 
+  @Column({ name: 'sacred_weapon_active', type: 'boolean', default: false })
+  sacredWeaponActive!: boolean;
+
   @Column({ name: 'persona_masks', type: 'jsonb', default: [] })
   personaMasks!: string[];
 

@@ -37,6 +37,7 @@ describe('BarbarianActionsHandler', () => {
       tempHp: 0,
       rageActive: false,
       recklessActive: false,
+      sacredWeaponActive: false,
     },
     defaultCharacter: barbarian,
     mechanicalCatalogLoad: {
