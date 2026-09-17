@@ -51,6 +51,9 @@ export class Skirmish {
   @Column({ name: 'pc_reaction_available', type: 'boolean', default: true })
   pcReactionAvailable!: boolean;
 
+  @Column({ name: 'pc_oa_available', type: 'boolean', default: false })
+  pcOaAvailable!: boolean;
+
   @Column({ name: 'winner_kind', type: 'text', nullable: true })
   winnerKind!: SkirmishWinnerKind | null;
 

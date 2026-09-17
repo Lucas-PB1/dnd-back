@@ -46,7 +46,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_spell_source` — metadado de origem (listas/subclass)
 - `phb_spell_grant` — magias concedidas (feat/class); views `v_phb_feat_granted_spell` / `v_phb_class_granted_spell` — espécie via `phb_effect`
 - `phb_spell_combat` — resolução tipada skirmish/duelo (`apply_condition`, `arena_darkness`, … — ver [`spell-combat.md`](spell-combat.md))
-- `skirmish` — arena PVE; `arena_effects` / `pc_reaction_available` (Escudo/Uncanny)
+- `skirmish` — arena PVE; `arena_effects` / `pc_reaction_available` / `pc_oa_available`
 
 ### 3. Classes
 

@@ -14,6 +14,7 @@ import type {
   SkirmishSummaryDto,
   SkirmishWeaponOptionDto,
 } from '../dto/skirmish.dto';
+import { resolveOpportunityAttackGate } from '../domain/resolve-opportunity-attack-gate';
 
 export async function toSkirmishSummary(input: {
   skirmish: Skirmish;
@@ -135,6 +136,14 @@ export async function toSkirmishDetail(input: {
     );
   }
   const currentRow = input.combatants.find((row) => row.id === current);
+  const awaitingActor =
+    input.skirmish.status === 'active' && currentRow?.kind === 'actor';
+  const oaGate = resolveOpportunityAttackGate({
+    currentTurnIsActor: awaitingActor,
+    reactionAvailable: input.skirmish.pcReactionAvailable ?? true,
+    opportunityAvailable: input.skirmish.pcOaAvailable ?? false,
+    conditions: input.pcConditions,
+  });
   return {
     ...(await toSkirmishSummary({
       skirmish: input.skirmish,
@@ -151,6 +160,8 @@ export async function toSkirmishDetail(input: {
     fighter: input.fighter,
     arenaEffects: input.skirmish.arenaEffects ?? [],
     pcReactionAvailable: input.skirmish.pcReactionAvailable ?? true,
+    awaitingActorResolution: awaitingActor,
+    canOpportunityAttack: oaGate.ok,
     combatLog: input.skirmish.combatLog,
   };
 }

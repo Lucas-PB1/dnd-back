@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-4b opportunity attack
+
+* **Update** (21:25 UTC): Gate OA sem mapa; `pc_oa_available`; `POST /skirmishes/:id/react` (`opportunity_attack`); end-turn pausa no turno da criatura. Specs + Swagger. — refs: [`resolve-opportunity-attack-gate.ts`](../../src/game/skirmish/domain/resolve-opportunity-attack-gate.ts), [`skirmishes.controller.ts`](../../src/game/skirmish/skirmishes.controller.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: reação tipada de OA no skirmish sem grade.
+
 ## 2026-09-17 — PVE-4a incoming hit (Escudo / Uncanny)
 
 * **Update** (21:20 UTC): `resolveIncomingHit` (+5 CA Escudo Arcano / metade Esquiva Sobrenatural); `pc_reaction_available` no skirmish; `POST end-turn` com `defenderReaction`; specs. — refs: [`resolve-incoming-hit.ts`](../../src/game/combat/domain/resolve-incoming-hit.ts), [`skirmish.service.ts`](../../src/game/skirmish/application/skirmish.service.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: reações de defesa tipadas no skirmish com CA/HP corretos.

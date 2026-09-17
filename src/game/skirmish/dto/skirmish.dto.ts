@@ -30,11 +30,35 @@ export class EndSkirmishTurnDto {
   @ApiPropertyOptional({
     enum: ['shield', 'uncanny_dodge'],
     description:
-      'Reação no próximo ataque que acertar você: Escudo Arcano (+5 CA) ou Esquiva Sobrenatural (metade do dano)',
+      'Reação no próximo ataque que acertar você: Escudo Arcano (+5 CA) ou Esquiva Sobrenatural (metade do dano). Use ao resolver o turno da criatura (2º end-turn).',
   })
   @IsOptional()
   @IsIn(['shield', 'uncanny_dodge'])
   defenderReaction?: 'shield' | 'uncanny_dodge';
+}
+
+/** Reação do PC no turno da criatura (ex.: ataque de oportunidade). */
+export class SkirmishReactDto {
+  @ApiProperty({
+    enum: ['opportunity_attack'],
+    example: 'opportunity_attack',
+  })
+  @IsIn(['opportunity_attack'])
+  reactionSlug!: 'opportunity_attack';
+
+  @ApiPropertyOptional({
+    description: 'Arma equipada para a OA (default: primeira disponível)',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemSlug?: string;
+
+  @ApiPropertyOptional({ enum: ['melee', 'ranged'], default: 'melee' })
+  @IsOptional()
+  @IsIn(['melee', 'ranged'])
+  mode?: 'melee' | 'ranged';
 }
 
 export class ResolveSkirmishAttackDto {
@@ -323,6 +347,17 @@ export class SkirmishDetailDto extends SkirmishSummaryDto {
     description: 'PC ainda tem reação disponível nesta rodada',
   })
   pcReactionAvailable!: boolean;
+
+  @ApiProperty({
+    description:
+      'Turno da criatura pausado: use POST /react (OA) e depois end-turn de novo',
+  })
+  awaitingActorResolution!: boolean;
+
+  @ApiProperty({
+    description: 'PC pode declarar ataque de oportunidade agora',
+  })
+  canOpportunityAttack!: boolean;
 
   @ApiProperty({ type: [SkirmishLogEntryDto] })
   combatLog!: SkirmishLogEntryDto[];

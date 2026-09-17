@@ -32,6 +32,7 @@ import {
   ResolveSkirmishAttackDto,
   SkirmishAttackResultDto,
   SkirmishDetailDto,
+  SkirmishReactDto,
   SkirmishSummaryDto,
 } from './dto/skirmish.dto';
 
@@ -86,7 +87,7 @@ export class SkirmishesController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary:
-      'End the PC turn; resolves the creature turn (optional defender reaction)',
+      'End PC turn (pauses on creature) or resolve creature turn (2nd call; optional defenderReaction)',
   })
   @ApiOkResponse({ type: SkirmishDetailDto })
   endTurn(
@@ -95,6 +96,21 @@ export class SkirmishesController {
     @Body() dto: EndSkirmishTurnDto,
   ): Promise<SkirmishDetailDto> {
     return this.skirmishes.endTurn(user.id, id, dto ?? {});
+  }
+
+  @Post(':id/react')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'PC reaction during creature turn (opportunity_attack). Requires awaitingActorResolution.',
+  })
+  @ApiOkResponse({ type: SkirmishAttackResultDto })
+  react(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: SkirmishReactDto,
+  ): Promise<SkirmishAttackResultDto> {
+    return this.skirmishes.react(user.id, id, dto);
   }
 
   @Post(':id/finish')

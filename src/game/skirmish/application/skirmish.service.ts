@@ -77,6 +77,7 @@ import {
   ResolveSkirmishAttackDto,
   SkirmishAttackResultDto,
   SkirmishDetailDto,
+  SkirmishReactDto,
   SkirmishSummaryDto,
 } from '../dto/skirmish.dto';
 import {
@@ -91,6 +92,10 @@ import {
   SHIELD_SPELL_SLUG,
   type IncomingHitDefenseKind,
 } from '@game/combat/domain/resolve-incoming-hit';
+import {
+  OPPORTUNITY_ATTACK_REACTION_SLUG,
+  resolveOpportunityAttackGate,
+} from '../domain/resolve-opportunity-attack-gate';
 
 @Injectable()
 export class SkirmishService {
@@ -183,6 +188,7 @@ export class SkirmishService {
       arenaEffects: [],
       arenaEffectSourceCharacterId: null,
       pcReactionAvailable: true,
+      pcOaAvailable: false,
       combatLog: [
         {
           at: new Date().toISOString(),
@@ -219,8 +225,13 @@ export class SkirmishService {
     skirmish.currentCombatantId = ordered[0]?.id ?? saved[0].id;
     skirmish = await this.repo.saveSkirmish(skirmish);
 
-    await this.resolvePendingActorTurns(userId, skirmish);
-    await this.syncPcAttackBudget(skirmish);
+    const opener = ordered.find((row) => row.id === skirmish.currentCombatantId);
+    if (opener?.kind === 'actor') {
+      skirmish.pcOaAvailable = true;
+      await this.repo.saveSkirmish(skirmish);
+    } else {
+      await this.syncPcAttackBudget(skirmish);
+    }
     return this.detailOf(skirmish);
   }
 
@@ -296,7 +307,10 @@ export class SkirmishService {
     this.assertActive(skirmish);
     const current = await this.currentCombatant(skirmish);
     if (current.kind === 'pc') {
+      await this.assertPcCanAct(skirmish);
       await this.advanceTurn(skirmish);
+      // Pausa: front pode POST /react (OA) e depois end-turn de novo.
+      return this.detailOf(skirmish);
     }
     await this.resolvePendingActorTurns(
       userId,
@@ -305,6 +319,77 @@ export class SkirmishService {
     );
     await this.syncPcAttackBudget(skirmish);
     return this.detailOf(skirmish);
+  }
+
+  async react(
+    userId: string,
+    id: string,
+    dto: SkirmishReactDto,
+  ): Promise<SkirmishAttackResultDto> {
+    const skirmish = await this.requireOwned(userId, id);
+    this.assertActive(skirmish);
+    if (dto.reactionSlug !== OPPORTUNITY_ATTACK_REACTION_SLUG) {
+      throw new BadRequestException(
+        `Unsupported reaction '${dto.reactionSlug}'`,
+      );
+    }
+    const current = await this.currentCombatant(skirmish);
+    const character = await this.access.findOwnedOrFail(
+      userId,
+      skirmish.characterId,
+    );
+    const state = await this.characterState.buildResponse(character);
+    const gate = resolveOpportunityAttackGate({
+      currentTurnIsActor: current.kind === 'actor',
+      reactionAvailable: skirmish.pcReactionAvailable ?? true,
+      opportunityAvailable: skirmish.pcOaAvailable ?? false,
+      conditions: state.conditions ?? [],
+    });
+    if (!gate.ok) {
+      throw new BadRequestException(gate.reason);
+    }
+    const combatants = await this.repo.listCombatants(skirmish.id);
+    const pc = combatants.find((row) => row.kind === 'pc');
+    const actorTarget = combatants.find((row) => row.kind === 'actor');
+    if (!pc || !actorTarget) {
+      throw new BadRequestException('Combatants missing');
+    }
+    const rolled = await this.resolveAttack(
+      userId,
+      skirmish,
+      pc,
+      actorTarget,
+      {
+        attackerCombatantId: pc.id,
+        targetCombatantId: actorTarget.id,
+        itemSlug: dto.itemSlug,
+        mode: dto.mode ?? 'melee',
+      },
+    );
+    skirmish.pcReactionAvailable = false;
+    skirmish.pcOaAvailable = false;
+    await this.repo.saveSkirmish(skirmish);
+    await this.appendLog(
+      skirmish,
+      `Ataque de Oportunidade · ${this.attackLogLine(pc.displayName, actorTarget.displayName, rolled)}`,
+    );
+    await this.maybeFinish(skirmish);
+    const detail = await this.detailOf(skirmish);
+    return {
+      skirmish: detail,
+      hit: rolled.hit,
+      critical: rolled.critical,
+      attackTotal: rolled.attackTotal,
+      attackExpression: rolled.attackExpression,
+      attackRolls: rolled.attackRolls,
+      targetAc: rolled.targetAc,
+      damageTotal: rolled.hit ? rolled.damageTotal : null,
+      damageExpression: rolled.hit ? rolled.damageExpression : null,
+      damageRolls: rolled.hit ? rolled.damageRolls : [],
+      note: rolled.note,
+      attackerCombatantId: pc.id,
+      targetCombatantId: actorTarget.id,
+    };
   }
 
   async finish(userId: string, id: string): Promise<SkirmishDetailDto> {
@@ -818,6 +903,9 @@ export class SkirmishService {
     skirmish.currentCombatantId = active[nextIndex].id;
     if (active[nextIndex].kind === 'pc') {
       skirmish.pcReactionAvailable = true;
+      skirmish.pcOaAvailable = false;
+    } else {
+      skirmish.pcOaAvailable = true;
     }
     await this.repo.saveSkirmish(skirmish);
   }

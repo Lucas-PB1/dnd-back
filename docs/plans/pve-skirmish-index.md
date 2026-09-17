@@ -103,6 +103,8 @@ flowchart LR
 
 **PVE-4a fechado (2026-09-17):** `resolveIncomingHit` (Escudo Arcano +5 CA / Esquiva Sobrenatural metade); `pc_reaction_available`; `end-turn` aceita `defenderReaction`.
 
+**PVE-4b fechado (2026-09-17):** OA sem mapa (`pc_oa_available`); `POST /skirmishes/:id/react`; end-turn pausa no turno da criatura.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -116,7 +118,7 @@ flowchart LR
 | PVE-3a | ~~Quebra de concentração~~ **feito** | — | M | PVE-0 |
 | PVE-3b | ~~Arena escuridão + conditions~~ **feito** | — | M | PVE-3a |
 | PVE-4a | ~~Incoming hit Escudo/Uncanny~~ **feito** | — | M | PVE-0 |
-| PVE-4b | OA sem mapa + endpoint react | [`pve-4b-opportunity-attack.md`](pve-4b-opportunity-attack.md) | S | PVE-4a |
+| PVE-4b | ~~OA sem mapa + react~~ **feito** | — | S | PVE-4a |
 | PVE-5a | DTO parity + smites | [`pve-5a-attack-flags-smites.md`](pve-5a-attack-flags-smites.md) | M | PVE-0 |
 | PVE-5b | Battle Master no acerto | [`pve-5b-battle-master.md`](pve-5b-battle-master.md) | M | PVE-5a |
 | PVE-5c | Estilos GWF/TWF/PAM/Charger | [`pve-5c-fighting-styles.md`](pve-5c-fighting-styles.md) | M | PVE-5a |
