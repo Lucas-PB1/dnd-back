@@ -82,6 +82,10 @@ export class SkirmishRepository {
     });
   }
 
+  async deleteCombatant(id: string): Promise<void> {
+    await this.combatants.delete({ id });
+  }
+
   async deleteOwned(userId: string, id: string): Promise<boolean> {
     const row = await this.findOwned(userId, id);
     if (!row) return false;

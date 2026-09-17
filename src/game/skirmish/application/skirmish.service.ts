@@ -61,6 +61,15 @@ import {
   mergeConditions,
 } from '@game/duel/domain/duel-spell-resolve';
 import { noteSkirmishConcentrationBreak } from '../domain/note-concentration-break';
+import {
+  findFoeSkirmishCombatant,
+  pickAutomaticSkirmishTarget,
+  type ActorAllianceHint,
+} from '../domain/skirmish-alliance';
+import {
+  addAlliedActorsToSkirmish,
+  pruneMissingActorCombatants,
+} from './sync-allied-actors-into-skirmish';
 import { resolveSkirmishAttackBudget } from './skirmish-attack-budget';
 import { formatSkirmishAttackLogLine } from '../domain/format-skirmish-attack-log';
 import { SkirmishRepository } from '../infrastructure/skirmish.repository';
@@ -226,6 +235,36 @@ export class SkirmishService {
       isActive: true,
     });
     const saved = await this.repo.saveCombatants([pcRow, actorRow]);
+    const pb = await this.domain.getProficiencyBonus(character.level);
+    const abilitySlug = await loadSpellcastingAbilitySlug(
+      this.dataSource,
+      character.classSlug,
+    );
+    const castingMod = abilityModifierFromSlug(
+      computeAbilityModifiers(character.abilityScores),
+      abilitySlug,
+    );
+    const companions = await this.actors.find({
+      where: {
+        parentCharacterId: character.id,
+        actorKind: 'companion',
+      },
+    });
+    if (companions.length > 0) {
+      await addAlliedActorsToSkirmish({
+        repo: this.repo,
+        actors: this.actors,
+        actorActions: this.actorActions,
+        skirmishId: skirmish.id,
+        pcCombatant: saved.find((r) => r.kind === 'pc') ?? pcRow,
+        allyActorIds: companions.map((c) => c.id),
+        spellAttackBonus: pb + castingMod,
+      });
+      await this.appendLog(
+        skirmish,
+        `Companheiro(s) na iniciativa: ${companions.map((c) => c.name).join(', ')}`,
+      );
+    }
     const ordered = await this.repo.listCombatants(skirmish.id);
     skirmish.currentCombatantId = ordered[0]?.id ?? saved[0].id;
     skirmish = await this.repo.saveSkirmish(skirmish);
@@ -355,7 +394,12 @@ export class SkirmishService {
     }
     const combatants = await this.repo.listCombatants(skirmish.id);
     const pc = combatants.find((row) => row.kind === 'pc');
-    const actorTarget = combatants.find((row) => row.kind === 'actor');
+    const hints = await this.actorAllianceHints(combatants);
+    const actorTarget = findFoeSkirmishCombatant({
+      combatants,
+      skirmishCharacterId: skirmish.characterId,
+      actorHints: hints,
+    });
     if (!pc || !actorTarget) {
       throw new BadRequestException('Combatants missing');
     }
@@ -425,7 +469,12 @@ export class SkirmishService {
       skirmish.characterId,
     );
     const combatants = await this.repo.listCombatants(skirmish.id);
-    const actorRow = combatants.find((row) => row.kind === 'actor');
+    const hints = await this.actorAllianceHints(combatants);
+    const actorRow = findFoeSkirmishCombatant({
+      combatants,
+      skirmishCharacterId: skirmish.characterId,
+      actorHints: hints,
+    });
     const actor = actorRow?.actorId
       ? await this.actors.findOne({ where: { id: actorRow.actorId } })
       : null;
@@ -579,6 +628,31 @@ export class SkirmishService {
         `${character.name}: ${resolved.note}${mmSuffix}`,
       );
     }
+
+    const spiritActors =
+      cast.spirits?.map((s) => s.actorId) ??
+      (cast.spirit ? [cast.spirit.actorId] : []);
+    if (spiritActors.length > 0) {
+      const pcCombatant = combatants.find((row) => row.kind === 'pc');
+      if (pcCombatant) {
+        const added = await addAlliedActorsToSkirmish({
+          repo: this.repo,
+          actors: this.actors,
+          actorActions: this.actorActions,
+          skirmishId: skirmish.id,
+          pcCombatant,
+          allyActorIds: spiritActors,
+          spellAttackBonus: bonuses.spellAttackBonus,
+        });
+        if (added.length > 0) {
+          await this.appendLog(
+            skirmish,
+            `${character.name}: espírito(s) na iniciativa — ${added.map((a) => a.displayName).join(', ')}`,
+          );
+        }
+      }
+    }
+
     await this.maybeFinish(skirmish);
     return this.detailOf(skirmish);
   }
@@ -720,7 +794,13 @@ export class SkirmishService {
     defenderReaction: IncomingHitDefenseKind | null,
   ): Promise<void> {
     const combatants = await this.repo.listCombatants(skirmish.id);
-    const target = combatants.find((row) => row.kind === 'pc');
+    const hints = await this.actorAllianceHints(combatants);
+    const target = pickAutomaticSkirmishTarget({
+      attacker,
+      combatants,
+      skirmishCharacterId: skirmish.characterId,
+      actorHints: hints,
+    });
     if (!target || !attacker.actorId) return;
     try {
       await pickActorAttackAction(this.actorActions, attacker.actorId);
@@ -737,7 +817,7 @@ export class SkirmishService {
       attacker,
       target,
       {},
-      defenderReaction,
+      target.kind === 'pc' ? defenderReaction : null,
     );
     await this.appendLog(
       skirmish,
@@ -897,6 +977,9 @@ export class SkirmishService {
         await this.repo.saveSkirmish(skirmish);
         await this.appendLog(skirmish, concNote);
       }
+      if (applied.concentration.broken && target.kind === 'pc') {
+        await this.repairTurnAfterSpiritDespawn(skirmish);
+      }
     }
     return { ...rolled, targetAc: effectiveAc };
   }
@@ -930,7 +1013,12 @@ export class SkirmishService {
   private async maybeFinish(skirmish: Skirmish): Promise<void> {
     const combatants = await this.repo.listCombatants(skirmish.id);
     const pc = combatants.find((row) => row.kind === 'pc');
-    const actorRow = combatants.find((row) => row.kind === 'actor');
+    const hints = await this.actorAllianceHints(combatants);
+    const actorRow = findFoeSkirmishCombatant({
+      combatants,
+      skirmishCharacterId: skirmish.characterId,
+      actorHints: hints,
+    });
     if (!pc?.characterId || !actorRow?.actorId) return;
     const character = await this.characters.findOwnedOrFail(
       skirmish.userId,
@@ -988,6 +1076,48 @@ export class SkirmishService {
       throw new BadRequestException('Current combatant missing');
     }
     return row;
+  }
+
+  private async actorAllianceHints(
+    combatants: readonly SkirmishCombatant[],
+  ): Promise<ActorAllianceHint[]> {
+    const hints: ActorAllianceHint[] = [];
+    for (const row of combatants) {
+      if (!row.actorId) continue;
+      const actor = await this.actors.findOne({ where: { id: row.actorId } });
+      if (!actor) continue;
+      hints.push({
+        actorId: actor.id,
+        parentCharacterId: actor.parentCharacterId,
+      });
+    }
+    return hints;
+  }
+
+  private async repairTurnAfterSpiritDespawn(
+    skirmish: Skirmish,
+  ): Promise<void> {
+    const pruned = await pruneMissingActorCombatants({
+      repo: this.repo,
+      actors: this.actors,
+      skirmishId: skirmish.id,
+      currentCombatantId: skirmish.currentCombatantId,
+    });
+    const stillCurrent =
+      skirmish.currentCombatantId &&
+      (await this.repo.findCombatant(skirmish.id, skirmish.currentCombatantId));
+    if (!stillCurrent || pruned.currentCleared) {
+      const ordered = await this.repo.listCombatants(skirmish.id);
+      const next = ordered.find((row) => row.isActive);
+      skirmish.currentCombatantId = next?.id ?? null;
+      await this.repo.saveSkirmish(skirmish);
+      if (pruned.removed > 0) {
+        await this.appendLog(
+          skirmish,
+          `Espírito(s) removidos da iniciativa (${pruned.removed})`,
+        );
+      }
+    }
   }
 
   private async appendLog(

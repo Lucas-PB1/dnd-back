@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-7a spirits na iniciativa
+
+* **Update** (22:50 UTC): Invocar Fera / companions entram na iniciativa do skirmish; turno automático aliado→foe; bônus de ataque do invocador; prune no break de concentração. — refs: [`skirmish-alliance.ts`](../../src/game/skirmish/domain/skirmish-alliance.ts), [`sync-allied-actors-into-skirmish.ts`](../../src/game/skirmish/application/sync-allied-actors-into-skirmish.ts), [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: summons tipados na fila de turnos, não só nota de mesa.
+
 ## 2026-09-17 — PVE-6c resist/vuln/imune
 
 * **Update** (22:35 UTC): `applyDamageTypeModifiers` + tabela `phb_creature_template_damage_affinity`; skirmish cast passa `damageTypeSlug`; imunidade zera / resist metade. Piloto Elemental do Fogo + Azer. — refs: [`apply-damage-type-modifiers.ts`](../../src/game/combat/domain/apply-damage-type-modifiers.ts), [`0168_phb_creature_template_damage_affinity.sql`](../../database/schema/020_tables/0168_phb_creature_template_damage_affinity.sql), [`damage-type-defenses.md`](../architecture/damage-type-defenses.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: dano tipado respeita afinidades do alvo no HP.

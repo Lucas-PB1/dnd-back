@@ -136,6 +136,16 @@ export class CastSkirmishSpellDto {
   @MinLength(1)
   @MaxLength(120)
   itemCastItemSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'terra',
+    description: 'Variante de espírito (Invocar Fera: ar | terra | agua)',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(60)
+  spiritVariantKey?: string;
 }
 
 export class PatchSkirmishConditionDto {

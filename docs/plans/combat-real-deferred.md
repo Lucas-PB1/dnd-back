@@ -64,7 +64,8 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 ### Encontro / atores
 
 - [x] Combate no encontro (acerto/dano). Saves e tracker fino de summon ainda futuros. Board/spawn/tracker leve de combatentes já é mesa.
-- [ ] Tracker fino de companheiro / summon em combate (além de nota/uso)
+- [x] Tracker fino de companheiro / summon em combate (skirmish PVE-7a: iniciativa + turno + despawn) — [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md)
+- [ ] Board/spawn fino no encontro de campanha (além do skirmish)
 
 ---
 

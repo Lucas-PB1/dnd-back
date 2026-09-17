@@ -49,6 +49,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`architecture/metamagic-eldritch-combat.md`](architecture/metamagic-eldritch-combat.md) | Metamagia tipada + Eldritch Smite |
 | [`architecture/item-charge-combat.md`](architecture/item-charge-combat.md) | Cast com carga de item no skirmish |
 | [`architecture/damage-type-defenses.md`](architecture/damage-type-defenses.md) | Resist / vuln / imune no HP |
+| [`architecture/spirits-skirmish-initiative.md`](architecture/spirits-skirmish-initiative.md) | Espíritos / companion na iniciativa |
 | [`architecture/spell-combat-audit.md`](architecture/spell-combat-audit.md) | Auditoria PHB tipada vs utilitária / deferida |
 
 Contrato REST: Swagger em `/api`.

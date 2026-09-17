@@ -7,6 +7,8 @@ export type CombatSurfaceCastInput = {
   itemCastResourceSlug?: string;
   itemCastSpendAmount?: number;
   itemCastItemSlug?: string;
+  spiritVariantKey?: string;
+  spiritCount?: number;
 };
 
 export function pickCombatSurfaceCastCommand(
@@ -18,5 +20,7 @@ export function pickCombatSurfaceCastCommand(
     itemCastResourceSlug: dto.itemCastResourceSlug,
     itemCastSpendAmount: dto.itemCastSpendAmount,
     itemCastItemSlug: dto.itemCastItemSlug,
+    spiritVariantKey: dto.spiritVariantKey,
+    spiritCount: dto.spiritCount,
   };
 }

@@ -13,7 +13,19 @@ describe('pickCombatSurfaceCastCommand', () => {
       itemCastResourceSlug: 'varinhaMisseisCharges',
       itemCastSpendAmount: 2,
       itemCastItemSlug: undefined,
+      spiritVariantKey: undefined,
+      spiritCount: undefined,
     });
+  });
+
+  it('forwards Invocar Fera variant', () => {
+    const cmd = pickCombatSurfaceCastCommand({
+      spellSlug: 'invocar-fera',
+      slotLevel: 2,
+      spiritVariantKey: 'terra',
+    });
+    expect(cmd.spiritVariantKey).toBe('terra');
+    expect(cmd.spellSlug).toBe('invocar-fera');
   });
 
   it('forwards free item cast without charge pool', () => {
