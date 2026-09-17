@@ -86,8 +86,10 @@ export async function executeRollDamage(input: {
   const dieOpts = {
     critical: input.dto.critical,
     treatOnesAndTwosAsThree: attack.greatWeaponFighting,
+    // GWF (1–2→3) already covers floor; don't also apply Elemental Adept 1→2.
     treatOnesAsTwos:
-      hasDamageDieFloor(featEffects, featSlugs) ||
+      (!attack.greatWeaponFighting &&
+        hasDamageDieFloor(featEffects, featSlugs)) ||
       Boolean(input.dto.damageDieFloor),
     flipLowestDie:
       hasDamageDieFlip(featEffects, featSlugs) &&
@@ -116,6 +118,16 @@ export async function executeRollDamage(input: {
     );
   }
   if (input.dto.chargerStrike) {
+    if (input.dto.mode !== 'melee') {
+      throw new BadRequestException(
+        'Investida (Charger) exige ataque corpo a corpo',
+      );
+    }
+    if (!featSlugs.includes('charger')) {
+      throw new BadRequestException(
+        'Investida (Charger) exige o talento Agressor',
+      );
+    }
     addDamagePart(acc, '1d8', { critical: input.dto.critical });
     acc.notes.push(
       'Investida (Charger): +1d8 (desligue o toggle apos o uso).',

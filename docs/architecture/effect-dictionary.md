@@ -404,7 +404,7 @@ Seeds: `database/seeds/effects/E001`/`E003`/`E004`. ENUM no baseline. Residual g
 | `slow_fall` | Cap taxa de queda | seed Perfect Flight |
 | `extra_damage_on_nat20` | Nat20 → +dano (fórmula attr) | seed Irresistible |
 | `heal_from_dice_pool` | Gastar N dados do pool → cura = soma na ficha | seed Recovery; Zelote / Celestial; `applyHealHitPoints` |
-| `damage_die_floor` + `flat` | Piso de face (GWF = 3) | seed GWF; wire DTO ainda 1→2 |
+| `damage_die_floor` + `flat` | Piso de face (GWF = 3) | seed GWF; roll via `treatOnesAndTwosAsThree` (PVE-5c) |
 
 FS: **sem** kind novo exclusivo — reuso `attack_bonus` / `ac_bonus` / `light_bonus_ability_mod` / …
 

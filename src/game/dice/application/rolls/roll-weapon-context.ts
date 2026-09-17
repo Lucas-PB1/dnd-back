@@ -50,10 +50,13 @@ export async function findEquippedWeaponAttack(
   const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
     sheet.subclassOptions,
   );
+  const ownedFeatSlugs = [
+    ...new Set([...featSlugs, ...fightingStyleSlugs]),
+  ];
   const featEffects = deps.effectCatalog
     ? await deps.effectCatalog.load({
         ownerKind: 'feat',
-        ownerSlugs: featSlugs,
+        ownerSlugs: ownedFeatSlugs,
       })
     : undefined;
   const itemEffects = deps.permanentItemEffects
@@ -113,7 +116,7 @@ export async function findEquippedWeaponAttack(
       `No equipped weapon attack for '${itemSlug}' (${mode})`,
     );
   }
-  return { attack, combatFlags, featSlugs };
+  return { attack, combatFlags, featSlugs: ownedFeatSlugs };
 }
 
 export async function loadAccessibleCharacter(

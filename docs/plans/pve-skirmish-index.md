@@ -109,6 +109,8 @@ flowchart LR
 
 **PVE-5b fechado (2026-09-17):** Battle Master no acerto — `trip-attack` / `menacing-attack` / `pushing-attack` (+dado, save, condição/nota); gasta superiority.
 
+**PVE-5c fechado (2026-09-17):** GWF piso + TWF ability no `light_bonus` + Charger gate (feat+melee); effects de estilo via `featSlugs ∪ fightingStyleSlugs`. PAM → PVE-10a. Doc [`fighting-style-combat.md`](../architecture/fighting-style-combat.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -125,7 +127,7 @@ flowchart LR
 | PVE-4b | ~~OA sem mapa + react~~ **feito** | — | S | PVE-4a |
 | PVE-5a | ~~DTO parity + smites~~ **feito** | — | M | PVE-0 |
 | PVE-5b | ~~Battle Master no acerto~~ **feito** | — | M | PVE-5a |
-| PVE-5c | Estilos GWF/TWF/PAM/Charger | [`pve-5c-fighting-styles.md`](pve-5c-fighting-styles.md) | M | PVE-5a |
+| PVE-5c | ~~Estilos GWF/TWF/Charger~~ **feito** (PAM→10a) | — | M | PVE-5a |
 | PVE-6a | Metamagia + Eldritch Smite | [`pve-6a-metamagic-eldritch.md`](pve-6a-metamagic-eldritch.md) | M | PVE-1c |
 | PVE-6b | Itens charges combate | [`pve-6b-item-charges-combat.md`](pve-6b-item-charges-combat.md) | M | PVE-0 |
 | PVE-6c | Resist/vuln/imune no HP | [`pve-6c-damage-resistances.md`](pve-6c-damage-resistances.md) | M | PVE-0 |

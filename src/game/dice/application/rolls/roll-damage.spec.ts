@@ -82,4 +82,37 @@ describe('executeRollDamage', () => {
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
+
+  it('adds Charger +1d8 when feat owned and melee', async () => {
+    mockEquippedAttack(WEAPONS.longsword(), undefined, ['charger']);
+    const result = await ctx.rollDamage({
+      itemSlug: 'longsword',
+      mode: 'melee',
+      chargerStrike: true,
+    });
+    expect(result.expression).toContain('+1d8');
+    expect(result.note).toContain('Investida');
+  });
+
+  it('rejects Charger without feat', async () => {
+    mockEquippedAttack(WEAPONS.longsword());
+    await expect(
+      ctx.rollDamage({
+        itemSlug: 'longsword',
+        mode: 'melee',
+        chargerStrike: true,
+      }),
+    ).rejects.toThrow(/Agressor/i);
+  });
+
+  it('rejects Charger on ranged attack', async () => {
+    mockEquippedAttack(WEAPONS.longsword(), undefined, ['charger']);
+    await expect(
+      ctx.rollDamage({
+        itemSlug: 'longsword',
+        mode: 'ranged',
+        chargerStrike: true,
+      }),
+    ).rejects.toThrow(/corpo a corpo/i);
+  });
 });

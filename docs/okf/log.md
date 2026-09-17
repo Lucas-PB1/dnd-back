@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-5c estilos no roll
+
+* **Update** (21:55 UTC): GWF 1–2→3 sem empilhar Elemental 1→2; TWF via effects + `fightingStyleSlugs`; Charger +1d8 gated (feat+melee); load `ownedFeatSlugs = feat ∪ style`. PAM residual PVE-10a. Specs + [`fighting-style-combat.md`](../architecture/fighting-style-combat.md). — refs: [`roll-weapon-context.ts`](../../src/game/dice/application/rolls/roll-weapon-context.ts), [`roll-damage.ts`](../../src/game/dice/application/rolls/roll-damage.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: estilos de combate tipados no path de dano skirmish/ficha.
+
 ## 2026-09-17 — PVE-5b Battle Master no acerto
 
 * **Update** (21:45 UTC): `resolveBattleMasterOnHit` (trip / menacing / pushing); gasta `superiority-dice`; condição no alvo ou nota de empurrão; DTO `battleMasterManeuverSlug`. Specs. — refs: [`resolve-battle-master-on-hit.ts`](../../src/game/combat/domain/fighter/resolve-battle-master-on-hit.ts), [`apply-battle-master-maneuver.ts`](../../src/game/skirmish/application/apply-battle-master-maneuver.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: manobras BM tipadas no skirmish, não só nota de mesa.

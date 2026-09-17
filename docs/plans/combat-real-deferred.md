@@ -38,7 +38,8 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 - [x] Battle Master: trip / menacing / pushing no acerto (skirmish PVE-5b) — além de Rally/`tempHp` e notas
 - [ ] Parry / redução de dano no momento do acerto
-- [ ] Estilos condicionais no roll (GWF piso, TWF gate, Charger, PAM, …)
+- [x] Estilos no roll: GWF piso 1–2→3, TWF `light_bonus` + ability, Charger +1d8 (feat+melee) — PVE-5c · [`fighting-style-combat.md`](../architecture/fighting-style-combat.md)
+- [ ] PAM: ataque do cabo / reação tipada (residual PVE-10a)
 - [ ] Gunslinger: manobras `descriptive` que só fazem sentido no ataque/alvo (blindfire, ricochet, fan-the-hammer, …)
 - [ ] Atacante Selvagem: enforcement 1×/turno no servidor
 - [ ] Front: escolher entre 2 rolagens de dano (`alternateRolls`)

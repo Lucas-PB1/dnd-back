@@ -11,6 +11,7 @@ Docs: [`combat-real-deferred.md`](combat-real-deferred.md)
 
 - [ ] Proteção Arcana: pool própria ≠ temp HP; Proteção Projetada
 - [ ] Centelha Divina / Auxílio da Terra: dano + save no alvo
+- [ ] PAM: ataque do cabo / reação tipada (economia-only após PVE-5c)
 - [ ] Gunslinger manobras `descriptive` no acerto
 - [ ] Atacante Selvagem: enforcement 1×/turno no servidor
 - [ ] Parry / redução de dano no hit
