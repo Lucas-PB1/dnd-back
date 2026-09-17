@@ -26,6 +26,7 @@ export type SpellCombatRow = {
   saveSuccessOutcome: SpellCombatSaveSuccessOutcome | null;
   saveAbilitySlug: string | null;
   conditionSlug: string | null;
+  damageTypeSlug: string | null;
 };
 
 export type CombatSpellResolution =

@@ -31,6 +31,7 @@ export class LoadSpellCombat {
       saveSuccessOutcome: row.saveSuccessOutcome,
       saveAbilitySlug: row.saveAbilitySlug,
       conditionSlug: row.conditionSlug,
+      damageTypeSlug: row.damageTypeSlug,
     };
   }
 }

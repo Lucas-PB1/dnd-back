@@ -27,6 +27,7 @@ function baseRow(
     saveSuccessOutcome: null,
     saveAbilitySlug: null,
     conditionSlug: null,
+    damageTypeSlug: null,
     ...overrides,
   };
 }

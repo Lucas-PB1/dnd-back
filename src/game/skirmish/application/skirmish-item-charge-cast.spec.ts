@@ -28,6 +28,7 @@ const mmRow: SpellCombatRow = {
   saveSuccessOutcome: null,
   saveAbilitySlug: null,
   conditionSlug: null,
+  damageTypeSlug: null,
 };
 
 /**

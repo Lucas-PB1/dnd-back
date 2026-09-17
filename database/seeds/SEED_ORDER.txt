@@ -469,6 +469,7 @@ creature/phb/seed.mm-animals.sql
 creature/phb/seed.mm-monsters-ab.sql
 creature/phb/seed.mm-monsters-cl.sql
 creature/phb/seed.mm-monsters-mz.sql
+creature/phb/phb_creature_template.damage-affinity.sql
 creature/phb/seed.mm-list-gap-srd.sql
 creature/phb/seed.mm-monster-lists.sql
 creature/phb/seed.mm-monsters-a-images.sql

@@ -1,15 +1,22 @@
 import { BadRequestException } from '@nestjs/common';
-import type { Repository } from 'typeorm';
+import type { DataSource, Repository } from 'typeorm';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
+import { isBloodHoundSubclass } from '@game/combat/domain/fighter';
 import { applyCombatHpDamage } from '../domain/apply-combat-hp-damage';
+import {
+  applyDamageTypeModifiers,
+  emptyDamageTypeDefenses,
+  type DamageTypeDefenses,
+} from '../domain/apply-damage-type-modifiers';
 import {
   resolveConcentrationCheck,
   type ConcentrationCheckResult,
 } from '../domain/resolve-concentration-check';
+import { loadCreatureTemplateDamageDefenses } from './load-creature-damage-defenses';
 
 export type CombatHpTarget = {
   kind: 'pc' | 'actor';
@@ -19,6 +26,8 @@ export type CombatHpTarget = {
 
 export type ApplyCombatantHpDamageResult = {
   concentration: ConcentrationCheckResult;
+  damageApplied: number;
+  damageModifier: ReturnType<typeof applyDamageTypeModifiers>['applied'];
 };
 
 const NO_CONCENTRATION: ConcentrationCheckResult = {
@@ -29,6 +38,19 @@ const NO_CONCENTRATION: ConcentrationCheckResult = {
   spellSlug: null,
 };
 
+function pcDamageDefenses(
+  character: PlayerCharacter,
+): DamageTypeDefenses {
+  if (isBloodHoundSubclass(character.subclassSlug)) {
+    return {
+      immunities: [],
+      resistances: ['poison'],
+      vulnerabilities: [],
+    };
+  }
+  return emptyDamageTypeDefenses();
+}
+
 export async function applyCombatantHpDamage(input: {
   loadCharacter: (characterId: string) => Promise<PlayerCharacter | null>;
   characterState: CharacterStateRepository;
@@ -36,9 +58,17 @@ export async function applyCombatantHpDamage(input: {
   actors: Repository<GameActor>;
   target: CombatHpTarget;
   damage: number;
+  damageTypeSlug?: string | null;
+  /** Optional override (tests); otherwise loaded from template / PC rules. */
+  defenses?: DamageTypeDefenses;
+  dataSource?: DataSource;
 }): Promise<ApplyCombatantHpDamageResult> {
   if (input.damage <= 0) {
-    return { concentration: NO_CONCENTRATION };
+    return {
+      concentration: NO_CONCENTRATION,
+      damageApplied: 0,
+      damageModifier: 'none',
+    };
   }
 
   if (input.target.kind === 'pc' && input.target.characterId) {
@@ -46,9 +76,22 @@ export async function applyCombatantHpDamage(input: {
     if (!character) {
       throw new BadRequestException('Target character not found');
     }
+    const defenses = input.defenses ?? pcDamageDefenses(character);
+    const modified = applyDamageTypeModifiers({
+      damage: input.damage,
+      damageTypeSlug: input.damageTypeSlug,
+      defenses,
+    });
+    if (modified.damage <= 0) {
+      return {
+        concentration: NO_CONCENTRATION,
+        damageApplied: 0,
+        damageModifier: modified.applied,
+      };
+    }
     const stateBefore = await input.characterState.buildResponse(character);
     const split = applyCombatHpDamage({
-      damage: input.damage,
+      damage: modified.damage,
       hitPointsCurrent: character.hitPointsCurrent ?? 0,
       tempHp: stateBefore.tempHp ?? 0,
     });
@@ -64,14 +107,18 @@ export async function applyCombatantHpDamage(input: {
 
     const mods = computeAbilityModifiers(character.abilityScores);
     const concentration = resolveConcentrationCheck({
-      damageTaken: input.damage,
+      damageTaken: modified.damage,
       constitutionModifier: mods.constituicao,
       concentratingOn: stateBefore.concentratingOn,
     });
     if (concentration.broken) {
       await input.characterState.patch(character, { concentratingOn: null });
     }
-    return { concentration };
+    return {
+      concentration,
+      damageApplied: modified.damage,
+      damageModifier: modified.applied,
+    };
   }
 
   if (!input.target.actorId) {
@@ -83,9 +130,29 @@ export async function applyCombatantHpDamage(input: {
   if (!actor) {
     throw new BadRequestException('Target actor not found');
   }
+  const defenses =
+    input.defenses ??
+    (input.dataSource
+      ? await loadCreatureTemplateDamageDefenses(
+          input.dataSource,
+          actor.templateSlug,
+        )
+      : emptyDamageTypeDefenses());
+  const modified = applyDamageTypeModifiers({
+    damage: input.damage,
+    damageTypeSlug: input.damageTypeSlug,
+    defenses,
+  });
+  if (modified.damage <= 0) {
+    return {
+      concentration: NO_CONCENTRATION,
+      damageApplied: 0,
+      damageModifier: modified.applied,
+    };
+  }
   const state = await input.actorState.ensureState(actor.id);
   const split = applyCombatHpDamage({
-    damage: input.damage,
+    damage: modified.damage,
     hitPointsCurrent: actor.hitPointsCurrent ?? 0,
     tempHp: state.tempHp ?? 0,
   });
@@ -100,7 +167,7 @@ export async function applyCombatantHpDamage(input: {
 
   const mods = computeAbilityModifiers(actor.abilityScores);
   const concentration = resolveConcentrationCheck({
-    damageTaken: input.damage,
+    damageTaken: modified.damage,
     constitutionModifier: mods.constituicao,
     concentratingOn: state.concentratingOn,
   });
@@ -111,5 +178,9 @@ export async function applyCombatantHpDamage(input: {
       input.actors,
     );
   }
-  return { concentration };
+  return {
+    concentration,
+    damageApplied: modified.damage,
+    damageModifier: modified.applied,
+  };
 }

@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-6c resist/vuln/imune
+
+* **Update** (22:35 UTC): `applyDamageTypeModifiers` + tabela `phb_creature_template_damage_affinity`; skirmish cast passa `damageTypeSlug`; imunidade zera / resist metade. Piloto Elemental do Fogo + Azer. — refs: [`apply-damage-type-modifiers.ts`](../../src/game/combat/domain/apply-damage-type-modifiers.ts), [`0168_phb_creature_template_damage_affinity.sql`](../../database/schema/020_tables/0168_phb_creature_template_damage_affinity.sql), [`damage-type-defenses.md`](../architecture/damage-type-defenses.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: dano tipado respeita afinidades do alvo no HP.
+
 ## 2026-09-17 — PVE-6b itens charges combate
 
 * **Update** (22:20 UTC): `itemCastResourceSlug` / `itemCastSpendAmount` / `itemCastItemSlug` no cast skirmish/duelo; overrides CD/ataque do Treasure no resolve. Piloto Varinha de Mísseis → `auto_damage`. — refs: [`pick-combat-surface-cast-command.ts`](../../src/game/combat/application/pick-combat-surface-cast-command.ts), [`spell-combat-bonuses-from-cast.ts`](../../src/game/combat/application/spell-combat-bonuses-from-cast.ts), [`item-charge-combat.md`](../architecture/item-charge-combat.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: charges de item disparam o mesmo motor tipado de magia no combatente.

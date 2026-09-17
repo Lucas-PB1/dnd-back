@@ -260,6 +260,7 @@ export async function castSpell(
       member: opponent,
       target: defenderPc,
       damage: resolution.damage,
+      damageType: combatRow?.damageTypeSlug,
     });
     const saveNote =
       resolution.kind === 'save_damage'
@@ -319,6 +320,7 @@ export async function castSpell(
       member: opponent,
       target: defenderPc,
       damage: resolution.damage,
+      damageType: combatRow?.damageTypeSlug,
     });
     log = appendCombatLog(
       log,

@@ -115,6 +115,8 @@ flowchart LR
 
 **PVE-6b fechado (2026-09-17):** Cast com carga de item no skirmish/duelo (`itemCastResourceSlug` + overrides CD/ataque). Piloto: Varinha de Mísseis. Doc [`item-charge-combat.md`](../architecture/item-charge-combat.md).
 
+**PVE-6c fechado (2026-09-17):** Resist/vuln/imune no HP (`applyDamageTypeModifiers` + afinidades de template). Fire Bolt vs resist = metade; imunidade zera. Doc [`damage-type-defenses.md`](../architecture/damage-type-defenses.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -134,7 +136,7 @@ flowchart LR
 | PVE-5c | ~~Estilos GWF/TWF/Charger~~ **feito** (PAM→10a) | — | M | PVE-5a |
 | PVE-6a | ~~Metamagia + Eldritch Smite~~ **feito** | — | M | PVE-1c |
 | PVE-6b | ~~Itens charges combate~~ **feito** | — | M | PVE-0 |
-| PVE-6c | Resist/vuln/imune no HP | [`pve-6c-damage-resistances.md`](pve-6c-damage-resistances.md) | M | PVE-0 |
+| PVE-6c | ~~Resist/vuln/imune no HP~~ **feito** | — | M | PVE-0 |
 | PVE-7a | Spirits/companion na iniciativa | [`pve-7a-spirits-initiative.md`](pve-7a-spirits-initiative.md) | M | PVE-3a |
 | PVE-7b | Arma Espiritual + Conjure 1-actor | [`pve-7b-spiritual-conjure.md`](pve-7b-spiritual-conjure.md) | M | PVE-7a |
 | PVE-8 | Paridade encontro/duelo + docs | [`pve-8-surface-parity.md`](pve-8-surface-parity.md) | M | PVE-1c+5a+7a |

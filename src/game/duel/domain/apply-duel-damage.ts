@@ -6,6 +6,10 @@ import {
   resolveConcentrationCheck,
   type ConcentrationCheckResult,
 } from '@game/combat/domain/resolve-concentration-check';
+import {
+  applyDamageTypeModifiers,
+  emptyDamageTypeDefenses,
+} from '@game/combat/domain/apply-damage-type-modifiers';
 import { hitPointsOf } from '../application/to-dto';
 import type { DuelMember } from '../infrastructure/duel-member.entity';
 import { applyDamageToMemberVitals } from './duel-member-vitals';
@@ -28,19 +32,15 @@ const NO_CONCENTRATION: ConcentrationCheckResult = {
   spellSlug: null,
 };
 
-function applyPoisonResist(
-  damage: number,
-  target: PlayerCharacter,
-  damageType?: string | null,
-): number {
-  let damageTotal = Math.max(0, damage);
-  if (
-    damageType === 'poison' &&
-    isBloodHoundSubclass(target.subclassSlug)
-  ) {
-    damageTotal = Math.floor(damageTotal / 2);
+function pcDefenses(target: PlayerCharacter) {
+  if (isBloodHoundSubclass(target.subclassSlug)) {
+    return {
+      immunities: [] as string[],
+      resistances: ['poison'],
+      vulnerabilities: [] as string[],
+    };
   }
-  return damageTotal;
+  return emptyDamageTypeDefenses();
 }
 
 async function maybeBreakConcentration(input: {
@@ -71,11 +71,12 @@ export async function applyDuelDamageToTarget(input: {
   damage: number;
   damageType?: string | null;
 }): Promise<AppliedDuelDamage> {
-  const damageTotal = applyPoisonResist(
-    input.damage,
-    input.target,
-    input.damageType,
-  );
+  const modified = applyDamageTypeModifiers({
+    damage: input.damage,
+    damageTypeSlug: input.damageType,
+    defenses: pcDefenses(input.target),
+  });
+  const damageTotal = modified.damage;
 
   if (input.member != null && input.member.hitPointsCurrent != null) {
     const applied = applyDamageToMemberVitals(input.member, damageTotal);

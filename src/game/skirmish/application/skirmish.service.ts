@@ -511,6 +511,8 @@ export class SkirmishService {
           actors: this.actors,
           target: actorRow,
           damage,
+          damageTypeSlug: combatRow?.damageTypeSlug,
+          dataSource: this.dataSource,
         });
         const concNote = noteSkirmishConcentrationBreak({
           skirmish,
@@ -884,6 +886,7 @@ export class SkirmishService {
         actors: this.actors,
         target,
         damage: rolled.damageTotal,
+        dataSource: this.dataSource,
       });
       const concNote = noteSkirmishConcentrationBreak({
         skirmish,
