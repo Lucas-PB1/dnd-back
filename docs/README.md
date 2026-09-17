@@ -43,6 +43,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`architecture/adr-effect-engine.md`](architecture/adr-effect-engine.md) | Motor de efeitos (`phb_effect`) |
 | [`architecture/effect-dictionary.md`](architecture/effect-dictionary.md) | Dicionário vivo de `effect_kind` |
 | [`architecture/effect-engine-read-path.md`](architecture/effect-engine-read-path.md) | DX — seed → load → query → DTO (+ exemplos) |
+| [`architecture/spell-combat.md`](architecture/spell-combat.md) | Magia tipada em combate (`phb_spell_combat`) |
 
 Contrato REST: Swagger em `/api`.
 

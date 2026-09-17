@@ -2,7 +2,7 @@
 
 Guia de DX do motor `phb_effect`. Meta: em ~2 minutos responder “este talento → quais efeitos → onde aparece na ficha/mesa”.
 
-ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Dicionário: [`effect-dictionary.md`](effect-dictionary.md) · Residual mesa: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md)
+ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Dicionário: [`effect-dictionary.md`](effect-dictionary.md) · Residual mesa: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) · Magia skirmish/duelo: [`spell-combat.md`](spell-combat.md) (`phb_spell_combat` + `resolveCombatSpell` — fora deste motor)
 
 ## Porta pública
 

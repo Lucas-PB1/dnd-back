@@ -58,7 +58,7 @@ Ordem e pacotes executáveis (fácil → difícil): **[`pve-skirmish-index.md`](
 
 | Trilha | Conteúdo |
 |--------|----------|
-| **DB-0** | Reorg migrations greenfield (sem prod; sem histórico ALTER) |
+| **DB-0** | ~~Reorg migrations~~ **feito** (greenfield; ver `docs/okf/log.md`) |
 | **PVE-0…8** | Motor magia + seeds + concentração + reações + marciais + caster/itens + summons + paridade |
 | **PVE-9…10** | Legado mesa (slug branches) + residuals combate + DoD PVE |
 | **LEG-1…4** | Limpeza código morto repo-wide — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`) |

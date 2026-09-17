@@ -845,3 +845,53 @@ UPDATE rpg.phb_spell
 SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'),
     requires_attack_roll = FALSE
 WHERE slug = 'zona-da-verdade';
+
+-- PVE-1a: meta save/attack dos cantrips ofensivos PHB
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = TRUE
+WHERE slug IN (
+  'chicote-de-espinhos',
+  'criar-chamas',
+  'fagulha-estelar',
+  'raio-de-fogo',
+  'raio-de-gelo',
+  'rajada-de-veneno',
+  'toque-necrotico'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
+    requires_attack_roll = FALSE
+WHERE slug = 'zombaria-perversa';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'),
+    requires_attack_roll = FALSE
+WHERE slug = 'amigos';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug = 'protecao-contra-laminas';
+
+-- PVE-1b: meta save/attack magias Nv 1 ofensivas/cura
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = TRUE
+WHERE slug IN (
+  'raio-guia',
+  'orbe-cromatico',
+  'raio-de-bruxa',
+  'raio-nauseante'
+);
+
+UPDATE rpg.phb_spell
+SET save_ability_id = (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'),
+    requires_attack_roll = FALSE
+WHERE slug = 'infligir-ferimentos';
+
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug IN ('curar-ferimentos', 'palavra-curativa');

@@ -1,5 +1,25 @@
 # log
 
+## 2026-09-17 — PVE-1b magias Nv 1
+
+* **Update** (19:15 UTC): Colunas `dice_count_*` / `spell_level` / `include_spellcasting_mod`; seed `phb_spell_combat.level-1.sql` (cura, ataques e saves Nv 1 PHB). — refs: [`phb_spell_combat.level-1.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-1.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: magias de 1º círculo tipadas no skirmish.
+
+## 2026-09-17 — PVE-1a cantrips combate
+
+* **Update** (18:55 UTC): Extensão `save_damage` / `heal_combatant` / `per_die_attack`; seed `phb_spell_combat.cantrips.sql` (16 ofensivos PHB); meta save/attack de cantrips; wire skirmish/duelo com CD e save do alvo. — refs: [`0167_phb_spell_combat.sql`](../../database/schema/020_tables/0167_phb_spell_combat.sql), [`phb_spell_combat.cantrips.sql`](../../database/seeds/spell/phb/phb_spell_combat.cantrips.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`spell-combat.md`](../architecture/spell-combat.md) — motivo: truques ofensivos tipados no skirmish sem hardcode.
+
+## 2026-09-17 — PVE-0 motor magia combate (+ RES-3)
+
+* **Update** (18:35 UTC): Tabela `rpg.phb_spell_combat` + seed piloto (MM, Raio de Fogo, Escuridão); `resolveCombatSpell` / `LoadSpellCombat`; skirmish+duelo sem hardcode de slug; docs `spell-combat.md` + links dicionário/read-path/data-model. Planos `pve-0` e `resolve-3` apagados. — refs: [`0167_phb_spell_combat.sql`](../../database/schema/020_tables/0167_phb_spell_combat.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`spell-combat.md`](../architecture/spell-combat.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: SSOT tipado para magia em arena sem if por slug.
+
+## 2026-09-17 — QA-1 auditoria planos
+
+* **Update** (18:20 UTC): Índice `pve-skirmish-index.md` — 45 links `.md` ok; 0 missing; 0 órfãos. DB-0 pacotes apagados pós-fechamento. — refs: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md), [`quality-gate-backlog.md`](../plans/quality-gate-backlog.md) — motivo: validar fila gerada antes de seguir PVE.
+
+## 2026-09-17 — DB-0 greenfield: fold + esvaziar migrations
+
+* **Update** (18:05 UTC): Auditoria 53 migrations vs `database/schema/**` — enums/effects/kinds e quase todo DDL já estavam no CREATE; único drift de coluna: `sacred_weapon_active` → fold em `0129_player_character_state.sql` (entity já tinha). Colunas spirit/companion em template foram supersedidas por `0161_phb_creature_scale.sql` (migration intermediária ADD+DROP). Apagados todos `database/migrations/*.sql`; README política greenfield. Seeds disfarçados não precisaram mover (DML já em `database/seeds/`). — refs: [`0129_player_character_state.sql`](../../database/schema/020_tables/0129_player_character_state.sql), [`0161_phb_creature_scale.sql`](../../database/schema/020_tables/0161_phb_creature_scale.sql), [`sql-layout.md`](../architecture/sql-layout.md) — motivo: sem prod; histórico ALTER não agrega.
+
 ## 2026-09-16 — §H Item: charges, dawn MVP, poções de ficha
 
 * **Update** (15:20 UTC): `POST …/item/table-action` gasta cargas de item ativo; poções de cura/heroísmo/saúde aplicam PV/PV temp./condições e consomem qty; DL já recarrega pools; cast de item já existia; arma/alvo e dawn real ficam fora — refs: [`apply-item-economy-table-action.ts`](../../src/game/session/application/table-actions/item/apply-item-economy-table-action.ts), [`phb_effect.item-mesa.sql`](../../database/seeds/effect/dmg/phb_effect.item-mesa.sql), [`item.routes.ts`](../../src/game/session/controllers/table-actions/item.routes.ts), [`backlog.md`](../plans/backlog.md) — motivo: economy de item sem rota de apply deixava charges e poções só como lembrete.

@@ -1,0 +1,179 @@
+import { resolveCombatSpell } from './resolve-combat-spell';
+import type { SpellCombatRow } from './resolve-combat-spell';
+
+jest.mock('@game/dice/domain/dice', () => ({
+  rollDie: jest.fn((sides: number) => sides),
+  rollD20Check: jest.fn((bonus: number) => ({
+    total: 15 + bonus,
+    d20: { kept: [15], rolls: [15] },
+  })),
+}));
+
+function baseRow(
+  overrides: Partial<SpellCombatRow> &
+    Pick<SpellCombatRow, 'spellSlug' | 'resolution' | 'label'>,
+): SpellCombatRow {
+  return {
+    damageDie: null,
+    flatPerDie: 0,
+    autoUnitBase: null,
+    autoUnitPerSlotAboveBase: null,
+    diceCountBase: null,
+    dicePerSlotAboveBase: null,
+    spellLevel: 0,
+    cantripScale: false,
+    perDieAttack: false,
+    includeSpellcastingMod: false,
+    saveSuccessOutcome: null,
+    saveAbilitySlug: null,
+    ...overrides,
+  };
+}
+
+const mmRow = baseRow({
+  spellSlug: 'misseis-magicos',
+  resolution: 'auto_damage',
+  label: 'Mísseis Mágicos',
+  damageDie: 4,
+  flatPerDie: 1,
+  autoUnitBase: 3,
+  autoUnitPerSlotAboveBase: 1,
+  spellLevel: 1,
+});
+
+const fireBoltRow = baseRow({
+  spellSlug: 'raio-de-fogo',
+  resolution: 'spell_attack',
+  label: 'Raio de Fogo',
+  damageDie: 10,
+  cantripScale: true,
+});
+
+const sacredFlameRow = baseRow({
+  spellSlug: 'chama-sagrada',
+  resolution: 'save_damage',
+  label: 'Chama Sagrada',
+  damageDie: 8,
+  cantripScale: true,
+  saveSuccessOutcome: 'none',
+  saveAbilitySlug: 'destreza',
+});
+
+const cureRow = baseRow({
+  spellSlug: 'curar-ferimentos',
+  resolution: 'heal_combatant',
+  label: 'Curar Ferimentos',
+  damageDie: 8,
+  diceCountBase: 2,
+  dicePerSlotAboveBase: 2,
+  spellLevel: 1,
+  includeSpellcastingMod: true,
+});
+
+describe('resolveCombatSpell', () => {
+  const common = {
+    spellAttackBonus: 0,
+    spellSaveDc: 13,
+    spellcastingAbilityMod: 3,
+    targetAc: 10,
+    targetSaveBonus: 0,
+    advantage: 'normal' as const,
+  };
+
+  it('returns slot_only when row missing', () => {
+    const r = resolveCombatSpell({
+      row: null,
+      slotLevel: 1,
+      characterLevel: 1,
+      ...common,
+    });
+    expect(r.kind).toBe('slot_only');
+  });
+
+  it('auto_damage scales darts with slot (MM parity)', () => {
+    const r = resolveCombatSpell({
+      row: mmRow,
+      slotLevel: 2,
+      characterLevel: 5,
+      ...common,
+    });
+    expect(r.kind).toBe('auto_damage');
+    if (r.kind === 'auto_damage') {
+      expect(r.damage).toBe(4 * (4 + 1));
+      expect(r.label).toContain('4');
+    }
+  });
+
+  it('spell_attack cantrip at L1 hits with 1d10', () => {
+    const r = resolveCombatSpell({
+      row: fireBoltRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+    });
+    expect(r.kind).toBe('spell_attack');
+    if (r.kind === 'spell_attack') {
+      expect(r.hit).toBe(true);
+      expect(r.damage).toBe(10);
+    }
+  });
+
+  it('save_damage deals full when save fails', () => {
+    const r = resolveCombatSpell({
+      row: sacredFlameRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+      spellSaveDc: 20,
+    });
+    expect(r.kind).toBe('save_damage');
+    if (r.kind === 'save_damage') {
+      expect(r.saved).toBe(false);
+      expect(r.damage).toBe(8);
+    }
+  });
+
+  it('save_damage deals none when save succeeds (outcome none)', () => {
+    const r = resolveCombatSpell({
+      row: sacredFlameRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+      spellSaveDc: 10,
+    });
+    expect(r.kind).toBe('save_damage');
+    if (r.kind === 'save_damage') {
+      expect(r.saved).toBe(true);
+      expect(r.damage).toBe(0);
+    }
+  });
+
+  it('heal_combatant scales with slot and adds casting mod', () => {
+    const r = resolveCombatSpell({
+      row: cureRow,
+      slotLevel: 2,
+      characterLevel: 3,
+      ...common,
+    });
+    expect(r.kind).toBe('heal');
+    if (r.kind === 'heal') {
+      // 2 + (2-1)*2 = 4 dados d8 + mod 3 → 4*8+3
+      expect(r.amount).toBe(4 * 8 + 3);
+    }
+  });
+
+  it('arena_darkness from catalog', () => {
+    const r = resolveCombatSpell({
+      row: baseRow({
+        spellSlug: 'escuridao',
+        resolution: 'arena_darkness',
+        label: 'Escuridão',
+        spellLevel: 2,
+      }),
+      slotLevel: 2,
+      characterLevel: 3,
+      ...common,
+    });
+    expect(r).toEqual({ kind: 'arena_darkness' });
+  });
+});

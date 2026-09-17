@@ -28,6 +28,12 @@ import {
 } from '@game/combat/application/roll-combat-attack';
 import { pickActorAttackAction } from '@game/combat/application/combat-attack-weapons';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
+import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
+import {
+  abilityModifierFromSlug,
+  spellSaveDcFromMods,
+} from '@game/combat/domain/spell-save-dc';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
@@ -36,10 +42,10 @@ import {
   secondWindHealDice,
 } from '@game/combat/domain/fighter';
 import { assertCanTakeDuelAction } from '@game/duel/domain/duel-combat-gates';
+import { applyHealHitPoints } from '@game/session/application/table-actions/primitives/apply-heal-hit-points';
 import {
   assertValidDuelConditionSlug,
   mergeConditions,
-  resolveDuelSpellEffect,
 } from '@game/duel/domain/duel-spell-resolve';
 import { resolveSkirmishAttackBudget } from './skirmish-attack-budget';
 import { formatSkirmishAttackLogLine } from '../domain/format-skirmish-attack-log';
@@ -80,6 +86,7 @@ export class SkirmishService {
     private readonly characterState: CharacterStateRepository,
     private readonly armorClass: ResolveEquippedArmorClass,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly spellCombat: LoadSpellCombat,
     private readonly sheet: CharacterSheetRepository,
     private readonly domain: CharacterDomainService,
     @InjectDataSource()
@@ -310,18 +317,33 @@ export class SkirmishService {
       character.classSlug,
     );
     const mods = computeAbilityModifiers(character.abilityScores);
-    const spellAttackBonus = pb + (abilitySlug ? mods[abilitySlug] : 0);
+    const castingMod = abilityModifierFromSlug(mods, abilitySlug);
+    const spellAttackBonus = pb + castingMod;
+    const spellSaveDc = spellSaveDcFromMods(pb, castingMod);
     const targetAc = actor.armorClass ?? 10;
-    const resolved = resolveDuelSpellEffect({
-      spellSlug: dto.spellSlug,
+    const actorMods = computeAbilityModifiers(actor.abilityScores);
+    const combatRow = await this.spellCombat.bySlug(dto.spellSlug);
+    const targetSaveBonus = abilityModifierFromSlug(
+      actorMods,
+      combatRow?.saveAbilitySlug,
+    );
+    const resolved = resolveCombatSpell({
+      row: combatRow,
       slotLevel: cast.slotLevelUsed ?? dto.slotLevel ?? 0,
       characterLevel: character.level,
       spellAttackBonus,
+      spellSaveDc,
+      spellcastingAbilityMod: castingMod,
       targetAc,
+      targetSaveBonus,
       advantage: 'normal',
       castNote: cast.note ?? undefined,
     });
-    if (resolved.kind === 'auto_damage' || resolved.kind === 'spell_attack') {
+    if (
+      resolved.kind === 'auto_damage' ||
+      resolved.kind === 'spell_attack' ||
+      resolved.kind === 'save_damage'
+    ) {
       const damage =
         resolved.kind === 'spell_attack' && !resolved.hit
           ? 0
@@ -336,11 +358,31 @@ export class SkirmishService {
           damage,
         });
       }
+      if (resolved.kind === 'spell_attack') {
+        await this.appendLog(
+          skirmish,
+          `${character.name}: ${resolved.label} (${resolved.hit ? 'acerto' : 'erro'} ${resolved.attackTotal} vs CA ${targetAc})${damage ? ` · dano ${damage}` : ''}`,
+        );
+      } else if (resolved.kind === 'save_damage') {
+        await this.appendLog(
+          skirmish,
+          `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${damage ? ` · dano ${damage}` : ''}`,
+        );
+      } else {
+        await this.appendLog(
+          skirmish,
+          `${character.name}: ${resolved.label} · dano ${damage}`,
+        );
+      }
+    } else if (resolved.kind === 'heal') {
+      const healed = await applyHealHitPoints(
+        this.characterState,
+        character,
+        resolved.amount,
+      );
       await this.appendLog(
         skirmish,
-        resolved.kind === 'spell_attack'
-          ? `${character.name}: ${resolved.label} (${resolved.hit ? 'acerto' : 'erro'} ${resolved.attackTotal} vs CA ${targetAc})${damage ? ` · dano ${damage}` : ''}`
-          : `${character.name}: ${resolved.label} · dano ${damage}`,
+        `${character.name}: ${resolved.label} · curou ${healed.healed} PV`,
       );
     } else if (resolved.kind === 'arena_darkness') {
       await this.appendLog(

@@ -32,10 +32,12 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
 import { GameSharedModule } from '../shared/game-shared.module';
 import { EffectsModule } from '../effects/effects.module';
 import { LoadCombatMechanicalCatalog } from './application/load-combat-mechanical-catalog';
+import { LoadSpellCombat } from './application/load-spell-combat';
 import { ResolveEquippedArmorClass } from './application/resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './application/resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './application/resolve-equipment-compliance';
 import { CombatCatalogService } from './infrastructure/combat-catalog.service';
+import { PhbSpellCombat } from '@entities/spell/phb-spell-combat.entity';
 
 @Module({
   imports: [
@@ -50,6 +52,7 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       PhbClassRef,
       PhbSubclassRef,
       PhbSpellRef,
+      PhbSpellCombat,
       PhbGunslingerManeuver,
       PhbBattleMasterManeuver,
       PhbCunningStrikeEffect,
@@ -75,6 +78,7 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
   providers: [
     CombatCatalogService,
     LoadCombatMechanicalCatalog,
+    LoadSpellCombat,
     ResolveActivePermanentItemEffects,
     ResolveEquippedArmorClass,
     ResolveEquippedWeaponAttacks,
@@ -83,6 +87,7 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
   exports: [
     CombatCatalogService,
     LoadCombatMechanicalCatalog,
+    LoadSpellCombat,
     ResolveActivePermanentItemEffects,
     ResolveEquippedArmorClass,
     ResolveEquippedWeaponAttacks,

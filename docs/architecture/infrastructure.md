@@ -111,7 +111,7 @@ PORT=3000
 |------|--------|
 | **Atual** | Catálogo + Auth Nest + RLS player/campaign no schema |
 | **Próxima** | Endurecer ownership / mesa |
-| **Depois** | Forward migrations se houver prod com dados |
+| **Depois** | Forward migrations **só** se houver prod com dados; até lá editar `database/schema/**` + `db:setup` |
 
 ## Rules / skills derivadas
 

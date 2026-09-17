@@ -1,39 +1,9 @@
-# Migrations forward
+# database/migrations
 
-Schema greenfield (SSOT): **`database/schema/`** — ver [`../schema/README.md`](../schema/README.md).
+**Política greenfield (sem prod com dados):** pasta **vazia** de SQL.
 
-Aplicação local/remoto: `npm run db:setup` (schema + seeds) ou `npm run db:migrate` / `db:migrate:all`.
+- Schema SSOT: `database/schema/**` (`CREATE` only) + `npm run db:setup`
+- Seeds: `database/seeds/**` — nunca DML de catálogo aqui
+- Forward-only `.sql` nesta pasta: **só** quando existir produção com dados a preservar
 
-## Esta pasta
-
-Forward-only deltas **depois** do schema declarative já aplicado. Ordem lexicográfica; registro em `rpg.schema_migration`.
-
-Arquivos atuais:
-
-| Arquivo | Mudança |
-| --- | --- |
-| `20260908_player_character_state_mesa_circumstances.sql` | `ALTER` em estado de mesa (`mesa_circumstances`) |
-| `20260911_phb_class_fighting_style_unlock_level.sql` | Coluna `fighting_style_unlock_level` + UPDATE classes PHB/Valdas/GH |
-| `20260911_phb_class_progression_asi_or_feat.sql` | Coluna `asi_or_feat` + UPDATE calendário ASI/talento |
-| `20260911_phb_class_expertise_option.sql` | `phb_option_def`/`value` de Especialização (rogue/bard/ranger/wizard) |
-| `20260911_phb_class_jack_of_all_trades_level.sql` | Coluna `jack_of_all_trades_level` (Bardo = 2) |
-| `20260911_phb_companion_profile.sql` | Tabelas + seed de perfil/template de companheiro |
-| `20260911_phb_species_armor_preset_and_damage_type.sql` | Presets CA Manikin + `damage_type` EN em ancestry/legacy |
-| `20260911_phb_initiative_gates_notes_companion.sql` | Initiative rules, bloodhound gates, companion commands, GH level combat notes |
-| `20260911_phb_level_notes_northlands_phb_damage_type.sql` | Northlands + packs PHB estáticos em level notes; `phb_damage_type` labels PT |
-| `20260911_phb_level_combat_note_remaining_static.sql` | Literais estáticos restantes (fighter/rogue/ranger/warlock/wizard/cleric/bard/druid) |
-| `20260911_phb_level_combat_note_barb_monk_paladin_class.sql` | Notas de classe estáticas bárbaro/monge/paladino |
-| `20260911_phb_level_combat_note_bmp_no_dynamic.sql` | Ex-templates dinâmicos BMP → literais (schedule no texto) |
-| `20260911_phb_level_combat_note_remaining_dynamic_as_static.sql` | Ex-templates restantes (fighter/rogue/…/wizard) → literais |
-| `20260911_phb_class_feature_schedule.sql` | Tabela + piloto attacks_per_action / martial arts / unarmored speed |
-| `20260911_phb_class_feature_schedule_wave2.sql` | Schedules sneak/BI/rage/indomitable/superiority/psi/champion/zealot |
-| `20260911_phb_class_feature_schedule_wave3.sql` | brutal strike, gunslinger crit, warlock pact/invocations, metamagic |
-
-## Quando usar forward vs editar schema/
-
-| Situação | Onde |
-| --- | --- |
-| Dev local greenfield / reset | Editar `database/schema/**` + `npm run db:setup` |
-| Ambiente que já tem dados (Supabase / compartilhado) | Novo arquivo aqui (`YYYYMMDD_descricao.sql`) — **não** editar migration já aplicada |
-
-Ver skill `postgresql-sql` → migrations versionadas; nunca reset destrutivo em banco compartilhado/prod.
+Ver: [`docs/architecture/sql-layout.md`](../../docs/architecture/sql-layout.md) · log OKF 2026-09-17 DB-0

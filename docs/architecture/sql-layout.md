@@ -48,7 +48,7 @@ database/
     000_truncate.sql
     SEED_ORDER.txt        # ordem FK-safe
     {domínio}/{fonte}/{tabela}.{conteudo-slug}.sql
-  migrations/             # forward-only; greenfield: esvaziar via DB-0 (docs/plans/db-0-reorg-migrations.md)
+  migrations/             # forward-only; **vazio** sem prod (política greenfield / DB-0)
 ```
 
 ## Seeds — nome e ordem
@@ -64,10 +64,11 @@ database/
 
 | Regra | Detalhe |
 |-------|---------|
-| Zero ALTER | Schema = editar `CREATE` + `db:setup` **local**. |
+| **Zero ALTER (greenfield)** | Schema = editar `CREATE` + `db:setup` **local**. Sem prod: **não** criar `database/migrations/*.sql`. |
 | Upsert | `INSERT … ON CONFLICT`. Effects CTE: `-- seed-mode: truncate-scoped`. |
 | Local ≠ cloud | `DATABASE_URL` = localhost; `SUPABASE_DATABASE_URL` = cloud. |
 | Legado → Vasco | Após migrar fatia, apagar arquivo antigo no mesmo PR. |
+| Forward migrations | Só quando existir **prod com dados**; até lá pasta `migrations/` fica sem SQL (só README). |
 
 ## Domínios
 

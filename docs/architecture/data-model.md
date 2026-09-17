@@ -45,6 +45,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_spell_slot_pattern`, `phb_spell_slot_by_level`
 - `phb_spell_source` — metadado de origem (listas/subclass)
 - `phb_spell_grant` — magias concedidas (feat/class); views `v_phb_feat_granted_spell` / `v_phb_class_granted_spell` — espécie via `phb_effect`
+- `phb_spell_combat` — resolução tipada skirmish/duelo (ver [`spell-combat.md`](spell-combat.md))
 
 ### 3. Classes
 

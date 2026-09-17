@@ -2,7 +2,7 @@
 
 SSOT semântico dos `rpg.effect_kind`. Kind novo → satélite + serviço TS + linha neste arquivo no mesmo PR.
 
-ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Residual mesa: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) · **Read-path / kind→consumidor:** [`effect-engine-read-path.md`](effect-engine-read-path.md)
+ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Residual mesa: [`../plans/effect-mesa-checklist.md`](../plans/effect-mesa-checklist.md) · **Read-path / kind→consumidor:** [`effect-engine-read-path.md`](effect-engine-read-path.md) · **Magia em combate (tabela própria, não `effect_kind`):** [`spell-combat.md`](spell-combat.md)
 
 ## Freeze (DX)
 

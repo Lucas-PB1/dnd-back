@@ -13,10 +13,9 @@ Docs: [`code-standards.md`](../architecture/code-standards.md) · [`docs/README.
 
 ## Fases
 
-| # | Pacote | Doc | Quando | Tam. |
-|---|--------|-----|--------|------|
-| QA-1 | Auditoria dos `.md` de plano | [`quality-1-plans-audit.md`](quality-1-plans-audit.md) | **Agora** (antes/durante execução) | S |
-| QA-2 | Gate pós-execução das trilhas | [`quality-2-post-execution.md`](quality-2-post-execution.md) | **Depois** DB+PVE+LEG+RES+LEGAC | M |
+| QA | Backlog pai | [`quality-gate-backlog.md`](quality-gate-backlog.md) | — | — |
+| QA-1 | ~~Auditoria planos~~ **feito** | — | S | — |
+| QA-2 | Gate pós-execução | [`quality-2-post-execution.md`](quality-2-post-execution.md) | M | trilhas fechadas |
 
 ## Critérios gerais
 

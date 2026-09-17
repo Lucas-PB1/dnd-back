@@ -14,6 +14,7 @@ CREATE TABLE rpg.player_character_state (
   firearm_chambers JSONB NOT NULL DEFAULT '{}'::jsonb,
   rage_active BOOLEAN NOT NULL DEFAULT FALSE,
   reckless_active BOOLEAN NOT NULL DEFAULT FALSE,
+  sacred_weapon_active BOOLEAN NOT NULL DEFAULT FALSE,
   persona_masks JSONB NOT NULL DEFAULT '[]'::jsonb,
   bestial_aspect_level INTEGER NOT NULL DEFAULT 0 CHECK (bestial_aspect_level >= 0 AND bestial_aspect_level <= 5),
   missile_shield_armed BOOLEAN NOT NULL DEFAULT false,

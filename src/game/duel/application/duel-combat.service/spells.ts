@@ -6,6 +6,12 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
 import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import type { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
+import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
+import {
+  abilityModifierFromSlug,
+  spellSaveDcFromMods,
+} from '@game/combat/domain/spell-save-dc';
 import {
   clearMagicalDarkness,
   MAGICAL_DARKNESS_SPELL_SLUG,
@@ -19,7 +25,6 @@ import {
 import {
   assertValidDuelConditionSlug,
   mergeConditions,
-  resolveDuelSpellEffect,
 } from '../../domain/duel-spell-resolve';
 import { applyDuelDamageToTarget } from '../../domain/apply-duel-damage';
 import type { DuelRepository } from '../../infrastructure/duel.repository';
@@ -34,6 +39,8 @@ import {
   maybeSkipPendingExileTurn,
   type TurnDeps,
 } from './turn';
+import { applyHealHitPoints } from '@game/session/application/table-actions/primitives/apply-heal-hit-points';
+import { computeAbilityModifiers as computeSharedAbilityModifiers } from '@game/shared/domain/ability-scores';
 
 export type SpellsDeps = {
   repo: DuelRepository;
@@ -43,6 +50,7 @@ export type SpellsDeps = {
   snapshot: DuelCombatSnapshot;
   domain: CharacterDomainService;
   dataSource: DataSource;
+  spellCombat: LoadSpellCombat;
 };
 
 function conditionsDeps(deps: SpellsDeps): ConditionsDeps {
@@ -65,8 +73,16 @@ export async function spellAttackBonus(
   deps: SpellsDeps,
   characterId: string,
 ): Promise<number> {
+  const stats = await spellcastingCombatStats(deps, characterId);
+  return stats.attackBonus;
+}
+
+async function spellcastingCombatStats(
+  deps: SpellsDeps,
+  characterId: string,
+): Promise<{ attackBonus: number; saveDc: number; abilityMod: number }> {
   const character = await deps.repo.findCharacterById(characterId);
-  if (!character) return 0;
+  if (!character) return { attackBonus: 0, saveDc: 8, abilityMod: 0 };
   const pb = await deps.domain.getProficiencyBonus(character.level);
   const abilitySlug = await loadSpellcastingAbilitySlug(
     deps.dataSource,
@@ -74,7 +90,11 @@ export async function spellAttackBonus(
   );
   const mods = computeAbilityModifiers(character.abilityScores);
   const abilityMod = abilitySlug ? (mods[abilitySlug] ?? 0) : 0;
-  return pb + abilityMod;
+  return {
+    attackBonus: pb + abilityMod,
+    saveDc: spellSaveDcFromMods(pb, abilityMod),
+    abilityMod,
+  };
 }
 
 export async function castSpell(
@@ -126,11 +146,11 @@ export async function castSpell(
     throw new BadRequestException('Opponent not found');
   }
 
-  const [armorMap, attackerSees, defenderSees, spellAtk] = await Promise.all([
+  const [armorMap, attackerSees, defenderSees, casterStats] = await Promise.all([
     deps.snapshot.resolveArmorByCharacter([defenderPc]),
     seesMagicalDarkness(visionDeps(deps), caster.characterId),
     seesMagicalDarkness(visionDeps(deps), opponent.characterId),
-    spellAttackBonus(deps, caster.characterId),
+    spellcastingCombatStats(deps, caster.characterId),
   ]);
   const advantage = resolveDuelAttackVisionMode({
     arenaEffects: duel.arenaEffects,
@@ -138,12 +158,21 @@ export async function castSpell(
     defenderSeesMagicalDarkness: defenderSees,
   });
 
-  const resolution = resolveDuelSpellEffect({
-    spellSlug: input.spellSlug,
+  const combatRow = await deps.spellCombat.bySlug(input.spellSlug);
+  const defenderMods = computeSharedAbilityModifiers(defenderPc.abilityScores);
+  const targetSaveBonus = abilityModifierFromSlug(
+    defenderMods,
+    combatRow?.saveAbilitySlug,
+  );
+  const resolution = resolveCombatSpell({
+    row: combatRow,
     slotLevel: cast.slotLevelUsed ?? input.slotLevel ?? 0,
     characterLevel: casterPc.level,
-    spellAttackBonus: spellAtk,
+    spellAttackBonus: casterStats.attackBonus,
+    spellSaveDc: casterStats.saveDc,
+    spellcastingAbilityMod: casterStats.abilityMod,
     targetAc: armorMap.get(defenderPc.id) ?? 10,
+    targetSaveBonus,
     advantage,
     castNote: cast.note ?? undefined,
   });
@@ -163,16 +192,20 @@ export async function castSpell(
     return { duel: await deps.repo.saveDuel(duel), members };
   }
 
-  if (resolution.kind === 'auto_damage') {
+  if (resolution.kind === 'auto_damage' || resolution.kind === 'save_damage') {
     const applied = await applyDuelDamageToTarget({
       state: deps.state,
       member: opponent,
       target: defenderPc,
       damage: resolution.damage,
     });
+    const saveNote =
+      resolution.kind === 'save_damage'
+        ? ` (CD ${resolution.dc} · save ${resolution.saveTotal}${resolution.saved ? ' sucesso' : ' falha'})`
+        : '';
     log = appendCombatLog(
       log,
-      `${casterName}: ${resolution.label} — ${applied.damageTotal} de dano. ${defenderPc.name}: ${applied.hitPointsBefore} → ${applied.hitPointsAfter} PV.`,
+      `${casterName}: ${resolution.label}${saveNote} — ${applied.damageTotal} de dano. ${defenderPc.name}: ${applied.hitPointsBefore} → ${applied.hitPointsAfter} PV.`,
     );
     return afterDamage(turnDeps(deps), {
       duel,
@@ -184,6 +217,21 @@ export async function castSpell(
       hitPointsAfter: opponent.hitPointsCurrent ?? applied.hitPointsAfter,
       spendAttack: false,
     });
+  }
+
+  if (resolution.kind === 'heal') {
+    const healed = await applyHealHitPoints(
+      deps.state,
+      casterPc,
+      resolution.amount,
+    );
+    log = appendCombatLog(
+      log,
+      `${casterName}: ${resolution.label} — curou ${healed.healed} PV.`,
+    );
+    await advanceTurnFully(turnDeps(deps), duel, members, caster.characterId);
+    duel.combatLog = log;
+    return { duel: await deps.repo.saveDuel(duel), members };
   }
 
   if (resolution.kind === 'spell_attack') {

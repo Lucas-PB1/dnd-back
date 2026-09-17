@@ -6,6 +6,7 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
 import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import { LoadEffectCatalog } from '@game/effects';
 import type { Duel } from '../../infrastructure/duel.entity';
@@ -28,6 +29,7 @@ export class DuelCombatService {
     private readonly domain: CharacterDomainService,
     private readonly access: PlayerCharacterAccessService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly spellCombat: LoadSpellCombat,
     private readonly weaponAttacks: ResolveEquippedWeaponAttacks,
     private readonly effectCatalog: LoadEffectCatalog,
     private readonly dataSource: DataSource,
@@ -77,6 +79,7 @@ export class DuelCombatService {
       snapshot: this.snapshot,
       domain: this.domain,
       dataSource: this.dataSource,
+      spellCombat: this.spellCombat,
     };
   }
 

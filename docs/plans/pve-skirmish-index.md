@@ -9,7 +9,7 @@ Duelo PvP: [`pvp-1v1-duel.md`](pvp-1v1-duel.md)
 ## Produto
 
 1. **PVE** skirmish sem mapa: magias, traços, reações, classe/sub/feat/item tipados + legado morto → 100%.
-2. **DB-0** paralelo: schema declarative SSOT; apagar histórico de `database/migrations/` (nada em prod).
+2. **DB-0** ~~paralelo~~ **feito:** schema declarative SSOT; `migrations/` vazia (sem prod).
 
 ## Skills e rules (obrigatório em todo pacote)
 
@@ -83,20 +83,21 @@ flowchart LR
 
 ### Banco
 
-| # | Pacote | Doc | Tam. | Dep |
-|---|--------|-----|------|-----|
-| DB-0 | Reorg migrations greenfield | [`db-0-reorg-migrations.md`](db-0-reorg-migrations.md) | L | — |
-| DB-0a | Auditoria + fold enums/effects | [`db-0a-fold-enums-effects.md`](db-0a-fold-enums-effects.md) | M | — |
-| DB-0b | Fold runtime (skirmish, flags, wild shape…) | [`db-0b-fold-runtime.md`](db-0b-fold-runtime.md) | M | DB-0a |
-| DB-0c | Esvaziar migrations + docs + `db:setup` | [`db-0c-empty-verify.md`](db-0c-empty-verify.md) | S | DB-0b |
+**DB-0 fechado (2026-09-17):** `sacred_weapon_active` no CREATE; `database/migrations/` sem `.sql` (só README); `db:migrate` = só `schema/**`. Log: `docs/okf/log.md`.
+
+**PVE-0 + RES-3 fechados (2026-09-17):** `phb_spell_combat` + `resolveCombatSpell` + `LoadSpellCombat`; seeds piloto MM / Raio de Fogo / Escuridão; duelo/skirmish sem hardcode de slug. Doc: [`spell-combat.md`](../architecture/spell-combat.md).
+
+**PVE-1a fechado (2026-09-17):** kinds `save_damage` / `heal_combatant` / `per_die_attack`; 16 cantrips ofensivos PHB; meta save/attack corrigida.
+
+**PVE-1b fechado (2026-09-17):** escala por slot (`dice_count_*` / `spell_level`) + `include_spellcasting_mod`; 13 magias Nv 1 (cura/ataque/save).
 
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
-| PVE-0 | Motor `resolveCombatSpell` | [`pve-0-combat-spell-engine.md`](pve-0-combat-spell-engine.md) | M | — |
-| PVE-1a | Seeds cantrips combate | [`pve-1a-spell-cantrips.md`](pve-1a-spell-cantrips.md) | M | PVE-0 |
-| PVE-1b | Seeds magias Nv 1 | [`pve-1b-spell-level-1.md`](pve-1b-spell-level-1.md) | M | PVE-1a |
+| PVE-0 | ~~Motor `resolveCombatSpell`~~ **feito** | — | M | — |
+| PVE-1a | ~~Seeds cantrips combate~~ **feito** | — | M | PVE-0 |
+| PVE-1b | ~~Seeds magias Nv 1~~ **feito** | — | M | PVE-1a |
 | PVE-1c | Seeds magias Nv 2–3 | [`pve-1c-spell-level-2-3.md`](pve-1c-spell-level-2-3.md) | M | PVE-1b |
 | PVE-2a | Seeds magias Nv 4–6 | [`pve-2a-spell-level-4-6.md`](pve-2a-spell-level-4-6.md) | M | PVE-1c |
 | PVE-2b | Seeds magias Nv 7–9 + auditoria | [`pve-2b-spell-level-7-9.md`](pve-2b-spell-level-7-9.md) | M | PVE-2a |
@@ -142,7 +143,7 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 | RES | Backlog pai | [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) | — | — |
 | RES-1 | Inventário canônico vs legado | [`resolve-1-inventory-docs.md`](resolve-1-inventory-docs.md) | S | — |
 | RES-2 | Resolvers de mesa mortos | [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md) | M | RES-1 · LEG-2 |
-| RES-3 | `duel-spell-resolve` → motor | [`resolve-3-duel-spell.md`](resolve-3-duel-spell.md) | M | = PVE-0 |
+| RES-3 | ~~`duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | Maneuver/BM → catálogo | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | RES-2 · PVE-5b |
 | RES-5 | Sufixo Nest `*.resolver.ts` | [`resolve-5-nest-suffix.md`](resolve-5-nest-suffix.md) | S | RES-2 |
 
@@ -165,8 +166,8 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
 | QA | Backlog pai | [`quality-gate-backlog.md`](quality-gate-backlog.md) | — | — |
-| QA-1 | Auditoria dos planos `.md` | [`quality-1-plans-audit.md`](quality-1-plans-audit.md) | S | — (já) |
-| QA-2 | Gate pós-execução das trilhas | [`quality-2-post-execution.md`](quality-2-post-execution.md) | M | DB-0c+PVE-10b+LEG-4+RES-5+LEGAC-4 |
+| QA-1 | ~~Auditoria planos~~ **feito** (45 links ok) | — | S | — |
+| QA-2 | Gate pós-execução das trilhas | [`quality-2-post-execution.md`](quality-2-post-execution.md) | M | PVE-10b+LEG-4+RES-5+LEGAC-4 |
 
 ## Fora de escopo
 
