@@ -7,7 +7,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 **Última revisão:** 2026-09-16 — §H Item saiu (charges na ficha, DL ≈ amanhecer, cast de item, poções de cura/heroísmo/saúde).
 
-**Combate personagem×alvo** (dano, saves de combate, encontro simulado) **não** vive aqui → [`combat-real-deferred.md`](combat-real-deferred.md).
+**Combate / PVE / DB greenfield** **não** vive no Ativo mesa → [`pve-skirmish-index.md`](pve-skirmish-index.md) (fila executável) · lista residual histórica: [`combat-real-deferred.md`](combat-real-deferred.md).
 
 Detalhe por categoria: [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · por livro: [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md).
 
@@ -54,7 +54,19 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 
 ## Feature futura (mais difícil)
 
-- [ ] **Combate real** — [`combat-real-deferred.md`](combat-real-deferred.md) (saves, board, manobras no acerto; encontro já tem MVP ataque vs CA + dano)
+Ordem e pacotes executáveis (fácil → difícil): **[`pve-skirmish-index.md`](pve-skirmish-index.md)**.
+
+| Trilha | Conteúdo |
+|--------|----------|
+| **DB-0** | Reorg migrations greenfield (sem prod; sem histórico ALTER) |
+| **PVE-0…8** | Motor magia + seeds + concentração + reações + marciais + caster/itens + summons + paridade |
+| **PVE-9…10** | Legado mesa (slug branches) + residuals combate + DoD PVE |
+| **LEG-1…4** | Limpeza código morto repo-wide — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`) |
+| **RES-1…5** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não apagar verbo canônico; só legado/hardcode) |
+| **LEGAC-1…4** | Padrão `legac`/`legacy` — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) (docs/stubs/scripts; **não** `infernal_legacy`) |
+| **QA-1…2** | Quality gate — [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**: auditar planos + smoke pós-trilhas) |
+
+Lista residual / parqueado histórico: [`combat-real-deferred.md`](combat-real-deferred.md) (espelha o índice PVE; itens saem ao fechar pacote).
 
 ---
 
@@ -69,6 +81,10 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 1. Faixa Ativo: pegar o **menor # ainda aberto**.
 2. Adiado: mesmo critério, **só** com pedido explícito.
 3. Item **feito e testado** → remover daqui (não acumular histórico).
-4. Gap exige **alvo/dano/save de combate** → [`combat-real-deferred.md`](combat-real-deferred.md), não aqui.
-5. Plano filho **concluído** → **apagar** o `.md` e tirar do índice ([`docs/README.md`](../README.md)).
-6. Contrato: Swagger `/api`.
+4. Gap exige **alvo/dano/save de combate** → pacote em [`pve-skirmish-index.md`](pve-skirmish-index.md) (ou residual em [`combat-real-deferred.md`](combat-real-deferred.md)), não aqui.
+5. Código morto / pasta órfã → [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`), não inventar limpeza ad-hoc no Ativo mesa.
+6. “Resolver” / `resolve-*` legado vs canônico → [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não renomear derive saudável).
+7. Texto/stub `legacy`/`legado` (não PHB) → [`legac-pattern-backlog.md`](legac-pattern-backlog.md).
+8. Fechou trilhas (ou quer validar só os `.md`) → [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**).
+9. Plano filho **concluído** → **apagar** o `.md` e tirar do índice ([`docs/README.md`](../README.md)).
+10. Contrato: Swagger `/api`.

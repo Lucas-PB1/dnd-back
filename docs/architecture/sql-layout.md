@@ -48,7 +48,7 @@ database/
     000_truncate.sql
     SEED_ORDER.txt        # ordem FK-safe
     {domínio}/{fonte}/{tabela}.{conteudo-slug}.sql
-  migrations/             # forward-only (vazio até haver prod)
+  migrations/             # forward-only; greenfield: esvaziar via DB-0 (docs/plans/db-0-reorg-migrations.md)
 ```
 
 ## Seeds — nome e ordem

@@ -1,13 +1,15 @@
-# Combate real — feature futura (fora do backlog mesa)
+# Combate real — residual / parqueado
 
-**Não é polish adiado.** É uma **feature posterior**: rolagem personagem × personagem / personagem × criatura, dano no alvo, saves de combate, posição, iniciativa de encontro, etc.
+**Não é polish adiado.** Combate tipado (PVE skirmish sem mapa + paridade duelo/encontro) agora tem **fila executável**:
 
-Enquanto isso **não** existir, a mesa só movimenta o que a **ficha / estado do PC** já carrega (recursos, PV, PV temp., CA tipada, slots, toggles).
+→ **[`pve-skirmish-index.md`](pve-skirmish-index.md)** (DB-0 + PVE-0…10, fatiado)
+
+Este arquivo guarda a **fronteira mesa × combate** e itens ainda parqueados até o pacote correspondente fechar. Ao concluir um pacote do índice, remover o item daqui (ou o pacote some do índice).
 
 SSOT mesa ativo: [`backlog.md`](backlog.md) · [`effect-mesa-checklist.md`](effect-mesa-checklist.md)  
 Skill: `rpg-class-mesa-api` (critério mesa ≠ VTT / combate simulado).
 
-Consumidor futuro (lobby PvP, não inventa motor à parte): [`pvp-1v1-duel.md`](pvp-1v1-duel.md) — F3 do duelo 1v1.
+Consumidor PvP: [`pvp-1v1-duel.md`](pvp-1v1-duel.md) — reusa o motor do índice (não inventar motor à parte).
 
 **Nota 2026-09-16:** encontro ganhou MVP de **ataque vs CA + dano nos PV** (`POST .../encounters/:id/attacks`). Saves, tabuleiro, manobras no momento do acerto e o restante desta lista continuam futuros.
 
@@ -65,7 +67,8 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 ## Como usar
 
-1. Achou gap que **exige alvo/dano/save de combate** → **só aqui**, não em [`backlog.md`](backlog.md).
+1. Achou gap que **exige alvo/dano/save de combate** → pacote em [`pve-skirmish-index.md`](pve-skirmish-index.md); se não couber, anotar **aqui** e criar pacote no índice.
 2. Achou gap de **ficha** (cura, temp HP, CA, pool) → checklist mesa / backlog ativo.
 3. Não misturar com “Adiado — polish” (UI, modal, editorial).
-4. Lobby / match 1v1 entre contas → [`pvp-1v1-duel.md`](pvp-1v1-duel.md); combate do duelo **espera** itens desta lista (não duplicar motor no slice `duel`).
+4. Lobby / match 1v1 → [`pvp-1v1-duel.md`](pvp-1v1-duel.md); combate tipado **espera** o motor do índice (não duplicar no slice `duel`).
+5. Schema/migrations greenfield → [`db-0-reorg-migrations.md`](db-0-reorg-migrations.md).
