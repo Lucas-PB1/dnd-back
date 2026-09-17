@@ -27,6 +27,7 @@ import {
   mergeConditions,
 } from '../../domain/duel-spell-resolve';
 import { applyDuelDamageToTarget } from '../../domain/apply-duel-damage';
+import { noteConcentrationBreak } from '../../domain/note-concentration-break';
 import type { DuelRepository } from '../../infrastructure/duel.repository';
 import type { Duel } from '../../infrastructure/duel.entity';
 import type { DuelMember } from '../../infrastructure/duel-member.entity';
@@ -207,6 +208,14 @@ export async function castSpell(
       log,
       `${casterName}: ${resolution.label}${saveNote} — ${applied.damageTotal} de dano. ${defenderPc.name}: ${applied.hitPointsBefore} → ${applied.hitPointsAfter} PV.`,
     );
+    const concNote = noteConcentrationBreak({
+      duel,
+      damagedCharacterId: opponent.characterId,
+      concentration: applied.concentration,
+    });
+    if (concNote) {
+      log = appendCombatLog(log, concNote);
+    }
     return afterDamage(turnDeps(deps), {
       duel,
       members,
@@ -254,6 +263,14 @@ export async function castSpell(
       log,
       `${casterName}: ${resolution.label}${resolution.critical ? ' (crítico)' : ''} — acerto! Dano ${applied.damageTotal}. ${defenderPc.name}: ${applied.hitPointsBefore} → ${applied.hitPointsAfter} PV.`,
     );
+    const concNote = noteConcentrationBreak({
+      duel,
+      damagedCharacterId: opponent.characterId,
+      concentration: applied.concentration,
+    });
+    if (concNote) {
+      log = appendCombatLog(log, concNote);
+    }
     return afterDamage(turnDeps(deps), {
       duel,
       members,

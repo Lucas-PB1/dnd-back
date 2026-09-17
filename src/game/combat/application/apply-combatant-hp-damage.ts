@@ -4,12 +4,29 @@ import type { CharacterStateRepository } from '@game/session/infrastructure/char
 import type { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { applyCombatHpDamage } from '../domain/apply-combat-hp-damage';
+import {
+  resolveConcentrationCheck,
+  type ConcentrationCheckResult,
+} from '../domain/resolve-concentration-check';
 
 export type CombatHpTarget = {
   kind: 'pc' | 'actor';
   characterId?: string | null;
   actorId?: string | null;
+};
+
+export type ApplyCombatantHpDamageResult = {
+  concentration: ConcentrationCheckResult;
+};
+
+const NO_CONCENTRATION: ConcentrationCheckResult = {
+  attempted: false,
+  broken: false,
+  dc: 10,
+  total: 0,
+  spellSlug: null,
 };
 
 export async function applyCombatantHpDamage(input: {
@@ -19,8 +36,10 @@ export async function applyCombatantHpDamage(input: {
   actors: Repository<GameActor>;
   target: CombatHpTarget;
   damage: number;
-}): Promise<void> {
-  if (input.damage <= 0) return;
+}): Promise<ApplyCombatantHpDamageResult> {
+  if (input.damage <= 0) {
+    return { concentration: NO_CONCENTRATION };
+  }
 
   if (input.target.kind === 'pc' && input.target.characterId) {
     const character = await input.loadCharacter(input.target.characterId);
@@ -42,7 +61,17 @@ export async function applyCombatantHpDamage(input: {
         split.hitPointsAfter,
       );
     }
-    return;
+
+    const mods = computeAbilityModifiers(character.abilityScores);
+    const concentration = resolveConcentrationCheck({
+      damageTaken: input.damage,
+      constitutionModifier: mods.constituicao,
+      concentratingOn: stateBefore.concentratingOn,
+    });
+    if (concentration.broken) {
+      await input.characterState.patch(character, { concentratingOn: null });
+    }
+    return { concentration };
   }
 
   if (!input.target.actorId) {
@@ -68,4 +97,19 @@ export async function applyCombatantHpDamage(input: {
     },
     input.actors,
   );
+
+  const mods = computeAbilityModifiers(actor.abilityScores);
+  const concentration = resolveConcentrationCheck({
+    damageTaken: input.damage,
+    constitutionModifier: mods.constituicao,
+    concentratingOn: state.concentratingOn,
+  });
+  if (concentration.broken) {
+    await input.actorState.patch(
+      actor,
+      { concentratingOn: null },
+      input.actors,
+    );
+  }
+  return { concentration };
 }

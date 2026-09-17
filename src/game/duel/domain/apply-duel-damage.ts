@@ -1,6 +1,11 @@
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { isBloodHoundSubclass } from '@game/combat/domain/fighter';
+import {
+  resolveConcentrationCheck,
+  type ConcentrationCheckResult,
+} from '@game/combat/domain/resolve-concentration-check';
 import { hitPointsOf } from '../application/to-dto';
 import type { DuelMember } from '../infrastructure/duel-member.entity';
 import { applyDamageToMemberVitals } from './duel-member-vitals';
@@ -12,6 +17,15 @@ export type AppliedDuelDamage = {
   hitPointsAfter: number;
   tempHpBefore: number;
   tempHpAfter: number;
+  concentration: ConcentrationCheckResult;
+};
+
+const NO_CONCENTRATION: ConcentrationCheckResult = {
+  attempted: false,
+  broken: false,
+  dc: 10,
+  total: 0,
+  spellSlug: null,
 };
 
 function applyPoisonResist(
@@ -29,6 +43,27 @@ function applyPoisonResist(
   return damageTotal;
 }
 
+async function maybeBreakConcentration(input: {
+  state?: CharacterStateRepository;
+  target: PlayerCharacter;
+  damageTaken: number;
+}): Promise<ConcentrationCheckResult> {
+  if (!input.state || input.damageTaken <= 0) {
+    return NO_CONCENTRATION;
+  }
+  const before = await input.state.buildResponse(input.target);
+  const mods = computeAbilityModifiers(input.target.abilityScores);
+  const concentration = resolveConcentrationCheck({
+    damageTaken: input.damageTaken,
+    constitutionModifier: mods.constituicao,
+    concentratingOn: before.concentratingOn,
+  });
+  if (concentration.broken) {
+    await input.state.patch(input.target, { concentratingOn: null });
+  }
+  return concentration;
+}
+
 export async function applyDuelDamageToTarget(input: {
   state?: CharacterStateRepository;
   member?: DuelMember;
@@ -43,7 +78,13 @@ export async function applyDuelDamageToTarget(input: {
   );
 
   if (input.member != null && input.member.hitPointsCurrent != null) {
-    return applyDamageToMemberVitals(input.member, damageTotal);
+    const applied = applyDamageToMemberVitals(input.member, damageTotal);
+    const concentration = await maybeBreakConcentration({
+      state: input.state,
+      target: input.target,
+      damageTaken: damageTotal,
+    });
+    return { ...applied, concentration };
   }
 
   if (!input.state) {
@@ -67,6 +108,16 @@ export async function applyDuelDamageToTarget(input: {
     input.target.hitPointsCurrent = hitPointsAfter;
   }
 
+  const concentration = resolveConcentrationCheck({
+    damageTaken: damageTotal,
+    constitutionModifier: computeAbilityModifiers(input.target.abilityScores)
+      .constituicao,
+    concentratingOn: stateBefore.concentratingOn,
+  });
+  if (concentration.broken) {
+    await input.state.patch(input.target, { concentratingOn: null });
+  }
+
   return {
     damageTotal,
     absorbedByTempHp,
@@ -74,5 +125,6 @@ export async function applyDuelDamageToTarget(input: {
     hitPointsAfter,
     tempHpBefore,
     tempHpAfter,
+    concentration,
   };
 }

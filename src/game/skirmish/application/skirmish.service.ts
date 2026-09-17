@@ -231,7 +231,13 @@ export class SkirmishService {
     if ((skirmish.turnAttacksRemaining ?? 1) <= 0) {
       throw new BadRequestException('Sem ataques restantes neste turno');
     }
-    const rolled = await this.resolveAttack(userId, attacker, target, dto);
+    const rolled = await this.resolveAttack(
+      userId,
+      skirmish,
+      attacker,
+      target,
+      dto,
+    );
     skirmish.turnAttacksRemaining = Math.max(
       0,
       (skirmish.turnAttacksRemaining ?? 1) - 1,
@@ -349,7 +355,7 @@ export class SkirmishService {
           ? 0
           : resolved.damage;
       if (damage > 0) {
-        await applyCombatantHpDamage({
+        const applied = await applyCombatantHpDamage({
           loadCharacter: () => Promise.resolve(null),
           characterState: this.characterState,
           actorState: this.actorState,
@@ -357,6 +363,12 @@ export class SkirmishService {
           target: actorRow,
           damage,
         });
+        if (applied.concentration.broken && applied.concentration.spellSlug) {
+          await this.appendLog(
+            skirmish,
+            `Concentração em ${applied.concentration.spellSlug} quebrada (CD ${applied.concentration.dc}, save ${applied.concentration.total}).`,
+          );
+        }
       }
       if (resolved.kind === 'spell_attack') {
         await this.appendLog(
@@ -538,7 +550,13 @@ export class SkirmishService {
       );
       return;
     }
-    const rolled = await this.resolveAttack(userId, attacker, target, {});
+    const rolled = await this.resolveAttack(
+      userId,
+      skirmish,
+      attacker,
+      target,
+      {},
+    );
     await this.appendLog(
       skirmish,
       this.attackLogLine(attacker.displayName, target.displayName, rolled),
@@ -548,6 +566,7 @@ export class SkirmishService {
 
   private async resolveAttack(
     userId: string,
+    skirmish: Skirmish,
     attacker: SkirmishCombatant,
     target: SkirmishCombatant,
     dto: ResolveSkirmishAttackDto | Record<string, never>,
@@ -581,7 +600,7 @@ export class SkirmishService {
             targetAc,
           });
     if (rolled.damageTotal != null && rolled.damageTotal > 0) {
-      await applyCombatantHpDamage({
+      const applied = await applyCombatantHpDamage({
         loadCharacter: (characterId) =>
           this.characters
             .findOwnedOrFail(userId, characterId)
@@ -592,6 +611,12 @@ export class SkirmishService {
         target,
         damage: rolled.damageTotal,
       });
+      if (applied.concentration.broken && applied.concentration.spellSlug) {
+        await this.appendLog(
+          skirmish,
+          `Concentração em ${applied.concentration.spellSlug} quebrada (CD ${applied.concentration.dc}, save ${applied.concentration.total}).`,
+        );
+      }
     }
     return { ...rolled, targetAc };
   }

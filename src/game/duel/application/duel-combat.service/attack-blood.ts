@@ -27,6 +27,7 @@ import { asArenaEffects, setMagicalDarkness } from '../../domain/arena-effects';
 import { appendCombatLog } from '../../domain/combat-log';
 import { mergeConditions } from '../../domain/duel-spell-resolve';
 import { applyDuelDamageToTarget } from '../../domain/apply-duel-damage';
+import { noteConcentrationBreak } from '../../domain/note-concentration-break';
 import type { DuelRepository } from '../../infrastructure/duel.repository';
 import type { Duel } from '../../infrastructure/duel.entity';
 import type { DuelMember } from '../../infrastructure/duel-member.entity';
@@ -198,6 +199,14 @@ export async function resolveBloodshardAttack(
     log,
     `${input.defenderPc.name}: ${applied.hitPointsBefore} → ${applied.hitPointsAfter} PV (${applied.damageTotal} aplicado).`,
   );
+  const concNote = noteConcentrationBreak({
+    duel: input.duel,
+    damagedCharacterId: input.defender.characterId,
+    concentration: applied.concentration,
+  });
+  if (concNote) {
+    log = appendCombatLog(log, concNote);
+  }
 
   return afterDamage(turnDeps(deps), {
     duel: input.duel,

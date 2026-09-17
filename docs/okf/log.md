@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-3a quebra de concentração
+
+* **Update** (20:35 UTC): `resolveConcentrationCheck` (CD max(10, dano/2)); hook em `applyCombatantHpDamage` e `applyDuelDamageToTarget`; limpa concentração (+ espíritos via patch); Escuridão some da arena no duelo. Specs sucesso/falha. — refs: [`resolve-concentration-check.ts`](../../src/game/combat/domain/resolve-concentration-check.ts), [`apply-combatant-hp-damage.ts`](../../src/game/combat/application/apply-combatant-hp-damage.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: dano em concentrador quebra magia conforme PHB.
+
 ## 2026-09-17 — PVE-2b Nv 7–9 + auditoria
 
 * **Update** (20:05 UTC): Seeds `level-7-9.sql` + `gaps-backfill.sql` → 102 rows combate; auditoria PHB: ~139 com dados, ~40 residual (smite/summon/condição/exploração). — refs: [`phb_spell_combat.level-7-9.sql`](../../database/seeds/spell/phb/phb_spell_combat.level-7-9.sql), [`spell-combat-audit.md`](../architecture/spell-combat-audit.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: fechar ofensivas de cast direto no skirmish e responder o gap residual.
