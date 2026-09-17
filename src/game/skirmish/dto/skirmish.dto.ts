@@ -68,6 +68,17 @@ export class ResolveSkirmishAttackDto extends CombatAttackFlagsDto {
   @ApiProperty()
   @IsUUID()
   targetCombatantId!: string;
+
+  @ApiPropertyOptional({
+    example: 'trip-attack',
+    description:
+      'Manobra Battle Master no acerto (gasta Dado de Superioridade): trip-attack, menacing-attack, pushing-attack…',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  battleMasterManeuverSlug?: string;
 }
 
 export class CastSkirmishSpellDto {

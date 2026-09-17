@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-5b Battle Master no acerto
+
+* **Update** (21:45 UTC): `resolveBattleMasterOnHit` (trip / menacing / pushing); gasta `superiority-dice`; condição no alvo ou nota de empurrão; DTO `battleMasterManeuverSlug`. Specs. — refs: [`resolve-battle-master-on-hit.ts`](../../src/game/combat/domain/fighter/resolve-battle-master-on-hit.ts), [`apply-battle-master-maneuver.ts`](../../src/game/skirmish/application/apply-battle-master-maneuver.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: manobras BM tipadas no skirmish, não só nota de mesa.
+
 ## 2026-09-17 — PVE-5a DTO parity + smites
 
 * **Update** (21:35 UTC): `CombatAttackFlagsDto` + `pickCombatAttackCommand`; skirmish/encontro estendem o DTO; Destruição Divina já gasta slot no roll. Doc [`combat-attack-flags.md`](../architecture/combat-attack-flags.md). — refs: [`combat-attack-flags.dto.ts`](../../src/game/combat/dto/combat-attack-flags.dto.ts), [`pick-combat-attack-command.ts`](../../src/game/combat/application/pick-combat-attack-command.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: front declara as mesmas flags do motor sem drift.

@@ -107,6 +107,8 @@ flowchart LR
 
 **PVE-5a fechado (2026-09-17):** `CombatAttackFlagsDto` + `pickCombatAttackCommand`; paridade skirmish/encontro; smite já gasta slot via roll.
 
+**PVE-5b fechado (2026-09-17):** Battle Master no acerto — `trip-attack` / `menacing-attack` / `pushing-attack` (+dado, save, condição/nota); gasta superiority.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -122,7 +124,7 @@ flowchart LR
 | PVE-4a | ~~Incoming hit Escudo/Uncanny~~ **feito** | — | M | PVE-0 |
 | PVE-4b | ~~OA sem mapa + react~~ **feito** | — | S | PVE-4a |
 | PVE-5a | ~~DTO parity + smites~~ **feito** | — | M | PVE-0 |
-| PVE-5b | Battle Master no acerto | [`pve-5b-battle-master.md`](pve-5b-battle-master.md) | M | PVE-5a |
+| PVE-5b | ~~Battle Master no acerto~~ **feito** | — | M | PVE-5a |
 | PVE-5c | Estilos GWF/TWF/PAM/Charger | [`pve-5c-fighting-styles.md`](pve-5c-fighting-styles.md) | M | PVE-5a |
 | PVE-6a | Metamagia + Eldritch Smite | [`pve-6a-metamagic-eldritch.md`](pve-6a-metamagic-eldritch.md) | M | PVE-1c |
 | PVE-6b | Itens charges combate | [`pve-6b-item-charges-combat.md`](pve-6b-item-charges-combat.md) | M | PVE-0 |

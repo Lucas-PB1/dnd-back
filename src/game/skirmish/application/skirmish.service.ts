@@ -93,6 +93,7 @@ import {
   type IncomingHitDefenseKind,
 } from '@game/combat/domain/resolve-incoming-hit';
 import { pickCombatAttackCommand } from '@game/combat/application/pick-combat-attack-command';
+import { applyBattleMasterOnHitManeuver } from './apply-battle-master-maneuver';
 import {
   OPPORTUNITY_ATTACK_REACTION_SLUG,
   resolveOpportunityAttackGate,
@@ -813,6 +814,45 @@ export class SkirmishService {
       };
     }
 
+    const maneuverSlug =
+      'battleMasterManeuverSlug' in dto
+        ? dto.battleMasterManeuverSlug
+        : undefined;
+    if (
+      rolled.hit &&
+      maneuverSlug &&
+      attacker.kind === 'pc' &&
+      attacker.characterId
+    ) {
+      const character = await this.characters.findOwnedOrFail(
+        userId,
+        attacker.characterId,
+      );
+      const targetActor =
+        target.kind === 'actor' && target.actorId
+          ? await this.actors.findOne({ where: { id: target.actorId } })
+          : null;
+      const bm = await applyBattleMasterOnHitManeuver({
+        deps: {
+          mechanicalCatalog: this.mechanicalCatalog,
+          sheet: this.sheet,
+          characterState: this.characterState,
+          actorState: this.actorState,
+          actors: this.actors,
+          domain: this.domain,
+        },
+        character,
+        target,
+        targetActor,
+        maneuverSlug,
+      });
+      rolled = {
+        ...rolled,
+        damageTotal: (rolled.damageTotal ?? 0) + bm.extraDamage,
+        note: [rolled.note, bm.note].filter(Boolean).join(' · ') || null,
+      };
+    }
+
     if (rolled.damageTotal != null && rolled.damageTotal > 0 && rolled.hit) {
       const applied = await applyCombatantHpDamage({
         loadCharacter: (characterId) =>
@@ -956,15 +996,15 @@ export class SkirmishService {
       damageRolls: rolled.hit ? rolled.damageRolls : [],
     });
     if (!rolled.note) return base;
-    const defenseBits = rolled.note
+    const extraBits = rolled.note
       .split(' · ')
       .filter(
         (part) =>
-          /Escudo Arcano|Esquiva Sobrenatural|Reação indisponível/i.test(part),
+          /Escudo Arcano|Esquiva Sobrenatural|Reação indisponível|Dado de Superioridade|Caído|Amedrontado|empurrado/i.test(
+            part,
+          ),
       );
-    return defenseBits.length > 0
-      ? `${base} · ${defenseBits.join(' · ')}`
-      : base;
+    return extraBits.length > 0 ? `${base} · ${extraBits.join(' · ')}` : base;
   }
 
   private assertActive(skirmish: Skirmish): void {

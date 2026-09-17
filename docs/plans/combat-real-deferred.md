@@ -36,7 +36,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 ### Manobras / estilo (dano, save, ataque)
 
-- [ ] Battle Master: trip, menacing, pushing, precision-attack (no ataque), etc. — além de Rally/`tempHp` e notas
+- [x] Battle Master: trip / menacing / pushing no acerto (skirmish PVE-5b) — além de Rally/`tempHp` e notas
 - [ ] Parry / redução de dano no momento do acerto
 - [ ] Estilos condicionais no roll (GWF piso, TWF gate, Charger, PAM, …)
 - [ ] Gunslinger: manobras `descriptive` que só fazem sentido no ataque/alvo (blindfire, ricochet, fan-the-hammer, …)

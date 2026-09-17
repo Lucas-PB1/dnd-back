@@ -16,6 +16,8 @@ Paridade HTTP ↔ motor de roll (PVE-5a).
 
 **Smite:** `divineSmite` no skirmish/encontro → `rollDamage` → `apply-paladin` gasta o slot (`consumeSpellSlotLevel`). Spec: `roll-damage.class-rules.spec.ts`.
 
-Fora deste pacote: Battle Master no acerto (PVE-5b), estilos GWF/TWF (PVE-5c), Eldritch Smite (PVE-6a).
+**Battle Master (PVE-5b):** `battleMasterManeuverSlug` no ataque skirmish → `resolveBattleMasterOnHit` + gasto `superiority-dice` (`trip-attack` / `menacing-attack` / `pushing-attack`).
+
+Fora deste pacote: estilos GWF/TWF (PVE-5c), Eldritch Smite (PVE-6a), precision-attack on miss.
 
 Relacionado: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) · [`combat-real-deferred.md`](../plans/combat-real-deferred.md).
