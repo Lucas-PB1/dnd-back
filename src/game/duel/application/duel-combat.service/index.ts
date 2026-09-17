@@ -126,7 +126,7 @@ export class DuelCombatService {
   castSpell(
     userId: string,
     duelId: string,
-    input: { spellSlug: string; slotLevel?: number },
+    input: { spellSlug: string; slotLevel?: number; metamagicSlug?: string },
   ): Promise<{ duel: Duel; members: DuelMember[] }> {
     return castSpell(this.spellsDeps(), userId, duelId, input);
   }

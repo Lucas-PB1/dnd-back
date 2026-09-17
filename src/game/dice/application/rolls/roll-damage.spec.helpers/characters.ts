@@ -71,4 +71,11 @@ export const CHARACTERS = {
     level: 14,
     abilityScores: testScores({ sabedoria: 18 }),
   },
+  warlockL5: {
+    id: 'c1',
+    classSlug: 'warlock',
+    subclassSlug: null,
+    level: 5,
+    abilityScores: testScores({ carisma: 16 }),
+  },
 } satisfies Record<string, Partial<PlayerCharacter> & Pick<PlayerCharacter, 'classSlug'>>;

@@ -145,6 +145,14 @@ export class CombatAttackFlagsDto {
   @IsBoolean()
   smiteVsUndeadOrFiend?: boolean;
 
+  @ApiPropertyOptional({
+    description:
+      'Punição Mística (Bruxo): gasta slot de Pacto; +1d8 Energético/círculo',
+  })
+  @IsOptional()
+  @IsBoolean()
+  eldritchSmite?: boolean;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()

@@ -47,7 +47,8 @@ export async function executeRollDamage(input: {
     input.userId,
     input.characterId,
   );
-  const { attack, combatFlags, featSlugs } = await findEquippedWeaponAttack(
+  const { attack, combatFlags, featSlugs, eldritchInvocationSlugs } =
+    await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
       domain: input.domain,
@@ -150,6 +151,7 @@ export async function executeRollDamage(input: {
       character.subclassSlug,
     ),
     featureGatesBySubclassSlug: mechanical.featureGatesBySubclassSlug,
+    eldritchInvocationSlugs,
   };
   for (const effect of DAMAGE_EFFECT_PIPELINE) {
     await effect(ctx, acc);

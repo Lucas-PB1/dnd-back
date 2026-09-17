@@ -107,4 +107,13 @@ export class RollDamageDto extends RollDamageBaseDto {
   @IsOptional()
   @IsBoolean()
   divineStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Punição Mística (Bruxo): gasta slot de Pacto; +1d8 Energético/círculo; pode derrubar',
+  })
+  @IsOptional()
+  @IsBoolean()
+  eldritchSmite?: boolean;
 }

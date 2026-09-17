@@ -28,6 +28,7 @@ export function pickCombatAttackCommand(
     divineSmite: src.divineSmite,
     smiteSlotLevel: src.smiteSlotLevel,
     smiteVsUndeadOrFiend: src.smiteVsUndeadOrFiend,
+    eldritchSmite: src.eldritchSmite,
     huntersMark: src.huntersMark,
     colossusSlayer: src.colossusSlayer,
     dreadfulStrikes: src.dreadfulStrikes,

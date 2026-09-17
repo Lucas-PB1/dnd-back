@@ -46,8 +46,10 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 ### Metamagia / invocações / cast em combate
 
-- [ ] Metamagia: efeito no cast (não só gastar SP + descrição)
-- [ ] Eldritch Smite e invocações cujo efeito é dano/condição no alvo
+- [x] Metamagia tipada no cast: heightened (save desvantagem) + seeking (reroll ataque) — PVE-6a · [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md)
+- [ ] Demais metamagias (quickened, empowered, careful, …) no cast
+- [x] Eldritch Smite no acerto com arma — PVE-6a
+- [ ] Outras invocações cujo efeito é dano/condição no alvo (ex. Lifedrinker tipado fino)
 - [ ] Bloodied gate / craft spawn no fluxo de combate
 
 ### Condições / duração / alvo

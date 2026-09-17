@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-6a Metamagia + Eldritch Smite
+
+* **Update** (22:10 UTC): `heightened-spell` / `seeking-spell` no `resolveCombatSpell` + gasto SP no cast skirmish/duelo; `eldritchSmite` no pipeline de dano (Nv8/círculo, invocação). Doc [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md). — refs: [`spend-combat-metamagic.ts`](../../src/game/combat/application/spend-combat-metamagic.ts), [`apply-warlock.ts`](../../src/game/dice/application/rolls/damage/apply-warlock.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: metamagia e smite de bruxo tipados no combate, não só nota de mesa.
+
 ## 2026-09-17 — PVE-5c estilos no roll
 
 * **Update** (21:55 UTC): GWF 1–2→3 sem empilhar Elemental 1→2; TWF via effects + `fightingStyleSlugs`; Charger +1d8 gated (feat+melee); load `ownedFeatSlugs = feat ∪ style`. PAM residual PVE-10a. Specs + [`fighting-style-combat.md`](../architecture/fighting-style-combat.md). — refs: [`roll-weapon-context.ts`](../../src/game/dice/application/rolls/roll-weapon-context.ts), [`roll-damage.ts`](../../src/game/dice/application/rolls/roll-damage.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: estilos de combate tipados no path de dano skirmish/ficha.

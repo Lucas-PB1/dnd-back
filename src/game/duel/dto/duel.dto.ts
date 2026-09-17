@@ -110,6 +110,15 @@ export class DuelCastSpellDto {
   @Min(0)
   @Max(9)
   slotLevel?: number;
+
+  @ApiPropertyOptional({
+    example: 'seeking-spell',
+    description:
+      'Metamagia tipada (heightened-spell | seeking-spell); gasta Pontos de Feitiçaria',
+  })
+  @IsOptional()
+  @IsString()
+  metamagicSlug?: string;
 }
 
 export class DuelConditionDto {

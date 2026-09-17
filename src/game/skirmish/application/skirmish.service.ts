@@ -30,6 +30,7 @@ import {
 import { pickActorAttackAction } from '@game/combat/application/combat-attack-weapons';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
+import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
 import {
   abilityModifierFromSlug,
@@ -433,6 +434,17 @@ export class SkirmishService {
       spellSlug: dto.spellSlug,
       slotLevel: dto.slotLevel,
     });
+    let metamagicNote: string | null = null;
+    if (dto.metamagicSlug?.trim()) {
+      const spent = await spendCombatMetamagic({
+        dataSource: this.dataSource,
+        useClassResource: (pc, slug, amount) =>
+          this.characterState.useClassResource(pc, slug, amount),
+        character,
+        metamagicSlug: dto.metamagicSlug,
+      });
+      metamagicNote = spent.note;
+    }
     if (
       skirmish.arenaEffectSourceCharacterId === character.id &&
       cast.state.concentratingOn !== MAGICAL_DARKNESS_SPELL_SLUG
@@ -473,7 +485,9 @@ export class SkirmishService {
       targetSaveBonus,
       advantage,
       castNote: cast.note ?? undefined,
+      metamagicSlug: dto.metamagicSlug?.trim() || null,
     });
+    const mmSuffix = metamagicNote ? ` · ${metamagicNote}` : '';
     if (
       resolved.kind === 'auto_damage' ||
       resolved.kind === 'spell_attack' ||
@@ -505,17 +519,17 @@ export class SkirmishService {
       if (resolved.kind === 'spell_attack') {
         await this.appendLog(
           skirmish,
-          `${character.name}: ${resolved.label} (${resolved.hit ? 'acerto' : 'erro'} ${resolved.attackTotal} vs CA ${targetAc})${damage ? ` · dano ${damage}` : ''}`,
+          `${character.name}: ${resolved.label} (${resolved.hit ? 'acerto' : 'erro'} ${resolved.attackTotal} vs CA ${targetAc})${damage ? ` · dano ${damage}` : ''}${mmSuffix}`,
         );
       } else if (resolved.kind === 'save_damage') {
         await this.appendLog(
           skirmish,
-          `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${damage ? ` · dano ${damage}` : ''}`,
+          `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${damage ? ` · dano ${damage}` : ''}${mmSuffix}`,
         );
       } else {
         await this.appendLog(
           skirmish,
-          `${character.name}: ${resolved.label} · dano ${damage}`,
+          `${character.name}: ${resolved.label} · dano ${damage}${mmSuffix}`,
         );
       }
     } else if (resolved.kind === 'heal') {
@@ -526,7 +540,7 @@ export class SkirmishService {
       );
       await this.appendLog(
         skirmish,
-        `${character.name}: ${resolved.label} · curou ${healed.healed} PV`,
+        `${character.name}: ${resolved.label} · curou ${healed.healed} PV${mmSuffix}`,
       );
     } else if (resolved.kind === 'arena_darkness') {
       skirmish.arenaEffects = setMagicalDarkness(skirmish.arenaEffects);
@@ -534,7 +548,7 @@ export class SkirmishService {
       await this.repo.saveSkirmish(skirmish);
       await this.appendLog(
         skirmish,
-        `${character.name}: Escuridão — a arena está em escuridão mágica (Visão no Escuro não atravessa).`,
+        `${character.name}: Escuridão — a arena está em escuridão mágica (Visão no Escuro não atravessa).${mmSuffix}`,
       );
     } else if (resolved.kind === 'apply_condition') {
       assertValidDuelConditionSlug(resolved.conditionSlug);
@@ -549,12 +563,12 @@ export class SkirmishService {
       }
       await this.appendLog(
         skirmish,
-        `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${resolved.applied ? ` · ${resolved.conditionSlug}` : ''}`,
+        `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${resolved.applied ? ` · ${resolved.conditionSlug}` : ''}${mmSuffix}`,
       );
     } else {
       await this.appendLog(
         skirmish,
-        `${character.name}: ${resolved.note}`,
+        `${character.name}: ${resolved.note}${mmSuffix}`,
       );
     }
     await this.maybeFinish(skirmish);

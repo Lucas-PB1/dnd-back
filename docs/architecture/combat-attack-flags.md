@@ -18,6 +18,6 @@ Paridade HTTP ↔ motor de roll (PVE-5a).
 
 **Battle Master (PVE-5b):** `battleMasterManeuverSlug` no ataque skirmish → `resolveBattleMasterOnHit` + gasto `superiority-dice` (`trip-attack` / `menacing-attack` / `pushing-attack`).
 
-Estilos GWF/TWF/Charger: [`fighting-style-combat.md`](fighting-style-combat.md) (PVE-5c). Fora: Eldritch Smite (PVE-6a), precision-attack on miss.
+Estilos GWF/TWF/Charger: [`fighting-style-combat.md`](fighting-style-combat.md) (PVE-5c). Eldritch Smite: [`metamagic-eldritch-combat.md`](metamagic-eldritch-combat.md) (PVE-6a). Fora: precision-attack on miss.
 
 Relacionado: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) · [`combat-real-deferred.md`](../plans/combat-real-deferred.md).

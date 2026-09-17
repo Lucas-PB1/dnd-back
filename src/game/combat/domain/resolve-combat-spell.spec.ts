@@ -258,4 +258,55 @@ describe('resolveCombatSpell', () => {
       expect(r.applied).toBe(false);
     }
   });
+
+  it('heightened-spell forces save at disadvantage', () => {
+    const { rollD20Check } = jest.requireMock('@game/dice/domain/dice') as {
+      rollD20Check: jest.Mock;
+    };
+    rollD20Check.mockClear();
+    rollD20Check.mockReturnValue({
+      total: 12,
+      d20: { kept: [12], rolls: [12] },
+    });
+    resolveCombatSpell({
+      row: sacredFlameRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+      spellSaveDc: 20,
+      metamagicSlug: 'heightened-spell',
+    });
+    expect(rollD20Check).toHaveBeenCalledWith(0, 'disadvantage');
+  });
+
+  it('seeking-spell rerolls a missed spell attack', () => {
+    const { rollD20Check } = jest.requireMock('@game/dice/domain/dice') as {
+      rollD20Check: jest.Mock;
+    };
+    rollD20Check.mockClear();
+    rollD20Check
+      .mockReturnValueOnce({
+        total: 5,
+        d20: { kept: [5], rolls: [5] },
+      })
+      .mockReturnValueOnce({
+        total: 18,
+        d20: { kept: [18], rolls: [18] },
+      });
+    const r = resolveCombatSpell({
+      row: fireBoltRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+      targetAc: 15,
+      metamagicSlug: 'seeking-spell',
+    });
+    expect(r.kind).toBe('spell_attack');
+    if (r.kind === 'spell_attack') {
+      expect(r.hit).toBe(true);
+      expect(r.attackTotal).toBe(18);
+      expect(r.damage).toBe(10);
+    }
+    expect(rollD20Check).toHaveBeenCalledTimes(2);
+  });
 });

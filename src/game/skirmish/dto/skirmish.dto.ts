@@ -93,6 +93,17 @@ export class CastSkirmishSpellDto {
   @Min(0)
   @Max(9)
   slotLevel?: number;
+
+  @ApiPropertyOptional({
+    example: 'heightened-spell',
+    description:
+      'Metamagia tipada de combate (heightened-spell | seeking-spell); gasta Pontos de Feitiçaria',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  metamagicSlug?: string;
 }
 
 export class PatchSkirmishConditionDto {

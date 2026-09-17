@@ -24,6 +24,7 @@ export function buildDamageRollResponse(input: {
     dto.monsterSlayer ? ' (Matar Monstro)' : '',
     dto.sneakAttack ? ' (Ataque Furtivo)' : '',
     dto.divineSmite ? ' (Destruição Divina)' : '',
+    dto.eldritchSmite ? ' (Punição Mística)' : '',
     dto.huntersMark ? ' (Marca do Predador)' : '',
     dto.colossusSlayer ? ' (Assassino de Colossos)' : '',
     dto.dreadfulStrikes ? ' (Golpes Terríveis)' : '',

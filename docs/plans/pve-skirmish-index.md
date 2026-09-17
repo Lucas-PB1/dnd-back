@@ -111,6 +111,8 @@ flowchart LR
 
 **PVE-5c fechado (2026-09-17):** GWF piso + TWF ability no `light_bonus` + Charger gate (feat+melee); effects de estilo via `featSlugs ∪ fightingStyleSlugs`. PAM → PVE-10a. Doc [`fighting-style-combat.md`](../architecture/fighting-style-combat.md).
 
+**PVE-6a fechado (2026-09-17):** Metamagia tipada `heightened-spell` / `seeking-spell` no cast skirmish/duelo; Eldritch Smite no dano de arma. Doc [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -128,7 +130,7 @@ flowchart LR
 | PVE-5a | ~~DTO parity + smites~~ **feito** | — | M | PVE-0 |
 | PVE-5b | ~~Battle Master no acerto~~ **feito** | — | M | PVE-5a |
 | PVE-5c | ~~Estilos GWF/TWF/Charger~~ **feito** (PAM→10a) | — | M | PVE-5a |
-| PVE-6a | Metamagia + Eldritch Smite | [`pve-6a-metamagic-eldritch.md`](pve-6a-metamagic-eldritch.md) | M | PVE-1c |
+| PVE-6a | ~~Metamagia + Eldritch Smite~~ **feito** | — | M | PVE-1c |
 | PVE-6b | Itens charges combate | [`pve-6b-item-charges-combat.md`](pve-6b-item-charges-combat.md) | M | PVE-0 |
 | PVE-6c | Resist/vuln/imune no HP | [`pve-6c-damage-resistances.md`](pve-6c-damage-resistances.md) | M | PVE-0 |
 | PVE-7a | Spirits/companion na iniciativa | [`pve-7a-spirits-initiative.md`](pve-7a-spirits-initiative.md) | M | PVE-3a |

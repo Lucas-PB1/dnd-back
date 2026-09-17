@@ -27,6 +27,7 @@ export type DamageRollContext = {
   dungeoneerSlayerLabels: readonly string[];
   featureSchedules: readonly FeatureScheduleBand[];
   featureGatesBySubclassSlug: FeatureGatesByOwnerSlug;
+  eldritchInvocationSlugs: readonly string[];
 };
 
 export type DamageEffect = (

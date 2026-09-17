@@ -8,6 +8,7 @@ import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/reso
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
+import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
 import {
   abilityModifierFromSlug,
   spellSaveDcFromMods,
@@ -102,7 +103,7 @@ export async function castSpell(
   deps: SpellsDeps,
   userId: string,
   duelId: string,
-  input: { spellSlug: string; slotLevel?: number },
+  input: { spellSlug: string; slotLevel?: number; metamagicSlug?: string },
 ): Promise<{ duel: Duel; members: DuelMember[] }> {
   const { duel, members } = await deps.repo.getForMember(userId, duelId);
   deps.repo.assertStatus(duel, ['active']);
@@ -133,6 +134,18 @@ export async function castSpell(
     spellSlug: input.spellSlug,
     slotLevel: input.slotLevel,
   });
+
+  let metamagicNote: string | null = null;
+  if (input.metamagicSlug?.trim()) {
+    const spent = await spendCombatMetamagic({
+      dataSource: deps.dataSource,
+      useClassResource: (pc, slug, amount) =>
+        deps.state.useClassResource(pc, slug, amount),
+      character: casterPc,
+      metamagicSlug: input.metamagicSlug,
+    });
+    metamagicNote = spent.note;
+  }
 
   if (
     duel.arenaEffectSourceCharacterId === caster.characterId &&
@@ -176,10 +189,14 @@ export async function castSpell(
     targetSaveBonus,
     advantage,
     castNote: cast.note ?? undefined,
+    metamagicSlug: input.metamagicSlug?.trim() || null,
   });
 
   let log = duel.combatLog ?? [];
   const casterName = casterPc.name;
+  if (metamagicNote) {
+    log = appendCombatLog(log, `${casterName}: ${metamagicNote}`);
+  }
 
   if (resolution.kind === 'arena_darkness') {
     duel.arenaEffects = setMagicalDarkness(duel.arenaEffects);

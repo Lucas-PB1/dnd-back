@@ -20,6 +20,7 @@ import {
   type WeaponCombatFlags,
 } from '@game/session/infrastructure/queries/character-combat-flags.queries';
 import type { LoadEffectCatalog } from '@game/effects';
+import { readEldritchInvocationPicks } from '@game/combat/domain/warlock';
 
 export type { WeaponCombatFlags } from '@game/session/infrastructure/queries/character-combat-flags.queries';
 
@@ -116,7 +117,15 @@ export async function findEquippedWeaponAttack(
       `No equipped weapon attack for '${itemSlug}' (${mode})`,
     );
   }
-  return { attack, combatFlags, featSlugs: ownedFeatSlugs };
+  const eldritchInvocationSlugs = readEldritchInvocationPicks(
+    sheet.classOptions,
+  ).map((pick) => pick.slug);
+  return {
+    attack,
+    combatFlags,
+    featSlugs: ownedFeatSlugs,
+    eldritchInvocationSlugs,
+  };
 }
 
 export async function loadAccessibleCharacter(

@@ -76,11 +76,13 @@ export function mockEquippedAttack(
   attack: AttackInput,
   combatFlags: DamageCombatFlags = IDLE_COMBAT_FLAGS,
   featSlugs: string[] = [],
+  eldritchInvocationSlugs: string[] = [],
 ): void {
   (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
     attack: buildMockAttack(attack),
     combatFlags,
     featSlugs,
+    eldritchInvocationSlugs,
   });
 }
 

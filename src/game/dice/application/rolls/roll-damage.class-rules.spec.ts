@@ -156,4 +156,40 @@ describe('executeRollDamage — class rules', () => {
     expect(result.expression).toContain('+2d8');
     expect(result.note).toContain('Golpe Divino');
   });
+
+  it('debits a pact slot when Eldritch Smite is used', async () => {
+    mockCharacter(CHARACTERS.warlockL5);
+    mockEquippedAttack(
+      WEAPONS.longsword(),
+      undefined,
+      [],
+      ['eldritch-smite'],
+    );
+    const result = await ctx.rollDamage({
+      itemSlug: 'longsword',
+      mode: 'melee',
+      eldritchSmite: true,
+      smiteSlotLevel: 3,
+    });
+    expect(result.label).toContain('Punição Mística');
+    expect(result.note).toContain('Punição Mística');
+    expect(result.expression).toContain('+3d8');
+    expect(ctx.resourceSpender.consumeSpellSlotLevel).toHaveBeenCalledWith(
+      expect.objectContaining({ classSlug: 'warlock' }),
+      3,
+    );
+  });
+
+  it('rejects Eldritch Smite without the invocation', async () => {
+    mockCharacter(CHARACTERS.warlockL5);
+    mockEquippedAttack(WEAPONS.longsword());
+    await expect(
+      ctx.rollDamage({
+        itemSlug: 'longsword',
+        mode: 'melee',
+        eldritchSmite: true,
+        smiteSlotLevel: 1,
+      }),
+    ).rejects.toThrow(/Eldritch Smite/i);
+  });
 });

@@ -4,6 +4,10 @@ import type {
   SpellCombatResolutionKind,
   SpellCombatSaveSuccessOutcome,
 } from '@entities/spell/phb-spell-combat.entity';
+import {
+  saveAdvantageForMetamagic,
+  wantsSeekingSpell,
+} from './sorcerer/combat-metamagic';
 
 export type SpellCombatRow = {
   spellSlug: string;
@@ -110,6 +114,7 @@ function resolveSpellAttack(input: {
   spellcastingAbilityMod: number;
   targetAc: number;
   advantage: AdvantageMode;
+  seekingSpell: boolean;
 }): Extract<CombatSpellResolution, { kind: 'spell_attack' }> {
   const { row, die } = input;
   const dice = leveledDiceCount(row, input.characterLevel, input.slotLevel);
@@ -122,13 +127,19 @@ function resolveSpellAttack(input: {
   let lastTotal = 0;
 
   for (let i = 0; i < beams; i += 1) {
-    const attack = rollD20Check(input.spellAttackBonus, input.advantage);
+    let attack = rollD20Check(input.spellAttackBonus, input.advantage);
     lastTotal = attack.total;
-    const kept = attack.d20.kept[0] ?? 0;
-    const critical = kept === 20;
-    const hit = attack.total >= input.targetAc;
+    let kept = attack.d20.kept[0] ?? 0;
+    let hit = attack.total >= input.targetAc;
+    if (!hit && input.seekingSpell) {
+      attack = rollD20Check(input.spellAttackBonus, input.advantage);
+      lastTotal = attack.total;
+      kept = attack.d20.kept[0] ?? 0;
+      hit = attack.total >= input.targetAc;
+    }
     if (!hit) continue;
     anyHit = true;
+    const critical = kept === 20;
     if (critical) anyCrit = true;
     const count = critical ? dicePerHit * 2 : dicePerHit;
     damage += rollDiceTotal(die, count, row.flatPerDie);
@@ -155,6 +166,8 @@ export function resolveCombatSpell(input: {
   targetSaveBonus: number;
   advantage: AdvantageMode;
   castNote?: string;
+  /** Metamagia tipada (heightened-spell | seeking-spell). */
+  metamagicSlug?: string | null;
 }): CombatSpellResolution {
   const row = input.row;
   if (!row) {
@@ -170,6 +183,8 @@ export function resolveCombatSpell(input: {
     return { kind: 'arena_darkness' };
   }
 
+  const saveAdv = saveAdvantageForMetamagic(input.metamagicSlug);
+
   if (row.resolution === 'apply_condition') {
     const conditionSlug = row.conditionSlug?.trim();
     if (!conditionSlug) {
@@ -180,7 +195,7 @@ export function resolveCombatSpell(input: {
           `${row.label}: condição tipada ausente.`,
       };
     }
-    const save = rollD20Check(input.targetSaveBonus, 'normal');
+    const save = rollD20Check(input.targetSaveBonus, saveAdv);
     const saved = save.total >= input.spellSaveDc;
     return {
       kind: 'apply_condition',
@@ -235,7 +250,7 @@ export function resolveCombatSpell(input: {
       rollDiceTotal(die, count, row.flatPerDie),
       input.spellcastingAbilityMod,
     );
-    const save = rollD20Check(input.targetSaveBonus, 'normal');
+    const save = rollD20Check(input.targetSaveBonus, saveAdv);
     const saved = save.total >= input.spellSaveDc;
     const damage = applySaveOutcome(rolled, saved, row.saveSuccessOutcome);
     return {
@@ -257,5 +272,6 @@ export function resolveCombatSpell(input: {
     spellcastingAbilityMod: input.spellcastingAbilityMod,
     targetAc: input.targetAc,
     advantage: input.advantage,
+    seekingSpell: wantsSeekingSpell(input.metamagicSlug),
   });
 }
