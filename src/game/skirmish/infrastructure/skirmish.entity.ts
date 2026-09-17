@@ -38,6 +38,16 @@ export class Skirmish {
   @Column({ name: 'combat_log', type: 'jsonb', default: [] })
   combatLog!: SkirmishCombatLogEntry[];
 
+  @Column({ name: 'arena_effects', type: 'text', array: true, default: [] })
+  arenaEffects!: string[];
+
+  @Column({
+    name: 'arena_effect_source_character_id',
+    type: 'uuid',
+    nullable: true,
+  })
+  arenaEffectSourceCharacterId!: string | null;
+
   @Column({ name: 'winner_kind', type: 'text', nullable: true })
   winnerKind!: SkirmishWinnerKind | null;
 

@@ -6,7 +6,8 @@ CREATE TABLE rpg.phb_spell_combat (
       'spell_attack',
       'arena_darkness',
       'save_damage',
-      'heal_combatant'
+      'heal_combatant',
+      'apply_condition'
     )),
   label TEXT NOT NULL CHECK (char_length(label) BETWEEN 1 AND 120),
   damage_die INT
@@ -38,7 +39,8 @@ CREATE TABLE rpg.phb_spell_combat (
       OR save_success_outcome IN ('none', 'half', 'full')
     ),
   save_ability_slug TEXT,
-  damage_type_slug TEXT
+  damage_type_slug TEXT,
+  condition_slug TEXT
 );
 
 COMMENT ON TABLE rpg.phb_spell_combat IS

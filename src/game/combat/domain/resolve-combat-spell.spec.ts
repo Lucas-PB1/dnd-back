@@ -26,6 +26,7 @@ function baseRow(
     includeSpellcastingMod: false,
     saveSuccessOutcome: null,
     saveAbilitySlug: null,
+    conditionSlug: null,
     ...overrides,
   };
 }
@@ -198,5 +199,63 @@ describe('resolveCombatSpell', () => {
       ...common,
     });
     expect(r).toEqual({ kind: 'arena_darkness' });
+  });
+
+  it('apply_condition applies on failed save (Hold Person)', () => {
+    const { rollD20Check } = jest.requireMock('@game/dice/domain/dice') as {
+      rollD20Check: jest.Mock;
+    };
+    rollD20Check.mockReturnValueOnce({
+      total: 8,
+      d20: { kept: [8], rolls: [8] },
+    });
+    const r = resolveCombatSpell({
+      row: baseRow({
+        spellSlug: 'paralisar-pessoa',
+        resolution: 'apply_condition',
+        label: 'Paralisar Pessoa',
+        spellLevel: 2,
+        saveAbilitySlug: 'sabedoria',
+        conditionSlug: 'paralyzed',
+      }),
+      slotLevel: 2,
+      characterLevel: 5,
+      ...common,
+    });
+    expect(r.kind).toBe('apply_condition');
+    if (r.kind === 'apply_condition') {
+      expect(r.conditionSlug).toBe('paralyzed');
+      expect(r.dc).toBe(13);
+      expect(r.saved).toBe(false);
+      expect(r.applied).toBe(true);
+    }
+  });
+
+  it('apply_condition skips when save succeeds', () => {
+    const { rollD20Check } = jest.requireMock('@game/dice/domain/dice') as {
+      rollD20Check: jest.Mock;
+    };
+    rollD20Check.mockReturnValueOnce({
+      total: 20,
+      d20: { kept: [20], rolls: [20] },
+    });
+    const r = resolveCombatSpell({
+      row: baseRow({
+        spellSlug: 'medo',
+        resolution: 'apply_condition',
+        label: 'Medo',
+        spellLevel: 3,
+        saveAbilitySlug: 'sabedoria',
+        conditionSlug: 'frightened',
+      }),
+      slotLevel: 3,
+      characterLevel: 5,
+      ...common,
+    });
+    expect(r.kind).toBe('apply_condition');
+    if (r.kind === 'apply_condition') {
+      expect(r.saved).toBe(true);
+      expect(r.applied).toBe(false);
+    }
   });
 });

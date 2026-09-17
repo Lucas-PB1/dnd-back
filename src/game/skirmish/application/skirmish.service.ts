@@ -10,6 +10,7 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { CharacterRollsService } from '@game/dice/application/character-rolls.service';
 import { rollD20Check, rollExpression } from '@game/dice/domain/dice';
+import type { AdvantageMode } from '@game/dice/domain/dice';
 import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
@@ -41,12 +42,22 @@ import {
   isFighterClass,
   secondWindHealDice,
 } from '@game/combat/domain/fighter';
-import { assertCanTakeDuelAction } from '@game/duel/domain/duel-combat-gates';
+import {
+  assertCanTakeDuelAction,
+  characterSeesInMagicalDarkness,
+  resolveDuelAttackVisionMode,
+} from '@game/duel/domain/duel-combat-gates';
+import {
+  clearMagicalDarkness,
+  MAGICAL_DARKNESS_SPELL_SLUG,
+  setMagicalDarkness,
+} from '@game/duel/domain/arena-effects';
 import { applyHealHitPoints } from '@game/session/application/table-actions/primitives/apply-heal-hit-points';
 import {
   assertValidDuelConditionSlug,
   mergeConditions,
 } from '@game/duel/domain/duel-spell-resolve';
+import { noteSkirmishConcentrationBreak } from '../domain/note-concentration-break';
 import { resolveSkirmishAttackBudget } from './skirmish-attack-budget';
 import { formatSkirmishAttackLogLine } from '../domain/format-skirmish-attack-log';
 import { SkirmishRepository } from '../infrastructure/skirmish.repository';
@@ -162,6 +173,8 @@ export class SkirmishService {
       status: 'active',
       round: 1,
       currentCombatantId: null,
+      arenaEffects: [],
+      arenaEffectSourceCharacterId: null,
       combatLog: [
         {
           at: new Date().toISOString(),
@@ -317,6 +330,14 @@ export class SkirmishService {
       spellSlug: dto.spellSlug,
       slotLevel: dto.slotLevel,
     });
+    if (
+      skirmish.arenaEffectSourceCharacterId === character.id &&
+      cast.state.concentratingOn !== MAGICAL_DARKNESS_SPELL_SLUG
+    ) {
+      skirmish.arenaEffects = clearMagicalDarkness(skirmish.arenaEffects);
+      skirmish.arenaEffectSourceCharacterId = null;
+      await this.repo.saveSkirmish(skirmish);
+    }
     const pb = await this.domain.getProficiencyBonus(character.level);
     const abilitySlug = await loadSpellcastingAbilitySlug(
       this.dataSource,
@@ -333,6 +354,11 @@ export class SkirmishService {
       actorMods,
       combatRow?.saveAbilitySlug,
     );
+    const advantage = await this.resolveVisionAdvantage(
+      skirmish,
+      character.id,
+      null,
+    );
     const resolved = resolveCombatSpell({
       row: combatRow,
       slotLevel: cast.slotLevelUsed ?? dto.slotLevel ?? 0,
@@ -342,7 +368,7 @@ export class SkirmishService {
       spellcastingAbilityMod: castingMod,
       targetAc,
       targetSaveBonus,
-      advantage: 'normal',
+      advantage,
       castNote: cast.note ?? undefined,
     });
     if (
@@ -363,11 +389,14 @@ export class SkirmishService {
           target: actorRow,
           damage,
         });
-        if (applied.concentration.broken && applied.concentration.spellSlug) {
-          await this.appendLog(
-            skirmish,
-            `Concentração em ${applied.concentration.spellSlug} quebrada (CD ${applied.concentration.dc}, save ${applied.concentration.total}).`,
-          );
+        const concNote = noteSkirmishConcentrationBreak({
+          skirmish,
+          damagedCharacterId: actorRow.characterId,
+          concentration: applied.concentration,
+        });
+        if (concNote) {
+          await this.repo.saveSkirmish(skirmish);
+          await this.appendLog(skirmish, concNote);
         }
       }
       if (resolved.kind === 'spell_attack') {
@@ -397,9 +426,27 @@ export class SkirmishService {
         `${character.name}: ${resolved.label} · curou ${healed.healed} PV`,
       );
     } else if (resolved.kind === 'arena_darkness') {
+      skirmish.arenaEffects = setMagicalDarkness(skirmish.arenaEffects);
+      skirmish.arenaEffectSourceCharacterId = character.id;
+      await this.repo.saveSkirmish(skirmish);
       await this.appendLog(
         skirmish,
-        `${character.name}: Escuridão (sem arena no skirmish — slot gasto)`,
+        `${character.name}: Escuridão — a arena está em escuridão mágica (Visão no Escuro não atravessa).`,
+      );
+    } else if (resolved.kind === 'apply_condition') {
+      assertValidDuelConditionSlug(resolved.conditionSlug);
+      if (resolved.applied) {
+        const state = await this.actorState.ensureState(actor.id);
+        const next = mergeConditions({
+          current: state.conditions ?? [],
+          action: 'add',
+          condition: resolved.conditionSlug,
+        });
+        await this.actorState.patch(actor, { conditions: next }, this.actors);
+      }
+      await this.appendLog(
+        skirmish,
+        `${character.name}: ${resolved.label} (CD ${resolved.dc} · save ${resolved.saveTotal}${resolved.saved ? ' sucesso' : ' falha'})${resolved.applied ? ` · ${resolved.conditionSlug}` : ''}`,
       );
     } else {
       await this.appendLog(
@@ -583,6 +630,18 @@ export class SkirmishService {
       actors: this.actors,
       target,
     });
+    const visionAdvantage = await this.resolveVisionAdvantage(
+      skirmish,
+      attacker.characterId,
+      target.characterId,
+    );
+    const attackDto = {
+      ...dto,
+      advantage:
+        'advantage' in dto && dto.advantage != null && dto.advantage !== 'normal'
+          ? dto.advantage
+          : visionAdvantage,
+    };
     const rolled =
       attacker.kind === 'pc' && attacker.characterId
         ? await rollPcCombatAttack({
@@ -590,13 +649,13 @@ export class SkirmishService {
             inventoryItems: this.inventoryItems,
             userId,
             characterId: attacker.characterId,
-            dto,
+            dto: attackDto,
             targetAc,
           })
         : await rollActorCombatAttack({
             actorActions: this.actorActions,
             actorId: attacker.actorId!,
-            dto,
+            dto: attackDto,
             targetAc,
           });
     if (rolled.damageTotal != null && rolled.damageTotal > 0) {
@@ -611,14 +670,43 @@ export class SkirmishService {
         target,
         damage: rolled.damageTotal,
       });
-      if (applied.concentration.broken && applied.concentration.spellSlug) {
-        await this.appendLog(
-          skirmish,
-          `Concentração em ${applied.concentration.spellSlug} quebrada (CD ${applied.concentration.dc}, save ${applied.concentration.total}).`,
-        );
+      const concNote = noteSkirmishConcentrationBreak({
+        skirmish,
+        damagedCharacterId: target.characterId,
+        concentration: applied.concentration,
+      });
+      if (concNote) {
+        await this.repo.saveSkirmish(skirmish);
+        await this.appendLog(skirmish, concNote);
       }
     }
     return { ...rolled, targetAc };
+  }
+
+  private async resolveVisionAdvantage(
+    skirmish: Skirmish,
+    attackerCharacterId: string | null,
+    defenderCharacterId: string | null,
+  ): Promise<AdvantageMode> {
+    const [attackerSees, defenderSees] = await Promise.all([
+      this.seesMagicalDarkness(attackerCharacterId),
+      this.seesMagicalDarkness(defenderCharacterId),
+    ]);
+    return resolveDuelAttackVisionMode({
+      arenaEffects: skirmish.arenaEffects,
+      attackerSeesMagicalDarkness: attackerSees,
+      defenderSeesMagicalDarkness: defenderSees,
+    });
+  }
+
+  private async seesMagicalDarkness(
+    characterId: string | null,
+  ): Promise<boolean> {
+    if (!characterId) return false;
+    const sheet = await this.sheet.load(characterId);
+    return characterSeesInMagicalDarkness({
+      classOptions: sheet.classOptions,
+    });
   }
 
   private async maybeFinish(skirmish: Skirmish): Promise<void> {

@@ -7,6 +7,9 @@ CREATE TABLE rpg.skirmish (
   turn_attacks_remaining INT CHECK (turn_attacks_remaining IS NULL OR turn_attacks_remaining >= 0),
   current_combatant_id UUID,
   combat_log JSONB NOT NULL DEFAULT '[]'::jsonb,
+  arena_effects TEXT[] NOT NULL DEFAULT '{}',
+  arena_effect_source_character_id UUID
+    REFERENCES rpg.player_character(id) ON DELETE SET NULL,
   winner_kind TEXT CHECK (winner_kind IS NULL OR winner_kind IN ('pc', 'actor')),
   end_reason TEXT CHECK (end_reason IS NULL OR end_reason IN ('hp', 'forfeit')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

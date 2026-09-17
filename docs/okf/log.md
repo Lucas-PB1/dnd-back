@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-17 — PVE-3b arena + conditions
+
+* **Update** (21:00 UTC): `arena_effects` no skirmish (paridade duelo); Escuridão altera visão/vantagem; `apply_condition` + seeds Paralisar Pessoa / Medo; specs. — refs: [`0166_skirmish.sql`](../../database/schema/020_tables/0166_skirmish.sql), [`phb_spell_combat.conditions.sql`](../../database/seeds/spell/phb/phb_spell_combat.conditions.sql), [`resolve-combat-spell.ts`](../../src/game/combat/domain/resolve-combat-spell.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: escuridão e condições tipadas no skirmish sem hardcode.
+
 ## 2026-09-17 — PVE-3a quebra de concentração
 
 * **Update** (20:35 UTC): `resolveConcentrationCheck` (CD max(10, dano/2)); hook em `applyCombatantHpDamage` e `applyDuelDamageToTarget`; limpa concentração (+ espíritos via patch); Escuridão some da arena no duelo. Specs sucesso/falha. — refs: [`resolve-concentration-check.ts`](../../src/game/combat/domain/resolve-concentration-check.ts), [`apply-combatant-hp-damage.ts`](../../src/game/combat/application/apply-combatant-hp-damage.ts), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: dano em concentrador quebra magia conforme PHB.

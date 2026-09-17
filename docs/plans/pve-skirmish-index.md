@@ -99,6 +99,8 @@ flowchart LR
 
 **PVE-3a fechado (2026-09-17):** save de concentração CD `max(10, dano/2)` em `applyCombatantHpDamage` + duelo; limpa `concentrating_on` (espíritos via patch) e Escuridão na arena.
 
+**PVE-3b fechado (2026-09-17):** `arena_effects` no skirmish + visão como duelo; `apply_condition` (Paralisar Pessoa / Medo); Escuridão altera vantagem.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -110,7 +112,7 @@ flowchart LR
 | PVE-2a | ~~Seeds magias Nv 4–6~~ **feito** | — | M | PVE-1c |
 | PVE-2b | ~~Seeds Nv 7–9 + auditoria~~ **feito** | — | M | PVE-2a |
 | PVE-3a | ~~Quebra de concentração~~ **feito** | — | M | PVE-0 |
-| PVE-3b | Arena escuridão + conditions no alvo | [`pve-3b-arena-conditions.md`](pve-3b-arena-conditions.md) | M | PVE-3a |
+| PVE-3b | ~~Arena escuridão + conditions~~ **feito** | — | M | PVE-3a |
 | PVE-4a | Hook `resolveIncomingHit` + Escudo/Uncanny | [`pve-4a-incoming-hit-defenses.md`](pve-4a-incoming-hit-defenses.md) | M | PVE-0 |
 | PVE-4b | OA sem mapa + endpoint react | [`pve-4b-opportunity-attack.md`](pve-4b-opportunity-attack.md) | S | PVE-4a |
 | PVE-5a | DTO parity + smites | [`pve-5a-attack-flags-smites.md`](pve-5a-attack-flags-smites.md) | M | PVE-0 |

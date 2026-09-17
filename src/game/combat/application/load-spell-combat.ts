@@ -30,6 +30,7 @@ export class LoadSpellCombat {
       includeSpellcastingMod: row.includeSpellcastingMod,
       saveSuccessOutcome: row.saveSuccessOutcome,
       saveAbilitySlug: row.saveAbilitySlug,
+      conditionSlug: row.conditionSlug,
     };
   }
 }

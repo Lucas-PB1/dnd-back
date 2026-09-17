@@ -193,6 +193,35 @@ export async function castSpell(
     return { duel: await deps.repo.saveDuel(duel), members };
   }
 
+  if (resolution.kind === 'apply_condition') {
+    assertValidDuelConditionSlug(resolution.conditionSlug);
+    if (resolution.applied) {
+      const current = await loadConditions(
+        conditionsDeps(deps),
+        defenderPc.id,
+        members,
+      );
+      const next = mergeConditions({
+        current,
+        action: 'add',
+        condition: resolution.conditionSlug,
+      });
+      if (opponent.hitPointsCurrent != null) {
+        opponent.conditions = next;
+        await deps.repo.saveMember(opponent);
+      } else {
+        await deps.state.patch(defenderPc, { conditions: next });
+      }
+    }
+    log = appendCombatLog(
+      log,
+      `${casterName}: ${resolution.label} (CD ${resolution.dc} · save ${resolution.saveTotal}${resolution.saved ? ' sucesso' : ' falha'})${resolution.applied ? ` · ${resolution.conditionSlug}` : ''}.`,
+    );
+    await advanceTurnFully(turnDeps(deps), duel, members, caster.characterId);
+    duel.combatLog = log;
+    return { duel: await deps.repo.saveDuel(duel), members };
+  }
+
   if (resolution.kind === 'auto_damage' || resolution.kind === 'save_damage') {
     const applied = await applyDuelDamageToTarget({
       state: deps.state,

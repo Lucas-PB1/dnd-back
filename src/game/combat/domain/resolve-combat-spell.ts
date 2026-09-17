@@ -21,6 +21,7 @@ export type SpellCombatRow = {
   includeSpellcastingMod: boolean;
   saveSuccessOutcome: SpellCombatSaveSuccessOutcome | null;
   saveAbilitySlug: string | null;
+  conditionSlug: string | null;
 };
 
 export type CombatSpellResolution =
@@ -41,6 +42,15 @@ export type CombatSpellResolution =
       saveTotal: number;
       saved: boolean;
       dc: number;
+    }
+  | {
+      kind: 'apply_condition';
+      conditionSlug: string;
+      label: string;
+      saveTotal: number;
+      saved: boolean;
+      dc: number;
+      applied: boolean;
     }
   | { kind: 'heal'; amount: number; label: string }
   | { kind: 'slot_only'; note: string };
@@ -158,6 +168,29 @@ export function resolveCombatSpell(input: {
 
   if (row.resolution === 'arena_darkness') {
     return { kind: 'arena_darkness' };
+  }
+
+  if (row.resolution === 'apply_condition') {
+    const conditionSlug = row.conditionSlug?.trim();
+    if (!conditionSlug) {
+      return {
+        kind: 'slot_only',
+        note:
+          input.castNote?.trim() ||
+          `${row.label}: condição tipada ausente.`,
+      };
+    }
+    const save = rollD20Check(input.targetSaveBonus, 'normal');
+    const saved = save.total >= input.spellSaveDc;
+    return {
+      kind: 'apply_condition',
+      conditionSlug,
+      label: row.label,
+      saveTotal: save.total,
+      saved,
+      dc: input.spellSaveDc,
+      applied: !saved,
+    };
   }
 
   const die = row.damageDie;

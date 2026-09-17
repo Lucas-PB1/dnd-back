@@ -1,4 +1,4 @@
--- Magias PHB níveis 2–3 ofensivas/cura (PVE-1c). Utilitárias / condição pura → slot_only (PVE-3b).
+-- Magias PHB níveis 2–3 ofensivas/cura (PVE-1c). Condições tipadas → `phb_spell_combat.conditions.sql` (PVE-3b).
 INSERT INTO rpg.phb_spell_combat (
   spell_slug,
   resolution,

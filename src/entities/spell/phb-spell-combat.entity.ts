@@ -5,7 +5,8 @@ export type SpellCombatResolutionKind =
   | 'spell_attack'
   | 'arena_darkness'
   | 'save_damage'
-  | 'heal_combatant';
+  | 'heal_combatant'
+  | 'apply_condition';
 
 export type SpellCombatSaveSuccessOutcome = 'none' | 'half' | 'full';
 
@@ -58,4 +59,7 @@ export class PhbSpellCombat {
 
   @Column({ name: 'damage_type_slug', type: 'text', nullable: true })
   damageTypeSlug!: string | null;
+
+  @Column({ name: 'condition_slug', type: 'text', nullable: true })
+  conditionSlug!: string | null;
 }

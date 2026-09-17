@@ -149,6 +149,7 @@ export async function toSkirmishDetail(input: {
     myWeapons: input.weapons,
     mySpells: input.spells,
     fighter: input.fighter,
+    arenaEffects: input.skirmish.arenaEffects ?? [],
     combatLog: input.skirmish.combatLog,
   };
 }

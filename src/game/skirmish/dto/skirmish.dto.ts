@@ -304,6 +304,9 @@ export class SkirmishDetailDto extends SkirmishSummaryDto {
   @ApiPropertyOptional({ type: SkirmishFighterPanelDto, nullable: true })
   fighter!: SkirmishFighterPanelDto | null;
 
+  @ApiProperty({ type: [String], default: [] })
+  arenaEffects!: string[];
+
   @ApiProperty({ type: [SkirmishLogEntryDto] })
   combatLog!: SkirmishLogEntryDto[];
 }

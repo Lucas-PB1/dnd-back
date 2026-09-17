@@ -67,6 +67,7 @@ spell/phb/phb_spell_combat.pilot.sql
 spell/phb/phb_spell_combat.cantrips.sql
 spell/phb/phb_spell_combat.level-1.sql
 spell/phb/phb_spell_combat.level-2-3.sql
+spell/phb/phb_spell_combat.conditions.sql
 spell/phb/phb_spell_combat.level-4-6.sql
 spell/phb/phb_spell_combat.level-7-9.sql
 spell/phb/phb_spell_combat.gaps-backfill.sql
