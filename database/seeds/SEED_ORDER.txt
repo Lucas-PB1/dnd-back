@@ -424,6 +424,7 @@ heritage/phb/phb_heritage_trait.mechanics-core.sql
 heritage/phb/phb_heritage_trait.mechanics-bulk.sql
 heritage/phb/phb_heritage_trait.resources.sql
 heritage/phb/phb_heritage_combat_note.all.sql
+heritage/grim-hollow/phb_heritage_trait.option.sql
 economy/phb/phb_class_economy_action.gh-cap2-resources.sql
 economy/grim-hollow/phb_combat.modifier-grim-hollow-cap2.sql
 economy/grim-hollow/phb_class_economy_action.gh-cap4-feats.sql

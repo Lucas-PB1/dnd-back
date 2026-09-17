@@ -1,6 +1,6 @@
 # Senhor das Feras: Companheiro Primal na mesa
 
-**Status:** em espera — **não implementar** até pedido explícito.  
+**Status:** Fase A + B no front (invocar/PV/comandos + Golpe da Fera no ataque). Fase C encontro continua de fora.  
 **Classe:** Patrulheiro · subclasse `beast-master` (Senhor das Feras).
 
 ## Problema hoje

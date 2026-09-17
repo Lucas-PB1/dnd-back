@@ -1,4 +1,5 @@
 import {
+  applyDawnResourceRecovery,
   applyLongRestResourceRecovery,
   applyResourceSpend,
   applyShortRestResourceRecovery,
@@ -293,5 +294,34 @@ describe('class-resources', () => {
     const result = applyLongRestResourceRecovery(used, resources, () => 0.99);
     expect(result.used).toEqual({});
     expect(result.notes[0]).toMatch(/recuperou 6/);
+  });
+
+  it('recovers only dawn-tagged item pools on dawn', () => {
+    const resources: ClassResourceMax[] = [
+      {
+        slug: 'secondWind',
+        name: 'Second Wind',
+        max: 2,
+        recoverOneOnShort: true,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+        recoverOnLongDice: null,
+      },
+      {
+        slug: 'varinhaMisseisCharges',
+        name: 'Cargas — Mísseis',
+        max: 7,
+        recoverOneOnShort: false,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+        recoverOnLongDice: null,
+        recoverOnDawn: true,
+      },
+    ];
+    const result = applyDawnResourceRecovery(
+      { secondWind: 1, varinhaMisseisCharges: 4 },
+      resources,
+    );
+    expect(result.used).toEqual({ secondWind: 1 });
   });
 });

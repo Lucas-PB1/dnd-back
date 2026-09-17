@@ -139,6 +139,8 @@ export async function applyCastSpell(input: {
     spellSlug: dto.spellSlug,
     slotLevelUsed: spend.slotLevelUsed,
     usedFreeResource: spend.usedFreeResource,
+    applyMissileShield: dto.applyMissileShield,
+    applyGigaMissile: dto.applyGigaMissile,
   });
   if (spend.usedSpellMastery) {
     const masteryNote = 'Dominância de Magias: conjurada sem espaço.';

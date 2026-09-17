@@ -18,6 +18,7 @@ import {
   type AttunementCharacterContext,
 } from '../inventory/inventory-item-ops';
 import { encumbranceFromInventoryDtos } from '../inventory/inventory-encumbrance';
+import { MAX_ATTUNED_ITEMS } from '../../domain/attunement';
 import type { CoinPurse } from '../../domain/coin-purse';
 import { addInventoryItem } from '../inventory/inventory-coin-tx';
 import { adjustInventoryQuantityWithCoins } from '../inventory/inventory-purchase-tx';
@@ -65,6 +66,7 @@ export class CharacterInventoryRepository {
     return {
       items: dtos,
       encumbrance: encumbranceFromInventoryDtos(dtos, strengthScore),
+      attunementLimit: MAX_ATTUNED_ITEMS,
     };
   }
 

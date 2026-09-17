@@ -24,12 +24,12 @@ export async function syncSkillsAndOrigin(
 
   const originSync = resolveOriginChoicesForSync(input);
   if (originSync?.kind === 'heritage') {
+    await deps.speciesChoices.delete({ characterId });
     await syncHeritageChoices(
       deps.dataSource,
       characterId,
       originSync.choices,
     );
-    await deps.speciesChoices.delete({ characterId });
   } else if (originSync?.kind === 'species') {
     await deps.speciesChoices.delete({ characterId });
     const phbChoices = originSync.choices.filter(

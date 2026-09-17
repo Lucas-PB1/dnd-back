@@ -111,7 +111,11 @@ export async function loadItemResourceSchedule(
      ORDER BY rd.slug, e.unlock_level`,
     [itemSlugs],
   );
-  return fromEffects.map(mapResourceScheduleRow);
+  return fromEffects.map((row) => ({
+    ...mapResourceScheduleRow(row),
+    recoverOnDawn:
+      row.recover_all_on_long || Boolean(row.recover_on_long_dice),
+  }));
 }
 
 export async function loadHeritageResourceSchedule(

@@ -9,6 +9,8 @@ Skill: `rpg-class-mesa-api` (critério mesa ≠ VTT / combate simulado).
 
 Consumidor futuro (lobby PvP, não inventa motor à parte): [`pvp-1v1-duel.md`](pvp-1v1-duel.md) — F3 do duelo 1v1.
 
+**Nota 2026-09-16:** encontro ganhou MVP de **ataque vs CA + dano nos PV** (`POST .../encounters/:id/attacks`). Saves, tabuleiro, manobras no momento do acerto e o restante desta lista continuam futuros.
+
 **Nota 2026-09-08:** o duelo ganhou um **MVP** (ataque com arma vs CA + `applyCurrentHitPoints`, depois PV temp. no pipeline) e **retrato** de PC. Magias tipadas e condições no turno do duelo ainda estão nesta lista / F4 do [`pvp-1v1-duel.md`](pvp-1v1-duel.md). **Mapa/distância/voo ficam fora do x1 por decisão de produto.** **Escuridão mágica** no x1: conjurável como efeito de arena; visão normal e Visão no Escuro **não** atravessam (só exceções tipadas, ex. Visão do Diabo) — ver BEA do duelo.
 
 ---
@@ -56,7 +58,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 ### Encontro / atores
 
-- [ ] Combate no encontro (acerto/dano/saves). Board/spawn/tracker leve de combatentes já é mesa.
+- [x] Combate no encontro (acerto/dano). Saves e tracker fino de summon ainda futuros. Board/spawn/tracker leve de combatentes já é mesa.
 - [ ] Tracker fino de companheiro / summon em combate (além de nota/uso)
 
 ---

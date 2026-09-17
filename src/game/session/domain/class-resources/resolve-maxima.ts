@@ -74,6 +74,7 @@ export function resolveClassResourceMaxima(input: {
       recoverAllOnShort,
       recoverAllOnLong: top.recoverAllOnLong,
       recoverOnLongDice: top.recoverOnLongDice ?? null,
+      recoverOnDawn: top.recoverOnDawn === true,
     });
   }
 

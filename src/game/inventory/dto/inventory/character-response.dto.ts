@@ -57,4 +57,10 @@ export class CharacterInventoryResponseDto {
 
   @ApiProperty({ type: InventoryPaymentContextDto })
   paymentContext!: InventoryPaymentContextDto;
+
+  @ApiProperty({
+    example: 3,
+    description: 'Limite de itens sintonizados (PHB)',
+  })
+  attunementLimit!: number;
 }

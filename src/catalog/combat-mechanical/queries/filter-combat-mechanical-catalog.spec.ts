@@ -30,6 +30,10 @@ function sampleCatalog(): CombatMechanicalCatalogResponseDto {
         classSlug: 'fighter',
         subclassSlug: 'psi-warrior',
       }),
+      asDep({ id: 'lucky-a', featSlug: 'lucky' }),
+      asDep({ id: 'potion-a', itemSlug: 'potion-of-healing' }),
+      asDep({ id: 'thread-a', threadSlug: 'cursemarked' }),
+      asDep({ id: 'heritage-a', heritageTraitSlug: 'potent-breath' }),
     ],
     panelActions: [
       asDep({ panelKey: 'fighter|a', classSlug: 'fighter' }),
@@ -52,6 +56,10 @@ describe('filterCombatMechanicalCatalog', () => {
       'fighter-a',
       'species-a',
       'fighter-sub',
+      'lucky-a',
+      'potion-a',
+      'thread-a',
+      'heritage-a',
     ]);
     expect(result.panelActions.map((row) => row.panelKey)).toEqual([
       'fighter|a',
@@ -94,9 +102,48 @@ describe('filterCombatMechanicalCatalog', () => {
     expect(result.economyActions.map((row) => row.id)).toEqual([
       'fighter-a',
       'species-a',
+      'lucky-a',
+      'potion-a',
+      'thread-a',
+      'heritage-a',
     ]);
     expect(result.battleMasterManeuvers).toHaveLength(1);
     expect(result.gunslingerManeuvers).toEqual([]);
     expect(result.tableActions.map((row) => row.slug)).toEqual(['maneuver']);
+  });
+
+  it('filters economy by featSlug and clears class extras', () => {
+    const result = filterCombatMechanicalCatalog(sampleCatalog(), {
+      featSlug: 'lucky',
+    });
+    expect(result.economyActions.map((row) => row.id)).toEqual(['lucky-a']);
+    expect(result.panelActions).toEqual([]);
+    expect(result.battleMasterManeuvers).toEqual([]);
+    expect(result.gunslingerManeuvers).toEqual([]);
+  });
+
+  it('filters economy by itemSlug', () => {
+    const result = filterCombatMechanicalCatalog(sampleCatalog(), {
+      itemSlug: 'potion-of-healing',
+    });
+    expect(result.economyActions.map((row) => row.id)).toEqual(['potion-a']);
+  });
+
+  it('filters economy by speciesSlug, threadSlug and heritageTraitSlug', () => {
+    expect(
+      filterCombatMechanicalCatalog(sampleCatalog(), {
+        speciesSlug: 'dwarf',
+      }).economyActions.map((row) => row.id),
+    ).toEqual(['species-a']);
+    expect(
+      filterCombatMechanicalCatalog(sampleCatalog(), {
+        threadSlug: 'cursemarked',
+      }).economyActions.map((row) => row.id),
+    ).toEqual(['thread-a']);
+    expect(
+      filterCombatMechanicalCatalog(sampleCatalog(), {
+        heritageTraitSlug: 'potent-breath',
+      }).economyActions.map((row) => row.id),
+    ).toEqual(['heritage-a']);
   });
 });

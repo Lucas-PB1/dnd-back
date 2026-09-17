@@ -113,7 +113,7 @@ export class CharacterSessionController {
 
   @Post(':id/rest')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Short or long rest' })
+  @ApiOperation({ summary: 'Short rest, long rest, or dawn recharge' })
   @ApiOkResponse({ type: RestResponseDto })
   @ApiNotFoundResponse()
   takeRest(

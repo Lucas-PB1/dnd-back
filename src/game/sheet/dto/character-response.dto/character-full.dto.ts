@@ -144,6 +144,12 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
     description: 'Character Thread ativo + histórico (Northlands)',
   })
   thread!: CharacterThreadBundleDto | null;
+
+  @ApiProperty({
+    example: false,
+    description: 'True se Jack of All Trades se aplica neste nível',
+  })
+  jackOfAllTrades!: boolean;
 }
 
 export class CharacterSummaryResponseDto extends PickType(CharacterResponseDto, [

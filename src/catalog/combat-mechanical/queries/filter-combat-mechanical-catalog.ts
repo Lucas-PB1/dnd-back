@@ -3,6 +3,11 @@ import type { CombatMechanicalCatalogResponseDto } from '../dto/combat-mechanica
 export type CombatMechanicalCatalogFilters = {
   classSlug?: string;
   subclassSlug?: string;
+  featSlug?: string;
+  itemSlug?: string;
+  speciesSlug?: string;
+  threadSlug?: string;
+  heritageTraitSlug?: string;
 };
 
 const BATTLE_MASTER_SUBCLASS = 'battle-master';
@@ -36,13 +41,78 @@ function gunslingerManeuversForFilters(
 }
 
 
+function catalogForOwnerEconomy(
+  catalog: CombatMechanicalCatalogResponseDto,
+  economyActions: CombatMechanicalCatalogResponseDto['economyActions'],
+): CombatMechanicalCatalogResponseDto {
+  return {
+    ...catalog,
+    economyActions,
+    panelActions: [],
+    gunslingerManeuvers: [],
+    battleMasterManeuvers: [],
+    cunningStrikeEffects: [],
+    strikeOptions: [],
+    tableActions: [],
+    personaMasks: [],
+    beastborneAspectBenefits: [],
+    dungeoneerSlayerLabels: [],
+    precautionSpells: [],
+  };
+}
+
 export function filterCombatMechanicalCatalog(
   catalog: CombatMechanicalCatalogResponseDto,
   filters: CombatMechanicalCatalogFilters,
 ): CombatMechanicalCatalogResponseDto {
   const classSlug = filters.classSlug?.trim() || undefined;
   const subclassSlug = filters.subclassSlug?.trim() || undefined;
-  if (!classSlug && !subclassSlug) return catalog;
+  const featSlug = filters.featSlug?.trim() || undefined;
+  const itemSlug = filters.itemSlug?.trim() || undefined;
+  const speciesSlug = filters.speciesSlug?.trim() || undefined;
+  const threadSlug = filters.threadSlug?.trim() || undefined;
+  const heritageTraitSlug = filters.heritageTraitSlug?.trim() || undefined;
+  if (
+    !classSlug &&
+    !subclassSlug &&
+    !featSlug &&
+    !itemSlug &&
+    !speciesSlug &&
+    !threadSlug &&
+    !heritageTraitSlug
+  ) {
+    return catalog;
+  }
+
+  if (featSlug || itemSlug || speciesSlug || threadSlug || heritageTraitSlug) {
+    let economyActions = catalog.economyActions;
+    if (featSlug) {
+      economyActions = economyActions.filter(
+        (action) => action.featSlug === featSlug,
+      );
+    }
+    if (itemSlug) {
+      economyActions = economyActions.filter(
+        (action) => action.itemSlug === itemSlug,
+      );
+    }
+    if (speciesSlug) {
+      economyActions = economyActions.filter(
+        (action) => action.speciesSlug === speciesSlug,
+      );
+    }
+    if (threadSlug) {
+      economyActions = economyActions.filter(
+        (action) => action.threadSlug === threadSlug,
+      );
+    }
+    if (heritageTraitSlug) {
+      economyActions = economyActions.filter(
+        (action) => action.heritageTraitSlug === heritageTraitSlug,
+      );
+    }
+    return catalogForOwnerEconomy(catalog, economyActions);
+  }
 
   let economyActions = catalog.economyActions;
   let panelActions = catalog.panelActions;

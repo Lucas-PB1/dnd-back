@@ -78,14 +78,14 @@ export class PatchCharacterStateDto {
 }
 
 export class RestDto {
-  @ApiProperty({ enum: ['short', 'long'] })
-  @IsIn(['short', 'long'])
-  type!: 'short' | 'long';
+  @ApiProperty({ enum: ['short', 'long', 'dawn'] })
+  @IsIn(['short', 'long', 'dawn'])
+  type!: 'short' | 'long' | 'dawn';
 
   @ApiPropertyOptional({
     example: 1,
     description:
-      'Dados de vida a gastar no descanso curto (ignorado no longo). Padrão 0.',
+      'Dados de vida a gastar no descanso curto (ignorado no longo e no amanhecer). Padrão 0.',
   })
   @IsOptional()
   @IsInt()
@@ -94,8 +94,8 @@ export class RestDto {
 }
 
 export class RestResponseDto {
-  @ApiProperty({ enum: ['short', 'long'] })
-  type!: 'short' | 'long';
+  @ApiProperty({ enum: ['short', 'long', 'dawn'] })
+  type!: 'short' | 'long' | 'dawn';
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;
@@ -111,7 +111,7 @@ export class RestResponseDto {
 
   @ApiPropertyOptional({
     example: ['Cargas — Varinha de Mísseis Mágicos: recuperou 5 (1d6+1).'],
-    description: 'Notas de recover 1dN de itens no descanso longo',
+    description: 'Notas de recover 1dN de itens no descanso longo ou amanhecer',
   })
   notes?: string[];
 }

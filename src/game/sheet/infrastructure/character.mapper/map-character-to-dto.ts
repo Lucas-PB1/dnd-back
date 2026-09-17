@@ -30,7 +30,8 @@ import { PhbHeritageTrait } from '@entities/heritage/phb-heritage-trait.entity';
 import { resolveAggregatedHeritageTraits } from '../../domain/heritage/resolve-aggregated-heritage-traits';
 import { resolveSheetMeta } from './resolve-sheet-meta';
 import { loadGatedSpeciesEffects, type LoadEffectCatalog } from '@game/effects';
-import { resolveJackOfAllTradesLevel } from '@game/sheet/infrastructure/queries/class-meta.queries';
+import { hasJackOfAllTrades } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
+import { resolveJackOfAllTradesLevel } from '../queries/class-meta.queries';
 
 export type MapCharacterToDtoDeps = {
   dataSource: DataSource;
@@ -184,5 +185,9 @@ export async function mapCharacterToDto(
     spellcasting,
     thread,
     aggregatedHeritageTraits,
+    jackOfAllTrades: hasJackOfAllTrades(
+      jackOfAllTradesUnlockLevel,
+      row.level,
+    ),
   });
 }

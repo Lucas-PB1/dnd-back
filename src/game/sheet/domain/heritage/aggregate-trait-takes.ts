@@ -14,6 +14,7 @@ export const HERITAGE_TRAIT_SLOTS = [
 export const HERITAGE_TRAIT_SLOT_9 = 'heritage_trait_9';
 export const HERITAGE_SPEED_TRADE_KIND = 'heritage_speed_trade';
 export const HERITAGE_SIZE_KIND = 'heritage_size';
+export const HERITAGE_OPT_KIND_PREFIX = 'heritage_opt_';
 
 export interface HeritageTraitPick {
   choiceKind: string;
@@ -68,6 +69,56 @@ export function collectHeritageTraitPicks(
   choices: readonly HeritageTraitPick[],
 ): HeritageTraitPick[] {
   return choices.filter((choice) => isHeritageTraitSlot(choice.choiceKind));
+}
+
+export function isHeritageOptKind(choiceKind: string): boolean {
+  return choiceKind.startsWith(HERITAGE_OPT_KIND_PREFIX);
+}
+
+export function heritageOptChoiceKind(
+  slotIndex: number,
+  optionKey: string,
+): string {
+  return `${HERITAGE_OPT_KIND_PREFIX}${slotIndex}_${optionKey}`;
+}
+
+export function parseHeritageOptKind(
+  choiceKind: string,
+): { slotIndex: number; optionKey: string } | null {
+  const match = choiceKind.match(/^heritage_opt_(\d+)_(.+)$/);
+  if (!match) return null;
+  return {
+    slotIndex: Number.parseInt(match[1], 10),
+    optionKey: match[2],
+  };
+}
+
+export interface HeritageTraitOptionCatalog {
+  traitSlug: string;
+  optionKey: string;
+  valueIds: readonly string[];
+}
+
+export function requiredHeritageOptKinds(
+  picks: readonly HeritageTraitPick[],
+  traitOptions: readonly HeritageTraitOptionCatalog[],
+): string[] {
+  const keysByTrait = new Map<string, string[]>();
+  for (const row of traitOptions) {
+    const keys = keysByTrait.get(row.traitSlug) ?? [];
+    if (!keys.includes(row.optionKey)) keys.push(row.optionKey);
+    keysByTrait.set(row.traitSlug, keys);
+  }
+  const kinds: string[] = [];
+  for (const pick of picks) {
+    const slotIndex = heritageTraitSlotIndex(pick.choiceKind);
+    const traitSlug = pick.choiceSlug?.trim();
+    if (slotIndex == null || !traitSlug) continue;
+    for (const optionKey of keysByTrait.get(traitSlug) ?? []) {
+      kinds.push(heritageOptChoiceKind(slotIndex, optionKey));
+    }
+  }
+  return kinds;
 }
 
 export function requiredHeritageTraitSlotKinds(

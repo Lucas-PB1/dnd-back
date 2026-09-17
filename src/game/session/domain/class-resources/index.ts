@@ -10,6 +10,7 @@ export type {
 
 export { resolveClassResourceMaxima } from './resolve-maxima';
 export {
+  applyDawnResourceRecovery,
   applyLongRestResourceRecovery,
   applyResourceRecover,
   applyResourceSpend,

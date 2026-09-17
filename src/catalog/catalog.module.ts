@@ -19,6 +19,7 @@ import { MetamagicsModule } from './metamagics/metamagics.module';
 import { CreatureTemplatesModule } from './creature-templates/creature-templates.module';
 import { VehicleTemplatesModule } from './vehicle-templates/vehicle-templates.module';
 import { CharacterThreadsModule } from './character-threads/character-threads.module';
+import { CatalogLabelsModule } from './catalog-labels/catalog-labels.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CharacterThreadsModule } from './character-threads/character-threads.mo
     CreatureTemplatesModule,
     VehicleTemplatesModule,
     CharacterThreadsModule,
+    CatalogLabelsModule,
   ],
   exports: [CatalogLookupModule, ItemsModule, CharacterThreadsModule, ClassesModule],
 })

@@ -34,6 +34,13 @@ export class ClassEconomyActionDto {
   @ApiPropertyOptional({ example: 'sworn-huskarl', nullable: true })
   threadSlug?: string | null;
 
+  @ApiPropertyOptional({
+    example: 2,
+    description:
+      'Mínimo de takes do traço de heritage (coluna min_trait_takes). Omitido se null.',
+  })
+  minTraitTakes?: number;
+
   @ApiPropertyOptional({ example: 'giantAncestryId' })
   requiresOptionKey?: string;
 

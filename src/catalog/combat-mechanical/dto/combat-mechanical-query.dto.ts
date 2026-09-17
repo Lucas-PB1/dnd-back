@@ -17,4 +17,44 @@ export class CombatMechanicalQueryDto {
   @IsOptional()
   @IsString()
   subclassSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtra economy actions do talento.',
+    example: 'lucky',
+  })
+  @IsOptional()
+  @IsString()
+  featSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtra economy actions do item.',
+    example: 'potion-of-healing',
+  })
+  @IsOptional()
+  @IsString()
+  itemSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtra economy actions da espécie.',
+    example: 'dwarf',
+  })
+  @IsOptional()
+  @IsString()
+  speciesSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtra economy actions do character thread.',
+    example: 'cursemarked',
+  })
+  @IsOptional()
+  @IsString()
+  threadSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtra economy actions do traço de herança.',
+    example: 'potent-breath',
+  })
+  @IsOptional()
+  @IsString()
+  heritageTraitSlug?: string;
 }

@@ -75,4 +75,56 @@ describe('validateHeritageChoices', () => {
       }),
     ).toThrow(/at most 2 take/);
   });
+
+  it('requires nested option picks when the selected trait has catalog options', () => {
+    const slugs = [
+      'potent-breath',
+      'damage-immunity',
+      'incomparable-roar',
+      'improved-darkvision',
+      'shared-movement',
+      'powerful-shove',
+      'terrifying-influence',
+    ];
+    const traitRows = slugs.map((choiceSlug, index) => ({
+      choiceKind: `heritage_trait_${index + 1}`,
+      traitSlug: choiceSlug,
+    }));
+    const choices = slugs.map((choiceSlug, index) => ({
+      choiceKind: `heritage_trait_${index + 1}`,
+      choiceSlug,
+    }));
+    const traitOptions = [
+      {
+        traitSlug: 'potent-breath',
+        optionKey: 'damageType',
+        valueIds: ['fire', 'cold'],
+      },
+    ];
+
+    expect(() =>
+      validateHeritageChoices({
+        heritageSlug: 'gh-downcast',
+        choices,
+        catalogRows: traitRows,
+        traitLimits: slugs.map((slug) => ({ slug, maxTakes: 2 })),
+        traitOptions,
+        rules: { allowsSpeedTrade: false, allowsSizeChoice: false },
+      }),
+    ).toThrow(/heritage_opt_1_damageType/);
+
+    expect(() =>
+      validateHeritageChoices({
+        heritageSlug: 'gh-downcast',
+        choices: [
+          ...choices,
+          { choiceKind: 'heritage_opt_1_damageType', choiceSlug: 'fire' },
+        ],
+        catalogRows: traitRows,
+        traitLimits: slugs.map((slug) => ({ slug, maxTakes: 2 })),
+        traitOptions,
+        rules: { allowsSpeedTrade: false, allowsSizeChoice: false },
+      }),
+    ).not.toThrow();
+  });
 });

@@ -27,6 +27,7 @@ AS $$
       )
       FROM rpg.player_character_species_choice sc
       WHERE sc.character_id = p_character_id
+        AND sc.choice_kind NOT LIKE 'heritage_%'
     ), '[]'::jsonb),
     'heritageChoices', COALESCE((
       SELECT jsonb_agg(choice ORDER BY (choice->>'choiceKind'))
@@ -54,6 +55,14 @@ AS $$
         FROM rpg.player_character_heritage_config cfg
         WHERE cfg.character_id = p_character_id
           AND cfg.size_choice IS NOT NULL
+        UNION ALL
+        SELECT jsonb_build_object(
+          'choiceKind', sc.choice_kind,
+          'choiceSlug', sc.choice_slug
+        )
+        FROM rpg.player_character_species_choice sc
+        WHERE sc.character_id = p_character_id
+          AND sc.choice_kind LIKE 'heritage_opt_%'
       ) heritage_rows
     ), COALESCE((
       SELECT jsonb_agg(

@@ -5,7 +5,10 @@ import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-c
 import { DEFAULT_PHB_EDITION_SLUG } from '@common/dto/pagination.dto';
 import { HeritageResponseDto } from './dto/heritage-response.dto';
 import { HeritageSummaryResponseDto } from './dto/heritage-summary-response.dto';
-import { HeritageTraitResponseDto } from './dto/heritage-trait-response.dto';
+import {
+  HeritageTraitResponseDto,
+  type HeritageTraitOptionGroupDto,
+} from './dto/heritage-trait-response.dto';
 import { HeritageTraitChoiceResponseDto } from './dto/heritage-trait-choice-response.dto';
 
 function editionSlugFromSourceMeta(
@@ -45,7 +48,10 @@ export class HeritagesMapper {
     };
   }
 
-  toTraitDto(row: PhbHeritageTrait): HeritageTraitResponseDto {
+  toTraitDto(
+    row: PhbHeritageTrait,
+    options: HeritageTraitOptionGroupDto[] = [],
+  ): HeritageTraitResponseDto {
     return {
       slug: row.slug,
       name: row.name.replace(/\.$/, ''),
@@ -53,6 +59,7 @@ export class HeritagesMapper {
       description: row.description,
       benefitBase: row.benefitBase,
       benefitImproved: row.benefitImproved,
+      ...(options.length > 0 ? { options } : {}),
     };
   }
 

@@ -22,7 +22,7 @@ import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity'
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';
 import { applyPatchState } from '../core/patch-state';
-import { applyLongRestState, applyShortRestState } from '../rest/rest';
+import { applyDawnState, applyLongRestState, applyShortRestState } from '../rest/rest';
 import { applyCastSpell } from '../spell/cast-spell';
 import type { SyncSpellSpiritResult } from '@game/spirit/application/sync-spell-spirit.handler';
 
@@ -90,6 +90,20 @@ export async function castSpellOp(
     characters: deps.characters,
     dataSource: deps.dataSource,
     syncSpellSpirit: deps.syncSpellSpirit,
+    buildResponse: deps.buildResponse,
+  });
+}
+
+export async function applyDawnOp(
+  deps: CoreSessionDeps,
+  character: PlayerCharacter,
+): Promise<RestResponseDto> {
+  const state = await deps.findOrCreate(character.id, character.level);
+  return applyDawnState({
+    character,
+    state,
+    stateRepo: deps.stateRepo,
+    dataSource: deps.dataSource,
     buildResponse: deps.buildResponse,
   });
 }

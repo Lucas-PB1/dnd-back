@@ -29,6 +29,7 @@ export function assembleCharacterResponseDto(input: {
   spellcasting: SpellcastingSlice;
   thread: CharacterThreadBundleDto | null;
   aggregatedHeritageTraits?: AggregatedHeritageTraitDto[];
+  jackOfAllTrades: boolean;
 }): CharacterResponseDto {
   const { row, loaded, combat, spellcasting, derived } = input;
   return {
@@ -101,6 +102,7 @@ export function assembleCharacterResponseDto(input: {
       platinum: row.coinPlatinum,
     },
     thread: input.thread,
+    jackOfAllTrades: input.jackOfAllTrades,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };

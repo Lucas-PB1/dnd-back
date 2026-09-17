@@ -10,14 +10,23 @@ describe('FindClassBySlugQuery', () => {
     const proficiencies = {
       forClassSlug: jest.fn().mockResolvedValue({ armor: ['light'] }),
     };
+    const classRef = {
+      findOne: jest.fn().mockResolvedValue({
+        subclassUnlockLevel: 3,
+        jackOfAllTradesLevel: null,
+      }),
+    };
     const query = new FindClassBySlugQuery(
       asDep(catalogLookup),
       asDep(mapper),
       asDep(proficiencies),
+      asDep(classRef),
     );
     await expect(query.execute('fighter')).resolves.toEqual({
       slug: 'fighter',
       armor: ['light'],
+      subclassUnlockLevel: 3,
+      jackOfAllTradesLevel: null,
     });
   });
 
@@ -29,6 +38,7 @@ describe('FindClassBySlugQuery', () => {
       asDep(catalogLookup),
       asDep({ toClassDto: jest.fn() }),
       asDep({ forClassSlug: jest.fn() }),
+      asDep({ findOne: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow('not found');
   });

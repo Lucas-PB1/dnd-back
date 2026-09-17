@@ -79,6 +79,18 @@ export function applyLongRestResourceRecovery(
   return { used: next, notes };
 }
 
+export function applyDawnResourceRecovery(
+  used: Record<string, number>,
+  resources: readonly ClassResourceMax[],
+  rng: Rng = Math.random,
+): LongRestResourceRecoveryResult {
+  return applyLongRestResourceRecovery(
+    used,
+    resources.filter((resource) => resource.recoverOnDawn === true),
+    rng,
+  );
+}
+
 export function resourcesRemaining(
   maxBySlug: Record<string, number>,
   used: Record<string, number>,

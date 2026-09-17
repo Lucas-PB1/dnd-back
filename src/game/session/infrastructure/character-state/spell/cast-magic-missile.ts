@@ -61,6 +61,8 @@ export async function applyMagicMissileMageOnCast(input: {
   spellSlug: string;
   slotLevelUsed: number | null;
   usedFreeResource: boolean;
+  applyMissileShield?: boolean;
+  applyGigaMissile?: boolean;
 }): Promise<string | null> {
   const {
     character,
@@ -69,20 +71,31 @@ export async function applyMagicMissileMageOnCast(input: {
     spellSlug,
     slotLevelUsed,
     usedFreeResource,
+    applyMissileShield = false,
+    applyGigaMissile = false,
   } = input;
 
-  if (
-    spellSlug !== MAGIC_MISSILE_SPELL_SLUG ||
-    !isMagicMissileMage(character.subclassSlug)
-  ) {
+  const isMissileCast =
+    spellSlug === MAGIC_MISSILE_SPELL_SLUG &&
+    isMagicMissileMage(character.subclassSlug);
+
+  if ((applyMissileShield || applyGigaMissile) && !isMissileCast) {
+    throw new BadRequestException(
+      'Missile boosts only apply when a Magic Missile Mage casts Mísseis Mágicos',
+    );
+  }
+
+  if (!isMissileCast) {
     return null;
   }
 
   const resources = await resolveClassResources(dataSource, character);
   let missileShield = false;
   let gigaMissile = false;
+  const wantShield = applyMissileShield || state.missileShieldArmed;
+  const wantGiga = applyGigaMissile || state.gigaMissileArmed;
 
-  if (state.missileShieldArmed) {
+  if (wantShield) {
     spendArmedResource({
       state,
       resources,
@@ -93,7 +106,7 @@ export async function applyMagicMissileMageOnCast(input: {
     state.missileShieldArmed = false;
   }
 
-  if (state.gigaMissileArmed) {
+  if (wantGiga) {
     spendArmedResource({
       state,
       resources,

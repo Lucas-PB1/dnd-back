@@ -4,7 +4,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
-import { applyLongRestState, applyShortRestState } from './rest';
+import { applyDawnState, applyLongRestState, applyShortRestState } from './rest';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 import { asDep } from '@common/testing/as-dep';
@@ -141,6 +141,53 @@ describe('rest', () => {
       expect(stateRepo.save).toHaveBeenCalledWith(state);
       expect(characters.save).toHaveBeenCalledWith(character);
       expect(result).toEqual({ type: 'long', state: { id: 'char1' } });
+    });
+  });
+
+  describe('applyDawnState', () => {
+    it('recharges dawn pools without a long rest', async () => {
+      mockResolveClassResources.mockResolvedValue(
+        asDep([
+          {
+            slug: 'secondWind',
+            name: 'Second Wind',
+            max: 1,
+            recoverAllOnLong: true,
+            recoverOneOnShort: false,
+            recoverAllOnShort: false,
+            recoverOnLongDice: null,
+          },
+          {
+            slug: 'varinhaMisseisCharges',
+            name: 'Cargas — Mísseis',
+            max: 7,
+            recoverAllOnLong: true,
+            recoverOneOnShort: false,
+            recoverAllOnShort: false,
+            recoverOnLongDice: null,
+            recoverOnDawn: true,
+          },
+        ]),
+      );
+      state.resourcesUsed = { secondWind: 1, varinhaMisseisCharges: 4 };
+      state.spellSlotsUsed = { '1': 2 };
+      state.conditions = ['poisoned'];
+      character.hitPointsCurrent = 20;
+
+      const result = await applyDawnState({
+        character,
+        state,
+        stateRepo,
+        dataSource,
+        buildResponse,
+      });
+
+      expect(state.resourcesUsed).toEqual({ secondWind: 1 });
+      expect(state.spellSlotsUsed).toEqual({ '1': 2 });
+      expect(state.conditions).toEqual(['poisoned']);
+      expect(character.hitPointsCurrent).toBe(20);
+      expect(characters.save).not.toHaveBeenCalled();
+      expect(result.type).toBe('dawn');
     });
   });
 

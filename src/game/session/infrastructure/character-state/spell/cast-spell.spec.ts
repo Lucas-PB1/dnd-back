@@ -170,6 +170,8 @@ describe('applyCastSpell', () => {
       itemCastSpendAmount?: number;
       slotLevel?: number;
       spiritVariantKey?: string;
+      applyMissileShield?: boolean;
+      applyGigaMissile?: boolean;
     },
     characterOverride?: Record<string, unknown>,
     dataSourceOverride?: { query: jest.Mock },
@@ -496,6 +498,55 @@ describe('applyCastSpell', () => {
       expect(state.resourcesUsed['giga-missile']).toBe(1);
       expect(result.note).toMatch(/Escudo de Mísseis/i);
       expect(result.note).toMatch(/Giga-Míssil/i);
+    });
+
+    it('applies shield and giga from body without armed flags', async () => {
+      const result = await cast(
+        {
+          spellSlug: 'misseis-magicos',
+          freeCastResourceSlug: 'magic-missile-free',
+          applyMissileShield: true,
+          applyGigaMissile: true,
+        },
+        mage,
+      );
+      expect(state.missileShieldArmed).toBe(false);
+      expect(state.gigaMissileArmed).toBe(false);
+      expect(state.resourcesUsed['missile-shield']).toBe(1);
+      expect(state.resourcesUsed['giga-missile']).toBe(1);
+      expect(result.note).toMatch(/Escudo de Mísseis/i);
+      expect(result.note).toMatch(/Giga-Míssil/i);
+    });
+
+    it('rejects missile shield without remaining uses', async () => {
+      state.resourcesUsed = { 'missile-shield': 1 };
+      await expect(
+        cast(
+          {
+            spellSlug: 'misseis-magicos',
+            freeCastResourceSlug: 'magic-missile-free',
+            applyMissileShield: true,
+          },
+          mage,
+        ),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('rejects missile boosts for a non-mage wizard', async () => {
+      classSlots.findOne.mockResolvedValue({
+        level1: 4,
+        level2: 3,
+      });
+      await expect(
+        cast(
+          {
+            spellSlug: 'alarme',
+            slotLevel: 1,
+            applyMissileShield: true,
+          },
+          { classSlug: 'wizard', subclassSlug: 'evocation', level: 5 },
+        ),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 

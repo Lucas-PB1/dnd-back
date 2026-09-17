@@ -58,6 +58,8 @@ export class ClassesMapper {
       weaponProficiencyNames: [],
       fightingStyleSlugs: [],
       fightingStyleNames: [],
+      subclassUnlockLevel: null,
+      jackOfAllTradesLevel: null,
     };
   }
 
@@ -127,6 +129,7 @@ export class ClassesMapper {
       preparedSpells: row.preparedSpells,
       channelDivinity: row.channelDivinity,
       weaponMastery: row.weaponMastery,
+      asiOrFeat: row.asiOrFeat,
     };
   }
 }

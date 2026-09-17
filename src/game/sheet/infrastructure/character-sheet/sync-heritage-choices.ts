@@ -4,6 +4,7 @@ import {
   HERITAGE_SIZE_KIND,
   HERITAGE_SPEED_TRADE_KIND,
   heritageTraitSlotIndex,
+  isHeritageOptKind,
   isHeritageTraitSlot,
 } from '@game/sheet/domain/heritage/aggregate-trait-takes';
 
@@ -53,6 +54,18 @@ export async function syncHeritageChoices(
         speedTrade?.choiceSlug ?? null,
         sizeChoice?.choiceSlug ?? null,
       ],
+    );
+  }
+
+  for (const choice of choices) {
+    if (!isHeritageOptKind(choice.choiceKind) || !choice.choiceSlug?.trim()) {
+      continue;
+    }
+    await dataSource.query(
+      `INSERT INTO rpg.player_character_species_choice (character_id, choice_kind, choice_slug)
+       VALUES ($1::uuid, $2, $3)
+       ON CONFLICT (character_id, choice_kind) DO UPDATE SET choice_slug = EXCLUDED.choice_slug`,
+      [characterId, choice.choiceKind, choice.choiceSlug.trim()],
     );
   }
 }

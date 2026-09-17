@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-export type OptionScope = 'subclass' | 'species' | 'feat' | 'class';
+export type OptionScope = 'subclass' | 'species' | 'feat' | 'class' | 'heritage';
 
 @Entity({ schema: 'rpg', name: 'phb_option_def' })
 export class PhbOptionDef {

@@ -26,4 +26,10 @@ export class ClassProgressionResponseDto {
     description: 'Tipos de arma com maestria disponíveis neste nível',
   })
   weaponMastery!: number | null;
+
+  @ApiProperty({
+    example: false,
+    description: 'True se o nível concede ASI ou talento',
+  })
+  asiOrFeat!: boolean;
 }

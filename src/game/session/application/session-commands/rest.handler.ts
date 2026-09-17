@@ -24,6 +24,10 @@ export class RestHandler {
       'write',
     );
 
+    if (dto.type === 'dawn') {
+      return this.state.applyDawn(character);
+    }
+
     if (dto.type === 'long') {
       return this.state.applyLongRest(character);
     }

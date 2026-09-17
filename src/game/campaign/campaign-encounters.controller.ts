@@ -28,10 +28,13 @@ import {
   AddEncounterPcDto,
   CampaignEncounterDto,
   CreateCampaignEncounterDto,
+  EncounterAttackResponseDto,
   PatchCampaignEncounterDto,
   PatchEncounterCombatantDto,
+  ResolveEncounterAttackDto,
   RollEncounterInitiativeDto,
 } from './dto/encounter.dto';
+import { CampaignEncounterAttackService } from './application/campaign-encounter-attack.service';
 
 @ApiTags('game-campaign-encounters')
 @ApiBearerAuth()
@@ -42,6 +45,7 @@ export class CampaignEncountersController {
   constructor(
     private readonly encounters: CampaignEncounterService,
     private readonly initiative: CampaignEncounterInitiativeService,
+    private readonly attacks: CampaignEncounterAttackService,
   ) {}
 
   @Post()
@@ -196,6 +200,20 @@ export class CampaignEncountersController {
       encounterId,
       combatantId,
     );
+  }
+
+  @Post(':encounterId/attacks')
+  @ApiOperation({
+    summary: 'Resolve attack vs AC and apply damage (encounter combat MVP)',
+  })
+  @ApiOkResponse({ type: EncounterAttackResponseDto })
+  resolveAttack(
+    @CurrentUser() user: AuthUser,
+    @Param('campaignId', ParseUUIDPipe) campaignId: string,
+    @Param('encounterId', ParseUUIDPipe) encounterId: string,
+    @Body() dto: ResolveEncounterAttackDto,
+  ): Promise<EncounterAttackResponseDto> {
+    return this.attacks.resolve(user.id, campaignId, encounterId, dto);
   }
 
   @Post(':encounterId/next-turn')

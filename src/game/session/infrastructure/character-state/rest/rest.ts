@@ -15,6 +15,7 @@ import {
   CURSEMARKED_BRACKET_LOCK,
 } from '@game/session/domain/cursemarked-bracket';
 import {
+  applyDawnResourceRecovery,
   applyLongRestResourceRecovery,
   applyShortRestResourceRecovery,
 } from '@game/session/domain/class-resources';
@@ -62,7 +63,6 @@ export async function applyLongRestState(input: {
     previousConcentration,
     null,
   );
-  // Companheiro Selvagem / Convocar Familiar: some no Descanso Longo (PHB 2024).
   await despawnSpiritsForSpell(dataSource, character.id, 'convocar-familiar');
   await resetLinkedMountLongRestUses(dataSource, character.id);
   state.concentratingOn = null;
@@ -129,6 +129,29 @@ export async function applyLongRestState(input: {
     type: 'long',
     state: await buildResponse(character, state),
     notes: mergeRestNotes(recovery.notes, craftNotes),
+  };
+}
+
+export async function applyDawnState(input: {
+  character: PlayerCharacter;
+  state: PlayerCharacterState;
+  stateRepo: Repository<PlayerCharacterState>;
+  dataSource: DataSource;
+  buildResponse: BuildResponse;
+}): Promise<RestResponseDto> {
+  const { character, state, stateRepo, dataSource, buildResponse } = input;
+  const resources = await resolveClassResources(dataSource, character);
+  const recovery = applyDawnResourceRecovery(
+    state.resourcesUsed ?? {},
+    resources,
+  );
+  state.resourcesUsed = recovery.used;
+  await stateRepo.save(state);
+  await recoverArtifactRandomSpellUses(dataSource, character.id);
+  return {
+    type: 'dawn',
+    state: await buildResponse(character, state),
+    notes: mergeRestNotes(recovery.notes, []),
   };
 }
 

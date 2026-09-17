@@ -69,6 +69,11 @@ export class CharacterHeritageChoicesValidator {
             .where('trait.slug IN (:...traitSlugs)', { traitSlugs })
             .getMany();
 
+    const traitOptions =
+      traitSlugs.length === 0
+        ? []
+        : await this.loadHeritageTraitOptions(traitSlugs);
+
     validateHeritageChoices({
       heritageSlug,
       choices,
@@ -80,10 +85,48 @@ export class CharacterHeritageChoicesValidator {
         slug: row.slug,
         maxTakes: row.maxTakes,
       })),
+      traitOptions,
       rules: {
         allowsSpeedTrade: false,
         allowsSizeChoice: heritage.allowsSizeChoice,
       },
     });
+  }
+
+  private async loadHeritageTraitOptions(
+    traitSlugs: string[],
+  ): Promise<{ traitSlug: string; optionKey: string; valueIds: string[] }[]> {
+    const rows = await this.heritageTraitChoicesRepo.manager.query<
+      { traitSlug: string; optionKey: string; valueId: string }[]
+    >(
+      `SELECT ht.slug AS "traitSlug",
+              def.option_key AS "optionKey",
+              val.value_id AS "valueId"
+       FROM rpg.phb_option_def def
+       JOIN rpg.phb_heritage_trait ht ON ht.id = def.owner_id
+       JOIN rpg.phb_option_value val
+         ON val.scope = def.scope
+        AND val.owner_id = def.owner_id
+        AND val.option_key = def.option_key
+       WHERE def.scope = 'heritage'::rpg.option_scope
+         AND ht.slug = ANY($1::text[])
+       ORDER BY ht.slug, def.sort_order, def.option_key, val.sort_order`,
+      [traitSlugs],
+    );
+    const grouped = new Map<
+      string,
+      { traitSlug: string; optionKey: string; valueIds: string[] }
+    >();
+    for (const row of rows) {
+      const key = `${row.traitSlug}:${row.optionKey}`;
+      const group = grouped.get(key) ?? {
+        traitSlug: row.traitSlug,
+        optionKey: row.optionKey,
+        valueIds: [],
+      };
+      group.valueIds.push(row.valueId);
+      grouped.set(key, group);
+    }
+    return [...grouped.values()];
   }
 }

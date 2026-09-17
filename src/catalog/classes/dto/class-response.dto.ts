@@ -79,4 +79,18 @@ export class ClassResponseDto {
 
   @ApiProperty({ type: [String], example: ['Defensivo', 'Duelismo'] })
   fightingStyleNames!: string[];
+
+  @ApiPropertyOptional({
+    example: 3,
+    nullable: true,
+    description: 'Nível em que a subclasse passa a ser obrigatória',
+  })
+  subclassUnlockLevel!: number | null;
+
+  @ApiPropertyOptional({
+    example: 2,
+    nullable: true,
+    description: 'Nível de Jack of All Trades; null se a classe não tem',
+  })
+  jackOfAllTradesLevel!: number | null;
 }

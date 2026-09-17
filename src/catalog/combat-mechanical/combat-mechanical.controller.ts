@@ -14,7 +14,7 @@ export class CombatMechanicalController {
   @Get()
   @ApiOperation({
     summary:
-      'Catálogo mecânico de combate (Golpe Astuto, máscaras, precaução, manobras, …). Filtros opcionais por classe/subclasse.',
+      'Catálogo mecânico de combate. Filtros: classSlug, subclassSlug, featSlug, itemSlug, speciesSlug, threadSlug, heritageTraitSlug.',
   })
   @ApiOkResponse({ type: CombatMechanicalCatalogResponseDto })
   findAll(
@@ -23,6 +23,11 @@ export class CombatMechanicalController {
     return this.findCombatMechanicalCatalog.execute({
       classSlug: query.classSlug,
       subclassSlug: query.subclassSlug,
+      featSlug: query.featSlug,
+      itemSlug: query.itemSlug,
+      speciesSlug: query.speciesSlug,
+      threadSlug: query.threadSlug,
+      heritageTraitSlug: query.heritageTraitSlug,
     });
   }
 }

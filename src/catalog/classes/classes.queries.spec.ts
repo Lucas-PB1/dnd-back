@@ -211,7 +211,7 @@ describe('Classes queries', () => {
           provide: getRepositoryToken(PhbClassProgression),
           useValue: progressionRepo,
         },
-        { provide: getRepositoryToken(PhbClassRef), useValue: {} },
+        { provide: getRepositoryToken(PhbClassRef), useValue: { findOne: jest.fn().mockResolvedValue(null) } },
         { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();

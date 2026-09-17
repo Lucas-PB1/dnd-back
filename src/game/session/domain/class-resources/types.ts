@@ -21,6 +21,7 @@ export type ClassResourceScheduleRow = {
   recoverAllOnShort: boolean;
   recoverAllOnLong: boolean;
   recoverOnLongDice: string | null;
+  recoverOnDawn?: boolean;
 };
 
 export type ClassResourceMax = {
@@ -31,6 +32,7 @@ export type ClassResourceMax = {
   recoverAllOnShort: boolean;
   recoverAllOnLong: boolean;
   recoverOnLongDice: string | null;
+  recoverOnDawn?: boolean;
 };
 
 export type AbilityMods = {

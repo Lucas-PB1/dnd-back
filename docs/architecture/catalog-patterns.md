@@ -134,7 +134,9 @@ Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C0
 
 **Não** manter no TypeScript `Set`/`array` paralelo de slugs de subclasse, manobra ou feature — o filtro e a listagem leem o catálogo carregado do banco. Nova sub/manobra = seed; o código não lista slugs.
 
-HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions` + manobras, …).
+HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions` + manobras, …). Filtros: `classSlug`, `subclassSlug`, `featSlug`, `itemSlug`.
+
+**Consumidores:** ficha (aba Ações / painéis) **e** detalhe do compêndio (seção Na mesa). Nova ação de mesa = seed C009/C010 (nome, summary, description, `table_action`). Não copiar a mesma linha em `phb_class_feature` só para o hub. Prosa editorial PHB permanece em `phb_class_feature` / `v_phb_subclass_mechanics`.
 
 Itens mágicos (DMG) na mesma profundidade de mesa (várias ações, cargas, passivos): ver [`dmg-item-mesa.md`](./dmg-item-mesa.md). Seeds de referência: `combat/C013` (Valdas), catálogo `dmg/D010`.
 

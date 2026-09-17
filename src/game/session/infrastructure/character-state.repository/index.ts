@@ -23,6 +23,7 @@ import { CharacterStateResponseDto } from '../../dto/core/character-state-respon
 import { PhbCondition } from '../phb-condition.entity';
 import { PlayerCharacterState } from '../player-character-state.entity';
 import {
+  applyDawnOp,
   applyLongRestOp,
   applyShortRestOp,
   castSpellOp,
@@ -144,6 +145,10 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
 
   castSpell(character: PlayerCharacter, dto: CastSpellDto) {
     return castSpellOp(this.coreDeps(), character, dto);
+  }
+
+  applyDawn(character: PlayerCharacter): Promise<RestResponseDto> {
+    return applyDawnOp(this.coreDeps(), character);
   }
 
   applyLongRest(character: PlayerCharacter): Promise<RestResponseDto> {

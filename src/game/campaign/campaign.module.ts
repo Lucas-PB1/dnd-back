@@ -24,6 +24,9 @@ import { EnrichEncounterActors } from './application/enrich-encounter-actors';
 import { LoadEncounterDto } from './application/load-encounter-dto';
 import { CampaignsController } from './campaigns.controller';
 import { CampaignEncountersController } from './campaign-encounters.controller';
+import { CampaignEncounterAttackService } from './application/campaign-encounter-attack.service';
+import { GameActorAction } from '../actor/infrastructure/game-actor-action.entity';
+import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 
 @Module({
   imports: [
@@ -42,6 +45,8 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
       GameActor,
       GameActorState,
       PhbCreatureTemplate,
+      GameActorAction,
+      PlayerCharacterItem,
     ]),
   ],
   controllers: [CampaignsController, CampaignEncountersController],
@@ -51,6 +56,7 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
     CampaignEncounterRepository,
     CampaignEncounterService,
     CampaignEncounterInitiativeService,
+    CampaignEncounterAttackService,
     EnrichEncounterPcs,
     EnrichEncounterActors,
     LoadEncounterDto,

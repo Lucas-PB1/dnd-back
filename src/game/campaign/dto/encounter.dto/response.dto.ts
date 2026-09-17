@@ -121,3 +121,41 @@ export class CampaignEncounterDto {
   @ApiProperty({ type: [EncounterCombatantDto] })
   combatants!: EncounterCombatantDto[];
 }
+
+export class EncounterAttackResponseDto {
+  @ApiProperty({ type: CampaignEncounterDto })
+  encounter!: CampaignEncounterDto;
+
+  @ApiProperty()
+  hit!: boolean;
+
+  @ApiProperty()
+  critical!: boolean;
+
+  @ApiProperty({ example: 17 })
+  attackTotal!: number;
+
+  @ApiProperty({ example: '1d20+5' })
+  attackExpression!: string;
+
+  @ApiProperty({ type: [Number] })
+  attackRolls!: number[];
+
+  @ApiProperty({ example: 15 })
+  targetAc!: number;
+
+  @ApiPropertyOptional({ nullable: true, example: 8 })
+  damageTotal!: number | null;
+
+  @ApiPropertyOptional({ nullable: true, example: '1d8+3' })
+  damageExpression!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  note!: string | null;
+
+  @ApiProperty()
+  attackerCombatantId!: string;
+
+  @ApiProperty()
+  targetCombatantId!: string;
+}

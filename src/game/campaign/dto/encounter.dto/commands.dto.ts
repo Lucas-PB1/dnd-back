@@ -188,3 +188,37 @@ export class AddEncounterLinkedActorDto {
   @IsUUID()
   actorId!: string;
 }
+
+export class ResolveEncounterAttackDto {
+  @ApiProperty({ example: '11111111-1111-1111-1111-111111111111' })
+  @IsUUID()
+  attackerCombatantId!: string;
+
+  @ApiProperty({ example: '22222222-2222-2222-2222-222222222222' })
+  @IsUUID()
+  targetCombatantId!: string;
+
+  @ApiPropertyOptional({ enum: ['normal', 'advantage', 'disadvantage'] })
+  @IsOptional()
+  @IsIn(['normal', 'advantage', 'disadvantage'])
+  advantage?: 'normal' | 'advantage' | 'disadvantage';
+
+  @ApiPropertyOptional({ example: 'longsword' })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemSlug?: string;
+
+  @ApiPropertyOptional({ enum: ['melee', 'ranged'] })
+  @IsOptional()
+  @IsIn(['melee', 'ranged'])
+  mode?: 'melee' | 'ranged';
+
+  @ApiPropertyOptional({
+    description: 'Ação de ataque do actor (omitir usa a primeira com bônus)',
+  })
+  @IsOptional()
+  @IsUUID()
+  actionId?: string;
+}

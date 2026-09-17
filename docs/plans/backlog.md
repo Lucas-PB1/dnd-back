@@ -43,14 +43,10 @@ Só retomar com pedido explícito. **Não** é combate real.
 | 4 | [ ] NL: escolhas secundárias de espécie (`choice_kind` se a ficha precisar) | Fino e só se a ficha pedir |
 | 5 | [ ] GH Cap. 7 magias: overlay PT fino | Editorial |
 | 6 | [ ] NL: features só texto → Passivas / economy (Provocação, Regeneração, …) | Editorial + economy pontual |
-| 7 | [ ] GH Cap. 1: sub-escolhas de traço (tipo dano / arma / skill / truque) | Wizard de criação, várias chaves |
-| 8 | [ ] Pistoleiro: Assumidor de risco; White Hat; Bang; polish câmaras | Vários poderes; fora de dano no alvo |
 | 9 | [ ] GH Cap. 2 features: EN residual (~166 → meta <30) | Volume, não desenho |
 | 10 | [ ] Mísseis Mágicos: Escudo/Giga no cast — [`mm-cast-options-modal.md`](mm-cast-options-modal.md) | API + modal, um fluxo |
-| 11 | [ ] Evento `dawn` real ≠ Descanso Longo (MVP: DL ≈ amanhecer) | Relógio de mesa novo |
 | 12 | [ ] Cast de item: concentração / componentes / CD overlay | Cruza item + magia |
 | 13 | [ ] GH: Skinrider's Trance (estado/actor vinculado) | Actor extra na ficha |
-| 14 | [ ] Senhor das Feras: Companheiro Primal na mesa — [`beast-master-primal-companion.md`](beast-master-primal-companion.md) | Estado persistido + painel + §K |
 
 Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
 
@@ -58,7 +54,13 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 
 ## Feature futura (mais difícil)
 
-- [ ] **Combate real** — [`combat-real-deferred.md`](combat-real-deferred.md) (dano/alvo/saves/encontro; **não** priorizar no ciclo mesa)
+- [ ] **Combate real** — [`combat-real-deferred.md`](combat-real-deferred.md) (saves, board, manobras no acerto; encontro já tem MVP ataque vs CA + dano)
+
+---
+
+## Notas (não puxar agora)
+
+- [ ] **XP de monstro:** `phb_creature_template` tem ND (`challenge_rating`); **não** há XP de encontro/derrota (coluna, tabela CR→XP nem DTO). `xp_threshold` em `phb_character_level` é só limiar de PC. Quando for: seed + contrato no Catalog, sem calcular no front.
 
 ---
 

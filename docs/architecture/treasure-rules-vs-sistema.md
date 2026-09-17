@@ -53,15 +53,15 @@ Texto Beyond (resumo):
 
 - Recarga oficial: **próximo amanhecer** (ou horário que o Mestre definir se não houver amanhecer).
 
-**Sistema hoje (MVP curto — documentado):**
+**Sistema hoje:**
 
 | Regra | Onde |
 |-------|------|
-| Recarga de cargas / 1× | `recover_all_on_long` / `recover_on_long_dice` no **Descanso Longo** |
-| Contrato de mesa | UI: título do botão DL — “cargas de item ≈ amanhecer”; docs mesa/Treasure |
-| P1 (não neste PR) | evento de sessão `dawn` reusando o mesmo recover — **sem** segundo pipeline |
+| Recarga de cargas / 1× | `recover_all_on_long` / `recover_on_long_dice` no **Descanso Longo**; **amanhecer** via `POST …/rest` `{ type: "dawn" }` (mesmo recover, só pools `recoverOnDawn`) |
+| Contrato de mesa | UI: botão **Amanhecer** distinto de Descanso longo |
+| P1 | evento de sessão `dawn` — feito |
 
-**Falha conhecida aceita no MVP:** DL ao meio-dia recarrega cedo; amanhecer sem DL não recarrega.
+**Residual:** o Descanso Longo ainda recarrega pools de item (noite típica inclui amanhecer). Use **Amanhecer** quando não houver DL.
 #### 3. Itens amaldiçoados
 
 - Identify **não** revela maldição.

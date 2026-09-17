@@ -171,6 +171,24 @@ export class CastSpellDto {
   @ValidateNested({ each: true })
   @Type(() => SpiritSelectionDto)
   spiritSelections?: SpiritSelectionDto[];
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Mago dos Mísseis: gastar Escudo de Mísseis neste cast (além de state.missileShieldArmed)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  applyMissileShield?: boolean;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Mago dos Mísseis: gastar Giga-Míssil neste cast (além de state.gigaMissileArmed)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  applyGigaMissile?: boolean;
 }
 
 export class CastSpellSpiritDto {

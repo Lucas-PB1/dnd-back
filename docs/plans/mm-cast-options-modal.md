@@ -1,6 +1,6 @@
 # Mísseis Mágicos: escolhas no cast
 
-**Status:** em espera — **não implementar** até pedido explícito.
+**Status:** feito.
 
 ## Ideia
 
