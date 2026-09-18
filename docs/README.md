@@ -66,7 +66,7 @@ Contrato REST: Swagger em `/api`.
 |------|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **SSOT mesa** — aberto + polish adiado |
 | [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB** — pacotes abertos (fora da mesa) |
-| [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…4) |
+| [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
 | [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado (RES-1…5) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — docs/stubs/scripts (LEGAC-1…4); não PHB |
 | [`plans/quality-gate-backlog.md`](plans/quality-gate-backlog.md) | **Quality gate** — auditar planos + smoke final (QA-1…2) |
@@ -85,7 +85,7 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |------|----------|
 | [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB-0** — pacotes executáveis (fácil → difícil) |
-| [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` pasta a pasta (LEG-1…4) |
+| [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
 | [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado/hardcode (RES-1…5) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — stubs/docs/scripts (LEGAC-1…4) |
 | [`plans/quality-gate-backlog.md`](plans/quality-gate-backlog.md) | **Quality gate** — planos + pós-execução (QA-1…2) |

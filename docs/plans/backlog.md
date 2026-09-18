@@ -59,7 +59,7 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 | Trilha | Conteúdo |
 |--------|----------|
 | **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro |
-| **LEG-1…4** | Limpeza código morto repo-wide — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`) |
+| **LEG** | ~~Limpeza código morto~~ **feito** (LEG-1…5) — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) |
 | **RES-1…5** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não apagar verbo canônico; só legado/hardcode) |
 | **LEGAC-1…4** | Padrão `legac`/`legacy` — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) (docs/stubs/scripts; **não** `infernal_legacy`) |
 | **QA-1…2** | Quality gate — [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**: auditar planos + smoke pós-trilhas) |

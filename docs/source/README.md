@@ -51,6 +51,6 @@ Imagens: ver [`catalog-images.md`](./catalog-images.md).
 
 ## Docs relacionados
 
-- Modelo mesa DMG: [`docs/architecture/dmg-item-mesa.md`](../architecture/dmg-item-mesa.md)
-- Seeds DMG: [`database/seeds/dmg/README.md`](../../database/seeds/dmg/README.md)
+- Modelo mesa DMG: [`dmg-item-mesa.md`](../architecture/dmg-item-mesa.md)
+- Seeds DMG: `database/seeds/dmg/` (+ combat)
 - Scripts essenciais: [`scripts/README.md`](../../scripts/README.md)

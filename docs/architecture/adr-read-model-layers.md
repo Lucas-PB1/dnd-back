@@ -280,7 +280,7 @@ Escreve normalizado (Camada 1). Labels de enum via VALUES view (Camada 2). Expõ
 - [x] Entities TypeORM apontando para `mv_*` onde aplicável
 - [x] Inventário views tipo B → tabela (fase 2)
 - [x] `catalog-patterns.md` §10/§11 e `data-model.md` referenciam este ADR
-- [x] Skill `phb-query-views` menciona MV vs view viva
+- [x] Skill `catalog-sql-first` menciona MV vs view viva
 - [x] Inventário objetivo: [`read-model-inventory.md`](./read-model-inventory.md)
 
 ## Histórico

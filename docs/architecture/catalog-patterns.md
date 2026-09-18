@@ -11,7 +11,7 @@ Repetir **estrutura** entre domínios é aceitável quando cada tabela tem FK e 
 | Camada | Onde DRY |
 |--------|----------|
 | Escrita (seeds/migrations) | Tabelas normalizadas / unificadas por ADR |
-| Leitura (API/domain) | Views `v_phb_*` e [`phb-query-views`](../../.cursor/skills/phb-query-views/SKILL.md) |
+| Leitura (API/domain) | Views `v_phb_*` e skill [`catalog-sql-first`](../../.cursor/skills/catalog-sql-first/SKILL.md) |
 | Runtime da ficha | Loaders de domínio + views de magia concedida |
 
 ---

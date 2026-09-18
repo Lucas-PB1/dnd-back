@@ -1,6 +1,6 @@
 # Legado — backlog de limpeza de código
 
-**Status:** aberto · **Não é** mesa ficha · **Não é** combate tipado (isso é [`pve-skirmish-index.md`](pve-skirmish-index.md))
+**Status:** fechado · **Não é** mesa ficha · **Não é** combate tipado (isso é [`pve-skirmish-index.md`](pve-skirmish-index.md))
 
 Playbook: [`.cursor/commands/legado.md`](../../.cursor/commands/legado.md) (`/legado`)  
 Mapa: [`docs/okf/module-map.md`](../okf/module-map.md) · Log: [`docs/okf/log.md`](../okf/log.md)
@@ -39,10 +39,10 @@ Rules: `game-folder-conventions.mdc` · `nestjs-project.mdc` · `file-size.mdc` 
 | LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | companion/spirit = domain library |
 | LEG-2 | ~~Combat domain morto~~ **feito** (+ RES-2) | — | helpers/consts mortos em `combat/domain/<classe>/` |
 | LEG-3 | ~~Entities / Catalog~~ **feito** | — | 4 entities órfãs → `forFeature`; queries ok |
-| LEG-4 | Session / apply escape hatches docs | [`legado-4-session-docs.md`](legado-4-session-docs.md) | barrels mortos session; planos `.md` concluídos ainda vivos |
+| LEG-4 | ~~Session + docs planos~~ **feito** | — | session limpo; PVE-7b/8 apagados; links architecture |
 | LEG-5 | ~~Pós-PVE adapters~~ **feito (= PVE-10b)** | — | duel/combat mortos removidos |
 
-Ordem sugerida do command: LEG-4; LEG-1…3 e LEG-5 **feitos**.
+Ordem sugerida do command: trilha LEG **fechada**; residual docs/stubs → [`legac-pattern-backlog.md`](legac-pattern-backlog.md).
 
 ## Checklist rápido (repo)
 
@@ -54,7 +54,7 @@ Ordem sugerida do command: LEG-4; LEG-1…3 e LEG-5 **feitos**.
 - [x] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (PVE-10b: `pending-arena-bridge` apagado)
 - [x] `src/game/session/application/actions/**` — zero resolvers de mesa órfãos (RES-2)
 - [x] `src/game/skirmish/` — endpoints especiais SW/AS → `table-actions` (PVE-10a)
-- [ ] Barrels `index.ts` que só reexportam mortos
+- [x] Barrels `index.ts` que só reexportam mortos
 
 ### Catalog / entities
 
@@ -64,7 +64,6 @@ Ordem sugerida do command: LEG-4; LEG-1…3 e LEG-5 **feitos**.
 
 ### Docs / SQL
 
-- [ ] Planos em `docs/plans/` concluídos ainda listados (política: apagar)
 - [ ] Referências “mapa legado deprecated” / dual-read grants stale → também [`legac-1-docs-stale.md`](legac-1-docs-stale.md)
 - [ ] Seeds/SQL stub “Grants legado” → [`legac-2-seed-stubs.md`](legac-2-seed-stubs.md)
 
@@ -77,10 +76,11 @@ Ordem sugerida do command: LEG-4; LEG-1…3 e LEG-5 **feitos**.
 
 ## DoD desta trilha
 
-- [ ] LEG-4 fechado (`.md` apagado)
+- [x] LEG-1…4 fechados (`.md` de pacote apagados)
 - [x] LEG-1 feito (companion/spirit documentados; zero deletes)
 - [x] LEG-2 feito (+ RES-2; helpers mortos removidos)
 - [x] LEG-3 feito (entities órfãs registradas; catalog limpo)
+- [x] LEG-4 feito (session limpo; planos feitos apagados; links architecture)
 - [x] LEG-5 / PVE-10b alinhados
 - [x] `module-map.md` sem pasta “suspeita” sem nota viva/morta
 - [x] Feature futura em [`backlog.md`](backlog.md): PVE completo; residual + XP/VTT

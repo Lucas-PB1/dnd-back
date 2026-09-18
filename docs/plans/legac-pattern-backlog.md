@@ -37,7 +37,7 @@ Docs: `adr-effect-engine.md` (dual-read **fechado**), `sql-layout.md`, `effect-d
 | LEGAC-3 | Scripts `legacy*` + baseline morto | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
 | LEGAC-4 | TODOs SQL “slugs legados” | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
 
-Overlap: texto “mapa legado” também em [`legado-4-session-docs.md`](legado-4-session-docs.md) / PVE-10b (fechado no índice) — **um PR** pode fechar os dois checklists; não duplicar trabalho.
+Overlap: texto “mapa legado” / dual-read — PVE-10b fechado no índice; residual docs stale → este backlog (LEGAC-1).
 
 ## Anti-padrões
 

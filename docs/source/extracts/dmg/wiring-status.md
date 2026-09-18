@@ -3,7 +3,7 @@
 SSOT operacional = **seeds SQL** (`database/seeds/dmg` + `combat`).  
 Este arquivo substitui as antigas `dmg-item-mesa-taxonomy-*.yaml` (planejamento).
 
-Modelo: [`docs/architecture/dmg-item-mesa.md`](../architecture/dmg-item-mesa.md).  
+Modelo: [`dmg-item-mesa.md`](../../../architecture/dmg-item-mesa.md).  
 MVP recover: `recover_all_on_long` ≈ amanhecer; 1dN parcial via `D041`.
 
 | Lote | Padrão | Seeds (resource / PE) | Economy | Status |
@@ -34,6 +34,6 @@ MVP recover: `recover_all_on_long` ≈ amanhecer; 1dN parcial via `D041`.
 - Artefatos (11): wiring em `D042`–`D045` / `C045`; status na tabela acima.
 - 1ª sintonia: rola `artifactRandomQuota` + copia `sentience` → `player_character_item.instance_properties` (`P027`). Tabelas: `dmg_artifact_random_property` / `dmg_sentient_trait_table`.
 - Props expandido: magia rolada do catálogo (`artifactSpell`, CD 18, 1× até DL via `artifactRandomCast`); regen `1d6` (`POST …/inventory/actions` com `actionSlug: artifact-regen`); `abilityPenalty` persiste em `abilityPenalties` até `restauracao-maior` (não é cursed).
-- Gaps de regra geral (dawn real, curse, conflict senciente, d6 1–5 RAW na magia): [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
+- Gaps de regra geral (dawn real, curse, conflict senciente, d6 1–5 RAW na magia): [`treasure-rules-vs-sistema.md`](../../../architecture/treasure-rules-vs-sistema.md).
 - Preferir editar `D010` com cuidado (seed versionado). Gerador antigo `generate-dmg-item-seeds.mjs` saiu do repo — histórico git se precisar regenerar em massa (cost por raridade DMG; consumível ×½; artefato/varies/+N = NULL).
 - Loja (inventário Beyond): preços PHB em `S031`; `POST …/inventory/purchase` (carrinho atômico); PATCH qty cobrado; DELETE `?quantity=&mode=sell|discard`; serviços (`kind:service`) debitam sem criar item; stats `phb_item_catalog_stats` (view/purchase); compartimentos `contained_in_item_slug` (P028). Cap. 6 (variantes, montarias, veículos, serviços, pergaminhos 2–9) seedado em `S031`.

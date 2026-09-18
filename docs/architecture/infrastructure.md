@@ -120,10 +120,8 @@ Ver [`README.md`](../../README.md#cursor--rules-e-skills) e `.cursor/rules/00-or
 | Tema | Rule | Skill |
 |------|------|-------|
 | Infra geral | `00-orchestrator` | — |
-| Postgres catálogo | `postgres-sql`, `phb-data-model` | `postgres-apply-catalog`, `rpg-catalog-model` |
-| Supabase DB | `supabase-sql` | `supabase-connection` |
-| Supabase Auth | `supabase-auth` | `supabase-auth` |
-| API Vercel | `nestjs-vercel` | `nest-vercel-deploy` |
-| Nest + TypeORM | `nestjs-core`, `nestjs-typeorm` | `typeorm-rpg-entities`, `nest-phb-api` |
-| Contrato frontend | `api-contract` | `api-consumer-next` |
-| **Arquitetura / BC** | `bounded-contexts`, `catalog-thin-layer`, `game-domain` | `nestjs-bounded-context`, `cqrs-catalog-vs-game` |
+| Postgres catálogo | `catalog-sql-first.mdc` | `catalog-sql-first` (repo) · `postgresql-sql` (Cursor user skills) |
+| Supabase | — | `supabase` (Cursor user skills) |
+| API Vercel | — | `vercel` (Cursor user skills) |
+| Nest + TypeORM | `nestjs-project.mdc` | `nestjs`, `typeorm` (Cursor user skills) |
+| **Arquitetura / BC** | `game-folder-conventions.mdc` | `domain-driven-design`, `nestjs` |

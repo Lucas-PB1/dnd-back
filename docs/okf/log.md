@@ -1,5 +1,21 @@
 # log
 
+## 2026-09-18 — LEG-4 session + docs planos
+
+* **Update** (13:25 UTC): `/legado` LEG-4 — `session/application` barrels/helpers **zero mortos**; apagados planos PVE-7b/8 (`Status: feito`); `mm-cast-options-modal` status corrigido (adiado); links quebrados de skills/paths em architecture + source DMG.
+
+| path | status | ação | evidência |
+|------|--------|------|-----------|
+| `session/application/**/index.ts` | vivo | — | 10 barrels; 0 exports mortos |
+| `session/application/**` (non-index) | vivo | — | 0 arquivos órfãos |
+| `plans/pve-7b-spiritual-conjure.md` | feito | DELETE | índice PVE já ~~feito~~ |
+| `plans/pve-8-surface-parity.md` | feito | DELETE | índice PVE já ~~feito~~ |
+| `plans/mm-cast-options-modal.md` | adiado | status | backlog ainda `[ ]` |
+| `architecture/*` skill links | errado | apontar `catalog-sql-first` | skills antigas inexistentes no repo |
+| `okf/log` extracts MM | residual | → LEGAC-1 | links históricos `source/extracts/mm/no-image*` |
+
+— refs: [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: fechar trilha LEG; residual docs stale em LEGAC.
+
 ## 2026-09-18 — LEG-3 entities + catalog
 
 * **Update** (13:15 UTC): `/legado` em `src/entities/` — 4 entities sem `forFeature` registradas nos módulos consumidores; vercel trace alinhado (table-roll/temp-hp/affinity). Catalog queries: zero órfãs. Game→`@catalog/.../domain`: zero.

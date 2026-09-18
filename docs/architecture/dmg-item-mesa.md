@@ -8,7 +8,7 @@ Fontes:
 
 - Catálogo DMG: `database/seeds/dmg/D010_phb_item.sql` · índice `docs/source/extracts/dmg/items-az-index.md` · status lotes `docs/source/extracts/dmg/wiring-status.md`
 - Regras Treasure × gaps: `docs/architecture/treasure-rules-vs-sistema.md`
-- Economia de classe: `.cursor/skills/rpg-class-mesa-api/references/economia-painel.md`
+- Economia de classe: painel mesa / `table-actions` (ver `docs/architecture/adr-effect-engine.md`)
 - Economia de item (Valdas): `database/seeds/combat/C013_phb_item_economy_action.sql`
 - Recursos de item: `database/seeds/valdas/V020_phb_item_resource_grant.sql`
 - Passivos numéricos: `src/game/inventory/domain/permanent-item-effects.ts`

@@ -172,7 +172,7 @@ flowchart LR
 | LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | M | — |
 | LEG-2 | ~~Combat domain morto~~ **feito** (+ RES-2) | — | M | LEG-1 |
 | LEG-3 | ~~Entities / Catalog~~ **feito** | — | M | LEG-2 |
-| LEG-4 | Session + docs planos | [`legado-4-session-docs.md`](legado-4-session-docs.md) | S–M | LEG-3 |
+| LEG-4 | ~~Session + docs planos~~ **feito** | — | S–M | LEG-3 |
 
 LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate adapters **fechado com PVE-10b**.
 

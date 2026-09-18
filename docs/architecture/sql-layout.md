@@ -74,4 +74,4 @@ database/
 
 `catalog` · `background` · `class` · `subclass` · `species` · `feat` · `transformation` · `heritage` · `thread` · `item` · `spell` · `economy` · `creature` · `effect`
 
-Skill: [`postgres-apply-catalog`](../../.cursor/skills/postgres-apply-catalog/SKILL.md).
+Skill: [`catalog-sql-first`](../../.cursor/skills/catalog-sql-first/SKILL.md).

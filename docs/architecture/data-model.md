@@ -130,7 +130,7 @@ Combatente de encontro: `kind IN ('pc','actor')`. Criaturas manuais viram `game_
 
 ## Views (read models)
 
-Contratos estáveis para a API — skill `phb-query-views`. Política view / MV / RPC: [`adr-read-model-layers.md`](adr-read-model-layers.md).
+Contratos estáveis para a API — skill `catalog-sql-first`. Política view / MV / RPC: [`adr-read-model-layers.md`](adr-read-model-layers.md).
 
 Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, granted-spells, heritage.  
 **MV (consumo):** `mv_spell_by_class`, `mv_phb_feat`, `mv_phb_background`, `mv_phb_species_trait_choices`, `mv_phb_class_economy_action`, `mv_phb_feat_granted_spell`, bundles creature/vehicle/thread — inventário [`read-model-inventory.md`](./read-model-inventory.md).

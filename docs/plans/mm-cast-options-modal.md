@@ -1,6 +1,6 @@
 # Mísseis Mágicos: escolhas no cast
 
-**Status:** feito.
+**Status:** adiado (polish).
 
 ## Ideia
 
