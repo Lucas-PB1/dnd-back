@@ -24,16 +24,25 @@ export class CreateSkirmishDto {
   templateSlug!: string;
 }
 
+/** Table-action tipada no skirmish (economy genérica; ex. second-wind, action-surge). */
+export class SkirmishTableActionDto {
+  @ApiProperty({ example: 'second-wind' })
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  actionSlug!: string;
+}
+
 /** Declaração de reação do PC antes do turno automático da criatura. */
 export class EndSkirmishTurnDto {
   @ApiPropertyOptional({
-    enum: ['shield', 'uncanny_dodge'],
+    enum: ['shield', 'uncanny_dodge', 'parry'],
     description:
-      'Reação no próximo ataque que acertar você: Escudo Arcano (+5 CA) ou Esquiva Sobrenatural (metade do dano). Use ao resolver o turno da criatura (2º end-turn).',
+      'Reação no próximo ataque que acertar você: Escudo Arcano (+5 CA), Esquiva Sobrenatural (metade) ou Aparar (dado de superioridade + FOR/DES). Use ao resolver o turno da criatura (2º end-turn).',
   })
   @IsOptional()
-  @IsIn(['shield', 'uncanny_dodge'])
-  defenderReaction?: 'shield' | 'uncanny_dodge';
+  @IsIn(['shield', 'uncanny_dodge', 'parry'])
+  defenderReaction?: 'shield' | 'uncanny_dodge' | 'parry';
 }
 
 /** Reação do PC no turno da criatura (ex.: ataque de oportunidade). */

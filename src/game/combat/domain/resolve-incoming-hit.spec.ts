@@ -81,6 +81,20 @@ describe('resolveIncomingHit', () => {
     expect(r.spendShieldSlot).toBe(false);
   });
 
+  it('Parry subtracts reduction from damage', () => {
+    const r = resolveIncomingHit({
+      ...base,
+      damageTotal: 14,
+      defense: 'parry',
+      parryReduction: 9,
+    });
+    expect(r.hit).toBe(true);
+    expect(r.damageTotal).toBe(5);
+    expect(r.reactionSpent).toBe(true);
+    expect(r.defenseApplied).toBe('parry');
+    expect(r.notes.join(' ')).toMatch(/Aparar/i);
+  });
+
   it('ignores Uncanny when not eligible', () => {
     const r = resolveIncomingHit({
       ...base,

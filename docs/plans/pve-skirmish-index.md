@@ -127,6 +127,8 @@ flowchart LR
 
 **PVE-9b fechado (2026-09-18):** `feral-howl` / `psychic-teleport` / `psychic-whispers` / `arcane-ward-recharge` tipados (`phb_effect_table_roll` / `phb_effect_temp_hp`); zero `actionSlug ===` em `apply-one-effect-*`; residual flat-override/early/structured no ADR.
 
+**PVE-10a fechado (2026-09-18):** SW/AS via `table-actions`; Savage 1×/turno; Parry no hit; nunca/defer documentados. Doc [`skirmish-residuals-pve-10a.md`](../architecture/skirmish-residuals-pve-10a.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -157,7 +159,7 @@ flowchart LR
 |---|--------|-----|------|-----|
 | PVE-9a | ~~Sacred Weapon → `toggle_combat_flag`~~ **feito** | — | M | PVE-0 |
 | PVE-9b | ~~Zerar slug branches apply/flat-override~~ **feito** | — | L | PVE-9a |
-| PVE-10a | Residuals deferred (Ward, Gunslinger, Savage…) | [`pve-10a-deferred-residuals.md`](pve-10a-deferred-residuals.md) | L | PVE-8+9b |
+| PVE-10a | ~~Residuals deferred (Ward, Gunslinger, Savage…)~~ **feito** | — | L | PVE-8+9b |
 | PVE-10b | `/legado` combate + DoD 100% PVE | [`pve-10b-legado-dod.md`](pve-10b-legado-dod.md) | M | PVE-10a |
 
 ### Limpeza de código legado (repo-wide)

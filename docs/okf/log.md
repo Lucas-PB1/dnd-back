@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-18 — PVE-10a residuals skirmish
+
+* **Update** (12:20 UTC): SW/AS via `POST …/table-actions` (economy); `pc_savage_attacker_used` 1×/turno; Parry em `resolveIncomingHit`; PAM reativo/craft = nunca; Ward/Spark/Gunslinger/PAM cabo/Bloodied = defer. — refs: [`skirmishes.controller.ts`](../../src/game/skirmish/skirmishes.controller.ts), [`resolve-incoming-hit.ts`](../../src/game/combat/domain/resolve-incoming-hit.ts), [`skirmish-residuals-pve-10a.md`](../architecture/skirmish-residuals-pve-10a.md), [`combat-real-deferred.md`](../plans/combat-real-deferred.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: residuals tipáveis sem mapa fechados; irredutíveis justificados.
+
 ## 2026-09-18 — PVE-9b slug branches apply tipados
 
 * **Update** (12:00 UTC): `phb_effect_table_roll` (`result_scale` / `apply_bestial_aspect`) + `phb_effect_temp_hp` (slot→PV temp.); removidos `actionSlug ===` em `apply-one-effect-*` para Uivo Feral / Teleporte / Sussurros / Recarregar Proteção. Residual flat-override/early/structured listado no ADR. — refs: [`0169_phb_effect_table_roll.sql`](../../database/schema/020_tables/0169_phb_effect_table_roll.sql), [`0170_phb_effect_temp_hp.sql`](../../database/schema/020_tables/0170_phb_effect_temp_hp.sql), [`apply-one-effect-table.ts`](../../src/game/session/application/table-actions/apply-declared-economy/apply-one-effect-table.ts), [`adr-effect-engine.md`](../architecture/adr-effect-engine.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: features de mesa tipadas por satélite, sem hardcode de slug no apply.

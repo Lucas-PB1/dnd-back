@@ -7,7 +7,7 @@ Enforcement no path skirmish → `rollDamage` / `computeWeaponAttacks`.
 | **GWF** (`great-weapon-fighting`) | Faces 1–2 → 3 em dados de dano C/C 2H/versátil | `deriveAttackExtras` → `greatWeaponFighting` → `treatOnesAndTwosAsThree` |
 | **TWF** (`two-weapon-fighting`) | Mod de atributo no ataque `light_bonus` / off-hand | `resolveDamageBonuses` + effect `light_bonus_ability_mod` |
 | **Charger** (`charger` + `chargerStrike`) | +1d8; exige feat + `mode: melee` | `executeRollDamage` |
-| **PAM** | Só economia/mesa — ataque do cabo ainda residual | PVE-10a |
+| **PAM** | Cabo tipado **defer**; reação espacial = **nunca** no skirmish sem mapa | PVE-10a · [`skirmish-residuals-pve-10a.md`](skirmish-residuals-pve-10a.md) |
 
 Effects de estilo carregados com `featSlugs ∪ fightingStyleSlugs` em `findEquippedWeaponAttack` (paridade ficha).
 

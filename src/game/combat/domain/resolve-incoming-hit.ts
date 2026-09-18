@@ -4,7 +4,7 @@ export const SHIELD_SPELL_SLUG = 'escudo-arcano';
 export const SHIELD_AC_BONUS = 5;
 export const UNCANNY_DODGE_MIN_LEVEL = 5;
 
-export type IncomingHitDefenseKind = 'shield' | 'uncanny_dodge';
+export type IncomingHitDefenseKind = 'shield' | 'uncanny_dodge' | 'parry';
 
 export type ResolveIncomingHitInput = {
   attackTotal: number;
@@ -17,6 +17,8 @@ export type ResolveIncomingHitInput = {
   defense: IncomingHitDefenseKind | null;
   /** Rogue L5+ for uncanny; shield eligibility is enforced by castSpell in the wire. */
   uncannyEligible: boolean;
+  /** Redução tipada (Parry: dado + max FOR/DES). */
+  parryReduction?: number;
 };
 
 export type ResolveIncomingHitResult = {
@@ -105,20 +107,41 @@ export function resolveIncomingHit(
   }
 
   // uncanny_dodge
-  if (!input.uncannyEligible) {
-    base.notes.push('Esquiva Sobrenatural indisponível');
-    return base;
+  if (input.defense === 'uncanny_dodge') {
+    if (!input.uncannyEligible) {
+      base.notes.push('Esquiva Sobrenatural indisponível');
+      return base;
+    }
+    const raw = input.damageTotal ?? 0;
+    const halved = Math.floor(raw / 2);
+    return {
+      hit: true,
+      critical: input.provisionalCritical,
+      effectiveAc: input.targetAc,
+      damageTotal: halved,
+      reactionSpent: true,
+      defenseApplied: 'uncanny_dodge',
+      spendShieldSlot: false,
+      notes: [`Esquiva Sobrenatural (dano ${raw} → ${halved})`],
+    };
   }
-  const raw = input.damageTotal ?? 0;
-  const halved = Math.floor(raw / 2);
-  return {
-    hit: true,
-    critical: input.provisionalCritical,
-    effectiveAc: input.targetAc,
-    damageTotal: halved,
-    reactionSpent: true,
-    defenseApplied: 'uncanny_dodge',
-    spendShieldSlot: false,
-    notes: [`Esquiva Sobrenatural (dano ${raw} → ${halved})`],
-  };
+
+  if (input.defense === 'parry') {
+    const raw = input.damageTotal ?? 0;
+    const reduction = Math.max(0, input.parryReduction ?? 0);
+    const reduced = Math.max(0, raw - reduction);
+    return {
+      hit: true,
+      critical: input.provisionalCritical,
+      effectiveAc: input.targetAc,
+      damageTotal: reduced,
+      reactionSpent: true,
+      defenseApplied: 'parry',
+      spendShieldSlot: false,
+      notes: [`Aparar (−${reduction} dano → ${reduced})`],
+    };
+  }
+
+  base.notes.push('Defesa desconhecida');
+  return base;
 }

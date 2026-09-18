@@ -34,6 +34,7 @@ import {
   SkirmishDetailDto,
   SkirmishReactDto,
   SkirmishSummaryDto,
+  SkirmishTableActionDto,
 } from './dto/skirmish.dto';
 
 @ApiTags('game-skirmishes')
@@ -171,23 +172,18 @@ export class SkirmishesController {
     return this.skirmishes.appendNarration(user.id, id, dto.text);
   }
 
-  @Post(':id/second-wind')
+  @Post(':id/table-actions')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'Aplica table-action tipada (economy) no skirmish — Second Wind, Action Surge, etc.',
+  })
   @ApiOkResponse({ type: SkirmishDetailDto })
-  secondWind(
+  tableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: SkirmishTableActionDto,
   ): Promise<SkirmishDetailDto> {
-    return this.skirmishes.secondWind(user.id, id);
-  }
-
-  @Post(':id/action-surge')
-  @HttpCode(HttpStatus.OK)
-  @ApiOkResponse({ type: SkirmishDetailDto })
-  actionSurge(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<SkirmishDetailDto> {
-    return this.skirmishes.actionSurge(user.id, id);
+    return this.skirmishes.tableAction(user.id, id, dto.actionSlug);
   }
 }

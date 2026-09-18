@@ -39,11 +39,11 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 ### Manobras / estilo (dano, save, ataque)
 
 - [x] Battle Master: trip / menacing / pushing no acerto (skirmish PVE-5b) — além de Rally/`tempHp` e notas
-- [ ] Parry / redução de dano no momento do acerto
+- [x] Parry / redução de dano no momento do acerto (skirmish PVE-10a · `defenderReaction: parry`)
 - [x] Estilos no roll: GWF piso 1–2→3, TWF `light_bonus` + ability, Charger +1d8 (feat+melee) — PVE-5c · [`fighting-style-combat.md`](../architecture/fighting-style-combat.md)
-- [ ] PAM: ataque do cabo / reação tipada (residual PVE-10a)
-- [ ] Gunslinger: manobras `descriptive` que só fazem sentido no ataque/alvo (blindfire, ricochet, fan-the-hammer, …)
-- [ ] Atacante Selvagem: enforcement 1×/turno no servidor
+- [ ] PAM: ataque do cabo tipado (defer); reação “entra no alcance” = **nunca** no skirmish sem mapa (PVE-10a)
+- [ ] Gunslinger: manobras `descriptive` que só fazem sentido no ataque/alvo (blindfire, ricochet, fan-the-hammer, …) — defer PVE-10a
+- [x] Atacante Selvagem: enforcement 1×/turno no servidor (skirmish PVE-10a)
 - [ ] Front: escolher entre 2 rolagens de dano (`alternateRolls`)
 
 ### Metamagia / invocações / cast em combate
@@ -52,7 +52,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [ ] Demais metamagias (quickened, empowered, careful, …) no cast
 - [x] Eldritch Smite no acerto com arma — PVE-6a
 - [ ] Outras invocações cujo efeito é dano/condição no alvo (ex. Lifedrinker tipado fino)
-- [ ] Bloodied gate / craft spawn no fluxo de combate
+- [ ] Bloodied gate no fluxo de combate (defer); craft spawn = **nunca** em combate (rest/downtime) — PVE-10a
 
 ### Condições / duração / alvo
 
@@ -60,8 +60,8 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [x] Escuridão mágica (área/arena): fortemente obscurecido; **não** atravessada por visão normal nem Visão no Escuro; exceções tipadas (ex. Visão do Diabo) — skirmish/duelo PVE-3b; encontro sem arena (nota no cast PVE-8)
 - [ ] Empurrão / grappled / improvisado (Briguento de Taverna e similares)
 - [ ] Attitude NPC tipado (Influenciar) se depender de combate social tipado fino
-- [ ] Proteção Arcana: pool própria (≠ PV temp.), recarga por espaço, Proteção Projetada no aliado
-- [ ] Centelha Divina / Auxílio da Terra: dano no alvo + save tipados (cura na ficha já é mesa)
+- [ ] Proteção Arcana: pool própria (≠ PV temp.), recarga por espaço, Proteção Projetada no aliado — defer (L)
+- [ ] Centelha Divina / Auxílio da Terra: dano no alvo + save tipados (cura na ficha já é mesa) — defer
 
 ### Encontro / atores
 
@@ -69,6 +69,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [x] Tracker fino de companheiro / summon em combate (skirmish PVE-7a: iniciativa + turno + despawn) — [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md)
 - [x] Arma Espiritual + Conjure 1-actor no skirmish (PVE-7b) — [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md)
 - [x] Cast tipado no encontro + docs paridade (PVE-8) — [`surface-combat-parity.md`](../architecture/surface-combat-parity.md)
+- [x] Skirmish Second Wind / Action Surge via `POST …/table-actions` (economy; PVE-10a) — [`skirmish-residuals-pve-10a.md`](../architecture/skirmish-residuals-pve-10a.md)
 - [ ] Board/spawn fino no encontro de campanha (além do skirmish)
 
 ---

@@ -12,6 +12,7 @@ CREATE TABLE rpg.skirmish (
     REFERENCES rpg.player_character(id) ON DELETE SET NULL,
   pc_reaction_available BOOLEAN NOT NULL DEFAULT TRUE,
   pc_oa_available BOOLEAN NOT NULL DEFAULT FALSE,
+  pc_savage_attacker_used BOOLEAN NOT NULL DEFAULT FALSE,
   winner_kind TEXT CHECK (winner_kind IS NULL OR winner_kind IN ('pc', 'actor')),
   end_reason TEXT CHECK (end_reason IS NULL OR end_reason IN ('hp', 'forfeit')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

@@ -8,13 +8,16 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterRollsService } from '@game/dice/application/character-rolls.service';
-import { rollD20Check, rollExpression } from '@game/dice/domain/dice';
+import { rollD20Check, rollDie } from '@game/dice/domain/dice';
 import type { AdvantageMode } from '@game/dice/domain/dice';
 import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { ActorStateRepository } from '@game/actor/infrastructure/actor-state.repository';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { applyDeclaredEconomyTableAction } from '@game/session/application/table-actions/apply-declared-economy';
+import { LoadEffectCatalog, hasDamageRerollChoice } from '@game/effects';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { GameActorAction } from '@game/actor/infrastructure/game-actor-action.entity';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
@@ -43,8 +46,11 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import { loadSpellcastingAbilitySlug } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import {
   isFighterClass,
-  secondWindHealDice,
+  listBattleMasterManeuvers,
+  superiorityDieFaces,
 } from '@game/combat/domain/fighter';
+import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedule';
+import { resolveParryReduction } from '@game/combat/domain/resolve-parry-reduction';
 import {
   assertCanTakeDuelAction,
   characterSeesInMagicalDarkness,
@@ -71,6 +77,7 @@ import {
   pruneMissingActorCombatants,
 } from './sync-allied-actors-into-skirmish';
 import { resolveSkirmishAttackBudget } from './skirmish-attack-budget';
+import { applyActionSurgeAttackBudget } from './skirmish-table-action-budget';
 import { formatSkirmishAttackLogLine } from '../domain/format-skirmish-attack-log';
 import { SkirmishRepository } from '../infrastructure/skirmish.repository';
 import { Skirmish } from '../infrastructure/skirmish.entity';
@@ -126,6 +133,7 @@ export class SkirmishService {
     private readonly spellCombat: LoadSpellCombat,
     private readonly sheet: CharacterSheetRepository,
     private readonly domain: CharacterDomainService,
+    private readonly effectCatalog: LoadEffectCatalog,
     @InjectDataSource()
     private readonly dataSource: DataSource,
     @InjectRepository(GameActor)
@@ -203,6 +211,7 @@ export class SkirmishService {
       arenaEffectSourceCharacterId: null,
       pcReactionAvailable: true,
       pcOaAvailable: false,
+      pcSavageAttackerUsed: false,
       combatLog: [
         {
           at: new Date().toISOString(),
@@ -307,6 +316,9 @@ export class SkirmishService {
     if ((skirmish.turnAttacksRemaining ?? 1) <= 0) {
       throw new BadRequestException('Sem ataques restantes neste turno');
     }
+    if (dto.savageAttacker) {
+      await this.assertSavageAttackerAllowed(userId, skirmish);
+    }
     const rolled = await this.resolveAttack(
       userId,
       skirmish,
@@ -314,6 +326,9 @@ export class SkirmishService {
       target,
       dto,
     );
+    if (dto.savageAttacker) {
+      skirmish.pcSavageAttackerUsed = true;
+    }
     skirmish.turnAttacksRemaining = Math.max(
       0,
       (skirmish.turnAttacksRemaining ?? 1) - 1,
@@ -714,7 +729,11 @@ export class SkirmishService {
     return this.detailOf(skirmish);
   }
 
-  async secondWind(userId: string, id: string): Promise<SkirmishDetailDto> {
+  async tableAction(
+    userId: string,
+    id: string,
+    actionSlug: string,
+  ): Promise<SkirmishDetailDto> {
     const skirmish = await this.requireOwned(userId, id);
     this.assertActive(skirmish);
     await this.assertPcCanAct(skirmish);
@@ -722,45 +741,36 @@ export class SkirmishService {
       userId,
       skirmish.characterId,
     );
-    if (!isFighterClass(character.classSlug)) {
-      throw new BadRequestException('Recuperar Fôlego exige Guerreiro');
-    }
-    await this.characterState.useClassResource(character, 'secondWind', 1);
-    const healRoll = rollExpression(secondWindHealDice(character.level));
-    const max = character.hitPointsMax ?? 0;
-    const before = character.hitPointsCurrent ?? 0;
-    const after = Math.min(max, before + healRoll.total);
-    await this.characterState.applyCurrentHitPoints(character, after);
-    await this.appendLog(
-      skirmish,
-      `${character.name}: Recuperar Fôlego (${healRoll.expression}) — ${before} → ${after} PV`,
-    );
-    return this.detailOf(skirmish);
-  }
-
-  async actionSurge(userId: string, id: string): Promise<SkirmishDetailDto> {
-    const skirmish = await this.requireOwned(userId, id);
-    this.assertActive(skirmish);
-    await this.assertPcCanAct(skirmish);
-    const character = await this.access.findOwnedOrFail(
-      userId,
-      skirmish.characterId,
-    );
-    if (!isFighterClass(character.classSlug) || character.level < 2) {
-      throw new BadRequestException('Surto de Ação exige Guerreiro nível 2+');
-    }
-    await this.characterState.useClassResource(character, 'actionSurge', 1);
-    const extra = await resolveSkirmishAttackBudget(
-      this.mechanicalCatalog,
+    const applied = await applyDeclaredEconomyTableAction(
+      {
+        state: this.characterState,
+        mechanicalCatalog: this.mechanicalCatalog,
+        effectCatalog: this.effectCatalog,
+        sheet: this.sheet,
+        getProficiencyBonus: (level) => this.domain.getProficiencyBonus(level),
+      },
       character,
+      actionSlug,
     );
-    skirmish.turnAttacksRemaining =
-      (skirmish.turnAttacksRemaining ?? 0) + extra;
-    await this.repo.saveSkirmish(skirmish);
-    await this.appendLog(
-      skirmish,
-      `${character.name}: Surto de Ação — +${extra} ataque(s) (restantes: ${skirmish.turnAttacksRemaining})`,
-    );
+    if (actionSlug === 'action-surge') {
+      const budgeted = await applyActionSurgeAttackBudget({
+        mechanicalCatalog: this.mechanicalCatalog,
+        character,
+        turnAttacksRemaining: skirmish.turnAttacksRemaining,
+      });
+      skirmish.turnAttacksRemaining = budgeted.turnAttacksRemaining;
+      await this.repo.saveSkirmish(skirmish);
+      await this.appendLog(
+        skirmish,
+        `${character.name}: Surto de Ação — +${budgeted.extra} ataque(s) (restantes: ${skirmish.turnAttacksRemaining})`,
+      );
+    } else {
+      const note =
+        'note' in applied && typeof applied.note === 'string'
+          ? applied.note
+          : actionSlug;
+      await this.appendLog(skirmish, `${character.name}: ${note}`);
+    }
     return this.detailOf(skirmish);
   }
 
@@ -881,6 +891,10 @@ export class SkirmishService {
         userId,
         target.characterId,
       );
+      let parryReduction: number | undefined;
+      if (defenderReaction === 'parry') {
+        parryReduction = await this.spendParryAndResolveReduction(character);
+      }
       const incoming = resolveIncomingHit({
         attackTotal: rolled.attackTotal,
         naturalD20: rolled.naturalD20,
@@ -894,6 +908,7 @@ export class SkirmishService {
           classSlug: character.classSlug,
           level: character.level,
         }),
+        parryReduction,
       });
       if (incoming.spendShieldSlot) {
         await this.characterState.castSpell(character, {
@@ -1056,6 +1071,7 @@ export class SkirmishService {
     if (active[nextIndex].kind === 'pc') {
       skirmish.pcReactionAvailable = true;
       skirmish.pcOaAvailable = false;
+      skirmish.pcSavageAttackerUsed = false;
     } else {
       skirmish.pcOaAvailable = true;
     }
@@ -1153,11 +1169,91 @@ export class SkirmishService {
       .split(' · ')
       .filter(
         (part) =>
-          /Escudo Arcano|Esquiva Sobrenatural|Reação indisponível|Dado de Superioridade|Caído|Amedrontado|empurrado/i.test(
+          /Escudo Arcano|Esquiva Sobrenatural|Aparar|Reação indisponível|Dado de Superioridade|Caído|Amedrontado|empurrado/i.test(
             part,
           ),
       );
     return extraBits.length > 0 ? `${base} · ${extraBits.join(' · ')}` : base;
+  }
+
+  private async assertSavageAttackerAllowed(
+    userId: string,
+    skirmish: Skirmish,
+  ): Promise<void> {
+    if (skirmish.pcSavageAttackerUsed) {
+      throw new BadRequestException(
+        'Atacante Selvagem já usado neste turno',
+      );
+    }
+    const character = await this.characters.findOwnedOrFail(
+      userId,
+      skirmish.characterId,
+    );
+    const sheet = await this.sheet.load(
+      character.id,
+      character.backgroundSlug,
+    );
+    const featSlugs = sheet.characterFeats.map((f) => f.featSlug);
+    const effects = await this.effectCatalog.load({
+      ownerKind: 'feat',
+      ownerSlugs: featSlugs,
+    });
+    if (!hasDamageRerollChoice(effects, featSlugs)) {
+      throw new BadRequestException(
+        'Atacante Selvagem exige o talento correspondente',
+      );
+    }
+  }
+
+  private async spendParryAndResolveReduction(
+    character: PlayerCharacter,
+  ): Promise<number> {
+    if (
+      character.classSlug !== 'fighter' ||
+      character.subclassSlug !== 'battle-master' ||
+      character.level < 3
+    ) {
+      throw new BadRequestException('Aparar exige Battle Master nível 3+');
+    }
+    const catalog = await this.mechanicalCatalog.load();
+    const maneuvers = listBattleMasterManeuvers(catalog.battleMasterManeuvers);
+    const sheet = await this.sheet.load(
+      character.id,
+      character.backgroundSlug,
+    );
+    const selected = new Set(
+      sheet.subclassOptions
+        .filter((option) => option.optionKey.startsWith('maneuver'))
+        .map((option) => option.valueId),
+    );
+    const available =
+      selected.size === 0
+        ? maneuvers
+        : maneuvers.filter((row) => selected.has(row.slug));
+    if (!available.some((row) => row.slug === 'parry')) {
+      throw new BadRequestException('Aparar não está selecionado neste personagem');
+    }
+    const bands = featureSchedulesFromCatalog(
+      catalog,
+      character.classSlug,
+      character.subclassSlug,
+    );
+    const dieFaces = superiorityDieFaces(character.level, bands);
+    if (dieFaces == null) {
+      throw new BadRequestException('Dado de Superioridade indisponível');
+    }
+    await this.characterState.useClassResource(
+      character,
+      'superiority-dice',
+      1,
+    );
+    const mods = computeAbilityModifiers(character.abilityScores);
+    return resolveParryReduction({
+      dieFaces,
+      dieRoll: rollDie(dieFaces),
+      strengthMod: mods.forca,
+      dexterityMod: mods.destreza,
+    }).reduction;
   }
 
   private assertActive(skirmish: Skirmish): void {
