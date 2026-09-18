@@ -209,11 +209,11 @@ Default: **não comentar** — nome, tipo e pasta bastam.
 Rule: `.cursor/rules/typescript-docs.mdc` — **proibido `//` como docs**; só `/** */` (TSDoc) para invariante/SSOT/edge D&D.  
 Contrato HTTP → Swagger; catálogo → SQL + OKF.
 
-## Legado
+## Código morto / padrão `legacy`
 
-- Não expandir caminhos marcados `legacy` / mortos.
-- Remover em PR dedicado ou listar no roadmap / plano ativo relevante.
-- Reexports “compat” só com data de remoção no plano.
+- Trilha `/legado` (LEG-1…5) **fechada** — ver [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md).
+- Nome/stub `legacy`/`legado` restante → [`legac-pattern-backlog.md`](../plans/legac-pattern-backlog.md) (não renomear `infernal_legacy`).
+- Não expandir caminhos mortos; reexports “compat” só com data de remoção no plano.
 
 ## Skills
 

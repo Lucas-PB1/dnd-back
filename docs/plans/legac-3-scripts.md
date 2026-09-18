@@ -1,6 +1,6 @@
 # LEGAC-3 — Scripts `legacy*`
 
-**Status:** aberto · **Pai:** [`legac-pattern-backlog.md`](legac-pattern-backlog.md) · **Dep:** LEGAC-1 · **Tam:** S
+**Status:** aberto · **Pai:** [`legac-pattern-backlog.md`](legac-pattern-backlog.md) · **Dep:** LEGAC-1 (feito) · **Tam:** S
 
 ## Skills / rules
 

@@ -44,7 +44,7 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 
 **Positivas:** menos `case` por slug; novos traços similares = seed; SSOT de economia de cast/gasto.
 
-**Custos:** dicionário é produto contínuo; residual de mesa por categoria. Convívio dual-read / tabelas `phb_resource_grant` + `phb_combat_modifier` — **fechado** (DROP feito; limpeza mole dual-read + MV espécie feita).
+**Custos:** dicionário é produto contínuo; residual de mesa por categoria. Dual-read / tabelas `phb_resource_grant` + `phb_combat_modifier` — **histórico** (DROP feito; não há convívio no schema vivo).
 
 ## DoD Fase 0
 

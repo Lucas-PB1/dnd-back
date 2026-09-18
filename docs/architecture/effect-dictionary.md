@@ -169,7 +169,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** texto jogável para Passivas / notas de combate.
 - **Satélite:** `phb_effect_note`
 - **Trigger:** `passive`
-- **Serviço:** `featCombatNotes` → `combatNotesFromEffects` (só catálogo; sem mapa TS legado)
+- **Serviço:** `featCombatNotes` → `combatNotesFromEffects` (só catálogo; sem hardcode de slug em TS)
 
 ### `initiative_pb` (lote origem)
 
@@ -205,7 +205,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Satélite:** `phb_effect_feat`
 - **Trigger:** `on_build`
 - **Serviço:** `featSlugsFromEffects` → merge na lista efetiva de feats (Humano Versátil)
-- **Não:** inject legado hardcode por slug de espécie
+- **Não:** inject hardcode por slug de espécie
 
 ### `save_advantage` (espécie)
 

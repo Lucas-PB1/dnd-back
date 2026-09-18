@@ -77,11 +77,8 @@ class/phb/phb_class_progression.weapon-mastery.sql
 class/phb/phb_class.resource.sql
 feat/phb/phb_feat_requirement.all.sql
 class/phb/phb_class_ability_boost.all.sql
-feat/phb/phb_feat.resource-grant.sql
-item/phb/phb_item.resource-grant.sql
 economy/phb/phb_eldritch_invocation.all.sql
 economy/phb/phb_metamagic.all.sql
-species/phb/phb_species.resource-grant.sql
 class/phb/phb_class.option.sql
 class/phb/phb_class.expertise-option.sql
 class/phb/phb_class.granted-spell.sql
@@ -92,7 +89,6 @@ catalog/phb/phb_barding.descriptions.sql
 subclass/phb/phb_subclass_feature.phb-pack.sql
 economy/phb/phb_resource_definition.subclass-pack.sql
 economy/phb/phb_resource_definition.all.02.sql
-subclass/phb/phb_subclass.resource.sql
 subclass/phb/phb_subclass.option-def.sql
 subclass/phb/phb_subclass.option-value.sql
 class/phb/phb_spell_source.subclass-pack.sql
@@ -121,7 +117,6 @@ feat/valdas/phb_feat_option.all.sql
 economy/valdas/seed.dungeoneer-resources.sql
 economy/valdas/seed.arachnoid-stalker-resources.sql
 species/valdas/phb_mandrake.resource.sql
-feat/valdas/phb_feat.resource-grant.sql
 item/valdas/phb_item.resource-grant.sql
 economy/valdas/seed.oath-of-revelry-resources.sql
 economy/valdas/seed.future-you-resources.sql
@@ -166,7 +161,6 @@ item/valdas/phb_item.familiars.sql
 economy/valdas/seed.pp2-resources.sql
 item/valdas/seed.weapon-charms.sql
 subclass/valdas/phb_subclass_prepared_spell.player-pack-2.sql
-feat/valdas/seed.feat-item-resource-grant.sql
 feat/valdas/phb_feat_requirement.all.03.sql
 feat/valdas/phb_feat_option.spellblade.sql
 catalog/steinhardt/phb_edition.base.sql
@@ -198,7 +192,6 @@ item/steinhardt/phb_mundane.weapon.sql
 item/steinhardt/phb_magic.item.sql
 class/steinhardt/phb_spell_class.all.sql
 species/steinhardt/phb_species.resource.sql
-feat/steinhardt/phb_feat.resource.sql
 item/steinhardt/phb_item.resource.sql
 species/steinhardt/phb_species.flavor.sql
 catalog/northlands/phb_edition.base.sql
@@ -217,7 +210,6 @@ background/northlands/phb_background_ability_option.all.sql
 background/northlands/phb_background_skill.all.sql
 background/northlands/phb_background_tool_option.all.sql
 background/northlands/phb_background.starting.sql
-feat/northlands/phb_feat.resource-eir-loki.sql
 feat/northlands/phb_feat.all.02.sql
 feat/northlands/phb_feat_benefit.all.02.sql
 catalog/northlands/phb_fighting_style.all.sql
@@ -233,7 +225,6 @@ item/northlands/phb_armor.gear-northlands.sql
 item/northlands/phb_item.magic-northlands.sql
 feat/northlands/phb_feat_option.blessings.sql
 spell/northlands/phb_spell_grant.blessings.sql
-economy/grim-hollow/phb_resource.ghpg-cap4-feats.sql
 feat/northlands/phb_feat_option.greater-blessings.sql
 item/northlands/phb_item.masterwork.sql
 species/northlands/phb_giantkin.spell-fks.sql
@@ -264,8 +255,6 @@ item/grim-hollow/phb_gear.advanced.sql
 item/grim-hollow/phb_ammunition.advanced.sql
 catalog/grim-hollow/seed.catalog-images.sql
 catalog/grim-hollow/phb_edition.citation-cap1-cap3.sql
-species/grim-hollow/phb_species.heritage.sql
-species/grim-hollow/phb_species.heritage-trait.sql
 heritage/grim-hollow/seed.catalog-heritage-images.sql
 feat/grim-hollow/phb_feat.gh-cap4.sql
 feat/grim-hollow/phb_feat_requirement.ghpg.sql
@@ -275,7 +264,6 @@ background/grim-hollow/phb_background.equipment-ghpg.sql
 transformation/grim-hollow/phb_feat.gh-transformations.sql
 background/grim-hollow/phb_background_tool_option.ghpg.sql
 background/phb/phb_background_language.all.sql
-species/grim-hollow/phb_species.heritage-playable.sql
 catalog/grim-hollow/phb_edition.citation-cap2.sql
 class/grim-hollow/phb_class.monster-hunter.sql
 class/phb/phb_class.fighting-style-unlock.sql
@@ -352,7 +340,6 @@ item/dmg/phb_item.resource-grant-enspelled-weapon.sql
 item/dmg/seed.fix-armadura-magificada.sql
 item/dmg/phb_item.resource-grant-enspelled-armor.sql
 item/dmg/phb_item.resource-grant-weapon-coverages.sql
-item/dmg/phb_item.resource-grant-recover-dice.sql
 item/dmg/phb_item.resource-grant-dmg-artifacts-fix.sql
 item/dmg/dmg_artifact_random_property.all.sql
 item/dmg/dmg_sentient_trait_table.all.sql
@@ -427,8 +414,6 @@ class/grim-hollow/phb_class_panel_action.grim-hollow-cap2.sql
 economy/grim-hollow/phb_class_economy_action.grim-hollow-cap2-bulk.sql
 economy/grim-hollow/phb_subclass_table_action.cap2-bulk.sql
 economy/phb/phb_class_economy_action.sangromancer.sql
-economy/phb/phb_combat.modifier-sangromancer.sql
-heritage/phb/phb_heritage_trait.mechanics-core.sql
 heritage/phb/phb_heritage_trait.mechanics-bulk.sql
 heritage/phb/phb_heritage_trait.resources.sql
 heritage/phb/phb_heritage_combat_note.all.sql
@@ -436,7 +421,6 @@ heritage/grim-hollow/phb_heritage_trait.option.sql
 economy/phb/phb_class_economy_action.gh-cap2-resources.sql
 economy/grim-hollow/phb_combat.modifier-grim-hollow-cap2.sql
 economy/grim-hollow/phb_class_economy_action.gh-cap4-feats.sql
-economy/grim-hollow/phb_combat.modifier-ghpg-cap4-feats.sql
 economy/phb/phb_shape.of-the-wild-rage-recover.sql
 economy/grim-hollow/phb_class_economy_action.gh-transformations.sql
 economy/phb/phb_companion.tracker.sql

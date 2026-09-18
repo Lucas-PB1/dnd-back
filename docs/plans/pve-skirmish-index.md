@@ -194,8 +194,8 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
 | LEGAC | Backlog pai | [`legac-pattern-backlog.md`](legac-pattern-backlog.md) | — | — |
-| LEGAC-1 | Docs stale | [`legac-1-docs-stale.md`](legac-1-docs-stale.md) | S | — |
-| LEGAC-2 | Seeds stub grants | [`legac-2-seed-stubs.md`](legac-2-seed-stubs.md) | M | LEGAC-1 |
+| LEGAC-1 | ~~Docs stale~~ **feito** | — | S | — |
+| LEGAC-2 | ~~Seeds stub grants~~ **feito** | — | M | LEGAC-1 |
 | LEGAC-3 | Scripts `legacy*` | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
 | LEGAC-4 | TODOs SQL slugs | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
 

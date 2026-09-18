@@ -64,8 +64,8 @@ Ordem sugerida do command: trilha LEG **fechada**; residual docs/stubs → [`leg
 
 ### Docs / SQL
 
-- [ ] Referências “mapa legado deprecated” / dual-read grants stale → também [`legac-1-docs-stale.md`](legac-1-docs-stale.md)
-- [ ] Seeds/SQL stub “Grants legado” → [`legac-2-seed-stubs.md`](legac-2-seed-stubs.md)
+- [x] Referências “mapa legado deprecated” / dual-read grants stale → LEGAC-1 **feito**
+- [x] Seeds/SQL stub “Grants legado” → LEGAC-2 **feito**
 
 ## Anti-padrões
 

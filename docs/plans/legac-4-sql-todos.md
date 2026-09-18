@@ -1,6 +1,6 @@
 # LEGAC-4 — TODOs SQL “slugs legados”
 
-**Status:** aberto · **Pai:** [`legac-pattern-backlog.md`](legac-pattern-backlog.md) · **Dep:** LEGAC-2 · **Tam:** S–M
+**Status:** aberto · **Pai:** [`legac-pattern-backlog.md`](legac-pattern-backlog.md) · **Dep:** LEGAC-2 (feito) · **Tam:** S–M
 
 ## Skills / rules
 

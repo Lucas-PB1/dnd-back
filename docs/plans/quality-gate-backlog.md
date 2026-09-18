@@ -37,7 +37,7 @@ Docs: [`code-standards.md`](../architecture/code-standards.md) · [`docs/README.
 - [ ] `combat-real-deferred` só VTT/XP (ou vazio)
 - [ ] `database/migrations/` sem SQL de schema
 - [ ] Pacotes `.md` concluídos **apagados**; índice atualizado
-- [ ] Sem docs stale dual-read / mapa legado como código vivo
+- [x] Sem docs stale dual-read / mapa legado como código vivo (LEGAC-1)
 
 ## Anti-padrões
 

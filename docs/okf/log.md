@@ -1,5 +1,45 @@
 # log
 
+## 2026-09-18 — LEGAC-2 seeds stub Grants legado
+
+* **Update** (13:55 UTC): removidos 16 seeds no-op (`SELECT 1` / “Grants legado aposentado” / placeholders heritage GH) do disco e do `SEED_ORDER`; defs/grants vivos (DMG/Valdas/GSB) mantidos. `db:validate:sequences` ainda falha por dívidas pré-existentes (ON CONFLICT / DELETE / domain `notes`) — fora deste pacote.
+
+| path | status | ação |
+|------|--------|------|
+| `feat/**/phb_feat.resource*.sql` stubs | morto | DELETE + order |
+| `item/phb/phb_item.resource-grant.sql` | morto | DELETE + order |
+| `item/dmg/...recover-dice.sql` | morto | DELETE + order |
+| `species/phb/...resource-grant.sql` | morto | DELETE + order |
+| `subclass/phb/phb_subclass.resource.sql` | morto | DELETE + order |
+| `economy/**` modifier/resource stubs | morto | DELETE + order |
+| `species/grim-hollow/phb_species.heritage*.sql` | morto | DELETE + order |
+| `heritage/...mechanics-core.sql` | morto | DELETE + order |
+| `item/dmg/phb_item.resource-grant-*.sql` (INSERT) | vivo | manter |
+
+— refs: [`SEED_ORDER.txt`](../../database/seeds/SEED_ORDER.txt), [`legac-pattern-backlog.md`](../plans/legac-pattern-backlog.md) — motivo: fechar LEGAC-2 sem tocar seeds de `phb_resource_definition` reais.
+
+## 2026-09-18 — LEGAC-1 inventário + docs stale
+
+* **Update** (13:40 UTC): inventário `legacy|legado|legac` em docs/src/scripts; architecture já tratava dual-read como DROP; polish de prosa; links mortos `source/extracts/mm/no-image*` no log → `catalog-images.md`.
+
+| kind | ~hits | ação |
+|------|-------|------|
+| canônico (`infernal_legacy`, `legacy_2014`) | 17 | manter |
+| trilha LEG / planos | 47 | OK (backlogs) |
+| histórico OKF / “fechado” | 24 | OK |
+| dívida docs (mapa/dual-read “vivo”) | 0 em architecture | confirmado; planos LEGAC só |
+| dívida scripts `legacy*` | 11 | → LEGAC-3 |
+| seeds “Grants legado aposentado” | vários | → LEGAC-2 |
+
+| path | status | ação |
+|------|--------|------|
+| `effect-dictionary` “mapa TS legado” | prosa | → “sem hardcode de slug” |
+| `adr-effect-engine` “convívio dual-read” | prosa | → histórico / DROP |
+| `code-standards` § Legado | stale | aponta LEG fechado + LEGAC |
+| `okf/log` no-image*.md | link morto | → `catalog-images.md` |
+
+— refs: [`legac-pattern-backlog.md`](../plans/legac-pattern-backlog.md), [`effect-dictionary.md`](../architecture/effect-dictionary.md), [`adr-effect-engine.md`](../architecture/adr-effect-engine.md) — motivo: fechar LEGAC-1 sem tocar seeds/scripts.
+
 ## 2026-09-18 — LEG-4 session + docs planos
 
 * **Update** (13:25 UTC): `/legado` LEG-4 — `session/application` barrels/helpers **zero mortos**; apagados planos PVE-7b/8 (`Status: feito`); `mm-cast-options-modal` status corrigido (adiado); links quebrados de skills/paths em architecture + source DMG.
@@ -242,7 +282,7 @@
 
 ## 2026-09-16 — Veículos PHB com imagem (12/12)
 
-* **Update** (12:25 UTC): 12 artes → `public/catalog/vehicles/` + `seed.mm-vehicles-images.sql` (`phb_vehicle_template`); backlog imagens **0** — refs: [`seed.mm-vehicles-images.sql`](../../database/seeds/creature/phb/seed.mm-vehicles-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: fechar veículos após rename Navio a Remo.
+* **Update** (12:25 UTC): 12 artes → `public/catalog/vehicles/` + `seed.mm-vehicles-images.sql` (`phb_vehicle_template`); backlog imagens **0** — refs: [`seed.mm-vehicles-images.sql`](../../database/seeds/creature/phb/seed.mm-vehicles-images.sql), [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: fechar veículos após rename Navio a Remo.
 
 ## 2026-09-16 — Galley: Galera → Navio a Remo
 
@@ -250,35 +290,35 @@
 
 ## 2026-09-16 — Backlog real: wire 286 + 12 veículos
 
-* **Update** (12:05 UTC): audit seeds mostrou ~298 sem `image_url`; **286** já tinham arquivo em `public/catalog/` e foram ligados (`seed.mm-catalog-wire-images.sql`); restam **12 veículos** PHB — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md), [`seed.mm-catalog-wire-images.sql`](../../database/seeds/creature/phb/seed.mm-catalog-wire-images.sql) — motivo: lista “fechada” ignorava arte órfã sem UPDATE.
+* **Update** (12:05 UTC): audit seeds mostrou ~298 sem `image_url`; **286** já tinham arquivo em `public/catalog/` e foram ligados (`seed.mm-catalog-wire-images.sql`); restam **12 veículos** PHB — refs: [`no-image-ddb-links.md`](../source/catalog-images.md), [`seed.mm-catalog-wire-images.sql`](../../database/seeds/creature/phb/seed.mm-catalog-wire-images.sql) — motivo: lista “fechada” ignorava arte órfã sem UPDATE.
 
 ## 2026-09-16 — Summons fechados (37/37)
 
-* **Update** (12:00 UTC): lote final elemental+skeletal+montaria+primal → `public/catalog/summons/`; lista sem imagem **0** — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: usuário entregou o resto (nomes com typo mapeados).
+* **Update** (12:00 UTC): lote final elemental+skeletal+montaria+primal → `public/catalog/summons/`; lista sem imagem **0** — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: usuário entregou o resto (nomes com typo mapeados).
 
 ## 2026-09-16 — 20 artes de summons importadas
 
-* **Update** (11:40 UTC): 20 retratos → `public/catalog/summons/` + `seed.mm-summons-images.sql`; restam elemental×4, skeletal, montaria×3, primal×9 — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: lote Google por forma (aberration→undead parcial).
+* **Update** (11:40 UTC): 20 retratos → `public/catalog/summons/` + `seed.mm-summons-images.sql`; restam elemental×4, skeletal, montaria×3, primal×9 — refs: [`seed.mm-summons-images.sql`](../../database/seeds/creature/phb/seed.mm-summons-images.sql), [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: lote Google por forma (aberration→undead parcial).
 
 ## 2026-09-15 — Summons caça por forma EN
 
-* **Update** (22:40 UTC): doc reorganizado magia→forma (Beholderkin/Slaad/Star Spawn, Mirthful/Fuming/Tricksy, etc.) + Google por nome da forma; primal = 3 ambientes — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md), [`summon-vs-conjure.md`](./summon-vs-conjure.md) — motivo: Beyond só tem símbolo; forma tem nome pesquisável.
+* **Update** (22:40 UTC): doc reorganizado magia→forma (Beholderkin/Slaad/Star Spawn, Mirthful/Fuming/Tricksy, etc.) + Google por nome da forma; primal = 3 ambientes — refs: [`no-image-ddb-links.md`](../source/catalog-images.md), [`summon-vs-conjure.md`](./summon-vs-conjure.md) — motivo: Beyond só tem símbolo; forma tem nome pesquisável.
 
 ## 2026-09-15 — Links Google Imagens para summons
 
-* **Update** (22:35 UTC): Beyond só tem símbolo nas magias; doc com busca Google Imagens por família e por variante — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: caçar arte fora do Beyond.
+* **Update** (22:35 UTC): Beyond só tem símbolo nas magias; doc com busca Google Imagens por família e por variante — refs: [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: caçar arte fora do Beyond.
 
 ## 2026-09-15 — Docs sem-imagem só summons
 
-* **Update** (22:30 UTC): `no-image-list.md` + `no-image-ddb-links.json` alinhados — total **37** summons; bestas/jovens removidos da lista aberta — refs: [`no-image-list.md`](../source/extracts/mm/no-image-list.md), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: doc batia com estado real pós import cobra/crocodilo.
+* **Update** (22:30 UTC): `no-image-list.md` + `no-image-ddb-links.json` alinhados — total **37** summons; bestas/jovens removidos da lista aberta — refs: [`no-image-list.md`](../source/catalog-images.md), [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: doc batia com estado real pós import cobra/crocodilo.
 
 ## 2026-09-15 — Últimas bestas + lista só summons
 
-* **Update** (22:25 UTC): `cobra-voadora` + `crocodilo-gigante` → `public/catalog/beasts/` + seed; lista sem imagem agora só **37** summons — refs: [`seed.mm-beasts-manual-images.sql`](../../database/seeds/creature/phb/seed.mm-beasts-manual-images.sql), [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: fechar gaps MM/beasts; usuário caça summons nas magias.
+* **Update** (22:25 UTC): `cobra-voadora` + `crocodilo-gigante` → `public/catalog/beasts/` + seed; lista sem imagem agora só **37** summons — refs: [`seed.mm-beasts-manual-images.sql`](../../database/seeds/creature/phb/seed.mm-beasts-manual-images.sql), [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: fechar gaps MM/beasts; usuário caça summons nas magias.
 
 ## 2026-09-15 — Lista sem imagem atualizada
 
-* **Update** (22:20 UTC): após bestas manuais + jovens→adulto, restam **2** fichas para caçar (Flying Snake, Giant Crocodile) + summons sem arte — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: orientar scrap residual.
+* **Update** (22:20 UTC): após bestas manuais + jovens→adulto, restam **2** fichas para caçar (Flying Snake, Giant Crocodile) + summons sem arte — refs: [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: orientar scrap residual.
 
 ## 2026-09-15 — Dragões jovens reusam arte do adulto
 
@@ -290,7 +330,7 @@
 
 ## 2026-09-15 — Links Beyond para fichas sem imagem
 
-* **Update** (17:45 UTC): lista navegável com busca DDB das criaturas sem `image_url` — refs: [`no-image-ddb-links.md`](../source/extracts/mm/no-image-ddb-links.md) — motivo: acelerar download manual da arte nas fichas individuais.
+* **Update** (17:45 UTC): lista navegável com busca DDB das criaturas sem `image_url` — refs: [`no-image-ddb-links.md`](../source/catalog-images.md) — motivo: acelerar download manual da arte nas fichas individuais.
 
 ## 2026-09-15 — Imagens Animals do scrap Beyond
 
@@ -326,8 +366,8 @@
 
 ## 2026-09-15 — Nomes UTF-8 + inventário sem imagem
 
-* **Fix** (16:30 UTC): 29 nomes com `??` no DB (espíritos/companions/montarias/objeto animado) corrigidos para acentos PT — refs: [`no-image-list.md`](../source/extracts/mm/no-image-list.md) — motivo: encoding corrompido na apply anterior; seeds SQL já estavam corretas.
-* **Update** (16:30 UTC): inventário 240 sem `image_url` + busca web de fontes MM 2024 — refs: [`no-image-sources.md`](../source/extracts/mm/no-image-sources.md) — motivo: arte oficial está em Roll20/DDB (sem CDN pública); scrap local já limpo.
+* **Fix** (16:30 UTC): 29 nomes com `??` no DB (espíritos/companions/montarias/objeto animado) corrigidos para acentos PT — refs: [`no-image-list.md`](../source/catalog-images.md) — motivo: encoding corrompido na apply anterior; seeds SQL já estavam corretas.
+* **Update** (16:30 UTC): inventário 240 sem `image_url` + busca web de fontes MM 2024 — refs: [`no-image-sources.md`](../source/catalog-images.md) — motivo: arte oficial está em Roll20/DDB (sem CDN pública); scrap local já limpo.
 
 ## 2026-09-15 — Gaps da lista via SRD
 

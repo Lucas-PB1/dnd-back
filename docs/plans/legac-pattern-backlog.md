@@ -32,10 +32,10 @@ Docs: `adr-effect-engine.md` (dual-read **fechado**), `sql-layout.md`, `effect-d
 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
-| LEGAC-1 | Inventário + docs stale | [`legac-1-docs-stale.md`](legac-1-docs-stale.md) | S | — |
-| LEGAC-2 | Seeds stub resource-grant / SELECT 1 | [`legac-2-seed-stubs.md`](legac-2-seed-stubs.md) | M | LEGAC-1 |
-| LEGAC-3 | Scripts `legacy*` + baseline morto | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
-| LEGAC-4 | TODOs SQL “slugs legados” | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
+| LEGAC-1 | ~~Docs stale~~ **feito** | — | S | — |
+| LEGAC-2 | ~~Seeds stub grants~~ **feito** | — | M | LEGAC-1 |
+| LEGAC-3 | Scripts `legacy*` | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
+| LEGAC-4 | TODOs SQL slugs | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
 
 Overlap: texto “mapa legado” / dual-read — PVE-10b fechado no índice; residual docs stale → este backlog (LEGAC-1).
 
@@ -48,7 +48,8 @@ Overlap: texto “mapa legado” / dual-read — PVE-10b fechado no índice; res
 
 ## DoD da trilha
 
-- [ ] `rg -i 'legado aposent|mapa legado deprecated|dual-read' docs/` limpo (exceto histórico OKF intencional)
-- [ ] Zero seed stub “Grants legado” no order
+- [x] `rg -i 'legado aposent|mapa legado deprecated|dual-read' docs/` limpo em architecture (exceto ADR histórico “DROP” + OKF) — LEGAC-1
+- [x] Zero seed stub “Grants legado” no order — LEGAC-2
 - [ ] Scripts sem identificador `legacy*` **ou** renomeados com comentário claro (anti-pack / baseline)
+- [ ] TODOs SQL “slugs legados” resolvidos ou movidos
 - [ ] Pacotes LEGAC-*.md apagados

@@ -1,3 +1,0 @@
--- Grants de recursos de espécie PHB (defs em S046).
--- SSOT migrado para effects/E007_species.sql (DELETE legado no fim de E007).
--- Mantido vazio de propósito para ordem FK-safe: defs em S046; efeitos por último.
