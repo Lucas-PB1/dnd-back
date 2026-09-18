@@ -170,8 +170,8 @@ flowchart LR
 |---|--------|-----|------|-----|
 | LEG | Backlog pai | [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) | — | — |
 | LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | M | — |
-| LEG-2 | Combat domain morto | [`legado-2-combat-domain.md`](legado-2-combat-domain.md) | M | LEG-1 |
-| LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | M | LEG-2 |
+| LEG-2 | ~~Combat domain morto~~ **feito** (+ RES-2) | — | M | LEG-1 |
+| LEG-3 | ~~Entities / Catalog~~ **feito** | — | M | LEG-2 |
 | LEG-4 | Session + docs planos | [`legado-4-session-docs.md`](legado-4-session-docs.md) | S–M | LEG-3 |
 
 LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate adapters **fechado com PVE-10b**.
@@ -182,7 +182,7 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 |---|--------|-----|------|-----|
 | RES | Backlog pai | [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) | — | — |
 | RES-1 | Inventário canônico vs legado | [`resolve-1-inventory-docs.md`](resolve-1-inventory-docs.md) | S | — |
-| RES-2 | Resolvers de mesa mortos | [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md) | M | RES-1 · LEG-2 |
+| RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~`duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | Maneuver/BM → catálogo | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | RES-2 · PVE-5b |
 | RES-5 | Sufixo Nest `*.resolver.ts` | [`resolve-5-nest-suffix.md`](resolve-5-nest-suffix.md) | S | RES-2 |

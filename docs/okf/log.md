@@ -1,5 +1,38 @@
 # log
 
+## 2026-09-18 — LEG-3 entities + catalog
+
+* **Update** (13:15 UTC): `/legado` em `src/entities/` — 4 entities sem `forFeature` registradas nos módulos consumidores; vercel trace alinhado (table-roll/temp-hp/affinity). Catalog queries: zero órfãs. Game→`@catalog/.../domain`: zero.
+
+| path | status | ação | evidência |
+|------|--------|------|-----------|
+| `PhbInitiativeRule` | vivo (raw SQL) | `forFeature` sheet | `initiative-rule.queries` |
+| `PhbCreatureTemplateDamageAffinity` | vivo (raw SQL) | `forFeature` combat | `load-creature-damage-defenses` |
+| `PhbWildShapeCrBand` | vivo (raw SQL) | `forFeature` session | `wild-shape.queries` |
+| `PhbWildShapeKnownBand` | vivo (seed; helper TS ainda) | `forFeature` session | tabela SSOT; `maxWildShapeKnownForms` residual |
+| catalog `*.query.ts` | vivo | — | 0 classes sem import |
+| Game `@catalog/*/domain` | — | N/A | 0 hits |
+
+— refs: [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md), [`character-sheet.module.ts`](../../src/game/sheet/character-sheet.module.ts), [`combat.module.ts`](../../src/game/combat/combat.module.ts), [`character-session.module.ts`](../../src/game/session/character-session.module.ts) — motivo: fechar LEG-3 sem apagar mapeamentos SQL-first.
+
+## 2026-09-18 — LEG-2 / RES-2 combat domain trim
+
+* **Update** (13:00 UTC): `/legado` em `combat/domain/<classe>/` — removidos helpers/consts mortos pós-economy (zero imports de produção); resolvers de mesa em `session/actions` já inexistentes; BM/`maneuver-resolve` vivos → RES-4.
+
+| path | status | ação | evidência |
+|------|--------|------|-----------|
+| `druid/features` wrath/wickerbone/landAid/wildShapeMaxUses | morto | removidos | só defs/specs |
+| `wizard` THIRD_EYE/SPECTRAL/ILLUSORY/SCULPT + ward/portent | morto | removidos | DTOs usam string literal |
+| `bard` bardicInspiration* helpers | morto | removidos | economy usa schedule key |
+| `bard` knownPersonaMaskCount | morto | removido | só teste; schedule key fica |
+| `cleric` destroyUndead + divineSparkDiceCount fn | morto | removidos | schedule key vivo no loop |
+| `sorcerer` SORCEROUS_RESTORATION_RESOURCE | morto | removido | zero import |
+| `warlock` resource consts + healingLightDiceMax | morto | removidos | handlers usam slug string |
+| `session/actions/**` class resolvers | morto | N/A | já zero pós-economy |
+| `fighter` table-actions / BM on-hit | vivo | manter | → RES-4 |
+
+— refs: [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md), [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md) — motivo: fechar LEG-2 + RES-2 sem tocar símbolos vivos de combat.
+
 ## 2026-09-18 — LEG-1 pastas Game sem module
 
 * **Update** (12:45 UTC): `/legado` em `companion/` + `spirit/` — **zero mortos**; ambas domain libraries vivas. `module-map` e `game-module-structure` atualizados (companion não é “suspeita”; spirit documentado; skirmish listado).

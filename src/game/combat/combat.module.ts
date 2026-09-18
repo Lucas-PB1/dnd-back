@@ -38,6 +38,7 @@ import { ResolveEquippedWeaponAttacks } from './application/resolve-equipped-wea
 import { ResolveEquipmentCompliance } from './application/resolve-equipment-compliance';
 import { CombatCatalogService } from './infrastructure/combat-catalog.service';
 import { PhbSpellCombat } from '@entities/spell/phb-spell-combat.entity';
+import { PhbCreatureTemplateDamageAffinity } from '@entities/template/phb-creature-template-damage-affinity.entity';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { PhbSpellCombat } from '@entities/spell/phb-spell-combat.entity';
       PhbLevelCombatNote,
       PhbDamageType,
       PhbClassFeatureSchedule,
+      PhbCreatureTemplateDamageAffinity,
     ]),
     GameSharedModule,
     EffectsModule,

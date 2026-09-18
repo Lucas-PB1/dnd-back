@@ -27,14 +27,14 @@ Command `/legado` quando for pasta morta.
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
 | RES-1 | Inventário + docs (canônico vs legado) | [`resolve-1-inventory-docs.md`](resolve-1-inventory-docs.md) | S | — |
-| RES-2 | Resolvers de mesa mortos (`session/actions`, `combat/domain/<classe>`) | [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md) | M | RES-1 · overlap [`legado-2`](legado-2-combat-domain.md) |
+| RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~Hardcode `duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | `maneuver-resolve` / BM `resolveBattleMasterTableRoll` → kinds tipados | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | PVE-5b / catalog |
 | RES-5 | Naming Nest `*.resolver.ts` + barrels órfãos | [`resolve-5-nest-suffix.md`](resolve-5-nest-suffix.md) | S | RES-2 |
 
 ## Checklist residual conhecido
 
-- [ ] Zero imports de “class action resolver” em `session/application/actions/**` (confirmar; OKF já removeu vários)
+- [x] Zero imports de “class action resolver” em `session/application/actions/**` (RES-2 / LEG-2)
 - [ ] `combat/domain/fighter/table-actions.ts` (`resolveBattleMasterTableRoll`) — vivo via `apply-catalog-maneuver`; migrar ou documentar como structured
 - [ ] `session/domain/maneuver-resolve.ts` (Gunslinger) — vivo; candidatar catalog/kinds
 - [x] `duel/domain/duel-spell-resolve.ts` — hardcode slug removido; reexport + conditions (PVE-0)

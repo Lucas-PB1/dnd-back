@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '@catalog/catalog.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
 import { PhbCharacterLevel } from '@entities/reference/phb-character-level.entity';
+import { PhbInitiativeRule } from '@entities/reference/phb-initiative-rule.entity';
 import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
@@ -88,6 +89,7 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
       PhbCharacterThread,
       VPhbCharacterThreadBundle,
       PhbCharacterLevel,
+      PhbInitiativeRule,
       VPhbSpeciesTraitChoices,
       VPhbHeritageTraitChoices,
       PhbHeritageTrait,

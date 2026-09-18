@@ -1,22 +1,9 @@
 
-
-import {
-  FEATURE_SCHEDULE_KEYS,
-  scheduleIntAtLevel,
-  type FeatureScheduleBand,
-} from '../../feature-schedule';
-
 export const MAGIC_MISSILE_SPELL_SLUG = 'misseis-magicos';
 export const MAGIC_MISSILE_MAGE_SUBCLASS = 'magic-missile-mage';
 export const MAGIC_MISSILE_FREE_RESOURCE = 'magic-missile-free';
 export const MISSILE_SHIELD_RESOURCE = 'missile-shield';
 export const GIGA_MISSILE_RESOURCE = 'giga-missile';
-
-export const THIRD_EYE_RESOURCE = 'third-eye';
-export const SPECTRAL_SUMMON_RESOURCE = 'spectral-summon';
-export const ILLUSORY_SELF_RESOURCE = 'illusory-self';
-
-export const SCULPT_SPELLS_UNLOCK_LEVEL = 6;
 
 export const SPELL_MASTERY_LEVEL_1_KEY = 'spellMastery1';
 export const SPELL_MASTERY_LEVEL_2_KEY = 'spellMastery2';
@@ -121,20 +108,4 @@ export function buildMagicMissileCastNote(input: {
     note += ` Giga-Míssil: +${bonus} de Força em cada dardo.`;
   }
   return note;
-}
-
-export function abjurerArcaneWardHp(level: number, intMod: number): number {
-  return 2 * level + Math.max(1, intMod);
-}
-
-export function portentDiceCount(
-  level: number,
-  bands: readonly FeatureScheduleBand[],
-): number {
-  return scheduleIntAtLevel(
-    bands,
-    FEATURE_SCHEDULE_KEYS.portentD20Count,
-    level,
-    2,
-  );
 }

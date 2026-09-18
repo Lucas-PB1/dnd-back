@@ -1,6 +1,6 @@
 # LEG-4 — Session barrels + docs planos mortos
 
-**Status:** aberto · **Pai:** [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) · **Dep:** LEG-3 · **Tam:** S–M
+**Status:** aberto · **Pai:** [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) · **Dep:** LEG-3 (feito) · **Tam:** S–M
 
 ## Skills / rules
 

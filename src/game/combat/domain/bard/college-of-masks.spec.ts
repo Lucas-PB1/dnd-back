@@ -1,7 +1,6 @@
 import { FIXTURE_PERSONA_MASK_SLUGS } from '../__fixtures__/mechanical-catalog';
 import {
   assertValidPersonaMasks,
-  knownPersonaMaskCount,
   maxEquippedPersonaMasks,
 } from './college-of-masks';
 import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
@@ -13,14 +12,6 @@ describe('college-of-masks', () => {
     expect(maxEquippedPersonaMasks(3, maskBands)).toBe(1);
     expect(maxEquippedPersonaMasks(13, maskBands)).toBe(1);
     expect(maxEquippedPersonaMasks(14, maskBands)).toBe(2);
-  });
-
-  it('computes known mask count by level', () => {
-    expect(knownPersonaMaskCount(3, maskBands)).toBe(3);
-    expect(knownPersonaMaskCount(5, maskBands)).toBe(3);
-    expect(knownPersonaMaskCount(6, maskBands)).toBe(4);
-    expect(knownPersonaMaskCount(13, maskBands)).toBe(4);
-    expect(knownPersonaMaskCount(14, maskBands)).toBe(5);
   });
 
   it('accepts valid equipped masks within limit', () => {

@@ -81,15 +81,3 @@ export function isBlastInvocationSlug(
 export function isLessonsOfTheFirstOnesSlug(slug: string): boolean {
   return slug === LESSONS_OF_THE_FIRST_ONES_SLUG;
 }
-
-export const MAGICAL_CUNNING_RESOURCE = 'magical-cunning';
-export const DARK_ONES_LUCK_RESOURCE = 'dark-ones-luck';
-export const FEY_STEPS_RESOURCE = 'fey-steps';
-export const HURL_THROUGH_HELL_RESOURCE = 'hurl-through-hell';
-export const SEARING_VENGEANCE_RESOURCE = 'searing-vengeance';
-export const BEGUILING_DEFENSES_RESOURCE = 'beguiling-defenses';
-export const CLAIRVOYANT_COMBATANT_RESOURCE = 'clairvoyant-competitor';
-
-export function healingLightDiceMax(level: number): number {
-  return 1 + level;
-}

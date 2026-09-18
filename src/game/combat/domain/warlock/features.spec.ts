@@ -1,5 +1,4 @@
 import {
-  healingLightDiceMax,
   isWarlockClass,
   magicalCunningSlotRecoveryCount,
   warlockInvocationLimit,
@@ -50,10 +49,5 @@ describe('warlock-features', () => {
     expect(warlockInvocationLimit(12, warlockBands)).toBe(8);
     expect(warlockInvocationLimit(15, warlockBands)).toBe(9);
     expect(warlockInvocationLimit(18, warlockBands)).toBe(10);
-  });
-
-  it('computes celestial healing light dice max pool', () => {
-    expect(healingLightDiceMax(3)).toBe(4);
-    expect(healingLightDiceMax(10)).toBe(11);
   });
 });

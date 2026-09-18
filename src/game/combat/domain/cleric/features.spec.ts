@@ -1,8 +1,4 @@
-import {
-  destroyUndeadDice,
-  divineStrikeDice,
-  isClericClass,
-} from './features';
+import { divineStrikeDice, isClericClass } from './features';
 import { fixtureSchedulesFor } from '../feature-schedule.fixtures';
 
 describe('cleric-features', () => {
@@ -12,11 +8,6 @@ describe('cleric-features', () => {
     expect(isClericClass('cleric')).toBe(true);
     expect(isClericClass('paladin')).toBe(false);
     expect(isClericClass(null)).toBe(false);
-  });
-
-  it('uses at least one die for Sear Undead', () => {
-    expect(destroyUndeadDice(8)).toBe('1d8');
-    expect(destroyUndeadDice(18)).toBe('4d8');
   });
 
   it('scales Divine Strike at levels 7 and 14', () => {

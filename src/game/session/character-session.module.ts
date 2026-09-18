@@ -5,6 +5,8 @@ import { CombatModule } from '../combat/combat.module';
 import { ActorModule } from '../actor/actor.module';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { PhbWildShapeCrBand } from '@entities/template/phb-wild-shape-cr-band.entity';
+import { PhbWildShapeKnownBand } from '@entities/template/phb-wild-shape-known-band.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
@@ -54,6 +56,8 @@ import { CampaignCharacter } from '../campaign/infrastructure/campaign-character
       PhbCondition,
       VClassSpellSlots,
       VSubclassSpellSlots,
+      PhbWildShapeCrBand,
+      PhbWildShapeKnownBand,
       PlayerCharacterItem,
       CampaignCharacter,
     ]),

@@ -1,6 +1,6 @@
 # RES-4 — Maneuver / BM resolve → catálogo tipado
 
-**Status:** aberto · **Pai:** [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) · **Dep:** RES-2 · idealmente PVE-5b · **Tam:** L
+**Status:** aberto · **Pai:** [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) · **Dep:** RES-2 (feito) · idealmente PVE-5b · **Tam:** L
 
 ## Skills / rules
 

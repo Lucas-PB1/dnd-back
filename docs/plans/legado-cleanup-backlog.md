@@ -37,12 +37,12 @@ Rules: `game-folder-conventions.mdc` · `nestjs-project.mdc` · `file-size.mdc` 
 | # | Pacote | Doc | Escopo |
 |---|--------|-----|--------|
 | LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | companion/spirit = domain library |
-| LEG-2 | Combat domain morto | [`legado-2-combat-domain.md`](legado-2-combat-domain.md) | `combat/domain/<classe>/` duplicatas / generated |
-| LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | `src/entities/` sem uso; catalog thin |
+| LEG-2 | ~~Combat domain morto~~ **feito** (+ RES-2) | — | helpers/consts mortos em `combat/domain/<classe>/` |
+| LEG-3 | ~~Entities / Catalog~~ **feito** | — | 4 entities órfãs → `forFeature`; queries ok |
 | LEG-4 | Session / apply escape hatches docs | [`legado-4-session-docs.md`](legado-4-session-docs.md) | barrels mortos session; planos `.md` concluídos ainda vivos |
 | LEG-5 | ~~Pós-PVE adapters~~ **feito (= PVE-10b)** | — | duel/combat mortos removidos |
 
-Ordem sugerida do command: LEG-2 → LEG-3 → LEG-4; LEG-1 e LEG-5 **feitos**.
+Ordem sugerida do command: LEG-4; LEG-1…3 e LEG-5 **feitos**.
 
 ## Checklist rápido (repo)
 
@@ -50,17 +50,17 @@ Ordem sugerida do command: LEG-2 → LEG-3 → LEG-4; LEG-1 e LEG-5 **feitos**.
 
 - [x] `src/game/companion/` — vivo (domain library; LEG-1)
 - [x] Pastas sob `src/game/` **sem** `*.module.ts` — só `companion/` + `spirit/` (documentadas LEG-1)
-- [ ] `src/game/combat/domain/<classe>/` — resolvers/generated mortos (**overlap** [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md))
+- [x] `src/game/combat/domain/<classe>/` — helpers/consts mortos removidos (LEG-2; BM vivo → RES-4)
 - [x] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (PVE-10b: `pending-arena-bridge` apagado)
-- [ ] `src/game/session/application/actions/**` — handlers/resolvers mortos pós-economy
+- [x] `src/game/session/application/actions/**` — zero resolvers de mesa órfãos (RES-2)
 - [x] `src/game/skirmish/` — endpoints especiais SW/AS → `table-actions` (PVE-10a)
 - [ ] Barrels `index.ts` que só reexportam mortos
 
 ### Catalog / entities
 
-- [ ] `src/entities/` Entity/ViewEntity sem referência no TypeORM module
-- [ ] `src/catalog/**` queries/DTOs órfãos
-- [ ] Imports profundos `@catalog/.../domain` a partir de Game (mover para game-port)
+- [x] `src/entities/` Entity/ViewEntity sem referência no TypeORM module
+- [x] `src/catalog/**` queries/DTOs órfãos
+- [x] Imports profundos `@catalog/.../domain` a partir de Game (mover para game-port)
 
 ### Docs / SQL
 
@@ -77,8 +77,10 @@ Ordem sugerida do command: LEG-2 → LEG-3 → LEG-4; LEG-1 e LEG-5 **feitos**.
 
 ## DoD desta trilha
 
-- [ ] LEG-2…4 fechados (`.md` apagados)
+- [ ] LEG-4 fechado (`.md` apagado)
 - [x] LEG-1 feito (companion/spirit documentados; zero deletes)
+- [x] LEG-2 feito (+ RES-2; helpers mortos removidos)
+- [x] LEG-3 feito (entities órfãs registradas; catalog limpo)
 - [x] LEG-5 / PVE-10b alinhados
 - [x] `module-map.md` sem pasta “suspeita” sem nota viva/morta
 - [x] Feature futura em [`backlog.md`](backlog.md): PVE completo; residual + XP/VTT

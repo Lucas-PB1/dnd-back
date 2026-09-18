@@ -3,7 +3,6 @@ export function isSorcererClass(classSlug: string | null | undefined): boolean {
 }
 
 export const INNATE_SORCERY_RESOURCE = 'innate-sorcery';
-export const SORCEROUS_RESTORATION_RESOURCE = 'sorcerous-restoration';
 
 export function sorceryPointsMax(level: number): number {
   return level >= 2 ? level : 0;

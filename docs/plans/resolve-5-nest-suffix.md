@@ -1,6 +1,6 @@
 # RES-5 — Sufixo Nest `*.resolver.ts`
 
-**Status:** aberto · **Pai:** [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) · **Dep:** RES-2 · **Tam:** S
+**Status:** aberto · **Pai:** [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) · **Dep:** RES-2 (feito) · **Tam:** S
 
 ## Skills / rules
 

@@ -20,18 +20,6 @@ export function maxEquippedPersonaMasks(
   );
 }
 
-export function knownPersonaMaskCount(
-  level: number,
-  bands: readonly FeatureScheduleBand[],
-): number {
-  return scheduleIntAtLevel(
-    bands,
-    FEATURE_SCHEDULE_KEYS.personaMasksKnown,
-    level,
-    3,
-  );
-}
-
 export function isPersonaMaskSlug(
   catalogSlugs: readonly string[],
   slug: string,
