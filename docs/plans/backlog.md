@@ -54,19 +54,18 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 
 ## Feature futura (mais difícil)
 
-Ordem e pacotes executáveis (fácil → difícil): **[`pve-skirmish-index.md`](pve-skirmish-index.md)**.
+**PVE skirmish sem mapa: completo** (DB-0 + PVE-0…10) — índice [`pve-skirmish-index.md`](pve-skirmish-index.md). Residual tipável além do skirmish (Ward pool, PAM cabo, Gunslinger…) e **nunca** justificados ficam em [`combat-real-deferred.md`](combat-real-deferred.md).
 
 | Trilha | Conteúdo |
 |--------|----------|
-| **DB-0** | ~~Reorg migrations~~ **feito** (greenfield; ver `docs/okf/log.md`) |
-| **PVE-0…8** | ~~Motor magia + seeds + … + paridade~~ **PVE-0…8 feitos** — próximo: PVE-9…10 |
-| **PVE-9…10** | Legado mesa (slug branches) + residuals combate + DoD PVE |
+| **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro |
 | **LEG-1…4** | Limpeza código morto repo-wide — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`) |
 | **RES-1…5** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não apagar verbo canônico; só legado/hardcode) |
 | **LEGAC-1…4** | Padrão `legac`/`legacy` — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) (docs/stubs/scripts; **não** `infernal_legacy`) |
 | **QA-1…2** | Quality gate — [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**: auditar planos + smoke pós-trilhas) |
+| **XP / VTT** | Fora do PVE skirmish — ver Notas abaixo + deferred |
 
-Lista residual / parqueado histórico: [`combat-real-deferred.md`](combat-real-deferred.md) (espelha o índice PVE; itens saem ao fechar pacote).
+Lista residual / parqueado: [`combat-real-deferred.md`](combat-real-deferred.md).
 
 ---
 

@@ -1,8 +1,8 @@
 # Combate real — residual / parqueado
 
-**Não é polish adiado.** Combate tipado (PVE skirmish sem mapa + paridade duelo/encontro) agora tem **fila executável**:
+**PVE skirmish sem mapa (índice 0–10): fechado.** Itens abaixo são **além** do produto skirmish (mapa/VTT, pools próprias, manobras finas) ou **nunca** justificado — não reabrem “classe done” nem o backlog mesa.
 
-→ **[`pve-skirmish-index.md`](pve-skirmish-index.md)** (DB-0 + PVE-0…10, fatiado)
+→ Índice: [`pve-skirmish-index.md`](pve-skirmish-index.md) (**fechado**)
 
 Este arquivo guarda a **fronteira mesa × combate** e itens ainda parqueados até o pacote correspondente fechar. Ao concluir um pacote do índice, remover o item daqui (ou o pacote some do índice).
 

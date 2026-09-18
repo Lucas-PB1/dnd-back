@@ -1,8 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
 
-export type { CombatSpellResolution } from '@game/combat/domain/resolve-combat-spell';
-export { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
-
 export function mergeConditions(input: {
   current: readonly string[];
   action: 'add' | 'remove';

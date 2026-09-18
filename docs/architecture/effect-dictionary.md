@@ -169,7 +169,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** texto jogável para Passivas / notas de combate.
 - **Satélite:** `phb_effect_note`
 - **Trigger:** `passive`
-- **Serviço:** merge em `featCombatNotes` (catálogo ∪ mapa legado deprecated)
+- **Serviço:** `featCombatNotes` → `combatNotesFromEffects` (só catálogo; sem mapa TS legado)
 
 ### `initiative_pb` (lote origem)
 

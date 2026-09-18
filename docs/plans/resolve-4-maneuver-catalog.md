@@ -12,7 +12,7 @@
 - `session/domain/maneuver-resolve.ts` (Gunslinger `resolveManeuverEffect` / `rollRiskDie`)
 - `combat/domain/fighter/table-actions.ts` (`resolveBattleMasterTableRoll`) usado por `apply-catalog-maneuver-table-action`
 - Preferir kinds/satélites tipados; handler só orquestra
-- Gunslinger `descriptive` fino pode residual → [`pve-10a`](pve-10a-deferred-residuals.md)
+- Gunslinger `descriptive` fino pode residual → [`combat-real-deferred.md`](combat-real-deferred.md) (PVE-10a defer)
 
 ## DoD
 

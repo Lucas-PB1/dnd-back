@@ -9,7 +9,7 @@ Mapa: [`docs/okf/module-map.md`](../okf/module-map.md) · Log: [`docs/okf/log.md
 
 Matar código/docs/SQL **mortos** (zero imports de produção), realocar o que estiver no lugar errado, sem misturar feature nova no mesmo PR.
 
-**Relação com PVE-10b:** [`pve-10b-legado-dod.md`](pve-10b-legado-dod.md) cobre só o escopo pós-PVE (`combat/`, adapters duel, docs stale de combate). **Este backlog** é a fila **repo-wide** (Game + Catalog + entities + docs).
+**Relação com PVE-10b:** fechado no índice ([`pve-skirmish-index.md`](pve-skirmish-index.md) — LEG-5/adapters duel). **Este backlog** é a fila **repo-wide** (Game + Catalog + entities + docs).
 
 ## Skills / rules (obrigatório)
 
@@ -40,9 +40,9 @@ Rules: `game-folder-conventions.mdc` · `nestjs-project.mdc` · `file-size.mdc` 
 | LEG-2 | Combat domain morto | [`legado-2-combat-domain.md`](legado-2-combat-domain.md) | `combat/domain/<classe>/` duplicatas / generated |
 | LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | `src/entities/` sem uso; catalog thin |
 | LEG-4 | Session / apply escape hatches docs | [`legado-4-session-docs.md`](legado-4-session-docs.md) | barrels mortos session; planos `.md` concluídos ainda vivos |
-| LEG-5 | Pós-PVE adapters | (fecha com [`pve-10b`](pve-10b-legado-dod.md)) | duel-spell hardcode, adapters após motor |
+| LEG-5 | ~~Pós-PVE adapters~~ **feito (= PVE-10b)** | — | duel/combat mortos removidos |
 
-Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 depois PVE-0+.
+Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 **feito**.
 
 ## Checklist rápido (repo)
 
@@ -51,9 +51,9 @@ Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 depois PVE
 - [ ] `src/game/companion/` — revalidar (OKF 2026-09-11: vivo; re-checar órfãos)
 - [ ] Pastas sob `src/game/` **sem** `*.module.ts` (exceto domain-only documentado)
 - [ ] `src/game/combat/domain/<classe>/` — resolvers/generated mortos (**overlap** [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md))
-- [ ] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (pós PVE-0 / [`resolve-3`](resolve-3-duel-spell.md))
+- [x] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (PVE-10b: `pending-arena-bridge` apagado)
 - [ ] `src/game/session/application/actions/**` — handlers/resolvers mortos pós-economy
-- [ ] `src/game/skirmish/` — endpoints especiais duplicando economy (alinhar PVE-10a)
+- [x] `src/game/skirmish/` — endpoints especiais SW/AS → `table-actions` (PVE-10a)
 - [ ] Barrels `index.ts` que só reexportam mortos
 
 ### Catalog / entities
@@ -78,6 +78,6 @@ Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 depois PVE
 ## DoD desta trilha
 
 - [ ] LEG-1…4 fechados (`.md` apagados)
-- [ ] LEG-5 / PVE-10b alinhados
+- [x] LEG-5 / PVE-10b alinhados
 - [ ] `module-map.md` sem pasta “suspeita” sem nota viva/morta
-- [ ] Feature futura em [`backlog.md`](backlog.md) pode apontar só residual VTT/XP + PVE aberto
+- [x] Feature futura em [`backlog.md`](backlog.md): PVE completo; residual + XP/VTT

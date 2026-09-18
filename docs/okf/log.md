@@ -1,5 +1,19 @@
 # log
 
+## 2026-09-18 — PVE-10b /legado combat+duel + DoD 100%
+
+* **Update** (12:30 UTC): pasta `duel`/`combat` — removidos `pending-arena-bridge.ts`, re-exports mortos em `duel-spell-resolve`, helpers órfãos `find/listSubclassTableAction`; `effect-dictionary` sem “mapa legado deprecated”; dual-read grants confirmado morto em `src/`. Índice PVE fechado.
+
+| path | status | ação | evidência |
+|------|--------|------|-----------|
+| `duel/domain/pending-arena-bridge.ts` | morto | DELETE | nenhum importer |
+| `duel/domain/duel-spell-resolve.ts` re-exports | morto | removidos | importers só usam `mergeConditions` / `assertValid…` |
+| `combat/domain/catalog/subclass-table-action.ts` helpers | morto | removidos | type ainda vivo via catalog load |
+| `effect-dictionary.md` combat_note | errado | texto catálogo-only | `featCombatNotes` → `combatNotesFromEffects` |
+| dual-read grants | morto | confirmado | `rg` src sem `phb_resource_grant` / `phb_combat_modifier` |
+
+— refs: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md), [`backlog.md`](../plans/backlog.md), [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md) — motivo: DoD 100% PVE + limpeza `/legado` do escopo pós-motor.
+
 ## 2026-09-18 — PVE-10a residuals skirmish
 
 * **Update** (12:20 UTC): SW/AS via `POST …/table-actions` (economy); `pc_savage_attacker_used` 1×/turno; Parry em `resolveIncomingHit`; PAM reativo/craft = nunca; Ward/Spark/Gunslinger/PAM cabo/Bloodied = defer. — refs: [`skirmishes.controller.ts`](../../src/game/skirmish/skirmishes.controller.ts), [`resolve-incoming-hit.ts`](../../src/game/combat/domain/resolve-incoming-hit.ts), [`skirmish-residuals-pve-10a.md`](../architecture/skirmish-residuals-pve-10a.md), [`combat-real-deferred.md`](../plans/combat-real-deferred.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: residuals tipáveis sem mapa fechados; irredutíveis justificados.

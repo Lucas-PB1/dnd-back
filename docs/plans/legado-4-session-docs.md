@@ -15,7 +15,7 @@ Política: `docs/README.md` — plano concluído = apagar
 
 ## Fora
 
-- Escape hatch `actionSlug` tipar (→ [`pve-9b`](pve-9b-slug-branch-cleanup.md))
+- Escape hatch `actionSlug` tipar (→ PVE-9b **feito**; ver índice)
 - Feature polish mesa
 
 ## DoD

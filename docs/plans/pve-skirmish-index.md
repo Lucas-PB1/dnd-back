@@ -1,9 +1,9 @@
 # PVE skirmish + DB greenfield — índice
 
-**Status:** aberto (só planos; execução por pacote)  
+**Status:** **fechado** (PVE-0…10 + DB-0) · residual tipável / VTT em [`combat-real-deferred.md`](combat-real-deferred.md)  
 **Não é** backlog mesa. Mesa ficha permanece fechada.
 
-SSOT mesa: [`backlog.md`](backlog.md) · Combate legado listado: [`combat-real-deferred.md`](combat-real-deferred.md)  
+SSOT mesa: [`backlog.md`](backlog.md) · Combate residual: [`combat-real-deferred.md`](combat-real-deferred.md)  
 Duelo PvP: [`pvp-1v1-duel.md`](pvp-1v1-duel.md)
 
 ## Produto
@@ -129,6 +129,8 @@ flowchart LR
 
 **PVE-10a fechado (2026-09-18):** SW/AS via `table-actions`; Savage 1×/turno; Parry no hit; nunca/defer documentados. Doc [`skirmish-residuals-pve-10a.md`](../architecture/skirmish-residuals-pve-10a.md).
 
+**PVE-10b fechado (2026-09-18):** `/legado` escopo combat/duel — mortos removidos; dual-read confirmado morto; DoD 100% PVE. Log OKF.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -159,8 +161,8 @@ flowchart LR
 |---|--------|-----|------|-----|
 | PVE-9a | ~~Sacred Weapon → `toggle_combat_flag`~~ **feito** | — | M | PVE-0 |
 | PVE-9b | ~~Zerar slug branches apply/flat-override~~ **feito** | — | L | PVE-9a |
-| PVE-10a | ~~Residuals deferred (Ward, Gunslinger, Savage…)~~ **feito** | — | L | PVE-8+9b |
-| PVE-10b | `/legado` combate + DoD 100% PVE | [`pve-10b-legado-dod.md`](pve-10b-legado-dod.md) | M | PVE-10a |
+| PVE-10a | ~~Residuals deferred~~ **feito** | — | L | PVE-8+9b |
+| PVE-10b | ~~`/legado` + DoD 100% PVE~~ **feito** | — | M | PVE-10a |
 
 ### Limpeza de código legado (repo-wide)
 
@@ -172,7 +174,7 @@ flowchart LR
 | LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | M | LEG-2 |
 | LEG-4 | Session + docs planos | [`legado-4-session-docs.md`](legado-4-session-docs.md) | S–M | LEG-3 |
 
-LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate adapters fecha com PVE-10b.
+LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate adapters **fechado com PVE-10b**.
 
 ### Padrão `resolve` (canônico vs legado)
 
@@ -213,8 +215,9 @@ Mapa/VTT · ranked · XP encontro · polish mesa · preservar histórico de migr
 
 ## Critério “PVE 100%”
 
-- Magia ofensiva PHB tipada (utilitária = `slot_only` ok)
-- Escape hatch mesa fechado (PVE-9)
-- Residuals deferred fechados ou “nunca” justificado (PVE-10a)
-- `combat-real-deferred.md` só VTT/XP (ou vazio)
-- `database/migrations/` sem SQL de schema (pós DB-0c)
+- [x] Magia ofensiva PHB tipada (utilitária = `slot_only` ok) — PVE-2b
+- [x] Escape hatch mesa fechado (PVE-9)
+- [x] Residuals deferred fechados ou “nunca” justificado (PVE-10a)
+- [x] `combat-real-deferred.md` — além do skirmish: defer/nunca documentados; VTT/XP fora de escopo
+- [x] `database/migrations/` sem SQL de schema (pós DB-0c)
+- [x] `/legado` escopo combat/duel limpo (PVE-10b)
