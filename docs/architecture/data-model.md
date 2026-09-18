@@ -79,6 +79,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 ### 5. Equipment
 
 - `phb_item` + `phb_weapon` / `phb_armor` / `phb_tool`
+- `phb_weapon.mastery_id` + `secondary_mastery_id` (NL Ulfberht dual mastery; combate tipado ainda aplica só a principal)
 - `phb_weapon_property_link`, `phb_armor_category`, `phb_tool_category`
 
 ### 6. Backgrounds

@@ -11,6 +11,8 @@ export {
   weaponPropsOf,
   loadWeaponPropertyRows,
   loadWeaponMasteryBySlug,
+  resolveWeaponMasterySlug,
+  resolveWeaponSecondaryMasterySlug,
   type WeaponPropsJson,
 } from '../equipment/weapon-props';
 export { choiceKindForOptionKey } from '../species/domain/species-option-keys';

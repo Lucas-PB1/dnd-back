@@ -5,6 +5,8 @@ import type { PhbItem } from '@entities/equipment/phb-item.entity';
 import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import {
   loadWeaponMasteryBySlug,
+  resolveWeaponMasterySlug,
+  resolveWeaponSecondaryMasterySlug,
   weaponPropsOf,
 } from '@catalog/game-port';
 import type { EquippedWeaponPiece } from '../../domain/weapon-attacks';
@@ -32,9 +34,13 @@ function toPiece(
   },
 ): EquippedWeaponPiece {
   const props = weaponPropsOf(weapon);
-  const masterySlug = props.masteryId ?? null;
+  const masterySlug = resolveWeaponMasterySlug(weapon);
   const mastery = masterySlug
     ? (masteryBySlug.get(masterySlug) ?? null)
+    : null;
+  const secondaryMasterySlug = resolveWeaponSecondaryMasterySlug(weapon);
+  const secondaryMastery = secondaryMasterySlug
+    ? (masteryBySlug.get(secondaryMasterySlug) ?? null)
     : null;
   return {
     itemSlug: weapon.item.slug,
@@ -47,6 +53,8 @@ function toPiece(
     equipmentSlot: extras.equipmentSlot,
     masterySlug,
     masteryName: mastery?.name ?? null,
+    secondaryMasterySlug,
+    secondaryMasteryName: secondaryMastery?.name ?? null,
     reloadCapacity: typeof props.reload === 'number' ? props.reload : null,
     attachedCharmSlug: extras.attachedCharmSlug,
     attachedCharmName: extras.attachedCharmName,
@@ -66,7 +74,7 @@ export async function piecesFromInventory(
 ): Promise<EquippedWeaponPiece[]> {
   const rows = await weapons.find({
     where: { item: { slug: In(equipped.map((row) => row.itemSlug)) } },
-    relations: ['item'],
+    relations: ['item', 'mastery', 'secondaryMastery'],
   });
   const bySlug = new Map(rows.map((row) => [row.item.slug, row]));
   const masteryBySlug = await loadWeaponMasteryBySlug(rows, masteryRepo);
@@ -123,7 +131,7 @@ export async function piecesFromCatalogSlugs(
 ): Promise<EquippedWeaponPiece[]> {
   const rows = await weapons.find({
     where: { item: { slug: In(slugs) } },
-    relations: ['item'],
+    relations: ['item', 'mastery', 'secondaryMastery'],
   });
   if (rows.length === 0) return [];
   const masteryBySlug = await loadWeaponMasteryBySlug(rows, masteryRepo);

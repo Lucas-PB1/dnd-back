@@ -15,6 +15,8 @@ import { EquipmentMapper } from '../equipment.mapper';
 import {
   loadWeaponMasteryBySlug,
   loadWeaponPropertyRows,
+  resolveWeaponMasterySlug,
+  resolveWeaponSecondaryMasterySlug,
   weaponPropsOf,
 } from '../weapon-props';
 
@@ -44,6 +46,8 @@ export class FindWeaponsQuery {
     const qb = this.weaponsRepo
       .createQueryBuilder('weapon')
       .innerJoinAndSelect('weapon.item', 'item')
+      .leftJoinAndSelect('weapon.mastery', 'mastery')
+      .leftJoinAndSelect('weapon.secondaryMastery', 'secondaryMastery')
       .orderBy('item.name', 'ASC')
       .addOrderBy('item.slug', 'ASC');
 
@@ -84,10 +88,15 @@ export class FindWeaponsQuery {
       const raw = weaponPropsOf(row);
       const needed = new Set(raw.propertyIds ?? []);
       const props = properties.filter((p) => needed.has(p.slug));
-      const mastery = raw.masteryId
-        ? (masteryBySlug.get(raw.masteryId) ?? null)
+      const masterySlug = resolveWeaponMasterySlug(row);
+      const secondarySlug = resolveWeaponSecondaryMasterySlug(row);
+      const mastery = masterySlug
+        ? (masteryBySlug.get(masterySlug) ?? null)
         : null;
-      return this.mapper.toWeaponDto(row, props, mastery);
+      const secondaryMastery = secondarySlug
+        ? (masteryBySlug.get(secondarySlug) ?? null)
+        : null;
+      return this.mapper.toWeaponDto(row, props, mastery, secondaryMastery);
     });
   }
 }

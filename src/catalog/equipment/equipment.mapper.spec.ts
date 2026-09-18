@@ -41,6 +41,7 @@ describe('EquipmentMapper', () => {
         versatileDamage: '1d10',
         range: null,
         mastery: null,
+        secondaryMastery: null,
         propertyDetails: [{ slug: 'versatile', name: 'Versátil' }],
         imageUrl: '/catalog/equipment/longsword.png',
       });
@@ -57,13 +58,27 @@ describe('EquipmentMapper', () => {
           },
         },
       } as unknown as PhbWeapon;
-      const dto = mapper.toWeaponDto(ranged, [], asDep({
-        slug: 'vex',
-        name: 'Vex',
-        description: 'd',
-      }));
+      const dto = mapper.toWeaponDto(
+        ranged,
+        [],
+        asDep({
+          slug: 'vex',
+          name: 'Vex',
+          description: 'd',
+        }),
+        asDep({
+          slug: 'sap',
+          name: 'Drenar',
+          description: 's',
+        }),
+      );
       expect(dto.range).toEqual({ normal: 80, max: 320 });
       expect(dto.mastery).toEqual({ slug: 'vex', name: 'Vex', description: 'd' });
+      expect(dto.secondaryMastery).toEqual({
+        slug: 'sap',
+        name: 'Drenar',
+        description: 's',
+      });
     });
 
     it('keeps partial range with null sides', () => {

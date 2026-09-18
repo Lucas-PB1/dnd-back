@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Adiado #1 Ulfberht secondary mastery
+
+* **Update** (16:00 UTC): `phb_weapon.secondary_mastery_id` tipado; Ulfberht `graze`+`sap`; API `secondaryMastery` no catálogo; peça equipada expõe `secondaryMasterySlug`. Combate tipado continua na maestria principal.
+
+— refs: [`0047_phb_weapon.sql`](../../database/schema/020_tables/0047_phb_weapon.sql), [`weapon-response.dto.ts`](../../src/catalog/equipment/dto/weapon-response.dto.ts), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #1 (sair do jsonb-only).
+
 ## 2026-09-18 — Combate residual seq (1→4)
 
 * **Update** (15:45 UTC): fila residual tipável fechada em 4 pacotes.

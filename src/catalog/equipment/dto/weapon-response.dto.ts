@@ -53,6 +53,13 @@ export class WeaponResponseDto {
   @ApiPropertyOptional({ type: WeaponTraitDto })
   mastery!: WeaponTraitDto | null;
 
+  @ApiPropertyOptional({
+    type: WeaponTraitDto,
+    description:
+      'Maestria secundária (ex. Ulfberht NL). Combate tipado ainda usa a principal; secundária é read-model / mesa.',
+  })
+  secondaryMastery!: WeaponTraitDto | null;
+
   @ApiPropertyOptional({ example: '/catalog/equipment/catchpole.png' })
   imageUrl!: string | null;
 

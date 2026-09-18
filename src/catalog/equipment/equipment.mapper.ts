@@ -13,6 +13,7 @@ export class EquipmentMapper {
     row: PhbWeapon,
     propertyRows: PhbWeaponProperty[] = [],
     mastery: PhbWeaponMastery | null = null,
+    secondaryMastery: PhbWeaponMastery | null = null,
   ): WeaponResponseDto {
     const raw = weaponPropsOf(row);
     const bySlug = new Map(propertyRows.map((p) => [p.slug, p]));
@@ -34,6 +35,9 @@ export class EquipmentMapper {
           }
         : null;
 
+    const primary = mastery;
+    const secondary = secondaryMastery;
+
     return {
       slug: row.item.slug,
       name: row.item.name,
@@ -45,11 +49,18 @@ export class EquipmentMapper {
       weight: row.item.weight,
       range,
       propertyDetails,
-      mastery: mastery
+      mastery: primary
         ? {
-            slug: mastery.slug,
-            name: mastery.name,
-            description: mastery.description,
+            slug: primary.slug,
+            name: primary.name,
+            description: primary.description,
+          }
+        : null,
+      secondaryMastery: secondary
+        ? {
+            slug: secondary.slug,
+            name: secondary.name,
+            description: secondary.description,
           }
         : null,
       imageUrl: row.item.imageUrl ?? null,

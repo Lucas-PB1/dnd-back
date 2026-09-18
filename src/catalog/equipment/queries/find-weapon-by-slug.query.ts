@@ -10,7 +10,8 @@ import { EquipmentMapper } from '../equipment.mapper';
 import {
   loadWeaponMasteryBySlug,
   loadWeaponPropertyRows,
-  weaponPropsOf,
+  resolveWeaponMasterySlug,
+  resolveWeaponSecondaryMasterySlug,
 } from '../weapon-props';
 
 @Injectable()
@@ -29,7 +30,7 @@ export class FindWeaponBySlugQuery {
     const row = requireFound(
       await this.weaponsRepo.findOne({
         where: { item: { slug } },
-        relations: ['item'],
+        relations: ['item', 'mastery', 'secondaryMastery'],
       }),
       `Weapon '${slug}' not found`,
     );
@@ -38,9 +39,15 @@ export class FindWeaponBySlugQuery {
       loadWeaponPropertyRows([row], this.propertyRepo),
       loadWeaponMasteryBySlug([row], this.masteryRepo),
     ]);
-    const masteryId = weaponPropsOf(row).masteryId;
-    const mastery = masteryId ? (masteryBySlug.get(masteryId) ?? null) : null;
+    const masterySlug = resolveWeaponMasterySlug(row);
+    const secondarySlug = resolveWeaponSecondaryMasterySlug(row);
+    const mastery = masterySlug
+      ? (masteryBySlug.get(masterySlug) ?? null)
+      : null;
+    const secondaryMastery = secondarySlug
+      ? (masteryBySlug.get(secondarySlug) ?? null)
+      : null;
 
-    return this.mapper.toWeaponDto(row, properties, mastery);
+    return this.mapper.toWeaponDto(row, properties, mastery, secondaryMastery);
   }
 }

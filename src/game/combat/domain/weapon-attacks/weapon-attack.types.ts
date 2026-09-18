@@ -14,6 +14,8 @@ export type EquippedWeaponPiece = {
   equipmentSlot: "main_hand" | "off_hand" | string;
   masterySlug?: string | null;
   masteryName?: string | null;
+  secondaryMasterySlug?: string | null;
+  secondaryMasteryName?: string | null;
   reloadCapacity?: number | null;
   attachedCharmSlug?: string | null;
   attachedCharmName?: string | null;

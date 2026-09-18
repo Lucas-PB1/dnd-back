@@ -73,7 +73,7 @@ VALUES
     'Lâmina Ulfberht',
     '{"text":"350 PO"}'::jsonb,
     '1,5 kg',
-    'Espada lendária de aço excepcional. Mastery principal: Resvalar (a fonte também cita Drenar — use Resvalar no sistema; Drenar na mesa se o MJ permitir dual).',
+    'Espada lendária de aço excepcional. Maestria principal Resvalar; secundária Drenar (NL — escolha na mesa / dual mastery).',
     '{"propertyIds":["versatile"],"masteryId":"graze","versatileDamage":"1d10","secondaryMasteryId":"sap","source":"northlands-heroes"}'::jsonb
   )
 ON CONFLICT (slug) DO UPDATE SET
@@ -85,20 +85,21 @@ ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type;
 
 -- —— Weapon rows ——
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id)
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id, secondary_mastery_id)
 VALUES
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'seax'), 'simple'::rpg.weapon_category, '1d4', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'graze')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'snaerispear'), 'simple'::rpg.weapon_category, '1d6', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'slow')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'atgeir'), 'martial'::rpg.weapon_category, '1d10', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'pull')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'bearded-axe'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'cleave')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'breidox'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'topple')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'bryntroll'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'slow')),
-  ((SELECT id FROM rpg.phb_item WHERE slug = 'ulfberht-blade'), 'martial'::rpg.weapon_category, '1d8', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'graze'))
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'seax'), 'simple'::rpg.weapon_category, '1d4', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'graze'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'snaerispear'), 'simple'::rpg.weapon_category, '1d6', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'slow'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'atgeir'), 'martial'::rpg.weapon_category, '1d10', 'Perfurante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'pull'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'bearded-axe'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'cleave'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'breidox'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'topple'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'bryntroll'), 'martial'::rpg.weapon_category, '1d10', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'slow'), NULL),
+  ((SELECT id FROM rpg.phb_item WHERE slug = 'ulfberht-blade'), 'martial'::rpg.weapon_category, '1d8', 'Cortante', (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'graze'), (SELECT id FROM rpg.phb_weapon_mastery WHERE slug = 'sap'))
 ON CONFLICT (item_id) DO UPDATE SET
   category = EXCLUDED.category,
   damage = EXCLUDED.damage,
   damage_type = EXCLUDED.damage_type,
-  mastery_id = EXCLUDED.mastery_id;
+  mastery_id = EXCLUDED.mastery_id,
+  secondary_mastery_id = EXCLUDED.secondary_mastery_id;
 
 -- —— Property links ——
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id)

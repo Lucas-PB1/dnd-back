@@ -37,7 +37,6 @@ Só retomar com pedido explícito. **Não** é combate real.
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 1 | [ ] NL: Ulfberht dual mastery só em jsonb | Limitação de modelo; quase só documentar |
 | 2 | [ ] DTO `actionSlug` enums vs catálogo | Validação mecânica |
 | 3 | [ ] Paladino: Destruição Protetora (lembrete Cobertura na aura) | Lembrete de UI, sem motor novo |
 | 4 | [ ] NL: escolhas secundárias de espécie (`choice_kind` se a ficha precisar) | Fino e só se a ficha pedir |

@@ -33,4 +33,11 @@ export class PhbWeapon {
   @ManyToOne(() => PhbWeaponMastery, { nullable: true })
   @JoinColumn({ name: 'mastery_id' })
   mastery!: PhbWeaponMastery | null;
+
+  @Column({ name: 'secondary_mastery_id', type: 'bigint', nullable: true })
+  secondaryMasteryId!: string | null;
+
+  @ManyToOne(() => PhbWeaponMastery, { nullable: true })
+  @JoinColumn({ name: 'secondary_mastery_id' })
+  secondaryMastery!: PhbWeaponMastery | null;
 }

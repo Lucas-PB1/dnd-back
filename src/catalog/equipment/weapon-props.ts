@@ -6,6 +6,7 @@ import { PhbWeaponProperty } from '@entities/equipment/phb-weapon-property.entit
 export type WeaponPropsJson = {
   propertyIds?: string[];
   masteryId?: string;
+  secondaryMasteryId?: string;
   versatileDamage?: string;
   range?: { normal?: number; max?: number };
 
@@ -15,6 +16,21 @@ export type WeaponPropsJson = {
 
 export function weaponPropsOf(row: PhbWeapon): WeaponPropsJson {
   return (row.item.properties ?? {}) as WeaponPropsJson;
+}
+
+/** Prefer coluna tipada; fallback jsonb legado. */
+export function resolveWeaponMasterySlug(row: PhbWeapon): string | null {
+  return row.mastery?.slug ?? weaponPropsOf(row).masteryId ?? null;
+}
+
+export function resolveWeaponSecondaryMasterySlug(
+  row: PhbWeapon,
+): string | null {
+  return (
+    row.secondaryMastery?.slug ??
+    weaponPropsOf(row).secondaryMasteryId ??
+    null
+  );
 }
 
 export async function loadWeaponPropertyRows(
@@ -35,8 +51,10 @@ export async function loadWeaponMasteryBySlug(
 ): Promise<Map<string, PhbWeaponMastery>> {
   const slugs = new Set<string>();
   for (const row of rows) {
-    const id = weaponPropsOf(row).masteryId;
-    if (id) slugs.add(id);
+    const primary = resolveWeaponMasterySlug(row);
+    const secondary = resolveWeaponSecondaryMasterySlug(row);
+    if (primary) slugs.add(primary);
+    if (secondary) slugs.add(secondary);
   }
   if (slugs.size === 0) return new Map();
   const masteries = await masteryRepo.find({ where: { slug: In([...slugs]) } });

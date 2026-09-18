@@ -3,5 +3,6 @@ CREATE TABLE rpg.phb_weapon (
   category rpg.weapon_category,
   damage TEXT,
   damage_type TEXT,
-  mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id)
+  mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id),
+  secondary_mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id)
 );
