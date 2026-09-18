@@ -65,11 +65,10 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |------|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **SSOT mesa** — aberto + polish adiado |
-| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB** — pacotes abertos (fora da mesa) |
+| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Índice PVE + DB** — **fechado**; residual em deferred |
 | [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
-| [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado (RES-1…5) |
+| [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado (RES-1…5 **fechados**) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — LEGAC-1…4 **fechados** (não PHB `infernal_legacy`) |
-| [`plans/quality-gate-backlog.md`](plans/quality-gate-backlog.md) | **Quality gate** — auditar planos + smoke final (QA-1…2) |
 | [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | Residual combate / fronteira mesa×combate |
 | [`plans/pvp-1v1-duel.md`](plans/pvp-1v1-duel.md) | Duelo 1v1 — F0–F4 jogável; expansões via índice PVE |
 
@@ -86,9 +85,8 @@ Contrato REST: Swagger em `/api`.
 |------|----------|
 | [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB-0** — pacotes executáveis (fácil → difícil) |
 | [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
-| [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado/hardcode (RES-1…5) |
+| [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado/hardcode (RES-1…5 **fechados**) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — LEGAC-1…4 **fechados** |
-| [`plans/quality-gate-backlog.md`](plans/quality-gate-backlog.md) | **Quality gate** — planos + pós-execução (QA-1…2) |
 | [`plans/combat-real-deferred.md`](plans/combat-real-deferred.md) | Residual / fronteira mesa×combate (espelha o índice) |
 | [`plans/pvp-1v1-duel.md`](plans/pvp-1v1-duel.md) | Duelo 1v1 PvP — F0–F4; tipados avançados via índice PVE |
 

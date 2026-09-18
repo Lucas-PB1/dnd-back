@@ -205,9 +205,9 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
-| QA | Backlog pai | [`quality-gate-backlog.md`](quality-gate-backlog.md) | — | — |
+| QA | ~~Backlog pai~~ **feito** | — | — | — |
 | QA-1 | ~~Auditoria planos~~ **feito** (45 links ok) | — | S | — |
-| QA-2 | Gate pós-execução das trilhas | [`quality-2-post-execution.md`](quality-2-post-execution.md) | M | PVE-10b+LEG-4+RES-5+LEGAC-4 |
+| QA-2 | ~~Gate pós-execução~~ **feito** (OKF 2026-09-18) | — | M | PVE-10b+LEG-4+RES-5+LEGAC-4 |
 
 ## Fora de escopo
 

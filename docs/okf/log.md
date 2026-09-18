@@ -1,5 +1,21 @@
 # log
 
+## 2026-09-18 — QA-2 gate pós-execução
+
+* **Update** (15:10 UTC): gate final das trilhas DB/PVE/LEG/RES/LEGAC. Planos QA apagados; Feature futura sem fila fantasma.
+
+| Check | Resultado |
+|-------|-----------|
+| Specs escopo (RES/LEGAC) | **4** suites / **21** testes verdes (`table-actions`, `resolve-maneuver`, `filter-combat-mechanical`, `equipment-slot`) |
+| `database/migrations/` | sem `.sql` (só README + `.gitkeep`) |
+| `db:setup` | **bloqueado neste ambiente** — Docker Desktop off (`ECONNREFUSED :54122`); `db:validate:sequences` ainda falha em seeds pré-existentes (schedules/creature DELETE/notes domain) — **não** regressão RES-4 |
+| PVE 100% | checklist do índice **fechado** (PVE-0…10 + DB-0) |
+| LEG / RES / LEGAC | pais **fechados**; spot-check: 0 `*.resolver.ts` em `src/game/`; `maneuver-resolve` removido; `mesaRollKind` vivo; `infernal_legacy` canônico |
+| Planos filho fantasma | 0 em `docs/plans/` (só pais fechados + mesa/deferred) |
+| `combat-real-deferred` | residual tipável **justificado** (PAM cabo, gunslinger descriptive, metamagia restante…) — alinhado ao índice; **não** só VTT/XP |
+
+— refs: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md), [`backlog.md`](../plans/backlog.md), [`combat-real-deferred.md`](../plans/combat-real-deferred.md) — motivo: fechar trilha QA (último gate).
+
 ## 2026-09-18 — RES-4 BM/Gunslinger → kinds de catálogo
 
 * **Update** (15:00 UTC): BM `mesa_roll_kind` no SQL + domain; `resolveBattleMasterTableRoll` / apply mesa sem `if (slug === …)`. Gunslinger `resolveManeuverEffect` movido para `combat/domain/gunslinger` (switch só em `effectKind`). Specs BM + gunslinger verdes. Plano `.md` apagado; trilha RES fechada.
@@ -273,7 +289,7 @@ Zero “class action resolver” de mesa restante (RES-2). Não renomear verbo c
 
 ## 2026-09-17 — QA-1 auditoria planos
 
-* **Update** (18:20 UTC): Índice `pve-skirmish-index.md` — 45 links `.md` ok; 0 missing; 0 órfãos. DB-0 pacotes apagados pós-fechamento. — refs: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md), [`quality-gate-backlog.md`](../plans/quality-gate-backlog.md) — motivo: validar fila gerada antes de seguir PVE.
+* **Update** (18:20 UTC): Índice `pve-skirmish-index.md` — 45 links `.md` ok; 0 missing; 0 órfãos. DB-0 pacotes apagados pós-fechamento. — refs: [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: validar fila gerada antes de seguir PVE.
 
 ## 2026-09-17 — DB-0 greenfield: fold + esvaziar migrations
 
