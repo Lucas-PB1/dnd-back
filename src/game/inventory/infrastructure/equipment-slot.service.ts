@@ -16,7 +16,7 @@ function magicWearSlot(
 }
 
 @Injectable()
-export class EquipmentSlotResolver {
+export class EquipmentSlotService {
   constructor(
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,

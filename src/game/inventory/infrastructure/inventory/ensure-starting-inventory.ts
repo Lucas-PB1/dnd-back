@@ -1,14 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { Repository } from 'typeorm';
-import { EquipmentSlotResolver } from '../equipment-slot-resolver';
+import { EquipmentSlotService } from '../equipment-slot.service';
 import { PlayerCharacterItem } from '../player-character-item.entity';
 import { clearEquippedSlotIfOccupied } from './inventory-item-ops';
 
 export async function ensureFromStartingEquipment(
   items: Repository<PlayerCharacterItem>,
   catalogLookup: CatalogLookupService,
-  slotResolver: EquipmentSlotResolver,
+  slotResolver: EquipmentSlotService,
   characterId: string,
   equipment: Array<{ itemSlug?: string; quantity?: number }>,
 ): Promise<void> {

@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import type { PhbItem } from '@entities/equipment/phb-item.entity';
 import { CharacterInventoryRepository } from './character-inventory.repository';
-import type { EquipmentSlotResolver } from './equipment-slot-resolver';
+import type { EquipmentSlotService } from './equipment-slot.service';
 import type { PlayerCharacterItem } from './player-character-item.entity';
 import { asDep } from '@common/testing/as-dep';
 
@@ -84,7 +84,7 @@ describe('CharacterInventoryRepository', () => {
       asDep({ findOne: jest.fn() }),
       asDep({ find: jest.fn().mockResolvedValue([]) }),
       catalogLookup as unknown as CatalogLookupService,
-      slotResolver as unknown as EquipmentSlotResolver,
+      slotResolver as unknown as EquipmentSlotService,
       asDep({ transaction: jest.fn(), query: jest.fn().mockResolvedValue([]) }),
     );
   });

@@ -12,7 +12,7 @@ Convenção: [`.cursor/rules/game-folder-conventions.mdc`](../../.cursor/rules/g
 | **Verbo canônico** `resolve-*` | Derive/compute puro ou Nest thin (`ResolveEquippedArmorClass`, `resolve-spend-plan`, `resolve-effect-amount`, combat slice…) | **Manter** |
 | **Resolver de mesa (legado)** | Módulo TS por classe / `switch` de `actionSlug` que a economy+effects substituiu | **Apagar** se morto; migrar se vivo |
 | **Resolve hardcode** | `if (slug === …)` disfarçado de resolve (ex. duelo magia) | **Migrar** para catálogo / motor compartilhado |
-| **Sufixo Nest** `*.resolver.ts` | Infra (`EquipmentSlotResolver`, `TemplateImageResolver`) | Opcional: alinhar nome; **não** misturar com limpeza de domínio |
+| **Sufixo Nest** `*.resolver.ts` | Infra lookup | **RES-5 feito:** renomear para `*.service.ts` (não GraphQL; não confundir com verbo `resolve-*`) |
 
 ~50 arquivos com `resolve` no nome sob `src/game/` — a maioria é **saudável**. Este backlog ataca só o legado / hardcode / duplicata.
 
@@ -30,7 +30,7 @@ Command `/legado` quando for pasta morta.
 | RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~Hardcode `duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | `maneuver-resolve` / BM `resolveBattleMasterTableRoll` → kinds tipados | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | PVE-5b / catalog |
-| RES-5 | Naming Nest `*.resolver.ts` + barrels órfãos | [`resolve-5-nest-suffix.md`](resolve-5-nest-suffix.md) | S | RES-2 |
+| RES-5 | ~~Naming Nest `*.resolver.ts`~~ **feito** | — | S | RES-2 |
 
 ## Checklist residual conhecido
 
@@ -50,6 +50,7 @@ Command `/legado` quando for pasta morta.
 ## DoD da trilha
 
 - [x] RES-1 inventário versionado (OKF 2026-09-18)
-- [ ] RES-4…5 fechados (`.md` apagados) ou absorvidos em PVE/LEG com link
+- [ ] RES-4 fechado (`.md` apagado) — último aberto da trilha
+- [x] RES-5 feito (`*.resolver.ts` → `*.service.ts`)
 - [x] Docs OKF/backlog distinguem “resolvers de mesa” vs “verbo resolve”
 - [ ] Nenhum hardcode slug novo sob nome `resolve*`

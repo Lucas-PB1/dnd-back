@@ -16,7 +16,7 @@ import { PlayerCharacterItem } from './infrastructure/player-character-item.enti
 import { DmgArtifactRandomProperty } from './infrastructure/dmg-artifact-random-property.entity';
 import { DmgSentientTraitTable } from './infrastructure/dmg-sentient-trait-table.entity';
 import { CharacterInventoryRepository } from './infrastructure/character-inventory.repository';
-import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
+import { EquipmentSlotService } from './infrastructure/equipment-slot.service';
 import { CharacterInventoryController } from './character-inventory.controller';
 import { AssertCanBindPactWeaponService } from './application/assert/assert-can-bind-pact-weapon.service';
 import { AssertCanEquipItemService } from './application/assert/assert-can-equip-item.service';
@@ -56,7 +56,7 @@ import { PlayerCharacter } from '../shared/infrastructure/player-character.entit
   controllers: [CharacterInventoryController],
   providers: [
     CharacterInventoryRepository,
-    EquipmentSlotResolver,
+    EquipmentSlotService,
     AssertCanBindPactWeaponService,
     AssertCanEquipItemService,
     AttachWeaponCharmHandler,

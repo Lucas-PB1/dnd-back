@@ -60,7 +60,7 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 |--------|----------|
 | **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro |
 | **LEG** | ~~Limpeza código morto~~ **feito** (LEG-1…5) — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) |
-| **RES** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (RES-1 feito; aberto: RES-4…5; **não** apagar verbo canônico) |
+| **RES** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (aberto: **RES-4**; **não** apagar verbo canônico) |
 | **LEGAC** | ~~Padrão `legac`/`legacy`~~ **feito** (1…4) — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) |
 | **QA-1…2** | Quality gate — [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**: auditar planos + smoke pós-trilhas) |
 | **XP / VTT** | Fora do PVE skirmish — ver Notas abaixo + deferred |

@@ -32,7 +32,7 @@ import { SyncCharacterCompanionHandler } from './application/sync-character-comp
 import { DismissCharacterCompanionHandler } from './application/dismiss-character-companion.handler';
 import { ListCharacterCompanionsQuery } from './application/list-character-companions.query';
 import { SyncWildShapeActorHandler } from './application/sync-wild-shape-actor.handler';
-import { TemplateImageResolver } from './application/template-image.resolver';
+import { TemplateImageService } from './application/template-image.service';
 import { CreateActorHandler } from './application/create-actor.handler';
 import { DeleteActorHandler } from './application/delete-actor.handler';
 import { GetActorQuery } from './application/get-actor.query';
@@ -120,7 +120,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     DismissCharacterCompanionHandler,
     SyncSpellSpiritHandler,
     SyncWildShapeActorHandler,
-    TemplateImageResolver,
+    TemplateImageService,
   ],
   exports: [
     ActorRepository,

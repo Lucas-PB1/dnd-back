@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GameActor } from '../infrastructure/game-actor.entity';
 import { ActorSheetLoader } from '../infrastructure/actor-sheet.loader';
-import { TemplateImageResolver } from '../application/template-image.resolver';
+import { TemplateImageService } from '../application/template-image.service';
 import {
   ActorResponseDto,
   ActorSummaryResponseDto,
@@ -11,7 +11,7 @@ import {
 export class ActorMapper {
   constructor(
     private readonly sheetLoader: ActorSheetLoader,
-    private readonly templateImages: TemplateImageResolver,
+    private readonly templateImages: TemplateImageService,
   ) {}
 
   toSummary(actor: GameActor): ActorSummaryResponseDto {

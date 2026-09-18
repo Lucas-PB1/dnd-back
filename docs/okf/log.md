@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-18 — RES-5 Nest `*.resolver.ts` → service
+
+* **Update** (14:50 UTC): decisão — **renomear** (não manter sufixo Nest `Resolver`, confunde com verbo `resolve-*` e GraphQL). `TemplateImageResolver` → `TemplateImageService`; `EquipmentSlotResolver` → `EquipmentSlotService`. Specs verdes.
+
+| path | status | ação |
+|------|--------|------|
+| `actor/.../template-image.resolver.ts` | nome | → `template-image.service.ts` |
+| `inventory/.../equipment-slot-resolver.ts` | nome | → `equipment-slot.service.ts` (+ spec) |
+| `*.resolver.ts` sob `src/game/` | — | **0** restantes |
+
+— refs: [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md), [`actor.module.ts`](../../src/game/actor/actor.module.ts), [`character-inventory.module.ts`](../../src/game/inventory/character-inventory.module.ts) — motivo: fechar RES-5 (cosmético DI-safe).
+
 ## 2026-09-18 — RES-1 inventário resolve*
 
 * **Update** (14:25 UTC): inventário `src/game/**/resolve*` (+ `*.resolver.ts` / `maneuver-resolve` / DTOs `Resolve*`). Maioria **canônico**; migrar só BM table-roll + Gunslinger maneuver → RES-4; Nest suffix → RES-5.

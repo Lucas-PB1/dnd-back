@@ -5,7 +5,7 @@ import { PhbCreatureTemplate } from '@entities/template/phb-creature-template.en
 import { PhbVehicleTemplate } from '@entities/template/phb-vehicle-template.entity';
 
 @Injectable()
-export class TemplateImageResolver {
+export class TemplateImageService {
   constructor(
     @InjectRepository(PhbCreatureTemplate)
     private readonly creatureTemplates: Repository<PhbCreatureTemplate>,

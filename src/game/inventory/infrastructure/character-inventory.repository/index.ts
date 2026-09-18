@@ -12,7 +12,7 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from '../../dto/inventory.dto';
-import { EquipmentSlotResolver } from '../equipment-slot-resolver';
+import { EquipmentSlotService } from '../equipment-slot.service';
 import {
   inventoryItemsToDtos,
   type AttunementCharacterContext,
@@ -50,7 +50,7 @@ export class CharacterInventoryRepository {
     @InjectRepository(DmgArtifactRandomProperty)
     private readonly artifactRandomProperties: Repository<DmgArtifactRandomProperty>,
     private readonly catalogLookup: CatalogLookupService,
-    private readonly slotResolver: EquipmentSlotResolver,
+    private readonly slotResolver: EquipmentSlotService,
     private readonly dataSource: DataSource,
   ) {}
 

@@ -6,7 +6,7 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from '@game/inventory/dto/inventory.dto';
-import { EquipmentSlotResolver } from '../equipment-slot-resolver';
+import { EquipmentSlotService } from '../equipment-slot.service';
 import { PlayerCharacterItem } from '../player-character-item.entity';
 import type { DmgArtifactRandomProperty } from '../dmg-artifact-random-property.entity';
 import {
@@ -29,7 +29,7 @@ export async function patchInventoryItem(input: {
   items: Repository<PlayerCharacterItem>;
   catalogItems: Repository<PhbItem>;
   catalogLookup: CatalogLookupService;
-  slotResolver: EquipmentSlotResolver;
+  slotResolver: EquipmentSlotService;
   artifactRandomProperties: Repository<DmgArtifactRandomProperty>;
   dataSource: DataSource;
   characterId: string;
