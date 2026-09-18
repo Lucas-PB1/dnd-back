@@ -36,20 +36,20 @@ Rules: `game-folder-conventions.mdc` · `nestjs-project.mdc` · `file-size.mdc` 
 
 | # | Pacote | Doc | Escopo |
 |---|--------|-----|--------|
-| LEG-1 | Pastas Game suspeitas | [`legado-1-game-folders.md`](legado-1-game-folders.md) | `companion/`, pastas sem `*.module.ts`, órfãos |
+| LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | companion/spirit = domain library |
 | LEG-2 | Combat domain morto | [`legado-2-combat-domain.md`](legado-2-combat-domain.md) | `combat/domain/<classe>/` duplicatas / generated |
 | LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | `src/entities/` sem uso; catalog thin |
 | LEG-4 | Session / apply escape hatches docs | [`legado-4-session-docs.md`](legado-4-session-docs.md) | barrels mortos session; planos `.md` concluídos ainda vivos |
 | LEG-5 | ~~Pós-PVE adapters~~ **feito (= PVE-10b)** | — | duel/combat mortos removidos |
 
-Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 **feito**.
+Ordem sugerida do command: LEG-2 → LEG-3 → LEG-4; LEG-1 e LEG-5 **feitos**.
 
 ## Checklist rápido (repo)
 
 ### Game
 
-- [ ] `src/game/companion/` — revalidar (OKF 2026-09-11: vivo; re-checar órfãos)
-- [ ] Pastas sob `src/game/` **sem** `*.module.ts` (exceto domain-only documentado)
+- [x] `src/game/companion/` — vivo (domain library; LEG-1)
+- [x] Pastas sob `src/game/` **sem** `*.module.ts` — só `companion/` + `spirit/` (documentadas LEG-1)
 - [ ] `src/game/combat/domain/<classe>/` — resolvers/generated mortos (**overlap** [`resolve-2-mesa-resolvers.md`](resolve-2-mesa-resolvers.md))
 - [x] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (PVE-10b: `pending-arena-bridge` apagado)
 - [ ] `src/game/session/application/actions/**` — handlers/resolvers mortos pós-economy
@@ -77,7 +77,8 @@ Ordem sugerida do command: LEG-1 → LEG-2 → LEG-3 → LEG-4; LEG-5 **feito**.
 
 ## DoD desta trilha
 
-- [ ] LEG-1…4 fechados (`.md` apagados)
+- [ ] LEG-2…4 fechados (`.md` apagados)
+- [x] LEG-1 feito (companion/spirit documentados; zero deletes)
 - [x] LEG-5 / PVE-10b alinhados
-- [ ] `module-map.md` sem pasta “suspeita” sem nota viva/morta
+- [x] `module-map.md` sem pasta “suspeita” sem nota viva/morta
 - [x] Feature futura em [`backlog.md`](backlog.md): PVE completo; residual + XP/VTT

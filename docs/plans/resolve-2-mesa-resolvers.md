@@ -1,7 +1,7 @@
 # RES-2 — Resolvers de mesa mortos
 
 **Status:** aberto · **Pai:** [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) · **Dep:** RES-1 · **Tam:** M  
-**Overlap:** executar junto ou dentro de [`legado-2-combat-domain.md`](legado-2-combat-domain.md) / [`legado-1-game-folders.md`](legado-1-game-folders.md)
+**Overlap:** executar junto ou dentro de [`legado-2-combat-domain.md`](legado-2-combat-domain.md) (LEG-1 fechado)
 
 ## Skills / rules
 

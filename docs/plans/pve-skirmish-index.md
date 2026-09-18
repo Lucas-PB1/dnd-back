@@ -169,7 +169,7 @@ flowchart LR
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
 | LEG | Backlog pai | [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) | — | — |
-| LEG-1 | Pastas Game suspeitas | [`legado-1-game-folders.md`](legado-1-game-folders.md) | M | — |
+| LEG-1 | ~~Pastas Game suspeitas~~ **feito** | — | M | — |
 | LEG-2 | Combat domain morto | [`legado-2-combat-domain.md`](legado-2-combat-domain.md) | M | LEG-1 |
 | LEG-3 | Entities / Catalog | [`legado-3-entities-catalog.md`](legado-3-entities-catalog.md) | M | LEG-2 |
 | LEG-4 | Session + docs planos | [`legado-4-session-docs.md`](legado-4-session-docs.md) | S–M | LEG-3 |

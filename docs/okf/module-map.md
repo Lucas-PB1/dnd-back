@@ -1,9 +1,9 @@
 ---
 type: Architecture
 title: Mapa de módulos (Game + Catalog)
-description: Pasta → responsabilidade → ordem de tamanho; suspeitas de legado.
+description: Pasta → responsabilidade → domínio Nest vs library.
 tags: [ddd, nestjs, modules]
-timestamp: 2026-09-11
+timestamp: 2026-09-18
 ---
 
 ## Bounded contexts
@@ -26,14 +26,16 @@ Porta Catalog→Game: `@catalog/game-port` + `CatalogLookupService`.
 | `inventory/` | 84 | sim | |
 | `dice/` | 40 | sim | |
 | `campaign/` | 38 | sim | |
-| `actor/` | 38 | sim | |
+| `actor/` | 38 | sim | sync companion/spirit providers |
+| `skirmish/` | — | sim | PVE sem mapa |
 | `duel/` | 29 | sim | combat fatiado |
 | `spellcasting/` | 24 | sim | |
 | `effects/` | 17 | sim | |
 | `progression/` | 9 | sim | |
 | `shared/` | 8 | sim | ownership PC |
 | `build/` | 7 | sim | |
-| `companion/` | 2 | **não** | Suspeita legado / helpers órfãos |
+| `companion/` | ~7 | **não** | Domain library viva (LEG-1) — ver `game-module-structure.md` |
+| `spirit/` | ~6 | **não** | Domain library viva (LEG-1); handlers Nest em `actor.module` |
 
 ## Catalog — features
 
@@ -49,7 +51,7 @@ Ao abrir um submódulo Game, espere:
 3. `dto/` se houver HTTP
 4. Specs `*.spec.ts` ao lado
 
-Se faltar `*.module.ts` e não for `shared` domain-only documentado → investigar (`/legado`).
+Se faltar `*.module.ts` e **não** for domain library documentada (`companion/`, `spirit/`) → investigar (`/legado`).
 
 ## Relacionados
 

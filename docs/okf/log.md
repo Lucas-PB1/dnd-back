@@ -1,5 +1,18 @@
 # log
 
+## 2026-09-18 — LEG-1 pastas Game sem module
+
+* **Update** (12:45 UTC): `/legado` em `companion/` + `spirit/` — **zero mortos**; ambas domain libraries vivas. `module-map` e `game-module-structure` atualizados (companion não é “suspeita”; spirit documentado; skirmish listado).
+
+| path | status | ação | evidência |
+|------|--------|------|-----------|
+| `src/game/companion/**` | vivo | documentar | session companion-table-actions + actor sync |
+| `src/game/spirit/**` | vivo | documentar | actor.module SyncSpellSpirit + cast/rest/skirmish |
+| demais pastas `src/game/` | vivo | — | todas têm `*.module.ts` |
+| deletes TS | — | nenhum | sem órfãos seguros |
+
+— refs: [`module-map.md`](module-map.md), [`game-module-structure.md`](../architecture/game-module-structure.md), [`legado-cleanup-backlog.md`](../plans/legado-cleanup-backlog.md) — motivo: fechar LEG-1 sem apagar código vivo.
+
 ## 2026-09-18 — PVE-10b /legado combat+duel + DoD 100%
 
 * **Update** (12:30 UTC): pasta `duel`/`combat` — removidos `pending-arena-bridge.ts`, re-exports mortos em `duel-spell-resolve`, helpers órfãos `find/listSubclassTableAction`; `effect-dictionary` sem “mapa legado deprecated”; dual-read grants confirmado morto em `src/`. Índice PVE fechado.
