@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Adiado #2 DTO actionSlug vs catálogo
+
+* **Update** (16:20 UTC): gate de drift `table-action-slug-catalog-drift.spec` — DTO `@IsIn` ⊆ economy∪panel∪effect∪subclass_table_action; economy wireável (sem GH Cap.2 bulk) ⊆ DTO ∪ allowlist explícita.
+
+— refs: [`table-action-slug-catalog-drift.spec.ts`](../../src/game/session/dto/table-actions/table-action-slug-catalog-drift.spec.ts), [`parse-table-action-slug-catalog.ts`](../../src/game/session/dto/table-actions/parse-table-action-slug-catalog.ts), [`backlog.md`](../plans/backlog.md) — motivo: validação mecânica sem codegen de enums.
+
 ## 2026-09-18 — Adiado #1 Ulfberht secondary mastery
 
 * **Update** (16:00 UTC): `phb_weapon.secondary_mastery_id` tipado; Ulfberht `graze`+`sap`; API `secondaryMastery` no catálogo; peça equipada expõe `secondaryMasterySlug`. Combate tipado continua na maestria principal.
