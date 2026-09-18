@@ -1,14 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import type { GunslingerManeuver } from '@game/combat/domain/gunslinger';
 import {
   findGunslingerManeuver,
   listGunslingerManeuvers,
+  resolveManeuverEffect,
+  rollRiskDie,
+  type GunslingerManeuver,
 } from '@game/combat/domain/gunslinger';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { applyResourceSpend } from '@game/session/domain/class-resources';
-import { resolveManeuverEffect, rollRiskDie } from '@game/session/domain/maneuver-resolve';
+
 import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';

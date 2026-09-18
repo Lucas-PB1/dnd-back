@@ -5,7 +5,7 @@ import {
   applyResourceRecover,
   applyResourceSpend,
 } from '@game/session/domain/class-resources';
-import { rollRiskDie } from '@game/session/domain/maneuver-resolve';
+import { rollRiskDie } from '@game/combat/domain/gunslinger';
 import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';

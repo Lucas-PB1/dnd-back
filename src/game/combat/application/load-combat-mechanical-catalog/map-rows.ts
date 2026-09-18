@@ -78,6 +78,7 @@ export function mapCombatMechanicalCatalog(
       name: row.name,
       description: row.description,
       timing: row.timing as BattleMasterManeuver['timing'],
+      mesaRollKind: row.mesaRollKind as BattleMasterManeuver['mesaRollKind'],
       addsToDamage: Boolean(row.addsToDamage),
       addsToAttack: Boolean(row.addsToAttack),
     })),

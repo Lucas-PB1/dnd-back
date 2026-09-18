@@ -1,10 +1,16 @@
 
+export type BattleMasterMesaRollKind =
+  | 'parry_reduce_damage'
+  | 'rally_temp_hp'
+  | 'precision_add_attack'
+  | 'superiority_die';
 
 export type BattleMasterManeuver = {
   slug: string;
   name: string;
   description: string;
   timing: 'on_hit' | 'on_miss' | 'reaction' | 'bonus_action' | 'other';
+  mesaRollKind: BattleMasterMesaRollKind;
   addsToDamage: boolean;
   addsToAttack: boolean;
 };

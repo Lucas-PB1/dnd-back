@@ -17,6 +17,9 @@ export class PhbBattleMasterManeuver {
   @Column({ type: 'text' })
   timing!: string;
 
+  @Column({ name: 'mesa_roll_kind', type: 'text' })
+  mesaRollKind!: string;
+
   @Column({ name: 'adds_to_damage', type: 'boolean' })
   addsToDamage!: boolean;
 

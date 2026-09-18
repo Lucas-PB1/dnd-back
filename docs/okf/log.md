@@ -1,5 +1,18 @@
 # log
 
+## 2026-09-18 — RES-4 BM/Gunslinger → kinds de catálogo
+
+* **Update** (15:00 UTC): BM `mesa_roll_kind` no SQL + domain; `resolveBattleMasterTableRoll` / apply mesa sem `if (slug === …)`. Gunslinger `resolveManeuverEffect` movido para `combat/domain/gunslinger` (switch só em `effectKind`). Specs BM + gunslinger verdes. Plano `.md` apagado; trilha RES fechada.
+
+| path | status | ação |
+|------|--------|------|
+| `phb_battle_master_maneuver.mesa_roll_kind` | novo | enum `parry_reduce_damage` / `rally_temp_hp` / `precision_add_attack` / `superiority_die` |
+| `fighter/table-actions.ts` | tipado | resolve por `mesaRollKind` |
+| `session/domain/maneuver-resolve.ts` | movido | → `gunslinger/resolve-maneuver.ts` |
+| `descriptive` gunslinger | residual | permanece em [`combat-real-deferred.md`](../plans/combat-real-deferred.md) |
+
+— refs: [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md), [`0045_battle_master_mesa_roll_kind.sql`](../../database/schema/010_enums/0045_battle_master_mesa_roll_kind.sql), [`resolve-maneuver.ts`](../../src/game/combat/domain/gunslinger/resolve-maneuver.ts) — motivo: fechar RES-4 (último aberto da trilha).
+
 ## 2026-09-18 — RES-5 Nest `*.resolver.ts` → service
 
 * **Update** (14:50 UTC): decisão — **renomear** (não manter sufixo Nest `Resolver`, confunde com verbo `resolve-*` e GraphQL). `TemplateImageResolver` → `TemplateImageService`; `EquipmentSlotResolver` → `EquipmentSlotService`. Specs verdes.
@@ -28,7 +41,7 @@
 
 Zero “class action resolver” de mesa restante (RES-2). Não renomear verbo canônico em massa.
 
-— refs: [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md), [`resolve-4-maneuver-catalog.md`](../plans/resolve-4-maneuver-catalog.md), [`resolve-5-nest-suffix.md`](../plans/resolve-5-nest-suffix.md) — motivo: fechar RES-1 (só inventário).
+— refs: [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md) — motivo: fechar RES-1 (só inventário).
 
 ## 2026-09-18 — LEGAC-4 TODOs SQL slugs
 

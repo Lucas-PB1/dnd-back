@@ -75,6 +75,17 @@ export class BattleMasterManeuverDto {
   @ApiProperty()
   timing!: string;
 
+  @ApiProperty({
+    example: 'superiority_die',
+    enum: [
+      'parry_reduce_damage',
+      'rally_temp_hp',
+      'precision_add_attack',
+      'superiority_die',
+    ],
+  })
+  mesaRollKind!: string;
+
   @ApiProperty()
   addsToDamage!: boolean;
 

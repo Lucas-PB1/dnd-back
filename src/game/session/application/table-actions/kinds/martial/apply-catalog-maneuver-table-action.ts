@@ -90,7 +90,7 @@ export async function applyCatalogManeuverTableAction(input: {
     });
 
     let note = result.note;
-    if (result.maneuver.slug === 'rally' && result.effectValue > 0) {
+    if (result.kind === 'rally_temp_hp' && result.effectValue > 0) {
       state = await applyTemporaryHitPoints(
         input.state,
         character,

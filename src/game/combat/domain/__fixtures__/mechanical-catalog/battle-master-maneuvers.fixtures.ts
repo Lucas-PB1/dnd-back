@@ -7,6 +7,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Reação ao receber dano corpo a corpo: reduza o dano pelo Dado + FOR ou DES.',
     timing: 'reaction',
+    mesaRollKind: 'parry_reduce_damage',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -16,6 +17,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; alvo faz salvaguarda de Sabedoria ou fica Amedrontado.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -25,6 +27,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto corpo a corpo: outra criatura a 1,5 m sofre dano igual ao dado.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -34,6 +37,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ação Bônus: gaste o dado e Corra; se mover 1,5 m em linha reta antes do ataque, +dado no dano.',
     timing: 'bonus_action',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -43,6 +47,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; próximo ataque de outro atacante tem Vantagem.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -51,6 +56,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     name: 'Ataque Preciso',
     description: 'No erro: adicione o dado à jogada de ataque.',
     timing: 'on_miss',
+    mesaRollKind: 'precision_add_attack',
     addsToDamage: false,
     addsToAttack: true,
   },
@@ -60,6 +66,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; alvo Grande ou menor faz salvaguarda de Força ou fica Caído.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -69,6 +76,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; alvo Grande ou menor faz salvaguarda de Força ou é empurrado 4,5 m.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -78,6 +86,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Reação ao ser errado por ataque corpo a corpo: ataque com +dado no dano se acertar.',
     timing: 'reaction',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -87,6 +96,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ação Bônus: aliado ganha PV temporários iguais ao dado + modificador de Carisma.',
     timing: 'bonus_action',
+    mesaRollKind: 'rally_temp_hp',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -96,6 +106,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ao atacar, abra mão de um ataque: aliado usa Reação para atacar com +dado no dano.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -105,6 +116,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; aliado pode se mover metade do Deslocamento sem provocar AO.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -114,6 +126,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; alvo faz salvaguarda de Sabedoria ou tem Desvantagem contra outros.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -123,6 +136,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ação Bônus: Vantagem no próximo ataque neste turno; +dado no dano se acertar.',
     timing: 'bonus_action',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },
@@ -131,6 +145,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     name: 'Pés Escorregadios',
     description: 'Ao se mover: +dado na CA até o fim do movimento.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -139,6 +154,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     name: 'Emboscada',
     description: 'Ao fazer teste de Iniciativa ou Furtividade: +dado no teste.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -148,6 +164,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ao estar a 1,5 m de aliado voluntário: ambos se movem; você ou o aliado ganha +dado na CA.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -157,6 +174,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'Ao falhar em Intimidação/Performance/Persuasão: +dado no teste.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -165,6 +183,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     name: 'Avaliação Tática',
     description: 'Ao falhar em História/Investigação/Insight: +dado no teste.',
     timing: 'other',
+    mesaRollKind: 'superiority_die',
     addsToDamage: false,
     addsToAttack: false,
   },
@@ -174,6 +193,7 @@ export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = 
     description:
       'No acerto: +dado de dano; alvo faz salvaguarda de Força ou solta um objeto.',
     timing: 'on_hit',
+    mesaRollKind: 'superiority_die',
     addsToDamage: true,
     addsToAttack: false,
   },

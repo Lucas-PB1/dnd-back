@@ -4,6 +4,7 @@ CREATE TABLE rpg.phb_battle_master_maneuver (
   name              TEXT NOT NULL,
   description       TEXT NOT NULL,
   timing            rpg.battle_master_maneuver_timing NOT NULL,
+  mesa_roll_kind    rpg.battle_master_mesa_roll_kind NOT NULL DEFAULT 'superiority_die',
   adds_to_damage    BOOLEAN NOT NULL DEFAULT false,
   adds_to_attack    BOOLEAN NOT NULL DEFAULT false
 );

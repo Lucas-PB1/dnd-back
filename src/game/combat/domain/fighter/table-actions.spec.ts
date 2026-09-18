@@ -27,6 +27,7 @@ describe('fighter tabletop actions', () => {
 
       expect(result.expression).toBe('1d8');
       expect(result.effectValue).toBe(6);
+      expect(result.kind).toBe('superiority_die');
       expect(result.saveDc).toBe(15);
       expect(result.resourceSpent).toBe(true);
       expect(result.note).toContain('CD 15');
@@ -58,8 +59,10 @@ describe('fighter tabletop actions', () => {
 
       expect(parry.expression).toBe('1d10+5');
       expect(parry.effectValue).toBe(12);
+      expect(parry.kind).toBe('parry_reduce_damage');
       expect(rally.expression).toBe('1d10+1');
       expect(rally.effectValue).toBe(8);
+      expect(rally.kind).toBe('rally_temp_hp');
       expect(rally.note).toContain('PV temporários');
     });
 
@@ -79,6 +82,7 @@ describe('fighter tabletop actions', () => {
 
       expect(result.dieFaces).toBe(8);
       expect(result.resourceSpent).toBe(false);
+      expect(result.kind).toBe('precision_add_attack');
       expect(result.note).toContain('Some 8 à jogada de ataque');
     });
 

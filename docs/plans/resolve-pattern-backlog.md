@@ -1,6 +1,6 @@
 # Resolve — backlog de limpeza do padrão
 
-**Status:** aberto · **Não é** mesa ficha · **Não renomear** o verbo canônico `resolve-*` de derive/compute
+**Status:** fechado · **Não é** mesa ficha · **Não renomear** o verbo canônico `resolve-*` de derive/compute
 
 Índice PVE: [`pve-skirmish-index.md`](pve-skirmish-index.md) · Legado morto: [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md)  
 Convenção: [`.cursor/rules/game-folder-conventions.mdc`](../../.cursor/rules/game-folder-conventions.mdc) (`apply-…`, `resolve-…`, `load-…`)
@@ -29,14 +29,14 @@ Command `/legado` quando for pasta morta.
 | RES-1 | ~~Inventário + docs~~ **feito** | — | S | — |
 | RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~Hardcode `duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
-| RES-4 | `maneuver-resolve` / BM `resolveBattleMasterTableRoll` → kinds tipados | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | PVE-5b / catalog |
+| RES-4 | ~~`maneuver-resolve` / BM table-roll → kinds tipados~~ **feito** | — | L | PVE-5b / catalog |
 | RES-5 | ~~Naming Nest `*.resolver.ts`~~ **feito** | — | S | RES-2 |
 
 ## Checklist residual conhecido
 
 - [x] Zero imports de “class action resolver” em `session/application/actions/**` (RES-2 / LEG-2)
-- [ ] `combat/domain/fighter/table-actions.ts` (`resolveBattleMasterTableRoll`) — vivo via `apply-catalog-maneuver`; migrar ou documentar como structured
-- [ ] `session/domain/maneuver-resolve.ts` (Gunslinger) — vivo; candidatar catalog/kinds
+- [x] `combat/domain/fighter/table-actions.ts` — `mesaRollKind` no catálogo; resolve por kind (RES-4)
+- [x] Gunslinger resolve em `combat/domain/gunslinger/resolve-maneuver.ts` por `effectKind` (RES-4); `descriptive` residual → [`combat-real-deferred.md`](combat-real-deferred.md)
 - [x] `duel/domain/duel-spell-resolve.ts` — hardcode slug removido; reexport + conditions (PVE-0)
 - [x] Reexports finos tipo `campaign/domain/resolve-attack-vs-armor-class.ts` — ok (apontam combat); não apagar sem motivo (RES-1)
 - [x] DTOs HTTP `Resolve*AttackDto` — contrato; **não** são legado de mesa (RES-1)
@@ -50,7 +50,7 @@ Command `/legado` quando for pasta morta.
 ## DoD da trilha
 
 - [x] RES-1 inventário versionado (OKF 2026-09-18)
-- [ ] RES-4 fechado (`.md` apagado) — último aberto da trilha
+- [x] RES-4 fechado (`.md` apagado)
 - [x] RES-5 feito (`*.resolver.ts` → `*.service.ts`)
 - [x] Docs OKF/backlog distinguem “resolvers de mesa” vs “verbo resolve”
-- [ ] Nenhum hardcode slug novo sob nome `resolve*`
+- [x] Nenhum hardcode slug novo sob nome `resolve*` (BM/Gunslinger por kind de catálogo)
