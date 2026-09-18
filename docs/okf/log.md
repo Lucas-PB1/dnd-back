@@ -1,5 +1,23 @@
 # log
 
+## 2026-09-18 — RES-1 inventário resolve*
+
+* **Update** (14:25 UTC): inventário `src/game/**/resolve*` (+ `*.resolver.ts` / `maneuver-resolve` / DTOs `Resolve*`). Maioria **canônico**; migrar só BM table-roll + Gunslinger maneuver → RES-4; Nest suffix → RES-5.
+
+| kind | count (prod, sem spec) | exemplos / ação |
+|------|------------------------|-----------------|
+| canônico `resolve-*` | ~35 | combat spell/hit/AC/slice; effects amount; spend-plan; sheet/heritage/initiative; spellcasting slice; inventory purchase/gold |
+| Nest thin `Resolve*` class | 5 | `ResolveEquippedArmorClass`, `ResolveEquippedWeaponAttacks`, `ResolveEquipmentCompliance`, `ResolveActivePermanentItemEffects`, `ResolveSubclassOptionGrantedSpells` — **manter** |
+| reexport fino | 1 | `campaign/.../resolve-attack-vs-armor-class` → combat — **manter** |
+| residual nome (`duel-spell-resolve`) | 1 | só `mergeConditions` / assert — **manter** (hardcode slug já PVE-0) |
+| legado/migrar | 2 | `fighter/table-actions.ts` (`resolveBattleMasterTableRoll`); `session/domain/maneuver-resolve.ts` → **RES-4** |
+| Nest `*.resolver.ts` | 2 | `template-image.resolver.ts`, `equipment-slot-resolver.ts` → **RES-5** (naming opcional) |
+| DTO HTTP `Resolve*AttackDto` | 2 | skirmish + encounter — **contrato**; não apagar |
+
+Zero “class action resolver” de mesa restante (RES-2). Não renomear verbo canônico em massa.
+
+— refs: [`resolve-pattern-backlog.md`](../plans/resolve-pattern-backlog.md), [`resolve-4-maneuver-catalog.md`](../plans/resolve-4-maneuver-catalog.md), [`resolve-5-nest-suffix.md`](../plans/resolve-5-nest-suffix.md) — motivo: fechar RES-1 (só inventário).
+
 ## 2026-09-18 — LEGAC-4 TODOs SQL slugs
 
 * **Update** (14:15 UTC): TODO “Remover slugs legados (homing-strikes / psychic-teleportation)” removido — seed já canônico (`guided-strike` / `psychic-teleport`); prosa economy Bardo 2014 suavizada. `action_id` `rogue-psychic-teleportation` mantido (PK estável; `table_action` = `psychic-teleport`).

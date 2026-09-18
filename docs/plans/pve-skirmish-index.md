@@ -181,7 +181,7 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
 | RES | Backlog pai | [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) | — | — |
-| RES-1 | Inventário canônico vs legado | [`resolve-1-inventory-docs.md`](resolve-1-inventory-docs.md) | S | — |
+| RES-1 | ~~Inventário canônico vs legado~~ **feito** | — | S | — |
 | RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~`duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | Maneuver/BM → catálogo | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | RES-2 · PVE-5b |

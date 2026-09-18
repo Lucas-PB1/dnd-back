@@ -53,6 +53,7 @@ Ordem sugerida do command: trilha LEG **fechada**; residual docs/stubs → [`leg
 - [x] `src/game/combat/domain/<classe>/` — helpers/consts mortos removidos (LEG-2; BM vivo → RES-4)
 - [x] `src/game/duel/` — adapters mortos após `resolveCombatSpell` (PVE-10b: `pending-arena-bridge` apagado)
 - [x] `src/game/session/application/actions/**` — zero resolvers de mesa órfãos (RES-2)
+- [x] Verbo canônico `resolve-*` **não** é alvo de delete em massa (RES-1 inventário; migrar só BM/Gunslinger → RES-4)
 - [x] `src/game/skirmish/` — endpoints especiais SW/AS → `table-actions` (PVE-10a)
 - [x] Barrels `index.ts` que só reexportam mortos
 

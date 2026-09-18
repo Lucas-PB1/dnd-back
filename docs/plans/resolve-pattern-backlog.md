@@ -26,7 +26,7 @@ Command `/legado` quando for pasta morta.
 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
-| RES-1 | Inventário + docs (canônico vs legado) | [`resolve-1-inventory-docs.md`](resolve-1-inventory-docs.md) | S | — |
+| RES-1 | ~~Inventário + docs~~ **feito** | — | S | — |
 | RES-2 | ~~Resolvers de mesa mortos~~ **feito (= LEG-2)** | — | M | RES-1 · LEG-2 |
 | RES-3 | ~~Hardcode `duel-spell-resolve` → motor~~ **feito (= PVE-0)** | — | M | = PVE-0 |
 | RES-4 | `maneuver-resolve` / BM `resolveBattleMasterTableRoll` → kinds tipados | [`resolve-4-maneuver-catalog.md`](resolve-4-maneuver-catalog.md) | L | PVE-5b / catalog |
@@ -38,8 +38,8 @@ Command `/legado` quando for pasta morta.
 - [ ] `combat/domain/fighter/table-actions.ts` (`resolveBattleMasterTableRoll`) — vivo via `apply-catalog-maneuver`; migrar ou documentar como structured
 - [ ] `session/domain/maneuver-resolve.ts` (Gunslinger) — vivo; candidatar catalog/kinds
 - [x] `duel/domain/duel-spell-resolve.ts` — hardcode slug removido; reexport + conditions (PVE-0)
-- [ ] Reexports finos tipo `campaign/domain/resolve-attack-vs-armor-class.ts` — ok (apontam combat); não apagar sem motivo
-- [ ] DTOs HTTP `Resolve*AttackDto` — contrato; **não** são legado de mesa
+- [x] Reexports finos tipo `campaign/domain/resolve-attack-vs-armor-class.ts` — ok (apontam combat); não apagar sem motivo (RES-1)
+- [x] DTOs HTTP `Resolve*AttackDto` — contrato; **não** são legado de mesa (RES-1)
 
 ## Anti-padrões deste backlog
 
@@ -49,6 +49,7 @@ Command `/legado` quando for pasta morta.
 
 ## DoD da trilha
 
-- [ ] RES-1…5 fechados (`.md` apagados) ou absorvidos em PVE/LEG com link
-- [ ] Docs OKF/backlog distinguem “resolvers de mesa” vs “verbo resolve”
+- [x] RES-1 inventário versionado (OKF 2026-09-18)
+- [ ] RES-4…5 fechados (`.md` apagados) ou absorvidos em PVE/LEG com link
+- [x] Docs OKF/backlog distinguem “resolvers de mesa” vs “verbo resolve”
 - [ ] Nenhum hardcode slug novo sob nome `resolve*`
