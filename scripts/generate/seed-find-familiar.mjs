@@ -181,7 +181,7 @@ out.push('');
 
 const slugList = forms.map((f) => `'${f.key}'`).join(', ');
 
-out.push(`-- Remove legado familiar-* (nome misturava vínculo com identidade).`);
+out.push(`-- Remove slugs antigos familiar-* (nome misturava vínculo com identidade).`);
 out.push(
   `DELETE FROM rpg.phb_spell_spirit_variant WHERE template_slug LIKE 'familiar-%';`,
 );

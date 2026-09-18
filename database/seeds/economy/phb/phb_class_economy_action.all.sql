@@ -1,7 +1,7 @@
 -- Seed: Class economy actions (UI Actions tab)
 -- Catálogo SSOT com C010 (painel). Recursos mago: C014.
 
--- Legado Bardo (nome 2014): removido em favor de Manto de Inspiração (PHB 2024).
+-- Ação 2014 do Bardo removida em favor de Manto de Inspiração (PHB 2024).
 
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, subclass_id, name, economy, unlock_level,

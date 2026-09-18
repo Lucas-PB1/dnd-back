@@ -61,7 +61,7 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 | **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro |
 | **LEG** | ~~Limpeza código morto~~ **feito** (LEG-1…5) — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) |
 | **RES-1…5** | Padrão `resolve` — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não apagar verbo canônico; só legado/hardcode) |
-| **LEGAC-1…4** | Padrão `legac`/`legacy` — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) (docs/stubs/scripts; **não** `infernal_legacy`) |
+| **LEGAC** | ~~Padrão `legac`/`legacy`~~ **feito** (1…4) — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) |
 | **QA-1…2** | Quality gate — [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**: auditar planos + smoke pós-trilhas) |
 | **XP / VTT** | Fora do PVE skirmish — ver Notas abaixo + deferred |
 
@@ -83,7 +83,7 @@ Lista residual / parqueado: [`combat-real-deferred.md`](combat-real-deferred.md)
 4. Gap exige **alvo/dano/save de combate** → pacote em [`pve-skirmish-index.md`](pve-skirmish-index.md) (ou residual em [`combat-real-deferred.md`](combat-real-deferred.md)), não aqui.
 5. Código morto / pasta órfã → [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`), não inventar limpeza ad-hoc no Ativo mesa.
 6. “Resolver” / `resolve-*` legado vs canônico → [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não renomear derive saudável).
-7. Texto/stub `legacy`/`legado` (não PHB) → [`legac-pattern-backlog.md`](legac-pattern-backlog.md).
+7. Texto/stub `legacy`/`legado` (não PHB) → trilha [`legac-pattern-backlog.md`](legac-pattern-backlog.md) **fechada**.
 8. Fechou trilhas (ou quer validar só os `.md`) → [`quality-gate-backlog.md`](quality-gate-backlog.md) (**último**).
 9. Plano filho **concluído** → **apagar** o `.md` e tirar do índice ([`docs/README.md`](../README.md)).
 10. Contrato: Swagger `/api`.

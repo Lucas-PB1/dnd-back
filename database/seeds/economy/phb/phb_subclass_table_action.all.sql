@@ -1,5 +1,5 @@
 -- Seed: Subclass table actions (Psi Warrior + Soulknife)
--- Soulknife: slugs alinhados ao handler/DTO (`guided-strike`, `psychic-teleport`).
+-- Soulknife: slugs canônicos = handler/DTO (`guided-strike`, `psychic-teleport`).
 
 -- Psi Warrior actions
 INSERT INTO rpg.phb_subclass_table_action (subclass_id, slug, name, unlock_level, free_resource_slug, always_spends_pool, rolls_pool_die, spends_only_on_success, always_pool_cost, repeat_pool_cost)
@@ -27,5 +27,3 @@ ON CONFLICT (subclass_id, slug) DO UPDATE
       spends_only_on_success = EXCLUDED.spends_only_on_success,
       always_pool_cost = EXCLUDED.always_pool_cost,
       repeat_pool_cost = EXCLUDED.repeat_pool_cost;
-
--- Remover slugs legados (homing-strikes / psychic-teleportation) após alinhar ao handler.

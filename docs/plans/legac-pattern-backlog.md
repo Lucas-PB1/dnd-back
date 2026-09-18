@@ -1,6 +1,6 @@
 # Padrão `legac` / `legacy` — backlog
 
-**Status:** aberto · **Não confundir** com [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (código morto `/legado`)
+**Status:** fechado · **Não confundir** com [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (código morto `/legado`)
 
 Este backlog ataca o **padrão de nome/stub** `legacy` / `legado` / `legac` ainda espalhado em docs, seeds no-op e scripts — **não** o domínio PHB.
 
@@ -34,8 +34,8 @@ Docs: `adr-effect-engine.md` (dual-read **fechado**), `sql-layout.md`, `effect-d
 |---|--------|-----|------|-----|
 | LEGAC-1 | ~~Docs stale~~ **feito** | — | S | — |
 | LEGAC-2 | ~~Seeds stub grants~~ **feito** | — | M | LEGAC-1 |
-| LEGAC-3 | Scripts `legacy*` | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
-| LEGAC-4 | TODOs SQL slugs | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
+| LEGAC-3 | ~~Scripts `legacy*`~~ **feito** | — | S | LEGAC-1 |
+| LEGAC-4 | ~~TODOs SQL slugs~~ **feito** | — | S–M | LEGAC-2 |
 
 Overlap: texto “mapa legado” / dual-read — PVE-10b fechado no índice; residual docs stale → este backlog (LEGAC-1).
 
@@ -50,6 +50,6 @@ Overlap: texto “mapa legado” / dual-read — PVE-10b fechado no índice; res
 
 - [x] `rg -i 'legado aposent|mapa legado deprecated|dual-read' docs/` limpo em architecture (exceto ADR histórico “DROP” + OKF) — LEGAC-1
 - [x] Zero seed stub “Grants legado” no order — LEGAC-2
-- [ ] Scripts sem identificador `legacy*` **ou** renomeados com comentário claro (anti-pack / baseline)
-- [ ] TODOs SQL “slugs legados” resolvidos ou movidos
-- [ ] Pacotes LEGAC-*.md apagados
+- [x] Scripts sem identificador `legacy*` **ou** renomeados com comentário claro (anti-pack / baseline) — LEGAC-3 (`rg` scripts/ = 0)
+- [x] TODOs SQL “slugs legados” resolvidos ou movidos — LEGAC-4
+- [x] Pacotes LEGAC-*.md apagados

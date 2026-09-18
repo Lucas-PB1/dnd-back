@@ -196,8 +196,8 @@ LEG-\* pode correr **em paralelo** ao PVE (não bloqueia magias). LEG-5 combate 
 | LEGAC | Backlog pai | [`legac-pattern-backlog.md`](legac-pattern-backlog.md) | — | — |
 | LEGAC-1 | ~~Docs stale~~ **feito** | — | S | — |
 | LEGAC-2 | ~~Seeds stub grants~~ **feito** | — | M | LEGAC-1 |
-| LEGAC-3 | Scripts `legacy*` | [`legac-3-scripts.md`](legac-3-scripts.md) | S | LEGAC-1 |
-| LEGAC-4 | TODOs SQL slugs | [`legac-4-sql-todos.md`](legac-4-sql-todos.md) | S–M | LEGAC-2 |
+| LEGAC-3 | ~~Scripts `legacy*`~~ **feito** | — | S | LEGAC-1 |
+| LEGAC-4 | ~~TODOs SQL slugs~~ **feito** | — | S–M | LEGAC-2 |
 
 **Manter:** `infernal_legacy`, `legacy_2014_name_en`. **Não** confundir com trilha LEG (`/legado` código morto).
 

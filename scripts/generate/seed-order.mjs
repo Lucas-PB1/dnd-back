@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Gera SEED_ORDER.txt na ordem histórica dos packs (git HEAD).
- * Casa legado → path atual por source+stem, depois hash normalizado.
+ * Casa basename antigo (EXACT_MAP / pack+stem) → path relativo atual.
  *
  * Uso: node scripts/generate/seed-order.mjs
  */
@@ -46,7 +46,7 @@ const PACK_SOURCE = {
   effects: null,
 };
 
-/** Basename legado → path relativo atual. */
+/** Basename antigo (pré-domain layout) → path relativo atual. */
 const EXACT_MAP = {
   'E001_phb.sql': 'effect/phb/phb_effect.phb.sql',
   'E002_steinhardt.sql': 'effect/steinhardt/phb_effect.steinhardt.sql',

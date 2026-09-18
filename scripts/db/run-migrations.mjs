@@ -17,7 +17,6 @@ import { listSqlFiles, migrationVersion } from '../lib/sql-files.mjs';
 loadEnv();
 
 const schemaDir = path.join(rootDir, 'database/schema');
-const legacyBaselineDir = path.join(rootDir, 'database/baseline');
 const migrationsDir = path.join(rootDir, 'database/migrations');
 
 const BOOTSTRAP_SQL = `
@@ -83,13 +82,12 @@ function collectMigrationFiles() {
         version: migrationVersion(filePath, databaseDir),
       });
     }
-  } else if (fs.existsSync(legacyBaselineDir)) {
-    for (const filePath of listSqlFiles(legacyBaselineDir)) {
-      entries.push({
-        filePath,
-        version: migrationVersion(filePath, databaseDir),
-      });
-    }
+  } else {
+    console.error(
+      `Schema declarative ausente: ${schemaDir}\n` +
+        'Esperado database/schema/** (baseline monolítico removido).',
+    );
+    process.exit(1);
   }
 
   if (fs.existsSync(migrationsDir)) {

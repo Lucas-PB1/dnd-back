@@ -119,8 +119,8 @@ for (const filePath of seedFiles) {
   }
 }
 
-// legacy packs must be gone
-const legacyPacks = [
+// Flat pack dirs under seeds/ are forbidden (domain layout only).
+const forbiddenFlatPacks = [
   'phb',
   'valdas',
   'combat',
@@ -134,11 +134,13 @@ const legacyPacks = [
   'northlands-heroes',
   'griffons-saddlebag',
 ];
-for (const pack of legacyPacks) {
+for (const pack of forbiddenFlatPacks) {
   const p = path.join(seedsDir, pack);
   if (fs.existsSync(p) && fs.statSync(p).isDirectory()) {
     const still = walkSql(p);
-    if (still.length) fail(`legacy pack still present: seeds/${pack} (${still.length} sql)`);
+    if (still.length) {
+      fail(`forbidden flat pack still present: seeds/${pack} (${still.length} sql)`);
+    }
   }
 }
 

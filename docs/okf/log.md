@@ -1,5 +1,29 @@
 # log
 
+## 2026-09-18 — LEGAC-4 TODOs SQL slugs
+
+* **Update** (14:15 UTC): TODO “Remover slugs legados (homing-strikes / psychic-teleportation)” removido — seed já canônico (`guided-strike` / `psychic-teleport`); prosa economy Bardo 2014 suavizada. `action_id` `rogue-psychic-teleportation` mantido (PK estável; `table_action` = `psychic-teleport`).
+
+| path | status | ação |
+|------|--------|------|
+| `phb_subclass_table_action.all.sql` TODO | stale | DELETE comentário |
+| `phb_class_economy_action.all.sql` “Legado Bardo” | prosa | → “Ação 2014 do Bardo…” |
+| `infernal_legacy` / Legado Ínfero | canônico | sem mudança |
+
+— refs: [`legac-pattern-backlog.md`](../plans/legac-pattern-backlog.md) — motivo: fechar trilha LEGAC.
+
+## 2026-09-18 — LEGAC-3 scripts legacy*
+
+* **Update** (14:05 UTC): removido fallback `database/baseline` de `run-migrations`; `legacyPacks` → `forbiddenFlatPacks`; prosa `legado`/`legacy` zerada em `scripts/`.
+
+| path | status | ação |
+|------|--------|------|
+| `run-migrations.mjs` `legacyBaselineDir` | morto | DROP fallback; erro se schema ausente |
+| `validate-sql-sequences.mjs` `legacyPacks` | nome | → `forbiddenFlatPacks` + msg |
+| `seed-order.mjs` / `seed-find-familiar.mjs` | prosa | basename antigo / slugs antigos |
+
+— refs: [`run-migrations.mjs`](../../scripts/db/run-migrations.mjs), [`validate-sql-sequences.mjs`](../../scripts/db/validate-sql-sequences.mjs), [`legac-pattern-backlog.md`](../plans/legac-pattern-backlog.md) — motivo: fechar LEGAC-3 sem quebrar guard anti-pack flat.
+
 ## 2026-09-18 — LEGAC-2 seeds stub Grants legado
 
 * **Update** (13:55 UTC): removidos 16 seeds no-op (`SELECT 1` / “Grants legado aposentado” / placeholders heritage GH) do disco e do `SEED_ORDER`; defs/grants vivos (DMG/Valdas/GSB) mantidos. `db:validate:sequences` ainda falha por dívidas pré-existentes (ON CONFLICT / DELETE / domain `notes`) — fora deste pacote.
