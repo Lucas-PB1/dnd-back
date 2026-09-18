@@ -13,6 +13,8 @@ export async function applyEncounterAttackDamage(input: {
   actors: Repository<GameActor>;
   target: CampaignEncounterCombatant;
   damage: number;
+  damageTypeSlug?: string | null;
+  dataSource?: import('typeorm').DataSource;
 }): Promise<void> {
   await applyCombatantHpDamage({
     loadCharacter: async (characterId) => {
@@ -26,5 +28,7 @@ export async function applyEncounterAttackDamage(input: {
     actors: input.actors,
     target: input.target,
     damage: input.damage,
+    damageTypeSlug: input.damageTypeSlug,
+    dataSource: input.dataSource,
   });
 }

@@ -15,7 +15,7 @@ SSOT combate amplo: [`combat-real-deferred.md`](combat-real-deferred.md)
 | Retrato | Distância, cobertura, voo |
 | PV temporários no dano | Ranked / fila / realtime |
 | Condições no turno | |
-| Magias tipadas (subset) + cast genérico (nota) | |
+| Magias tipadas (`phb_spell_combat` / `resolveCombatSpell`) + cast genérico (nota) | |
 | Escuridão mágica como efeito de arena | Tratar darkvision como se atravessasse |
 | **Espectador** via link `/duels/:id` (conta logada, só leitura) | Assistir sem login |
 | **Sabujo de Sangue** (Golpe / Armamento / Explosão / refund L15) | Wiring tipado completo na mesa |
@@ -33,14 +33,19 @@ Regra de arena: sempre no alcance útil. Escuridão mágica **não** é resolvid
 | **Espectador** | `GET /duels/:id` para qualquer conta autenticada → `viewerRole: spectator` |
 | **Sabujo** | `POST .../attack` com `bloodStrike` / `damageTypeOverride` / `bloodExplosionOnMiss`; panel no detail |
 
-### Magias tipadas (F4)
+### Magias tipadas (F4 + PVE)
 
-| Slug | Efeito |
-|------|--------|
+Motor compartilhado `resolveCombatSpell` + tabela `phb_spell_combat` (cantrips…Nv9, condições, arena). Ausência de row → gasta slot + nota (`slot_only`).
+
+| Exemplo | Efeito |
+|---------|--------|
 | `escuridao` | Arena `magical_darkness` + concentração |
-| `misseis-magicos` | Acerto automático, dano por dardos |
-| `raio-de-fogo` | Ataque mágico vs CA + 1d10 (escala de truque) |
-| demais | Gasta slot via cast da ficha + nota no log |
+| `misseis-magicos` | `auto_damage` |
+| `raio-de-fogo` / `bola-de-fogo` | `spell_attack` / `save_damage` |
+| demais tipadas | ver [`spell-combat.md`](../architecture/spell-combat.md) |
+| sem row | Slot + nota no log |
+
+Paridade superfícies: [`surface-combat-parity.md`](../architecture/surface-combat-parity.md).
 
 ### Sabujo de Sangue (duelo)
 

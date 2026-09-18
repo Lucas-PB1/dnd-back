@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-18 — PVE-8 paridade superfícies
+
+* **Update** (11:40 UTC): `POST …/encounters/:id/cast` via `resolveCombatSpell`; docs sem “só 2 magias”; duelo aponta para catálogo `phb_spell_combat`. — refs: [`campaign-encounter-cast.service.ts`](../../src/game/campaign/application/campaign-encounter-cast.service.ts), [`surface-combat-parity.md`](../architecture/surface-combat-parity.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: MM/Fireball (e demais tipadas) nas 3 superfícies com o mesmo motor.
+
 ## 2026-09-18 — PVE-7b Arma Espiritual + Conjure 1-actor
 
 * **Update** (11:30 UTC): `arma-espiritual` e `conjurar-animais` spawnam 1 companion no skirmish; removido one-shot de combate; `injectCasterDamageMod` para `NdX+0`. — refs: [`seed.spiritual-conjure.sql`](../../database/seeds/creature/phb/seed.spiritual-conjure.sql), [`inject-caster-damage-mod.ts`](../../src/game/spirit/domain/inject-caster-damage-mod.ts), [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: efeitos flutuantes/auras jogáveis sem mapa nem N tokens.

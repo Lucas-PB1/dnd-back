@@ -181,6 +181,7 @@ Todos os controllers usam `@Controller('characters')`:
 | **dice** | `POST /characters/:id/rolls/{attack,damage,skill,saving-throw,initiative}` |
 | **actor** | `GET/POST/PATCH/DELETE /actors`, `GET /actors/:id`, `POST /actors/spawn-from-template`, `GET/PATCH /actors/:id/state`, `POST /actors/:id/rolls/attack` |
 | **duel** | `GET/POST /duels`, `POST /duels/join`, `GET /duels/:id`, `POST /duels/:id/{ready,attack,cast,conditions,forfeit}` |
+| **campaign** | `…/encounters/:id/attacks`, `…/encounters/:id/cast` (PVE-8) |
 
 ## O que fica onde
 

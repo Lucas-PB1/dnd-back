@@ -25,8 +25,10 @@ import { LoadEncounterDto } from './application/load-encounter-dto';
 import { CampaignsController } from './campaigns.controller';
 import { CampaignEncountersController } from './campaign-encounters.controller';
 import { CampaignEncounterAttackService } from './application/campaign-encounter-attack.service';
+import { CampaignEncounterCastService } from './application/campaign-encounter-cast.service';
 import { GameActorAction } from '../actor/infrastructure/game-actor-action.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
+import { CharacterSheetModule } from '../sheet/character-sheet.module';
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
     CombatModule,
     CharacterDiceModule,
     CharacterSessionModule,
+    CharacterSheetModule,
     ActorModule,
     TypeOrmModule.forFeature([
       Campaign,
@@ -57,6 +60,7 @@ import { PlayerCharacterItem } from '../inventory/infrastructure/player-characte
     CampaignEncounterService,
     CampaignEncounterInitiativeService,
     CampaignEncounterAttackService,
+    CampaignEncounterCastService,
     EnrichEncounterPcs,
     EnrichEncounterActors,
     LoadEncounterDto,

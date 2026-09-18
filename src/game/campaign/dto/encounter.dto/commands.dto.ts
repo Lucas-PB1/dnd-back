@@ -199,3 +199,71 @@ export class ResolveEncounterAttackDto extends CombatAttackFlagsDto {
   @IsUUID()
   targetCombatantId!: string;
 }
+
+export class CastEncounterSpellDto {
+  @ApiProperty({ example: '11111111-1111-1111-1111-111111111111' })
+  @IsUUID()
+  casterCombatantId!: string;
+
+  @ApiProperty({ example: '22222222-2222-2222-2222-222222222222' })
+  @IsUUID()
+  targetCombatantId!: string;
+
+  @ApiProperty({ example: 'bola-de-fogo' })
+  @IsString()
+  @MinLength(1)
+  spellSlug!: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(9)
+  slotLevel?: number;
+
+  @ApiPropertyOptional({
+    example: 'heightened-spell',
+    description:
+      'Metamagia tipada de combate (heightened-spell | seeking-spell); gasta Pontos de Feitiçaria',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'varinhaMisseisCharges',
+    description:
+      'Cast via carga de item ativo; gasta o resource do item',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemCastResourceSlug?: string;
+
+  @ApiPropertyOptional({ example: 2 })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  itemCastSpendAmount?: number;
+
+  @ApiPropertyOptional({ example: 'anel-de-invisibilidade' })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  itemCastItemSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'terra',
+    description: 'Variante de espírito (Invocar Fera: ar | terra | agua)',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(60)
+  spiritVariantKey?: string;
+}

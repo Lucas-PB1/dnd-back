@@ -51,6 +51,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | [`architecture/damage-type-defenses.md`](architecture/damage-type-defenses.md) | Resist / vuln / imune no HP |
 | [`architecture/spirits-skirmish-initiative.md`](architecture/spirits-skirmish-initiative.md) | Espíritos / companion na iniciativa |
 | [`architecture/spiritual-conjure-skirmish.md`](architecture/spiritual-conjure-skirmish.md) | Arma Espiritual + Conjure 1-actor |
+| [`architecture/surface-combat-parity.md`](architecture/surface-combat-parity.md) | Paridade cast skirmish / duelo / encontro |
 | [`architecture/spell-combat-audit.md`](architecture/spell-combat-audit.md) | Auditoria PHB tipada vs utilitária / deferida |
 
 Contrato REST: Swagger em `/api`.

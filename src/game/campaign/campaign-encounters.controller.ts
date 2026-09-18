@@ -27,14 +27,17 @@ import {
   AddEncounterLinkedActorDto,
   AddEncounterPcDto,
   CampaignEncounterDto,
+  CastEncounterSpellDto,
   CreateCampaignEncounterDto,
   EncounterAttackResponseDto,
+  EncounterCastResponseDto,
   PatchCampaignEncounterDto,
   PatchEncounterCombatantDto,
   ResolveEncounterAttackDto,
   RollEncounterInitiativeDto,
 } from './dto/encounter.dto';
 import { CampaignEncounterAttackService } from './application/campaign-encounter-attack.service';
+import { CampaignEncounterCastService } from './application/campaign-encounter-cast.service';
 
 @ApiTags('game-campaign-encounters')
 @ApiBearerAuth()
@@ -46,6 +49,7 @@ export class CampaignEncountersController {
     private readonly encounters: CampaignEncounterService,
     private readonly initiative: CampaignEncounterInitiativeService,
     private readonly attacks: CampaignEncounterAttackService,
+    private readonly casts: CampaignEncounterCastService,
   ) {}
 
   @Post()
@@ -214,6 +218,21 @@ export class CampaignEncountersController {
     @Body() dto: ResolveEncounterAttackDto,
   ): Promise<EncounterAttackResponseDto> {
     return this.attacks.resolve(user.id, campaignId, encounterId, dto);
+  }
+
+  @Post(':encounterId/cast')
+  @ApiOperation({
+    summary:
+      'Cast tipado via resolveCombatSpell (paridade skirmish/duelo; PVE-8)',
+  })
+  @ApiOkResponse({ type: EncounterCastResponseDto })
+  castSpell(
+    @CurrentUser() user: AuthUser,
+    @Param('campaignId', ParseUUIDPipe) campaignId: string,
+    @Param('encounterId', ParseUUIDPipe) encounterId: string,
+    @Body() dto: CastEncounterSpellDto,
+  ): Promise<EncounterCastResponseDto> {
+    return this.casts.cast(user.id, campaignId, encounterId, dto);
   }
 
   @Post(':encounterId/next-turn')

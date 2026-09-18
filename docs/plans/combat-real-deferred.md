@@ -11,9 +11,11 @@ Skill: `rpg-class-mesa-api` (critério mesa ≠ VTT / combate simulado).
 
 Consumidor PvP: [`pvp-1v1-duel.md`](pvp-1v1-duel.md) — reusa o motor do índice (não inventar motor à parte).
 
-**Nota 2026-09-16:** encontro ganhou MVP de **ataque vs CA + dano nos PV** (`POST .../encounters/:id/attacks`). Saves, tabuleiro, manobras no momento do acerto e o restante desta lista continuam futuros.
+**Nota 2026-09-18 (PVE-8):** encontro ganhou `POST .../encounters/:id/cast` via `resolveCombatSpell` (paridade skirmish/duelo). Doc [`surface-combat-parity.md`](../architecture/surface-combat-parity.md).
 
-**Nota 2026-09-08:** o duelo ganhou um **MVP** (ataque com arma vs CA + `applyCurrentHitPoints`, depois PV temp. no pipeline) e **retrato** de PC. Magias tipadas e condições no turno do duelo ainda estão nesta lista / F4 do [`pvp-1v1-duel.md`](pvp-1v1-duel.md). **Mapa/distância/voo ficam fora do x1 por decisão de produto.** **Escuridão mágica** no x1: conjurável como efeito de arena; visão normal e Visão no Escuro **não** atravessam (só exceções tipadas, ex. Visão do Diabo) — ver BEA do duelo.
+**Nota 2026-09-16:** encontro ganhou MVP de **ataque vs CA + dano nos PV** (`POST .../encounters/:id/attacks`). Tabuleiro fino e o restante desta lista continuam futuros.
+
+**Nota 2026-09-08:** o duelo ganhou um **MVP** (ataque com arma vs CA + `applyCurrentHitPoints`, depois PV temp. no pipeline) e **retrato** de PC. Magias tipadas no duelo = motor compartilhado (`phb_spell_combat`), não subset de 2–3 slugs — ver [`pvp-1v1-duel.md`](pvp-1v1-duel.md). **Mapa/distância/voo ficam fora do x1 por decisão de produto.** **Escuridão mágica** no x1: conjurável como efeito de arena; visão normal e Visão no Escuro **não** atravessam (só exceções tipadas, ex. Visão do Diabo) — ver BEA do duelo.
 
 ---
 
@@ -55,7 +57,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 ### Condições / duração / alvo
 
 - [ ] Condições e duração tipadas no alvo (Véu Psíquico, Rasgar Mente, Teia, Veneno, …) além de declare
-- [ ] Escuridão mágica (área/arena): fortemente obscurecido; **não** atravessada por visão normal nem Visão no Escuro; exceções tipadas (ex. Visão do Diabo) — no x1 sem mapa = efeito de arena ([`pvp-1v1-duel.md`](pvp-1v1-duel.md))
+- [x] Escuridão mágica (área/arena): fortemente obscurecido; **não** atravessada por visão normal nem Visão no Escuro; exceções tipadas (ex. Visão do Diabo) — skirmish/duelo PVE-3b; encontro sem arena (nota no cast PVE-8)
 - [ ] Empurrão / grappled / improvisado (Briguento de Taverna e similares)
 - [ ] Attitude NPC tipado (Influenciar) se depender de combate social tipado fino
 - [ ] Proteção Arcana: pool própria (≠ PV temp.), recarga por espaço, Proteção Projetada no aliado
@@ -66,6 +68,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [x] Combate no encontro (acerto/dano). Saves e tracker fino de summon ainda futuros. Board/spawn/tracker leve de combatentes já é mesa.
 - [x] Tracker fino de companheiro / summon em combate (skirmish PVE-7a: iniciativa + turno + despawn) — [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md)
 - [x] Arma Espiritual + Conjure 1-actor no skirmish (PVE-7b) — [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md)
+- [x] Cast tipado no encontro + docs paridade (PVE-8) — [`surface-combat-parity.md`](../architecture/surface-combat-parity.md)
 - [ ] Board/spawn fino no encontro de campanha (além do skirmish)
 
 ---

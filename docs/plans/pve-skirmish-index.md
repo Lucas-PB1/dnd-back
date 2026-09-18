@@ -121,6 +121,8 @@ flowchart LR
 
 **PVE-7b fechado (2026-09-18):** Arma Espiritual + Conjurar Animais como 1 companion; doc [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md).
 
+**PVE-8 fechado (2026-09-18):** Cast tipado no encontro (`POST .../cast`); paridade skirmish/duelo/encontro via `resolveCombatSpell`. Doc [`surface-combat-parity.md`](../architecture/surface-combat-parity.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -143,7 +145,7 @@ flowchart LR
 | PVE-6c | ~~Resist/vuln/imune no HP~~ **feito** | — | M | PVE-0 |
 | PVE-7a | ~~Spirits/companion na iniciativa~~ **feito** | — | M | PVE-3a |
 | PVE-7b | ~~Arma Espiritual + Conjure 1-actor~~ **feito** | — | M | PVE-7a |
-| PVE-8 | Paridade encontro/duelo + docs | [`pve-8-surface-parity.md`](pve-8-surface-parity.md) | M | PVE-1c+5a+7a |
+| PVE-8 | ~~Paridade encontro/duelo + docs~~ **feito** | — | M | PVE-1c+5a+7a |
 
 ### Legado → 100%
 

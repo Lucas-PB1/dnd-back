@@ -159,3 +159,26 @@ export class EncounterAttackResponseDto {
   @ApiProperty()
   targetCombatantId!: string;
 }
+
+export class EncounterCastResponseDto {
+  @ApiProperty({ type: () => CampaignEncounterDto })
+  encounter!: CampaignEncounterDto;
+
+  @ApiProperty({
+    example: 'auto_damage',
+    description: 'Kind de resolveCombatSpell (ou slot_only / arena_darkness / …)',
+  })
+  resolutionKind!: string;
+
+  @ApiPropertyOptional({ nullable: true, example: 14 })
+  damageTotal!: number | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  note!: string | null;
+
+  @ApiProperty()
+  casterCombatantId!: string;
+
+  @ApiProperty()
+  targetCombatantId!: string;
+}
