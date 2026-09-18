@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Adiado #12 Cast de item overlay Treasure UI
+
+* **Update** (18:45 UTC): inventário expõe `spellSaveDc` / `spellAttackBonus` / `requiresComponents` / `useCasterAbility`; aba Ações mostra chips pré-cast + dialog de troca de concentração; helper `item-cast-overlay` + vitest. Motor de cast já cobria overrides/notas.
+
+— refs: [`item-response.dto.ts`](../../src/game/inventory/dto/inventory/item-response.dto.ts), [`inventory-item-mappers.ts`](../../src/game/inventory/infrastructure/inventory/inventory-item-mappers.ts), [`item-cast-overlay.ts`](../../../dnd-front/src/features/character/character-sheet/lib/combat/item-cast-overlay.ts), [`beyond-actions-tab.tsx`](../../../dnd-front/src/features/character/character-sheet/ui/beyond/layout/beyond-actions-tab.tsx), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #12 (overlay Treasure na UI de cast de item).
+
 ## 2026-09-18 — Adiado #10 MM Escudo/Giga no cast
 
 * **Update** (17:15 UTC): critério de pronto já coberto — API `applyMissileShield`/`applyGigaMissile` + `applyMagicMissileMageOnCast` (body ∪ armed); front modal Conjurar/uso gratuito; armar Economia mantido. Specs `cast-spell` **18** verdes; vitest boosts verdes. Plano filho apagado.

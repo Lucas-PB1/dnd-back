@@ -48,7 +48,7 @@ Texto Beyond (resumo):
 | Círculo | `resolveItemCastSlotLevel` + SSOT `itemCastSlotRule(s)` em properties (`D046`) — default `max(nível, spend)`; Relâmpagos/Cuspidora `charge-upcast`; Onda/Órbes fixed |
 | +0 + PB | `properties.useCasterAbility: true` + classe sem `phb_class_spellcasting` |
 
-**Gap residual:** nem todo item do A–Z com CD no texto tem `spellSaveDc` no seed (só lotes em `D046` + Enspelled). Ampliar overlay conforme uso.
+**Gap residual:** seed A–Z incompleto para `spellSaveDc` (só lotes em `D046` + Enspelled). UI pré-cast (inventário + chips Ações) feito — Adiado #12.
 #### 2. “The Next Dawn” ≠ Descanso Longo
 
 - Recarga oficial: **próximo amanhecer** (ou horário que o Mestre definir se não houver amanhecer).

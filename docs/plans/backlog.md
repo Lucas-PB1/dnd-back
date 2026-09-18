@@ -37,7 +37,6 @@ Só retomar com pedido explícito. **Não** é combate real.
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 12 | [ ] Cast de item: concentração / componentes / CD overlay | Cruza item + magia |
 | 13 | [ ] GH: Skinrider's Trance (estado/actor vinculado) | Actor extra na ficha |
 
 Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).

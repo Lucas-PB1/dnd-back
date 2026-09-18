@@ -14,6 +14,7 @@ import {
 } from '@game/inventory/domain/item-effects-active';
 import { parseItemWeightKg } from '@game/inventory/domain/encumbrance';
 import { itemPropertiesKind } from '@game/inventory/domain/item-kind';
+import { parseItemCastProperties } from '@game/session/domain/item-cast-rules';
 
 export function inventoryItemToDtoFromCatalog(
   catalogBySlug: Map<string, PhbItem>,
@@ -28,6 +29,7 @@ export function inventoryItemToDtoFromCatalog(
       ? (catalog.properties as Record<string, unknown>)
       : null;
   const consumable = props?.consumable === true;
+  const castProps = parseItemCastProperties(props);
   const activation = {
     location: row.location,
     attuned: row.attuned,
@@ -71,6 +73,10 @@ export function inventoryItemToDtoFromCatalog(
     isCoverage,
     propertiesKind: itemPropertiesKind(props),
     isMagic,
+    spellSaveDc: castProps.spellSaveDc,
+    spellAttackBonus: castProps.spellAttackBonus,
+    requiresComponents: castProps.requiresComponents,
+    useCasterAbility: castProps.useCasterAbility,
     instanceProperties: row.instanceProperties ?? null,
     costText: catalogCostText(catalog?.cost ?? null),
     containedInItemSlug: row.containedInItemSlug ?? null,

@@ -149,6 +149,36 @@ export class InventoryItemResponseDto {
   isMagic!: boolean;
 
   @ApiPropertyOptional({
+    example: 15,
+    nullable: true,
+    description:
+      'CD fixa de cast Treasure (phb_item.properties.spellSaveDc); null = usa CD do personagem / Enspelled',
+  })
+  spellSaveDc!: number | null;
+
+  @ApiPropertyOptional({
+    example: 7,
+    nullable: true,
+    description:
+      'Bônus de ataque mágico fixo (phb_item.properties.spellAttackBonus)',
+  })
+  spellAttackBonus!: number | null;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'True quando o item exige componentes além do próprio item (properties.requiresComponents)',
+  })
+  requiresComponents!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'True quando o cast usa atributo de conjuração do usuário (properties.useCasterAbility)',
+  })
+  useCasterAbility!: boolean;
+
+  @ApiPropertyOptional({
     description:
       'Estado por instância (props de artefato roladas na 1ª sintonia, senciência, etc.)',
     example: {
