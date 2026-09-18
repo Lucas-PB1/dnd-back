@@ -44,7 +44,8 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [x] PAM: ataque do cabo tipado (`haftBonusAttack` → 1d4+mod); reação “entra no alcance” = **nunca** no skirmish sem mapa (PVE-10a)
 - [ ] Gunslinger: residual `descriptive` fino (fan-the-hammer, ricochet, …); tipados: blindfire/`blindsense_until_eot`, showdown/`attack_damage_bonus` + `gunslingerRiskDamageBonus`
 - [x] Atacante Selvagem: enforcement 1×/turno no servidor (skirmish PVE-10a)
-- [ ] Front: escolher entre 2 rolagens de dano (`alternateRolls`)
+- [x] Front: escolher entre 2 rolagens de dano (`alternateRolls`) — ficha (`RollResultBanner`); skirmish/duelo ainda aplicam um total sem escolha
+- [ ] Front skirmish/duelo: escolha tipada de `alternateRolls` (contrato aplica HP depois da escolha)
 
 ### Metamagia / invocações / cast em combate
 

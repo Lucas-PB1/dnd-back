@@ -62,6 +62,7 @@ export class CharacterResponseDto extends CharacterIdentityResponseDto {
     damageDieFloor: boolean;
     damageDieFlip: boolean;
     damageDieExplode: boolean;
+    damageRerollChoice: boolean;
     improveCritical: boolean;
     slotElevate: boolean;
     slotReduce: boolean;

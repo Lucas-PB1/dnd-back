@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Front alternateRolls (Atacante Selvagem)
+
+* **Update** (19:15 UTC): flag `damageRerollChoice` na ficha; toggle + banner escolhe 1ª/2ª; API devolve `alternateRolls` com total completo (arma alt. + extras). Skirmish/duelo escolha tipada fica residual.
+
+— refs: [`roll-damage.ts`](../../src/game/dice/application/rolls/roll-damage.ts), [`apply-damage-roll-choice.ts`](../../../dnd-front/src/features/character/character-sheet/lib/combat/apply-damage-roll-choice.ts), [`sheet-rolls.tsx`](../../../dnd-front/src/features/character/character-sheet/ui/beyond/layout/sheet-rolls.tsx), [`combat-real-deferred.md`](../plans/combat-real-deferred.md) — motivo: fechar residual “Front: escolher entre 2 rolagens”.
+
 ## 2026-09-18 — Adiado #13 Skinrider's Trance estado/actor
 
 * **Update** (19:00 UTC): estado `skinriderTranceActive` + `skinriderActorId`; enter/end tipados (`skinrider_trance`); rage-recover; panel/economy; UI status + link do actor. Pose de combate (swap de stats / Amizade Animal arbitrário) fica fora.

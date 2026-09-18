@@ -265,8 +265,9 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Semântica:** ao marcar toggle no dano, rola o pacote de dano da arma **duas vezes**; API devolve ambos; jogador escolhe.
 - **Satélite:** nenhum (elegibilidade = presença do efeito)
 - **Trigger:** `on_damage_roll` / `passive`
-- **DTO:** `savageAttacker` em roll-damage; resposta com `alternateRolls`
-- **1×/turno:** honor system (nota); enforcement rígido = backlog
+- **DTO:** `savageAttacker` em roll-damage; resposta com `alternateRolls` (total **completo** = pacote arma alternativo + extras)
+- **1×/turno:** skirmish enforce `pc_savage_attacker_used`; ficha = honor + UI de escolha
+- **Front ficha:** toggle + banner com 1ª/2ª rolagem (`applyDamageRollChoice`)
 
 ### `damage_die_override` (lote origem)
 

@@ -185,8 +185,13 @@ export async function executeRollDamage(input: {
     alternateRolls: alternateBase
       ? [
           {
-            expression: alternateBase.expression,
-            total: alternateBase.total,
+            expression: (() => {
+              const extrasSuffix = acc.expression.startsWith(base.expression)
+                ? acc.expression.slice(base.expression.length)
+                : '';
+              return `${alternateBase.expression}${extrasSuffix}`;
+            })(),
+            total: alternateBase.total + (acc.total - base.total),
             rolls: alternateBase.dice[0]?.rolls ?? [],
           },
         ]
