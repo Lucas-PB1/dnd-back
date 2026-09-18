@@ -10,6 +10,7 @@ import { computeAbilityModifiers } from '@game/shared/domain/ability-scores';
 import { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
 import { pickCombatSurfaceCastCommand } from '@game/combat/application/pick-combat-surface-cast-command';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
+import { carefulProtectsCombatTarget } from '@game/combat/domain/sorcerer/combat-metamagic';
 import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
 import { spellCombatBonusesFromCast } from '@game/combat/application/spell-combat-bonuses-from-cast';
 import {
@@ -139,11 +140,17 @@ export class CampaignEncounterCastService {
       spellAttackBonus: bonuses.spellAttackBonus,
       spellSaveDc: bonuses.spellSaveDc,
       spellcastingAbilityMod: castingMod,
+      charismaModifier: computeAbilityModifiers(character.abilityScores).carisma,
       targetAc,
       targetSaveBonus,
       advantage: 'normal',
       castNote: cast.note ?? undefined,
       metamagicSlug: dto.metamagicSlug?.trim() || null,
+      carefulProtectsTarget: carefulProtectsCombatTarget(
+        dto.metamagicSlug,
+        dto.carefulExcludeTargetIds,
+        dto.targetCombatantId,
+      ),
     });
 
     const mmSuffix = metamagicNote ? ` · ${metamagicNote}` : '';

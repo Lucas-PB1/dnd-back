@@ -78,7 +78,7 @@ export async function spendCombatMetamagic(input: {
   const slug = input.metamagicSlug.trim();
   if (!isCombatMetamagicSlug(slug)) {
     throw new BadRequestException(
-      `Metamagia '${slug}' ainda não tipada em combate (use heightened-spell ou seeking-spell)`,
+      `Metamagia '${slug}' ainda não tipada em combate (use heightened-spell, seeking-spell, empowered-spell ou careful-spell)`,
     );
   }
   const option = await loadMetamagicCatalogRow(input.dataSource, slug);

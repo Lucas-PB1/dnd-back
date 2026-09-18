@@ -15,7 +15,7 @@ export const FIXTURE_GUNSLINGER_MANEUVERS: readonly GunslingerManeuver[] = [
     name: 'Fogo cego',
     description:
       'Ação Bônus: gaste um Dado de Risco para ganhar Visão Cega de 9 m até o fim do turno.',
-    effectKind: 'descriptive',
+    effectKind: 'blindsense_until_eot',
     riskCost: 1,
     fromLevel: 2,
   },
@@ -70,7 +70,7 @@ export const FIXTURE_GUNSLINGER_MANEUVERS: readonly GunslingerManeuver[] = [
     name: 'Confronto',
     description:
       'Na Iniciativa (Pistolero): gaste 1 Dado de Risco, saque uma arma à distância e ataque; some o dado ao dano. No 1º turno, o alvo tem Desvantagem em ataques contra outros.',
-    effectKind: 'descriptive',
+    effectKind: 'attack_damage_bonus',
     riskCost: 1,
     fromLevel: 10,
     subclassSlug: 'pistolero',

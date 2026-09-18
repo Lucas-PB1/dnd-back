@@ -9,6 +9,7 @@ import type { PlayerCharacterAccessService } from '@game/shared/player-character
 import type { LoadSpellCombat } from '@game/combat/application/load-spell-combat';
 import { pickCombatSurfaceCastCommand } from '@game/combat/application/pick-combat-surface-cast-command';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
+import { carefulProtectsCombatTarget } from '@game/combat/domain/sorcerer/combat-metamagic';
 import { spendCombatMetamagic } from '@game/combat/application/spend-combat-metamagic';
 import { spellCombatBonusesFromCast } from '@game/combat/application/spell-combat-bonuses-from-cast';
 import {
@@ -109,6 +110,7 @@ export async function castSpell(
     spellSlug: string;
     slotLevel?: number;
     metamagicSlug?: string;
+    carefulExcludeTargetIds?: string[];
     itemCastResourceSlug?: string;
     itemCastSpendAmount?: number;
     itemCastItemSlug?: string;
@@ -200,11 +202,18 @@ export async function castSpell(
     spellAttackBonus: bonuses.spellAttackBonus,
     spellSaveDc: bonuses.spellSaveDc,
     spellcastingAbilityMod: casterStats.abilityMod,
+    charismaModifier: computeSharedAbilityModifiers(casterPc.abilityScores)
+      .carisma,
     targetAc: armorMap.get(defenderPc.id) ?? 10,
     targetSaveBonus,
     advantage,
     castNote: cast.note ?? undefined,
     metamagicSlug: input.metamagicSlug?.trim() || null,
+    carefulProtectsTarget: carefulProtectsCombatTarget(
+      input.metamagicSlug,
+      input.carefulExcludeTargetIds,
+      opponent.characterId,
+    ),
   });
 
   let log = duel.combatLog ?? [];

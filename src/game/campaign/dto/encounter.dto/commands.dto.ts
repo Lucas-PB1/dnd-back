@@ -224,13 +224,22 @@ export class CastEncounterSpellDto {
   @ApiPropertyOptional({
     example: 'heightened-spell',
     description:
-      'Metamagia tipada de combate (heightened-spell | seeking-spell); gasta Pontos de Feitiçaria',
+      'Metamagia tipada (heightened|seeking|empowered|careful); gasta Pontos de Feitiçaria',
   })
   @IsOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(120)
   metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    type: [String],
+    description:
+      'Careful Spell: ids de combatentes aliados que passam no save / não sofrem o efeito',
+  })
+  @IsOptional()
+  @IsUUID('4', { each: true })
+  carefulExcludeTargetIds?: string[];
 
   @ApiPropertyOptional({
     example: 'varinhaMisseisCharges',

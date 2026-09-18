@@ -41,22 +41,23 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 - [x] Battle Master: trip / menacing / pushing no acerto (skirmish PVE-5b) — além de Rally/`tempHp` e notas
 - [x] Parry / redução de dano no momento do acerto (skirmish PVE-10a · `defenderReaction: parry`)
 - [x] Estilos no roll: GWF piso 1–2→3, TWF `light_bonus` + ability, Charger +1d8 (feat+melee) — PVE-5c · [`fighting-style-combat.md`](../architecture/fighting-style-combat.md)
-- [ ] PAM: ataque do cabo tipado (defer); reação “entra no alcance” = **nunca** no skirmish sem mapa (PVE-10a)
-- [ ] Gunslinger: manobras `descriptive` que só fazem sentido no ataque/alvo (blindfire, ricochet, fan-the-hammer, …) — defer PVE-10a
+- [x] PAM: ataque do cabo tipado (`haftBonusAttack` → 1d4+mod); reação “entra no alcance” = **nunca** no skirmish sem mapa (PVE-10a)
+- [ ] Gunslinger: residual `descriptive` fino (fan-the-hammer, ricochet, …); tipados: blindfire/`blindsense_until_eot`, showdown/`attack_damage_bonus` + `gunslingerRiskDamageBonus`
 - [x] Atacante Selvagem: enforcement 1×/turno no servidor (skirmish PVE-10a)
 - [ ] Front: escolher entre 2 rolagens de dano (`alternateRolls`)
 
 ### Metamagia / invocações / cast em combate
 
-- [x] Metamagia tipada no cast: heightened (save desvantagem) + seeking (reroll ataque) — PVE-6a · [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md)
-- [ ] Demais metamagias (quickened, empowered, careful, …) no cast
+- [x] Metamagia tipada no cast: heightened + seeking (PVE-6a); empowered + careful (residual 2026-09-18) — [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md)
+- [ ] Demais metamagias (quickened, twinned, distant, subtle, transmuted) no cast
 - [x] Eldritch Smite no acerto com arma — PVE-6a
 - [ ] Outras invocações cujo efeito é dano/condição no alvo (ex. Lifedrinker tipado fino)
 - [ ] Bloodied gate no fluxo de combate (defer); craft spawn = **nunca** em combate (rest/downtime) — PVE-10a
 
 ### Condições / duração / alvo
 
-- [ ] Condições e duração tipadas no alvo (Véu Psíquico, Rasgar Mente, Teia, Veneno, …) além de declare
+- [x] Condições tipadas no alvo (piloto): Paralisar/Medo + Teia/`restrained`, Cegueira/`blinded`, Enfeitiçar/`charmed` — sem duração/repeat save fino
+- [ ] Duração tipada / repeat save no fim do turno; forma (`aumentar-reduzir`, `alterar-se`)
 - [x] Escuridão mágica (área/arena): fortemente obscurecido; **não** atravessada por visão normal nem Visão no Escuro; exceções tipadas (ex. Visão do Diabo) — skirmish/duelo PVE-3b; encontro sem arena (nota no cast PVE-8)
 - [ ] Empurrão / grappled / improvisado (Briguento de Taverna e similares)
 - [ ] Attitude NPC tipado (Influenciar) se depender de combate social tipado fino

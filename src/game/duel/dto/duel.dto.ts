@@ -114,11 +114,20 @@ export class DuelCastSpellDto {
   @ApiPropertyOptional({
     example: 'seeking-spell',
     description:
-      'Metamagia tipada (heightened-spell | seeking-spell); gasta Pontos de Feitiçaria',
+      'Metamagia tipada (heightened|seeking|empowered|careful); gasta Pontos de Feitiçaria',
   })
   @IsOptional()
   @IsString()
   metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    type: [String],
+    description:
+      'Careful Spell: ids de personagens aliados que passam no save / não sofrem o efeito',
+  })
+  @IsOptional()
+  @IsUUID('4', { each: true })
+  carefulExcludeTargetIds?: string[];
 
   @ApiPropertyOptional({
     example: 'varinhaMisseisCharges',

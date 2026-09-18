@@ -38,6 +38,9 @@ import { spendCombatMetamagic } from '@game/combat/application/spend-combat-meta
 import { spellCombatBonusesFromCast } from '@game/combat/application/spell-combat-bonuses-from-cast';
 import { resolveCombatSpell } from '@game/combat/domain/resolve-combat-spell';
 import {
+  carefulProtectsCombatTarget,
+} from '@game/combat/domain/sorcerer/combat-metamagic';
+import {
   abilityModifierFromSlug,
   spellSaveDcFromMods,
 } from '@game/combat/domain/spell-save-dc';
@@ -551,11 +554,17 @@ export class SkirmishService {
       spellAttackBonus: bonuses.spellAttackBonus,
       spellSaveDc: bonuses.spellSaveDc,
       spellcastingAbilityMod: castingMod,
+      charismaModifier: mods.carisma,
       targetAc,
       targetSaveBonus,
       advantage,
       castNote: cast.note ?? undefined,
       metamagicSlug: dto.metamagicSlug?.trim() || null,
+      carefulProtectsTarget: carefulProtectsCombatTarget(
+        dto.metamagicSlug,
+        dto.carefulExcludeTargetIds,
+        actor.id,
+      ),
     });
     const mmSuffix = metamagicNote ? ` · ${metamagicNote}` : '';
     if (

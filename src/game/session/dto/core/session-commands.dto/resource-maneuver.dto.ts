@@ -76,6 +76,12 @@ export class UseManeuverResponseDto {
   @ApiPropertyOptional({ example: 3 })
   checkBonus?: number;
 
+  @ApiPropertyOptional({ example: 9 })
+  blindsenseMeters?: number;
+
+  @ApiPropertyOptional({ example: 5 })
+  damageBonus?: number;
+
   @ApiProperty({ example: '+12 PV Temporários' })
   note!: string;
 }

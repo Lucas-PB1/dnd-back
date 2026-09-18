@@ -1,11 +1,15 @@
-import { rollDie, rollD20Check } from '@game/dice/domain/dice';
+import { rollD20Check } from '@game/dice/domain/dice';
 import type { AdvantageMode } from '@game/dice/domain/dice';
 import type {
   SpellCombatResolutionKind,
   SpellCombatSaveSuccessOutcome,
 } from '@entities/spell/phb-spell-combat.entity';
 import {
+  empoweredRerollCount,
+  rollDiceTotalMaybeEmpowered,
   saveAdvantageForMetamagic,
+  wantsCarefulSpell,
+  wantsEmpoweredSpell,
   wantsSeekingSpell,
 } from './sorcerer/combat-metamagic';
 
@@ -67,14 +71,6 @@ function cantripDiceCount(characterLevel: number): number {
   return 1;
 }
 
-function rollDiceTotal(die: number, count: number, flatPerDie: number): number {
-  let total = 0;
-  for (let i = 0; i < count; i += 1) {
-    total += rollDie(die) + flatPerDie;
-  }
-  return total;
-}
-
 function leveledDiceCount(
   row: SpellCombatRow,
   characterLevel: number,
@@ -116,6 +112,8 @@ function resolveSpellAttack(input: {
   targetAc: number;
   advantage: AdvantageMode;
   seekingSpell: boolean;
+  empowered: boolean;
+  empowerRerolls: number;
 }): Extract<CombatSpellResolution, { kind: 'spell_attack' }> {
   const { row, die } = input;
   const dice = leveledDiceCount(row, input.characterLevel, input.slotLevel);
@@ -143,7 +141,13 @@ function resolveSpellAttack(input: {
     const critical = kept === 20;
     if (critical) anyCrit = true;
     const count = critical ? dicePerHit * 2 : dicePerHit;
-    damage += rollDiceTotal(die, count, row.flatPerDie);
+    damage += rollDiceTotalMaybeEmpowered({
+      die,
+      count,
+      flatPerDie: row.flatPerDie,
+      empowered: input.empowered,
+      rerollCount: input.empowerRerolls,
+    });
   }
 
   return {
@@ -163,12 +167,19 @@ export function resolveCombatSpell(input: {
   spellAttackBonus: number;
   spellSaveDc: number;
   spellcastingAbilityMod: number;
+  /** Mod de Carisma para Empowered (default = spellcastingAbilityMod). */
+  charismaModifier?: number;
   targetAc: number;
   targetSaveBonus: number;
   advantage: AdvantageMode;
   castNote?: string;
-  /** Metamagia tipada (heightened-spell | seeking-spell). */
+  /** Metamagia tipada de combate. */
   metamagicSlug?: string | null;
+  /**
+   * Careful Spell: este alvo é aliado protegido (sem save / sem efeito).
+   * Wire via `carefulExcludeTargetIds` contendo o id do alvo.
+   */
+  carefulProtectsTarget?: boolean;
 }): CombatSpellResolution {
   const row = input.row;
   if (!row) {
@@ -184,6 +195,13 @@ export function resolveCombatSpell(input: {
     return { kind: 'arena_darkness' };
   }
 
+  const careful =
+    wantsCarefulSpell(input.metamagicSlug) &&
+    Boolean(input.carefulProtectsTarget);
+  const empowered = wantsEmpoweredSpell(input.metamagicSlug);
+  const empowerRerolls = empoweredRerollCount(
+    input.charismaModifier ?? input.spellcastingAbilityMod,
+  );
   const saveAdv = saveAdvantageForMetamagic(input.metamagicSlug);
 
   if (row.resolution === 'apply_condition') {
@@ -194,6 +212,17 @@ export function resolveCombatSpell(input: {
         note:
           input.castNote?.trim() ||
           `${row.label}: condição tipada ausente.`,
+      };
+    }
+    if (careful) {
+      return {
+        kind: 'apply_condition',
+        conditionSlug,
+        label: row.label,
+        saveTotal: input.spellSaveDc,
+        saved: true,
+        dc: input.spellSaveDc,
+        applied: false,
       };
     }
     const save = rollD20Check(input.targetSaveBonus, saveAdv);
@@ -224,7 +253,13 @@ export function resolveCombatSpell(input: {
       base + Math.max(0, input.slotLevel - row.spellLevel) * perSlot;
     const damage = withSpellcastingMod(
       row,
-      rollDiceTotal(die, units, row.flatPerDie),
+      rollDiceTotalMaybeEmpowered({
+        die,
+        count: units,
+        flatPerDie: row.flatPerDie,
+        empowered,
+        rerollCount: empowerRerolls,
+      }),
       input.spellcastingAbilityMod,
     );
     return {
@@ -238,17 +273,39 @@ export function resolveCombatSpell(input: {
     const count = leveledDiceCount(row, input.characterLevel, input.slotLevel);
     const amount = withSpellcastingMod(
       row,
-      rollDiceTotal(die, count, row.flatPerDie),
+      rollDiceTotalMaybeEmpowered({
+        die,
+        count,
+        flatPerDie: row.flatPerDie,
+        empowered: false,
+        rerollCount: 0,
+      }),
       input.spellcastingAbilityMod,
     );
     return { kind: 'heal', amount, label: row.label };
   }
 
   if (row.resolution === 'save_damage') {
+    if (careful) {
+      return {
+        kind: 'save_damage',
+        damage: 0,
+        label: row.label,
+        saveTotal: input.spellSaveDc,
+        saved: true,
+        dc: input.spellSaveDc,
+      };
+    }
     const count = leveledDiceCount(row, input.characterLevel, input.slotLevel);
     const rolled = withSpellcastingMod(
       row,
-      rollDiceTotal(die, count, row.flatPerDie),
+      rollDiceTotalMaybeEmpowered({
+        die,
+        count,
+        flatPerDie: row.flatPerDie,
+        empowered,
+        rerollCount: empowerRerolls,
+      }),
       input.spellcastingAbilityMod,
     );
     const save = rollD20Check(input.targetSaveBonus, saveAdv);
@@ -274,5 +331,7 @@ export function resolveCombatSpell(input: {
     targetAc: input.targetAc,
     advantage: input.advantage,
     seekingSpell: wantsSeekingSpell(input.metamagicSlug),
+    empowered,
+    empowerRerolls,
   });
 }

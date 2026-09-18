@@ -1,5 +1,20 @@
 # log
 
+## 2026-09-18 — Combate residual seq (1→4)
+
+* **Update** (15:45 UTC): fila residual tipável fechada em 4 pacotes.
+
+| # | Pacote | Evidência |
+|---|--------|-----------|
+| 1 | Metamagia `empowered` / `careful` | `resolveCombatSpell` + DTO `carefulExcludeTargetIds`; specs |
+| 2 | Condições | seeds `teia`/`cegueira-surdez`/`enfeiticar-pessoa` + audit |
+| 3 | Gunslinger | kinds `blindsense_until_eot` / `attack_damage_bonus`; flag `gunslingerRiskDamageBonus` |
+| 4 | PAM cabo | `haftBonusAttack` → 1d4+mod; `polearm-haft.ts` |
+
+Residual explícito: fan-the-hammer / ricochet / quickened+… / duração de condição / reação PAM mapa.
+
+— refs: [`combat-real-deferred.md`](../plans/combat-real-deferred.md), [`metamagic-eldritch-combat.md`](../architecture/metamagic-eldritch-combat.md), [`polearm-haft.ts`](../../src/game/combat/domain/feats/polearm-haft.ts) — motivo: tipar residual sem reabrir índice PVE.
+
 ## 2026-09-18 — QA-2 gate pós-execução
 
 * **Update** (15:10 UTC): gate final das trilhas DB/PVE/LEG/RES/LEGAC. Planos QA apagados; Feature futura sem fila fantasma.

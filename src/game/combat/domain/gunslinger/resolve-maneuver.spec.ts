@@ -46,7 +46,7 @@ describe('resolveManeuverEffect', () => {
   it('keeps descriptive as note-only residual', () => {
     const maneuver = findGunslingerManeuver(
       FIXTURE_GUNSLINGER_MANEUVERS,
-      'blindfire',
+      'fan-the-hammer',
     )!;
     const result = resolveManeuverEffect({
       maneuver,
@@ -58,5 +58,34 @@ describe('resolveManeuverEffect', () => {
     expect(result.effectKind).toBe('descriptive');
     expect(result.note).toBe(maneuver.description);
     expect(result.tempHpGained).toBeUndefined();
+  });
+
+  it('resolves blindsense_until_eot for blindfire', () => {
+    const maneuver = findGunslingerManeuver(
+      FIXTURE_GUNSLINGER_MANEUVERS,
+      'blindfire',
+    )!;
+    const result = resolveManeuverEffect({
+      maneuver,
+      riskRoll: RISK,
+      gunslingerLevel: 5,
+      dexterityModifier: 3,
+    });
+    expect(result.blindsenseMeters).toBe(9);
+    expect(result.note).toContain('Visão Cega');
+  });
+
+  it('resolves attack_damage_bonus for showdown', () => {
+    const maneuver = findGunslingerManeuver(
+      FIXTURE_GUNSLINGER_MANEUVERS,
+      'showdown',
+    )!;
+    const result = resolveManeuverEffect({
+      maneuver,
+      riskRoll: RISK,
+      gunslingerLevel: 10,
+      dexterityModifier: 3,
+    });
+    expect(result.damageBonus).toBe(5);
   });
 });

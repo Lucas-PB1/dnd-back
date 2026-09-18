@@ -138,6 +138,15 @@ export class RollDamageBaseDto {
   @ApiPropertyOptional({
     default: false,
     description:
+      'Polearm Master — Golpe de Haste: dano 1d4 Contundente + mod (ação bônus)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  haftBonusAttack?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
       'Elemental Adept / damage_die_floor: faces 1 viram 2 nos dados de dano',
   })
   @IsOptional()

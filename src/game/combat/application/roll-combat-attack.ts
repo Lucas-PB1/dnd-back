@@ -48,6 +48,7 @@ export type CombatAttackCommand = {
   smiteSlotLevel?: number;
   smiteVsUndeadOrFiend?: boolean;
   eldritchSmite?: boolean;
+  gunslingerRiskDamageBonus?: number;
   huntersMark?: boolean;
   colossusSlayer?: boolean;
   dreadfulStrikes?: boolean;
@@ -55,6 +56,7 @@ export type CombatAttackCommand = {
   divineStrike?: boolean;
   savageAttacker?: boolean;
   chargerStrike?: boolean;
+  haftBonusAttack?: boolean;
   poisonousSneak?: boolean;
   assassinSurprise?: boolean;
   psiStrike?: boolean;
@@ -173,6 +175,7 @@ export async function rollPcCombatAttack(input: {
     smiteSlotLevel: input.dto.smiteSlotLevel,
     smiteVsUndeadOrFiend: input.dto.smiteVsUndeadOrFiend,
     eldritchSmite: input.dto.eldritchSmite,
+    gunslingerRiskDamageBonus: input.dto.gunslingerRiskDamageBonus,
     huntersMark: input.dto.huntersMark,
     colossusSlayer: input.dto.colossusSlayer,
     dreadfulStrikes: input.dto.dreadfulStrikes,
@@ -180,6 +183,7 @@ export async function rollPcCombatAttack(input: {
     divineStrike: input.dto.divineStrike,
     savageAttacker: input.dto.savageAttacker,
     chargerStrike: input.dto.chargerStrike,
+    haftBonusAttack: input.dto.haftBonusAttack,
     poisonousSneak: input.dto.poisonousSneak,
     assassinSurprise: input.dto.assassinSurprise,
     psiStrike: input.dto.psiStrike,

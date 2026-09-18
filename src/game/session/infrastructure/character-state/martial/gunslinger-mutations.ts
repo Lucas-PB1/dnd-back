@@ -108,6 +108,8 @@ export async function applyUseManeuver(input: {
     missDamage: effect.missDamage,
     acBonus: effect.acBonus,
     checkBonus: effect.checkBonus,
+    blindsenseMeters: effect.blindsenseMeters,
+    damageBonus: effect.damageBonus,
     note: effect.note,
   };
 }

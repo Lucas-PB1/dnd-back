@@ -116,4 +116,16 @@ export class RollDamageDto extends RollDamageBaseDto {
   @IsOptional()
   @IsBoolean()
   eldritchSmite?: boolean;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+    maximum: 20,
+    description:
+      'Pistoleiro: bônus flat de dano do Risk já gasto (ex. Confronto / showdown)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  gunslingerRiskDamageBonus?: number;
 }

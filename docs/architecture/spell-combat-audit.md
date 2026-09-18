@@ -8,7 +8,7 @@ Gerada no PVE-2b (2026-09-17). Critério “ofensiva/cura tipável”: descriç�
 |---------|---|
 | Magias PHB no catálogo | 390 |
 | Com dados de dano/cura no texto | 139 |
-| Tipadas em `phb_spell_combat` | **104** rows (~99 PHB ofensivas/cura + arena + 2 condições) |
+| Tipadas em `phb_spell_combat` | **107** rows (~99 PHB ofensivas/cura + arena + **5** condições) |
 | Ainda com dados no texto sem row | **~38** (quase todas deferidas abaixo) |
 | Utilitárias / sem dados de combate | resto → `slot_only` OK |
 
@@ -22,7 +22,7 @@ Gerada no PVE-2b (2026-09-17). Critério “ofensiva/cura tipável”: descriç�
 | **Summon / companion** | `invocar-*`, `inseto-gigante`, `convocar-montaria` | PVE-7a (spirit) |
 | **Conjure / arma espiritual** | `arma-espiritual`, `conjurar-animais` | PVE-7b (1-actor proxy) |
 | **Exploração / longo prazo** | `sonho`, `missao`, `contato-extraplanar`, `desejo`, `teleporte` (erro) | fora skirmish |
-| **Condição / forma residual** | `teia`, `alterar-se`, `aumentar-reduzir` | PVE-3b+ / fora |
+| **Condição / forma residual** | `alterar-se`, `aumentar-reduzir` (forma); duração/repeat save fino | combat-real-deferred |
 | **Reação / retaliação** | `escudo-ardente` | PVE-4 |
 | **Simplificações aceitas** | Prismática = 12d6; Meteoros = 40d6; Faca de Gelo = só ataque 1d10; Regeneração = 4d8 (sem +15 flat) | esta auditoria |
 

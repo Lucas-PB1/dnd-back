@@ -1,4 +1,5 @@
--- Condições tipadas via save (PVE-3b): Hold Person, Fear…
+-- Condições tipadas via save (PVE-3b + residual combate):
+-- Hold Person, Fear, Web, Blindness/Deafness, Charm Person…
 INSERT INTO rpg.phb_spell_combat (
   spell_slug,
   resolution,
@@ -55,6 +56,63 @@ INSERT INTO rpg.phb_spell_combat (
     'sabedoria',
     NULL,
     'frightened'
+  ),
+  (
+    'teia',
+    'apply_condition',
+    'Teia',
+    NULL,
+    0,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    2,
+    FALSE,
+    FALSE,
+    FALSE,
+    NULL,
+    'destreza',
+    NULL,
+    'restrained'
+  ),
+  (
+    'cegueira-surdez',
+    'apply_condition',
+    'Cegueira/Surdez',
+    NULL,
+    0,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    2,
+    FALSE,
+    FALSE,
+    FALSE,
+    NULL,
+    'constituicao',
+    NULL,
+    'blinded'
+  ),
+  (
+    'enfeiticar-pessoa',
+    'apply_condition',
+    'Enfeitiçar Pessoa',
+    NULL,
+    0,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    1,
+    FALSE,
+    FALSE,
+    FALSE,
+    NULL,
+    'sabedoria',
+    NULL,
+    'charmed'
   )
 ON CONFLICT (spell_slug) DO UPDATE SET
   resolution = EXCLUDED.resolution,

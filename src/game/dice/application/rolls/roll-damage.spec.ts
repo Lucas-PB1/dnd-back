@@ -115,4 +115,39 @@ describe('executeRollDamage', () => {
       }),
     ).rejects.toThrow(/corpo a corpo/i);
   });
+
+  it('uses 1d4 for Polearm Master haft bonus attack', async () => {
+    mockEquippedAttack(WEAPONS.longsword(), undefined, ['polearm-master']);
+    // longsword not eligible — use spear fixture if any
+    const spear = {
+      ...WEAPONS.longsword(),
+      itemSlug: 'spear',
+      itemName: 'Lança',
+      damageDice: '1d6',
+    };
+    mockEquippedAttack(spear, undefined, ['polearm-master']);
+    const result = await ctx.rollDamage({
+      itemSlug: 'spear',
+      mode: 'melee',
+      haftBonusAttack: true,
+    });
+    expect(result.expression).toMatch(/^1d4/);
+    expect(result.note).toContain('Golpe de Haste');
+  });
+
+  it('rejects haft bonus without polearm-master', async () => {
+    mockEquippedAttack({
+      ...WEAPONS.longsword(),
+      itemSlug: 'spear',
+      itemName: 'Lança',
+      damageDice: '1d6',
+    });
+    await expect(
+      ctx.rollDamage({
+        itemSlug: 'spear',
+        mode: 'melee',
+        haftBonusAttack: true,
+      }),
+    ).rejects.toThrow(/Mestre em Armas de Haste/);
+  });
 });

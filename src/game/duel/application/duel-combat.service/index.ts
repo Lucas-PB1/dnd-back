@@ -130,6 +130,7 @@ export class DuelCombatService {
       spellSlug: string;
       slotLevel?: number;
       metamagicSlug?: string;
+      carefulExcludeTargetIds?: string[];
       itemCastResourceSlug?: string;
       itemCastSpendAmount?: number;
       itemCastItemSlug?: string;

@@ -4,5 +4,7 @@ CREATE TYPE rpg.maneuver_effect_kind AS ENUM (
   'ac_bonus',
   'ability_check_bonus',
   'descriptive',
-  'reload_move'
+  'reload_move',
+  'blindsense_until_eot',
+  'attack_damage_bonus'
 );

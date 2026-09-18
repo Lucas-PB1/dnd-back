@@ -1,12 +1,13 @@
 
-
 export type ManeuverEffectKind =
   | 'temp_hp'
   | 'miss_damage'
   | 'ac_bonus'
   | 'ability_check_bonus'
   | 'descriptive'
-  | 'reload_move';
+  | 'reload_move'
+  | 'blindsense_until_eot'
+  | 'attack_damage_bonus';
 
 export type GunslingerManeuver = {
   slug: string;

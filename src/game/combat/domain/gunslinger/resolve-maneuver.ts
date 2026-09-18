@@ -30,6 +30,8 @@ export type ManeuverResolveResult = {
   missDamage?: number;
   acBonus?: number;
   checkBonus?: number;
+  blindsenseMeters?: number;
+  damageBonus?: number;
   note: string;
 };
 
@@ -81,6 +83,18 @@ export function resolveManeuverEffect(input: {
       return {
         ...base,
         note: 'Mova até 4,5 m e recarregue a arma à distância (Rolamento Evasivo)',
+      };
+    case 'blindsense_until_eot':
+      return {
+        ...base,
+        blindsenseMeters: 9,
+        note: 'Visão Cega 9 m até o fim do turno',
+      };
+    case 'attack_damage_bonus':
+      return {
+        ...base,
+        damageBonus: riskRoll.value,
+        note: `+${riskRoll.value} dano no próximo acerto à distância (Confronto); passe gunslingerRiskDamageBonus no ataque`,
       };
     case 'descriptive':
       return {

@@ -153,6 +153,17 @@ export class CombatAttackFlagsDto {
   @IsBoolean()
   eldritchSmite?: boolean;
 
+  @ApiPropertyOptional({
+    minimum: 1,
+    maximum: 20,
+    description: 'Pistoleiro: +N dano (Risk já gasto, ex. Confronto)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  gunslingerRiskDamageBonus?: number;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
@@ -187,6 +198,14 @@ export class CombatAttackFlagsDto {
   @IsOptional()
   @IsBoolean()
   chargerStrike?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Polearm Master — Golpe de Haste: dano 1d4 Contundente + mod (ação bônus)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  haftBonusAttack?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()

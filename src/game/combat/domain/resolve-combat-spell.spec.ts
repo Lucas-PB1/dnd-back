@@ -310,4 +310,78 @@ describe('resolveCombatSpell', () => {
     }
     expect(rollD20Check).toHaveBeenCalledTimes(2);
   });
+
+  it('empowered-spell rerolls the lowest damage dice', () => {
+    const { rollDie } = jest.requireMock('@game/dice/domain/dice') as {
+      rollDie: jest.Mock;
+    };
+    rollDie.mockClear();
+    // 3 MM darts: first pass 1,1,4 then reroll two lowest → 4,4
+    rollDie
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(4)
+      .mockReturnValueOnce(4)
+      .mockReturnValueOnce(4);
+    const r = resolveCombatSpell({
+      row: mmRow,
+      slotLevel: 1,
+      characterLevel: 5,
+      ...common,
+      charismaModifier: 2,
+      metamagicSlug: 'empowered-spell',
+    });
+    expect(r.kind).toBe('auto_damage');
+    if (r.kind === 'auto_damage') {
+      // (4+1)+(4+1)+(4+1) = 15
+      expect(r.damage).toBe(15);
+    }
+    expect(rollDie).toHaveBeenCalledTimes(5);
+  });
+
+  it('careful-spell skips save_damage on protected target', () => {
+    const r = resolveCombatSpell({
+      row: sacredFlameRow,
+      slotLevel: 0,
+      characterLevel: 1,
+      ...common,
+      metamagicSlug: 'careful-spell',
+      carefulProtectsTarget: true,
+    });
+    expect(r.kind).toBe('save_damage');
+    if (r.kind === 'save_damage') {
+      expect(r.damage).toBe(0);
+      expect(r.saved).toBe(true);
+    }
+  });
+
+  it('apply_condition teia applies restrained on failed save', () => {
+    const { rollD20Check } = jest.requireMock('@game/dice/domain/dice') as {
+      rollD20Check: jest.Mock;
+    };
+    rollD20Check.mockClear();
+    rollD20Check.mockReturnValue({
+      total: 5,
+      d20: { kept: [5], rolls: [5] },
+    });
+    const r = resolveCombatSpell({
+      row: baseRow({
+        spellSlug: 'teia',
+        resolution: 'apply_condition',
+        label: 'Teia',
+        spellLevel: 2,
+        saveAbilitySlug: 'destreza',
+        conditionSlug: 'restrained',
+      }),
+      slotLevel: 2,
+      characterLevel: 5,
+      ...common,
+      spellSaveDc: 14,
+    });
+    expect(r.kind).toBe('apply_condition');
+    if (r.kind === 'apply_condition') {
+      expect(r.conditionSlug).toBe('restrained');
+      expect(r.applied).toBe(true);
+    }
+  });
 });

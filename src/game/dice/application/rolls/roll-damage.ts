@@ -8,6 +8,7 @@ import { featureSchedulesFromCatalog } from '@game/combat/domain/feature-schedul
 import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { rollDamageParts } from '@game/dice/domain/dice';
+import { assertPolearmHaftBonusAttack } from '@game/combat/domain/feats/polearm-haft';
 import type {
   CharacterRollResponseDto,
   RollDamageDto,
@@ -84,12 +85,28 @@ export async function executeRollDamage(input: {
     ownerKind: 'feat',
     ownerSlugs: featSlugs,
   });
+  if (input.dto.haftBonusAttack) {
+    try {
+      assertPolearmHaftBonusAttack({
+        featSlugs,
+        mode: input.dto.mode,
+        itemSlug: input.dto.itemSlug,
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Golpe de Haste inválido',
+      );
+    }
+  }
+  const damageDice = input.dto.haftBonusAttack ? '1d4' : attack.damageDice;
   const dieOpts = {
     critical: input.dto.critical,
-    treatOnesAndTwosAsThree: attack.greatWeaponFighting,
+    treatOnesAndTwosAsThree:
+      !input.dto.haftBonusAttack && attack.greatWeaponFighting,
     // GWF (1–2→3) already covers floor; don't also apply Elemental Adept 1→2.
     treatOnesAsTwos:
       (!attack.greatWeaponFighting &&
+        !input.dto.haftBonusAttack &&
         hasDamageDieFloor(featEffects, featSlugs)) ||
       Boolean(input.dto.damageDieFloor),
     flipLowestDie:
@@ -99,13 +116,9 @@ export async function executeRollDamage(input: {
       hasDamageDieExplode(featEffects, featSlugs) &&
       Boolean(input.dto.damageDieExplode),
   };
-  const base = rollDamageParts(
-    attack.damageDice,
-    attack.damageBonus,
-    dieOpts,
-  );
+  const base = rollDamageParts(damageDice, attack.damageBonus, dieOpts);
   const alternateBase = input.dto.savageAttacker
-    ? rollDamageParts(attack.damageDice, attack.damageBonus, dieOpts)
+    ? rollDamageParts(damageDice, attack.damageBonus, dieOpts)
     : null;
   const acc = createDamageAccumulator(
     base.total,
@@ -113,6 +126,11 @@ export async function executeRollDamage(input: {
     base.dice[0]?.rolls ?? [],
   );
   noteRageBonus(acc, attack.rageDamageBonus);
+  if (input.dto.haftBonusAttack) {
+    acc.notes.push(
+      'Golpe de Haste (PAM): 1d4 Contundente + mod (ação bônus após Atacar).',
+    );
+  }
   if (alternateBase) {
     acc.notes.push(
       'Atacante Selvagem: escolha entre esta rolagem e alternateRolls[0] (1×/turno).',
