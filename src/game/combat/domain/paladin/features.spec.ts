@@ -6,6 +6,7 @@ import {
   isPaladinClass,
   paladinAttacksPerAction,
   paladinSavingThrowAuraBonus,
+  protectiveSmiteAuraCoverNote,
   radiantStrikesDie,
   sacredWeaponAttackBonus,
 } from './features';
@@ -37,6 +38,20 @@ describe('paladin-features', () => {
       expect(divineSmiteDice({ slotLevel: 3, vsUndeadOrFiend: true })).toBe(
         '5d8',
       );
+    });
+  });
+
+  describe('protectiveSmiteAuraCoverNote', () => {
+    it('reminds half cover in aura for devotion 15+', () => {
+      expect(
+        protectiveSmiteAuraCoverNote({ subclassSlug: 'devotion', level: 15 }),
+      ).toContain('Cobertura Parcial');
+      expect(
+        protectiveSmiteAuraCoverNote({ subclassSlug: 'devotion', level: 14 }),
+      ).toBeNull();
+      expect(
+        protectiveSmiteAuraCoverNote({ subclassSlug: 'glory', level: 15 }),
+      ).toBeNull();
     });
   });
 

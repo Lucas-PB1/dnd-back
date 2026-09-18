@@ -37,7 +37,6 @@ Só retomar com pedido explícito. **Não** é combate real.
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 3 | [ ] Paladino: Destruição Protetora (lembrete Cobertura na aura) | Lembrete de UI, sem motor novo |
 | 4 | [ ] NL: escolhas secundárias de espécie (`choice_kind` se a ficha precisar) | Fino e só se a ficha pedir |
 | 5 | [ ] GH Cap. 7 magias: overlay PT fino | Editorial |
 | 6 | [ ] NL: features só texto → Passivas / economy (Provocação, Regeneração, …) | Editorial + economy pontual |

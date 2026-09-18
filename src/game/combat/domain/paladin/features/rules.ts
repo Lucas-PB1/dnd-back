@@ -28,6 +28,25 @@ export function divineSmiteDice(input: {
   return `${base + bonus}d8`;
 }
 
+/** Juramento da Devoção nv.15 — lembrete de UI (sem auto-aplicar cobertura). */
+export const PROTECTIVE_SMITE_UNLOCK_LEVEL = 15;
+
+export function protectiveSmiteAuraCoverNote(input: {
+  subclassSlug: string | null | undefined;
+  level: number;
+}): string | null {
+  if (
+    input.subclassSlug !== 'devotion' ||
+    input.level < PROTECTIVE_SMITE_UNLOCK_LEVEL
+  ) {
+    return null;
+  }
+  return (
+    'Destruição Protetora: Cobertura Parcial na Aura de Proteção até o início ' +
+    'do seu próximo turno (marque cobertura nos ataques contra você/aliados na aura)'
+  );
+}
+
 export function radiantStrikesDie(
   level: number,
   bands: readonly FeatureScheduleBand[],

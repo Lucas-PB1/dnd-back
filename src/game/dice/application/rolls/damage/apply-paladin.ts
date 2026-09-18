@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import {
   divineSmiteDice,
+  protectiveSmiteAuraCoverNote,
   radiantStrikesDie,
 } from '@game/combat/domain/paladin';
 import { addDamagePart } from './damage-accumulator';
@@ -23,6 +24,11 @@ export const applyPaladinExtras: DamageEffect = async (ctx, acc) => {
     acc.notes.push(
       `Destruição Divina: ${dice} Radiante (espaço de ${slotLevel}º círculo gasto)`,
     );
+    const coverNote = protectiveSmiteAuraCoverNote({
+      subclassSlug: character.subclassSlug,
+      level: character.level,
+    });
+    if (coverNote) acc.notes.push(coverNote);
   } else if (dto.divineSmite) {
     throw new BadRequestException('Divine Smite requires Paladin class');
   }

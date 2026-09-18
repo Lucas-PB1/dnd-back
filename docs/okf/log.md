@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Adiado #3 Destruição Protetora lembrete
+
+* **Update** (16:35 UTC): nota no roll de Destruição Divina (Devoção 15+) para marcar Cobertura Parcial na aura; sem auto-aplicar `targetCover`. Passiva/`phb_level_combat_note` já existiam.
+
+— refs: [`apply-paladin.ts`](../../src/game/dice/application/rolls/damage/apply-paladin.ts), [`rules.ts`](../../src/game/combat/domain/paladin/features/rules.ts), [`backlog.md`](../plans/backlog.md) — motivo: lembrete no momento do smite, sem motor de cobertura.
+
 ## 2026-09-18 — Adiado #2 DTO actionSlug vs catálogo
 
 * **Update** (16:20 UTC): gate de drift `table-action-slug-catalog-drift.spec` — DTO `@IsIn` ⊆ economy∪panel∪effect∪subclass_table_action; economy wireável (sem GH Cap.2 bulk) ⊆ DTO ∪ allowlist explícita.

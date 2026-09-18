@@ -57,6 +57,13 @@ export const CHARACTERS = {
     level: 5,
     abilityScores: testScores({ carisma: 16 }),
   },
+  paladinDevotionL15: {
+    id: 'c1',
+    classSlug: 'paladin',
+    subclassSlug: 'devotion',
+    level: 15,
+    abilityScores: testScores({ carisma: 16 }),
+  },
   gloomStalker: {
     id: 'c1',
     classSlug: 'ranger',

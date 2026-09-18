@@ -122,10 +122,24 @@ describe('executeRollDamage — class rules', () => {
     });
     expect(result.label).toContain('Destruição Divina');
     expect(result.note).toContain('Destruição Divina');
+    expect(result.note ?? '').not.toContain('Destruição Protetora');
     expect(ctx.resourceSpender.consumeSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ classSlug: 'paladin' }),
       1,
     );
+  });
+
+  it('reminds Protective Smite half cover on Divine Smite for devotion 15+', async () => {
+    mockCharacter(CHARACTERS.paladinDevotionL15);
+    mockEquippedAttack(WEAPONS.longsword());
+    const result = await ctx.rollDamage({
+      itemSlug: 'longsword',
+      mode: 'melee',
+      divineSmite: true,
+      smiteSlotLevel: 1,
+    });
+    expect(result.note).toContain('Destruição Protetora');
+    expect(result.note).toContain('Cobertura Parcial');
   });
 
   it('spends dread-strike for Dread Ambusher and adds psychic damage', async () => {
