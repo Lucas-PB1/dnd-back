@@ -999,7 +999,7 @@ WITH rows(slug, sort_order, label, note) AS (
     ('chosen-by-fate', 10, 'Ressurgimento Heroico · Bonança Heroica', 'Ressurgimento Heroico · Bonança Heroica'),
     ('clout', 10, 'Influência Forte', 'Influência Forte'),
     ('cold-water-warrior', 10, 'Contra a Corrente · Resistência à Águ…', 'Contra a Corrente · Resistência à Água Fria · Salto Nadando · Combatente Aquático'),
-    ('combat-flyting', 10, 'Provocação', 'Provocação'),
+    ('combat-flyting', 10, 'Provocação', 'AB: alvo a 9 m — salv. CAR (CD 8+CAR+PB); falha −1 ataque vs você (acumula). Sucesso: imune 24 h.'),
     ('cut-down-the-nithingr', 10, 'Flagelo dos Covardes · Visagem Aterra…', 'Flagelo dos Covardes · Visagem Aterradora'),
     ('endurance-conditioning', 10, 'Recuperação Rápida', 'Recuperação Rápida'),
     ('faster-crafting', 10, 'Proficiência Artesanal Aumentada · Cr…', 'Proficiência Artesanal Aumentada · Criação Rápida em Combate · Criação em Descanso Curto'),
@@ -1481,4 +1481,22 @@ fx AS (
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, '1×/turno após mover ≥4,5 m; Cont/Perf/Cort.'
 FROM fx
+ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;
+
+-- Provocação (combat-flyting) — mesa declare via POST feat/table-action
+WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'combat-flyting'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'table_note'::rpg.effect_kind, 'feat'::rpg.effect_owner_kind, feat.id,
+         'on_table_action'::rpg.effect_trigger, 'feat-combat-flyting-provoke', 1, 20,
+         'Provocação'
+  FROM feat
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Declare alvo a até 9 m (ouve e compreende). Salvaguarda de Carisma CD 8 + mod. Carisma + PB. Falha: −1 nas jogadas de ataque contra você (acumula até o mod. de Carisma; manter com AB; máx. PB rodadas). Sucesso: imune às suas Provocações por 24 h.'
+FROM ins
 ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;

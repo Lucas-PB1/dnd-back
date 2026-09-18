@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-18T17:35:00.000Z",
+  "source": "docs/source/extracts/grim-hollow/cap7-spells.json",
+  "overlay": "docs/source/extracts/grim-hollow/cap7-spells-pt.json",
+  "seed": "database/seeds/spell/grim-hollow/phb_spell.cap7.sql",
+  "spellCount": 101,
+  "sangromancyCount": 29,
+  "overlayEntries": 101,
+  "descriptionPt": 101,
+  "descriptionEnResidual": 0,
+  "meta": "overlay fino completo (estilo NL Cap.5); sangromancy lote1 + residual 0–9 lote2",
+  "applyScript": "scripts/generate/apply-cap7-spell-pt-overlay.mjs",
+  "notes": [
+    "call-the-rabid-beast, crimson-lash, investiture-of-venom, weave-numen truncados na fonte EN — PT espelha truncamento"
+  ]
+}

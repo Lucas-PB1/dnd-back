@@ -94,7 +94,6 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
-| [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Modal Escudo/Giga no cast de Mísseis |
 | [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Companheiro Primal na mesa |
 
 ### Referência (extract / SSOT, mesa feito)

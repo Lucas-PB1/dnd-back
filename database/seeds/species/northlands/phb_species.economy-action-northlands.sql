@@ -57,6 +57,16 @@ INSERT INTO rpg.phb_class_economy_action (
   NULL, NULL
 ),
 (
+  'species-trollkin-regeneration', NULL,
+  (SELECT id FROM rpg.phb_species WHERE slug = 'trollkin'), NULL,
+  'Regeneração Trollística', 'bonus'::rpg.action_economy_bucket, 1,
+  NULL, NULL, false,
+  'AB: gastar DV (até PB) para curar',
+  'Ação Bônus: gaste qualquer número de Dados de Vida até o seu PB e recupere PV iguais ao total rolado (+ CON se a mesa aplicar). Se sofrer dano Ácido ou Ígneo, perde o acesso até terminar um Descanso Curto — marque na ficha/Passivas. Mesa — role e ajuste PV/DV na ficha (sem auto-spend tipado ainda).',
+  NULL, NULL, 341,
+  NULL, NULL
+),
+(
   'species-baugsmidr-sense-magic', NULL,
   (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), NULL,
   'Sentir Magia', 'bonus'::rpg.action_economy_bucket, 1,

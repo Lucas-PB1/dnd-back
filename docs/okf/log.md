@@ -1,5 +1,41 @@
 # log
 
+## 2026-09-18 — Adiado #10 MM Escudo/Giga no cast
+
+* **Update** (17:15 UTC): critério de pronto já coberto — API `applyMissileShield`/`applyGigaMissile` + `applyMagicMissileMageOnCast` (body ∪ armed); front modal Conjurar/uso gratuito; armar Economia mantido. Specs `cast-spell` **18** verdes; vitest boosts verdes. Plano filho apagado.
+
+— refs: [`cast-spell.dto.ts`](../../src/game/session/dto/core/session-commands.dto/cast-spell.dto.ts), [`cast-magic-missile.ts`](../../src/game/session/infrastructure/character-state/spell/cast-magic-missile.ts), [`magic-missile-boost-dialog.tsx`](../../../dnd-front/src/features/character/character-sheet/ui/beyond/spells/magic-missile-boost-dialog.tsx), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #10 (modal + flags no cast).
+
+## 2026-09-18 — Adiado #9 GH Cap.2 features overlay PT
+
+* **Update** (17:10 UTC): `cap2-features-pt.json` **218/218** + bake em `phb_subclass_feature.all.sql`; residual EN **0** (meta <30). Scripts `merge-cap2-feature-pt-batches.mjs` + `apply-cap2-feature-pt-overlay.mjs`; audit `_audit-cap2-pt.json`.
+
+— refs: [`cap2-features-pt.json`](../source/extracts/grim-hollow/cap2-features-pt.json), [`_audit-cap2-pt.json`](../source/extracts/grim-hollow/_audit-cap2-pt.json), [`phb_subclass_feature.all.sql`](../../database/seeds/subclass/grim-hollow/phb_subclass_feature.all.sql), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #9 (features Cap.2 PT fino).
+
+## 2026-09-18 — Adiado #6 NL Provocação / Regeneração economy
+
+* **Update** (18:10 UTC): Provocação (`combat-flyting`) → economy AB + `table_note` mesa; Passiva `combat_note` enriquecida. Regeneração Trollística → economy AB declare (sem `expend_hit_dice` tipado) + Passiva aponta economia. SEED_ORDER: `feat/northlands/phb_feat.economy-action.sql`.
+
+— refs: [`phb_feat.economy-action.sql`](../../database/seeds/feat/northlands/phb_feat.economy-action.sql), [`phb_species.economy-action-northlands.sql`](../../database/seeds/species/northlands/phb_species.economy-action-northlands.sql), [`phb_effect.northlands.sql`](../../database/seeds/effect/northlands/phb_effect.northlands.sql), [`phb_effect.species.sql`](../../database/seeds/effect/phb/phb_effect.species.sql), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #6 (texto → Passivas/economy).
+
+## 2026-09-18 — Adiado #5 GH Cap.7 overlay PT completo
+
+* **Update** (17:35 UTC): `cap7-spells-pt.json` **101/101** + bake no seed; residual EN description **0**. Truncamentos herdados da fonte (`call-the-rabid-beast`, `crimson-lash`, `investiture-of-venom`, `weave-numen`).
+
+— refs: [`cap7-spells-pt.json`](../source/extracts/grim-hollow/cap7-spells-pt.json), [`_audit-cap7-pt.json`](../source/extracts/grim-hollow/_audit-cap7-pt.json), [`phb_spell.cap7.sql`](../../database/seeds/spell/grim-hollow/phb_spell.cap7.sql), [`backlog.md`](../plans/backlog.md) — motivo: fechar Cap.7 magias overlay fino.
+
+## 2026-09-18 — Adiado #5 GH Cap.7 overlay PT (lote sangromancy)
+
+* **Update** (17:00 UTC): `cap7-spells-pt.json` + bake no seed — **29/29** sangromancy em PT fino; residual **72** magias EN. Audit `_audit-cap7-pt.json`; script `apply-cap7-spell-pt-overlay.mjs`.
+
+— refs: [`cap7-spells-pt.json`](../source/extracts/grim-hollow/cap7-spells-pt.json), [`phb_spell.cap7.sql`](../../database/seeds/spell/grim-hollow/phb_spell.cap7.sql), [`backlog.md`](../plans/backlog.md) — motivo: destravar Cap.7 sem fingir 101/101 num turno.
+
+## 2026-09-18 — Adiado #4 NL choice_kind secundário
+
+* **Update** (16:50 UTC): fechado sem wire — ficha/API já cobrem primárias NL; secundárias (instinct/prowess/casting/Ápice) não entram em `trait-choices` nem `SKILL_SPECIES_CHOICE_KINDS`. Critério de reabertura em Notas do backlog.
+
+— refs: [`0008_species_choice_kind.sql`](../../database/schema/010_enums/0008_species_choice_kind.sql), [`types.ts`](../../src/game/sheet/domain/stats/character-check-bonuses/types.ts), [`backlog.md`](../plans/backlog.md) — motivo: gate “só se a ficha pedir”; sem consumidor no create.
+
 ## 2026-09-18 — Adiado #3 Destruição Protetora lembrete
 
 * **Update** (16:35 UTC): nota no roll de Destruição Divina (Devoção 15+) para marcar Cobertura Parcial na aura; sem auto-aplicar `targetCover`. Passiva/`phb_level_combat_note` já existiam.

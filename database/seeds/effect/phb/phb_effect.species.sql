@@ -1595,8 +1595,9 @@ ins AS (
 )
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
-  'Ação Bônus: gastar DV até PB para curar. Ácido/Ígneo: perde acesso até Descanso Curto.'
-FROM ins WHERE sort_order = 12;
+  'Ação Bônus: gastar DV até PB para curar. Ácido/Ígneo: perde acesso até Descanso Curto. Economia: Regeneração Trollística.'
+FROM ins WHERE sort_order = 12
+ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'trollkin'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'trollkin-fey-charm'),

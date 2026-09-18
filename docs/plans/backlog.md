@@ -37,11 +37,6 @@ Só retomar com pedido explícito. **Não** é combate real.
 
 | # | Item | Por quê nesta posição |
 |---|------|------------------------|
-| 4 | [ ] NL: escolhas secundárias de espécie (`choice_kind` se a ficha precisar) | Fino e só se a ficha pedir |
-| 5 | [ ] GH Cap. 7 magias: overlay PT fino | Editorial |
-| 6 | [ ] NL: features só texto → Passivas / economy (Provocação, Regeneração, …) | Editorial + economy pontual |
-| 9 | [ ] GH Cap. 2 features: EN residual (~166 → meta <30) | Volume, não desenho |
-| 10 | [ ] Mísseis Mágicos: Escudo/Giga no cast — [`mm-cast-options-modal.md`](mm-cast-options-modal.md) | API + modal, um fluxo |
 | 12 | [ ] Cast de item: concentração / componentes / CD overlay | Cruza item + magia |
 | 13 | [ ] GH: Skinrider's Trance (estado/actor vinculado) | Actor extra na ficha |
 
@@ -68,7 +63,8 @@ Lista residual / parqueado: [`combat-real-deferred.md`](combat-real-deferred.md)
 
 ## Notas (não puxar agora)
 
-- [ ] **XP de monstro:** `phb_creature_template` tem ND (`challenge_rating`); **não** há XP de encontro/derrota (coluna, tabela CR→XP nem DTO). `xp_threshold` em `phb_character_level` é só limiar de PC. Quando for: seed + contrato no Catalog, sem calcular no front.
+- [ ] **XP de monstro:** `phb_creature_template` tem ND (`challenge_rating`); **não** há XP de encontro/derrota (coluna, tabela CR→XP nem DTO). `xp_threshold` em `phb_character_level` é limiar de PC. Quando for: seed + contrato no Catalog, sem calcular no front.
+- [ ] **NL escolhas secundárias de espécie:** primárias já tipadas (`bearfolk_lineage`, `beastkin_*`, `giantkin_ancestry`, …). Secundárias (perícia beastkin/werekin, casting Giantkin, Ápice/arma natural) só texto/`option_key` stub — **reabrir só se o front pedir pickers** (enum + view + `SKILL_SPECIES_CHOICE_KINDS` / casting resolver).
 
 ---
 

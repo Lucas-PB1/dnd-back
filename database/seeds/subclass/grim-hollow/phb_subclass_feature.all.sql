@@ -1,5 +1,6 @@
 -- Grim Hollow Cap. 2 — subclass features
--- Fonte: D:/Projetos/dnd-work/dnd-api/docs/source/extracts/grim-hollow/cap2-subclasses-en.json
+-- Fonte: docs/source/extracts/grim-hollow/cap2-subclasses-en.json
+-- Overlay PT: docs/source/extracts/grim-hollow/cap2-features-pt.json
 
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description
@@ -20,7 +21,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'),
   3,
   'Corpo a Corpo',
-  'Your skill in close combat enables you to inflict crushing blows while keeping your opponent off balance. Quando você acerta uma creature with uma jogada de ataque using a arma corpo a corpo, você pode take a Reação to deal an extra 2d6 damage of the same type dealt by the weapon. That creature has Desvantagem on its next jogada de ataque before the start of your next turn. The damage becomes 4d6 when you reach Caçador de Monstros level 11.'
+  'Sua habilidade em combate próximo permite golpes devastadores enquanto desequilibra o oponente. Quando você acerta uma criatura com uma jogada de ataque usando uma arma corpo a corpo, pode gastar uma Reação para causar 2d6 de dano extra do mesmo tipo causado pela arma. Essa criatura tem Desvantagem na próxima jogada de ataque dela antes do início do seu próximo turno. O dano se torna 4d6 quando você alcança o 11º nível de Caçador de Monstros.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -32,7 +33,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'),
   7,
   'Determinação Inabalável',
-  'Você tem Vantagem on salvaguardas you make to avoid or end the condição Amedrontado, and you are immune to the condição Amedrontado caused by creature types in your Grimório de Monstros. Além disso, when you hit a creature with an attack como parte de uma Reação, você pode choose a Amedrontado creature within 18 m that can see you (including yourself). The condition ends on that creature.'
+  'Você tem Vantagem em salvaguardas que fizer para evitar ou terminar a condição Amedrontado, e é imune à condição Amedrontado causada por tipos de criatura no seu Grimório de Monstros. Além disso, quando acerta uma criatura com um ataque como parte de uma Reação, pode escolher uma criatura Amedrontada a até 18 m que possa vê-lo (incluindo você). A condição termina nessa criatura.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -44,7 +45,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'),
   10,
   'Aterrorizar os Terrores',
-  'Your reputation has become such that monsters preying on the fearful have come to fear you. Quando você acerta uma creature with an attack como parte de uma Reação, você pode force the creature to make a Sabedoria salvaguarda or have the condição Amedrontado até o fim do seu próximo turno. The CD for the salvaguarda equals 8 mais seu modificador de Inteligência e seu Bônus de Proficiência.'
+  'Sua reputação é tal que monstros que se alimentam do medo passaram a temê-lo. Quando você acerta uma criatura com um ataque como parte de uma Reação, pode forçá-la a fazer uma salvaguarda de Sabedoria ou ficar com a condição Amedrontado até o fim do seu próximo turno. A CD da salvaguarda é 8 + seu modificador de Inteligência + seu Bônus de Proficiência.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -56,7 +57,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'),
   15,
   'Redirecionamento Mortal',
-  'Your strikes have become even deadlier. The extra damage of your Close Quarters increases to 6d6. Além disso, se você deal damage to a creature with Close Quarters, the target has Desvantagem on all jogada de ataques até o fim do seu próximo turno.'
+  'Seus golpes ficaram ainda mais letais. O dano extra de Corpo a Corpo aumenta para 6d6. Além disso, se você causar dano a uma criatura com Corpo a Corpo, o alvo tem Desvantagem em todas as jogadas de ataque até o fim do seu próximo turno.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -68,7 +69,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'),
   18,
   'Passos Controlados',
-  'Você é such an effective combatant that you are always in control and never off balance. Você pode realizar a Reação twice in a round instead of once.'
+  'Você é um combatente tão eficaz que permanece sempre no controle e nunca desequilibrado. Você pode realizar uma Reação duas vezes em uma rodada, em vez de uma.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -79,8 +80,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   3,
-  'Alquímica Gastronomia',
-  'Você ganha proficiência com Alchemist’s Supplies and Cook’s Utensils .'
+  'Gastronomia Alquímica',
+  'Você ganha proficiência com Suprimentos de Alquimista e Utensílios de Cozinheiro.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -92,7 +93,11 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   3,
   'Metabolismo Transmutador',
-  'Você ganha a capacidade de consume monster remains, o que faz com que your body to adopt powerful and frightening mutations. These appear in the “ Mutations ” section later in the subclass’s description. Salvaging Portions. Como ação Utilizar, você pode harvest a single portion from the physical remains of a creature. Only one portion can be harvested from each creature. Record the monster’s creature type. A harvested portion lasts until you finish a Descanso Longo, at which point it loses its potency. Consuming Portions. Como Ação Bônus, você pode consume a portion. After you consume the portion, você escolhe a mutation to gain, dependendo de the creature’s type. Você pode gain the benefits of consumed portions um número de vezes até 1 mais seu modificador de Inteligência (mínimo de 1). Quando você termina um Descanso Longo, você recupera the ability to consume portions. Você pode benefit from multiple portions simultaneously, but você pode''t gain the same mutation more than once at the same time.'
+  'Você ganha a capacidade de consumir restos de monstros, o que faz seu corpo adotar mutações poderosas e assustadoras. Elas aparecem na seção “Mutações” mais adiante na descrição da subclasse.
+
+Salvando Porções. Como ação Utilizar, você pode colher uma única porção dos restos físicos de uma criatura. Só uma porção pode ser colhida de cada criatura. Anote o tipo de criatura do monstro. Uma porção colhida dura até você terminar um Descanso Longo, quando perde a potência.
+
+Consumindo Porções. Como Ação Bônus, você pode consumir uma porção. Depois de consumi-la, escolhe uma mutação para ganhar, conforme o tipo da criatura. Você pode obter os benefícios de porções consumidas um número de vezes até 1 + seu modificador de Inteligência (mínimo 1). Quando termina um Descanso Longo, recupera a capacidade de consumir porções. Você pode se beneficiar de várias porções ao mesmo tempo, mas não pode ganhar a mesma mutação mais de uma vez simultaneamente.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -103,8 +108,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   7,
-  'Sincronizada Resposta',
-  'Your ingestion of monsters heightens your understanding of them and their behaviour. Você ganha this additional effect when you consume a monster portion: For 1 minute, when you make an attack como parte de uma Reação, você causa an extra 1d6 damage. This damage has do mesmo tipo que the weapon or Ataque Desarmado used for the attack.'
+  'Resposta Sincronizada',
+  'A ingestão de monstros aprofunda sua compreensão deles e do comportamento deles. Você ganha este efeito adicional quando consome uma porção de monstro: por 1 minuto, quando faz um ataque como parte de uma Reação, causa 1d6 de dano extra. Esse dano é do mesmo tipo da arma ou do Ataque Desarmado usado no ataque.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -115,8 +120,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   10,
-  'Roedora Fome',
-  'Your hunger for your enemy allows you to partake of its essence during battle. Quando você deal damage to a creature with a melee attack using a weapon or Ataque Desarmado , you gain Pontos de Vida Temporários igual a half the damage dealt. If the target is a creature type in your Grimório de Monstros, you instead gain Pontos de Vida Temporários igual a the damage dealt instead. Você pode usar este recurso um número de times igual a your modificador de Inteligência (mínimo de once). You regain all expended uses when you finish a Short or Descanso Longo.'
+  'Fome Roedora',
+  'Sua fome pelo inimigo permite absorver a essência dele em combate. Quando você causa dano a uma criatura com um ataque corpo a corpo usando uma arma ou Ataque Desarmado, ganha Pontos de Vida Temporários iguais à metade do dano causado. Se o alvo for um tipo de criatura no seu Grimório de Monstros, em vez disso você ganha Pontos de Vida Temporários iguais ao dano causado. Você pode usar este recurso um número de vezes igual ao seu modificador de Inteligência (mínimo 1). Você recupera todos os usos gastos ao terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -127,8 +132,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   15,
-  'Alquímica Decocções',
-  'Você pode spend 1 hour and 20 PO worth of alchemical ingredients (such as special herbs or monster salvage) to use your Alchemist’s Supplies to convert a monster portion into a decoction. A decoction is a magic potion that grants the benefits of a consumed monster portion. Você pode have 4 unconsumed decoctions active. Você pode destroy a decoction como ação Utilizar. A creature other than você pode consume 1 decoction without adverse effects. A creature gains 1 nível de Exaustão for each decoction it consumes after the first. A creature must finish a Descanso Longo before it regains the ability to safely consume a decoction.'
+  'Decocções Alquímicas',
+  'Você pode gastar 1 hora e 20 PO em ingredientes alquímicos (como ervas especiais ou salvamento de monstro) para usar seus Suprimentos de Alquimista e converter uma porção de monstro em uma decocção. Uma decocção é uma poção mágica que concede os benefícios de uma porção de monstro consumida. Você pode ter 4 decocções não consumidas ativas. Você pode destruir uma decocção como ação Utilizar. Uma criatura que não seja você pode consumir 1 decocção sem efeitos adversos. Uma criatura ganha 1 nível de Exaustão por cada decocção que consumir após a primeira. A criatura deve terminar um Descanso Longo antes de recuperar a capacidade de consumir uma decocção com segurança.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -139,8 +144,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
   18,
-  'Adquirido Paladar',
-  'Your hunger for monster portions has increased to the point of being insatiable. Você pode now consume 1 additional portion safely. Além disso, por 1 minuto when you consume a portion, you have Vantagem , on jogada de ataques made como parte de uma Reação.'
+  'Paladar Adquirido',
+  'Sua fome por porções de monstro tornou-se insaciável. Agora você pode consumir 1 porção adicional com segurança. Além disso, por 1 minuto ao consumir uma porção, você tem Vantagem nas jogadas de ataque feitas como parte de uma Reação.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -151,8 +156,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   3,
-  'Acólito de the Oculto',
-  'Você ganha proficiency in the Arcana skill.'
+  'Acólito do Oculto',
+  'Você ganha proficiência na perícia Arcanismo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -164,7 +169,19 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   3,
   'Conjuração',
-  'Your study of the occult gives you the ability to cast spells. Truques. Você aprende dois truques de sua escolha from the magia de Mago list. Sempre que você gain a Caçador de Monstros level, você pode replace one of these truques with another de sua escolha from the magia de Mago list. Quando você alcança Caçador de Monstros level 10, you learn another Wizard cantrip de sua escolha. Espaços de Magia. The Occultist Spellcasting table shows how many espaços de magia you have to cast your level 1+ spells. You regain all expended espaços de magia when you finish a Descanso Longo. Prepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with este recurso. To start, choose three level 1 magia de Magos. Burning Hands , Detect Magic , and Protection from Evil and Good are recommended. The number of spells on your list increases as you gain Caçador de Monstros levels, as shown in the Prepared Spells column of the Occultist Spellcasting table. Whenever that number increases, choose additional spells from the magia de Mago list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have espaços de magia. For example, se você’re a level 7 Caçador de Monstros, your list of prepared spells can include five magia de Magos of levels 1 and 2 in any combination. Changing Your Prepared Spells. Sempre que você gain a Caçador de Monstros level, você pode replace one spell on your list with another magia de Mago. Spellcasting Ability. Inteligência is sua habilidade de conjuração for your magia de Magos. Foco de Conjuração. Você pode usar an Foco Arcano as Foco de Conjuração for your magia de Magos.'
+  'Seu estudo do oculto concede a capacidade de conjurar magias.
+
+Truques. Você aprende dois truques de sua escolha da lista de magias de Mago. Sempre que ganha um nível de Caçador de Monstros, pode substituir um desses truques por outro de sua escolha da lista de magias de Mago. Quando alcança o 10º nível de Caçador de Monstros, aprende outro truque de Mago de sua escolha.
+
+Espaços de Magia. A tabela Conjuração do Ocultista mostra quantos espaços de magia você tem para conjurar magias de 1º círculo ou superior. Você recupera todos os espaços gastos ao terminar um Descanso Longo.
+
+Magias Preparadas de 1º+. Você prepara a lista de magias de 1º círculo ou superior disponíveis para conjurar com este recurso. Para começar, escolha três magias de Mago de 1º círculo. Mãos Flamejantes, Detectar Magia e Proteção contra o Bem e o Mal são recomendadas. O número de magias na lista aumenta conforme você sobe de nível de Caçador de Monstros, como na coluna Magias Preparadas da tabela. Sempre que esse número aumenta, escolha magias adicionais da lista de Mago até o número coincidir. As magias escolhidas devem ser de um círculo para o qual você tenha espaços. Por exemplo, se você for um Caçador de Monstros de 7º nível, sua lista pode incluir cinco magias de Mago de 1º e 2º círculos em qualquer combinação.
+
+Mudando Magias Preparadas. Sempre que ganha um nível de Caçador de Monstros, pode substituir uma magia da lista por outra magia de Mago.
+
+Habilidade de Conjuração. Inteligência é sua habilidade de conjuração para suas magias de Mago.
+
+Foco de Conjuração. Você pode usar um Foco Arcano como Foco de Conjuração para suas magias de Mago.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -175,8 +192,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   3,
-  'Arcana Interferência',
-  'Você tem Vantagem on salvaguardas against spells cast by creature types in your Grimório de Monstros. Além disso, when a creature você pode see within 18 m of you casts a spell or makes a spell attack, você pode use Resposta Estudada against that creature before the spell is cast.'
+  'Interferência Arcana',
+  'Você tem Vantagem em salvaguardas contra magias conjuradas por tipos de criatura no seu Grimório de Monstros. Além disso, quando uma criatura que você possa ver a até 18 m conjura uma magia ou faz um ataque de magia, você pode usar Resposta Estudada contra essa criatura antes da magia ser conjurada.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -187,8 +204,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   7,
-  'Mago Caçador',
-  'You consider Humanoideees that can cast spells as being a creature type in your Grimório de Monstros. Além disso, when you damage a creature type in your Grimório de Monstros that is concentrating, it has Desvantagem on the salvaguarda it makes to maintain its Concentração . Say what you will about their methods. The results speak for themselves. —Arcanist Inquisitor'
+  'Caçador de Magos',
+  'Você considera Humanoides capazes de conjurar magias como um tipo de criatura no seu Grimório de Monstros. Além disso, quando causa dano a um tipo de criatura no seu Grimório de Monstros que esteja se concentrando, ela tem Desvantagem na salvaguarda para manter a Concentração.
+
+“Digam o que quiserem sobre os métodos. Os resultados falam por si.” —Inquisidor Arcanista'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -199,8 +218,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   10,
-  'Oculto Knowledge',
-  'Your knowledge of magic has increased so that you learn to cast Rituals. Você pode conjurar any spell como Ritual if that spell has the Ritual tag and it’s a spell you have prepared. Além disso, you learn two spells de sua escolha. These spells can come from the Cleric, Druid, or magia de Mago list or any combination thereof (see a class’s section for its spell list). A spell você escolhe must have the Ritual tag. Quando você alcança Caçador de Monstros level 14, você pode replace one of the spells você conhece from este recurso with another spell de sua escolha from any spell list. The new spell must have the Ritual tag.'
+  'Conhecimento Oculto',
+  'Seu conhecimento de magia aumenta a ponto de você aprender a conjurar Rituais. Você pode conjurar qualquer magia como Ritual se ela tiver a etiqueta Ritual e estiver preparada. Além disso, aprende duas magias de sua escolha. Elas podem vir das listas de Clérigo, Druida ou Mago, ou qualquer combinação (veja a seção da classe para a lista). Uma magia escolhida deve ter a etiqueta Ritual. Quando alcança o 14º nível de Caçador de Monstros, pode substituir uma das magias que conhece por este recurso por outra magia de qualquer lista. A nova magia deve ter a etiqueta Ritual.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -211,8 +230,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   15,
-  'Mágico Égide',
-  'Você ganha a capacidade de extend a protective charm. You radiate an unseeable aura in a 6 m Emanação that originates from you. The aura is inactive while you have the Incapacitado condition. You and allies in your aura have Vantagem on salvaguardas against spells cast by creature types in your Grimório de Monstros. Além disso, you always have the Counterspell spell prepared. Você pode conjurar Counterspell once without expending a espaço de magia. Uma vez você cast the spell with este recurso, você pode’t do so in this way again until you finish a Descanso Longo.'
+  'Égide Mágica',
+  'Você ganha a capacidade de estender um encanto protetor. Você irradia uma aura invisível em uma Emanação de 6 m originada de você. A aura fica inativa enquanto você tiver a condição Incapacitado. Você e aliados na aura têm Vantagem em salvaguardas contra magias conjuradas por tipos de criatura no seu Grimório de Monstros. Além disso, você sempre tem a magia Contramagía preparada. Você pode conjurar Contramagía uma vez sem gastar um espaço de magia. Depois de conjurá-la assim, não pode fazê-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -224,7 +243,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'),
   18,
   'Resposta Arcana',
-  'Você tem learned to anticipate your enemies well enough to rapidly cast spells in response to their attacks. Quando você use Resposta Estudada, você pode cast a spell. The spell must have a casting time of an action and must target only that creature.'
+  'Você aprendeu a antecipar inimigos o bastante para conjurar magias rapidamente em resposta aos ataques deles. Quando usa Resposta Estudada, pode conjurar uma magia. A magia deve ter tempo de conjuração de uma ação e deve ter como alvo apenas aquela criatura.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -235,8 +254,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   3,
-  'Furtiva e Astuta',
-  'Você ganha proficiency in the Stealth skill and with Tinker’s Tools .'
+  'Furtivo e Astuto',
+  'Você ganha proficiência na perícia Furtividade e com Ferramentas de Funileiro.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -247,8 +266,24 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   3,
-  'Gadgets de Armadilheiro',
-  'Você aprende to create gadgets and mechanisms that help you during the hunt. As part of a Descanso Longo, você pode craft two Trapper Gadgets se você have materials and Tinker’s Tools on hand. Also, with 1 hour of work with such a kit and expending 20 PO worth of materials (such as equipment or monster salvage), você pode create one Trapper Gadget from the list below. Some Trapper Gadgets allow your target to make an ability check or salvaguarda to resist the gadget’s effects. The salvaguarda CD is calculated as follows: Trapper Gadgets Save CD = 8 + your modificador de Inteligência + your Bônus de Proficiência Trapper Gadgets Trapper Gadgets are listed in alphabetical order. Dread Venom. A foul-smelling blade oil that causes wounds to hemorrhage and refuse healing. Dread Venom can coat one Cortante or Perfurante weapon or up to 10 pieces of Cortante or Perfurante ammunition. Applying the oil takes 1 minute and the oil lasts 8 hours once applied. When a creature takes damage from the poisoned item, it can’t regain Pontos de Vida until it finishes a Short or Descanso Longo. Elemental Ammunition. The head of an arrow or bolt is tipped with poison, loaded with an acid vial, dipped in flammable oil, or coated with another substance. Como Ação Bônus, you imbue with elemental power a single piece of ammunition that can be fired from a Longbow , Shortbow , or Crossbow como parte de uman ação Atacar. When a Elemental Ammunition is imbued, choose a damage type: Acid, Cold, Fire, Lightning, Poison, or Thunder. When a creature takes damage from the Elemental Ammunition, it takes an additional 2d6 damage of the chosen type. Elemental Ammunition discharges its energy if it hits, and it can’t be recovered. If the attack misses, the Elemental Ammunition can be recovered and used again. Elemental Ammunition retains its power for 48 hours. Runic Bomb. Runic Bombs are used to hunt creatures resilient to mundane weapons. Como Ação Bônus, você pode throw the runic bomb at a point within 18 m que você possa ver, creating a 6 m-radius Sphere centered on that point. The Sphere spreads around corners, and its area is Lightly Obscured . It lasts por 1 minuto or until a strong wind (such as one created by Gust of Wind ) disperses it. Whenever Contundente, Perfurante, and Cortante damage is dealt to a creature inside the sphere, that damage is dano de Força instead of its normal damage type. A Runic Bomb is destroyed after a single use. Scorpion Anchor. This weapon is intended to keep flying foes anchored to the ground or stop monsters from fleeing. The Scorpion Anchor can be fired from a Longbow, Shortbow, or Crossbow como parte de uman ação Atacar. Quando você acerta uma creature with uma jogada de ataque using a Scorpion Anchor, it has the Restrained condition. A creature Restrained by the Scorpion Anchor can take an action to make a Força ( Athletics ) check against your Trapper Gadget save CD. If it succeeds, it is no longer Restrained. A Scorpion Anchor is destroyed after the Restrained creature escapes or dies. Terrain Cloak. Composed of local materials, a Terrain Cloak allows wearers to conceal themselves within the environment. Terrain Cloaks can be worn over Light or Medium armor and are donned and doffed with the speed of Light armor. Creatures have Desvantagem on Sabedoria ( Perception ) checks to see you. The item lasts until you finish a Descanso Longo, at which point the item falls apart. Weretrap. A Weretrap detonates when its fragile exterior is broken. Você pode realizar a ação Utilizar to set the Weretrap in an unoccupied space within 1,5 m of you. A creature within 9 m must succeed on a Sabedoria ( Perception ) check against your Trapper Gadget CD to spot the trap. Creatures have Desvantagem on this check. A creature that steps into a space containing a Weretrap triggers the trap and makes a Destreza salvaguarda. On a failed save, the creature takes 3d10 Contundente damage and has the condição Caído. On a successful save, the creature takes half as much damage only. The Weretrap can also be used como Light arma à distância with the Finesse and Thrown property. It hcomo normal range of 6 m and a long range of 18 m. On a hit, the Weretrap deals 3d10 Contundente damage and the target has the condição Caído. The Weretrap is destroyed after it is triggered or thrown, regardless of whether it hits or misses.'
+  'Engenhocas de Armadilheiro',
+  'Você aprende a criar engenhocas e mecanismos que ajudam na caçada. Como parte de um Descanso Longo, pode fabricar duas Engenhocas de Armadilheiro se tiver materiais e Ferramentas de Funileiro à mão. Também, com 1 hora de trabalho com esse kit e gastando 20 PO em materiais (como equipamento ou salvamento de monstro), pode criar uma Engenhoca de Armadilheiro da lista abaixo.
+
+Algumas Engenhocas permitem que o alvo faça um teste de atributo ou salvaguarda para resistir aos efeitos. A CD da salvaguarda é: CD das Engenhocas = 8 + seu modificador de Inteligência + seu Bônus de Proficiência.
+
+As Engenhocas estão listadas em ordem alfabética.
+
+Veneno do Pavor. Óleo de lâmina de cheiro nauseabundo que faz feridas hemorragiarem e recusarem cura. Pode revestir uma arma Cortante ou Perfurante ou até 10 peças de munição Cortante ou Perfurante. Aplicar o óleo leva 1 minuto e o óleo dura 8 horas após aplicado. Quando uma criatura sofre dano do item envenenado, não pode recuperar Pontos de Vida até terminar um Descanso Curto ou Longo.
+
+Munição Elemental. A ponta de uma flecha ou virote é impregnada de veneno, carregada com um frasco de ácido, mergulhada em óleo inflamável ou revestida com outra substância. Como Ação Bônus, você imbuem poder elemental em uma única peça de munição que possa ser disparada de Arco Longo, Arco Curto ou Besta como parte de uma ação Atacar. Ao imbuir, escolha um tipo de dano: Ácido, Gélido, Ígneo, Elétrico, Veneno ou Trovejante. Quando uma criatura sofre dano da Munição Elemental, sofre 2d6 adicionais do tipo escolhido. A munição descarrega a energia se acertar e não pode ser recuperada. Se o ataque errar, pode ser recuperada e usada de novo. Retém o poder por 48 horas.
+
+Bomba Rúnica. Usada para caçar criaturas resistentes a armas mundanas. Como Ação Bônus, você pode arremessar a bomba rúnica em um ponto a até 18 m que possa ver, criando uma Esfera de 6 m de raio centrada nesse ponto. A Esfera se espalha pelos cantos e sua área fica Levemente Obscurecida. Dura 1 minuto ou até um vento forte (como o de Rajada de Vento) dispersá-la. Sempre que dano Contundente, Perfurante ou Cortante for causado a uma criatura dentro da esfera, esse dano é de Força em vez do tipo normal. A Bomba Rúnica é destruída após um uso.
+
+Âncora Escorpião. Destinada a prender inimigos voadores ao chão ou impedir a fuga de monstros. Pode ser disparada de Arco Longo, Arco Curto ou Besta como parte de uma ação Atacar. Quando você acerta uma criatura com uma jogada de ataque usando uma Âncora Escorpião, ela fica com a condição Contido. Uma criatura Contida pela Âncora pode gastar uma ação para fazer um teste de Força (Atletismo) contra a CD das Engenhocas. Em sucesso, deixa de estar Contida. A Âncora é destruída depois que a criatura Contida escapa ou morre.
+
+Manto do Terreno. Feito de materiais locais, permite ocultar-se no ambiente. Pode ser vestido sobre armadura Leve ou Média e é vestido/removido com a velocidade de armadura Leve. Criaturas têm Desvantagem em testes de Sabedoria (Percepção) para vê-lo. O item dura até você terminar um Descanso Longo, quando se desfaz.
+
+Armadilha Homem-Lobo. Detona quando o exterior frágil é quebrado. Você pode gastar uma ação Utilizar para armá-la em um espaço desocupado a até 1,5 m de você. Uma criatura a até 9 m deve ser bem-sucedida em um teste de Sabedoria (Percepção) contra a CD das Engenhocas para notar a armadilha. Criaturas têm Desvantagem nesse teste. Uma criatura que entre no espaço contendo a armadilha a aciona e faz uma salvaguarda de Destreza. Em falha, sofre 3d10 de dano Contundente e fica com a condição Caído. Em sucesso, sofre apenas metade do dano. A Armadilha Homem-Lobo também pode ser usada como arma Leve à Distância com as propriedades Acuidade e Arremesso. Alcance normal 6 m e longo 18 m. Em um acerto, causa 3d10 Contundente e o alvo fica Caído. É destruída após ser acionada ou arremessada, independentemente de acertar ou errar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -259,8 +294,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   7,
-  'Ambusher’s Vantagem',
-  'Você tem become a ferocious ambusher. Quando você rola Initiative, você pode add your modificador de Inteligência to the roll. Além disso, você pode’t be surprised by enemies that include creature types in your Grimório de Monstros.'
+  'Vantagem do Emboscador',
+  'Você se tornou um emboscador feroz. Ao rolar Iniciativa, pode somar seu modificador de Inteligência à rolagem. Além disso, não pode ser Surpreso por inimigos que incluam tipos de criatura no seu Grimório de Monstros.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -272,7 +307,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   10,
   'Resposta Ágil',
-  'Você pode leap aside to avoid enemies rushing toward you. When a creature makes a melee jogada de ataque against you, você pode take a Reação to impose Desvantagem on that roll and use your Resposta Estudada as part of the same Reação. Whether the attack hits or misses, você pode then move up to half your Speed . This movement doesn’t provoke Opportunity ação Atacar.'
+  'Você pode saltar para o lado e evitar inimigos que avancem. Quando uma criatura faz uma jogada de ataque corpo a corpo contra você, pode gastar uma Reação para impor Desvantagem nessa rolagem e usar Resposta Estudada como parte da mesma Reação. Quer o ataque acerte ou erre, você pode então se mover até metade do seu Deslocamento. Esse movimento não provoca Ataque de Oportunidade.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -284,7 +319,21 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   15,
   'Armadura de Pele de Monstro',
-  'Você tem learned to craft a set of Light or Medium armor by using dragon scales, werewolf hide, troll leather, or a similar monster component. The armor takes on the appearance de sua escolha, reflecting the component it is made from. The armor has the same properties as Light or Medium armor (sua escolha when the armor is crafted) and gains two modifications from the Armor Modifications list. Sempre que você gain a Caçador de Monstros level, você pode replace one of these modifications with another modification. Modifications require the armor to be worn to function. Armor Modifications Armor modifications are listed in alphabetical order. Damage Resistência. The monster hide used to craft your armor grants some resistances. Você ganha Resistência to two of o seguinte damage types de sua escolha: Acid, Cold, Fire, Lightning, Poison, or Thunder. Elemental Charge. You embed your armor with a Construct’s gemstone or infuse it with the power of an Elemental. Choose one of o seguinte damage types: Acid, Cold, Fire, Lightning, Poison, or Thunder. Quando você acerta uma creature with an attack, você pode cause it to deal the chosen damage type rather than its normal damage type, and the attack deals an extra 1d6 of that type. Hardened Defense. Hardened scales or magical pelts make your armor difficult to pierce. While wearing your crafted armor, you gain a +2 bonus to Armor Class. Phase Leap. Você tem powdered your armor with fey dust or sewn a pelt of a phase-shifting monstrosity into it. Como Ação Bônus, you teleport up to 18 m to an unoccupied space você pode see. Você pode usar este recurso three times, and você recupera all expended uses when you finish a Descanso Longo. Regeneration. You reinforce the armor with troll hide or soak it in vampire blood. Você tem a pool of six d10s. Como Ação Bônus, você pode expend a die from the pool, roll that die and add your modificador de Constituição, and regain um número de Pontos de Vida igual a the roll’s total. You regain all the expended dice when you finish a Descanso Longo. Stealthy. Your armor is draped with a shadowy cloak or made from hide as light como feather. Your armor doesn’t impose Desvantagem on Destreza ( Stealth ) checks, even if it would normally. While wearing your armor, creatures have Desvantagem on Sabedoria ( Perception ) checks to see you, and you have Vantagem on Sabedoria ( Perception ) checks to notice creatures.'
+  'Você aprendeu a fabricar um conjunto de armadura Leve ou Média usando escamas de dragão, pele de lobisomem, couro de troll ou componente semelhante de monstro. A armadura assume a aparência de sua escolha, refletindo o componente. Tem as mesmas propriedades de armadura Leve ou Média (sua escolha na fabricação) e ganha duas modificações da lista Modificações de Armadura. Sempre que ganha um nível de Caçador de Monstros, pode substituir uma dessas modificações por outra. As modificações exigem que a armadura esteja vestida para funcionar.
+
+Modificações de Armadura (ordem alfabética):
+
+Resistência a Dano. A pele usada concede resistências. Você ganha Resistência a dois dos seguintes tipos de dano de sua escolha: Ácido, Gélido, Ígneo, Elétrico, Veneno ou Trovejante.
+
+Carga Elemental. Você embute uma gema de Constructo ou infunde poder de Elemental. Escolha um tipo: Ácido, Gélido, Ígneo, Elétrico, Veneno ou Trovejante. Quando acerta uma criatura com um ataque, pode fazer com que cause o tipo escolhido em vez do normal, e o ataque causa 1d6 extra desse tipo.
+
+Defesa Endurecida. Escamas endurecidas ou peles mágicas dificultam a penetração. Enquanto vestir a armadura fabricada, você ganha +2 na Classe de Armadura.
+
+Salto de Fase. Você polvilhou a armadura com pó feérico ou costurou pele de monstruosidade que muda de fase. Como Ação Bônus, teleporta-se até 18 m para um espaço desocupado que possa ver. Pode usar este recurso três vezes e recupera todos os usos ao terminar um Descanso Longo.
+
+Regeneração. Você reforça a armadura com pele de troll ou a embebe em sangue de vampiro. Você tem um pool de seis d10. Como Ação Bônus, pode gastar um dado do pool, rolá-lo, somar seu modificador de Constituição e recuperar Pontos de Vida iguais ao total. Recupera todos os dados gastos ao terminar um Descanso Longo.
+
+Furtiva. A armadura é coberta por manto sombrio ou feita de pele leve como pena. Não impõe Desvantagem em testes de Destreza (Furtividade), mesmo que normalmente o fizesse. Enquanto a vestir, criaturas têm Desvantagem em testes de Sabedoria (Percepção) para vê-lo, e você tem Vantagem em testes de Sabedoria (Percepção) para notar criaturas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -295,8 +344,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
   18,
-  'Rápida Engenheiro',
-  'Você tem become capable of crafting trapper tools at a much faster rate. Você pode spend 1 minute to make a Trapper Gadget without spending PO or components. Você pode usar este recurso twice, and você recupera all expended uses when you finish a Descanso Longo.'
+  'Engenho Rápido',
+  'Você passou a fabricar ferramentas de armadilheiro bem mais rápido. Pode gastar 1 minuto para criar uma Engenhoca de Armadilheiro sem gastar PO nem componentes. Pode usar este recurso duas vezes e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -307,8 +356,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-fractured'),
   3,
-  'Face de Fúria',
-  'Quando você activate sua Fúria, your countenance distorts e seu body swells. Creatures that haven’t witnessed your transformation, now or previously, don’t recognize you. Além disso, while sua Fúria is active, you gain o seguinte benefits: Você pode roll 1d8 in place of the normal damage of your Ataque Desarmado , and whenever você causa damage with an Ataque Desarmado, it can deal sua escolha of dano de Força or its normal damage type. Quando você acerta uma creature with an Ataque Desarmado, você pode push it 3 m or force the creature to make a Constituição salvaguarda (CD 8 mais seu modificador de Força e seu Bônus de Proficiência). On a failed save, the creature has the condição Caído. You count as one size larger when determining the success or failure of a Grapple, and when you make an Ataque Desarmado, your reach is 1,5 m greater than normal.'
+  'Rosto da Fúria',
+  'Quando ativa a Fúria, seu semblante se distorce e o corpo incha. Criaturas que não testemunharam sua transformação — agora ou antes — não o reconhecem. Além disso, enquanto a Fúria estiver ativa, você ganha os seguintes benefícios: pode rolar 1d8 no lugar do dano normal do Ataque Desarmado e, sempre que causar dano com Ataque Desarmado, pode escolher dano de Força ou o tipo normal; quando acerta uma criatura com Ataque Desarmado, pode empurrá-la 3 m ou forçá-la a fazer salvaguarda de Constituição (CD 8 + modificador de Força + Bônus de Proficiência) — em falha, fica Caído; você conta como um tamanho maior ao determinar sucesso ou falha de Agarrar, e ao fazer Ataque Desarmado seu alcance é 1,5 m maior que o normal.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -320,7 +369,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-fractured'),
   3,
   'Máscara de Civilidade',
-  'Você é proficient in one of o seguinte skills de sua escolha: Arcana , History , Investigation , Medicine , Nature , Persuasion , or Religion . Além disso, you gain proficiency with one type of Artisan’s Tools de sua escolha or você conhece one language de sua escolha.'
+  'Você é proficiente em uma das seguintes perícias de sua escolha: Arcanismo, História, Investigação, Medicina, Natureza, Persuasão ou Religião. Além disso, ganha proficiência com um tipo de Ferramentas de Artesão de sua escolha ou conhece um idioma de sua escolha.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -332,7 +381,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-fractured'),
   6,
   'Cérebro e Músculo',
-  'While sua Fúria is not active, you have Resistência to dano Psíquico. While sua Fúria is active, you have Resistência to every damage type except Force and Psychic.'
+  'Enquanto a Fúria não estiver ativa, você tem Resistência a dano Psíquico. Enquanto a Fúria estiver ativa, tem Resistência a todos os tipos de dano exceto Força e Psíquico.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -344,7 +393,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-fractured'),
   10,
   'Astúcia e Brutalidade',
-  'While sua Fúria is not active, você pode take the Desengajar or ação Ajudar como Ação Bônus. While sua Fúria is active, your jogada de ataques with Ataque Desarmados score a Acerto Crítico on a roll of 19 or 20 on the d20.'
+  'Enquanto a Fúria não estiver ativa, você pode realizar a ação Desengajar ou Ajudar como Ação Bônus. Enquanto a Fúria estiver ativa, suas jogadas de ataque com Ataques Desarmados marcam Acerto Crítico em 19 ou 20 no d20.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -355,8 +404,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-fractured'),
   14,
-  'Melhor Half',
-  'Quando você are reduced to 0 Pontos de Vida and not killed outright, você pode drop to 1 Hit Point instead, and you gain Pontos de Vida Temporários igual a half your máximo de Pontos de Vida. Além disso, se vocêr Rage is active, sua Fúria ends. Se vocêr Rage was not active, you immediately activate sua Fúria (even se você have no remaining uses of sua Fúria). If any of these Pontos de Vida Temporários remain after 1 minute, they vanish. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Melhor Metade',
+  'Quando você é reduzido a 0 Pontos de Vida e não é morto na hora, pode cair para 1 Ponto de Vida em vez disso e ganha Pontos de Vida Temporários iguais à metade do seu máximo de Pontos de Vida. Além disso, se a Fúria estiver ativa, ela termina. Se a Fúria não estiver ativa, você a ativa imediatamente (mesmo sem usos restantes). Se algum desses Pontos de Vida Temporários restar após 1 minuto, eles desaparecem. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -367,8 +416,12 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
   3,
-  'Primordial Companheiro',
-  'You magically summon a primal spirit that adopts the form of a beast and accompanies you on your adventures. Choose its stat block: Primal Guardian or Primal Striker. Além disso, choose an environment that will modify the creature’s stat block: Land, Sea, or Sky . You also determine the kind of animal it is, choosing a kind appropriate for the stat block. Whatever companion você escolhe, it bears eldritch markings indicating its otherworldly origin. The companion is Aliado to you e seu allies and obeys your commands. It vanishes se você die. The Beast in Combat. In combat, the companion acts during your turn. It can move and use its Reação on its own, but the only action it takes is the Dodge action unless you take a Ação Bônus to command it to take an action in its stat block or some other action. Você pode also sacrifice one of your attacks when you take the ação Atacar to command the beast to take the Beast’s Strike action. Se você have the Incapacitado condition, the companion acts on its own and isn’t limited to the Dodge action. Restoring or Replacing the Beast. If the companion has died within the last hour, você pode take a ação Mágica to touch it and expend a use of sua Fúria. The companion returns to life immediately with all its Pontos de Vida restored. Sempre que você finish a Descanso Longo, você pode summon a different primal companion, which appears in an unoccupied space within 1,5 m of you. You choose its stat block and appearance. Se você already have a beast from este recurso, the old one vanishes when the new one appears.'
+  'Companheiro Primordial',
+  'Você invoca magicamente um espírito primordial que assume a forma de uma fera e o acompanha. Escolha o bloco de estatísticas: Guardião Primordial ou Atacante Primordial. Além disso, escolha um ambiente que modifica o bloco: Terra, Mar ou Céu. Determine também o tipo de animal, adequado ao bloco. Qualquer que seja, ele exibe marcas eldritch indicando origem sobrenatural. O companheiro é Aliado a você e aos seus aliados e obedece a seus comandos. Desaparece se você morrer.
+
+A Fera em Combate. Em combate, o companheiro age durante o seu turno. Pode se mover e usar a Reação por conta própria, mas a única ação que realiza é Esquivar, a menos que você gaste uma Ação Bônus para ordenar uma ação do bloco ou outra ação. Você também pode sacrificar um dos seus ataques ao realizar a ação Atacar para ordenar à fera a ação Golpe da Fera. Se você tiver a condição Incapacitado, o companheiro age sozinho e não fica limitado a Esquivar.
+
+Restaurando ou Substituindo a Fera. Se o companheiro morreu na última hora, você pode gastar uma ação Mágica para tocá-lo e gastar um uso de Fúria. O companheiro volta à vida imediatamente com todos os Pontos de Vida restaurados. Sempre que terminar um Descanso Longo, pode invocar um companheiro primordial diferente, que aparece em um espaço desocupado a até 1,5 m de você. Você escolhe o bloco e a aparência. Se já tiver uma fera deste recurso, a antiga desaparece quando a nova aparece.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -379,8 +432,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
   3,
-  'Compartilhada Fúria',
-  'While sua Fúria is active, your primal companion has Resistência to Contundente, Perfurante, and Cortante damage.'
+  'Fúria Compartilhada',
+  'Enquanto a Fúria estiver ativa, seu companheiro primordial tem Resistência a dano Contundente, Perfurante e Cortante.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -391,8 +444,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
   6,
-  'Parentesco a Feras',
-  'You always have the Animal Friendship and Speak with Animals spells prepared. Você pode conjurar each of these spells without expending a espaço de magia. Uma vez você cast either spell in this way, você pode’t cast that spell in this way again until you finish a Short or Descanso Longo. Você pode also cast these spells using espaços de magia you have of the appropriate level. Constituição is sua habilidade de conjuração for them.'
+  'Parentesco com Feras',
+  'Você sempre tem as magias Amizade Animal e Falar com Animais preparadas. Pode conjurar cada uma sem gastar espaço de magia. Depois de conjurar uma delas assim, não pode conjurá-la desse modo de novo até terminar um Descanso Curto ou Longo. Também pode conjurá-las usando espaços de magia do círculo apropriado. Constituição é sua habilidade de conjuração para elas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -403,8 +456,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
   10,
-  'Skinrider’s Trance',
-  'You take a ação Mágica to enter a trance and choose your primal companion or one Beast currently under the effect of your Animal Friendship spell within 18 m of yourself. For the duration of this trance, you possess the chosen creature. Uma vez você possess a creature’s body, you control it. Your Pontos de Vida, Dados de Vida, Força, Destreza, Constituição, Speed , and senses are replaced by the creature’s. You otherwise keep your game statistics. This possession ends se você choose to exit the trance (no action required by you), if the Beast you’re possessing is reduced to 0 Pontos de Vida, or se você and the Beast are on different planes of existence. While in this trance, your body falls into a catatonic state. Você pode’t move or take Reaçãos, and you’re unaware of your surroundings. Você pode remain in the trance for um número de hours up to half your Barbarian level mais seu modificador de Constituição. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending one use of sua Fúria (no action required).'
+  'Transe do Cavaleiro da Pele',
+  'Você gasta uma ação Mágica para entrar em transe e escolhe seu companheiro primordial ou uma Fera atualmente sob efeito de Amizade Animal a até 18 m de você. Pela duração do transe, você possui a criatura escolhida. Uma vez no corpo, você o controla. Seus Pontos de Vida, Dados de Vida, Força, Destreza, Constituição, Deslocamento e sentidos são substituídos pelos da criatura. Você mantém o restante das estatísticas. A posse termina se você optar por sair do transe (sem ação), se a Fera for reduzida a 0 Pontos de Vida, ou se você e a Fera estiverem em planos diferentes. Enquanto estiver em transe, seu corpo cai em estado catatônico: não pode se mover nem usar Reações e não percebe o entorno. Pode permanecer no transe por um número de horas até a metade do seu nível de Bárbaro + modificador de Constituição. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo. Também pode restaurar o uso gastando um uso de Fúria (sem ação).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -415,8 +468,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
   14,
-  'Forma de the Selvagem',
-  'Como Ação Bônus, você pode choose a new form for your primal companion, causing it to transform instantaneously. Quando você cause your primal companion to transform in this way, its current Pontos de Vida change to its new máximo de Pontos de Vida. Depois de usar este recurso, você pode’t use it again until you finish a Short or Descanso Longo. Você pode also restore your use of it by expending one use of sua Fúria (no action required).'
+  'Forma do Selvagem',
+  'Como Ação Bônus, você pode escolher uma nova forma para o companheiro primordial, fazendo-o se transformar instantaneamente. Quando faz isso, os Pontos de Vida atuais dele passam a ser o novo máximo de Pontos de Vida. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Curto ou Longo. Também pode restaurar o uso gastando um uso de Fúria (sem ação).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -427,8 +480,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-wrathful-dead'),
   3,
-  'Fúria de the Dead',
-  'Your Rage taps into the endless fury of the unquiet dead. While sua Fúria is active, you take on aspects of restless spirits and you gain o seguinte benefits. Shadow Form. You ignore Difficult Terrain . Além disso, você pode move through the space of any creature, but você pode’t end your move in an occupied space. Lucas Torquato Shadowy Sidestep. Your Speed increases by 3 m, and Opportunity ação Atacar have Desvantagem against you. Spectral Sight. You see creatures and objects within 36 m that have the Invisible condition as if they were visible, and você pode see into the Ethereal Plane.'
+  'Fúria dos Mortos',
+  'Sua Fúria canaliza a fúria sem fim dos mortos inquietos. Enquanto a Fúria estiver ativa, você assume aspectos de espíritos inquietos e ganha os seguintes benefícios.
+
+Forma Sombria. Você ignora Terreno Difícil. Além disso, pode se mover pelo espaço de qualquer criatura, mas não pode terminar o movimento em um espaço ocupado.
+
+Esquiva Sombria. Seu Deslocamento aumenta em 3 m, e Ataques de Oportunidade contra você têm Desvantagem.
+
+Visão Espectral. Você vê criaturas e objetos a até 36 m com a condição Invisível como se fossem visíveis, e pode ver no Plano Etéreo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -439,8 +498,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-wrathful-dead'),
   3,
-  'Final Noite Catarse',
-  'Você é overcome by an emotion a nearby spirit experienced at its death. Você ganha um of as seguintes opções de sua escolha. Sempre que você finish a Descanso Longo, você pode change sua escolha. Hate. Quando você miss with uma jogada de ataque against a creature, you have Vantagem on the next jogada de ataque you make against it before the end of your next turn. Jealousy. When a creature you have Agarrado is about to make an ability check to end the condição Agarrado on itself, você pode take a Reação to impose Desvantagem on that roll. Terror. While you are Ferido , você pode take a Ação Bônus to take the Dash or Desengajar action.'
+  'Catarse da Noite Final',
+  'Você é tomado por uma emoção que um espírito próximo experimentou na morte. Escolha uma das opções abaixo. Sempre que terminar um Descanso Longo, pode mudar a escolha.
+
+Ódio. Quando erra uma jogada de ataque contra uma criatura, tem Vantagem na próxima jogada de ataque contra ela antes do fim do seu próximo turno.
+
+Ciúme. Quando uma criatura que você tenha Agarrado estiver prestes a fazer um teste de atributo para terminar Agarrado em si, você pode gastar uma Reação para impor Desvantagem nessa rolagem.
+
+Terror. Enquanto estiver Ferido, pode gastar uma Ação Bônus para realizar a ação Disparar ou Desengajar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -451,8 +516,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-wrathful-dead'),
   6,
-  'Sombria Perdição Revisited',
-  'Uma vez por Rage, você pode take a ação Mágica to channel a traumatic death. Quando você do, choose one of as seguintes opções. Contamination. No início de their turn, each creature de sua escolha in a 3 m Emanação originating from you must make a Constituição salvaguarda (CD 8 mais seu modificador de Constituição and Bônus de Proficiência) or take dano de Veneno and gain the condição Envenenado por 1 minuto. To determine the dano de Veneno, roll um número de d6s igual a sua Fúria Damage bonus, and add them together. An affected creature can use an action to end the condição Envenenado on itself. Hypothermia. No início de their turn, each creature de sua escolha in a 3 m Emanação originating from you must make a Constituição salvaguarda (CD 8 mais seu modificador de Força and Bônus de Proficiência) or take dano Gélido and have its Speed halved por 1 minuto. To determine the dano Gélido, roll um número de d6s igual a sua Fúria Damage bonus, and add them together. A creature can use an action to end this effect on itself. Immolation. No início de their turn, each creature de sua escolha in a 4,5 m Emanação originating from you must make a Destreza salvaguarda (CD 8 mais seu modificador de Constituição and Bônus de Proficiência) or take dano de Fogo. To determine the dano de Fogo, roll um número de d6s igual a sua Fúria Damage bonus, and add them together. As an action, a creature can extinguish the fire on itself by giving itself the condição Caído and rolling on the ground. The fire also goes out if it is doused, submerged, or suffocated.'
+  'Perdição Sombria Revisitada',
+  'Uma vez por Fúria ativa, você pode gastar uma ação Mágica para canalizar uma morte traumática. Ao fazê-lo, escolha uma das opções.
+
+Contaminação. No início do turno delas, cada criatura de sua escolha em uma Emanação de 3 m originada de você deve fazer salvaguarda de Constituição (CD 8 + modificador de Constituição + Bônus de Proficiência) ou sofrer dano de Veneno e a condição Envenenado por 1 minuto. O dano de Veneno é um número de d6 igual ao bônus de dano da Fúria, somados. A criatura afetada pode usar uma ação para terminar Envenenado em si.
+
+Hipotermia. No início do turno delas, cada criatura de sua escolha em uma Emanação de 3 m originada de você deve fazer salvaguarda de Constituição (CD 8 + modificador de Força + Bônus de Proficiência) ou sofrer dano Gélido e ter o Deslocamento reduzido à metade por 1 minuto. O dano Gélido é um número de d6 igual ao bônus de dano da Fúria, somados. A criatura pode usar uma ação para terminar o efeito em si.
+
+Imolação. No início do turno delas, cada criatura de sua escolha em uma Emanação de 4,5 m originada de você deve fazer salvaguarda de Destreza (CD 8 + modificador de Constituição + Bônus de Proficiência) ou sofrer dano Ígneo. O dano Ígneo é um número de d6 igual ao bônus de dano da Fúria, somados. Como ação, a criatura pode apagar o fogo em si ficando Caída e rolando no chão. O fogo também se apaga se for abafado, submerso ou sufocado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -463,8 +534,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-wrathful-dead'),
   10,
-  'Morte É Mas a Porta',
-  'Your familiarity with death has left you resistant to its call. Você ganha os seguintes benefícios. Hard to Kill. Você tem Vantagem on Death Salvaguardas. Além disso, you must fail four Death Salvaguardas to die instead of three as normal. Return the Spirit. Você pode call the spirits of the deceased to restore life essence to a nearby creature. Você pode conjurar the Cure Wounds , Raise Dead , or Revivify spell without providing Material components. Quando você do, you gain 1 nível de Exaustão for Cure Wounds , 2 Exhuastion levels for Revivify , and 3 nível de Exaustãos for Raise Dead . Constituição is sua habilidade de conjuração for este recurso. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo unless you expend two uses of sua Fúria (no action required) to restore your use of it. He’s a creepy fella, always muttering to himself and seeing things that just aren’t there. But there’s no one I’d rather have watching my back.'
+  'A Morte É Só uma Porta',
+  'Sua familiaridade com a morte deixou-o resistente ao chamado dela. Você ganha os seguintes benefícios.
+
+Difícil de Matar. Você tem Vantagem em Salvaguardas Contra a Morte. Além disso, precisa falhar em quatro Salvaguardas Contra a Morte para morrer, em vez de três.
+
+Devolver o Espírito. Você pode chamar espíritos dos mortos para restaurar essência vital a uma criatura próxima. Pode conjurar Curar Ferimentos, Reviver os Mortos ou Revivificar sem fornecer componentes Materiais. Ao fazê-lo, ganha 1 nível de Exaustão por Curar Ferimentos, 2 por Revivificar e 3 por Reviver os Mortos. Constituição é sua habilidade de conjuração para este recurso. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo, a menos que gaste dois usos de Fúria (sem ação) para restaurá-lo.
+
+“É um sujeito sinistro, sempre murmurando e vendo coisas que não estão lá. Mas não há ninguém com quem eu preferisse ter cobrindo minhas costas.”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -475,8 +552,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-wrathful-dead'),
   14,
-  'Alimentado by Pathos',
-  'Your Rage is empowered by the overwhelming emotions of the unquiet dead. Your Final Night Catharsis feature grants an additional effect based on the chosen emotion. Hate. While sua Fúria is active, your attacks with weapons and Ataque Desarmados score a Acerto Crítico on a roll of 19 or 20 on the d20. Jealousy. Whenever a creature você pode see starts its turn within 9 m of you while sua Fúria is active, você pode take a Reação to summon spectral assailants to Grapple the creature. The creature makes a Força or Destreza salvaguarda (CD 8 mais seu modificador de Constituição and Bônus de Proficiência). On a failure, the creature has the condição Agarrado até o fim de its turn. On a successful save, the creature is not Agarrado; however, each foot of movement costs 1 extra foot for that creature até o fim de its turn. Terror. Whenever a creature você pode see starts its turn within 9 m of you while sua Fúria is active, você pode take a Reação to make that creature terrified until the start of its next turn. A terrified creature’s Speed is halved and Opportunity ação Atacar against it have Vantagem .'
+  'Alimentado pelo Pathos',
+  'Sua Fúria é potencializada pelas emoções avassaladoras dos mortos inquietos. Catarse da Noite Final concede um efeito adicional conforme a emoção escolhida.
+
+Ódio. Enquanto a Fúria estiver ativa, seus ataques com armas e Ataques Desarmados marcam Acerto Crítico em 19 ou 20 no d20.
+
+Ciúme. Sempre que uma criatura que você possa ver começar o turno a até 9 m de você enquanto a Fúria estiver ativa, pode gastar uma Reação para convocar agressores espectrais que Agarram a criatura. Ela faz salvaguarda de Força ou Destreza (CD 8 + modificador de Constituição + Bônus de Proficiência). Em falha, fica Agarrada até o fim do turno dela. Em sucesso, não fica Agarrada; porém, cada 30 cm de movimento custa 30 cm extras até o fim do turno dela.
+
+Terror. Sempre que uma criatura que você possa ver começar o turno a até 9 m de você enquanto a Fúria estiver ativa, pode gastar uma Reação para aterrorizá-la até o início do próximo turno dela. Uma criatura aterrorizada tem o Deslocamento reduzido à metade e Ataques de Oportunidade contra ela têm Vantagem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -487,8 +570,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-adventurers'),
   3,
-  'Talentoso Aventureiro',
-  'Você aprende an adventurer’s talent de sua escolha from the “ Adventurer’s Talent Options ” section later in esta subclasse’s description. Você aprende um adicional adventurer’s talent de sua escolha when you reach Bard levels 6 and 14.'
+  'Aventureiro Talentoso',
+  'Você aprende um talento de aventureiro de sua escolha da seção “Opções de Talento de Aventureiro” mais adiante nesta subclasse. Aprende um talento adicional de sua escolha nos níveis 6 e 14 de Bardo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -499,8 +582,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-adventurers'),
   3,
-  'Festa Organizador',
-  'While a creature hcomo Bardic Inspiration die from you, it can use a Ação Bônus to take the ação Ajudar.'
+  'Organizador de Grupo',
+  'Enquanto uma criatura tiver um dado de Inspiração Bárdica seu, ela pode gastar uma Ação Bônus para realizar a ação Ajudar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -512,7 +595,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-adventurers'),
   6,
   'Bem Preparado',
-  'Você ganha proficiência com one type of Artisan’s Tools de sua escolha, you gain proficiency in one skill de sua escolha, and você conhece one language de sua escolha.'
+  'Você ganha proficiência com um tipo de Ferramentas de Artesão de sua escolha, proficiência em uma perícia de sua escolha e conhece um idioma de sua escolha.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -523,8 +606,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-adventurers'),
   14,
-  'Improvisacional Talento',
-  'Quando você termina um Descanso Longo, você pode choose one adventurer’s talent você conhece and replace it with one you don’t. Just show me what você pode. I promise, I’m a quick study.'
+  'Talento Improvisado',
+  'Quando termina um Descanso Longo, pode escolher um talento de aventureiro que conhece e substituí-lo por um que não conhece.
+
+“Só me mostre o que você sabe. Prometo: aprendo rápido.”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -535,8 +620,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-fools'),
   3,
-  'Antagônica Travessuras',
-  'You know the Vicious Mockery cantrip. Se você already know it, you learn a different Bard cantrip de sua escolha. The cantrip doesn’t count against your number of truques known. Além disso, you always have the Dissonant Whispers spell prepared. Além disso, when you take the Dash , Desengajar , or Influence action no seu turno, você pode take a Ação Bônus on the same turn to cast Vicious Mockery .'
+  'Travessuras Antagonistas',
+  'Você conhece o truque Zombaria Perversa. Se já o conhece, aprende outro truque de Bardo de sua escolha. O truque não conta no número de truques conhecidos. Além disso, sempre tem a magia Sussurros Dissonantes preparada. Ademais, quando realiza a ação Disparar, Desengajar ou Influenciar no seu turno, pode gastar uma Ação Bônus no mesmo turno para conjurar Zombaria Perversa.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -547,8 +632,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-fools'),
   3,
-  'Cruel Gracejo',
-  'When a creature que você possa ver or hear within 9 m of yourself fails a Teste D20 , você pode take a Reação to expend one use of your Bardic Inspiration; roll your Bardic Inspiration die and deal dano Psíquico igual a the number rolled mais seu modificador de Carisma. Além disso, the creature has Desvantagem on the next Teste D20 it makes before the end of its next turn.'
+  'Gracejo Cruel',
+  'Quando uma criatura que você possa ver ou ouvir a até 9 m falha em um Teste D20, pode gastar uma Reação para gastar um uso de Inspiração Bárdica; role o dado de Inspiração Bárdica e cause dano Psíquico igual ao número rolado + modificador de Carisma. Além disso, a criatura tem Desvantagem no próximo Teste D20 que fizer antes do fim do próximo turno dela.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -559,8 +644,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-fools'),
   6,
-  'Forca Humor',
-  'When a creature que você possa ver within 18 m of you is reduced to 0 Pontos de Vida or killed outright, você pode take a Reação to regain an expended use of your Bardic Inspiration. Quando você do so, choose a creature within 9 m of you that can hear and understand you. That creature must succeed on a Sabedoria salvaguarda against your spell save CD or gain the condição Caído and have its Speed reduced to 0 até o fim de its next turn. If the creature succeeds on the Sabedoria salvaguarda, você recupera the use of this ability. Otherwise, once you use este recurso, você pode’t use it again until you finish a Short or Descanso Longo.'
+  'Humor da Forca',
+  'Quando uma criatura que você possa ver a até 18 m é reduzida a 0 Pontos de Vida ou morta na hora, pode gastar uma Reação para recuperar um uso gasto de Inspiração Bárdica. Ao fazê-lo, escolha uma criatura a até 9 m que possa ouvi-lo e compreendê-lo. Essa criatura deve ser bem-sucedida em salvaguarda de Sabedoria contra sua CD de magia ou ficar Caída e ter o Deslocamento reduzido a 0 até o fim do próximo turno dela. Se for bem-sucedida na salvaguarda, você recupera o uso desta habilidade. Caso contrário, depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -572,7 +657,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-fools'),
   14,
   'Última Risada',
-  'Quando você become Ferido or take damage while you are Ferido, você pode take a Reação to regain all expended Bardic Inspiration dice and break out into a cackling fit of fatalistic glee at your own impending doom. For 1 minute, you have Resistência to all damage. Also, when a creature within 18 m of you hits you with uma jogada de ataque, você pode expend up to three Bardic Inspiration dice to force the attacker to make a Carisma salvaguarda against your spell save CD. On a failure, the creature takes dano Psíquico igual a the total rolled on the Bardic Inspiration dice mais seu modificador de Carisma. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Quando você fica Ferido ou sofre dano enquanto Ferido, pode gastar uma Reação para recuperar todos os dados de Inspiração Bárdica gastos e explodir em uma gargalhada fatalista diante da própria perdição iminente. Por 1 minuto, você tem Resistência a todo dano. Além disso, quando uma criatura a até 18 m o acerta com uma jogada de ataque, pode gastar até três dados de Inspiração Bárdica para forçar o atacante a fazer salvaguarda de Carisma contra sua CD de magia. Em falha, a criatura sofre dano Psíquico igual ao total rolado nos dados + modificador de Carisma. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -583,8 +668,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-requiems'),
   3,
-  'Gélida Melodia',
-  'Você aprende dois Necromancy truques de sua escolha. These count as Bard spells for you but don’t count against the number of truques você conhece.'
+  'Melodia Gélida',
+  'Você aprende dois truques de Necromancia de sua escolha. Contam como magias de Bardo para você, mas não contam no número de truques conhecidos.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -595,8 +680,12 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-requiems'),
   3,
-  'Arrancar the Corações',
-  'Your Bardic Inspiration can pluck at the tethers of life. Each creature that hcomo Bardic Inspiration die from você pode use it for one of o seguinte effects. Defense. When the creature is reduced to 0 Pontos de Vida and not killed outright, the creature can roll the Bardic Inspiration die to be reduced to um número de Pontos de Vida rolled on the Bardic Inspiration die instead. Offense. Immediately after the creature hits a target with uma jogada de ataque, the creature can roll the Bardic Inspiration die and add the number rolled as extra dano Necrótico dealt by the attack.'
+  'Arrancar as Cordas do Coração',
+  'Sua Inspiração Bárdica pode puxar as amarras da vida. Cada criatura que tiver um dado de Inspiração Bárdica seu pode usá-lo em um dos efeitos seguintes.
+
+Defesa. Quando a criatura é reduzida a 0 Pontos de Vida e não é morta na hora, pode rolar o dado de Inspiração Bárdica para ser reduzida a um número de Pontos de Vida igual ao resultado, em vez disso.
+
+Ofensa. Imediatamente após acertar um alvo com uma jogada de ataque, pode rolar o dado de Inspiração Bárdica e somar o número rolado como dano Necrótico extra do ataque.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -607,8 +696,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-requiems'),
   6,
-  'Agitar the Ossos',
-  'You always have the Animate Dead spell prepared. It counts como Bard spell for you. Quando você expend a use of Bardic Inspiration, choose Undead creatures under your control within 18 m of yourself, up to a number igual a your modificador de Carisma (mínimo de one creature). The chosen creatures each gain a Bardic Inspiration die. These extra Bardic Inspiration dice do not count against your limit. When an Undead creature under your control expends a Bardic Inspiration die on uma jogada de ataque, it can also add the number rolled on the Bardic Inspiration die to the attack’s jogada de dano if that attack hits.'
+  'Agitar os Ossos',
+  'Você sempre tem a magia Animar Mortos preparada. Ela conta como magia de Bardo para você. Quando gasta um uso de Inspiração Bárdica, escolha criaturas Mortas-vivas sob seu controle a até 18 m, até um número igual ao modificador de Carisma (mínimo 1). Cada uma ganha um dado de Inspiração Bárdica. Esses dados extras não contam no seu limite. Quando uma criatura Morta-viva sob seu controle gasta um dado de Inspiração Bárdica em uma jogada de ataque, também pode somar o número rolado à jogada de dano do ataque se ele acertar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -620,7 +709,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'collegeof-requiems'),
   14,
   'Dupla Morte',
-  'Quando você cast a Necromancy spell that targets only one creature, você pode have it target a second creature within range. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending one use of your Bardic Inspiration dice (no action required).'
+  'Quando conjura uma magia de Necromancia que tem como alvo apenas uma criatura, pode fazê-la ter como alvo uma segunda criatura no alcance. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo. Também pode restaurar o uso gastando um uso de Inspiração Bárdica (sem ação).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -631,8 +720,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'eldritch-domain'),
   3,
-  'Magias — Eldritch',
-  'Your connection to this divine domain ensures you always have certain spells ready. Quando você alcança a Cleric level specified in the Eldritch Domain Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Domínio Eldritch',
+  'Sua conexão com este domínio divino garante que certas magias estejam sempre prontas. Quando alcança um nível de Clérigo especificado na tabela Magias do Domínio Eldritch, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -643,8 +732,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'eldritch-domain'),
   3,
-  'Eldritch Contagion',
-  'You’ve been gifted with the ability to impart a fleeting taste of the unknowable on others. Quando você realiza a ação Mágica to cast a spell using a espaço de magia that targets one or more creatures, você pode force one target of the original spell to make a Sabedoria salvaguarda against your spell save CD. On a failed save, roll on the Eldritch Effects table, and the target creature suffers that effect por 1 minuto. No fim de each of its turns, the target repeats the save, ending the effect on itself on a success. This effect ends early se você use este recurso again.'
+  'Contágio Eldritch',
+  'Você recebeu a capacidade de transmitir aos outros um breve gosto do incompreensível. Quando gasta uma ação Mágica para conjurar uma magia usando um espaço de magia que tenha como alvo uma ou mais criaturas, pode forçar um alvo da magia original a fazer salvaguarda de Sabedoria contra sua CD de magia. Em falha, role na tabela Efeitos Eldritch e a criatura sofre aquele efeito por 1 minuto. No fim de cada turno dela, repete a salvaguarda, terminando o efeito em si em um sucesso. O efeito termina antes se você usar este recurso de novo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -656,7 +745,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'eldritch-domain'),
   3,
   'Profecia de Perdição',
-  'Como ação Mágica, you expend a use of your Channel Divinity to choose a point within 36 m of you que você possa ver and roll on the Eldritch Effects table. Each creature in a 4,5 m-radius Sphere centered on that point must succeed on a Sabedoria salvaguarda against your spell save CD or suffer the rolled effect por 1 minuto. No fim de each of its turns, the target repeats the save, ending the effect on itself on a success.'
+  'Como ação Mágica, você gasta um uso de Canalizar Divindade para escolher um ponto a até 36 m que possa ver e rolar na tabela Efeitos Eldritch. Cada criatura em uma Esfera de 4,5 m de raio centrada nesse ponto deve ser bem-sucedida em salvaguarda de Sabedoria contra sua CD de magia ou sofrer o efeito rolado por 1 minuto. No fim de cada turno dela, repete a salvaguarda, terminando o efeito em si em um sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -667,8 +756,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'eldritch-domain'),
   6,
-  'Sobrenatural Calm',
-  'Você tem Resistência to dano Psíquico and Vantagem on salvaguardas to avoid or end the Charmed and condição Amedrontados. Além disso, your thoughts can’t be read by telepathy or other means unless you allow it. The attempt automatically fails, and the creature must succeed on a Sabedoria salvaguarda against your spell save CD or take dano Psíquico igual a your Cleric level.'
+  'Calmaria Sobrenatural',
+  'Você tem Resistência a dano Psíquico e Vantagem em salvaguardas para evitar ou encerrar as condições Enfeitiçado e Amedrontado. Além disso, seus pensamentos não podem ser lidos por telepatia ou outros meios, a menos que você permita. A tentativa falha automaticamente, e a criatura deve passar numa salvaguarda de Sabedoria contra a sua CD de salvaguarda de magia ou sofrer dano Psíquico igual ao seu nível de Clérigo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -679,8 +768,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'eldritch-domain'),
   17,
-  'Cantar the Song that Ends the Mundo',
-  'When a creature fails a Sabedoria salvaguarda against your Prophecy of Doom feature, você pode deal 10d10 dano Psíquico to it. Once a creature takes damage in this way, it is immune to this effect for 10 minutes, after which it can be affected again.'
+  'Cantar a Canção que Termina o Mundo',
+  'Quando uma criatura falha numa salvaguarda de Sabedoria contra o seu recurso Profecia de Perdição, você pode causar 10d10 de dano Psíquico a ela. Depois que uma criatura sofre dano dessa forma, ela fica imune a este efeito por 10 minutos, após o que pode ser afetada novamente.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -691,8 +780,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
   3,
-  'Magias — Inquisition',
-  'Your connection to this divine domain ensures you always have certain spells ready. Quando você alcança a Cleric level specified in the Inquisition Domain Spells table, you thereafter always have the listed spells prepared.'
+  'Magias — Inquisição',
+  'Sua conexão com este domínio divino garante que você sempre tenha certas magias prontas. Quando você alcança um nível de Clérigo especificado na tabela Magias — Inquisição, você passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -703,8 +792,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
   3,
-  'Bruxa Hunter’s Golpe',
-  'Quando você acerta uma creature with a weapon attack or Ataque Desarmado , você pode deal an extra 1d8 dano de Força to the target. If the creature is concentrating on a spell, você causa an extra 2d8 dano de Força instead. At Cleric level 14, the extra dano de Força increases to 2d8, or 3d8 if the creature is concentrating on a spell. If a creature fails its salvaguarda to maintain Concentração como result of taking damage from este recurso, you gain Pontos de Vida Temporários igual a the extra dano de Força dealt. Você pode usar este recurso um número de times igual a your modificador de Sabedoria (mínimo de once). You regain all expended uses when you finish a Descanso Longo.'
+  'Golpe do Caçador de Bruxas',
+  'Quando você acerta uma criatura com um ataque com arma ou Ataque Desarmado, você pode causar 1d8 de dano de Força extra ao alvo. Se a criatura estiver se concentrando numa magia, você causa 2d8 de dano de Força extra em vez disso. No nível 14 de Clérigo, o dano de Força extra aumenta para 2d8, ou 3d8 se a criatura estiver se concentrando numa magia. Se uma criatura falhar na salvaguarda para manter Concentração em resultado do dano deste recurso, você ganha Pontos de Vida Temporários iguais ao dano de Força extra causado. Você pode usar este recurso um número de vezes igual ao seu modificador de Sabedoria (mínimo de uma vez). Você recupera todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -715,8 +804,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
   3,
-  'Magia Shield',
-  'Como Ação Bônus, você pode expend one use of your Channel Divinity to bestow a temporary resilience against arcane harm for 10 minutes. Choose a creature você pode see (including yourself) within 9 m of yourself. The chosen creature gains Pontos de Vida Temporários igual a 1d10 mais seu Cleric level. While a creature has Pontos de Vida Temporários granted by your Spell Escudo, the creature has Vantagem on salvaguardas against spells, and it has Resistência to the damage of spells. If any of these Pontos de Vida Temporários remain when Spell Escudo ends, they vanish.'
+  'Escudo Mágico',
+  'Como Ação Bônus, você pode gastar um uso de Canalizar Divindade para conceder resiliência temporária contra dano arcano por 10 minutos. Escolha uma criatura que você possa ver (incluindo você) a até 9 m de você. A criatura escolhida ganha Pontos de Vida Temporários iguais a 1d10 mais o seu nível de Clérigo. Enquanto uma criatura tiver Pontos de Vida Temporários concedidos pelo seu Escudo Mágico, ela tem Vantagem em salvaguardas contra magias e Resistência ao dano de magias. Se restarem quaisquer desses Pontos de Vida Temporários quando o Escudo Mágico terminar, eles desaparecem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -727,8 +816,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
   6,
-  'Repreender Invoker',
-  'Como Reação in response to a creature você pode see within 18 m of yourself using a ação Mágica to cast a spell, você pode force the creature to make a Constituição salvaguarda against your spell save CD. On a failed save, the creature takes 1d8 dano de Força, plus another 1d8 per level of the espaço de magia the creature expended. Truques are considered level 1 spells for this ability. On a successful save, the creature takes half as much damage instead. Você pode usar este recurso um número de times igual a your modificador de Sabedoria (minimum once). You regain all expended uses of este recurso when you finish a Descanso Longo.'
+  'Repreender Invocador',
+  'Como Reação em resposta a uma criatura que você possa ver a até 18 m de você usando uma Ação Mágica para conjurar uma magia, você pode forçar a criatura a fazer uma salvaguarda de Constituição contra a sua CD de salvaguarda de magia. Em caso de falha, a criatura sofre 1d8 de dano de Força, mais outro 1d8 por nível do espaço de magia que a criatura gastou. Truques são considerados magias de 1º nível para esta habilidade. Em caso de sucesso, a criatura sofre metade do dano. Você pode usar este recurso um número de vezes igual ao seu modificador de Sabedoria (mínimo uma vez). Você recupera todos os usos gastos deste recurso ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -739,8 +828,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
   17,
-  'Supernal Salvaguarda',
-  'Spell Escudo can target um número de creatures up to your modificador de Sabedoria (mínimo de one creature).'
+  'Salvaguarda Suprema',
+  'Escudo Mágico pode ter como alvo um número de criaturas até o seu modificador de Sabedoria (mínimo de uma criatura).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -751,8 +840,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'),
   3,
-  'Purificar Com Fogo',
-  'Quando você deal damage with a cantrip or an attack with a weapon or Ataque Desarmado , você pode deal an additional 1d8 dano de Fogo. Você pode usar este recurso um número de times igual a your modificador de Sabedoria mais seu Bônus de Proficiência (mínimo de once), and você recupera all expended uses when you finish a Short or Descanso Longo.'
+  'Purificar com Fogo',
+  'Quando você causa dano com um truque ou com um ataque com arma ou Ataque Desarmado, você pode causar 1d8 de dano de Fogo adicional. Você pode usar este recurso um número de vezes igual ao seu modificador de Sabedoria mais o seu Bônus de Proficiência (mínimo de uma vez), e recupera todos os usos gastos ao terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -763,8 +852,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'),
   3,
-  'Magias — Purification',
-  'Your connection to this divine domain ensures you always have certain spells ready. Quando você alcança a Cleric level specified in the Purification Domain Spells table, you thereafter always have the listed spells prepared.'
+  'Magias — Purificação',
+  'Sua conexão com este domínio divino garante que você sempre tenha certas magias prontas. Quando você alcança um nível de Clérigo especificado na tabela Magias — Purificação, você passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -775,8 +864,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'),
   3,
-  'Imunda Brand',
-  'Quando você acerta uma creature with a melee attack with a weapon or Ataque Desarmado , instead of dealing the strike’s normal damage, você pode expend one use of your Channel Divinity to sear a symbol into the creature’s flesh, marking it with a glowing brand por 1 minuto. During that time, the creature has Desvantagem on salvaguardas against your spells. Além disso, the creature gains Vulnerability to dano de Fogo você causa, even if it normally has Resistência or Imunidade to dano de Fogo.'
+  'Marca Impura',
+  'Quando você acerta uma criatura com um ataque corpo a corpo com arma ou Ataque Desarmado, em vez de causar o dano normal do golpe, você pode gastar um uso de Canalizar Divindade para gravar um símbolo na carne da criatura, marcando-a com uma marca brilhante por 1 minuto. Durante esse tempo, a criatura tem Desvantagem em salvaguardas contra as suas magias. Além disso, a criatura ganha Vulnerabilidade ao dano de Fogo que você causa, mesmo se normalmente tiver Resistência ou Imunidade a dano de Fogo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -788,7 +877,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'),
   6,
   'Proteção Contra Corrupção',
-  'Você tem Vantagem on salvaguardas to avoid or end diseases and against any effect that would change your form, such as the Polymorph spell. Como ação Mágica, você pode touch a willing creature to grant this benefit, but the creature takes dano de Fogo igual a your modificador de Sabedoria (mínimo de 1). This damage ignores Resistência and Imunidade . Uma vez você grant this benefit, it lasts por 1 hora or until you grant this benefit again.'
+  'Você tem Vantagem em salvaguardas para evitar ou encerrar doenças e contra qualquer efeito que alteraria a sua forma, como a magia Polimorfia. Como Ação Mágica, você pode tocar uma criatura disposto a receber este benefício, mas a criatura sofre dano de Fogo igual ao seu modificador de Sabedoria (mínimo de 1). Este dano ignora Resistência e Imunidade. Depois que você concede este benefício, ele dura 1 hora ou até você concedê-lo novamente.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -800,7 +889,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'),
   17,
   'Cauterizar Imperfeições',
-  'Você pode conjurar Lesser Restoration and Greater Restoration on a willing creature without expending espaços de magia and without Material components, but the target takes 1d6 dano de Fogo for each level of the espaço de magia immediately after you cast it. This damage ignores Resistência and Imunidade .'
+  'Você pode conjurar Restauração Menor e Restauração Maior numa criatura disposta sem gastar espaços de magia e sem componentes Materiais, mas o alvo sofre 1d6 de dano de Fogo por cada nível do espaço de magia imediatamente após você conjurá-la. Este dano ignora Resistência e Imunidade.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -811,8 +900,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-blood'),
   3,
-  'Magias do Círculo de Blood',
-  'Quando você alcança a Druid level specified in the Circle of Blood Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Círculo de Sangue',
+  'Quando você alcança um nível de Druida especificado na tabela Magias do Círculo de Sangue, você passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -823,8 +912,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-blood'),
   3,
-  'Rito de the Sangue Moon',
-  'Como Ação Bônus, você pode expend a use of your Wild Shape to adopt the violent savagery of the Blood Moon for 10 minutes. During this time, you gain o seguinte benefits: Red Resilience. Você ganha Pontos de Vida Temporários igual a three times your Druid level. Speed Increased. Your Speed increases by 3 m, and você pode take the Dash action como Ação Bônus. Violent Strikes. Quando você acerta uma creature with a weapon or Ataque Desarmado , você pode deal an extra 1d6 dano Necrótico to the target.'
+  'Rito da Lua de Sangue',
+  'Como Ação Bônus, você pode gastar um uso de Forma Selvagem para adotar a selvageria violenta da Lua de Sangue por 10 minutos. Durante esse tempo, você ganha os seguintes benefícios: Resiliência Escarlate. Você ganha Pontos de Vida Temporários iguais a três vezes o seu nível de Druida. Deslocamento Aumentado. Seu Deslocamento aumenta em 3 m, e você pode realizar a ação Disparada como Ação Bônus. Golpes Violentos. Quando você acerta uma criatura com uma arma ou Ataque Desarmado, você pode causar 1d6 de dano Necrótico extra ao alvo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -835,8 +924,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-blood'),
   6,
-  'Sangue Dádiva',
-  'Whenever a creature você pode see within 18 m of you is reduced to 0 Pontos de Vida, você pode take a Reação to claim the last vestiges of its vitality. You regain 1 spent Hit Die and grant a creature você pode see within 18 m of you Pontos de Vida Temporários igual a your Druid level. Você pode usar este recurso um número de times igual a your modificador de Sabedoria (minimum once). You regain one expended use when you finish a Descanso Curto, and você recupera all expended uses when you finish a Descanso Longo.'
+  'Dádiva de Sangue',
+  'Sempre que uma criatura que você possa ver a até 18 m de você é reduzida a 0 Pontos de Vida, você pode usar uma Reação para reivindicar os últimos vestígios de sua vitalidade. Você recupera 1 Dado de Vida gasto e concede a uma criatura que você possa ver a até 18 m de você Pontos de Vida Temporários iguais ao seu nível de Druida. Você pode usar este recurso um número de vezes igual ao seu modificador de Sabedoria (mínimo uma vez). Você recupera um uso gasto ao terminar um Descanso Curto, e recupera todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -847,8 +936,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-blood'),
   10,
-  'Sangue Luxúria',
-  'While your Blood Moon is active, you gain o seguinte benefits: Improved Violent Strikes. The extra dano Necrótico from your Violent Strikes increases to 2d6. Red Rage. Você tem Resistência to Contundente, Perfurante, and Cortante damage.'
+  'Sede de Sangue',
+  'Enquanto a sua Lua de Sangue estiver ativa, você ganha os seguintes benefícios: Golpes Violentos Aprimorados. O dano Necrótico extra dos seus Golpes Violentos aumenta para 2d6. Fúria Escarlate. Você tem Resistência a dano Contundente, Perfurante e Cortante.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -860,7 +949,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-blood'),
   14,
   'Exsanguinar',
-  'Quando você use your Blood Boon, você recupera spent Dados de Vida igual a half your Druid level and give Pontos de Vida Temporários igual a twice your Druid level to um número de creatures up to your modificador de Sabedoria (mínimo de one creature) que você possa ver within 18 m of yourself. Depois de usar este recurso, você pode’t do so again until you finish a Descanso Longo.'
+  'Quando você usa a sua Dádiva de Sangue, você recupera Dados de Vida gastos iguais à metade do seu nível de Druida e concede Pontos de Vida Temporários iguais ao dobro do seu nível de Druida a um número de criaturas até o seu modificador de Sabedoria (mínimo de uma criatura) que você possa ver a até 18 m de você. Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -871,8 +960,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-entropy'),
   3,
-  'Catastrófico Poder',
-  'Você tem mastered talents, both magical and martial, in your pursuit of the inevitable destruction of mortals and their works. Quando você termina um Short or Descanso Longo, you gain one of o seguinte benefits until you finish your next Short or Descanso Longo. Elemental Cataclysm. Como ação Mágica, você pode expend a espaço de magia to cause elemental energy to burst in a 3 m-radius Sphere centered on a point within 18 m of yourself. Choose a damage type: Acid, Cold, Fire, or Lightning. Lucas Torquato Each creature in the Sphere must make a Destreza salvaguarda against your spell save CD. On a failed save, a creature takes 1d6 damage of the chosen type per level of the espaço de magia expended, and then has Vulnerability to that damage type por 1 minuto. On a successful save, a creature takes half as much damage only. The target repeats the save at the end of each of its turns, ending the Vulnerability on a success. Ruinous Smite. Uma vez por turno when você causa damage with an attack with a weapon or an Ataque Desarmado , você pode choose to expend a espaço de magia to deal an extra 1d8 dano Necrótico, plus another 1d8 per level of the espaço de magia. Maestria em Armas. Your supernatural connection to destruction allows you to use the mastery property of one kind of weapon de sua escolha with which you have proficiency, such as Shortbows or Quarterstaffs. Sempre que você finish a Descanso Longo, você pode change the kind of weapon você escolhe. For example, you could switch to using the mastery property of Slings or Greatclubs.'
+  'Poder Catastrófico',
+  'Você dominou talentos, tanto mágicos quanto marciais, na busca pela destruição inevitável dos mortais e de suas obras. Quando você termina um Descanso Curto ou Longo, você ganha um dos seguintes benefícios até terminar o próximo Descanso Curto ou Longo. Cataclismo Elemental. Como Ação Mágica, você pode gastar um espaço de magia para fazer energia elemental explodir numa Esfera de 3 m de raio centrada num ponto a até 18 m de você. Escolha um tipo de dano: Ácido, Gélido, Fogo ou Relâmpago. Cada criatura na Esfera deve fazer uma salvaguarda de Destreza contra a sua CD de salvaguarda de magia. Em caso de falha, a criatura sofre 1d6 de dano do tipo escolhido por nível do espaço de magia gasto, e então tem Vulnerabilidade a esse tipo de dano por 1 minuto. Em caso de sucesso, a criatura sofre apenas metade do dano. O alvo repete a salvaguarda no fim de cada um dos seus turnos, encerrando a Vulnerabilidade em caso de sucesso. Golpe Ruinoso. Uma vez por turno, quando você causa dano com um ataque com arma ou Ataque Desarmado, você pode escolher gastar um espaço de magia para causar 1d8 de dano Necrótico extra, mais outro 1d8 por nível do espaço de magia. Maestria em Armas. Sua conexão sobrenatural com a destruição permite que você use a propriedade de maestria de um tipo de arma à sua escolha com a qual você tenha proficiência, como Arcos Curtos ou Bordões. Sempre que você termina um Descanso Longo, você pode mudar o tipo de arma escolhido. Por exemplo, você poderia passar a usar a propriedade de maestria de Fundas ou Clavas Grandes.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -883,8 +972,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-entropy'),
   3,
-  'Ruína Incarnate',
-  'Como Ação Bônus, você pode expend a use of your Wild Shape to adopt an aspect of entropy and the inevitable end of all things for 10 minutes. Você ganha os seguintes benefícios. All Things Pass. Você tem Vantagem on jogada de ataques against Ferido creatures. Inexorable Onslaught. Você pode attack twice instead of once whenever you take the ação Atacar no seu turno. Ironskin Armor. Your base AC becomes 17 mais seu modificador de Sabedoria (mínimo de +1) se vocêr AC is lower than that.'
+  'Ruína Encarnada',
+  'Como Ação Bônus, você pode gastar um uso de Forma Selvagem para adotar um aspecto da entropia e do fim inevitável de todas as coisas por 10 minutos. Você ganha os seguintes benefícios. Tudo Passa. Você tem Vantagem em jogadas de ataque contra criaturas Feridas. Investida Inexorável. Você pode atacar duas vezes em vez de uma sempre que realizar a ação Atacar no seu turno. Armadura de Pele de Ferro. Sua CA base se torna 17 mais o seu modificador de Sabedoria (mínimo de +1) se a sua CA for menor que isso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -895,8 +984,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-entropy'),
   6,
-  'Muitos Caminhos a Ruína',
-  'Your mystic connection to catastrophe and destruction grows stronger. Você ganha os seguintes benefícios. Elemental Assault. While your Ruin Incarnate feature is active, whenever you hit with a weapon or an Ataque Desarmado , você pode cause it to deal sua escolha of Acid, Cold, Fire, Lightning, or dano Necrótico rather than its normal damage type. Increased Might. While your Ruin Incarnate feature is active, você pode add your modificador de Sabedoria (minimum bonus of +1) to your Força and Destreza salvaguardas.'
+  'Muitos Caminhos para a Ruína',
+  'Sua conexão mística com a catástrofe e a destruição se fortalece. Você ganha os seguintes benefícios. Assalto Elemental. Enquanto o seu recurso Ruína Encarnada estiver ativo, sempre que você acertar com uma arma ou Ataque Desarmado, você pode fazer com que cause o tipo de dano à sua escolha entre Ácido, Gélido, Fogo, Relâmpago ou Necrótico em vez do tipo de dano normal. Poder Aumentado. Enquanto o seu recurso Ruína Encarnada estiver ativo, você pode somar o seu modificador de Sabedoria (bônus mínimo de +1) às suas salvaguardas de Força e Destreza.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -907,8 +996,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-entropy'),
   10,
-  'Sacudir the Terra',
-  'Como ação Mágica, você pode strike the earth with a thunderous tremor and grow. Quando você do so, your size increases by one category (from Medium to Large, for example) for 10 minutes. Além disso, each creature in a 9 m Emanação originating from your new form must make a Destreza salvaguarda against your spell save CD or have the condição Caído. The tremor deals Contundente damage to each structure in contact with the ground in the area. To determine esse dano, roll um número de d10s igual a your Druid level, and add them together. While your size is increased by este recurso, your attacks with weapons and Ataque Desarmados deal an extra 1d4 damage on a hit. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Sacudir a Terra',
+  'Como Ação Mágica, você pode golpear a terra com um tremor trovejante e crescer. Ao fazê-lo, o seu tamanho aumenta em uma categoria (de Médio para Grande, por exemplo) por 10 minutos. Além disso, cada criatura numa Emanação de 9 m originada da sua nova forma deve fazer uma salvaguarda de Destreza contra a sua CD de salvaguarda de magia ou ficar com a condição Caído. O tremor causa dano Contundente a cada estrutura em contato com o chão na área. Para determinar esse dano, role um número de d10s igual ao seu nível de Druida e some-os. Enquanto o seu tamanho estiver aumentado por este recurso, seus ataques com armas e Ataques Desarmados causam 1d4 de dano extra num acerto. Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -919,8 +1008,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-entropy'),
   14,
-  'Entropy’s Ápice',
-  'Você tem mastered the ability to hasten the inevitable slide toward entropy. Você ganha os seguintes benefícios. Enhanced Ruinous Smite. Until the end of your next turn, any creature affected by your Ruinous Smite suffers a Acerto Crítico on a roll of 19-20 on the d20. Improved Inexorable Onslaught. While your Ruin Incarnate feature is active, você pode attack with a weapon or an Ataque Desarmado three times instead of once whenever you take the ação Atacar no seu turno. World Breaker. You regain your use of your Shake the Earth feature when you finish a Short or Descanso Longo.'
+  'Ápice da Entropia',
+  'Você dominou a habilidade de acelerar o deslizamento inevitável em direção à entropia. Você ganha os seguintes benefícios. Golpe Ruinoso Aprimorado. Até o fim do seu próximo turno, qualquer criatura afetada pelo seu Golpe Ruinoso sofre um Acerto Crítico numa rolagem de 19–20 no d20. Investida Inexorável Aprimorada. Enquanto o seu recurso Ruína Encarnada estiver ativo, você pode atacar com uma arma ou Ataque Desarmado três vezes em vez de uma sempre que realizar a ação Atacar no seu turno. Quebrador de Mundos. Você recupera o uso do seu recurso Sacudir a Terra ao terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -931,8 +1020,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-mutation'),
   3,
-  'Círculo Formas',
-  'You channel the endless possibilities of nature when you assume a Wild Shape form, granting you the benefits below. Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (rounded down). Predator’s Strike. Quando você acerta uma creature with uma jogada de ataque using a Beast form’s attack in Wild Shape, you add +2 to the damage dealt. Unpredictable. Você pode realizar the Dash , Desengajar , or Influence action como Ação Bônus.'
+  'Formas do Círculo',
+  'Você canaliza as possibilidades infinitas da natureza ao assumir uma forma de Forma Selvagem, concedendo os benefícios abaixo. Nível de Desafio. O Nível de Desafio máximo da forma é igual ao seu nível de Druida dividido por 3 (arredondado para baixo). Golpe do Predador. Quando você acerta uma criatura com uma jogada de ataque usando um ataque da forma de Besta na Forma Selvagem, você soma +2 ao dano causado. Imprevisível. Você pode realizar a ação Disparada, Desengajar ou Influenciar como Ação Bônus.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -944,7 +1033,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-mutation'),
   3,
   'Mutar Forma',
-  'Quando você assume a Wild Shape form, or como Ação Bônus while your Wild Shape is active, você pode expend a espaço de magia to gain Mutation Points igual a the slot’s level. These Mutation Points last until they are spent, you gain additional Mutation Points, or you leave the form. While you have Mutation Points, você pode spend them no seu turno (no action required by you) to gain a Mutation from the list below. Quando você do, your body distends and reconstitutes in a gruesome display. Mutations last until you leave the form or you expend a espaço de magia to gain Mutation Points.'
+  'Quando você assume uma forma de Forma Selvagem, ou como Ação Bônus enquanto a sua Forma Selvagem estiver ativa, você pode gastar um espaço de magia para ganhar Pontos de Mutação iguais ao nível do espaço. Esses Pontos de Mutação duram até serem gastos, você ganhar Pontos de Mutação adicionais, ou você deixar a forma. Enquanto tiver Pontos de Mutação, você pode gastá-los no seu turno (sem exigir ação) para obter uma Mutação da lista abaixo. Ao fazê-lo, o seu corpo se distende e se reconstitui numa exibição grotesca. As Mutações duram até você deixar a forma ou gastar um espaço de magia para ganhar Pontos de Mutação.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -956,7 +1045,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-mutation'),
   6,
   'Antinatural e Inquietante',
-  'Quando você expend a level 2+ espaço de magia to gain Mutation Points, você recupera one expended espaço de magia. The slot você recupera must be of a level lower than the slot you expended and can’t be higher than level 5. Além disso, while in Wild Shape form, you gain o seguinte benefits. Unnatural Attacks. Each of your attacks in Wild Shape form can deal its normal damage type or dano de Força. You make this choice each time you hit with those attacks. Unnerving Aura. Você tem Vantagem on Carisma ( Deception or Intimidation ) and Sabedoria ( Animal Handling ) checks.'
+  'Quando você gasta um espaço de magia de 2º nível ou superior para ganhar Pontos de Mutação, você recupera um espaço de magia gasto. O espaço que você recupera deve ser de um nível inferior ao espaço gasto e não pode ser superior ao 5º nível. Além disso, enquanto estiver na forma de Forma Selvagem, você ganha os seguintes benefícios. Ataques Antinaturais. Cada um dos seus ataques na forma de Forma Selvagem pode causar o tipo de dano normal ou dano de Força. Você faz essa escolha cada vez que acerta com esses ataques. Aura Inquietante. Você tem Vantagem em testes de Carisma (Enganação ou Intimidação) e Sabedoria (Adestrar Animais).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -967,8 +1056,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-mutation'),
   10,
-  'Infinita Evolução',
-  'Quando você gain Mutation Points, you gain an additional number of Mutation Points igual a your modificador de Sabedoria (minimum 1). Além disso, você pode now spend your Mutation Points on o seguinte Mutations. Creature of Earth Cost: 3 Mutation Points Você tem Tremorsense with a range of 9 m. Você pode spend 2 additional Mutation Points to gain a Burrow Speed igual a your Speed . Elemental Inurement Cost: 2 Mutation Points Você ganha Resistência to one of o seguinte damage types de sua escolha: Acid, Cold, Fire, Lightning, Poison, or Thunder. Repeatable. Você pode gain this Mutation more than once, but you must choose a different Resistência each time. Eldritch Assault Cost: 2 Mutation Points Você ganha um +1 bonus to jogada de ataques and jogada de danos you make with your Wild Shape form’s attacks. Repeatable. Você pode gain this Mutation more than once, but no more than three times. Mystic Monster Cost: 3 Mutation Points Você pode conjurar spells while you’re in this Wild Shape form. Se você have 18 or more Druid levels, creatures have Desvantagem on salvaguardas against spells you cast while this Mutation is active. Rapid Regeneration Cost: 5 Mutation Points No início de each of your turns, você recupera Pontos de Vida igual a your modificador de Sabedoria (mínimo de 1 Hit Point regained). Supernatural Hide Cost: 5 Mutation Points Você tem Resistência to Contundente, Perfurante, and Cortante damage.'
+  'Evolução Infinita',
+  'Quando você ganha Pontos de Mutação, você ganha um número adicional de Pontos de Mutação igual ao seu modificador de Sabedoria (mínimo 1). Além disso, você agora pode gastar seus Pontos de Mutação nas seguintes Mutações. Criatura da Terra. Custo: 3 Pontos de Mutação. Você tem Sentido Sísmico com alcance de 9 m. Você pode gastar 2 Pontos de Mutação adicionais para ganhar um Deslocamento de Escavar igual ao seu Deslocamento. Endurecimento Elemental. Custo: 2 Pontos de Mutação. Você ganha Resistência a um dos seguintes tipos de dano à sua escolha: Ácido, Gélido, Fogo, Relâmpago, Veneno ou Trovejante. Repetível. Você pode obter esta Mutação mais de uma vez, mas deve escolher uma Resistência diferente a cada vez. Assalto Eldritch. Custo: 2 Pontos de Mutação. Você ganha um bônus de +1 em jogadas de ataque e jogadas de dano que fizer com os ataques da sua forma de Forma Selvagem. Repetível. Você pode obter esta Mutação mais de uma vez, mas no máximo três vezes. Monstro Místico. Custo: 3 Pontos de Mutação. Você pode conjurar magias enquanto estiver nesta forma de Forma Selvagem. Se você tiver 18 ou mais níveis de Druida, criaturas têm Desvantagem em salvaguardas contra magias que você conjurar enquanto esta Mutação estiver ativa. Regeneração Rápida. Custo: 5 Pontos de Mutação. No início de cada um dos seus turnos, você recupera Pontos de Vida iguais ao seu modificador de Sabedoria (mínimo de 1 Ponto de Vida recuperado). Pele Sobrenatural. Custo: 5 Pontos de Mutação. Você tem Resistência a dano Contundente, Perfurante e Cortante.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -979,8 +1068,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'circleof-mutation'),
   14,
-  'Ápice Predador',
-  'Your mastery of mutation has made you an apex predator, granting you o seguinte benefits. Evolved Attacks. Uma vez por turno, você pode deal an extra 2d10 dano de Força to a target you hit with a Wild Shape form’s attack. Mutate Beasts. Como ação Mágica, você pode touch a Beast and expend a espaço de magia, causing the target to mutate. Você ganha Mutation Points igual a the slot’s level, which you must immediately spend on Mutations for the Beast. Unspent Mutation Points are lost. Mutations remain until the Beast is targeted by este recurso again. A Remove Curse , Greater Restoration or similar magic ends the Mutations.'
+  'Predador Ápice',
+  'Seu domínio da mutação tornou você um predador ápice, concedendo os seguintes benefícios. Ataques Evoluídos. Uma vez por turno, você pode causar 2d10 de dano de Força extra a um alvo que acertar com um ataque da forma de Forma Selvagem. Mutar Bestas. Como Ação Mágica, você pode tocar uma Besta e gastar um espaço de magia, fazendo o alvo mutar. Você ganha Pontos de Mutação iguais ao nível do espaço, que deve gastar imediatamente em Mutações para a Besta. Pontos de Mutação não gastos são perdidos. As Mutações permanecem até a Besta ser alvo deste recurso novamente. Remover Maldição, Restauração Maior ou magia semelhante encerra as Mutações.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -991,8 +1080,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   3,
-  'Protetora Provocação',
-  'Uma vez por turno when you hit a creature with a melee attack using a weapon or Ataque Desarmado , você pode taunt it. Until the start of your next turn or until you have the Incapacitado condition, the target has Desvantagem on jogada de ataques against targets other than you. A creature can only be affected by one Taunt at a time.'
+  'Provocação Protetora',
+  'Uma vez por turno, quando você acerta uma criatura com um ataque corpo a corpo usando uma arma ou Ataque Desarmado, você pode provocá-la. Até o início do seu próximo turno ou até você ter a condição Incapacitado, o alvo tem Desvantagem em jogadas de ataque contra alvos que não sejam você. Uma criatura só pode ser afetada por uma Provocação por vez.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1003,8 +1092,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   3,
-  'Resistir the Tempestade',
-  'Você tem grown accustomed to being battered and bruised. Como Ação Bônus, you toughen up por 1 minuto. No fim de each of your turns, you gain Pontos de Vida Temporários igual a your Fighter level mais seu modificador de Constituição. Depois de usar este recurso, você pode’t use it again until you finish a Short or Descanso Longo.'
+  'Resistir à Tempestade',
+  'Você se acostumou a ser espancado e machucado. Como Ação Bônus, você se endurece por 1 minuto. No fim de cada um dos seus turnos, você ganha Pontos de Vida Temporários iguais ao seu nível de Guerreiro mais o seu modificador de Constituição. Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1015,8 +1104,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   7,
-  'Ameaçadora Presença',
-  'Você pode provoke your enemies into single-minded hatred of you. Como ação Mágica, each creature de sua escolha that can hear you in a 9 m Emanação originating from you must make a Sabedoria salvaguarda (CD 8 mais seu modificador de Constituição and Bônus de Proficiência). On a failed save, the creature takes 5d6 dano Psíquico and has Desvantagem on jogada de ataques against targets other than you. Quando você use este recurso, you restore your use of Weather the Storm. Você pode usar este recurso twice. You regain all expended uses when you finish a Descanso Longo. Quando você alcança Fighter level 15, you gain another use of este recurso.'
+  'Presença Ameaçadora',
+  'Você pode provocar seus inimigos a um ódio obsessivo por você. Como Ação Mágica, cada criatura à sua escolha que possa ouvi-lo numa Emanação de 9 m originada de você deve fazer uma salvaguarda de Sabedoria (CD 8 mais o seu modificador de Constituição e Bônus de Proficiência). Em caso de falha, a criatura sofre 5d6 de dano Psíquico e tem Desvantagem em jogadas de ataque contra alvos que não sejam você. Quando você usa este recurso, você restaura o uso de Resistir à Tempestade. Você pode usar este recurso duas vezes. Você recupera todos os usos gastos ao terminar um Descanso Longo. Quando você alcança o nível 15 de Guerreiro, ganha outro uso deste recurso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1027,8 +1116,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   10,
-  'Agressiva Defesa',
-  'You know when to switch from defense to offense. Once on each of your turns when you hit a creature with uma jogada de ataque using a arma corpo a corpo or Ataque Desarmado , você pode lose Pontos de Vida Temporários igual a no more than half your Fighter level (round down) to deal extra damage to the target igual a the number of Pontos de Vida Temporários lost in this way.'
+  'Defesa Agressiva',
+  'Você sabe quando passar da defesa para o ataque. Uma vez em cada um dos seus turnos, quando você acerta uma criatura com uma jogada de ataque usando uma arma corpo a corpo ou Ataque Desarmado, você pode perder Pontos de Vida Temporários iguais a no máximo a metade do seu nível de Guerreiro (arredondado para baixo) para causar dano extra ao alvo igual ao número de Pontos de Vida Temporários perdidos dessa forma.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1039,8 +1128,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   15,
-  'Aprimorado Second Vento',
-  'Your endurance is unrivaled. Quando você regain Pontos de Vida from Second Wind, you gain um número de Pontos de Vida Temporários igual a the roll’s total.'
+  'Segundo Vento Aprimorado',
+  'Sua resistência é inigualável. Quando você recupera Pontos de Vida com Segundo Vento, você ganha um número de Pontos de Vida Temporários igual ao total da rolagem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1051,8 +1140,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'bulwark-warrior'),
   18,
-  'Interromper the Ataque',
-  'When another creature você pode see within 1,5 m of you is hit by uma jogada de ataque, você pode take a Reação to change the target to yourself. Você tem Resistência to all damage against that attack. Every so often you find one: a soldier ready and willing to put themselves in harm’s way for their comrades. —'
+  'Interromper o Assalto',
+  'Quando outra criatura que você possa ver a até 1,5 m de você é acertada por uma jogada de ataque, você pode usar uma Reação para mudar o alvo para você. Você tem Resistência a todo o dano contra esse ataque. De vez em quando você encontra um: um soldado pronto e disposto a se colocar no caminho do perigo pelos camaradas. —'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1063,8 +1152,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   3,
-  'Composto Criador',
-  'Você aprende to create alchemical compounds toxic to others but empowering to you. Compounds. Você aprende three compounds de sua escolha from the “ Compound Options ” section below. Você aprende dois additional compounds de sua escolha when you reach Fighter levels 7, 10, and 15. Each time you learn new compounds, você pode also replace one compound você conhece with a different one. Guilherme Castro Creating. Sempre que você finish a Descanso Longo while holding Alchemist’s Supplies , você pode use that tool to magically produce any number of compounds. The compound appears in a vial, and the vial vanishes when the compound is consumed or poured out. If any compound remains when you finish a Descanso Longo, the compound and its vial vanish. Consuming. Como Ação Bônus, você pode consume one compound. Você pode consume um número de compounds up to one mais seu modificador de Constituição (mínimo de one). Uma vez você reach this limit, você podenot benefit from more compounds until you finish a Descanso Longo. Você pode benefit from multiple compounds at the same time, but consuming multiple vials of the same compound provides no additional effects. Only você pode benefit from your compounds. Any other creature that consumes a compound must succeed on a Constituição salvaguarda (CD 8 mais seu modificador de Inteligência plus Bônus de Proficiência) or have the condição Envenenado por 1 minuto.'
+  'Criador de Compostos',
+  'Você aprende a criar compostos alquímicos tóxicos para os outros, mas fortalecedores para você. Compostos. Você aprende três compostos à sua escolha da seção “Opções de Compostos” abaixo. Você aprende dois compostos adicionais à sua escolha quando alcança os níveis 7, 10 e 15 de Guerreiro. Cada vez que aprende novos compostos, você também pode substituir um composto que conhece por um diferente. Criação. Sempre que você termina um Descanso Longo enquanto empunha Suprimentos de Alquimista, você pode usar essa ferramenta para produzir magicamente qualquer número de compostos. O composto aparece num frasco, e o frasco desaparece quando o composto é consumido ou derramado. Se restar algum composto quando você terminar um Descanso Longo, o composto e seu frasco desaparecem. Consumo. Como Ação Bônus, você pode consumir um composto. Você pode consumir um número de compostos até um mais o seu modificador de Constituição (mínimo de um). Ao atingir esse limite, você não pode se beneficiar de mais compostos até terminar um Descanso Longo. Você pode se beneficiar de múltiplos compostos ao mesmo tempo, mas consumir múltiplos frascos do mesmo composto não fornece efeitos adicionais. Somente você pode se beneficiar dos seus compostos. Qualquer outra criatura que consumir um composto deve passar numa salvaguarda de Constituição (CD 8 mais o seu modificador de Inteligência mais Bônus de Proficiência) ou ficar com a condição Envenenado por 1 minuto.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1076,7 +1165,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   3,
   'Estudante de Alquimia',
-  'Você ganha Alchemist’s Supplies , and you have proficiency with it. Além disso, your Bônus de Proficiência is doubled for ability checks with Alchemist’s Supplies.'
+  'Você recebe Suprimentos de Alquimista e tem proficiência com eles. Além disso, o seu Bônus de Proficiência é dobrado em testes de habilidade com Suprimentos de Alquimista.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1087,8 +1176,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   7,
-  'Vivo Caldeirão',
-  'The number of compounds você pode safely consume increases to three mais seu modificador de Constituição (minimum one). At Fighter level 18, the number of compounds você pode safely consume increases to five mais seu modificador de Constituição (minimum one).'
+  'Caldeirão Vivo',
+  'O número de compostos que você pode consumir com segurança aumenta para três mais o seu modificador de Constituição (mínimo um). No nível 18 de Guerreiro, o número de compostos que você pode consumir com segurança aumenta para cinco mais o seu modificador de Constituição (mínimo um).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1099,8 +1188,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   10,
-  'Rápida Consumption',
-  'Quando você use a Ação Bônus to drink a compound, você pode drink a second compound.'
+  'Consumo Rápido',
+  'Quando você usa uma Ação Bônus para beber um composto, você pode beber um segundo composto.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1111,8 +1200,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   15,
-  'Toxina Transmutação',
-  'Você tem Resistência to dano de Veneno. Also, como Ação Bônus, você pode end the condição Envenenado on yourself. Quando você end the condição Envenenado on yourself in this way, você pode choose to gain Pontos de Vida Temporários igual a your Fighter level. You regain the ability to gain these Pontos de Vida Temporários after completing a Descanso Longo.'
+  'Transmutação de Toxina',
+  'Você tem Resistência a dano de Veneno. Também, como Ação Bônus, você pode encerrar a condição Envenenado em si mesmo. Quando você encerra a condição Envenenado em si mesmo dessa forma, você pode escolher ganhar Pontos de Vida Temporários iguais ao seu nível de Guerreiro. Você recupera a capacidade de ganhar esses Pontos de Vida Temporários após completar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1123,8 +1212,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'),
   18,
-  'Vivo Catalisador',
-  'Quando você termina um Descanso Longo, você pode replace one compound você conhece with another one.'
+  'Catalisador Vivo',
+  'Quando você termina um Descanso Longo, você pode substituir um composto que conhece por outro.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1135,8 +1224,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   3,
-  'Hábil Guardian',
-  'Unraveling mysteries under the cover of night has honed your skills. Você ganha os seguintes benefícios. Expertise. Choose one of your skill proficiencies with which you lack Expertise. Você ganha Expertise in that skill. Skilled. Você ganha proficiency in two skills de sua escolha from o seguinte list: Deception , History , Insight , Intimidation , Investigation , Perception , or Stealth .'
+  'Guardião Hábil',
+  'Desvendar mistérios sob o manto da noite aprimorou suas perícias. Você ganha os seguintes benefícios. Expertise. Escolha uma das suas proficiências em perícia nas quais você ainda não tenha Expertise. Você ganha Expertise nessa perícia. Hábil. Você ganha proficiência em duas perícias à sua escolha da seguinte lista: Enganação, História, Intuição, Intimidação, Investigação, Percepção ou Furtividade.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1148,7 +1237,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   3,
   'Sempre Vigilante',
-  'Your long nights of vigilance have left your senses attuned to signs of danger, granting you o seguinte benefits. Darkvision. Você ganha Darkvision with a range of 18 m. Se você already have Darkvision when you gain este recurso, its range increases by 18 m. Keen Senses. Você tem Vantagem on Initiative rolls and Sabedoria ( Perception ) checks. Warning Shout. Quando você make an Initiative roll, você pode take a Reação to warn creatures de sua escolha within 9 m of yourself that can see or hear you. Each creature can then take a Reação to have Vantagem on its Initiative roll and move up to half its Speed without provoking Opportunity ação Atacar. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Suas longas noites de vigilância deixaram seus sentidos sintonizados a sinais de perigo, concedendo os seguintes benefícios. Visão no Escuro. Você ganha Visão no Escuro com alcance de 18 m. Se você já tiver Visão no Escuro ao ganhar este recurso, o alcance dela aumenta em 18 m. Sentidos Aguçados. Você tem Vantagem em rolagens de Iniciativa e testes de Sabedoria (Percepção). Grito de Alerta. Quando você faz uma rolagem de Iniciativa, você pode usar uma Reação para alertar criaturas à sua escolha a até 9 m de você que possam vê-lo ou ouvi-lo. Cada criatura pode então usar uma Reação para ter Vantagem na sua rolagem de Iniciativa e se mover até metade do seu Deslocamento sem provocar Ataque de Oportunidade. Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1159,8 +1248,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   7,
-  'Avaliar Up',
-  'Como Ação Bônus, you assess a creature você pode see within 9 m of you. Until the start of your next turn, when that creature makes uma jogada de ataque against you or another creature within 1,5 m of you, você pode take a Reação to impose Desvantagem on that roll and give Resistência to that damage.'
+  'Avaliar',
+  'Como Ação Bônus, você avalia uma criatura que possa ver a até 9 m de você. Até o início do seu próximo turno, quando essa criatura fizer uma jogada de ataque contra você ou outra criatura a até 1,5 m de você, você pode usar uma Reação para impor Desvantagem nessa rolagem e conceder Resistência a esse dano.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1171,8 +1260,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   10,
-  'Noite Stalker',
-  'Você é adept at tracking down enemies in the dead of night, giving you these benefits. Blindsight. Como Ação Bônus, you gain Blindsight with a range of 9 m for 10 minutes. Depois de usar this benefit, você pode’t use it again until you finish a Short or Descanso Longo. Slippery. Opportunity ação Atacar have Desvantagem against you. While entirely within Dim Light or Darkness , your movement doesn’t provoke Opportunity ação Atacar.'
+  'Espreitador Noturno',
+  'Você é hábil em rastrear inimigos na escuridão da noite, recebendo estes benefícios. Visão Cega. Como Ação Bônus, você ganha Visão Cega com alcance de 9 m por 10 minutos. Depois de usar este benefício, você não pode usá-lo novamente até terminar um Descanso Curto ou Longo. Escorregadio. Ataques de Oportunidade têm Desvantagem contra você. Enquanto estiver totalmente sob Luz Fraca ou Escuridão, o seu movimento não provoca Ataque de Oportunidade.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1183,8 +1272,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   15,
-  'Ready para Action',
-  'Quando você make an Initiative roll, você pode treat a d20 roll of 9 or lower como 10. Quando você rola 18-20 on an Initiative roll, você pode take one additional action, except the ação Mágica, on your first turn.'
+  'Pronto para a Ação',
+  'Quando você faz uma rolagem de Iniciativa, você pode tratar uma rolagem de d20 de 9 ou menos como 10. Quando você rola 18–20 numa rolagem de Iniciativa, você pode realizar uma ação adicional, exceto a Ação Mágica, no seu primeiro turno.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1195,8 +1284,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'nightwatcher'),
   18,
-  'Espancar Derrubar',
-  'Immediately after you miss a creature under the effect of your Size Up feature with uma jogada de ataque, você pode take a Ação Bônus or Reação to make a melee attack against that creature if it’s within range. Você tem Vantagem on the new jogada de ataque against that creature.'
+  'Espancar',
+  'Imediatamente após errar uma criatura sob o efeito do seu recurso Avaliar com uma jogada de ataque, você pode usar uma Ação Bônus ou Reação para fazer um ataque corpo a corpo contra essa criatura se ela estiver no alcance. Você tem Vantagem na nova jogada de ataque contra essa criatura.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1207,8 +1296,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorofthe-leaden-crown'),
   3,
-  'Sutil Mão',
-  'Your martial arts are enhanced by a capacity for telekinetic strikes. During your turn, your reach is 1,5 m greater with Ataque Desarmados . Além disso, when you hit a creature with an Ataque Desarmado as part of the ação Atacar no seu turno, você pode choose to have it deal sua escolha of dano Psíquico or its normal damage type.'
+  'Mão Sutil',
+  'Suas artes marciais são aprimoradas por uma capacidade de golpes telecinéticos. Durante o seu turno, o seu alcance é 1,5 m maior com Ataques Desarmados. Além disso, quando você acerta uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, você pode escolher que ele cause dano Psíquico à sua escolha ou o tipo de dano normal.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1219,8 +1308,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorofthe-leaden-crown'),
   3,
-  'Psiônica Prowess',
-  'Your psychic powers have manifested in the ability to cast certain spells. You know the Mage Hand cantrip. Você pode conjurar it without Verbal or Somatic components, and você pode make the spectral hand Invisible . Além disso, você pode cast certain spells by expending Focus Points. Você pode realizar a ação Mágica and expend 1 Focus Point to cast Detect Evil and Good or Protection from Evil and Good . Você pode also take a ação Mágica and expend 2 Focus Points to cast Hold Person , Levitate , or Shatter . Sabedoria is sua habilidade de conjuração for these spells, and você pode cast them without Material components.'
+  'Proeza Psiônica',
+  'Seus poderes psíquicos se manifestaram na capacidade de conjurar certas magias. Você conhece o truque Mão Mágica. Você pode conjurá-lo sem componentes Verbais ou Somáticos, e pode tornar a mão espectral Invisível. Além disso, você pode conjurar certas magias gastando Pontos de Foco. Você pode realizar uma Ação Mágica e gastar 1 Ponto de Foco para conjurar Detectar o Bem e o Mal ou Proteção contra o Bem e o Mal. Você também pode realizar uma Ação Mágica e gastar 2 Pontos de Foco para conjurar Imobilizar Pessoa, Levitação ou Estilhaçar. Sabedoria é a sua habilidade de conjuração para essas magias, e você pode conjurá-las sem componentes Materiais.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1231,8 +1320,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorofthe-leaden-crown'),
   6,
-  'Descarado Golpe',
-  'Once on each of your turns when you hit a creature with your Ataque Desarmado or Monk weapon, você pode force it to make a Força salvaguarda against your Focus Point save CD. On a failed save, você pode move the target up to 3 m toward or away from you.'
+  'Golpe Descarado',
+  'Uma vez em cada um dos seus turnos, quando você acerta uma criatura com o seu Ataque Desarmado ou arma de Monge, você pode forçá-la a fazer uma salvaguarda de Força contra a sua CD de salvaguarda de Pontos de Foco. Em caso de falha, você pode mover o alvo até 3 m na sua direção ou para longe de você.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1243,8 +1332,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorofthe-leaden-crown'),
   11,
-  'Psíquica Crush',
-  'Each time you hit a creature with an Ataque Desarmado , it gains a Pressure Point. A creature loses all Pressure Points se você cause a different creature to gain a Pressure Point or after 1 minute, whichever comes first. Como Ação Bônus, você pode expend 1 Focus Point to telekinetically crush a creature with 1 or more of your Pressure Points. The creature loses all Pressure Points and must make a Força salvaguarda against your Focus Point save CD. On a failed save, the creature takes 1d8 dano de Força per Pressure Point, and it has the Restrained condition até o fim do seu próximo turno. On a successful save, the creature takes half as much damage only.'
+  'Esmagamento Psíquico',
+  'Cada vez que você acerta uma criatura com um Ataque Desarmado, ela ganha um Ponto de Pressão. Uma criatura perde todos os Pontos de Pressão se você fizer outra criatura ganhar um Ponto de Pressão ou após 1 minuto, o que ocorrer primeiro. Como Ação Bônus, você pode gastar 1 Ponto de Foco para esmagar telecineticamente uma criatura com 1 ou mais dos seus Pontos de Pressão. A criatura perde todos os Pontos de Pressão e deve fazer uma salvaguarda de Força contra a sua CD de salvaguarda de Pontos de Foco. Em caso de falha, a criatura sofre 1d8 de dano de Força por Ponto de Pressão, e fica com a condição Contido até o fim do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1255,8 +1344,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorofthe-leaden-crown'),
   17,
-  'Psiônica Mastery',
-  'After much training, you have mastered the psionic disciplines necessary to defend mortals from planar threats. Como ação Mágica, você pode spend 5 Focus Points to cast Dispel Evil and Good , Hold Monster , Telekinesis , or Wall of Force . Sabedoria is sua habilidade de conjuração for these spells, and você pode cast them without Material components.'
+  'Maestria Psiônica',
+  'Após muito treinamento, você dominou as disciplinas psiônicas necessárias para defender mortais de ameaças planares. Como Ação Mágica, você pode gastar 5 Pontos de Foco para conjurar Dissipar o Bem e o Mal, Imobilizar Monstro, Telecinesia ou Muralha de Força. Sabedoria é a sua habilidade de conjuração para essas magias, e você pode conjurá-las sem componentes Materiais.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1267,8 +1356,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   3,
-  'Altas Histórias',
-  'Você tem gained a knack for telling embellished tales of your past achievements. Você ganha proficiency in one of o seguinte skills de sua escolha: Deception , Intimidation , Performance , or Persuasion .'
+  'Contos Exagerados',
+  'Você adquiriu jeito para contar histórias exageradas de suas façanhas passadas. Você ganha proficiência em uma das seguintes perícias à sua escolha: Enganação, Intimidação, Atuação ou Persuasão.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1279,8 +1368,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   3,
-  'Machucado Ego',
-  'Your ego strengthens you as you fight to prove your value. Quando você expend a Focus Point, você pode also gain Pontos de Vida Temporários igual a your modificador de Sabedoria (mínimo de 1 Temporary Hit Point). While you are Ferido , you gain twice that amount instead.'
+  'Ego Ferido',
+  'Seu ego o fortalece enquanto você luta para provar o seu valor. Quando você gasta um Ponto de Foco, você também pode ganhar Pontos de Vida Temporários iguais ao seu modificador de Sabedoria (mínimo de 1 Ponto de Vida Temporário). Enquanto estiver Ferido, você ganha o dobro dessa quantidade.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1291,8 +1380,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   3,
-  'Assertivo Atacante',
-  'While you are Ferido , you add your modificador de Sabedoria to the damage você causa with Ataque Desarmados and Monk weapons.'
+  'Atacante Assertivo',
+  'Enquanto estiver Ferido, você soma o seu modificador de Sabedoria ao dano que causa com Ataques Desarmados e armas de Monge.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1303,8 +1392,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   6,
-  'Irracional Retaliação',
-  'Damage dealt to you is damage dealt to your pride, and that is something you simply can’t allow. Whenever a creature deals damage to you, você pode take a Reação and expend 1 Focus Point. Você tem Vantagem on jogada de ataques against that creature até o fim do seu próximo turno.'
+  'Retaliação Irracional',
+  'Dano causado a você é dano causado ao seu orgulho, e isso é algo que você simplesmente não pode permitir. Sempre que uma criatura causar dano a você, você pode usar uma Reação e gastar 1 Ponto de Foco. Você tem Vantagem em jogadas de ataque contra essa criatura até o fim do seu próximo turno.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1315,8 +1404,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   6,
-  'Redobrados Efforts',
-  'Quando você score a Acerto Crítico while you are Ferido , você pode roll one additional damage die when determining the extra damage dealt by the attack.'
+  'Esforços Redobrados',
+  'Quando você obtém um Acerto Crítico enquanto estiver Ferido, você pode rolar um dado de dano adicional ao determinar o dano extra causado pelo ataque.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1328,7 +1417,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   11,
   'Sempre Orgulhoso',
-  'Quando você are reduced to 0 Pontos de Vida and not killed outright, você pode expend 1 Focus Point to enter a trance. While in this trance, you have o seguinte effects: Você é imune a the Unconscious condition. Você pode’t speak. Você pode’t cast or concentrate on spells. You suffer 1 Death Salvaguarda failure from damage from a Acerto Crítico instead of 2. Sempre que você start your turn with 0 Hit Point, you must expend 1 Focus Point to maintain a trance, and you make Death Salvaguardas as normal.'
+  'Quando você é reduzido a 0 Pontos de Vida e não é morto na hora, pode gastar 1 Ponto de Foco para entrar em um transe. Enquanto estiver nesse transe: é imune à condição Inconsciente; não pode falar; não pode conjurar nem se concentrar em magias; sofre 1 falha em Salvaguarda Contra a Morte por dano de Acerto Crítico em vez de 2. Sempre que começar o turno com 0 Pontos de Vida, deve gastar 1 Ponto de Foco para manter o transe e faz Salvaguardas Contra a Morte normalmente.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1340,7 +1429,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-pride'),
   17,
   'Egotista',
-  'Injuries to your pride enrage you. Você é considered Ferido se vocêr current Pontos de Vida are below your máximo de Pontos de Vida.'
+  'Feridas no orgulho o enfurecem. Você é considerado Ferido se seus Pontos de Vida atuais estiverem abaixo do máximo de Pontos de Vida.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1352,7 +1441,11 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-regret'),
   3,
   'Sombra de Arrependimento',
-  'Uma vez por turno, no seu turno, você pode expend 1 Focus Point (no action required) to create a shade of yourself in an unoccupied space você pode see within 3 m of yourself. The shade is intangible and doesn’t occupy its space. It lasts até o fim do seu próximo turno, but it ends early se você dismiss it (no action required) or have the Incapacitado condition. While it persists, you gain o seguinte benefits. Daniel Alessi Shade Strike. Quando você use Flurry of Blows, você pode have the attacks originate from the shade instead of you. Attacks originating from the shade deal Necrotic or dano de Força (sua escolha) rather than their normal damage type. Move. Como Ação Bônus, você pode move the shade up to 18 m to an unoccupied space você pode see that is within 18 m of yourself.'
+  'Uma vez por turno, no seu turno, pode gastar 1 Ponto de Foco (sem ação) para criar uma sombra de si em um espaço desocupado que possa ver a até 3 m. A sombra é intangível e não ocupa o espaço. Dura até o fim do seu próximo turno, mas termina antes se você a dispensar (sem ação) ou tiver a condição Incapacitado. Enquanto persistir, você ganha os seguintes benefícios.
+
+Golpe da Sombra. Quando usa Rajada de Golpes, pode fazer com que os ataques originem da sombra em vez de você. Ataques originados da sombra causam dano Necrótico ou de Força (sua escolha) em vez do tipo normal.
+
+Mover. Como Ação Bônus, pode mover a sombra até 18 m para um espaço desocupado que possa ver a até 18 m de você.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1363,8 +1456,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-regret'),
   3,
-  'The Estrada Não Percorrida',
-  'Quando você realiza the Dash action, instead of moving, você pode teleport yourself or an ally within 18 m of you to the location of your shade.'
+  'A Estrada Não Percorrida',
+  'Quando realiza a ação Disparar, em vez de se mover, pode teleportar a si ou a um aliado a até 18 m de você para o local da sua sombra.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1376,7 +1469,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-regret'),
   6,
   'Auxílio Não Negado',
-  'Você pode realizar a Ação Bônus to take the ação Ajudar or expend 1 Focus Point to touch a creature and restore um número de Pontos de Vida igual a a roll of your Martial Arts die mais seu modificador de Sabedoria.'
+  'Você pode gastar uma Ação Bônus para realizar a ação Ajudar, ou gastar 1 Ponto de Foco para tocar uma criatura e restaurar Pontos de Vida iguais a uma rolagem do seu dado de Artes Marciais + modificador de Sabedoria.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1387,8 +1480,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-regret'),
   11,
-  'Esmagadora Culpa',
-  'Você pode expend 3 Focus Points to release your pent-up guilt in a crushing wave that drops your foes to their knees. Creatures de sua escolha in a 6 m Emanação originating from you or your shade must make a Sabedoria salvaguarda against your Focus Point save CD. On a failed save, a creature takes dano Psíquico igual a three rolls of your Martial Arts die and has the condição Caído. On a successful save, a creature takes half as much damage only.'
+  'Culpa Esmagadora',
+  'Você pode gastar 3 Pontos de Foco para liberar a culpa reprimida em uma onda esmagadora que derruba os inimigos. Criaturas de sua escolha em uma Emanação de 6 m originada de você ou da sua sombra devem fazer salvaguarda de Sabedoria contra a CD de salvaguarda do Ponto de Foco. Em falha, a criatura sofre dano Psíquico igual a três rolagens do dado de Artes Marciais e fica Caída. Em sucesso, sofre apenas metade do dano.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1399,8 +1492,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warriorof-regret'),
   17,
-  'Reviver the Past',
-  'Your Shade of Regret now lasts for 10 minutes. After using Flurry of Blows, your Shade can make one additional Ataque Desarmado as per Shade Strike. Você pode also use the Stunning Strike feature through the Shade Strike.'
+  'Reviver o Passado',
+  'Sua Sombra de Arrependimento agora dura 10 minutos. Após usar Rajada de Golpes, a Sombra pode fazer um Ataque Desarmado adicional conforme Golpe da Sombra. Você também pode usar Golpe Atordoante através do Golpe da Sombra.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1411,8 +1504,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   3,
-  'Debilitante Febre',
-  'Você pode inflict disease upon a creature. Quando você acerta uma creature with uma jogada de ataque using a weapon or Ataque Desarmado , você pode expend one use of your Channel Divinity to give that creature the condição Envenenado por 1 minuto. While Envenenado in this way, the target also has the Incapacitado condition. No fim de each of its turns, the Envenenado target makes a Constituição save, ending the effect on itself on a success.'
+  'Febre Debilitante',
+  'Você pode infligir doença a uma criatura. Quando acerta uma criatura com jogada de ataque usando arma ou Ataque Desarmado, pode gastar um uso de Canalizar Divindade para dar a essa criatura a condição Envenenado por 1 minuto. Enquanto Envenenada assim, o alvo também tem a condição Incapacitado. No fim de cada turno dela, o alvo Envenenado faz salvaguarda de Constituição, terminando o efeito em si em um sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1423,8 +1516,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   3,
-  'Entrópica Infecção',
-  'Como ação Mágica, você pode expend one use of your Channel Divinity and select a creature você pode see within 9 m of yourself. For 1 minute, se você deal damage to the target, the target takes an extra 2d6 dano Necrótico. Além disso, the target loses Resistência and Imunidade to dano Necrótico. The target can make a Constituição save against the Paladin''s spell save CD at the end of each of its turns, ending the effect on itself on a success.'
+  'Infecção Entrópica',
+  'Como ação Mágica, você pode gastar um uso de Canalizar Divindade e selecionar uma criatura que possa ver a até 9 m. Por 1 minuto, se causar dano ao alvo, ele sofre 2d6 de dano Necrótico extra. Além disso, o alvo perde Resistência e Imunidade a dano Necrótico. O alvo pode fazer salvaguarda de Constituição contra a CD de magia do Paladino no fim de cada turno dele, terminando o efeito em si em um sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1435,8 +1528,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   3,
-  'Magias do Juramento de Pestilence',
-  'The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Pestilence Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Juramento de Pestilência',
+  'A magia do seu juramento garante que certas magias estejam sempre prontas; quando alcança um nível de Paladino especificado na tabela Magias do Juramento de Pestilência, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1447,8 +1540,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   7,
-  'Aura de Desenfreada Doença',
-  'You emit an aura of contagion and virulence. When a creature within your Aura of Protection is about to make a Teste D20 , você pode take a Reação to impose Desvantagem on that Teste D20. There are days when você pode just make out the glint of their armor through the haze, like they’re waiting for something. —'
+  'Aura de Doença Desenfreada',
+  'Você emite uma aura de contágio e virulência. Quando uma criatura dentro da sua Aura de Proteção estiver prestes a fazer um Teste D20, pode gastar uma Reação para impor Desvantagem nesse Teste D20.
+
+“Há dias em que mal se enxerga o brilho da armadura deles através da névoa, como se estivessem esperando por algo.”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1459,8 +1554,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   15,
-  'Nojenta Resiliência',
-  'Quando você are reduced to 0 Pontos de Vida and not killed outright, você pode spend any number of Dados de Vida, roll them, and reduce the damage taken by the total rolled on those dice. Além disso, se você are killed, your corpse explodes in a shower of pus and gore. Each creature in a 6 m Emanação originating from you makes Constituição salvaguarda against the Paladin''s spell save CD, taking 8d6 dano Necrótico on a failed save or half as much damage on a successful one.'
+  'Resiliência Nojenta',
+  'Quando você é reduzido a 0 Pontos de Vida e não é morto na hora, pode gastar qualquer número de Dados de Vida, rolá-los e reduzir o dano sofrido pelo total rolado. Além disso, se for morto, seu cadáver explode em pus e vísceras. Cada criatura em uma Emanação de 6 m originada de você faz salvaguarda de Constituição contra a CD de magia do Paladino, sofrendo 8d6 de dano Necrótico em falha ou metade em sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1472,7 +1567,13 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-pestilence'),
   20,
   'Portador da Peste',
-  'Como Ação Bônus, you gain the benefits below for 10 minutes, or until you end them (no action required). Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending a level 5 espaço de magia (no action required). One with Plague. Você é imune a dano de Veneno and the condição Envenenado, and you have Resistência to dano Necrótico. Bolstered by Rot. Your máximo de Pontos de Vida can’t be reduced. Entropic Radiance. Whenever an enemy starts its turn within your Aura of Protection, it takes dano Necrótico igual a your modificador de Carisma mais seu Bônus de Proficiência.'
+  'Como Ação Bônus, você ganha os benefícios abaixo por 10 minutos, ou até encerrá-los (sem ação). Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo. Também pode restaurar o uso gastando um espaço de magia de 5º círculo (sem ação).
+
+Um com a Peste. Você é imune a dano de Veneno e à condição Envenenado, e tem Resistência a dano Necrótico.
+
+Fortalecido pela Podridão. Seu máximo de Pontos de Vida não pode ser reduzido.
+
+Radiancia Entrópica. Sempre que um inimigo começar o turno dentro da sua Aura de Proteção, sofre dano Necrótico igual ao seu modificador de Carisma + Bônus de Proficiência.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1483,8 +1584,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-slaughter'),
   3,
-  'Frenético Massacre',
-  'Você pode harness the rush of battle to drive you to even greater acts of violence. Como Ação Bônus, você pode expend one use of your Channel Divinity to enter a battle frenzy. Você ganha os seguintes benefícios while este recurso is active. Reflexive Attack. Quando você miss with uma jogada de ataque using a arma corpo a corpo or Ataque Desarmado , você pode take a Reação to make another attack with the same weapon. Condition Resistência. Você tem Vantagem on salvaguardas to avoid or end the Charmed , Amedrontado , and Stunned conditions. Duration. Frenzied Slaughter lasts até o fim do seu próximo turno, and it ends early se você have the Incapacitado condition. Se vocêr Frenzied Slaughter is still active no seu próximo turno, você pode extend it for another round by doing one of o seguinte: Make uma jogada de ataque against an enemy. Force an enemy to make a salvaguarda. Você é Ferido at the end of your turn. Each time Frenzied Slaughter is extended, it lasts até o fim do seu próximo turno. Você pode maintain it for up to 1 minute.'
+  'Massacre Frenético',
+  'Você pode canalizar a adrenalina da batalha para atos ainda maiores de violência. Como Ação Bônus, gasta um uso de Canalizar Divindade para entrar em frenesi de combate. Enquanto ativo, ganha os seguintes benefícios.
+
+Ataque Reflexivo. Quando erra uma jogada de ataque com arma corpo a corpo ou Ataque Desarmado, pode gastar uma Reação para fazer outro ataque com a mesma arma.
+
+Resistência a Condições. Você tem Vantagem em salvaguardas para evitar ou terminar as condições Enfeitiçado, Amedrontado e Atordoado.
+
+Duração. O Massacre Frenético dura até o fim do seu próximo turno e termina antes se você tiver a condição Incapacitado. Se ainda estiver ativo no seu próximo turno, pode estendê-lo por mais uma rodada fazendo uma das seguintes: fazer uma jogada de ataque contra um inimigo; forçar um inimigo a fazer uma salvaguarda; ou estar Ferido no fim do turno. Cada extensão dura até o fim do próximo turno. Você pode mantê-lo por até 1 minuto.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1495,8 +1602,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-slaughter'),
   3,
-  'Magias do Juramento de Slaughter',
-  'The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Slaughter Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Juramento de Massacre',
+  'A magia do seu juramento garante que certas magias estejam sempre prontas; quando alcança um nível de Paladino especificado na tabela Magias do Juramento de Massacre, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1507,8 +1614,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-slaughter'),
   7,
-  'Sede de Sangue Aura',
-  'Your lust for blood infects those around you. When a Ferido ally within your Aura of Protection makes an attack with a weapon or an Ataque Desarmado , it gains a bonus to damage. The bonus equals your modificador de Carisma. Além disso, when a Ferido creature within your Aura of Protection makes a salvaguarda against a Sangromancia spell, você pode take a Reação to impose Desvantagem on the save. We’re more similar than different to those paladins who revel in slaughter, I think. Though, they are a tad more…wasteful. —'
+  'Aura da Sede de Sangue',
+  'Sua sede de sangue contagia os que estão à sua volta. Quando um aliado Ferido dentro da sua Aura de Proteção faz um ataque com arma ou Ataque Desarmado, ganha bônus no dano igual ao seu modificador de Carisma. Além disso, quando uma criatura Ferida dentro da sua Aura de Proteção faz salvaguarda contra uma magia de Sangromancia, você pode gastar uma Reação para impor Desvantagem na salvaguarda.
+
+“Somos mais parecidos do que diferentes daqueles paladinos que se deleitam no massacre, acho. Embora sejam um pouco mais… perdulários.”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1519,8 +1628,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-slaughter'),
   15,
-  'Seguir Através',
-  'When a creature in your Aura of Protection becomes Ferido , você pode take a Reação to move up to half your Speed and make an attack with a arma corpo a corpo or Ataque Desarmado . This movement doesn’t provoke Opportunity ação Atacar, and you have Vantagem on the jogada de ataque.'
+  'Seguir em Frente',
+  'Quando uma criatura na sua Aura de Proteção fica Ferida, você pode gastar uma Reação para se mover até metade do Deslocamento e fazer um ataque com arma corpo a corpo ou Ataque Desarmado. Esse movimento não provoca Ataque de Oportunidade, e você tem Vantagem na jogada de ataque.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1531,8 +1640,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-slaughter'),
   20,
-  'Sangue Cavaleiro',
-  'Your bloodthirst imbues you with preternatural strength and resilience, allowing you to keep sowing slaughter. Como Ação Bônus, you gain the benefits below for 10 minutes or until you end them (no action required). Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending a level 5 espaço de magia (no action required). Crimson Armor. When a creature within your Aura of Protection becomes Ferido by an enemy, you gain 30 Pontos de Vida Temporários . Seeing Red. When a creature hits you with uma jogada de ataque, você pode take a Reação to make one melee attack against that creature, using a weapon or an Ataque Desarmado . Wanton Slaughter. Quando você acerta uma creature with a melee jogada de ataque using a weapon or an Ataque Desarmado, você pode choose any number of creatures within 1,5 m of the original target and within your reach. Each chosen creature takes dano de Força igual a your modificador de Carisma (mínimo de +1) mais seu Bônus de Proficiência.'
+  'Cavaleiro do Sangue',
+  'Sua sede de sangue confere força e resiliência sobrenaturais, permitindo continuar a semear o massacre. Como Ação Bônus, você ganha os benefícios abaixo por 10 minutos ou até encerrá-los (sem ação). Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo. Também pode restaurar o uso gastando um espaço de magia de 5º círculo (sem ação).
+
+Armadura Carmesim. Quando uma criatura dentro da sua Aura de Proteção fica Ferida por um inimigo, você ganha 30 Pontos de Vida Temporários.
+
+Vendo Vermelho. Quando uma criatura o acerta com uma jogada de ataque, pode gastar uma Reação para fazer um ataque corpo a corpo contra ela, com arma ou Ataque Desarmado.
+
+Massacre Desenfreado. Quando acerta uma criatura com jogada de ataque corpo a corpo usando arma ou Ataque Desarmado, pode escolher qualquer número de criaturas a até 1,5 m do alvo original e dentro do seu alcance. Cada uma sofre dano de Força igual ao modificador de Carisma (mínimo +1) + Bônus de Proficiência.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1543,8 +1658,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-zeal'),
   3,
-  'Marca de the Herege',
-  'Como Ação Bônus, você pode expend one use of your Channel Divinity to mark a creature você pode see within 9 m of yourself como heretic. For 1 minute, your weapon attacks and Ataque Desarmados against the chosen creature can score a Acerto Crítico on a roll of 19 or 20 on the d20. Além disso, whenever the target starts its turn, você pode take a Reação to make a melee attack against that creature if it’s within reach.'
+  'Marca do Herege',
+  'Como Ação Bônus, você pode gastar um uso de Canalizar Divindade para marcar como herege uma criatura que possa ver a até 9 m. Por 1 minuto, seus ataques com arma e Ataques Desarmados contra a criatura escolhida marcam Acerto Crítico em 19 ou 20 no d20. Além disso, sempre que o alvo começar o turno, você pode gastar uma Reação para fazer um ataque corpo a corpo contra ele se estiver no alcance.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1555,8 +1670,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-zeal'),
   3,
-  'Magias do Juramento de Zeal',
-  'The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Zeal Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Juramento de Zelo',
+  'A magia do seu juramento garante que certas magias estejam sempre prontas; quando alcança um nível de Paladino especificado na tabela Magias do Juramento de Zelo, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1568,7 +1683,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-zeal'),
   7,
   'Aura de Clareza',
-  'You e seu allies have Imunidade to the Blinded condition while in your Aura of Protection. If a Blinded ally enters the aura, that condition has no effect on that ally while there. Além disso, você pode see Invisible creatures within your Aura of Protection.'
+  'Você e seus aliados têm Imunidade à condição Cego enquanto estiverem na sua Aura de Proteção. Se um aliado Cego entrar na aura, essa condição não tem efeito nele enquanto estiver lá. Além disso, você pode ver criaturas Invisíveis dentro da sua Aura de Proteção.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1580,7 +1695,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-zeal'),
   15,
   'Compelir Confissão',
-  'Você pode conjurar Zone of Truth without expending a espaço de magia. Além disso, a creature that succeeds on its salvaguarda takes 1d6 dano Psíquico at the start of each of its turns while in your Zone of Truth until it chooses to fail its salvaguarda instead.'
+  'Você pode conjurar Zona da Verdade sem gastar espaço de magia. Além disso, uma criatura que tenha sucesso na salvaguarda sofre 1d6 de dano Psíquico no início de cada turno dela enquanto estiver na sua Zona da Verdade, até optar por falhar na salvaguarda em vez disso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1591,8 +1706,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oathof-zeal'),
   20,
-  'Apocalíptica Revelação',
-  'Como Ação Bônus, você pode reveal the true nature of your enemies por 1 minuto. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending a level 5 espaço de magia (no action required). Você ganha os seguintes benefícios. Blinding Glory. Enemies that start their turn within 1,5 m of you must make a Constituição salvaguarda against the Paladin''s spell save CD. On a failed save, the creature has the Blinded condition until the start of its next turn. See the Truth. Você tem Truesight with a range of 18 m. Smite the Heretic. Como Ação Bônus, você pode choose a creature within 18 m of yourself and reveal its weaknesses. You e seu allies have Vantagem on jogada de ataques against that creature. Daniel S. Alessi'
+  'Revelação Apocalíptica',
+  'Como Ação Bônus, você pode revelar a verdadeira natureza dos inimigos por 1 minuto. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Longo. Também pode restaurar o uso gastando um espaço de magia de 5º círculo (sem ação). Você ganha os seguintes benefícios.
+
+Glória Cegante. Inimigos que começarem o turno a até 1,5 m de você devem fazer salvaguarda de Constituição contra a CD de magia do Paladino. Em falha, ficam Cegos até o início do próximo turno deles.
+
+Ver a Verdade. Você tem Visão Verdadeira com alcance de 18 m.
+
+Destruir o Herege. Como Ação Bônus, pode escolher uma criatura a até 18 m e revelar as fraquezas dela. Você e seus aliados têm Vantagem nas jogadas de ataque contra essa criatura.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1603,8 +1724,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   3,
-  'Envenenado Ataque',
-  'Como Ação Bônus, você pode apply a poison dose to a weapon or up to 20 pieces of ammunition. Once applied, the poison retains its potency por 1 minuto. Your attacks with the poisoned item deal an extra 1d4 dano de Veneno on a hit. Você pode usar este recurso um número de times igual a your modificador de Sabedoria (mínimo de once). You regain all expended uses when you finish a Descanso Longo. At Ranger level 11, the extra dano de Veneno increases to 2d4, and você recupera all expended uses when you finish a Short or Descanso Longo.'
+  'Ataque Envenenado',
+  'Como Ação Bônus, você pode aplicar uma dose de veneno a uma arma ou até 20 peças de munição. Uma vez aplicado, o veneno retém a potência por 1 minuto. Seus ataques com o item envenenado causam 1d4 de dano de Veneno extra em um acerto. Pode usar este recurso um número de vezes igual ao modificador de Sabedoria (mínimo 1). Recupera todos os usos ao terminar um Descanso Longo. No 11º nível de Guardião, o dano de Veneno extra aumenta para 2d4, e você recupera todos os usos ao terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1615,8 +1736,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   3,
-  'Tóxica Ofício',
-  'Você ganha um Poisoner’s Kit , and you have proficiency with it. Além disso, your Bônus de Proficiência is doubled for ability checks with a Poisoner’s Kit. Se você lose the kit, você pode harvest toxic flora and venomous fauna por 1 hora to magically create a replacement. This harvest can be performed during a Short or Descanso Longo, and it destroys the previous Poisoner’s Kit. Uma vez por turno when você causa dano de Veneno to a creature with a weapon attack, você pode expend a espaço de magia (no action required). The attack deals an extra 1d6 dano de Veneno and the target gains the condição Envenenado até o fim do seu próximo turno. You may also add a Toxin Effect, chosen from the appropriate list below. All Toxin Effects last até o fim do seu próximo turno, unless its description states otherwise.'
+  'Ofício Tóxico',
+  'Você ganha um Kit de Envenenador e tem proficiência com ele. Além disso, seu Bônus de Proficiência é dobrado em testes de atributo com Kit de Envenenador. Se perder o kit, pode colher flora tóxica e fauna venenosa por 1 hora para criar magicamente um substituto. Essa colheita pode ser feita durante um Descanso Curto ou Longo e destrói o Kit de Envenenador anterior. Uma vez por turno, quando causa dano de Veneno a uma criatura com ataque de arma, pode gastar um espaço de magia (sem ação). O ataque causa 1d6 de dano de Veneno extra e o alvo fica Envenenado até o fim do seu próximo turno. Você também pode adicionar um Efeito de Toxina, escolhido da lista apropriada abaixo. Todos os Efeitos de Toxina duram até o fim do seu próximo turno, salvo indicação em contrário.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1627,8 +1748,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   3,
-  'Magias — Green Reaper',
-  'Quando você alcança a Ranger level specified in the Green Reaper Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Ceifador Verde',
+  'Quando alcança um nível de Guardião especificado na tabela Magias do Ceifador Verde, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1639,8 +1760,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   7,
-  'Veneno Controle',
-  'Você ganha Resistência to dano de Veneno and have Vantagem on salvaguardas to avoid or end the condição Envenenado. Além disso, você pode cast the Protection from Poison spell without expending a espaço de magia. Você pode do so um número de times igual a your modificador de Sabedoria (mínimo de once), and você recupera all expended uses when you finish a Descanso Longo.'
+  'Controle de Veneno',
+  'Você ganha Resistência a dano de Veneno e tem Vantagem em salvaguardas para evitar ou terminar a condição Envenenado. Além disso, pode conjurar Proteção contra Veneno sem gastar espaço de magia. Pode fazê-lo um número de vezes igual ao modificador de Sabedoria (mínimo 1) e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1651,8 +1772,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   11,
-  'Variadas Vexações',
-  'Sempre que você would deal dano de Veneno with a weapon attack, você pode change that damage to be either Acid or Necrotic instead.'
+  'Vexações Variadas',
+  'Sempre que for causar dano de Veneno com um ataque de arma, pode mudar esse dano para Ácido ou Necrótico.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1663,8 +1784,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'green-reaper'),
   15,
-  'Dor Tolerance',
-  'Você tem learned to quickly inure yourself against harm. Immediately before you take damage from a creature você pode see within 18 m of yourself, você pode take a Reação to gain Pontos de Vida Temporários igual a the damage you take. If any of these Pontos de Vida Temporários remain at the end of your next turn, they vanish.'
+  'Tolerância à Dor',
+  'Você aprendeu a se proteger rapidamente contra o dano. Imediatamente antes de sofrer dano de uma criatura que possa ver a até 18 m, pode gastar uma Reação para ganhar Pontos de Vida Temporários iguais ao dano sofrido. Se algum desses Pontos de Vida Temporários restar no fim do seu próximo turno, eles desaparecem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1676,7 +1797,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   3,
   'Flechas Elementais',
-  'Como Ação Bônus, você pode imbue a Longbow or Shortbow with elemental energy por 1 minuto. Choose one of o seguinte damage types: Acid, Cold, Fire, Lightning, or Thunder. For the duration, the imbued weapon deals damage of the selected type instead of its normal type and deals an extra 1d6 damage of the chosen type when it hits. No início de each of your turns, você pode change this choice. Você pode usar este recurso um número de times igual a your modificador de Sabedoria (mínimo de once), and você recupera all expended uses when you finish a Descanso Longo.'
+  'Como Ação Bônus, você pode imbuir um Arco Longo ou Arco Curto com energia elemental por 1 minuto. Escolha um dos tipos: Ácido, Gélido, Ígneo, Elétrico ou Trovejante. Pela duração, a arma imbuída causa dano do tipo escolhido em vez do normal e causa 1d6 extra desse tipo quando acerta. No início de cada um dos seus turnos, pode mudar essa escolha. Pode usar este recurso um número de vezes igual ao modificador de Sabedoria (mínimo 1) e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1687,8 +1808,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   3,
-  'Herbal Conhecimento',
-  'Você ganha an Herbalism Kit and are proficient with it. Você pode usar the Herbalism Kit como Ação Bônus to stabilize an Unconscious creature within 1,5 m of you that has 0 Pontos de Vida as if using a Healer’s Kit without needing to make a Sabedoria ( Medicine ) check. Se você take a ação Utilizar, an Unconscious creature within 1,5 m of you that has 0 Pontos de Vida gains 1 Hit Point instead. Guilherme Castro Depois de usar este recurso, você pode’t do so again until you finish a Short or Descanso Longo.'
+  'Sabedoria Herbal',
+  'Você ganha um Kit de Herbalismo e é proficiente com ele. Pode usar o Kit de Herbalismo como Ação Bônus para estabilizar uma criatura Inconsciente a até 1,5 m com 0 Pontos de Vida como se usasse um Kit de Curandeiro, sem precisar de teste de Sabedoria (Medicina). Se gastar uma ação Utilizar, uma criatura Inconsciente a até 1,5 m com 0 Pontos de Vida ganha 1 Ponto de Vida em vez disso. Depois de usar este recurso, não pode fazê-lo de novo até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1699,8 +1820,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   3,
-  'Magias — Primordial Archer',
-  'Quando você alcança a Ranger level specified in the Primordial Archer Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Arqueiro Primordial',
+  'Quando alcança um nível de Guardião especificado na tabela Magias do Arqueiro Primordial, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1711,8 +1832,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   7,
-  'Tece the Elementos',
-  'With 1 hour of work or when you finish a Descanso Longo, você pode use an Herbalism Kit to mark yourself with elemental patterns. Você ganha Resistência to one of o seguinte damage types de sua escolha until you finish a Descanso Longo: Acid, Cold, Fire, Lightning, or Thunder.'
+  'Tece os Elementos',
+  'Com 1 hora de trabalho ou ao terminar um Descanso Longo, pode usar um Kit de Herbalismo para marcar-se com padrões elementais. Você ganha Resistência a um dos seguintes tipos de dano de sua escolha até terminar um Descanso Longo: Ácido, Gélido, Ígneo, Elétrico ou Trovejante.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1723,8 +1844,16 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   11,
-  'Feiticeiras Flechas',
-  'Você ganha a capacidade de imbue curses into your arrows. Uma vez por turno when you hit a creature with a ranged attack using a Longbow or Shortbow , você pode expend a level 1+ espaço de magia to choose one of o seguinte effects (no action required). The listed damage increases by 2d6 for each espaço de magia above 1. Arcing Shot. Electricity crackles around the arrow. Make a ranged jogada de ataque with the same weapon against a second creature within 9 m of the first that is also within your range. Each creature hit takes 2d6 dano de Relâmpago. Entangling Shot. The wooden shaft of the arrow sprouts tiny green leaves. The target must succeed on a Força salvaguarda against your spell save CD. On a failed save, the target takes 2d6 Perfurante damage and has the Restrained condition por 1 minuto. On a successful save, the creature takes the damage only. A Restrained creature repeats the save at the end of each of its turns, ending the effect on itself on a success. Hexing Shot. The magic surrounding your arrow clouds the mind of your target. The target must make a Sabedoria salvaguarda against your spell save CD. On a failed save, the target takes 2d6 dano Psíquico and gains the Charmed or condição Amedrontado por 1 minuto (sua escolha). The creature can repeat the save at the end of each of its turns, ending the effect on a success. On a successful save, the creature takes half as much damage only. Viper Shot. The arrow transforms into a hissing serpent. The target must make a Constituição salvaguarda against your spell save CD. On a failed save, the target takes 2d6 dano de Veneno and has the condição Envenenado por 1 minuto. The creature can repeat the save at the end of each of its turns, ending the effect on a success. On a successful save, the creature takes half as much damage only.'
+  'Flechas Feiticeiras',
+  'Você ganha a capacidade de imbuir maldições nas flechas. Uma vez por turno, quando acerta uma criatura com ataque à distância usando Arco Longo ou Arco Curto, pode gastar um espaço de magia de 1º círculo ou superior para escolher um dos efeitos abaixo (sem ação). O dano listado aumenta em 2d6 para cada círculo acima do 1º.
+
+Tiro em Arco. Eletricidade crepita em torno da flecha. Faça uma jogada de ataque à distância com a mesma arma contra uma segunda criatura a até 9 m da primeira que também esteja no seu alcance. Cada criatura acertada sofre 2d6 de dano Elétrico.
+
+Tiro Enredante. O haste de madeira brota folhinhas verdes. O alvo deve ser bem-sucedido em salvaguarda de Força contra sua CD de magia. Em falha, sofre 2d6 de dano Perfurante e fica Contido por 1 minuto. Em sucesso, sofre apenas o dano. Uma criatura Contida repete a salvaguarda no fim de cada turno dela, terminando o efeito em si em um sucesso.
+
+Tiro Amaldiçoante. A magia em torno da flecha obscurece a mente do alvo. O alvo faz salvaguarda de Sabedoria contra sua CD de magia. Em falha, sofre 2d6 de dano Psíquico e ganha a condição Enfeitiçado ou Amedrontado por 1 minuto (sua escolha). Pode repetir a salvaguarda no fim de cada turno, terminando o efeito em sucesso. Em sucesso na salvaguarda inicial, sofre apenas metade do dano.
+
+Tiro Víbora. A flecha se transforma em serpente sibilante. O alvo faz salvaguarda de Constituição contra sua CD de magia. Em falha, sofre 2d6 de dano de Veneno e fica Envenenado por 1 minuto. Pode repetir a salvaguarda no fim de cada turno, terminando o efeito em sucesso. Em sucesso na salvaguarda inicial, sofre apenas metade do dano.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1735,8 +1864,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'),
   15,
-  'Primordial Magic',
-  'Taking damage can’t break your Concentração on any Ranger spells you cast. Além disso, você pode take a Ação Bônus to change the damage type you chose for the Weave the Elements feature to a different damage type in the list. Quando você do, você pode choose a creature que você possa ver within 9 m of yourself. That creature must succeed on a Constituição salvaguarda or take 6d6 damage of either damage type (sua escolha). Você pode usar este recurso um número de times igual a your modificador de Sabedoria (mínimo de once). You regain all expended uses when you finish a Descanso Longo.'
+  'Magia Primordial',
+  'Sofrer dano não pode quebrar sua Concentração em magias de Guardião que você conjurar. Além disso, pode gastar uma Ação Bônus para mudar o tipo de dano escolhido em Tece os Elementos para outro da lista. Ao fazê-lo, pode escolher uma criatura que possa ver a até 9 m. Essa criatura deve ser bem-sucedida em salvaguarda de Constituição ou sofrer 6d6 de dano de um dos dois tipos (sua escolha). Pode usar este recurso um número de vezes igual ao modificador de Sabedoria (mínimo 1) e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1747,8 +1876,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   3,
-  'Verminata',
-  'Você pode comprehend and verbally communicate with Tiny Beasts. Como ação Mágica, você pode expend a espaço de magia to summon vermin swarms. You summon um número de swarms igual a the slot’s level por 1 hora. Each swarm is summoned to an unoccupied space você pode see within 9 m of yourself. A swarm uses the Swarm of Vermin stat block. In combat, each swarm acts during your turn. It can move and use its Reação on its own, but the only action it takes is the Dodge action unless you take a Ação Bônus to command it to take an action in its stat block or some other action. Você pode command each swarm with a single Ação Bônus. Depois de usar este recurso, você pode’t use it again until you finish a Short or Descanso Longo.'
+  'Afinidade Verminosa',
+  'Você pode compreender e se comunicar verbalmente com Feras Minúsculas. Como ação Mágica, pode gastar um espaço de magia para convocar enxames de vermes. Convoca um número de enxames igual ao círculo do espaço por 1 hora. Cada enxame aparece em um espaço desocupado que possa ver a até 9 m. Um enxame usa o bloco Enxame de Vermes. Em combate, cada enxame age durante o seu turno. Pode se mover e usar a Reação por conta própria, mas a única ação que realiza é Esquivar, a menos que você gaste uma Ação Bônus para ordenar uma ação do bloco ou outra ação. Você pode comandar cada enxame com uma única Ação Bônus. Depois de usar este recurso, não pode usá-lo de novo até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1759,8 +1888,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   3,
-  'Enxame Golpes',
-  'Como Ação Bônus, você pode command all of your swarms to make an ação Atacar instead of just one. Alternatively, a single swarm can attack twice instead of once when it takes the ação Atacar. Suzanne Helmigh Você pode usar este recurso um número de times igual a your modificador de Sabedoria mais seu Bônus de Proficiência, and você recupera all expended uses when you finish a Short or Descanso Longo.'
+  'Golpes do Enxame',
+  'Como Ação Bônus, você pode ordenar que todos os seus enxames realizem a ação Atacar em vez de apenas um. Alternativamente, um único enxame pode atacar duas vezes em vez de uma ao realizar a ação Atacar. Pode usar este recurso um número de vezes igual ao modificador de Sabedoria + Bônus de Proficiência e recupera todos os usos ao terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1771,8 +1900,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   3,
-  'Magias — Vermin Lord',
-  'Quando você alcança a Ranger level specified in the Vermin Lord Spells table, you thereafter always have the listed spells prepared.'
+  'Magias do Senhor dos Vermes',
+  'Quando alcança um nível de Guardião especificado na tabela Magias do Senhor dos Vermes, passa a ter sempre as magias listadas preparadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1784,7 +1913,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   7,
   'Imundície e Fortitude',
-  'The time you’ve spent with plague-bearing rodents has rendered you immune to the condição Envenenados. Além disso, you gain proficiency in Constituição salvaguardas.'
+  'O tempo passado com roedores portadores de peste tornou-o imune à condição Envenenado. Além disso, ganha proficiência em salvaguardas de Constituição.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1795,8 +1924,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   11,
-  'Infecciosa Propagação',
-  'Quando você use Swarming Strikes, each swarm that takes the ação Atacar makes one additional attack. Each creature damaged by a swarm''s attack during this action has the condição Envenenado until the start of your next turn. We don’t have time to count all of them! Just write ‘hundreds of rodent bites.’ —'
+  'Propagação Infecciosa',
+  'Quando usa Golpes do Enxame, cada enxame que realiza a ação Atacar faz um ataque adicional. Cada criatura danificada pelo ataque de um enxame durante essa ação fica Envenenada até o início do seu próximo turno.
+
+“Não dá tempo de contar todos! Só anote ‘centenas de mordidas de roedor’.”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1807,8 +1938,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'vermin-lord'),
   15,
-  'Strength de the Swarm',
-  'Você pode call on your rodent minions for defense. Quando você realiza damage from a creature você pode see within 3 m of yourself, você pode take a Reação to direct the damage toward a swarm you control você pode see within 1,5 m of yourself.'
+  'Força do Enxame',
+  'Você pode chamar seus lacaios roedores para defesa. Quando sofrer dano de uma criatura que possa ver a até 3 m, pode gastar uma Reação para direcionar o dano a um enxame sob seu controle que possa ver a até 1,5 m de você.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1820,7 +1951,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   3,
   'Gatilho Instantâneo',
-  'Você ganha proficiência com Blackpowder Pistols. Além disso, when you roll Initiative and don’t have Desvantagem on that roll, você pode immediately take a Reação for one of as seguintes opções: Make one attack with a weapon or Ataque Desarmado . Move up to your Speed without provoking Opportunity ação Atacar. A controlled mount moves up to its Speed without provoking Opportunity ação Atacar. Take the Dodge or ação Utilizar.'
+  'Você ganha proficiência com Pistolas de Pólvora Negra. Além disso, ao rolar Iniciativa sem Desvantagem nessa rolagem, pode imediatamente gastar uma Reação para uma das opções: fazer um ataque com arma ou Ataque Desarmado; mover-se até o Deslocamento sem provocar Ataque de Oportunidade; uma montaria controlada move-se até o Deslocamento sem provocar Ataque de Oportunidade; realizar a ação Esquivar ou Utilizar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1831,8 +1962,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   3,
-  'Fiel Montaria',
-  'You always have the Find Steed spell prepared. With este recurso, você pode cast it without a espaço de magia or components, e seu spellcasting ability for it is Inteligência. Uma vez você cast the spell with este recurso, você pode’t do so in this way again until you finish a Descanso Longo.'
+  'Montaria Fiel',
+  'Você sempre tem a magia Encontrar Corcel preparada. Com este recurso, pode conjurá-la sem espaço de magia nem componentes, e a habilidade de conjuração para ela é Inteligência. Depois de conjurá-la assim, não pode fazê-lo desse modo de novo até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1843,8 +1974,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   3,
-  'Cavalgar Eles Derrubar',
-  'You don’t need Vantagem on the jogada de ataque to Sneak Attack se você or a controlled mount you ride moves at least 6 m, and you don’t have Desvantagem on the jogada de ataque.'
+  'Atropelar',
+  'Você não precisa de Vantagem na jogada de ataque para Ataque Furtivo se você ou uma montaria controlada que monta se moverem pelo menos 6 m, e você não tiver Desvantagem na jogada de ataque.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1855,8 +1986,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   9,
-  'Cavalo Senhor',
-  'Você pode spend 1 minute grooming and caring for your mount, at the end of which it gains um número de Pontos de Vida Temporários igual a twice your Rogue level. Além disso, your cunning extends to your steed. While you control a mount, it can take one of o seguinte actions como Ação Bônus: Dash , Desengajar , or Dodge .'
+  'Senhor dos Cavalos',
+  'Você pode gastar 1 minuto cuidando e tratando da montaria; ao final, ela ganha Pontos de Vida Temporários iguais ao dobro do seu nível de Ladino. Além disso, sua astúcia se estende ao corcel. Enquanto controlar uma montaria, ela pode realizar uma das seguintes ações como Ação Bônus: Disparar, Desengajar ou Esquivar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1868,7 +1999,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   13,
   'Determinação Inabalável',
-  'Você ganha proficiency in Constituição salvaguardas. Além disso, when you are subjected to an effect that allows you to make a Constituição salvaguarda to take only half damage, you instead take no damage se você succeed on the salvaguarda, and only half damage se você fail.'
+  'Você ganha proficiência em salvaguardas de Constituição. Além disso, quando for sujeito a um efeito que permita salvaguarda de Constituição para sofrer apenas metade do dano, em vez disso não sofre dano se for bem-sucedido, e sofre apenas metade se falhar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1880,7 +2011,9 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'),
   17,
   'Desesperado',
-  'Quando você are reduced to 0 Pontos de Vida and not killed outright, você pode use your Hair Trigger feature immediately before you fall Unconscious . The back roads are getting too dangerous. Our carriage got held up and ransacked three times… today! —'
+  'Quando você é reduzido a 0 Pontos de Vida e não é morto na hora, pode usar Gatilho Instantâneo imediatamente antes de ficar Inconsciente.
+
+“As estradas secundárias estão perigosas demais. Nossa carruagem foi assaltada e saqueada três vezes… só hoje!”'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1891,8 +2024,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'misfortune-bringer'),
   3,
-  'Maligno Olho',
-  'Você pode place a minor curse with a glance. Como Ação Bônus, choose a creature você pode see within 18 m of yourself to be cursed by your Evil Eye. While a creature is cursed by your Evil Eye, você pode deal Sneak Attack damage to the creature se você don’t have Desvantagem on the jogada de ataque. The creature remains cursed by your Evil Eye por 1 minuto or until you curse a different creature with your Evil Eye, whichever comes first.'
+  'Olho Maligno',
+  'Você pode lançar uma maldição menor com um olhar. Como Ação Bônus, escolha uma criatura que possa ver a até 18 m para ser amaldiçoada pelo seu Olho Maligno. Enquanto amaldiçoada assim, você pode causar dano de Ataque Furtivo a ela se não tiver Desvantagem na jogada de ataque. A criatura permanece amaldiçoada por 1 minuto ou até você amaldiçoar outra com o Olho Maligno, o que ocorrer primeiro.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1904,7 +2037,13 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'misfortune-bringer'),
   3,
   'Azarento',
-  'Você aprende Misfortunes that você pode inflict on those cursed by your Evil Eye. Misfortunes. Você aprende dois Misfortunes de sua escolha, which are detailed under “ Misfortunes ” below. Você aprende um adicional Misfortune de sua escolha when you reach Rogue levels 9, 13, and 17. Quando você termina um Descanso Longo, você pode replace one Misfortune você conhece with a different one. Jinx Points. Você tem 4 Jinx Points. Você ganha 2 additional Jinx Points at Rogue level 13. To use a Misfortune option, you must spend the number of Jinx Points that it costs. You regain all expended Jinx Points when you finish a Short or Descanso Longo. Salvaguardas. If a Misfortune requires a salvaguarda, the CD equals 8 + your Carisma or modificador de Inteligência (sua escolha) + your Bônus de Proficiência.'
+  'Você aprende Azarões que pode infligir aos amaldiçoados pelo Olho Maligno.
+
+Azarões. Você aprende dois Azarões de sua escolha, detalhados em “Azarões” abaixo. Aprende um Azarão adicional nos níveis 9, 13 e 17 de Ladino. Quando termina um Descanso Longo, pode substituir um Azarão conhecido por outro.
+
+Pontos de Azar. Você tem 4 Pontos de Azar. Ganha 2 Pontos de Azar adicionais no 13º nível de Ladino. Para usar uma opção de Azarão, gasta o número de Pontos de Azar que ela custa. Recupera todos os Pontos de Azar gastos ao terminar um Descanso Curto ou Longo.
+
+Salvaguardas. Se um Azarão exigir salvaguarda, a CD é 8 + modificador de Carisma ou Inteligência (sua escolha) + Bônus de Proficiência.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1916,7 +2055,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'misfortune-bringer'),
   9,
   'Roubar Sorte',
-  'When a creature você pode see within 9 m of yourself is about to make a Teste D20 with Vantagem , você pode take a Reação to prevent the roll from being affected by Vantagem. Quando você do so, você recupera 1 expended Jinx Point. Depois de usar este recurso, você pode’t do so again until you finish a Short or Descanso Longo.'
+  'Quando uma criatura que você possa ver a até 9 m estiver prestes a fazer um Teste D20 com Vantagem, pode gastar uma Reação para impedir que a rolagem seja afetada por Vantagem. Ao fazê-lo, recupera 1 Ponto de Azar gasto. Depois de usar este recurso, não pode fazê-lo de novo até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1927,8 +2066,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'misfortune-bringer'),
   13,
-  'Maldição Caster',
-  'Você pode realizar a ação Mágica and spend 3 Jinx Points to cast Bestow Curse .'
+  'Conjurador de Maldições',
+  'Você pode gastar uma ação Mágica e 3 Pontos de Azar para conjurar Lançar Maldição.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1939,8 +2078,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'misfortune-bringer'),
   17,
-  'Aprimorado Roubar Sorte',
-  'Você pode usar your Steal Luck feature three times, and você recupera all expended uses when you finish a Descanso Longo.'
+  'Roubar Sorte Aprimorado',
+  'Você pode usar Roubar Sorte três vezes e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1952,7 +2091,19 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   3,
   'Conjuração',
-  'Você tem learned to cast magia de Magos, as well as spells from the Sangromancia school. All Sangromancia spells and truques are treated as magia de Magos for the purposes of esta subclasse. Truques. You know three truques from the magia de Mago list and from the list of Sangromancia spells. Sempre que você gain a Rogue level, você pode replace one of your truques with another Wizard cantrip de sua escolha. Guilherme Castro Quando você alcança Rogue level 10, you learn another Wizard cantrip de sua escolha. Espaços de Magia. The Sanguine Thief Spellcasting table shows how many espaços de magia you have to cast your level 1+ spells. You regain all expended espaços de magia when you finish a Descanso Longo. Prepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with este recurso. To start, choose three level 1 magia de Magos. The number of spells on your list increases as you gain Rogue levels, as shown in the Prepared Spells column of the Sanguine Thief Spellcasting table. Whenever that number increases, choose additional magia de Magos until the number of spells on your list matches the number in the Sanguine Thief Spellcasting table. The chosen spells must be of a level for which you have espaços de magia. Changing Your Prepared Spells. Sempre que você gain a Rogue level, você pode replace one spell on your list with another magia de Mago for which you have espaços de magia. Spellcasting Ability. Inteligência is sua habilidade de conjuração for your magia de Magos. Foco de Conjuração. Você pode usar an Foco Arcano como Foco de Conjuração for your magia de Magos.'
+  'Você aprendeu a conjurar magias de Mago, bem como magias da escola de Sangromancia. Todas as magias e truques de Sangromancia são tratados como magias de Mago para esta subclasse.
+
+Truques. Você conhece três truques da lista de Mago e da lista de Sangromancia. Sempre que ganha um nível de Ladino, pode substituir um truque por outro truque de Mago de sua escolha. Quando alcança o 10º nível de Ladino, aprende outro truque de Mago de sua escolha.
+
+Espaços de Magia. A tabela Conjuração do Ladrão Sanguíneo mostra quantos espaços você tem para magias de 1º círculo ou superior. Recupera todos os espaços gastos ao terminar um Descanso Longo.
+
+Magias Preparadas de 1º+. Você prepara a lista de magias de 1º+ disponíveis com este recurso. Para começar, escolha três magias de Mago de 1º círculo. O número aumenta conforme sobe de nível de Ladino, como na coluna Magias Preparadas. Sempre que o número aumenta, escolha magias adicionais de Mago até coincidir. As magias devem ser de um círculo para o qual você tenha espaços.
+
+Mudando Magias Preparadas. Sempre que ganha um nível de Ladino, pode substituir uma magia da lista por outra magia de Mago para a qual tenha espaços.
+
+Habilidade de Conjuração. Inteligência é sua habilidade de conjuração para magias de Mago.
+
+Foco de Conjuração. Você pode usar um Foco Arcano como Foco de Conjuração para magias de Mago.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1963,8 +2114,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   3,
-  'Roubado Poder',
-  'You draw magic from blood. It is represented by your Sangromancia Dice, which fuel powers you have from esta subclasse. Você tem a pool of d8s that você pode use on Sanguine Thief features. The number of damage dice in the pool equals the number of damage dice as shown in the Sneak Attack column of the Rogue Features table. Você pode’t have more Sangromancia Dice than the number of damage dice shown in the Sneak Attack column for your level, unless you have Sangromancia Dice from a different source. Blood Magic. Você pode spend Sangromancia Dice instead of Dados de Vida when you cast Sangromancia spells. Your pool regains all expended dice when you finish a Descanso Longo.'
+  'Poder Roubado',
+  'Você extrai magia do sangue. Isso é representado pelos Dados de Sangromancia, que alimentam poderes desta subclasse. Você tem um pool de d8s que pode usar em recursos do Ladrão Sanguíneo. O número de dados no pool é igual ao número de dados de dano na coluna Ataque Furtivo da tabela de recursos de Ladino. Não pode ter mais Dados de Sangromancia do que esse número, a menos que tenha Dados de Sangromancia de outra fonte.
+
+Magia de Sangue. Você pode gastar Dados de Sangromancia em vez de Dados de Vida ao conjurar magias de Sangromancia. O pool recupera todos os dados gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1976,7 +2129,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   3,
   'Roubar Sangue',
-  'Quando você deal Sneak Attack damage, você pode restore 1 Sangromancia Die. Se você are Ferido , instead of restoring 1 Sangromancia Die when você causa Sneak Attack damage, você pode immediately roll the die and regain um número de Pontos de Vida igual a the roll’s total. Você pode usar este recurso um número de times igual a your modificador de Inteligência (mínimo de once). You regain all expended uses when you finish a Descanso Longo.'
+  'Quando causa dano de Ataque Furtivo, pode restaurar 1 Dado de Sangromancia. Se estiver Ferido, em vez de restaurar 1 Dado de Sangromancia ao causar dano de Ataque Furtivo, pode imediatamente rolar o dado e recuperar Pontos de Vida iguais ao total. Pode usar este recurso um número de vezes igual ao modificador de Inteligência (mínimo 1) e recupera todos os usos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -1987,8 +2140,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   9,
-  'Sanguinário Lâminas',
-  'Quando você termina um Descanso Longo, você pode spend up to 2 Dados de Vida or Sangromancia Dice to create um número de Daggers igual a the number of dice spent in this way. Each Dagger counts as an Foco Arcano for your Sanguine Thief spells, and você pode cast spells with Somatic components even se você wield these weapons in one or both hands. Além disso, when you score a Acerto Crítico with this weapon, você pode cause the weapon to deal extra damage to the target. The extra damage is um número de d8s igual a the number of Dados de Vida or Sangromancia Dice spent on este recurso. The extra damage is Necrotic. The Daggers last until you finish a Descanso Longo.'
+  'Lâminas Sangrentas',
+  'Quando você termina um Descanso Longo, pode gastar até 2 Dados de Vida ou Dados de Sangromancia para criar um número de Adagas igual ao número de dados gastos dessa forma. Cada Adaga conta como Foco Arcano para suas magias de Ladrão Sanguíneo, e você pode conjurar magias com componentes Somáticos mesmo empunhando essas armas em uma ou ambas as mãos. Além disso, quando obtém um Acerto Crítico com essa arma, pode fazer com que a arma cause dano extra ao alvo. O dano extra é um número de d8s igual ao número de Dados de Vida ou Dados de Sangromancia gastos neste recurso. O dano extra é Necrótico. As Adagas duram até você terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2000,7 +2153,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   13,
   'Costura Sangrenta',
-  'Como ação Mágica, você pode spend 3 Dados de Vida or Sangromancia Dice to fling a wave of needle-like blood shards. Quando você do so, each creature de sua escolha in a 9 m Emanação originating from you must make a Destreza salvaguarda against your spell save CD, taking 3d8 dano Necrótico on a failed save or half as much damage on a successful one. You regain 1 Hit Die or Sangromancia Die (sua escolha) for each creature reduced to 0 Pontos de Vida by este recurso. Depois de usar este recurso, você pode’t do so again until you finish a Short or Descanso Longo.'
+  'Como ação Mágica, você pode gastar 3 Dados de Vida ou Dados de Sangromancia para lançar uma onda de estilhaços de sangue semelhantes a agulhas. Ao fazê-lo, cada criatura de sua escolha em uma Emanação de 9 m originada de você deve fazer uma salvaguarda de Destreza contra a CD de salvaguarda de magia, sofrendo 3d8 de dano Necrótico em caso de falha ou metade desse dano em caso de sucesso. Você recupera 1 Dado de Vida ou Dado de Sangromancia (sua escolha) por cada criatura reduzida a 0 Pontos de Vida por este recurso. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2011,8 +2164,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'),
   17,
-  'Sanguinário Saída',
-  'When a creature hits you with uma jogada de ataque, você pode take a Reação and spend 5 Dados de Vida or Sangromancia Dice to turn into bloody mist. The attack automatically misses you, você pode teleport up to 9 m to an unoccupied space você pode see, and você recupera your normal form. As part of this Reação, você pode make an attack with a arma corpo a corpo immediately after you teleport. On a hit, this attack deals an extra 5d8 dano Necrótico to the target. Depois de usar este recurso, você pode’t use it again until you finish a Short or Descanso Longo.'
+  'Saída Sangrenta',
+  'Quando uma criatura o acerta com uma jogada de ataque, você pode gastar uma Reação e 5 Dados de Vida ou Dados de Sangromancia para transformar-se em névoa sanguínea. O ataque erra automaticamente, você pode se teletransportar até 9 m para um espaço desocupado que possa ver e retoma sua forma normal. Como parte dessa Reação, pode fazer um ataque com uma arma corpo a corpo imediatamente após o teletransporte. Em um acerto, esse ataque causa 5d8 de dano Necrótico extra ao alvo. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2023,8 +2176,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   3,
-  'Magias — Apocalyptic',
-  'Quando você alcança a Sorcerer level specified in the Apocalyptic Spells table, you thereafter always have the listed spells prepared.'
+  'Magias — Apocalípticas',
+  'Quando você alcança um nível de Feiticeiro indicado na tabela Magias — Apocalípticas, passa a ter sempre preparadas as magias listadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2035,8 +2188,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   3,
-  'Desequilibradas Asservations',
-  'Você é obsessed with documenting your visions. Você ganha proficiência com Calligrapher’s Supplies and você pode create Spell Scrolls in half the time and at half the cost in PO. Além disso, when you create a Spell Scroll , você pode ensorcell it. Quando você ensorcell a Spell Scroll , you must expend a espaço de magia igual a or greater than the spell’s level and você pode spend Sorcery Points to apply one of your Metamagic options. Any creature that knows at least one language can use your ensorcelled Spell Scroll , which casts the spell with the benefit of the Metamagic option you chose. The Spell Scroll remains ensorcelled until it is used or you finish a Descanso Longo.'
+  'Anotações Desvairadas',
+  'Você é obcecado por documentar suas visões. Ganha proficiência com Suprimentos de Calígrafo e pode criar Pergaminhos de Magia na metade do tempo e pela metade do custo em PO. Além disso, ao criar um Pergaminho de Magia, pode encantá-lo. Ao encantar um Pergaminho de Magia, deve gastar um espaço de magia igual ou superior ao nível da magia e pode gastar Pontos de Feitiçaria para aplicar uma de suas opções de Metamagia. Qualquer criatura que conheça ao menos um idioma pode usar seu Pergaminho de Magia encantado, que conjura a magia com o benefício da opção de Metamagia escolhida. O Pergaminho de Magia permanece encantado até ser usado ou até você terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2047,8 +2200,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   6,
-  'Testemunhar Testemunhar',
-  'Você tem prepared your entire life for the end of the world. While your Innate Sorcery feature is active, you gain o seguinte benefits. Apocalyptic Inurement. Você tem Resistência to dano de Força. Recite Scripture. Uma vez por Innate Sorcery, como Bonus action você pode use a Spell Scroll that hcomo spell with a casting time of Ação. Unflappable. Você é imune a the condição Amedrontado.'
+  'Testemunhar',
+  'Você passou a vida inteira se preparando para o fim do mundo. Enquanto seu recurso Feitiçaria Inata estiver ativo, ganha os seguintes benefícios. Endurecimento Apocalíptico. Você tem Resistência a dano de Força. Recitar Escrituras. Uma vez por Feitiçaria Inata ativa, como Ação Bônus você pode usar um Pergaminho de Magia cuja magia tenha tempo de conjuração de Ação. Impávido. Você é imune à condição Amedrontado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2059,8 +2212,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   6,
-  'Arcana Apócrifa',
-  'Your obsessive reflections on the end of existence inspire your writing. Sempre que você finish a Descanso Longo, você pode create one Spell Scroll at no cost. It must be a spell of level 5 or lower that você pode cast. This Spell Scroll disintegrates when you finish a Descanso Longo.'
+  'Apócrifa Arcana',
+  'Suas reflexões obsessivas sobre o fim da existência inspiram sua escrita. Sempre que termina um Descanso Longo, você pode criar um Pergaminho de Magia sem custo. Deve ser uma magia de 5º círculo ou inferior que você possa conjurar. Esse Pergaminho de Magia se desintegra quando você termina um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2071,8 +2224,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   14,
-  'Proibida Magic',
-  'The end of Etharis is a time when magic is unbound and magical powers long hidden are unearthed. Quando você cast a Sorcerer spell using a espaço de magia, você pode choose one option below. Excessive. If the spell requires a Material component with a cost, você pode cast the spell without the Material component. You take dano de Força igual a four times the level of the espaço de magia immediately after you cast it. This damage ignores Resistência and Imunidade . Inexorable. Taking damage can’t break your Concentração on the spell. When the spell ends, you gain 1 nível de Exaustão. Pyrrhic. If the spell requires uma jogada de ataque, the spell automatically hits and the jogada de ataque is a Acerto Crítico . Your máximo de Pontos de Vida is reduced by an amount igual a four times the level of the espaço de magia immediately after you cast it. Quando você termina um Descanso Longo, your máximo de Pontos de Vida returns to normal.'
+  'Magia Proibida',
+  'O fim de Etharis é um tempo em que a magia se liberta e poderes mágicos há muito ocultos são desenterrados. Ao conjurar uma magia de Feiticeiro usando um espaço de magia, você pode escolher uma opção abaixo. Excessivo. Se a magia exige um componente Material com custo, você pode conjurá-la sem o componente Material. Você sofre dano de Força igual a quatro vezes o nível do espaço de magia imediatamente após conjurá-la. Esse dano ignora Resistência e Imunidade. Inexorável. Sofrer dano não pode interromper sua Concentração na magia. Quando a magia termina, você ganha 1 nível de Exaustão. Pírrico. Se a magia exige uma jogada de ataque, ela acerta automaticamente e a jogada de ataque é um Acerto Crítico. Seu máximo de Pontos de Vida é reduzido em valor igual a quatro vezes o nível do espaço de magia imediatamente após conjurá-la. Quando você termina um Descanso Longo, seu máximo de Pontos de Vida volta ao normal.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2083,8 +2236,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'apocalypse-sorcery'),
   18,
-  'The Fim É Próximo',
-  'You loudly proclaim what will come to pass when the world ends. Como ação Mágica, you describe the end of days. Quando você do so, each creature de sua escolha in a 9 m Emanação originating from you must make a Sabedoria salvaguarda against your spell save CD. On a failed save, a creature takes 6d6 dano Psíquico and 6d6 dano de Força and has the condição Amedrontado por 1 minuto. On a successful save, the creature takes half as much damage only. A Amedrontado creature can repeat the salvaguarda at the end of each of its turns, ending the condição Amedrontado on a successful save. If esse dano reduces a creature to 0 Pontos de Vida, the creature can be revived only by a True Resurrection or a Wish spell. Depois de usar este recurso, você pode’t do so again until you finish a Descanso Longo unless you spend 6 Sorcery Points (no action required) to restore your use of it.'
+  'O Fim Está Próximo',
+  'Você proclama em voz alta o que acontecerá quando o mundo acabar. Como ação Mágica, descreve o fim dos dias. Ao fazê-lo, cada criatura de sua escolha em uma Emanação de 9 m originada de você deve fazer uma salvaguarda de Sabedoria contra a CD de salvaguarda de magia. Em caso de falha, a criatura sofre 6d6 de dano Psíquico e 6d6 de dano de Força e fica sob a condição Amedrontado por 1 minuto. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura Amedrontada pode repetir a salvaguarda no fim de cada um dos seus turnos, encerrando a condição Amedrontado em caso de sucesso. Se esse dano reduzir uma criatura a 0 Pontos de Vida, ela só pode ser revivida por uma magia Ressurreição Verdadeira ou Desejo. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo, a menos que gaste 6 Pontos de Feitiçaria (sem exigir ação) para restaurar seu uso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2095,8 +2248,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   3,
-  'Magias — Haunted',
-  'Quando você alcança a Sorcerer level specified in the Haunted Spells table, you thereafter always have the listed spells prepared.'
+  'Magias — Assombradas',
+  'Quando você alcança um nível de Feiticeiro indicado na tabela Magias — Assombradas, passa a ter sempre preparadas as magias listadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2108,7 +2261,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   3,
   'Sexto Sentido',
-  'Quando você rola Initiative, você pode add your modificador de Carisma to the roll.'
+  'Quando você rola Iniciativa, pode adicionar seu modificador de Carisma à rolagem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2119,8 +2272,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   3,
-  'Fantasma Companheiro',
-  'Você aprende Find Familiar spell and can cast it como ação Mágica without expending a espaço de magia. The familiar takes the form of a Specter , though it is an Undead instead of a Celestial, Fey, or Fiend. Como ação Mágica, você pode comme seu phantom companion to gain the Invisible condition until it attacks or you cast a spell through it. While Invisible, it leaves no physical evidence of its passage and can be tracked only by magic. Any equipment or objects it is holding remains visible. Além disso, when you take the ação Atacar, você pode forgo one of your own attacks to allow your familiar to make its Life Drain attack with its Reação.'
+  'Companheiro Fantasma',
+  'Você aprende a magia Encontrar Familiar e pode conjurá-la como ação Mágica sem gastar um espaço de magia. O familiar assume a forma de um Espectro, embora seja um Morto-vivo em vez de Celestial, Feérico ou Corruptor. Como ação Mágica, você pode ordenar que seu companheiro fantasma ganhe a condição Invisível até atacar ou até você conjurar uma magia através dele. Enquanto Invisível, não deixa evidência física de sua passagem e só pode ser rastreado por magia. Qualquer equipamento ou objeto que esteja segurando permanece visível. Além disso, ao realizar a ação Atacar, você pode abrir mão de um dos seus próprios ataques para permitir que seu familiar faça seu ataque Drenar Vida com sua Reação.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2131,8 +2284,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   6,
-  'Strength de Spirit',
-  'Your bond with your phantom companion empowers it. Você ganha os seguintes benefícios: Your familiar’s máximo de Pontos de Vida increases by four times your Sorcerer level. Você pode conjurar spells as se você were in the familiar’s space. Quando você use your action to cast a spell, você pode use a Ação Bônus to comme seu phantom companion to use its Life Drain attack with its Reação.'
+  'Força do Espírito',
+  'Seu vínculo com o companheiro fantasma o fortalece. Você ganha os seguintes benefícios: o máximo de Pontos de Vida do familiar aumenta em quatro vezes seu nível de Feiticeiro. Você pode conjurar magias como se estivesse no espaço do familiar. Quando usa sua ação para conjurar uma magia, pode usar uma Ação Bônus para ordenar que seu companheiro fantasma use seu ataque Drenar Vida com sua Reação.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2143,8 +2296,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   6,
-  'Mortífero Palidez',
-  'Você tem Resistência to dano Necrótico, and when you cast a Sorcerer spell that deals damage, it can deal sua escolha of dano Necrótico or its normal damage type.'
+  'Palidez Mortífera',
+  'Você tem Resistência a dano Necrótico e, ao conjurar uma magia de Feiticeiro que causa dano, pode causar dano Necrótico ou o tipo de dano normal da magia, à sua escolha.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2155,8 +2308,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   14,
-  'Fantasma Possessão',
-  'Como ação Mágica, você pode direct your phantom companion to possess a creature de sua escolha within 1,5 m of your phantom. The target makes a Carisma salvaguarda against your spell save CD. On a failed save, your phantom companion enters the target’s body por 1 minuto. On a successful save, the target resists the efforts to possess it, e seu familiar can’t possess it again por 24 horas. Once the phantom companion possesses a creature’s body, it controls that creature. The familiar’s Pontos de Vida, Dados de Vida, Força, Destreza, Constituição, Speed , and senses are replaced by the creature’s. The phantom companion otherwise keeps its game statistics. While the target is possessed, you have a telepathic link with your phantom companion as long as the two of you are within 30 m. Você pode usar this telepathic link to issue commands to your phantom companion (no action required) unless you have the Incapacitado condition. Your phantom companion does its best to obey on its turn. If it completes an order and doesn’t receive further direction from you, the phantom companion acts and moves as it likes, focusing on protecting itself. Você pode command the target to take a Reação but must take your own Reação to do so. Whenever the target takes damage, it repeats the save, ending the possession on itself on a success, e seu phantom companion reappears in the closest unoccupied space. Depois de usar este recurso, você pode’t do so again until you finish a Short or Descanso Longo.'
+  'Possessão Fantasma',
+  'Como ação Mágica, você pode direcionar seu companheiro fantasma a possuir uma criatura de sua escolha a até 1,5 m do fantasma. O alvo faz uma salvaguarda de Carisma contra a CD de salvaguarda de magia. Em caso de falha, o companheiro fantasma entra no corpo do alvo por 1 minuto. Em caso de sucesso, o alvo resiste aos esforços de possessão e seu familiar não pode possuí-lo novamente por 24 horas. Uma vez que o companheiro fantasma possui o corpo de uma criatura, ele a controla. Os Pontos de Vida, Dados de Vida, Força, Destreza, Constituição, Deslocamento e sentidos do familiar são substituídos pelos da criatura. O companheiro fantasma mantém, no restante, suas estatísticas de jogo. Enquanto o alvo estiver possuído, você tem um elo telepático com o companheiro fantasma enquanto ambos estiverem a até 30 m. Você pode usar esse elo telepático para emitir ordens ao companheiro fantasma (sem exigir ação), a menos que esteja sob a condição Incapacitado. O companheiro fantasma faz o possível para obedecer em seu turno. Se concluir uma ordem e não receber nova direção sua, age e se move como quiser, focando em se proteger. Você pode ordenar que o alvo gaste uma Reação, mas deve gastar sua própria Reação para isso. Sempre que o alvo sofrer dano, ele repete a salvaguarda, encerrando a possessão sobre si em caso de sucesso, e o companheiro fantasma reaparece no espaço desocupado mais próximo. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2168,7 +2321,9 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'haunted-sorcery'),
   18,
   'Tornar-se Morte',
-  'Você pode transmute your physical form into a spectral one when near death. Quando você are reduced to 0 Pontos de Vida and not killed outright, você pode drop to 1 Hit Point instead and gain Pontos de Vida Temporários igual a half your máximo de Pontos de Vida. No início de each of your turns, you lose 10 Pontos de Vida Temporários and creatures de sua escolha within 9 m of you take 10 dano Necrótico. While you have Pontos de Vida Temporários granted by este recurso, you have Resistência to all damage, a Fly Speed of 9 m, can Hover , and você pode move through occupied spaces as if they were Difficult Terrain . Se você end your turn in such a space, you are shunted to the last unoccupied space you were in. Depois de usar este recurso, você pode’t do so again until you finish a Descanso Longo. It seems that under the right circumstances, an individual experiencing a haunting can leverage the spirit’s energy into arcane magic. Deeply troubling. — Inquisitor’s field report'
+  'Você pode transmutar sua forma física em uma forma espectral quando está perto da morte. Quando for reduzido a 0 Pontos de Vida e não for morto imediatamente, pode cair para 1 Ponto de Vida em vez disso e ganhar Pontos de Vida Temporários iguais à metade do seu máximo de Pontos de Vida. No início de cada um dos seus turnos, você perde 10 Pontos de Vida Temporários e criaturas de sua escolha a até 9 m de você sofrem 10 de dano Necrótico. Enquanto tiver Pontos de Vida Temporários concedidos por este recurso, você tem Resistência a todo dano, Deslocamento de Voo de 9 m, pode Flutuar e pode atravessar espaços ocupados como se fossem Terreno Difícil. Se terminar seu turno em um espaço assim, é empurrado para o último espaço desocupado em que esteve. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo.
+
+“Parece que, nas circunstâncias certas, um indivíduo sob assombração pode canalizar a energia do espírito em magia arcana. Profundamente inquietante.” — Relatório de campo do Inquisidor'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2179,8 +2334,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   3,
-  'Má Sorte Amuleto',
-  'Você tem the ability to cast a sliver of your curse onto another temporarily. Como Ação Bônus, choose a creature você pode see within 9 m of yourself. The chosen creature has Desvantagem on the next Teste D20 it makes before the start of your next turn. Depois de usar este recurso, você pode’t do so again until you finish a Short or Descanso Longo unless you spend 1 Sorcery Point (no action required) to restore your use of it.'
+  'Amuleto da Má Sorte',
+  'Você tem a capacidade de lançar um fragmento da sua maldição sobre outro ser temporariamente. Como Ação Bônus, escolha uma criatura que possa ver a até 9 m de si. A criatura escolhida tem Desvantagem no próximo Teste D20 que fizer antes do início do seu próximo turno. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Curto ou Longo, a menos que gaste 1 Ponto de Feitiçaria (sem exigir ação) para restaurar seu uso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2191,8 +2346,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   3,
-  'Sangue Laços',
-  'Your senses easily attune to the supernatural forces that caused your inherited affliction. You always have the Detect Evil and Good spell prepared and can cast it without expending a espaço de magia. Além disso, choose one of o seguinte types of creatures as the being that cursed your ancestor: Fey, Fiend, or Undead. On each of your turns while you maintain Concentração on Detect Evil and Good , including the turn when you cast it, creatures of the chosen type have Desvantagem on jogada de ataques against you, and você pode’t be possessed, Charmed , or Amedrontado by such creatures. Uma vez você cast the spell with este recurso, você pode’t do so in this way again until you finish a Short or Descanso Longo.'
+  'Laços de Sangue',
+  'Seus sentidos se afinam facilmente às forças sobrenaturais que causaram sua aflição herdada. Você sempre tem a magia Detectar o Bem e o Mal preparada e pode conjurá-la sem gastar um espaço de magia. Além disso, escolha um dos seguintes tipos de criatura como o ser que amaldiçoou seu ancestral: Feérico, Corruptor ou Morto-vivo. Em cada um dos seus turnos enquanto mantiver Concentração em Detectar o Bem e o Mal, inclusive no turno em que a conjurou, criaturas do tipo escolhido têm Desvantagem nas jogadas de ataque contra você, e você não pode ser possuído, Enfeitiçado ou Amedrontado por tais criaturas. Depois de conjurar a magia com este recurso, não pode fazê-lo dessa forma novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2203,8 +2358,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   3,
-  'Miserável Maldição',
-  'You suffer from a curse inherited from an ancestor who failed to uphold their end of a bargain with an otherworldly power. Choose one of o seguinte curses that was passed down to you. Hulking. Your ancestor was cursed with a hulking frame. Você tem Desvantagem on Destreza ( Stealth ) checks to escape notice by moving quietly. Além disso, your máximo de Pontos de Vida increases by 1, and it increases by 1 whenever you gain another Sorcerer level. Finally, you count as one size larger when determining your carrying capacity. Nocturnal. Your ancestor was cursed to shun the light of day. Você tem Desvantagem on Sabedoria ( Perception ) checks that rely on sight while you are in sunlight. Além disso, você pode see normally in Dim Light and Darkness — both magical and nonmagical—within 36 m of yourself. Plaguebearer. Your ancestor was cursed with physical symptoms of a plague. Você tem Desvantagem on Carisma ( Persuasion ) checks made to influence an Indifferent Humanoidee within 1,5 m of yourself. Além disso, you are Imune to the condição Envenenado and have Resistência to dano Necrótico.'
+  'Maldição Miserável',
+  'Você sofre de uma maldição herdada de um ancestral que falhou em cumprir sua parte de um pacto com um poder de outro mundo. Escolha uma das seguintes maldições transmitidas a você. Descomunal. Seu ancestral foi amaldiçoado com um corpo descomunal. Você tem Desvantagem em testes de Destreza (Furtividade) para passar despercebido movendo-se em silêncio. Além disso, seu máximo de Pontos de Vida aumenta em 1 e aumenta em 1 sempre que você ganha outro nível de Feiticeiro. Por fim, você conta como uma categoria de tamanho maior ao determinar sua capacidade de carga. Noturno. Seu ancestral foi amaldiçoado a rejeitar a luz do dia. Você tem Desvantagem em testes de Sabedoria (Percepção) que dependam da visão enquanto estiver sob a luz do sol. Além disso, você enxerga normalmente em Luz Fraca e Escuridão — tanto mágica quanto não mágica — a até 36 m de si. Portador da Praga. Seu ancestral foi amaldiçoado com sintomas físicos de uma praga. Você tem Desvantagem em testes de Carisma (Persuasão) feitos para influenciar um Humanoide Indiferente a até 1,5 m de si. Além disso, você é Imune à condição Envenenado e tem Resistência a dano Necrótico.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2215,8 +2370,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   6,
-  'Compartilhar the Fardo',
-  'You always have the Bestow Curse spell prepared. Você pode conjurar the spell by spending 3 Sorcery Points instead of a espaço de magia. Quando você cast the spell in this way, the spell doesn’t require Concentração , and its range changes to 18 m for that casting.'
+  'Compartilhar o Fardo',
+  'Você sempre tem a magia Conceder Maldição preparada. Pode conjurá-la gastando 3 Pontos de Feitiçaria em vez de um espaço de magia. Ao conjurá-la dessa forma, a magia não exige Concentração e seu alcance muda para 18 m naquela conjuração.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2227,8 +2382,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   14,
-  'Aterrorizante Semblante',
-  'Como Ação Bônus, você pode adopt the terrifying visage of the being that cursed your ancestor for 10 minutes. During this time, você pode take a ação Mágica to cause creatures de sua escolha você pode see you within 9 m of yourself to make a Sabedoria salvaguarda. On a failed save, the target has the condição Amedrontado até o fim do seu próximo turno. Além disso, while your Terrifying Visage feature is active, you gain o seguinte benefit based on the creature type chosen with your Blood Ties feature. Fey. Como Ação Bônus, you teleport up to 9 m to an unoccupied space você pode see. Fiend. Você tem Resistência to Cold and dano de Fogo. Undead. Quando você realiza damage of any type other than Radiant, você pode take a Reação to reduce the damage by half your Sorcerer level. Depois de usar Terrifying Visage, você pode’t use it again until you finish a Descanso Longo.'
+  'Semblante Aterrorizante',
+  'Como Ação Bônus, você pode adotar o semblante aterrorizante do ser que amaldiçoou seu ancestral por 10 minutos. Durante esse tempo, pode usar uma ação Mágica para fazer com que criaturas de sua escolha que você possa ver a até 9 m de si façam uma salvaguarda de Sabedoria. Em caso de falha, o alvo fica sob a condição Amedrontado até o fim do seu próximo turno. Além disso, enquanto Semblante Aterrorizante estiver ativo, você ganha o seguinte benefício com base no tipo de criatura escolhido com seu recurso Laços de Sangue. Feérico. Como Ação Bônus, você se teletransporta até 9 m para um espaço desocupado que possa ver. Corruptor. Você tem Resistência a dano de Frio e de Fogo. Morto-vivo. Quando sofrer dano de qualquer tipo que não seja Radiante, pode gastar uma Reação para reduzir o dano em metade do seu nível de Feiticeiro. Depois de usar Semblante Aterrorizante, não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2239,8 +2394,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'wretched-bloodline-sorcery'),
   18,
-  'Vingativa Invocação',
-  'Your magic has become powerful enough that você pode call and command a servant of those who cursed you. Choose one of o seguinte creatures based on the choice you made with your Blood Ties feature: Lamia or Troll (Fey only), Barbed Devil , Incubus , or Succubus (Fiend only), Ghost or Wraith (Undead only). Você pode realizar a ação Mágica and spend 5 Sorcery Points to summon your chosen creature. The creature appears in an unoccupied space você pode see within 18 m. It disappears when it drops to 0 Pontos de Vida, you use este recurso to summon another creature, or after 10 minutes have passed. The creature is an ally to you e seu allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). Se você don’t issue any, it takes the Dodge action and uses its movement to avoid danger.'
+  'Invocação Vingativa',
+  'Sua magia tornou-se poderosa o bastante para chamar e comandar um servo daqueles que o amaldiçoaram. Escolha uma das seguintes criaturas com base na escolha feita com seu recurso Laços de Sangue: Lâmia ou Troll (somente Feérico), Diabo Espinhoso, Íncubo ou Súcubo (somente Corruptor), Fantasma ou Espectro (somente Morto-vivo). Você pode usar uma ação Mágica e gastar 5 Pontos de Feitiçaria para invocar a criatura escolhida. A criatura aparece em um espaço desocupado que você possa ver a até 18 m. Ela desaparece quando cai a 0 Pontos de Vida, quando você usa este recurso para invocar outra criatura ou após 10 minutos. A criatura é aliada sua e de seus aliados. Em combate, compartilha sua contagem de Iniciativa, mas age imediatamente após o seu turno. Obedece a seus comandos verbais (sem exigir ação sua). Se você não emitir nenhum, ela realiza a ação Esquivar e usa seu movimento para evitar perigo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2252,7 +2407,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'),
   3,
   'Magias — Coven',
-  'The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Coven Spells table, you thereafter always have the listed spells prepared.'
+  'A magia do seu patrono garante que você sempre tenha certas magias prontas; quando alcança um nível de Bruxo indicado na tabela Magias — Coven, passa a ter sempre preparadas as magias listadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2263,8 +2418,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'),
   3,
-  'Hag’s Olho',
-  'As an agent of a Hag, you have been gifted with a magical item known como Hag’s Eye . Crafted from a real eye and fitted into a ring, pendant, or other accessory, this item can be used as an Foco Arcano for your Warlock spells. The Hag can see through the eye, and the destruction of the item can cause the Hag actual pain, so any pawn who loses this talisman often invokes the Hag’s ire. While you possess the eye, você pode cast Hex um número de times igual a your modificador de Carisma (mínimo de once) without expending a espaço de magia, and você recupera all expended uses of this ability when you finish a Descanso Longo. Além disso, when you reach Warlock level 10, você pode use the eye to cast Bestow Curse once without expending a espaço de magia, and você recupera the ability to do so once you finish a Descanso Longo.'
+  'Olho da Bruxa',
+  'Como agente de uma Bruxa, você recebeu um item mágico conhecido como Olho da Bruxa. Forjado a partir de um olho real e encaixado em um anel, pingente ou outro acessório, esse item pode ser usado como Foco Arcano para suas magias de Bruxo. A Bruxa pode ver através do olho, e a destruição do item pode causar-lhe dor real, de modo que qualquer peão que perca esse talismã frequentemente provoca a ira da Bruxa. Enquanto possuir o olho, você pode conjurar Azar um número de vezes igual ao seu modificador de Carisma (mínimo de uma vez) sem gastar um espaço de magia, e recupera todos os usos gastos dessa habilidade quando termina um Descanso Longo. Além disso, ao alcançar o 10º nível de Bruxo, pode usar o olho para conjurar Conceder Maldição uma vez sem gastar um espaço de magia, e recupera a capacidade de fazê-lo ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2275,8 +2430,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'),
   6,
-  'Hag’s Astúcia',
-  'Hags delight in deceiving and manipulating others, and you gain some of their skill in doing so. You know the Minor Illusion cantrip. Se você already know it, you learn a different Warlock cantrip de sua escolha. The cantrip doesn’t count against your number of truques known. Além disso, if a creature takes a Study action to examine an illusion you have created, você pode take a Reação to impose Desvantagem on the check. Also, the first time a creature takes a Study action to examine an illusion spell you have cast and succeeds on the Inteligência ( Investigation ) check, você pode cause the illusion to deal dano Psíquico. The damage equals 1d6 plus 1d6 per level of the espaço de magia used to cast the spell. Você pode do damage um número de times igual a your modificador de Carisma (mínimo de once). You regain all expended uses when you finish a Short or Descanso Longo.'
+  'Astúcia da Bruxa',
+  'Bruxas se deleitam em enganar e manipular os outros, e você ganha parte dessa habilidade. Você conhece o truque Ilusão Menor. Se já o conhecer, aprende um truque de Bruxo diferente de sua escolha. O truque não conta contra o número de truques conhecidos. Além disso, se uma criatura realizar a ação Estudar para examinar uma ilusão que você criou, você pode gastar uma Reação para impor Desvantagem no teste. Também, na primeira vez que uma criatura realizar a ação Estudar para examinar uma magia de ilusão que você conjurou e for bem-sucedida no teste de Inteligência (Investigação), você pode fazer a ilusão causar dano Psíquico. O dano é igual a 1d6 mais 1d6 por nível do espaço de magia usado para conjurar a magia. Você pode causar esse dano um número de vezes igual ao seu modificador de Carisma (mínimo de uma vez). Recupera todos os usos gastos quando termina um Descanso Curto ou Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2287,8 +2442,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'),
   10,
-  'Hag’s Semblante',
-  'Como ação Mágica, you twist your face into a horrifying mask resembling your Hag patron. It lasts por 1 minuto, but it ends early se você dismiss it (no action required) or have the Incapacitado condition. While this effect lasts, you gain the benefits listed below. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Horrifying Gaze. Como Ação Bônus, choose one Humanoidee que você possa ver and that can see you within 9 m of you. The creature must make a Sabedoria salvaguarda against your spell save CD or have the condição Amedrontado por 1 minuto. The Amedrontado target repeats the save at the end of each of its turns, ending the effect on itself on a success. A creature that can see you has Desvantagem on this save. Paralyzing Gaze. Como Magic Ação, choose one Humanoidee que você possa ver and that can see you within 9 m of you that has the condição Amedrontado. The creature must make a Sabedoria salvaguarda against your spell save CD or have the Paralyzed condition. On a successful save, the creature takes dano Necrótico igual a your Warlock level, it is no longer Amedrontado, and it can’t be targeted by your Hag’s Visage again until you finish a Descanso Longo. Death Gaze. Como Magic Ação, choose one Humanoidee que você possa ver and that can see you within 9 m of you that has the Paralyzed condition. The creature must make a Sabedoria salvaguarda with Vantagem against your spell save CD or be reduced to 0 Pontos de Vida. On a successful save, the creature takes dano Necrótico igual a twice your Warlock level, it is no longer Paralyzed, and it can’t be targeted by your Hag’s Visage again until you finish a Descanso Longo.'
+  'Semblante da Bruxa',
+  'Como ação Mágica, você contorce o rosto em uma máscara horrenda que lembra sua patrona Bruxa. Dura 1 minuto, mas termina antecipadamente se você a dispensar (sem exigir ação) ou ficar sob a condição Incapacitado. Enquanto o efeito durar, você ganha os benefícios listados abaixo. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo. Olhar Horripilante. Como Ação Bônus, escolha um Humanoide que você possa ver e que possa vê-lo a até 9 m de você. A criatura deve fazer uma salvaguarda de Sabedoria contra a CD de salvaguarda de magia ou ficar sob a condição Amedrontado por 1 minuto. O alvo Amedrontado repete a salvaguarda no fim de cada um dos seus turnos, encerrando o efeito sobre si em caso de sucesso. Uma criatura que possa vê-lo tem Desvantagem nessa salvaguarda. Olhar Paralisante. Como ação Mágica, escolha um Humanoide que você possa ver e que possa vê-lo a até 9 m de você e que esteja sob a condição Amedrontado. A criatura deve fazer uma salvaguarda de Sabedoria contra a CD de salvaguarda de magia ou ficar sob a condição Paralisado. Em caso de sucesso, a criatura sofre dano Necrótico igual ao seu nível de Bruxo, deixa de estar Amedrontada e não pode ser alvo do seu Semblante da Bruxa novamente até você terminar um Descanso Longo. Olhar da Morte. Como ação Mágica, escolha um Humanoide que você possa ver e que possa vê-lo a até 9 m de você e que esteja sob a condição Paralisado. A criatura deve fazer uma salvaguarda de Sabedoria com Vantagem contra a CD de salvaguarda de magia ou ser reduzida a 0 Pontos de Vida. Em caso de sucesso, a criatura sofre dano Necrótico igual ao dobro do seu nível de Bruxo, deixa de estar Paralisada e não pode ser alvo do seu Semblante da Bruxa novamente até você terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2299,8 +2454,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'),
   14,
-  'Hag’s Ofício',
-  'The Hag imparts the knowledge to craft two magic items. Você pode temporarily turn a normal vessel into a Hag''s Cauldron by expending a espaço de magia. This magical cauldron lasts for 10 minutes. During that time, você pode take the Magic to pour out three Common, two Uncommon, or one Rare potion. The potions lose efficacy at the end of your next Short or Descanso Longo. You regain this ability at the end of a Descanso Longo. Além disso, when you finish a Descanso Longo, você pode expend a espaço de magia and imbue a gemstone worth at least 10 PO with magic, turning it into a Minor Heartstone . This magic item grants the bearer Imunidade to the condição Envenenado and the ability to cast Blink once without expending a espaço de magia. The magic within the gemstone fades after 24 hours and the gem crumbles into dust.'
+  'Ofício da Bruxa',
+  'A Bruxa transmite o conhecimento para criar dois itens mágicos. Você pode transformar temporariamente um recipiente comum em um Caldeirão da Bruxa gastando um espaço de magia. Esse caldeirão mágico dura 10 minutos. Durante esse tempo, você pode usar a ação Mágica para derramar três poções Comuns, duas Incomuns ou uma Rara. As poções perdem eficácia ao fim do seu próximo Descanso Curto ou Longo. Você recupera essa habilidade ao fim de um Descanso Longo. Além disso, ao terminar um Descanso Longo, pode gastar um espaço de magia e imbuir uma gema no valor de pelo menos 10 PO com magia, transformando-a em uma Pedra-Coração Menor. Esse item mágico concede ao portador Imunidade à condição Envenenado e a capacidade de conjurar Piscar uma vez sem gastar um espaço de magia. A magia na gema se desfaz após 24 horas e a gema se reduz a pó.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2312,7 +2467,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   3,
   'Drenar Vida',
-  'Você ganha an innate power to drain life from the living. After you take the Attack or ação Mágica, você pode use a Ação Bônus to make an Ataque Desarmado . On a hit, the Ataque Desarmado deals dano Necrótico igual a 1d6 mais seu modificador de Carisma instead of its normal damage. Quando você acerta uma creature with Drain Life, você pode expend a Pact Magic espaço de magia to deal an extra 1d8 dano Necrótico to the target, plus another 1d8 per level of the espaço de magia. Quando você expend a espaço de magia in this way, você recupera Pontos de Vida igual a the amount of damage dealt.'
+  'Você ganha um poder inato de drenar a vida dos vivos. Depois de realizar a ação Atacar ou a ação Mágica, pode usar uma Ação Bônus para fazer um Ataque Desarmado. Em um acerto, o Ataque Desarmado causa dano Necrótico igual a 1d6 mais seu modificador de Carisma em vez do dano normal. Quando acerta uma criatura com Drenar Vida, pode gastar um espaço de magia de Magia do Pacto para causar 1d8 de dano Necrótico extra ao alvo, mais outro 1d8 por nível do espaço de magia. Ao gastar um espaço de magia dessa forma, você recupera Pontos de Vida iguais à quantidade de dano causado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2323,8 +2478,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   3,
-  'Noturno Predador',
-  'Como predator of the night, you have been blessed with enhanced vision in darkness. Você tem Darkvision with a range of 18 m. Se você already have Darkvision , its range increases by 18 m.'
+  'Predador Noturno',
+  'Como predador da noite, você foi abençoado com visão aprimorada na escuridão. Você tem Visão no Escuro com alcance de 18 m. Se já tiver Visão no Escuro, seu alcance aumenta em 18 m.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2335,8 +2490,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   3,
-  'Magias — First Vampire',
-  'The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the First Vampire Spells table, you thereafter always have the listed spells prepared.'
+  'Magias — Primeiro Vampiro',
+  'A magia do seu patrono garante que você sempre tenha certas magias prontas; quando alcança um nível de Bruxo indicado na tabela Magias — Primeiro Vampiro, passa a ter sempre preparadas as magias listadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2347,8 +2502,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   6,
-  'Criatura de the Noite',
-  'You always have the Polymorph spell prepared. With este recurso, você pode cast it only on yourself without expending a espaço de magia and without Material components to transform into a Bat , Rat , or Wolf . Your game statistics are replaced by the Beast’s stat block, but you retain your creature type; Pontos de Vida; Dados de Vida; Inteligência, Sabedoria, and Carisma scores; class features; languages; and feats. You also retain your skill and salvaguarda proficiencies and use your Bônus de Proficiência for them, in addition to gaining the proficiencies of the creature. If a skill or salvaguarda modifier in the Beast’s stat block is higher than yours, use the one in the stat block. Você pode usar este recurso um número de times igual a your modificador de Carisma (mínimo de once). You regain all expended uses when you finish a Descanso Longo.'
+  'Criatura da Noite',
+  'Você sempre tem a magia Polimorfia preparada. Com este recurso, pode conjurá-la apenas sobre si mesmo sem gastar um espaço de magia e sem componentes Materiais para transformar-se em um Morcego, Rato ou Lobo. Suas estatísticas de jogo são substituídas pelo bloco de estatísticas da Besta, mas você mantém seu tipo de criatura; Pontos de Vida; Dados de Vida; valores de Inteligência, Sabedoria e Carisma; recursos de classe; idiomas; e talentos. Você também mantém suas proficiências em perícias e salvaguardas e usa seu Bônus de Proficiência nelas, além de ganhar as proficiências da criatura. Se um modificador de perícia ou salvaguarda no bloco de estatísticas da Besta for maior que o seu, use o do bloco. Você pode usar este recurso um número de vezes igual ao seu modificador de Carisma (mínimo de uma vez). Recupera todos os usos gastos quando termina um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2359,8 +2514,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   10,
-  'Eldritch Appetite',
-  'Quando você reduce an enemy to 0 Pontos de Vida with your Drain Life feature, você pode take a Reação to consume the last of its fleeting mortality. Quando você do so, você recupera one of your expended Pact Magic espaços de magia. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Apetite Sobrenatural',
+  'Quando você reduz um inimigo a 0 Pontos de Vida com seu recurso Drenar Vida, pode gastar uma Reação para consumir o último sopro de sua mortalidade fugaz. Ao fazê-lo, recupera um dos seus espaços de magia de Magia do Pacto gastos. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2371,8 +2526,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-first-vampire-patron'),
   14,
-  'Eterna Noite',
-  'Your vampire patron grants you a taste of true immortality. You no longer age, and you gain Resistência to dano Necrótico. Como Ação Bônus, you gain o seguinte benefits por 1 minuto: No início de each of your turns, você recupera 1d6 Pontos de Vida se você have at least 1 Hit Point and you aren’t in direct sunlight or running water. Se você take dano Radiante, you don’t regain Pontos de Vida from este recurso at the start of your next turn. Quando você use your Drain Life feature, você pode deal an extra 1d8 dano Necrótico without expending a espaço de magia. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Noite Eterna',
+  'Seu patrono vampiro concede-lhe um gosto da verdadeira imortalidade. Você deixa de envelhecer e ganha Resistência a dano Necrótico. Como Ação Bônus, ganha os seguintes benefícios por 1 minuto: no início de cada um dos seus turnos, recupera 1d6 Pontos de Vida se tiver pelo menos 1 Ponto de Vida e não estiver sob luz solar direta nem em água corrente. Se sofrer dano Radiante, não recupera Pontos de Vida deste recurso no início do seu próximo turno. Quando usar seu recurso Drenar Vida, pode causar 1d8 de dano Necrótico extra sem gastar um espaço de magia. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2383,8 +2538,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-parasite-patron'),
   3,
-  'Magia Sifão',
-  'Your patron has taught you to siphon magic from your enemies and make it your own. Immediately after a creature você pode see within 18 m of you casts a spell, você pode take a Reação to force the creature to make a Carisma salvaguarda. The CD equals your spell save CD. On a failed save, that creature can''t cast the spell again until 8 hours have passed. While this effect lasts, if the spell was at least level 1 and of a level você pode cast, you have that spell prepared. Tony Sart The maximum number of spell levels você pode have siphoned at once equals 1 mais seu modificador de Carisma (mínimo de 1). Se você have the Incapacitado condition or die, you lose all siphoned spells. Quando você termina um Descanso Longo, you lose all siphoned spells.'
+  'Sifão de Magia',
+  'Seu patrono ensinou-o a sifonar magia dos inimigos e torná-la sua. Imediatamente após uma criatura que você possa ver a até 18 m conjurar uma magia, você pode gastar uma Reação para forçar a criatura a fazer uma salvaguarda de Carisma. A CD é igual à sua CD de salvaguarda de magia. Em caso de falha, essa criatura não pode conjurar novamente aquela magia até que 8 horas tenham passado. Enquanto o efeito durar, se a magia for de pelo menos 1º círculo e de um nível que você possa conjurar, você a tem preparada. O número máximo de círculos de magia que você pode ter sifonado de uma vez é igual a 1 mais seu modificador de Carisma (mínimo de 1). Se estiver sob a condição Incapacitado ou morrer, perde todas as magias sifonadas. Quando termina um Descanso Longo, perde todas as magias sifonadas.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2395,8 +2550,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-parasite-patron'),
   3,
-  'Físico Espécime',
-  'Your patron has enhanced your physical form to improve your utility como host and pawn. Como Ação Bônus, once per Descanso Longo, choose um número de o seguinte benefits up to your modificador de Carisma (mínimo de one) that lasts until you finish a Descanso Longo. Sempre que você finish a Descanso Curto, você pode choose one of your selected benefits and replace it with another from this list. Your máximo de Pontos de Vida increases by an amount igual a your Warlock level. Você ganha Darkvision with a range of 18 m. Se você already have Darkvision , its range increases by 18 m. You Speed increases by 1,5 m. Você tem Vantagem on salvaguardas to avoid or end the condição Envenenado. Your jump distance is tripled, and you gain a Climb Speed igual a your Speed. Add your modificador de Carisma to your Força ( Athletics ) check or Destreza ( Acrobatics ) checks.'
+  'Espécime Físico',
+  'Seu patrono aprimorou sua forma física para melhorar sua utilidade como hospedeiro e peão. Como Ação Bônus, uma vez por Descanso Longo, escolha um número de benefícios a seguir até o valor do seu modificador de Carisma (mínimo de um) que dure até você terminar um Descanso Longo. Sempre que terminar um Descanso Curto, pode escolher um dos benefícios selecionados e substituí-lo por outro desta lista. Seu máximo de Pontos de Vida aumenta em valor igual ao seu nível de Bruxo. Você ganha Visão no Escuro com alcance de 18 m. Se já tiver Visão no Escuro, seu alcance aumenta em 18 m. Seu Deslocamento aumenta em 1,5 m. Você tem Vantagem em salvaguardas para evitar ou encerrar a condição Envenenado. Sua distância de salto é triplicada e você ganha Deslocamento de Escalada igual ao seu Deslocamento. Adicione seu modificador de Carisma aos seus testes de Força (Atletismo) ou Destreza (Acrobacia).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2407,8 +2562,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-parasite-patron'),
   6,
-  'Simbiótico Sentinela',
-  'Your patron remains alert to threats to its host at all times. Você pode’t be surprised and you have Vantagem on Initiative rolls. You also have Vantagem on salvaguardas to avoid or end the Charmed and condição Amedrontados.'
+  'Sentinela Simbiótica',
+  'Seu patrono permanece alerta a ameaças ao hospedeiro o tempo todo. Você não pode ser surpreendido e tem Vantagem nas rolagens de Iniciativa. Também tem Vantagem em salvaguardas para evitar ou encerrar as condições Enfeitiçado e Amedrontado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2420,7 +2575,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-parasite-patron'),
   10,
   'Gerar Peão',
-  'You always have the Dominate Person spell prepared. Você pode also cast it once without a espaço de magia, and você recupera the ability to do so when you finish a Descanso Longo. Além disso, taking damage can’t break your Concentração on Dominate Person . When a creature succeeds on its salvaguarda, it takes dano Psíquico igual a your Warlock level.'
+  'Você sempre tem a magia Dominar Pessoa preparada. Também pode conjurá-la uma vez sem um espaço de magia e recupera a capacidade de fazê-lo quando termina um Descanso Longo. Além disso, sofrer dano não pode interromper sua Concentração em Dominar Pessoa. Quando uma criatura for bem-sucedida na salvaguarda, sofre dano Psíquico igual ao seu nível de Bruxo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2431,8 +2586,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-parasite-patron'),
   14,
-  'Larval Regeneração',
-  'Quando você die, a larval parasite bursts from your corpse. You control the parasite. The parasite uses the Rat stat block except it has your Pontos de Vida; Dados de Vida; Inteligência, Sabedoria, and Carisma scores; class features; languages; and feats. It can’t cast spells. Além disso, it has o seguinte ability: Burrowing Possession. Como ação Mágica, the parasite can cause a Humanoidee within 1,5 m of it to make a Força or Destreza salvaguarda (sua escolha) against your Warlock spell save CD. On a failed save, the parasite burrows into the creature, dealing Perfurante damage igual a your Warlock level. While burrowed inside a creature, the parasite can’t take any action, Ação Bônus, or Reação, has Total Cover , and has Imunidade to all damage except dano Psíquico. On each of the creature’s subsequent turns, it can use its action to make a Constituição salvaguarda against your Warlock spell save CD. If the creature succeeds, the parasite is ejected from its body and into an unoccupied space of the creature’s choice within 1,5 m of it. If the parasite is burrowed inside the creature when the creature’s turn ends, the creature takes dano Necrótico igual a twice your Warlock level. If esse dano reduces the creature to 0 Pontos de Vida, it immediately dies, the parasite disappears, and you take over the body of the Humanoidee as se você had been targeted by the Reincarnate spell and rolled the species the Humanoidee had been. Se você are returned to life, such as by the Revivify spell, your parasite immediately disappears. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Regeneração Larval',
+  'Quando você morre, um parasita larval explode do seu cadáver. Você controla o parasita. O parasita usa o bloco de estatísticas de Rato, exceto por ter seus Pontos de Vida; Dados de Vida; valores de Inteligência, Sabedoria e Carisma; recursos de classe; idiomas; e talentos. Não pode conjurar magias. Além disso, tem a seguinte habilidade: Possessão Escavadora. Como ação Mágica, o parasita pode fazer um Humanoide a até 1,5 m dele realizar uma salvaguarda de Força ou Destreza (sua escolha) contra a CD de salvaguarda de magia de Bruxo. Em caso de falha, o parasita escava para dentro da criatura, causando dano Perfurante igual ao seu nível de Bruxo. Enquanto escavado dentro de uma criatura, o parasita não pode realizar qualquer Ação, Ação Bônus ou Reação, tem Cobertura Total e tem Imunidade a todo dano exceto dano Psíquico. Em cada um dos turnos subsequentes da criatura, ela pode usar sua ação para fazer uma salvaguarda de Constituição contra a CD de salvaguarda de magia de Bruxo. Se a criatura for bem-sucedida, o parasita é expelido do corpo para um espaço desocupado de escolha da criatura a até 1,5 m dela. Se o parasita estiver escavado dentro da criatura quando o turno dela terminar, a criatura sofre dano Necrótico igual ao dobro do seu nível de Bruxo. Se esse dano reduzir a criatura a 0 Pontos de Vida, ela morre imediatamente, o parasita desaparece e você assume o corpo do Humanoide como se tivesse sido alvo da magia Reencarnar e tivesse rolado a espécie que o Humanoide tinha. Se você for devolvido à vida, como pela magia Revivificar, seu parasita desaparece imediatamente. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2444,7 +2599,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'daemonologist'),
   3,
   'Justo e Torpe',
-  'The spells listed below can be added to your grimório for no cost when you reach the associated level. Each time you finish a Descanso Longo, choose whether you are siphoning power from Arch Daemons or Arch Seraphs. Consult the table below that corresponds to sua escolha; você pode prepare the spells listed for your nível de Mago and lower, but você pode’t prepare the ones for the opposite faction. For example, se você choose Arch Daemon as your siphoned power, você pode’t prepare the spells listed in the Arch Seraph section.'
+  'As magias listadas abaixo podem ser adicionadas ao seu grimório sem custo quando você alcança o nível associado. Cada vez que termina um Descanso Longo, escolha se está sifonando poder de Arquidemônios ou de Arquissarafins. Consulte a tabela abaixo correspondente à sua escolha; você pode preparar as magias listadas para o seu nível de Mago e inferiores, mas não pode preparar as da facção oposta. Por exemplo, se escolher Arquidemônio como poder sifonado, não pode preparar as magias listadas na seção Arquissarafim.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2455,8 +2610,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'daemonologist'),
   3,
-  'Roubado Segredos',
-  'Você tem uncovered or stolen secret power from agents of the Arch Daemons and Arch Seraphs. Você ganha um Eldritch Invocation de sua escolha. Prerequisites. If an invocation hcomo prerequisite, you must meet it to learn that invocation. If an invocation hcomo Warlock level prerequisite, you use your nível de Mago instead. For example, if an invocation requires you to be a level 5+ Warlock, você pode select the invocation once you reach nível de Mago 5. Replacing and Gaining Invocations. Sempre que você gain a nível de Mago, você pode replace one of your invocations with another one for which you qualify. Você pode’t replace an invocation if it’s a prerequisite for another invocation that you have. Você ganha um adicional invocation when you reach nível de Magos 6 and 14. Você pode’t pick the same invocation more than once unless its description says otherwise. Intelligent Invocations. Você pode usar your modificador de Inteligência instead of your modificador de Carisma for your invocations.'
+  'Segredos Roubados',
+  'Você descobriu ou roubou poder secreto de agentes dos Arquidemônios e Arquissarafins. Ganha uma Invocação Mística de sua escolha. Pré-requisitos. Se uma invocação tiver um pré-requisito, você deve atendê-lo para aprendê-la. Se uma invocação tiver um pré-requisito de nível de Bruxo, use seu nível de Mago em vez disso. Por exemplo, se uma invocação exigir que você seja um Bruxo de 5º nível ou superior, pode selecioná-la ao alcançar o 5º nível de Mago. Substituir e Ganhar Invocações. Sempre que ganhar um nível de Mago, pode substituir uma das suas invocações por outra para a qual se qualifique. Não pode substituir uma invocação se ela for pré-requisito de outra invocação que você tenha. Você ganha uma invocação adicional ao alcançar os níveis de Mago 6 e 14. Não pode escolher a mesma invocação mais de uma vez, a menos que a descrição diga o contrário. Invocações Inteligentes. Você pode usar seu modificador de Inteligência em vez do modificador de Carisma nas suas invocações.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2467,8 +2622,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'daemonologist'),
   6,
-  'Emprestadas Línguas e Peles',
-  'Your ability to siphon power from Celestials and Fiends is enhanced. Você ganha os seguintes benefícios. Arch Daemon Boon. While you are siphoning power from Arch Daemons, you have Resistência to dano Necrótico. Além disso, Fiends that know languages can underste seu speech and você pode understand theirs, even se você do not share a language. Arch Seraph Boon. While you are siphoning power from Arch Seraphs, you have Resistência to dano Radiante. Além disso, Celestials that know languages can underste seu speech and você pode understand theirs, even se você do not share a language. Switch Sides. Como Ação Bônus, você pode change which power you are siphoning from. Uma vez você switch, você pode’t do so again until you finish a Descanso Longo.'
+  'Línguas e Peles Emprestadas',
+  'Sua capacidade de sifonar poder de Celestiais e Corruptores é aprimorada. Você ganha os seguintes benefícios. Dádiva do Arquidemônio. Enquanto estiver sifonando poder de Arquidemônios, você tem Resistência a dano Necrótico. Além disso, Corruptores que conheçam idiomas podem compreender sua fala e você pode compreender a deles, mesmo sem compartilhar um idioma. Dádiva do Arquissarafim. Enquanto estiver sifonando poder de Arquissarafins, você tem Resistência a dano Radiante. Além disso, Celestiais que conheçam idiomas podem compreender sua fala e você pode compreender a deles, mesmo sem compartilhar um idioma. Trocar de Lado. Como Ação Bônus, você pode mudar de qual poder está sifonando. Depois de trocar, não pode fazê-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2479,8 +2634,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'daemonologist'),
   10,
-  'Sobrenatural Countenance',
-  'Como Ação Bônus, you adopt an infernal or celestial countenance for 10 minutes. For the duration, your appearance gains aspects of the power você escolhe. Você ganha os seguintes benefícios. Commanding Presence. Você tem Vantagem on Carisma checks. Improved Spells. Quando você expend a espaço de magia to cast a spell from the Arch Daemon or Arch Seraph table, the spell is cast as se você had spent a espaço de magia of one level higher. Unearthly Wings. Você ganha um Fly Speed of 18 m.Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo. Você pode also restore your use of it by expending a level 5+ espaço de magia (no action required).'
+  'Semblante Sobrenatural',
+  'Como Ação Bônus, você adota um semblante infernal ou celestial por 10 minutos. Durante a duração, sua aparência ganha aspectos do poder que escolher. Você ganha os seguintes benefícios. Presença Imponente. Você tem Vantagem em testes de Carisma. Magias Aprimoradas. Ao gastar um espaço de magia para conjurar uma magia da tabela Arquidemônio ou Arquissarafim, a magia é conjurada como se você tivesse gasto um espaço de magia um nível acima. Asas Sobrenaturais. Você ganha Deslocamento de Voo de 18 m. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo. Também pode restaurar seu uso gastando um espaço de magia de 5º círculo ou superior (sem exigir ação).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2491,8 +2646,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'daemonologist'),
   14,
-  'Eterna Guerra Erupção',
-  'You use the powers at your command to call forth warring celestials and infernals. Como ação Mágica, you summon a manifestation of the war between Arch Daemons and Arch Seraphs in a 9 m-radius Sphere centered on a point within 36 m of yourself. Each creature in the Sphere must make a Carisma salvaguarda against your spell save CD. On a failed save, a creature takes 4d10 dano Necrótico, 4d10 dano Radiante, and has the Blinded condition até o fim de its next turn. On a successful save, a creature takes half as much damage only. As part of the same action, você pode change the power you are siphoning from, and you also regain 1 Wizard espaço de magia de sua escolha of 5th level or lower. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Longo.'
+  'Erupção da Guerra Eterna',
+  'Você usa os poderes sob seu comando para evocar celestiais e infernais em guerra. Como ação Mágica, invoca uma manifestação da guerra entre Arquidemônios e Arquissarafins em uma Esfera de raio de 9 m centrada em um ponto a até 36 m de si. Cada criatura na Esfera deve fazer uma salvaguarda de Carisma contra a CD de salvaguarda de magia. Em caso de falha, a criatura sofre 4d10 de dano Necrótico, 4d10 de dano Radiante e fica sob a condição Cego até o fim do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Como parte da mesma ação, você pode mudar o poder do qual está sifonando e também recupera 1 espaço de magia de Mago de sua escolha de 5º círculo ou inferior. Depois de usar este recurso, não pode usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2503,8 +2658,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'plague-doctor'),
   3,
-  'Poção Ofício',
-  'Você ganha proficiency in the Medicine skill and proficiency with the Herbalism Kit and Alchemist’s Supplies . Além disso, you have learned to create magical potions. Crafting. With 10 minutes of work or when you finish a Short or Descanso Longo, você pode prepare magical potions se você have an Herbalism Kit or Alchemist’s Supplies . Quando você do so, you must expend a level 1+ espaço de magia for each potion you create and choose a spell from your grimório that targets only one creature. The chosen spell must be of an equal or lower level than the expended espaço de magia. Consuming. Como Ação Bônus, a creature can drink the potion or administer it to another creature within 1,5 m of it. When a creature consumes the potion, it becomes the target of the spell as se você had cast it. If the spell requires Concentração , the creature that consumes the potion Concentrates on it. Unconsumed potions last until you finish a Descanso Longo or until you use este recurso again.'
+  'Ofício de Poções',
+  'Você ganha proficiência na perícia Medicina e proficiência com o Kit de Herbalismo e com Suprimentos de Alquimista. Além disso, aprendeu a criar poções mágicas. Criação. Com 10 minutos de trabalho ou ao terminar um Descanso Curto ou Longo, você pode preparar poções mágicas se tiver um Kit de Herbalismo ou Suprimentos de Alquimista. Ao fazê-lo, deve gastar um espaço de magia de 1º círculo ou superior para cada poção criada e escolher uma magia do seu grimório que tenha apenas uma criatura como alvo. A magia escolhida deve ser de nível igual ou inferior ao do espaço de magia gasto. Consumo. Como Ação Bônus, uma criatura pode beber a poção ou administrá-la a outra criatura a até 1,5 m dela. Quando uma criatura consome a poção, torna-se o alvo da magia como se você a tivesse conjurado. Se a magia exigir Concentração, a criatura que consome a poção Concentra-se nela. Poções não consumidas duram até você terminar um Descanso Longo ou até usar este recurso novamente.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2516,7 +2671,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'plague-doctor'),
   3,
   'Boa Medicina',
-  'Quando você craft a potion, você pode choose to expend a espaço de magia without choosing a spell to craft a dose of Good Medicine. Como Ação Bônus, você pode drink the dose or administer it to another creature within 1,5 m of yourself. When Good Medicine is consumed, roll um número de d8s igual a the level of the espaço de magia expended, and the target regains Pontos de Vida igual a the roll’s total. Se você expended a level 3+ espaço de magia on este recurso, Good Medicine also removes the condição Envenenado.'
+  'Ao criar uma poção, você pode escolher gastar um espaço de magia sem escolher uma magia para criar uma dose de Boa Medicina. Como Ação Bônus, pode beber a dose ou administrá-la a outra criatura a até 1,5 m de si. Quando a Boa Medicina é consumida, role um número de d8s igual ao nível do espaço de magia gasto, e o alvo recupera Pontos de Vida iguais ao total da rolagem. Se você gastou um espaço de magia de 3º círculo ou superior neste recurso, a Boa Medicina também remove a condição Envenenado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2528,7 +2683,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'plague-doctor'),
   6,
   'Má Medicina',
-  'Quando você craft a potion, você pode choose to expend a espaço de magia without choosing a spell to craft a dose of Bad Medicine. Quando você create a dose, choose one effect per level of the espaço de magia expended. The creature has the condição Envenenado. The creature’s Speed is halved. The creature takes an extra 1d4 dano Necrótico the first time it takes damage each turn. The creature takes 1d6 dano de Veneno each time it takes an action, Ação Bônus, or Reação. The creature takes dano Ácido igual a the level of the espaço de magia expended at the start of each of its turns. Como ação Mágica, você pode hurl a dose of Bad Medicine at a point você pode see within 9 m. Creatures within 3 m of that point must make a Constituição salvaguarda against your spell save CD. On a failed save, the target suffers one of the chosen effects por 1 minuto. On each of its turns, the target can take an action and repeat the save, ending the effect on itself on a success.'
+  'Ao criar uma poção, você pode escolher gastar um espaço de magia sem escolher uma magia para criar uma dose de Má Medicina. Ao criar uma dose, escolha um efeito por nível do espaço de magia gasto. A criatura fica sob a condição Envenenado. O Deslocamento da criatura é reduzido à metade. A criatura sofre 1d4 de dano Necrótico extra na primeira vez que sofrer dano a cada turno. A criatura sofre 1d6 de dano de Veneno cada vez que realizar uma Ação, Ação Bônus ou Reação. A criatura sofre dano Ácido igual ao nível do espaço de magia gasto no início de cada um dos seus turnos. Como ação Mágica, você pode arremessar uma dose de Má Medicina em um ponto que possa ver a até 9 m. Criaturas a até 3 m desse ponto devem fazer uma salvaguarda de Constituição contra a CD de salvaguarda de magia. Em caso de falha, o alvo sofre um dos efeitos escolhidos por 1 minuto. Em cada um dos seus turnos, o alvo pode gastar uma ação e repetir a salvaguarda, encerrando o efeito sobre si em caso de sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2539,8 +2694,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'plague-doctor'),
   10,
-  'Respirar Isso Em',
-  'Being persistently exposed to the deadliest ailments known has given you some small measure of resistance. After you take Necrotic or dano de Veneno, you gain Pontos de Vida Temporários igual a the damage taken. Além disso, you are immune to the condição Envenenado.'
+  'Inalar',
+  'A exposição persistente aos males mais mortais conhecidos concedeu-lhe alguma medida de resistência. Depois de sofrer dano Necrótico ou de Veneno, você ganha Pontos de Vida Temporários iguais ao dano sofrido. Além disso, é imune à condição Envenenado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2551,8 +2706,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'plague-doctor'),
   14,
-  'Medicinal Mestre',
-  'When Good Medicine restores Pontos de Vida to a creature, that creature regains 2d8 additional Pontos de Vida. When Bad Medicine deals dano Ácido to a creature, that creature takes 2d8 extra dano Ácido. Além disso, target creatures have Desvantagem on their salvaguarda. It’s amazing what one can manage with just a few herbs and decades of intense singleminded study. — Tawnybruck Malore,'
+  'Mestre Medicinal',
+  'Quando a Boa Medicina restaura Pontos de Vida a uma criatura, essa criatura recupera 2d8 Pontos de Vida adicionais. Quando a Má Medicina causa dano Ácido a uma criatura, essa criatura sofre 2d8 de dano Ácido extra. Além disso, criaturas alvo têm Desvantagem na salvaguarda.
+
+“É incrível o que se consegue com apenas algumas ervas e décadas de estudo intenso e obstinado.” — Tawnybruck Malore'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2576,7 +2733,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'sangromancer'),
   3,
   'Sangue Pleno',
-  'Você extrai magia do sangue, representada pelos Dados de Sangromancia que alimentam os poderes desta subclasse. Você tem um pool de d12 que pode gastar no lugar de um Dado de Vida ao conjurar magias de Sangromancia. O número de dados no pool é igual a 1 + seu nível de Mago. Recupera 1 Dado de Sangromancia ao terminar um Descanso Curto e todos ao terminar um Descanso Longo.'
+  'Você extrai magia do sangue, representada pelos Dados de Sangromancia que alimentam os poderes desta subclasse. Você tem um conjunto de d12 que pode gastar no lugar de um Dado de Vida ao conjurar magias de Sangromancia. O número de dados no conjunto é igual a 1 mais o seu nível de Mago. Você recupera 1 Dado de Sangromancia ao terminar um Descanso Curto e todos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -2616,4 +2773,3 @@ VALUES (
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
-

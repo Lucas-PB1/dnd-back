@@ -401,6 +401,7 @@ economy/northlands/phb_subclass_table_action.northlands.sql
 economy/northlands/phb_class_economy_action.northlands.sql
 class/northlands/phb_class_panel_action.northlands.sql
 species/northlands/phb_species.economy-action-northlands.sql
+feat/northlands/phb_feat.economy-action.sql
 feat/phb/phb_feat.economy-eir.sql
 economy/phb/phb_class_economy_action.griffons-saddlebag-glacier.sql
 economy/griffons-saddlebag/phb_subclass_table_action.glacier.sql

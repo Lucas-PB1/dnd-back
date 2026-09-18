@@ -1,0 +1,158 @@
+{
+  "arcane-aegis": {
+    "name": "Arcane Aegis",
+    "level": 1,
+    "description": "When you cast this spell, you are surrounded by a shimmering light that quickly dissipates. You gain 2d10 Temporary Hit Points . If a creature hits you with a melee attack before the spell ends, the creature takes Force damage equal to the number of Temporary Hit Points lost as a result of the attack. The spell ends early if you have no Temporary Hit Points.",
+    "higherLevels": "You gain an additional 2d10 Temporary Hit Points for each spell slot level above 1."
+  },
+  "assisted-aim": {
+    "name": "Assisted Aim",
+    "level": 1,
+    "description": "You invigorate up to three creatures within range with improved accuracy. Each target gains a +1 bonus to attack rolls it makes with Ranged weapons. Additionally, the normal and long range of Ranged weapons wielded by a target are doubled for the spell’s duration.",
+    "higherLevels": "You can target one additional creature for each spell slot level above 1."
+  },
+  "binding-pledge": {
+    "name": "Binding Pledge",
+    "level": 1,
+    "description": "When you cast the spell, a willing creature within range makes a promise, swears an oath, or enters into a contract. For the duration of the spell, you immediately know if the creature breaks that promise, oath, or contract. If this happens, for the remainder of the duration of the spell, you know the distance and direction to the creature. If this spell is dispelled, you immediately know it but don’t learn the distance and direction to the creature.",
+    "higherLevels": "The duration becomes 30 days (level 3-4 slot) or 1 year (level 5-6 slot). If you use a level 7+ spell slot, the spell lasts until dispelled."
+  },
+  "bloat": {
+    "name": "Bloat",
+    "level": 2,
+    "description": "You cause the gases within a creature you can see within range to expand rapidly. The target makes a Constitution saving throw, taking 3d10 Necrotic damage on a failed save or half as much damage on a successful one. If the damage that the creature takes equals or exceeds its Constitution ability score, the creature floats vertically 5 feet and remains suspended until the start of your next turn. The target can move only by pushing or pulling against a fixed object or surface within reach (such as a wall or a ceiling), which allows it to move as if it were climbing. When the spell ends, the target floats gently to the ground.\n\nI saw the witch make the Inquisitor puff up like a sack of wind. Everyone was terrified. I laughed.",
+    "higherLevels": null
+  },
+  "bloodletter": {
+    "name": "Bloodletter",
+    "level": 2,
+    "description": "You touch a nonmagical weapon. Until the spell ends, the first creature hit by the weapon must succeed on a Constitution saving throw or receive a festering wound. A creature with a festering wound takes 2d6 Necrotic damage at the start of each of its turns for the spell’s duration. A creature can only have one festering wound at a time.\n\nIf the creature receives healing, the spell and recurring damage end.",
+    "higherLevels": "The damage increases by 1d6 for each spell slot above 2."
+  },
+  "calling-card": {
+    "name": "Calling Card",
+    "level": 0,
+    "description": "You touch a corpse and leave a magical mark. You can choose to make it a visible mark that appears as a rune or word written on the flesh, or you can choose to make the mark Invisible . A creature that takes the Study action to specifically examine a corpse automatically detects it, whether visible or Invisible.\n\nThe murders happening in Liesech have the authorities stumped. I found one of the bodies by the docks. They said there was a magical mark on it, but I didn’t notice it.",
+    "higherLevels": null
+  },
+  "creeping-touch": {
+    "name": "Creeping Touch",
+    "level": 1,
+    "description": "You detach your hand at the wrist, transforming it into a Spider . While the spider is within 100 feet of you, you can communicate with it telepathically. Additionally, as a Magic action, you can see through its eyes and hear what it hears until the start of your next turn. During this time, you have no awareness of your own surroundings.\n\nIf the spider is killed or doesn’t return to you before the spell ends, your hand is restored, but you take 1d6 Psychic damage. As a Bonus Action, you can command the spider to return to you. Once it arrives, it reattaches as your hand and the spell ends.",
+    "higherLevels": null
+  },
+  "dazing-blast": {
+    "name": "Dazing Blast",
+    "level": 2,
+    "description": "A wave of force leaves your palms, targeting a creature within range. The target makes a Constitution saving throw. On a failed save, the creature takes 2d6 Force damage and has the Stunned condition until the end of its next turn. On a successful save, the creature takes the damage only.",
+    "higherLevels": "One additional creature can be targeted for each spell slot above 2."
+  },
+  "enspelled-armament": {
+    "name": "Enspelled Armament",
+    "level": 2,
+    "description": "When you cast this spell, choose one Simple or Martial weapon. A replica of the chosen weapon, made of iridescent energy, appears in your hands. For the duration, you are proficient with that weapon and whenever you attack with the weapon, you can use your spellcasting ability modifier for the attack and damage rolls instead of using Strength or Dexterity. Attacks made with this weapon don’t require ammunition, and if you throw the weapon as part of a ranged attack, it returns to your hand immediately after resolving the attack. The damage dealt by this weapon is Force instead of the weapon’s normal damage type.",
+    "higherLevels": "The damage of the weapon increases by 1d4 for each spell slot level above 2. If you cast the spell using a level 5+ spell slot, the duration becomes 8 hours."
+  },
+  "fiend-flesh": {
+    "name": "Fiend Flesh",
+    "level": 2,
+    "description": "You touch a willing creature, transforming its skin into red scales. Until the spell ends, the target has Resistance to Cold, Fire, and Lightning damage, and the target also has Immunity to Poison damage.",
+    "higherLevels": null
+  },
+  "frightful-start": {
+    "name": "Frightful Start",
+    "level": 0,
+    "description": "You twist your visage to scare a creature that you can see within range. The creature must succeed on a Wisdom saving throw or have the Frightened condition until the start of your next turn.",
+    "higherLevels": null
+  },
+  "ghost-light": {
+    "name": "Ghost Light",
+    "level": 1,
+    "description": "You touch one object that is no larger than 10 feet in any dimension and specify any number of creatures you can see within 10 feet. Until the spell ends, the object sheds silvery Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. This light is only visible to the creatures you specified during the casting of the spell; all other creatures perceive the area affected by the light as they regularly would.",
+    "higherLevels": null
+  },
+  "holy-word": {
+    "name": "Holy Word",
+    "level": 0,
+    "description": "You whisper a divine word under your breath, careful not to speak loudly, for such celestial power isn’t for the unworthy. Make a ranged spell attack against a target within range. On a hit, the target takes 1d8 Radiant damage. If the target is Fey, Fiend, or Undead, its Speed is reduced by 10 feet and it can’t take Reactions until the end of its next turn.",
+    "higherLevels": null
+  },
+  "hunter-sense": {
+    "name": "Hunter Sense",
+    "level": 0,
+    "description": "You touch a willing creature. For the duration, the target’s senses are heightened. Whenever the target makes a Wisdom ( Perception ) check, it can treat a d20 roll of 9 or lower as a 10.",
+    "higherLevels": null
+  },
+  "illusory-instrument": {
+    "name": "Illusory Instrument",
+    "level": 0,
+    "description": "You create an illusionary copy of a mundane musical instrument. The copy of the instrument takes on the shape of your fondest memory of the instrument, such as the first flute you owned or the half harp gifted to you by a loved one. This illusion moves as its physical counterpart would, but it is weightless and is tangible only to you. This instrument can be used as a Spellcasting Focus. This illusory instrument dissipates if you move 10 feet away from it or choose to end the spell (no action required by you).\n\nAs a Bonus Action, you can command your instrument to create one of the following effects:",
+    "higherLevels": null
+  },
+  "intaglio": {
+    "name": "Intaglio",
+    "level": 1,
+    "description": "You create a duplicate of a text or image. During the spell’s duration, you can take a Magic action to trace your hand over any non-magical text or image on a surface within range. You copy the text or image onto a new medium that you provide, such as another book or parchement. This spell copies a single page with each Magic action. When copying a spellbook, you can do so using the same method as you would replace a spellbook, except the time and GP requirements are both halved.",
+    "higherLevels": null
+  },
+  "life-tether": {
+    "name": "Life Tether",
+    "level": 2,
+    "description": "Choose a creature you can see within range. The target must make a Wisdom saving throw. On a failed save, a sickly green tether forms between you and your target. Whenever you take damage, the tethered target takes half as much damage (round down) as Necrotic damage. If the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action to move the tether to a new creature you can see within range. The new target must succeed on a Wisdom saving throw or be tethered.",
+    "higherLevels": "You can create additional tethers with a spell slot of level 4 (two tethers), 6 (three tethers), or 8 (four tethers)."
+  },
+  "neutralize-aura": {
+    "name": "Neutralize Aura",
+    "level": 1,
+    "description": "You touch a willing creature and neutralize its aura. Until the spell ends, the target can’t be perceived by Fey, Fiends, Celestials, and Undead.\n\nThe spell ends early immediately after the target makes an attack roll, deals damage, casts a spell, or moves within 5 feet of one of the creature types.",
+    "higherLevels": "You can target one additional creature for each spell slot level above 1."
+  },
+  "overgrow": {
+    "name": "Overgrow",
+    "level": 2,
+    "description": "When you cast this spell, choose a creature or an object within range that is Huge or smaller and not being worn or carried within range. Vibrant vines quickly grow around the target, pinning it into place and making it easier to traverse.\n\nIf the target is a creature, it must succeed on a Strength saving throw or have the Restrained condition until the spell ends. The creature can repeat the saving throw at the end of each of its turns, ending the Restrained condition on a success.\n\nIf the target is an object, it can’t be moved from its current location and creatures that climb the object don’t spend extra movement. A creature can make a Strength ( Athletics ) check against your spell save DC to wrest the object out of the vines so it can be moved. If the object is too heavy for the creature to move, this action fails.",
+    "higherLevels": "You can choose an additional target for each spell slot level above 2."
+  },
+  "preserve": {
+    "name": "Preserve",
+    "level": 0,
+    "description": "Food and other perishable items weighing 5 pounds or less that you place in a sack don’t age or decay for the duration.",
+    "higherLevels": null
+  },
+  "seal-spellcasting": {
+    "name": "Seal Spellcasting",
+    "level": 2,
+    "description": "When you cast this spell, choose a creature you can see within range. When the target casts a spell, it must make a Charisma saving throw. On a failed save, the creature expends a spell slot to cast the spell as normal but the spell has no effect. On a successful save, the creature casts the spell but takes 3d8 Force damage. After the creature makes a saving throw, the spell immediately ends.",
+    "higherLevels": "The damage increases by 1d8 for each spell slot above level 2."
+  },
+  "summon-plant": {
+    "name": "Summon Plant",
+    "level": 2,
+    "description": "You call forth a plant spirit. It manifests in an unoccupied space you can see within range. This corporeal form uses the Plant Spirit stat block. When you cast the spell, choose a floral feature: Blooming, Oaken, or Thorny. The creature resembles an animated plant marked by the chosen floral feature, which determines one of the traits in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don’t issue any, it takes the Dodge action and uses its move to avoid danger.",
+    "higherLevels": "Use the spell slot’s level for the spell’s level in the stat block. Medium (Large if Oaken) Plant, Neutral AC 11 + the spell’s level HP 20 (Blooming and Thorny Only) or 30 (Oaken Only) + 10 for each spell level above 2 Speed 30 ft.; Climb 30 ft. (Blooming and Thorny Only) Immunities Blinded , Deafened , Exhaustion, Stunned Senses Tremorsense 30 ft. (Blind beyond this radius), Passive Perception 11 Languages Understands the languages you know Challenge None (XP 0; PB equals your Proficiency Bonus) Traits Sylvan Regeneration. The spirit regains 1 Hit Point at the start of its turn if it has at least 1 Hit Point and is in direct sunlight. Actions Multiattack. The plant makes a number of attacks equal to half this spell’s level (rounded down). Petal Burst (Blooming Only). The plant causes a burst of petals to fill the air within a 10-foot Emanation . The area is Heavily Obscured for 1 minute. Slam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 3 + the spell’s level Bludgeoning or Piercing damage (Thorny Only). Reactions Oaken Shield (Oaken Only). When a creature within 5 feet of the plant takes damage from an attack, the plant takes the damage instead. Prickly Protection (Thorny Only). When a creature within 5 feet of the plant attacks it, the plant makes a Slam attack with Advantage against the creature."
+  },
+  "thorn-armor": {
+    "name": "Thorn Armor",
+    "level": 1,
+    "description": "When you cast this spell, a flexible exoskeleton covered in thorns appears around a willing target within range. The target gains 3d6 Temporary Hit Points . If a creature hits the target with a melee attack roll before the spell ends, that creature takes Piercing damage equal to the number of Temporary Hit Points lost as a result of the attack. This spell ends early if the target has no remaining Temporary Hit Points granted by this spell.",
+    "higherLevels": "The target gains an additional 2d6 Temporary Hit Points for each spell slot level above 1."
+  },
+  "tremor": {
+    "name": "Tremor",
+    "level": 1,
+    "description": "The ground around you in a 15-foot Emanation begins to shake violently. You are unaffected by the tremors. The ground is considered Difficult Terrain and whenever the Emanation enters a creature’s space, a creature enters the Emanation, or the creature ends its turn there, the creature makes a Dexterity saving throw. On a failed save, the creature takes 1d6 Bludgeoning damage and has the Prone condition. A creature makes this save only once per turn.",
+    "higherLevels": "The damage increases by 1d6 for each spell slot level above 1."
+  },
+  "vampiric-claws": {
+    "name": "Vampiric Claws",
+    "level": 1,
+    "description": "You sprout wicked claws. When you use your Unarmed Strike to deal damage with the new growth, it deals 1d6 Slashing damage instead of dealing the normal damage for your Unarmed Strike, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength.\n\nWhile the spell lasts, each time you deal damage with an Unarmed Strike, you gain a number of Temporary Hit Points equal to your spellcasting ability modifier. Temporary Hit Points from the spell are lost when the spell ends.",
+    "higherLevels": null
+  },
+  "wrack": {
+    "name": "Wrack",
+    "level": 2,
+    "description": "Choose a creature that you can see within range. The target must succeed on a Constitution saving throw or be afflicted with excruciating muscle spasms for the duration. On a failed save, the target’s Speed is halved and it has Disadvantage on attack rolls. The target repeats the save at the end of each of its turns, ending the spell on a success.\n\nThe screams were like those of a banshee, but it was a human making them. Now a dead human.\n\nWithin Etharis, there are long-lasting spells empowered by a rare substance called Shadowsteel. Shadowsteel channels dark emotions, and spells cast with the substance grow in power as the targets languish under their spiteful effects.\n\nWhile Shadowsteel curses aren’t restricted by alignment, casting a Shadowsteel curse is considered evil. A Shadowsteel curse is felt by any Celestial or Fiend within 1 mile of its casting. This taint remains with the caster for as long as the target remains cursed.\n\nTo cast a Shadowsteel curse requires three facets:\n\nThe caster can increase proficiency with these curses by taking the Shadowsteel Master feat.\n\nWhen casting a Shadowsteel curse, the spellcaster can use special components to enhance the curse. These components are listed in the curse’s description. See “ Saving Throw Modifications ,” for more information.",
+    "higherLevels": null
+  }
+}
