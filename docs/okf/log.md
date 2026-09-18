@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-18 — Adiado #13 Skinrider's Trance estado/actor
+
+* **Update** (19:00 UTC): estado `skinriderTranceActive` + `skinriderActorId`; enter/end tipados (`skinrider_trance`); rage-recover; panel/economy; UI status + link do actor. Pose de combate (swap de stats / Amizade Animal arbitrário) fica fora.
+
+— refs: [`0147_skinrider_trance.sql`](../../database/schema/025_alters/0147_skinrider_trance.sql), [`phb_skinrider.trance.sql`](../../database/seeds/economy/phb/phb_skinrider.trance.sql), [`apply-skinrider-trance-table-action.ts`](../../src/game/session/application/table-actions/kinds/form-state/apply-skinrider-trance-table-action.ts), [`barbarian-panel.tsx`](../../../dnd-front/src/features/character/character-sheet/ui/beyond/combat/panels/barbarian-panel.tsx), [`backlog.md`](../plans/backlog.md) — motivo: fechar polish Adiado #13 (transe vinculado ao actor do companheiro).
+
 ## 2026-09-18 — Adiado #12 Cast de item overlay Treasure UI
 
 * **Update** (18:45 UTC): inventário expõe `spellSaveDc` / `spellAttackBonus` / `requiresComponents` / `useCasterAbility`; aba Ações mostra chips pré-cast + dialog de troca de concentração; helper `item-cast-overlay` + vitest. Motor de cast já cobria overrides/notas.

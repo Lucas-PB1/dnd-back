@@ -11,6 +11,7 @@ import { buildCharacterStateResponse } from '../character-state/core/build-respo
 import { applyStarryFormState } from '../character-state/druid/starry-form-mutations';
 import { applyWildShapeState, applyWildShapeKnownFormsState } from '../character-state/druid/wild-shape-mutations';
 import { applyAberrantMutationState } from '../character-state/transformation/aberrant-mutation-mutations';
+import { applySkinriderTranceState } from '../character-state/barbarian/skinrider-trance-mutations';
 import type { AberrantMutationSlug } from '@game/session/domain/transformation/aberrant-mutation';
 import type { PlayerCharacterState } from '../player-character-state.entity';
 import type {
@@ -210,6 +211,25 @@ export async function setAberrantMutationOp(
     character,
     state,
     mutationSlug,
+    stateRepo: ports.stateRepo,
+    buildResponse: ports.buildResponse,
+  });
+}
+
+export async function setSkinriderTranceOp(
+  ports: SessionCharacterPorts,
+  character: PlayerCharacter,
+  input: {
+    active: boolean;
+    actorId?: string | null;
+  },
+): Promise<CharacterStateResponseDto> {
+  const state = await ports.findOrCreate(character.id, character.level);
+  return applySkinriderTranceState({
+    character,
+    state,
+    active: input.active,
+    actorId: input.actorId,
     stateRepo: ports.stateRepo,
     buildResponse: ports.buildResponse,
   });

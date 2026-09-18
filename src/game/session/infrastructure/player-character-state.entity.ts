@@ -93,6 +93,12 @@ export class PlayerCharacterState {
   @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
   boardedActorId!: string | null;
 
+  @Column({ name: 'skinrider_trance_active', type: 'boolean', default: false })
+  skinriderTranceActive!: boolean;
+
+  @Column({ name: 'skinrider_actor_id', type: 'uuid', nullable: true })
+  skinriderActorId!: string | null;
+
   @Column({ name: 'mesa_circumstances', type: 'text', array: true, default: [] })
   mesaCircumstances!: string[];
 }

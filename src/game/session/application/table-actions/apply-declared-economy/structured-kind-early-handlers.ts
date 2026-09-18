@@ -9,6 +9,7 @@ import {
 } from '../kinds/martial/apply-gunslinger-maneuver-table-action';
 import { applyWildResurgenceTableAction } from '../kinds/form-state/apply-wild-resurgence-table-action';
 import { applySetStarryFormTableAction } from '../kinds/form-state/apply-set-starry-form-table-action';
+import { applySkinriderTranceTableAction } from '../kinds/form-state/apply-skinrider-trance-table-action';
 import type { CatalogEffect } from '@game/effects';
 import type {
   DeclaredEconomyTableActionDeps,
@@ -73,6 +74,14 @@ export async function handleStructuredEarlyKind(
 
   if (structured.kind === 'set_starry_form') {
     return applySetStarryFormTableAction({
+      state: deps.state,
+      character,
+      actionSlug,
+    });
+  }
+
+  if (structured.kind === 'skinrider_trance') {
+    return applySkinriderTranceTableAction({
       state: deps.state,
       character,
       actionSlug,

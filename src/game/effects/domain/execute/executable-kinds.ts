@@ -21,6 +21,7 @@ export const EXECUTABLE_KINDS = new Set<EffectKind>([
   'firearm_fire',
   'wild_resurgence',
   'set_starry_form',
+  'skinrider_trance',
   'strike_self_cost',
   'set_tracker',
   'start_concentration',

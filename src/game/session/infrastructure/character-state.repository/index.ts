@@ -45,6 +45,7 @@ import {
   buildResponseOp,
   setAberrantMutationOp,
   setMissileMageArmedFlagsOp,
+  setSkinriderTranceOp,
   setStarryFormOp,
   setWildShapeOp,
   setWildShapeKnownFormsOp,
@@ -205,6 +206,16 @@ export class CharacterStateRepository extends CharacterStateResourceApi {
     mutationSlug: AberrantMutationSlug | null,
   ) {
     return setAberrantMutationOp(this.ports(), character, mutationSlug);
+  }
+
+  setSkinriderTrance(
+    character: PlayerCharacter,
+    input: {
+      active: boolean;
+      actorId?: string | null;
+    },
+  ) {
+    return setSkinriderTranceOp(this.ports(), character, input);
   }
 
   syncHitDiceOnLevelChange(

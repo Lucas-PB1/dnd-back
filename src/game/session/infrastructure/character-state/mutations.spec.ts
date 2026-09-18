@@ -47,6 +47,8 @@ describe('mutations', () => {
     stellarConstellation: null,
     aberrantMutationActive: null,
     boardedActorId: null,
+    skinriderTranceActive: false,
+    skinriderActorId: null,
     mesaCircumstances: [],
   } as PlayerCharacterState;
 

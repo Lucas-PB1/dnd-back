@@ -35,9 +35,7 @@ Economies slug a slug e efeito sem apply de ficha fecham **no PR do §**, não c
 
 Só retomar com pedido explícito. **Não** é combate real.
 
-| # | Item | Por quê nesta posição |
-|---|------|------------------------|
-| 13 | [ ] GH: Skinrider's Trance (estado/actor vinculado) | Actor extra na ficha |
+Nada nesta faixa. Fila Adiado de polish mesa **vazia** (2026-09-18).
 
 Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).
 

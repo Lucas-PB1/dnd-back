@@ -85,6 +85,34 @@ INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id, 'Restaurou Forma do Selvagem gastando 1 uso de Fúria.'
 FROM fx;
 
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, resource_slug,
+    unlock_level, sort_order, label
+  )
+  SELECT 'recover_resource'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'skinrider-trance-rage-recover',
+         'skinrider-trance', 10, 1,
+         'Restaurar Transe do Cavaleiro da Pele'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.owner_kind = 'subclass'
+    AND e.action_slug = 'skinrider-trance-rage-recover'
+    AND e.kind = 'recover_resource'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Restaurou Transe do Cavaleiro da Pele gastando 1 uso de Fúria.'
+FROM fx;
+
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 ins AS (
   INSERT INTO rpg.phb_effect (

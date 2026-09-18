@@ -87,6 +87,8 @@ describe('CharacterStateRepository', () => {
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,
+    skinriderTranceActive: false,
+    skinriderActorId: null,
         mesaCircumstances: [],
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
@@ -166,6 +168,8 @@ describe('CharacterStateRepository', () => {
         stellarConstellation: null,
         aberrantMutationActive: null,
         boardedActorId: null,
+    skinriderTranceActive: false,
+    skinriderActorId: null,
         mesaCircumstances: [],
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);

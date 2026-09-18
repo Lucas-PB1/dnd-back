@@ -65,7 +65,8 @@ export function executeStructuredEffect(
     effect.kind === 'firearm_reload' ||
     effect.kind === 'firearm_fire' ||
     effect.kind === 'wild_resurgence' ||
-    effect.kind === 'set_starry_form'
+    effect.kind === 'set_starry_form' ||
+    effect.kind === 'skinrider_trance'
   ) {
     return {
       kind: effect.kind,

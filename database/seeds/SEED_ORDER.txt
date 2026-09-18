@@ -423,6 +423,7 @@ economy/phb/phb_class_economy_action.gh-cap2-resources.sql
 economy/grim-hollow/phb_combat.modifier-grim-hollow-cap2.sql
 economy/grim-hollow/phb_class_economy_action.gh-cap4-feats.sql
 economy/phb/phb_shape.of-the-wild-rage-recover.sql
+economy/phb/phb_skinrider.trance.sql
 economy/grim-hollow/phb_class_economy_action.gh-transformations.sql
 economy/phb/phb_companion.tracker.sql
 creature/phb/seed.primal-companion-earth.sql
@@ -500,6 +501,7 @@ effect/valdas/phb_effect.valdas.sql
 effect/valdas/phb_effect.spellblade-cantrips.sql
 effect/phb/phb_effect.mesa-spend.sql
 effect/phb/phb_effect.mesa-recover.sql
+effect/phb/phb_effect.skinrider-mesa.sql
 effect/phb/phb_effect.barbarian-mesa.sql
 effect/phb/phb_effect.fighter-mesa.sql
 effect/phb/phb_effect.cleric-mesa.sql

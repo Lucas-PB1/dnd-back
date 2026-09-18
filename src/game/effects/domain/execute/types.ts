@@ -101,6 +101,10 @@ export type EffectExecution =
       note: string | null;
     }
   | {
+      kind: 'skinrider_trance';
+      note: string | null;
+    }
+  | {
       kind: 'strike_self_cost';
       note: string | null;
     }

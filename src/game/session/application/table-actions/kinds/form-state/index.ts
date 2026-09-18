@@ -1,4 +1,5 @@
 export { applySetStarryFormTableAction } from './apply-set-starry-form-table-action';
+export { applySkinriderTranceTableAction } from './apply-skinrider-trance-table-action';
 export {
   applyWildResurgenceTableAction,
   applyRestoreLunarStepTableAction,

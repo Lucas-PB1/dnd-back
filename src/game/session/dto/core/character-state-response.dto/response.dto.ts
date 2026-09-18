@@ -192,6 +192,19 @@ export class CharacterStateResponseDto {
   boardedActorId!: string | null;
 
   @ApiProperty({
+    example: false,
+    description: 'Transe do Cavaleiro da Pele ativo (posse do companheiro)',
+  })
+  skinriderTranceActive!: boolean;
+
+  @ApiPropertyOptional({
+    example: null,
+    nullable: true,
+    description: 'game_actor do companheiro sob Transe do Cavaleiro da Pele',
+  })
+  skinriderActorId!: string | null;
+
+  @ApiProperty({
     example: ['snow_ice'],
     description:
       'Circunstâncias ativas na mesa (snow_ice | in_water | extreme_cold)',

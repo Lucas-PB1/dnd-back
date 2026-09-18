@@ -103,6 +103,8 @@ export async function buildCharacterStateResponse(input: {
     wildShapeActorId: state.wildShapeActorId ?? null,
     aberrantMutationActive: state.aberrantMutationActive ?? null,
     boardedActorId: state.boardedActorId ?? null,
+    skinriderTranceActive: state.skinriderTranceActive ?? false,
+    skinriderActorId: state.skinriderActorId ?? null,
     mesaCircumstances: state.mesaCircumstances ?? [],
     companions,
   };

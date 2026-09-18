@@ -38,6 +38,8 @@ export async function findOrCreateCharacterState(
       wildShapeActorId: null,
       aberrantMutationActive: null,
       boardedActorId: null,
+      skinriderTranceActive: false,
+      skinriderActorId: null,
     });
     await stateRepo.save(row);
   }
@@ -94,6 +96,12 @@ export async function findOrCreateCharacterState(
   }
   if (row.aberrantMutationActive === undefined) {
     row.aberrantMutationActive = null;
+  }
+  if (row.skinriderTranceActive == null) {
+    row.skinriderTranceActive = false;
+  }
+  if (row.skinriderActorId === undefined) {
+    row.skinriderActorId = null;
   }
   return row;
 }

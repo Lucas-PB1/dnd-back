@@ -82,6 +82,8 @@ export async function applyLongRestState(input: {
   state.wildShapeActorId = null;
   state.wildShapeFormSwapAvailable = true;
   state.aberrantMutationActive = null;
+  state.skinriderTranceActive = false;
+  state.skinriderActorId = null;
   if (previousWildShapeActorId) {
     await dataSource.query(`DELETE FROM rpg.game_actor WHERE id = $1`, [
       previousWildShapeActorId,
