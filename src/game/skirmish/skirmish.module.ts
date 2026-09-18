@@ -7,6 +7,7 @@ import { CharacterDiceModule } from '../dice/character-dice.module';
 import { CharacterSessionModule } from '../session/character-session.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { EffectsModule } from '../effects/effects.module';
+import { ActorModule } from '../actor/actor.module';
 import { GameActor } from '../actor/infrastructure/game-actor.entity';
 import { GameActorAction } from '../actor/infrastructure/game-actor-action.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';

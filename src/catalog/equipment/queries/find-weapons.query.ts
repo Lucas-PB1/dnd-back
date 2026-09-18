@@ -9,7 +9,7 @@ import {
   PaginatedResponseDto,
   paginateQbCursor,
 } from '@common/dto/pagination.dto';
-import { EXCLUDE_CLASS_GRANTED_ITEMS_SQL } from '../items/domain/class-granted-catalog-item';
+import { EXCLUDE_CLASS_GRANTED_ITEMS_SQL } from '../../items/domain/class-granted-catalog-item';
 import { WeaponResponseDto } from '../dto/weapon-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 import {
