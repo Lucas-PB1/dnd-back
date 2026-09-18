@@ -1,6 +1,6 @@
 # PVE-9a — Sacred Weapon → toggle_combat_flag
 
-**Status:** aberto · **Dep:** PVE-0 (fraca; pode paralelizar) · **Tam:** M · **Índice:** [`pve-skirmish-index.md`](pve-skirmish-index.md)
+**Status:** feito · **Dep:** PVE-0 (fraca; pode paralelizar) · **Tam:** M · **Índice:** [`pve-skirmish-index.md`](pve-skirmish-index.md)
 
 ## Skills / rules
 
@@ -15,6 +15,13 @@
 
 ## DoD
 
-- [ ] Sacred Weapon só via `toggle_combat_flag` + coluna
-- [ ] Specs toggle + regressão Fúria/Reckless
-- [ ] Dictionary + read-path atualizados
+- [x] Sacred Weapon só via `toggle_combat_flag` + coluna
+- [x] Specs toggle + regressão Fúria/Reckless
+- [x] Dictionary + read-path atualizados
+
+## Entrega
+
+- Schema/entity: `flag IN (…, 'sacred_weapon')`
+- Apply: `force_enter=true` liga / `false` desliga
+- Seeds: Devoção `oath-channel` + `end-sacred-weapon` (economy/panel/effect)
+- Removidos hardcodes em `apply-one-effect-table` e `paladin-actions.handler`

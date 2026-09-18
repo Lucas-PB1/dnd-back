@@ -77,6 +77,34 @@ const PALADIN_ECONOMY = [
     description: 'Voto.',
   },
   {
+    id: 'paladin-sacred-weapon',
+    name: 'Arma Sagrada',
+    economy: 'free' as const,
+    classSlug: 'paladin',
+    subclassSlug: 'devotion',
+    minLevel: 3,
+    resourceSlug: 'channelDivinity',
+    alwaysSpendsResource: true,
+    tableAction: 'oath-channel',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Arma Sagrada.',
+  },
+  {
+    id: 'paladin-end-sacred-weapon',
+    name: 'Encerrar Arma Sagrada',
+    economy: 'free' as const,
+    classSlug: 'paladin',
+    subclassSlug: 'devotion',
+    minLevel: 3,
+    resourceSlug: undefined,
+    alwaysSpendsResource: false,
+    tableAction: 'end-sacred-weapon',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Encerra Arma Sagrada.',
+  },
+  {
     id: 'paladin-inspiring-smite',
     name: 'Destruição Inspiradora',
     economy: 'bonus' as const,
@@ -583,5 +611,74 @@ describe('PaladinActionsHandler', () => {
         amount: 1,
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('activates Sacred Weapon via toggle_combat_flag (PVE-9a)', async () => {
+    ctx.mockCharacterOnce({
+      ...paladin,
+      subclassSlug: 'devotion',
+      level: 3,
+    });
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'toggle_combat_flag',
+        actionSlug: 'oath-channel',
+        ownerKind: 'subclass',
+        ownerSlug: 'devotion',
+        unlockLevel: 3,
+        combatFlag: {
+          flag: 'sacred_weapon',
+          spendOnEnter: false,
+          forceEnter: true,
+        },
+        note: {
+          note: 'Arma Sagrada: +Carisma no ataque.',
+        },
+      }),
+    ]);
+
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'oath-channel',
+    });
+
+    expect(ctx.state.martial.toggleSacredWeapon).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1', subclassSlug: 'devotion' }),
+      true,
+    );
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toContain('Arma Sagrada');
+  });
+
+  it('ends Sacred Weapon via toggle_combat_flag without early-route (PVE-9a)', async () => {
+    ctx.mockCharacterOnce({
+      ...paladin,
+      subclassSlug: 'devotion',
+      level: 3,
+    });
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'toggle_combat_flag',
+        actionSlug: 'end-sacred-weapon',
+        ownerKind: 'subclass',
+        ownerSlug: 'devotion',
+        unlockLevel: 3,
+        combatFlag: {
+          flag: 'sacred_weapon',
+          spendOnEnter: false,
+          forceEnter: false,
+        },
+      }),
+    ]);
+
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'end-sacred-weapon',
+    });
+
+    expect(ctx.state.martial.toggleSacredWeapon).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      false,
+    );
+    expect(result.resourceSpent).toBe(false);
+    expect(result.note).toContain('encerrada');
   });
 });

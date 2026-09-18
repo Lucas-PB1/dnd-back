@@ -68,9 +68,10 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 ### `temp_hp` (Fase 2)
 
 - **Semântica:** aplica PV temporários (ficha) ao disparar.
-- **Satélite:** `phb_effect_numeric` (+ opcional `phb_effect_note`)
+- **Satélite:** `phb_effect_numeric` (+ opcional `phb_effect_note`); opcional `phb_effect_temp_hp` (`consume_spell_slot`, `amount_per_slot_level`, `ward_temp_hp_cap`) para recarga via espaço (Proteção Arcana — ainda proxy em PV temp.; pool própria → PVE-10a).
 - **Trigger:** `on_resource_spend` ou `on_table_action`
-- **Serviço:** `applyTemporaryHitPoints`
+- **Serviço:** `applyTemporaryHitPoints` / `addTemporaryHitPoints` (com teto quando `ward_temp_hp_cap`)
+- **Apply mesa:** Recarga tipada: `tempHp.consumeSpellSlot` + `options.slotLevel` (sem branch por `actionSlug`).
 
 ### `heal` (Fase 2)
 
@@ -78,7 +79,7 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 - **Satélite:** `phb_effect_numeric` (+ note)
 - **Trigger:** `on_resource_spend` / `on_table_action`
 - **Fórmulas:** `dice_hit_die_plus_pb` (Médico de Combate); `dice_2d4_plus_flat` (Clemência Divina — flat = mod de conjuração via `flatOverride`); `dice_1d10_plus_level` (Recuperar Fôlego); `schedule_die_plus_flat` (Campo Protetor — faces do schedule + flatOverride INT); satélite `phb_effect_dice` + `ability_mod` (Regeneração da Armadura / Fortaleza Gelada — CON via `flatOverride` de ação)
-- **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy. Recarga de Proteção Arcana (`arcane-ward-recharge`) soma `2×slotLevel` em PV temp. (teto = 2×nível + INT).
+- **Apply mesa:** `applyHealHitPoints` em `applyDeclaredEconomyTableAction` / feat economy.
 
 ### `check_boost`
 
@@ -126,10 +127,14 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 
 ### `toggle_combat_flag`
 
-- **Semântica:** alterna flag de combate (`rage` / `reckless`).
+- **Semântica:** liga/desliga flag de combate sticky na ficha.
+- **Flags:** `rage` · `reckless` · `sacred_weapon` (PVE-9a)
 - **Satélite:** `phb_effect_combat_flag` (`flag`, `spend_on_enter`, `force_enter`)
 - **Trigger:** `on_table_action`
-- **Apply:** `state.martial.toggleRage` / `toggleReckless` — gasto de Fúria só ao entrar se `spend_on_enter`
+- **Apply:**
+  - `rage` / `reckless`: toggle (±); `force_enter` força ligado; `spend_on_enter` gasta pool só ao entrar (Fúria)
+  - `sacred_weapon`: **set** — `force_enter=true` liga, `false` desliga (não é ±); gasto de Canalizar vem da economy (`always_spends_resource`)
+- **Exemplos:** `toggle-rage` · `toggle-reckless` · `oath-channel` (Devoção) · `end-sacred-weapon`
 
 ### `sync_companion`
 
@@ -147,9 +152,11 @@ Verbos **sempre genéricos** — nunca `kind` com nome de talento/fonte.
 
 ### `table_roll`
 
-- **Semântica:** rola dados na mesa e devolve `expression`/`total` (sem apply no alvo).
-- **Satélite:** `phb_effect_dice` e/ou `phb_effect_numeric` (`rage_bonus_d6`, `ability_mod`, `half_level_if_rage`, …)
+- **Semântica:** rola dados na mesa e devolve `expression`/`total`.
+- **Satélite:** `phb_effect_dice` e/ou `phb_effect_numeric` (`rage_bonus_d6`, `ability_mod`, `half_level_if_rage`, …); opcional `phb_effect_table_roll` (`result_scale`, `apply_bestial_aspect`).
+- **Nota:** placeholders `{total}`, `{expression}`, `{saveDc}`, `{proficiencyBonus}`, `{psiSpend}`.
 - **Trigger:** `on_table_action`
+- **Exemplos PVE-9b:** Uivo Feral (`apply_bestial_aspect`); Teleporte Psíquico (`result_scale=3`); Sussurros Psíquicos (nota + PB).
 
 ### `table_note` (Fase 2)
 

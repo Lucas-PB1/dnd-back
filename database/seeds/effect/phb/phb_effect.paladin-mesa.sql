@@ -107,21 +107,46 @@ ins AS (
 INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
 SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
+-- PVE-9a: Arma Sagrada via toggle_combat_flag (force_enter = liga)
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'),
 ins AS (
   INSERT INTO rpg.phb_effect (
     kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
   )
-  SELECT 'table_note'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+  SELECT 'toggle_combat_flag'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
          'on_table_action'::rpg.effect_trigger, 'oath-channel', 3, 2,
          'Arma Sagrada'
   FROM sc
   RETURNING id
 )
+INSERT INTO rpg.phb_effect_combat_flag (effect_id, flag, spend_on_enter, force_enter)
+SELECT id, 'sacred_weapon', false, true FROM ins;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'oath-channel' AND e.kind = 'toggle_combat_flag'
+)
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Arma Sagrada: ao Atacar, imbuir arma corpo a corpo por 10 min — +mod. de Carisma (mín. +1) no ataque, dano pode ser Radiante, Luz Plena 6 m / Fraca +6 m (1 uso de Canalizar Divindade; CD {saveDc} quando houver salvaguarda).'
-FROM ins;
+FROM fx;
+
+-- Encerrar Arma Sagrada (force_enter = false → desliga)
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'),
+ins AS (
+  INSERT INTO rpg.phb_effect (
+    kind, owner_kind, owner_id, trigger, action_slug, unlock_level, sort_order, label
+  )
+  SELECT 'toggle_combat_flag'::rpg.effect_kind, 'subclass'::rpg.effect_owner_kind, sc.id,
+         'on_table_action'::rpg.effect_trigger, 'end-sacred-weapon', 3, 1,
+         'Encerrar Arma Sagrada'
+  FROM sc
+  RETURNING id
+)
+INSERT INTO rpg.phb_effect_combat_flag (effect_id, flag, spend_on_enter, force_enter)
+SELECT id, 'sacred_weapon', false, false FROM ins;
 
 -- Glória — Destruição Inspiradora
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'),

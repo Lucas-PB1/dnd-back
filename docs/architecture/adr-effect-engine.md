@@ -21,6 +21,17 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 4. Runtime em `src/game/effects/` (loader + executor por kind).
 5. Irredutíveis (metamagia, forma selvagem de druida, fluxos com UI especial) permanecem em handlers até existir kind honesto. Toggle de Fúria/Imprudente e companion de mesa usam kinds genéricos (`toggle_combat_flag`, `sync_companion`, `companion_command`).
 
+### Irredutíveis residual (PVE-9b inventário)
+
+`apply-one-effect-*`: **zero** `actionSlug ===` (fechado).
+
+| Local | Entradas | Destino |
+|-------|----------|---------|
+| `flat-override.ts` | flats por fórmula/classe + outliers (`armor-regen`, `wild-recovery`, `arcane-ward`, `heroic-soul`, `spell-thief`, …) | tipar via `amount_formula` / ability-source no satélite (PVE-10a/LEG) |
+| `slug-early-routes.ts` | validação de input (`healing-light`, `bastion-of-law`, `natural-recovery-*`, `recover-risk`) | gates tipados ou DTO refine |
+| `structured-kind-catalog-handlers.ts` | kinds structured com branch de slug (`set_tracker`, `resource_fallback_spend`, wild shape, …) | satélite de tracker / opções |
+| `run-declared-effects-loop.ts` | `dungeon-precaution`, `spectral-summon` / `fey-reinforcements` | kind dedicado ou PVE-10a |
+
 ## Anti-padrões
 
 - JSONB de regra de jogo

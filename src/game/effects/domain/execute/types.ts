@@ -22,7 +22,7 @@ export type EffectExecution =
     }
   | {
       kind: 'toggle_combat_flag';
-      flag: 'rage' | 'reckless';
+      flag: 'rage' | 'reckless' | 'sacred_weapon';
       spendOnEnter: boolean;
       forceEnter: boolean;
       note: string | null;
@@ -41,6 +41,7 @@ export type EffectExecution =
       amount: number;
       expression: string;
       note: string | null;
+      applyBestialAspect?: boolean;
     }
   | {
       kind: 'feature_dc';

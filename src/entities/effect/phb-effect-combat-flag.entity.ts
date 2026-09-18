@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { PhbEffect } from './phb-effect.entity';
 
-export type EffectCombatFlag = 'rage' | 'reckless';
+export type EffectCombatFlag = 'rage' | 'reckless' | 'sacred_weapon';
 
 @Entity({ schema: 'rpg', name: 'phb_effect_combat_flag' })
 export class PhbEffectCombatFlag {

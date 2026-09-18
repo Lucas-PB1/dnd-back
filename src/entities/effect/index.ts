@@ -22,5 +22,7 @@ export * from './phb-effect-save-advantage.entity';
 export * from './phb-effect-save.entity';
 export * from './phb-effect-sense.entity';
 export * from './phb-effect-spell.entity';
+export * from './phb-effect-table-roll.entity';
+export * from './phb-effect-temp-hp.entity';
 export * from './phb-effect-weapon.entity';
 export * from './phb-effect.entity';

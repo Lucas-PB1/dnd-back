@@ -138,13 +138,24 @@ export type EffectDiceSatellite = {
 };
 
 export type EffectCombatFlagSatellite = {
-  flag: 'rage' | 'reckless';
+  flag: 'rage' | 'reckless' | 'sacred_weapon';
   spendOnEnter: boolean;
   forceEnter: boolean;
 };
 
 export type EffectCompanionSatellite = {
   restoreHp: boolean;
+};
+
+export type EffectTableRollSatellite = {
+  resultScale: number | null;
+  applyBestialAspect: boolean;
+};
+
+export type EffectTempHpSatellite = {
+  consumeSpellSlot: boolean;
+  amountPerSlotLevel: number | null;
+  wardTempHpCap: boolean;
 };
 
 export type CatalogEffect = {
@@ -194,4 +205,6 @@ export type CatalogEffect = {
   dice: EffectDiceSatellite | null;
   combatFlag?: EffectCombatFlagSatellite | null;
   companion?: EffectCompanionSatellite | null;
+  tableRoll?: EffectTableRollSatellite | null;
+  tempHp?: EffectTempHpSatellite | null;
 };

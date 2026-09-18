@@ -94,6 +94,16 @@ export async function applyOneEffect(ctx: ApplyCtx): Promise<ApplyOneEffectResul
           note += ' Bote Instintivo: mova até metade do Deslocamento.';
         }
       }
+    } else if (executed.flag === 'sacred_weapon') {
+      // forceEnter=true → liga; false → desliga (não é toggle ± como Fúria).
+      const entering = executed.forceEnter;
+      state = await deps.state.martial.toggleSacredWeapon(character, entering);
+      toggleEntered = entering;
+      note =
+        executed.note?.trim() ||
+        (entering
+          ? 'Arma Sagrada ativa (+Carisma no ataque corpo a corpo; dano pode ser Radiante).'
+          : 'Arma Sagrada encerrada.');
     } else {
       const next = !before.recklessActive;
       state = await deps.state.martial.toggleReckless(character, next);

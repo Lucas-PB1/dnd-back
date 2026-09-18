@@ -35,19 +35,6 @@ export class PaladinActionsHandler {
       throw new BadRequestException('Paladin action is not available');
     }
 
-    if (dto.actionSlug === 'end-sacred-weapon') {
-      const state = await this.state.martial.toggleSacredWeapon(
-        character,
-        false,
-      );
-      return {
-        state,
-        actionName: 'Arma Sagrada',
-        note: 'Arma Sagrada encerrada.',
-        resourceSpent: false,
-      };
-    }
-
     const amount =
       dto.amount ?? (dto.actionSlug === 'lay-on-hands' ? 1 : undefined);
 

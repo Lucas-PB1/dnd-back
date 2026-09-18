@@ -134,8 +134,10 @@ function effect(
     numeric: partial.numeric ?? null,
     note: partial.note ?? null,
     dice: partial.dice ?? null,
-    combatFlag: null,
-    companion: null,
+    combatFlag: partial.combatFlag ?? null,
+    companion: partial.companion ?? null,
+    tableRoll: partial.tableRoll ?? null,
+    tempHp: partial.tempHp ?? null,
   };
 }
 
@@ -239,6 +241,11 @@ describe('WizardActionsHandler', () => {
         ownerKind: 'subclass',
         ownerSlug: 'abjurer',
         numeric: { amountFormula: 'fixed', flat: 0 },
+        tempHp: {
+          consumeSpellSlot: true,
+          amountPerSlotLevel: 2,
+          wardTempHpCap: true,
+        },
         note: { note: 'Recarregar Proteção.' },
       }),
     ]);

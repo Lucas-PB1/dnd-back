@@ -113,6 +113,17 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'arcane-ward-recharge' AND e.kind = 'temp_hp'
 )
+INSERT INTO rpg.phb_effect_temp_hp (
+  effect_id, consume_spell_slot, amount_per_slot_level, ward_temp_hp_cap
+)
+SELECT id, true, 2, true FROM fx;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'arcane-ward-recharge' AND e.kind = 'temp_hp'
+)
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT id,
   'Recarregar Proteção: gaste 1 espaço; a barreira recupera 2× o círculo (aplicado na ficha como PV temp., teto = 2×nível + INT).'

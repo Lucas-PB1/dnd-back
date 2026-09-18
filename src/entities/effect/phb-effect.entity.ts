@@ -4,6 +4,8 @@ import { PhbEffectCheckAdvantage } from './phb-effect-check-advantage.entity';
 import { PhbEffectCombatMod } from './phb-effect-combat-mod.entity';
 import { PhbEffectCombatFlag } from './phb-effect-combat-flag.entity';
 import { PhbEffectCompanion } from './phb-effect-companion.entity';
+import { PhbEffectTableRoll } from './phb-effect-table-roll.entity';
+import { PhbEffectTempHp } from './phb-effect-temp-hp.entity';
 import { PhbEffectDamageDie } from './phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from './phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from './phb-effect-environmental-immunity.entity';
@@ -314,4 +316,10 @@ export class PhbEffect {
 
   @OneToOne(() => PhbEffectCompanion, (row) => row.effect, { eager: true })
   companion?: PhbEffectCompanion | null;
+
+  @OneToOne(() => PhbEffectTableRoll, (row) => row.effect, { eager: true })
+  tableRoll?: PhbEffectTableRoll | null;
+
+  @OneToOne(() => PhbEffectTempHp, (row) => row.effect, { eager: true })
+  tempHp?: PhbEffectTempHp | null;
 }

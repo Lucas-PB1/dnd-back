@@ -41,6 +41,17 @@ ins AS (
 INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
 SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'psychic-whispers' AND e.kind = 'table_roll'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Sussurros Psíquicos: conecte até {proficiencyBonus} criaturas por {total} hora(s). {psiSpend}'
+FROM fx;
+
 -- Teleporte Psíquico
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
 ins AS (
@@ -52,9 +63,25 @@ ins AS (
          'Teleporte Psíquico'
   FROM sc
   RETURNING id
+),
+num AS (
+  INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+  SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins
+  RETURNING effect_id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_table_roll (effect_id, result_scale, apply_bestial_aspect)
+SELECT effect_id, 3, false FROM num;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'psychic-teleport' AND e.kind = 'table_roll'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id,
+  'Teleporte Psíquico: teleporte-se até {total} m para um espaço visível e desocupado.'
+FROM fx;
 
 -- Véu / Rasgar Mente
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),

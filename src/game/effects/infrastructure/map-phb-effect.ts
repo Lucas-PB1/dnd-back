@@ -186,5 +186,18 @@ export function mapPhbEffectToCatalog(
           restoreHp: Boolean(row.companion.restoreHp),
         }
       : null,
+    tableRoll: row.tableRoll
+      ? {
+          resultScale: row.tableRoll.resultScale ?? null,
+          applyBestialAspect: Boolean(row.tableRoll.applyBestialAspect),
+        }
+      : null,
+    tempHp: row.tempHp
+      ? {
+          consumeSpellSlot: Boolean(row.tempHp.consumeSpellSlot),
+          amountPerSlotLevel: row.tempHp.amountPerSlotLevel ?? null,
+          wardTempHpCap: Boolean(row.tempHp.wardTempHpCap),
+        }
+      : null,
   };
 }

@@ -6,6 +6,8 @@ import { PhbEffectCheckAdvantage } from '@entities/effect/phb-effect-check-advan
 import { PhbEffectCombatFlag } from '@entities/effect/phb-effect-combat-flag.entity';
 import { PhbEffectCombatMod } from '@entities/effect/phb-effect-combat-mod.entity';
 import { PhbEffectCompanion } from '@entities/effect/phb-effect-companion.entity';
+import { PhbEffectTableRoll } from '@entities/effect/phb-effect-table-roll.entity';
+import { PhbEffectTempHp } from '@entities/effect/phb-effect-temp-hp.entity';
 import { PhbEffectDamageDie } from '@entities/effect/phb-effect-damage-die.entity';
 import { PhbEffectDamageType } from '@entities/effect/phb-effect-damage-type.entity';
 import { PhbEffectEnvironmentalImmunity } from '@entities/effect/phb-effect-environmental-immunity.entity';
@@ -63,6 +65,8 @@ import { LoadEffectCatalog } from './application/load-effect-catalog';
       PhbEffectDice,
       PhbEffectCombatFlag,
       PhbEffectCompanion,
+      PhbEffectTableRoll,
+      PhbEffectTempHp,
       PhbFeatRef,
       PhbSpecies,
       PhbSpellRef,

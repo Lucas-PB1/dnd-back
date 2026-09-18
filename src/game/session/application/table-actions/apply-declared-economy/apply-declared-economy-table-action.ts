@@ -26,6 +26,7 @@ export async function applyDeclaredEconomyTableAction(
     catalog.economyActions,
     character.classSlug,
     actionSlug,
+    character.subclassSlug,
   );
   if (!action) {
     throw new BadRequestException(`Ação de mesa desconhecida: ${actionSlug}`);

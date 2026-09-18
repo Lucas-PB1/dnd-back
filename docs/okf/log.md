@@ -1,5 +1,13 @@
 # log
 
+## 2026-09-18 — PVE-9b slug branches apply tipados
+
+* **Update** (12:00 UTC): `phb_effect_table_roll` (`result_scale` / `apply_bestial_aspect`) + `phb_effect_temp_hp` (slot→PV temp.); removidos `actionSlug ===` em `apply-one-effect-*` para Uivo Feral / Teleporte / Sussurros / Recarregar Proteção. Residual flat-override/early/structured listado no ADR. — refs: [`0169_phb_effect_table_roll.sql`](../../database/schema/020_tables/0169_phb_effect_table_roll.sql), [`0170_phb_effect_temp_hp.sql`](../../database/schema/020_tables/0170_phb_effect_temp_hp.sql), [`apply-one-effect-table.ts`](../../src/game/session/application/table-actions/apply-declared-economy/apply-one-effect-table.ts), [`adr-effect-engine.md`](../architecture/adr-effect-engine.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: features de mesa tipadas por satélite, sem hardcode de slug no apply.
+
+## 2026-09-18 — PVE-9a Sacred Weapon toggle_combat_flag
+
+* **Update** (11:55 UTC): `sacred_weapon` em `phb_effect_combat_flag`; Devoção liga/desliga via effect (sem hardcode `oath-channel` / early-route). — refs: [`0155_phb_effect_combat_flag.sql`](../../database/schema/020_tables/0155_phb_effect_combat_flag.sql), [`apply-one-effect.ts`](../../src/game/session/application/table-actions/apply-declared-economy/apply-one-effect.ts), [`phb_effect.paladin-mesa.sql`](../../database/seeds/effect/phb/phb_effect.paladin-mesa.sql), [`effect-dictionary.md`](../architecture/effect-dictionary.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: flag sticky de combate só pelo kind genérico + satélite.
+
 ## 2026-09-18 — PVE-8 paridade superfícies
 
 * **Update** (11:40 UTC): `POST …/encounters/:id/cast` via `resolveCombatSpell`; docs sem “só 2 magias”; duelo aponta para catálogo `phb_spell_combat`. — refs: [`campaign-encounter-cast.service.ts`](../../src/game/campaign/application/campaign-encounter-cast.service.ts), [`surface-combat-parity.md`](../architecture/surface-combat-parity.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: MM/Fireball (e demais tipadas) nas 3 superfícies com o mesmo motor.

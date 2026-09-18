@@ -190,9 +190,24 @@ ins AS (
          'Uivo Feral'
   FROM sc
   RETURNING id
+),
+num AS (
+  INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
+  SELECT id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins
+  RETURNING effect_id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_table_roll (effect_id, result_scale, apply_bestial_aspect)
+SELECT effect_id, NULL, true FROM num;
+
+WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beastborne'),
+fx AS (
+  SELECT e.id FROM rpg.phb_effect e
+  JOIN sc ON sc.id = e.owner_id
+  WHERE e.action_slug = 'feral-howl' AND e.kind = 'table_roll'
+)
+INSERT INTO rpg.phb_effect_note (effect_id, note)
+SELECT id, 'Uivo Feral: 1d4 = {total}. Aspecto Bestial definido em {total}.'
+FROM fx;
 
 -- Beast Master — Companheiro Primal
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master'),

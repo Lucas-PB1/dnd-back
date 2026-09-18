@@ -1,6 +1,6 @@
 # PVE-9b — Zerar slug branches (apply / flat-override)
 
-**Status:** aberto · **Dep:** PVE-9a · **Tam:** L · **Índice:** [`pve-skirmish-index.md`](pve-skirmish-index.md)
+**Status:** feito · **Dep:** PVE-9a · **Tam:** L · **Índice:** [`pve-skirmish-index.md`](pve-skirmish-index.md)
 
 ## Skills / rules
 
@@ -15,5 +15,12 @@
 
 ## DoD
 
-- [ ] `rg "actionSlug ===" apply-declared-economy` → zero em apply-one-effect-\* **ou** lista ≤N irredutíveis no ADR
-- [ ] Specs das features tipadas
+- [x] `rg "actionSlug ===" apply-declared-economy` → zero em apply-one-effect-\*
+- [x] Specs das features tipadas
+- [x] Residual flat-override / early-routes / structured listado no ADR
+
+## Entrega
+
+- Satélites: `phb_effect_table_roll`, `phb_effect_temp_hp`
+- Seeds ranger/rogue/wizard mesa atualizados
+- Placeholders genéricos em `table_roll` notes

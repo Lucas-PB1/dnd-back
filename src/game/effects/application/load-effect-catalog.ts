@@ -71,6 +71,8 @@ export class LoadEffectCatalog {
       .leftJoinAndSelect('e.dice', 'dice')
       .leftJoinAndSelect('e.combatFlag', 'combatFlag')
       .leftJoinAndSelect('e.companion', 'companion')
+      .leftJoinAndSelect('e.tableRoll', 'tableRoll')
+      .leftJoinAndSelect('e.tempHp', 'tempHp')
       .orderBy('e.sort_order', 'ASC')
       .addOrderBy('e.id', 'ASC');
 

@@ -3,11 +3,44 @@ import type { ApplyCtx } from './types';
 import type { ApplyOneEffectResult } from './apply-one-effect.types';
 import { applySheetConditions } from '../primitives/apply-sheet-conditions';
 
+async function expandTableNote(
+  template: string,
+  values: {
+    total?: number;
+    expression?: string;
+    saveDc?: number;
+    proficiencyBonus?: number;
+    usePsiDie?: boolean;
+  },
+): Promise<string> {
+  let out = template
+    .replace(/\{total\}/g, values.total != null ? String(values.total) : '—')
+    .replace(
+      /\{expression\}/g,
+      values.expression != null ? String(values.expression) : '—',
+    )
+    .replace(
+      /\{saveDc\}/g,
+      values.saveDc != null ? String(values.saveDc) : '—',
+    );
+  if (out.includes('{proficiencyBonus}')) {
+    const pb = values.proficiencyBonus ?? 2;
+    out = out.replace(/\{proficiencyBonus\}/g, String(pb));
+  }
+  if (out.includes('{psiSpend}')) {
+    out = out.replace(
+      /\{psiSpend\}/g,
+      values.usePsiDie ? 'Dado psi gasto.' : 'Uso gratuito gasto.',
+    );
+  }
+  return out;
+}
+
 export async function applyTableEffect(
   ctx: ApplyCtx,
   executed: EffectExecution,
 ): Promise<Partial<ApplyOneEffectResult>> {
-  const { deps, character, actionSlug, options, state, note, saveDc } = ctx;
+  const { deps, character, options, state, note, saveDc } = ctx;
   let { total, expression, roll } = ctx;
   let nextState = state;
   let nextNote = note;
@@ -24,26 +57,23 @@ export async function applyTableEffect(
     total = executed.amount;
     expression = executed.expression;
     roll = executed.amount;
+    const pb = deps.getProficiencyBonus
+      ? await deps.getProficiencyBonus(character.level)
+      : undefined;
     if (executed.note?.trim()) {
-      nextNote = executed.note
-        .replace(/\{total\}/g, String(executed.amount))
-        .replace(/\{expression\}/g, executed.expression)
-        .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
+      nextNote = await expandTableNote(executed.note, {
+        total: executed.amount,
+        expression: executed.expression,
+        saveDc,
+        proficiencyBonus: pb,
+        usePsiDie: options.usePsiDie,
+      });
     }
-    if (actionSlug === 'feral-howl') {
+    if (executed.applyBestialAspect) {
       nextState = await deps.state.martial.setBestialAspectLevel(
         character,
         executed.amount,
       );
-      nextNote = `Uivo Feral: 1d4 = ${executed.amount}. Aspecto Bestial definido em ${executed.amount}.`;
-    }
-    if (actionSlug === 'psychic-teleport') {
-      total = executed.amount * 3;
-      nextNote = `Teleporte Psíquico: teleporte-se até ${total} m para um espaço visível e desocupado.`;
-    }
-    if (actionSlug === 'psychic-whispers' && deps.getProficiencyBonus) {
-      const pb = await deps.getProficiencyBonus(character.level);
-      nextNote = `Sussurros Psíquicos: conecte até ${pb} criaturas por ${executed.amount} hora(s). ${options.usePsiDie ? 'Dado psi gasto.' : 'Uso gratuito gasto.'}`;
     }
     return {
       state: nextState,
@@ -70,19 +100,11 @@ export async function applyTableEffect(
       total = executed.amount;
       expression = executed.expression;
     }
-    nextNote = `${note} ${executed.note}`
-      .replace(/\{total\}/g, total != null ? String(total) : '—')
-      .replace(/\{expression\}/g, expression != null ? String(expression) : '—')
-      .replace(/\{saveDc\}/g, saveDc != null ? String(saveDc) : '—');
-    if (
-      actionSlug === 'oath-channel' &&
-      character.subclassSlug === 'devotion'
-    ) {
-      nextState = await deps.state.martial.toggleSacredWeapon(character, true);
-      if (!nextNote.includes('Arma Sagrada ativa')) {
-        nextNote = `${nextNote} Arma Sagrada ativa (+Carisma no ataque corpo a corpo).`;
-      }
-    }
+    nextNote = await expandTableNote(`${note} ${executed.note}`, {
+      total,
+      expression,
+      saveDc,
+    });
     return { state: nextState, note: nextNote, total, expression };
   }
 

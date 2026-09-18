@@ -74,6 +74,18 @@ const RANGER_ECONOMY = [
     description: 'Esquiva.',
   },
   {
+    id: 'ranger-feral-howl',
+    name: 'Uivo Feral',
+    economy: 'free' as const,
+    classSlug: 'ranger',
+    subclassSlug: 'beastborne',
+    minLevel: 7,
+    tableAction: 'feral-howl',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Uivo.',
+  },
+  {
     id: 'ranger-primal-companion',
     name: 'Companheiro Primal',
     economy: 'bonus' as const,
@@ -133,6 +145,8 @@ function effect(
     dice: partial.dice ?? null,
     combatFlag: partial.combatFlag ?? null,
     companion: partial.companion ?? null,
+    tableRoll: partial.tableRoll ?? null,
+    tempHp: partial.tempHp ?? null,
   };
 }
 
@@ -259,6 +273,37 @@ describe('RangerActionsHandler', () => {
         actionSlug: 'primal-companion',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('rolls Feral Howl and sets bestial aspect from the roll', async () => {
+    ctx.mockCharacterOnce({
+      ...ranger,
+      subclassSlug: 'beastborne',
+      level: 7,
+    });
+    effectCatalog.load.mockResolvedValueOnce([
+      effect({
+        kind: 'table_roll',
+        actionSlug: 'feral-howl',
+        ownerKind: 'subclass',
+        ownerSlug: 'beastborne',
+        unlockLevel: 7,
+        numeric: { amountFormula: 'dice_1d4', flat: null },
+        tableRoll: { resultScale: null, applyBestialAspect: true },
+        note: {
+          note: 'Uivo Feral: 1d4 = {total}. Aspecto Bestial definido em {total}.',
+        },
+      }),
+    ]);
+
+    const result = await handler.useTableAction('user-1', 'ranger-1', {
+      actionSlug: 'feral-howl',
+    });
+
+    expect(ctx.state.martial.setBestialAspectLevel).toHaveBeenCalled();
+    expect(result.total).toBeGreaterThanOrEqual(1);
+    expect(result.total).toBeLessThanOrEqual(4);
+    expect(result.note).toContain('Uivo Feral');
   });
 
   it('resolves Hunter Superior Defense note at level 15', async () => {

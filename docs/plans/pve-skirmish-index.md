@@ -123,6 +123,10 @@ flowchart LR
 
 **PVE-8 fechado (2026-09-18):** Cast tipado no encontro (`POST .../cast`); paridade skirmish/duelo/encontro via `resolveCombatSpell`. Doc [`surface-combat-parity.md`](../architecture/surface-combat-parity.md).
 
+**PVE-9a fechado (2026-09-18):** Arma Sagrada via `toggle_combat_flag` / `sacred_weapon`; sem branch `oath-channel` nem early-route no handler.
+
+**PVE-9b fechado (2026-09-18):** `feral-howl` / `psychic-teleport` / `psychic-whispers` / `arcane-ward-recharge` tipados (`phb_effect_table_roll` / `phb_effect_temp_hp`); zero `actionSlug ===` em `apply-one-effect-*`; residual flat-override/early/structured no ADR.
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -151,8 +155,8 @@ flowchart LR
 
 | # | Pacote | Doc | Tam. | Dep |
 |---|--------|-----|------|-----|
-| PVE-9a | Sacred Weapon → `toggle_combat_flag` | [`pve-9a-sacred-weapon-flag.md`](pve-9a-sacred-weapon-flag.md) | M | PVE-0 |
-| PVE-9b | Zerar slug branches apply/flat-override | [`pve-9b-slug-branch-cleanup.md`](pve-9b-slug-branch-cleanup.md) | L | PVE-9a |
+| PVE-9a | ~~Sacred Weapon → `toggle_combat_flag`~~ **feito** | — | M | PVE-0 |
+| PVE-9b | ~~Zerar slug branches apply/flat-override~~ **feito** | — | L | PVE-9a |
 | PVE-10a | Residuals deferred (Ward, Gunslinger, Savage…) | [`pve-10a-deferred-residuals.md`](pve-10a-deferred-residuals.md) | L | PVE-8+9b |
 | PVE-10b | `/legado` combate + DoD 100% PVE | [`pve-10b-legado-dod.md`](pve-10b-legado-dod.md) | M | PVE-10a |
 

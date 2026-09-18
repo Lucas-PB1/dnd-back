@@ -13,8 +13,7 @@ export async function applyResourceEffect(
   ctx: ApplyCtx,
   executed: EffectExecution,
 ): Promise<Partial<ApplyOneEffectResult>> {
-  const { deps, character, actionSlug, effect, options, state, note, intMod } =
-    ctx;
+  const { deps, character, effect, options, state, note, intMod } = ctx;
   let { total, expression, resourceSpent } = ctx;
   let nextState = state;
   let nextNote = note;
@@ -59,28 +58,37 @@ export async function applyResourceEffect(
     return { state: nextState, note: nextNote, total, resourceSpent };
   }
 
-  if (executed.kind === 'temp_hp' && actionSlug === 'arcane-ward-recharge') {
+  if (executed.kind === 'temp_hp' && effect.tempHp?.consumeSpellSlot) {
     const slotLevel = options.slotLevel;
     if (slotLevel == null || slotLevel < 1) {
       throw new BadRequestException(
-        'slotLevel é obrigatório para Recarregar Proteção Arcana',
+        'slotLevel é obrigatório para este efeito de PV temporários',
       );
     }
     await deps.state.consumeSpellSlotLevel(character, slotLevel);
-    const recovered = 2 * slotLevel;
-    const cap = 2 * character.level + Math.max(1, intMod);
-    nextState = await addTemporaryHitPoints(
-      deps.state,
-      character,
-      recovered,
-      cap,
-    );
+    const perLevel = effect.tempHp.amountPerSlotLevel ?? 2;
+    const recovered = perLevel * slotLevel;
+    if (effect.tempHp.wardTempHpCap) {
+      const cap = 2 * character.level + Math.max(1, intMod);
+      nextState = await addTemporaryHitPoints(
+        deps.state,
+        character,
+        recovered,
+        cap,
+      );
+    } else {
+      nextState = await applyTemporaryHitPoints(
+        deps.state,
+        character,
+        recovered,
+      );
+    }
     total = recovered;
-    expression = `2×${slotLevel}`;
+    expression = `${perLevel}×${slotLevel}`;
     nextNote = [
       note,
       executed.note?.trim(),
-      `Proteção Arcana recuperou ${recovered} PV (espaço de ${slotLevel}º).`,
+      `Recuperou ${recovered} PV temp. (espaço de ${slotLevel}º).`,
     ]
       .filter(Boolean)
       .join(' ');

@@ -38,6 +38,20 @@ const ROGUE_ECONOMY = [
     description: 'Whispers',
   },
   {
+    id: 'rogue-psychic-teleport',
+    name: 'Teleporte Psíquico',
+    economy: 'bonus' as const,
+    classSlug: 'rogue',
+    subclassSlug: 'soulknife',
+    minLevel: 9,
+    resourceSlug: 'soulknife-psi-dice',
+    alwaysSpendsResource: true,
+    tableAction: 'psychic-teleport',
+    itemSlug: null,
+    featSlug: null,
+    description: 'Teleport',
+  },
+  {
     id: 'rogue-arachnoid-web',
     name: 'Correia / Teia',
     economy: 'bonus' as const,
@@ -85,6 +99,22 @@ const ROGUE_EFFECTS: CatalogEffect[] = [
     trigger: 'on_table_action',
     actionSlug: 'psychic-whispers',
     numeric: { amountFormula: 'schedule_die_plus_flat', flat: null },
+    note: {
+      note: 'Sussurros Psíquicos: conecte até {proficiencyBonus} criaturas por {total} hora(s). {psiSpend}',
+    },
+  } as CatalogEffect,
+  {
+    kind: 'table_roll',
+    ownerKind: 'subclass',
+    ownerSlug: 'soulknife',
+    unlockLevel: 9,
+    trigger: 'on_table_action',
+    actionSlug: 'psychic-teleport',
+    numeric: { amountFormula: 'schedule_die_plus_flat', flat: null },
+    tableRoll: { resultScale: 3, applyBestialAspect: false },
+    note: {
+      note: 'Teleporte Psíquico: teleporte-se até {total} m para um espaço visível e desocupado.',
+    },
   } as CatalogEffect,
   {
     kind: 'feature_dc',
@@ -199,6 +229,19 @@ describe('RogueActionsHandler', () => {
     expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'rogue-1' }),
       'psychic-whispers',
+      1,
+    );
+  });
+
+  it('scales Psychic Teleport distance by result_scale', async () => {
+    const result = await handler.useTableAction('user-1', 'rogue-1', {
+      actionSlug: 'psychic-teleport',
+    });
+    expect(result.total).toBeDefined();
+    expect(result.note).toMatch(/Teleporte Psíquico.*\d+ m/);
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'rogue-1' }),
+      'soulknife-psi-dice',
       1,
     );
   });

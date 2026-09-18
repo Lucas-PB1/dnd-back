@@ -3,6 +3,21 @@ import type { CatalogEffect } from '../catalog-effect';
 import { resolveEffectAmount } from '../resolve-effect-amount';
 import type { EffectExecution, ExecuteCatalogEffectContext } from './types';
 
+function finishTableRoll(
+  effect: CatalogEffect,
+  amount: number,
+  expression: string,
+): EffectExecution {
+  const scale = effect.tableRoll?.resultScale ?? 1;
+  return {
+    kind: 'table_roll',
+    amount: amount * scale,
+    expression,
+    note: effect.note?.note ?? null,
+    applyBestialAspect: effect.tableRoll?.applyBestialAspect === true,
+  };
+}
+
 export function executeTableEffect(
   effect: CatalogEffect,
   context: ExecuteCatalogEffectContext,
@@ -38,12 +53,11 @@ export function executeTableEffect(
         rng: context.rng,
         scheduleDieFaces: context.scheduleDieFaces,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: resolved.expression ?? `1d${context.scheduleDieFaces ?? 6}`,
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(
+        effect,
+        resolved.amount,
+        resolved.expression ?? `1d${context.scheduleDieFaces ?? 6}`,
+      );
     }
     if (effect.numeric?.amountFormula === 'rage_bonus_d6') {
       const resolved = resolveEffectAmount({
@@ -53,12 +67,11 @@ export function executeTableEffect(
         rng: context.rng,
         rageBonus: context.rageBonus,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: resolved.expression ?? `${context.rageBonus ?? 2}d6`,
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(
+        effect,
+        resolved.amount,
+        resolved.expression ?? `${context.rageBonus ?? 2}d6`,
+      );
     }
     if (effect.numeric?.amountFormula === 'portent_d20_count') {
       const resolved = resolveEffectAmount({
@@ -68,12 +81,11 @@ export function executeTableEffect(
         rng: context.rng,
         scheduleCount: context.scheduleCount,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: resolved.expression ?? String(resolved.amount),
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(
+        effect,
+        resolved.amount,
+        resolved.expression ?? String(resolved.amount),
+      );
     }
     if (effect.numeric?.amountFormula === 'rage_bonus') {
       const resolved = resolveEffectAmount({
@@ -82,12 +94,7 @@ export function executeTableEffect(
         level: context.level,
         rageBonus: context.rageBonus,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: String(resolved.amount),
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(effect, resolved.amount, String(resolved.amount));
     }
     if (
       effect.numeric?.amountFormula === 'dice_2d_schedule' ||
@@ -100,12 +107,11 @@ export function executeTableEffect(
         rng: context.rng,
         scheduleDieFaces: context.scheduleDieFaces,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: resolved.expression ?? String(resolved.amount),
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(
+        effect,
+        resolved.amount,
+        resolved.expression ?? String(resolved.amount),
+      );
     }
     if (effect.numeric && !effect.dice) {
       const resolved = resolveEffectAmount({
@@ -119,12 +125,11 @@ export function executeTableEffect(
         rageBonus: context.rageBonus,
         rageActive: context.rageActive,
       });
-      return {
-        kind: 'table_roll',
-        amount: resolved.amount,
-        expression: resolved.expression ?? String(resolved.amount),
-        note: effect.note?.note ?? null,
-      };
+      return finishTableRoll(
+        effect,
+        resolved.amount,
+        resolved.expression ?? String(resolved.amount),
+      );
     }
     const die = effect.dice?.die ?? '1d6';
     let bonus = 0;
@@ -148,12 +153,7 @@ export function executeTableEffect(
       }).amount;
     }
     const rolled = rollDamageParts(die, bonus, { rng: context.rng });
-    return {
-      kind: 'table_roll',
-      amount: rolled.total,
-      expression: rolled.expression,
-      note: effect.note?.note ?? null,
-    };
+    return finishTableRoll(effect, rolled.total, rolled.expression);
   }
 
   if (effect.dice?.die) {
