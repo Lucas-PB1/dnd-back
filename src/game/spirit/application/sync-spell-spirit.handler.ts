@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/game-port';
+import { injectCasterDamageMod } from '@game/spirit/domain/inject-caster-damage-mod';
 import { scaleSpiritCombatStats } from '@game/spirit/domain/scale-spirit-stats';
 import {
   planSpiritSpawns,
@@ -15,6 +16,7 @@ import {
 import { loadScaleBySlot } from '@game/actor/infrastructure/creature-scale.queries';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import { GameActorAction } from '@game/actor/infrastructure/game-actor-action.entity';
 import { GameActorSpeed } from '@game/actor/infrastructure/game-actor-speed.entity';
 
 export type SyncSpellSpiritActorResult = {
@@ -40,6 +42,8 @@ export class SyncSpellSpiritHandler {
     private readonly persistence: ActorPersistenceService,
     @InjectRepository(GameActor)
     private readonly actors: Repository<GameActor>,
+    @InjectRepository(GameActorAction)
+    private readonly actions: Repository<GameActorAction>,
     @InjectRepository(GameActorSpeed)
     private readonly speeds: Repository<GameActorSpeed>,
   ) {}
@@ -140,6 +144,7 @@ export class SyncSpellSpiritHandler {
         });
         const actor = await this.actors.findOneOrFail({ where: { id: actorId } });
         await this.applyScaledStats(actor, { hitPointsMax, armorClass }, true);
+        await this.applyCasterDamageFlat(actorId, input.castingAbilityMod);
         await this.applyFlyGate(
           actorId,
           profile.flySpeedMinSlot,
@@ -198,5 +203,23 @@ export class SyncSpellSpiritHandler {
     if (flySpeedMinSlot == null) return;
     if (slotLevel >= flySpeedMinSlot) return;
     await this.speeds.delete({ actorId, movementKind: 'fly' });
+  }
+
+  /** Seeds com `NdX+0` recebem o modificador de conjuração no flat. */
+  private async applyCasterDamageFlat(
+    actorId: string,
+    castingAbilityMod: number | null | undefined,
+  ): Promise<void> {
+    const rows = await this.actions.find({ where: { actorId } });
+    for (const row of rows) {
+      if (!row.damageExpression?.trim()) continue;
+      const next = injectCasterDamageMod(
+        row.damageExpression,
+        castingAbilityMod,
+      );
+      if (next === row.damageExpression) continue;
+      row.damageExpression = next;
+      await this.actions.save(row);
+    }
   }
 }

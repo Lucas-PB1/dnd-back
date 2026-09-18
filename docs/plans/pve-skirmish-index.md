@@ -119,6 +119,8 @@ flowchart LR
 
 **PVE-7a fechado (2026-09-17):** Invocar Fera / companions na iniciativa; turno automático ataca o foe; despawn no break de concentração. Doc [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md).
 
+**PVE-7b fechado (2026-09-18):** Arma Espiritual + Conjurar Animais como 1 companion; doc [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md).
+
 ### Combate tipado
 
 | # | Pacote | Doc | Tam. | Dep |
@@ -140,7 +142,7 @@ flowchart LR
 | PVE-6b | ~~Itens charges combate~~ **feito** | — | M | PVE-0 |
 | PVE-6c | ~~Resist/vuln/imune no HP~~ **feito** | — | M | PVE-0 |
 | PVE-7a | ~~Spirits/companion na iniciativa~~ **feito** | — | M | PVE-3a |
-| PVE-7b | Arma Espiritual + Conjure 1-actor | [`pve-7b-spiritual-conjure.md`](pve-7b-spiritual-conjure.md) | M | PVE-7a |
+| PVE-7b | ~~Arma Espiritual + Conjure 1-actor~~ **feito** | — | M | PVE-7a |
 | PVE-8 | Paridade encontro/duelo + docs | [`pve-8-surface-parity.md`](pve-8-surface-parity.md) | M | PVE-1c+5a+7a |
 
 ### Legado → 100%

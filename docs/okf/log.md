@@ -1,5 +1,9 @@
 # log
 
+## 2026-09-18 — PVE-7b Arma Espiritual + Conjure 1-actor
+
+* **Update** (11:30 UTC): `arma-espiritual` e `conjurar-animais` spawnam 1 companion no skirmish; removido one-shot de combate; `injectCasterDamageMod` para `NdX+0`. — refs: [`seed.spiritual-conjure.sql`](../../database/seeds/creature/phb/seed.spiritual-conjure.sql), [`inject-caster-damage-mod.ts`](../../src/game/spirit/domain/inject-caster-damage-mod.ts), [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: efeitos flutuantes/auras jogáveis sem mapa nem N tokens.
+
 ## 2026-09-17 — PVE-7a spirits na iniciativa
 
 * **Update** (22:50 UTC): Invocar Fera / companions entram na iniciativa do skirmish; turno automático aliado→foe; bônus de ataque do invocador; prune no break de concentração. — refs: [`skirmish-alliance.ts`](../../src/game/skirmish/domain/skirmish-alliance.ts), [`sync-allied-actors-into-skirmish.ts`](../../src/game/skirmish/application/sync-allied-actors-into-skirmish.ts), [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md) — motivo: summons tipados na fila de turnos, não só nota de mesa.

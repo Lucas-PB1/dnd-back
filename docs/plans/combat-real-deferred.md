@@ -65,6 +65,7 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 
 - [x] Combate no encontro (acerto/dano). Saves e tracker fino de summon ainda futuros. Board/spawn/tracker leve de combatentes já é mesa.
 - [x] Tracker fino de companheiro / summon em combate (skirmish PVE-7a: iniciativa + turno + despawn) — [`spirits-skirmish-initiative.md`](../architecture/spirits-skirmish-initiative.md)
+- [x] Arma Espiritual + Conjure 1-actor no skirmish (PVE-7b) — [`spiritual-conjure-skirmish.md`](../architecture/spiritual-conjure-skirmish.md)
 - [ ] Board/spawn fino no encontro de campanha (além do skirmish)
 
 ---

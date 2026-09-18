@@ -77,8 +77,8 @@ Rename de slugs **aplicado** (migration `20260912_summon_conjure_slug_rename.sql
 ## Dívida (fora desta onda)
 
 - MM genérico adicional além do Appendix B PHB — ver [wild-shape.md](/wild-shape.md)
-- Conjure\* sem ficha.
-- Conjure\* como actor (não — permanece `area_effect`)
+- Conjure\* sem ficha na mesa completa.
+- Conjure\* como actor na mesa completa (não — permanece `area_effect`); **skirmish** usa proxy 1-actor (PVE-7b) — ver [spiritual-conjure-skirmish.md](../architecture/spiritual-conjure-skirmish.md)
 
 ## Status `spirit_actor`
 

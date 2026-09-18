@@ -1,4 +1,7 @@
 -- Magias PHB níveis 2–3 ofensivas/cura (PVE-1c). Condições tipadas → `phb_spell_combat.conditions.sql` (PVE-3b).
+-- PVE-7b: arma-espiritual saiu do one-shot (actor via phb_spell_spirit).
+DELETE FROM rpg.phb_spell_combat WHERE spell_slug = 'arma-espiritual';
+
 INSERT INTO rpg.phb_spell_combat (
   spell_slug,
   resolution,
@@ -20,7 +23,7 @@ INSERT INTO rpg.phb_spell_combat (
   -- Nv 2: cura
   ('oracao-de-cura', 'heal_combatant', 'Oração de Cura', 8, 0, NULL, NULL, 2, 1, 2, FALSE, FALSE, FALSE, NULL, NULL, NULL),
   -- Nv 2: spell_attack
-  ('arma-espiritual', 'spell_attack', 'Arma Espiritual', 8, 0, NULL, NULL, 1, 1, 2, FALSE, FALSE, FALSE, NULL, NULL, 'force'),
+  -- arma-espiritual → actor leve via phb_spell_spirit (PVE-7b), não one-shot aqui
   ('flecha-acida-de-melf', 'spell_attack', 'Flecha Ácida de Melf', 4, 0, NULL, NULL, 4, 1, 2, FALSE, FALSE, FALSE, NULL, NULL, 'acid'),
   ('lamina-flamejante', 'spell_attack', 'Lâmina Flamejante', 6, 0, NULL, NULL, 3, 1, 2, FALSE, FALSE, TRUE, NULL, NULL, 'fire'),
   -- Raio Ardente: 3×2d6 ≈ 6d6 num ataque; +1 raio (=+2d6) por slot

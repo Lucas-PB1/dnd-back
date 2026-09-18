@@ -19,7 +19,8 @@ Gerada no PVE-2b (2026-09-17). Critério “ofensiva/cura tipável”: descriç�
 | Categoria | Exemplos | Para onde |
 |-----------|----------|-----------|
 | **Smite / weapon-addon** | `destruicao-*`, `favor-divino`, `marca-do-predador`, `flecha-relampago`, `danacao` | PVE-5 |
-| **Summon / companion** | `invocar-*`, `conjurar-animais`, `inseto-gigante`, `convocar-montaria` | PVE-7 |
+| **Summon / companion** | `invocar-*`, `inseto-gigante`, `convocar-montaria` | PVE-7a (spirit) |
+| **Conjure / arma espiritual** | `arma-espiritual`, `conjurar-animais` | PVE-7b (1-actor proxy) |
 | **Exploração / longo prazo** | `sonho`, `missao`, `contato-extraplanar`, `desejo`, `teleporte` (erro) | fora skirmish |
 | **Condição / forma residual** | `teia`, `alterar-se`, `aumentar-reduzir` | PVE-3b+ / fora |
 | **Reação / retaliação** | `escudo-ardente` | PVE-4 |

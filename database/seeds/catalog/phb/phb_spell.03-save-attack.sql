@@ -897,11 +897,16 @@ SET save_ability_id = NULL,
 WHERE slug IN ('curar-ferimentos', 'palavra-curativa');
 
 -- PVE-1c: meta save/attack magias Nv 2–3 ofensivas/cura
+-- arma-espiritual: spawn companion (PVE-7b); ataque no turno do actor, não no cast tipado
+UPDATE rpg.phb_spell
+SET save_ability_id = NULL,
+    requires_attack_roll = FALSE
+WHERE slug = 'arma-espiritual';
+
 UPDATE rpg.phb_spell
 SET save_ability_id = NULL,
     requires_attack_roll = TRUE
 WHERE slug IN (
-  'arma-espiritual',
   'flecha-acida-de-melf',
   'lamina-flamejante',
   'raio-ardente',
