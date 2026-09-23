@@ -114,9 +114,10 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 ### 10. Creature / vehicle templates (catálogo read-only)
 
-- `phb_creature_template` + filhos (`_speed`, `_action`, `_spell`)
-- `phb_vehicle_template` + filhos (`_speed`, `_action`)
-- Views: `v_phb_creature_template_bundle`, `v_phb_vehicle_template_bundle` (`V061`)
+- `phb_creature_template` / `phb_vehicle_template` (raízes)
+- Filhos unificados GEN-6: `phb_stat_block_speed` / `_action` / `_spell` / `_trait` (dual FK + `owner_kind`)
+- Runtime snapshot: `game_actor_speed` / `_action` / `_spell` (via `spawn_game_actor_from_template`)
+- Views: `v_phb_creature_template_bundle`, `v_phb_vehicle_template_bundle`
 
 ### 11. Character Threads (Northlands)
 

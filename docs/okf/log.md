@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-23 — GEN-6 stat-block children
+
+* **Update**: `phb_stat_block_{speed,action,spell,trait}` unifica filhos creature↔vehicle (−3…−4 tabelas espelho); dual FK + `owner_kind`/`template_slug` gerados; `game_actor_*` permanece snapshot no spawn (A3). Seeds + bundles + wild-shape + `db:setup` verde. Próximo = GEN-7.
+
+— refs: [`0103_phb_stat_block_speed.sql`](../../database/schema/020_tables/0103_phb_stat_block_speed.sql)…[`0106_phb_stat_block_trait.sql`](../../database/schema/020_tables/0106_phb_stat_block_trait.sql), [`0055_stat_block_owner.sql`](../../database/schema/010_enums/0055_stat_block_owner.sql), [`0005_spawn_game_actor_from_template.sql`](../../database/schema/040_functions/0005_spawn_game_actor_from_template.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-6 (children de stat-block polimórficos no catálogo).
+
 ## 2026-09-23 — GEN-5 feature gate única
 
 * **Update**: `phb_feature_gate(owner_kind class|subclass)` unifica class/subclass (−1 tabela); seeds + entity + loaders. Próximo = GEN-6.

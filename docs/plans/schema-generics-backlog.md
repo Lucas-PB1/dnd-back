@@ -134,7 +134,7 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 ## DoD da trilha
 
 - [x] GEN-0…1 fechados (higiene + docs)
-- [ ] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
+- [x] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
 - [ ] GEN-7: zero tabelas novas “de feature” no schema SSOT
 - [ ] GEN-8/9: ADR + implementação ou adiados com motivo em Notas do [`backlog.md`](backlog.md)
 - [ ] `data-model.md` / `catalog-patterns.md` atualizados
@@ -145,4 +145,5 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 | Cenário | Δ tabelas | Alvo ~ |
 |---------|----------:|-------:|
 | Conservador (GEN-1…6) | −12 | ~165 |
-| Agressivo (+7,8,9 parcial) | −32…−37 | 
+| Agressivo (+7,8,9 parcial) | −32…−37 | ~140 |
+| Radical (effects JSONB) | −40…−50 | ~130 | só com ADR GEN-9 = G3 |
