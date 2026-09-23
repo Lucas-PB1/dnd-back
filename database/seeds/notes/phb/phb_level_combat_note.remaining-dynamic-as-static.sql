@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Ex-templates dinâmicos → literais com schedule; números vivos ficam no motor.
 
 -- ========== FIGHTER (class) ==========

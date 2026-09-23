@@ -82,4 +82,4 @@ Economy/painel podem **listar** o botão e devolver **nota**; falta de apply de 
 2. Achou gap de **ficha** (cura, temp HP, CA, pool) → checklist mesa / backlog ativo.
 3. Não misturar com “Adiado — polish” (UI, modal, editorial).
 4. Lobby / match 1v1 → [`pvp-1v1-duel.md`](pvp-1v1-duel.md); combate tipado **espera** o motor do índice (não duplicar no slice `duel`).
-5. Schema/migrations greenfield → pasta `database/migrations/` vazia (DB-0 feito; ver `docs/okf/log.md`).
+5. Schema / TypeORM → baseline + forward em `src/database/migrations/` (trilha TORM); ver `database/migrations/README.md`.

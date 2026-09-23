@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Montaria Fantasmagórica (ritual 3º): Cavalo de Montaria com deslocamento 30 m;
 -- some se sofrer dano. Spawn via phb_spell_spirit no cast.
 

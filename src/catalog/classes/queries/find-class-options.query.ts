@@ -14,9 +14,9 @@ type OptionRow = {
   optionLabel: string;
   unlockLevel: number;
   valueType: string;
-  valueId: string;
-  valueLabel: string;
-  sortOrder: number;
+  valueId: string | null;
+  valueLabel: string | null;
+  sortOrder: number | null;
   benefit: string | null;
 };
 
@@ -45,7 +45,7 @@ export class FindClassOptionsQuery {
               val.sort_order AS "sortOrder",
               val.benefit AS "benefit"
        FROM rpg.phb_option_def def
-       JOIN rpg.phb_option_value val
+       LEFT JOIN rpg.phb_option_value val
          ON val.scope = def.scope
         AND val.owner_id = def.owner_id
         AND val.option_key = def.option_key
@@ -53,7 +53,7 @@ export class FindClassOptionsQuery {
        WHERE def.scope = 'class'::rpg.option_scope
          AND c.slug = $1
          AND COALESCE(def.unlock_level, 1) <= $2
-       ORDER BY def.unlock_level ASC NULLS FIRST, def.sort_order ASC, def.option_key ASC, val.sort_order ASC`,
+       ORDER BY def.unlock_level ASC NULLS FIRST, def.sort_order ASC, def.option_key ASC, val.sort_order ASC NULLS LAST`,
       [classSlug, characterLevel],
     );
     return paginateByKeys(this.groupOptions(rows), {
@@ -78,12 +78,14 @@ export class FindClassOptionsQuery {
         };
         map.set(row.optionKey, group);
       }
-      group.values.push({
-        valueId: row.valueId,
-        label: row.valueLabel,
-        sortOrder: row.sortOrder,
-        benefit: row.benefit,
-      });
+      if (row.valueId) {
+        group.values.push({
+          valueId: row.valueId,
+          label: row.valueLabel ?? row.valueId,
+          sortOrder: row.sortOrder ?? 0,
+          benefit: row.benefit,
+        });
+      }
     }
     return [...map.values()];
   }

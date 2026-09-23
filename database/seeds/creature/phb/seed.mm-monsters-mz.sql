@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Monster Manual 2024 — Monsters M–Z (delta).
 -- Extract: docs/source/extracts/mm/monsters-mz.json
 

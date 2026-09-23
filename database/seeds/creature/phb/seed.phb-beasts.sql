@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- PHB 2024 Appendix B — Creature Stat Blocks (Beasts only).
 -- Extract: docs/source/extracts/phb/creature-stat-blocks-beasts.json
 -- Alimenta Wild Shape (filtro CR × Beast) e reusa slugs do Find Familiar.

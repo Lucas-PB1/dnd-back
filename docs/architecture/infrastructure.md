@@ -14,7 +14,7 @@ Documento de referência para rules, skills e implementação.
 |--------|---------|--------|
 | **Banco** | Supabase (Postgres) | Catálogo PHB + Auth + RLS para fichas futuras |
 | **API** | NestJS na Vercel | Serverless, zero-config Nest, escala por request |
-| **ORM** | TypeORM | Mapeamento `rpg.phb_*`, views, `synchronize: false` |
+| **ORM** | TypeORM | Entities + **migrations CLI** (`db:migrate`); `synchronize: false` |
 | **Auth** | Supabase Auth | JWT; RLS no Postgres para dados de jogador |
 | **Frontend** | Next.js — repo **dnd-front** | Backlog em [`backlog.md`](../plans/backlog.md) |
 
@@ -63,15 +63,19 @@ flowchart LR
 | Comando | O que faz |
 |---------|-----------|
 | `db:up` / `db:down` | Docker Compose Postgres 16 local |
-| `db:migrate` | Schema em `DATABASE_URL` (**local**) |
-| `db:migrate:supabase` | Schema só no cloud (`SUPABASE_DATABASE_URL`) |
+| `db:migrate` | TypeORM migrations em `DATABASE_URL` (**local**) |
+| `db:migrate:show` | Lista aplicadas / pendentes |
+| `db:migrate:supabase` | TypeORM só no cloud (`SUPABASE_DATABASE_URL`) |
 | `db:migrate:all` | Local **e** cloud |
-| `db:seed` | Seeds local; `--from=` resume; `--skip-truncate` |
+| `db:migration:create` | Stub `MigrationInterface` (forward) |
+| `db:seed` | Pendentes via ledger `rpg.seed_migration` (checksum) |
+| `db:seed:fresh` | Truncate catálogo + ledger limpo + todos + MVs |
+| `db:seed:status` | applied / pending / drift |
 | `db:seed:supabase` | Seeds só cloud |
 | `db:reset` | `dev-reset.sql` — **só local** (recusa URL cloud) |
 | `db:reset -- --target=supabase --confirm` | Reset cloud (destrutivo) |
-| `db:setup` | validate + reset + migrate + seed **local** |
-| `db:setup:all` | setup local + wipe/migrate/seed cloud |
+| `db:setup` | validate + reset + migrate + **seed:fresh** local |
+| `db:setup:all` | setup local + wipe/migrate/seed:fresh cloud |
 
 ### Nest → Supabase Auth
 

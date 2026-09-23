@@ -6,10 +6,12 @@
 SSOT mesa: [`backlog.md`](backlog.md) · Combate residual: [`combat-real-deferred.md`](combat-real-deferred.md)  
 Duelo PvP: [`pvp-1v1-duel.md`](pvp-1v1-duel.md)
 
+**DB runner (pós-DB-0 / TORM):** TypeORM nativo — [`database/migrations/README.md`](../../database/migrations/README.md) · [`sql-layout.md`](../architecture/sql-layout.md). Este índice PVE permanece **fechado**.
+
 ## Produto
 
 1. **PVE** skirmish sem mapa: magias, traços, reações, classe/sub/feat/item tipados + legado morto → 100%.
-2. **DB-0** ~~paralelo~~ **feito:** schema declarative SSOT; `migrations/` vazia (sem prod).
+2. **DB-0** ~~paralelo~~ **feito** (histórico); **TORM** ~~feito~~ — runner TypeORM + seed ledger.
 
 ## Skills e rules (obrigatório em todo pacote)
 

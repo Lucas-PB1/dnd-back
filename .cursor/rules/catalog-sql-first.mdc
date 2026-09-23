@@ -15,6 +15,7 @@ alwaysApply: false
 - Dado de referência: `database/seeds/<domínio>/`
 - Leitura API: view/`@ViewEntity` + Query fina — sem reimplementar regra na API
 - Runtime da ficha consome slugs/effects; **não** hardcodar lista de raças/traços no TS
-- Nova espécie/traço/feat/item: migration ou edit schema + seed + view/contrato → TypeORM alinhado
+- Nova espécie/traço/feat/item: editar schema + seed + view; se DB sem wipe → **também** migration TypeORM nova (`database/migrations/README.md`)
+- **Nunca** editar migration já aplicada no ledger `rpg.migrations`
 - Porta Game: `@catalog/game-port` / `CatalogLookupService` — não `@catalog/*/domain` profundo
 - Detalhe operacional: skill `.cursor/skills/catalog-sql-first/SKILL.md`

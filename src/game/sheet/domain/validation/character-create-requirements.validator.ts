@@ -130,12 +130,13 @@ export class CharacterCreateRequirementsValidator {
         required: true,
         extra: (() => {
           const classExtra = classLanguageGrant(ctx.classSlug, ctx.level);
-          const speciesChoice = ctx.speciesSlug
-            ? SPECIES_LANGUAGE_CHOICE_COUNT
-            : 0;
+          const originChoice =
+            ctx.speciesSlug || ctx.heritageSlug
+              ? SPECIES_LANGUAGE_CHOICE_COUNT
+              : 0;
           return {
             grantedSlugs: classExtra.grantedSlugs,
-            choiceCount: (classExtra.choiceCount ?? 0) + speciesChoice,
+            choiceCount: (classExtra.choiceCount ?? 0) + originChoice,
           };
         })(),
       },

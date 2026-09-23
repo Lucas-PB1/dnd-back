@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Companheiro Primal (Beast Master) — Terra / Mar / Céu (PHB 2024)
 -- HP/AC de combate: phb_creature_scale_by_level (aplicados no sync).
 -- hit_points_avg / armor_class = piso de nível 1 (Wis 10) para spawn genérico.

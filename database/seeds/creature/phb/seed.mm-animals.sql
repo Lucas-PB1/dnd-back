@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Monster Manual — Animals (Beasts novas; sem overlap PHB App. B).
 -- Extract: docs/source/extracts/mm/animals-beasts.json
 -- Exclui Swarm e não-Beast (ex.: Giant Eagle Celestial).

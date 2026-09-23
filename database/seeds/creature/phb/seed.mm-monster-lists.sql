@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- MM 2024 Monster Lists: habitats, groups, conversões 2014→2024.
 -- Extract: docs/source/extracts/mm/monster-lists.json
 -- Agrupadores "(all)" ignorados; Yuan-ti Malison → 3 tipos.

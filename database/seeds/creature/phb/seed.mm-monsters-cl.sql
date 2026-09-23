@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Monster Manual 2024 — Monsters C–L (delta; sem repetir catálogo).
 -- Extract: docs/source/extracts/mm/monsters-cl.json
 

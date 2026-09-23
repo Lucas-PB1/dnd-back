@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Notas Northlands → phb_level_combat_note
 
 INSERT INTO rpg.phb_level_combat_note (owner_kind, class_id, subclass_id, unlock_level, note, sort_order)

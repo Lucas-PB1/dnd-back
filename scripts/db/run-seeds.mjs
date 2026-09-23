@@ -1,44 +1,29 @@
 #!/usr/bin/env node
 /**
- * Aplica seeds SQL (catálogo PHB + fontes).
+ * Seeds via TypeORM DataSource + ledger rpg.seed_migration (checksum).
  *
  * Uso:
  *   node scripts/db/run-seeds.mjs
+ *   node scripts/db/run-seeds.mjs --fresh
+ *   node scripts/db/run-seeds.mjs --status
  *   node scripts/db/run-seeds.mjs --target=supabase
  *   node scripts/db/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql
- *   node scripts/db/run-seeds.mjs --from=thread/northlands/phb_character.threads.sql --skip-truncate
- *
- * Iteração: use DATABASE_URL=localhost (npm run db:up). Cloud só com --target=supabase.
  */
-import fs from 'fs';
+import { spawnSync } from 'child_process';
 import path from 'path';
 import { loadEnv, rootDir } from '../lib/load-env.mjs';
 import { assertLocalDatabaseUrl } from '../lib/assert-local-db.mjs';
-import { createPgClient, maskDatabaseUrl } from '../lib/pg-client.mjs';
-import { listSqlFiles } from '../lib/sql-files.mjs';
+import { maskDatabaseUrl } from '../lib/pg-client.mjs';
 
 loadEnv();
 
-const seedsDir = path.join(rootDir, 'database/seeds');
+const CLI = path.join(rootDir, 'src/database/run-seeds-cli.ts');
+const TS_NODE = path.join(
+  rootDir,
+  'node_modules/ts-node/register/transpile-only.js',
+);
 
-const SEED_DOMAINS = [
-  'catalog',
-  'class',
-  'subclass',
-  'species',
-  'feat',
-  'transformation',
-  'heritage',
-  'thread',
-  'background',
-  'item',
-  'spell',
-  'economy',
-  'creature',
-  'effect',
-];
-
-/** @param {string} arg */
+/** @param {string | undefined} arg */
 function parseTarget(arg) {
   const value = arg?.split('=')[1] ?? 'local';
   if (!['local', 'supabase', 'all'].includes(value)) {
@@ -48,12 +33,7 @@ function parseTarget(arg) {
   return value;
 }
 
-/** @param {string | undefined} arg */
-function parseFrom(arg) {
-  if (!arg) return null;
-  return arg.split('=')[1]?.replace(/\\/g, '/').replace(/^database\/seeds\//, '') ?? null;
-}
-
+/** @param {string} target */
 function resolveTargets(target) {
   /** @type {{ label: string, url: string }[]} */
   const targets = [];
@@ -80,143 +60,44 @@ function resolveTargets(target) {
   return targets;
 }
 
-/** @returns {string[]} */
-function listSeedFilesInOrder() {
-  const files = [];
-  const truncate = path.join(seedsDir, '000_truncate.sql');
-  if (fs.existsSync(truncate)) files.push(truncate);
-
-  const orderFile = path.join(seedsDir, 'SEED_ORDER.txt');
-  if (fs.existsSync(orderFile)) {
-    const lines = fs
-      .readFileSync(orderFile, 'utf8')
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter((l) => l && !l.startsWith('#'));
-    for (const rel of lines) {
-      const abs = path.join(seedsDir, rel);
-      if (!fs.existsSync(abs)) {
-        console.warn(`  WARN SEED_ORDER missing: ${rel}`);
-        continue;
-      }
-      files.push(abs);
-    }
-    return files;
-  }
-
-  for (const domain of SEED_DOMAINS) {
-    const domainDir = path.join(seedsDir, domain);
-    if (!fs.existsSync(domainDir)) continue;
-    const sources = fs
-      .readdirSync(domainDir, { withFileTypes: true })
-      .filter((e) => e.isDirectory())
-      .map((e) => e.name)
-      .sort((a, b) => {
-        if (a === 'phb' && b !== 'phb') return -1;
-        if (b === 'phb' && a !== 'phb') return 1;
-        return a < b ? -1 : a > b ? 1 : 0;
-      });
-    for (const source of sources) {
-      files.push(...listSqlFiles(path.join(domainDir, source)));
-    }
-  }
-
-  return files;
-}
-
 /**
- * @param {string[]} files
- * @param {string | null} fromRel
- * @param {boolean} skipTruncate
+ * @param {string} url
+ * @param {string} label
+ * @param {string[]} passthrough
  */
-function applyFromFilter(files, fromRel, skipTruncate) {
-  let out = files;
-  if (skipTruncate) {
-    out = out.filter((f) => path.basename(f) !== '000_truncate.sql');
-  }
-  if (!fromRel) return out;
-
-  const needle = fromRel.replace(/\\/g, '/');
-  const idx = out.findIndex((f) => {
-    const rel = path.relative(seedsDir, f).replace(/\\/g, '/');
-    return rel === needle || rel.endsWith(needle) || f.replace(/\\/g, '/').endsWith(needle);
-  });
-  if (idx < 0) {
-    console.error(`--from não encontrado na ordem: ${fromRel}`);
+function runCli(url, label, passthrough) {
+  console.log(`\n→ [${label}] ${maskDatabaseUrl(url)}`);
+  const result = spawnSync(
+    process.execPath,
+    ['--require', TS_NODE, CLI, ...passthrough],
+    {
+      cwd: rootDir,
+      env: { ...process.env, DATABASE_URL: url },
+      stdio: 'inherit',
+    },
+  );
+  if (result.error) {
+    console.error(result.error);
     process.exit(1);
   }
-  console.log(`  resume from index ${idx}: ${path.relative(seedsDir, out[idx]).replace(/\\/g, '/')}`);
-  return out.slice(idx);
+  if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
-/**
- * @param {string} label
- * @param {string} url
- * @param {{ fromRel: string | null, skipTruncate: boolean, skipRefresh: boolean }} opts
- */
-async function seedOne(label, url, opts) {
-  console.log(`\n→ ${maskDatabaseUrl(url)}`);
-
-  const client = createPgClient(url);
-  await client.connect();
-
-  try {
-    let files = listSeedFilesInOrder();
-    files = applyFromFilter(files, opts.fromRel, opts.skipTruncate);
-
-    for (const filePath of files) {
-      const relative = path.relative(rootDir, filePath).replace(/\\/g, '/');
-      const sql = fs.readFileSync(filePath, 'utf8');
-
-      process.stdout.write(`  seeding ${relative}... `);
-      await client.query(sql);
-      console.log('ok');
-    }
-
-    if (!opts.skipRefresh) {
-      const materializedViews = [
-        'mv_spell_by_class',
-        'mv_phb_feat',
-        'mv_phb_background',
-        'mv_phb_species_trait_choices',
-        'mv_phb_class_economy_action',
-        'mv_phb_creature_template_bundle',
-        'mv_phb_vehicle_template_bundle',
-        'mv_phb_character_thread_bundle',
-        'mv_phb_hp_bonus_source',
-        'mv_phb_unarmored_defense',
-        'mv_class_spell_slots',
-        'mv_subclass_spell_slots',
-        'mv_phb_class_ability_boost',
-        'mv_phb_feat_granted_spell',
-        'mv_phb_class_granted_spell',
-        'mv_phb_heritage_trait_choices',
-      ];
-      for (const name of materializedViews) {
-        process.stdout.write(`  refresh rpg.${name}... `);
-        await client.query(`REFRESH MATERIALIZED VIEW CONCURRENTLY rpg.${name}`);
-        console.log('ok');
-      }
-    }
-
-    console.log(`  ${files.length} seed(s) aplicado(s)`);
-  } finally {
-    await client.end();
-  }
-}
-
-const targetArg = process.argv.find((arg) => arg.startsWith('--target='));
-const fromArg = process.argv.find((arg) => arg.startsWith('--from='));
+const argv = process.argv.slice(2);
+const targetArg = argv.find((a) => a.startsWith('--target='));
+const passthrough = argv.filter((a) => !a.startsWith('--target='));
 const target = parseTarget(targetArg);
-const fromRel = parseFrom(fromArg);
-const skipTruncate = process.argv.includes('--skip-truncate');
-const skipRefresh = process.argv.includes('--skip-refresh');
 const targets = resolveTargets(target);
+const mode = passthrough.includes('--status')
+  ? 'status'
+  : passthrough.includes('--fresh')
+    ? 'fresh'
+    : 'pending';
 
-console.log(`Seeds — target: ${target}${fromRel ? ` from=${fromRel}` : ''}${skipTruncate ? ' (skip-truncate)' : ''}`);
+console.log(`Seeds (${mode}) — target: ${target}`);
 
 for (const { label, url } of targets) {
-  await seedOne(label, url, { fromRel, skipTruncate, skipRefresh });
+  runCli(url, label, passthrough);
 }
 
 console.log('\nConcluído.');

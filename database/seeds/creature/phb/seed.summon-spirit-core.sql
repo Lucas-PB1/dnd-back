@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Espíritos Summon core: Bestial / Feérico / Elemental / Celestial.
 -- Escala: phb_creature_scale_by_slot; variantes tipadas + mapa phb_spell_spirit.
 

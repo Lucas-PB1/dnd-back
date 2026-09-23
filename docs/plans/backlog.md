@@ -5,9 +5,10 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-16 — §H Item saiu (charges na ficha, DL ≈ amanhecer, cast de item, poções de cura/heroísmo/saúde).
+**Última revisão:** 2026-09-23 — trilha **TORM** fechada (TypeORM migrations + seed ledger).
 
-**Combate / PVE / DB greenfield** **não** vive no Ativo mesa → [`pve-skirmish-index.md`](pve-skirmish-index.md) (fila executável) · lista residual histórica: [`combat-real-deferred.md`](combat-real-deferred.md).
+**Combate / PVE** **não** vive no Ativo mesa → [`pve-skirmish-index.md`](pve-skirmish-index.md) (fechado) · residual: [`combat-real-deferred.md`](combat-real-deferred.md).  
+**DB / migrations:** TypeORM — [`database/migrations/README.md`](../../database/migrations/README.md) · [`sql-layout.md`](../architecture/sql-layout.md).
 
 Detalhe por categoria: [`effect-mesa-checklist.md`](effect-mesa-checklist.md) · por livro: [`effect-mesa-por-fonte.md`](effect-mesa-por-fonte.md).
 
@@ -47,7 +48,8 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 
 | Trilha | Conteúdo |
 |--------|----------|
-| **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro |
+| **TORM** | ~~TypeORM migrations + seed ledger~~ **feito** (TORM-1…5) — [`database/migrations/README.md`](../../database/migrations/README.md) |
+| **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro; DB-0 greenfield **supersedido** por TORM |
 | **LEG** | ~~Limpeza código morto~~ **feito** (LEG-1…5) — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) |
 | **RES** | ~~Padrão `resolve`~~ **feito** — [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (**não** apagar verbo canônico) |
 | **LEGAC** | ~~Padrão `legac`/`legacy`~~ **feito** (1…4) — [`legac-pattern-backlog.md`](legac-pattern-backlog.md) |
@@ -74,6 +76,6 @@ Lista residual / parqueado: [`combat-real-deferred.md`](combat-real-deferred.md)
 5. Código morto / pasta órfã → [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) (`/legado`), não inventar limpeza ad-hoc no Ativo mesa.
 6. “Resolver” / `resolve-*` legado vs canônico → [`resolve-pattern-backlog.md`](resolve-pattern-backlog.md) (não renomear derive saudável).
 7. Texto/stub `legacy`/`legado` (não PHB) → trilha [`legac-pattern-backlog.md`](legac-pattern-backlog.md) **fechada**.
-8. Trilhas DB/PVE/LEG/RES/LEGAC/QA **fechadas** (2026-09-18); residual combate → [`combat-real-deferred.md`](combat-real-deferred.md).
+8. Trilhas PVE/LEG/RES/LEGAC/QA/TORM **fechadas**; residual combate → [`combat-real-deferred.md`](combat-real-deferred.md). DB runner → TypeORM (`db:migrate` / `db:seed*`).
 9. Plano filho **concluído** → **apagar** o `.md` e tirar do índice ([`docs/README.md`](../README.md)).
 10. Contrato: Swagger `/api`.

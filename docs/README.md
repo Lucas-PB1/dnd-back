@@ -65,7 +65,7 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |------|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **SSOT mesa** — aberto + polish adiado |
-| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Índice PVE + DB** — **fechado**; residual em deferred |
+| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Índice PVE + DB** — **fechado**; runner DDL → TypeORM; residual em deferred |
 | [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
 | [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado (RES-1…5 **fechados**) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — LEGAC-1…4 **fechados** (não PHB `infernal_legacy`) |
@@ -83,7 +83,7 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
-| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB-0** — pacotes executáveis (fácil → difícil) |
+| [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB-0** — **fechado**; DB runner → TypeORM |
 | [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
 | [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado/hardcode (RES-1…5 **fechados**) |
 | [`plans/legac-pattern-backlog.md`](plans/legac-pattern-backlog.md) | **Padrão legac/legacy** — LEGAC-1…4 **fechados** |

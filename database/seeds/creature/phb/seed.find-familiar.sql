@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Bestas CR0 do bestiário (identidade de monstro).
 -- Find Familiar (convocar-familiar) só mapeia variantes → estes templates.
 -- Stats: SRD 5.2.1; imagens do scrap Beyond.

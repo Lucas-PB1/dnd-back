@@ -91,16 +91,17 @@ export async function validateSheetInput(
     await deps.equipmentValidator.validateLanguageSlugs(input.languageSlugs);
     if (ctx.backgroundSlug) {
       const classExtra = classLanguageGrant(ctx.classSlug, ctx.level);
-      const speciesChoice = ctx.speciesSlug
-        ? SPECIES_LANGUAGE_CHOICE_COUNT
-        : 0;
+      const originChoice =
+        ctx.speciesSlug || ctx.heritageSlug
+          ? SPECIES_LANGUAGE_CHOICE_COUNT
+          : 0;
       await deps.backgroundValidator.validateBackgroundLanguages(
         ctx.backgroundSlug,
         input.languageSlugs,
         {
           extra: {
             grantedSlugs: classExtra.grantedSlugs,
-            choiceCount: (classExtra.choiceCount ?? 0) + speciesChoice,
+            choiceCount: (classExtra.choiceCount ?? 0) + originChoice,
           },
         },
       );

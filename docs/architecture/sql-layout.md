@@ -1,6 +1,6 @@
-# Layout SQL — schema declarative + seeds por domínio
+# Layout SQL — schema declarative + seeds + TypeORM
 
-SSOT do catálogo Postgres (`rpg`).
+SSOT do catálogo Postgres (`rpg`). Runner DDL: **TypeORM** (`npm run db:migrate`).
 
 ## Onde iterar (importante)
 
@@ -43,12 +43,16 @@ Cloud remoto: só quando o seed local estiver verde.
 
 ```text
 database/
-  schema/                 # DDL só CREATE (um arquivo ≈ um objeto)
+  schema/                      # DDL SSOT (CREATE; um arquivo ≈ um objeto)
   seeds/
     000_truncate.sql
-    SEED_ORDER.txt        # ordem FK-safe
+    SEED_ORDER.txt             # ordem FK-safe
     {domínio}/{fonte}/{tabela}.{conteudo-slug}.sql
-  migrations/             # forward-only; **vazio** sem prod (política greenfield / DB-0)
+  migrations/                  # README da política; arquivos .ts vivem em src/
+
+src/database/
+  data-source.ts               # CLI TypeORM
+  migrations/*.ts              # Baseline + forward (ledger rpg.migrations)
 ```
 
 ## Seeds — nome e ordem
@@ -64,14 +68,17 @@ database/
 
 | Regra | Detalhe |
 |-------|---------|
-| **Zero ALTER (greenfield)** | Schema = editar `CREATE` + `db:setup` **local**. Sem prod: **não** criar `database/migrations/*.sql`. |
+| **Wipe local** | Editar `CREATE` em `schema/**` + entity → `npm run db:setup` |
+| **Forward** | DB com dados: `schema/**` + migration TypeORM nova (`db:migration:create`); **nunca** editar migration já aplicada |
 | Upsert | `INSERT … ON CONFLICT`. Effects CTE: `-- seed-mode: truncate-scoped`. |
 | Local ≠ cloud | `DATABASE_URL` = localhost; `SUPABASE_DATABASE_URL` = cloud. |
 | Legado → Vasco | Após migrar fatia, apagar arquivo antigo no mesmo PR. |
-| Forward migrations | Só quando existir **prod com dados**; até lá pasta `migrations/` fica sem SQL (só README). |
+| Seeds ≠ migrations | DML só em `database/seeds/**` + ledger `rpg.seed_migration` (`db:seed` / `fresh` / `status`). |
+
+Política completa: [`database/migrations/README.md`](../../database/migrations/README.md).
 
 ## Domínios
 
-`catalog` · `background` · `class` · `subclass` · `species` · `feat` · `transformation` · `heritage` · `thread` · `item` · `spell` · `economy` · `creature` · `effect`
+`catalog` · `background` · `class` · `subclass` · `species` · `feat` · `transformation` · `heritage` · `thread` · `item` · `spell` · `economy` · `creature` · `effect` · `notes`
 
 Skill: [`catalog-sql-first`](../../.cursor/skills/catalog-sql-first/SKILL.md).

@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Golpes de Sangue (Blood Hound) — pacotes tipados em phb_effect.
 -- requires_option_key = 'strikeOption', requires_option_value = slug do golpe.
 -- Labels: phb_option_value (bloodStrike*).

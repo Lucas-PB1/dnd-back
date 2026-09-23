@@ -8,11 +8,15 @@ Só o essencial: banco, smokes, measure e geradores Cap.6/`SEED_ORDER`. One-offs
 |--------|---------|-----|
 | `npm run db:setup` | validate + reset + migrate + seed | Dev fresh (local) |
 | `npm run db:reset` | `db/dev-reset.mjs` | Limpa schema `rpg` (dev) |
-| `npm run db:migrate` | `db/run-migrations.mjs` | Baseline + forward |
-| `npm run db:seed` | `db/run-seeds.mjs` | Aplica seeds |
+| `npm run db:migrate` | `db/run-typeorm.mjs` | TypeORM migrations (baseline schema) |
+| `npm run db:migrate:show` | idem `migration:show` | Lista aplicadas / pendentes |
+| `npm run db:migration:create` | idem `migration:create` | Stub MigrationInterface |
+| `npm run db:seed` | `db/run-seeds.mjs` | Pendentes (ledger checksum) |
+| `npm run db:seed:fresh` | idem `--fresh` | Truncate + ledger limpo + todos |
+| `npm run db:seed:status` | idem `--status` | applied / pending / drift |
 | `npm run db:validate:sequences` | `db/validate-sql-sequences.mjs` | FK-safe antes de seed |
-| `npm run db:migrate:supabase` / `:all` | idem `--target` | Prod / ambos |
-| `npm run db:seed:supabase` / `:all` | idem | Prod / ambos |
+| `npm run db:migrate:supabase` / `:all` | idem `--target` | Cloud / ambos |
+| `npm run db:seed:supabase` / `:all` | idem | Cloud / ambos |
 | `npm run db:setup:all` | local + supabase | Setup completo |
 | `npm run smoke:health` | `ops/smoke-health.mjs` | GET `/health` |
 | `npm run vercel:smoke` | `ops/vercel-local-smoke.mjs` | Smoke Vercel dev |

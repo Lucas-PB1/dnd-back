@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Montaria Sobrenatural (Convocar Montaria / Find Steed) — 3 variantes tipadas.
 -- Escala: phb_creature_scale_by_slot (AC = 10+L; HP = 5+10×L). Fly gate no sync se slot < 4.
 

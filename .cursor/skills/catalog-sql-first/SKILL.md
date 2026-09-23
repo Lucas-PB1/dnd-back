@@ -17,7 +17,8 @@ description: >-
 ## Princípios
 
 - **Postgres é SSOT** do catálogo; TypeORM só mapeia
-- Uma mudança coerente = schema (ou migration forward) + seed + view/entity
+- Uma mudança coerente = schema (CREATE) + seed + view/entity; **forward** = migration TypeORM extra se o DB não pode wipe
+- **Nunca** editar migration já aplicada (`rpg.migrations`)
 - Game valida existência via `CatalogLookupService` / `@catalog/game-port`
 - Evitar JSONB genérico quando já existe tabela/effect tipado (ver ADRs)
 

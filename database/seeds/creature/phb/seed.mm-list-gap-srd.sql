@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Gaps Monster Lists via SRD 5.2.1 (CC-BY).
 -- Extract: docs/source/extracts/mm/list-gap-srd.json
 

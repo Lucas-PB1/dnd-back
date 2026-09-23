@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Notas de combate GH Cap.2 (classe/subclasse) — gerado a partir dos batches TS.
 
 INSERT INTO rpg.phb_level_combat_note (owner_kind, class_id, subclass_id, unlock_level, note, sort_order)

@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Lâmina Arcana: troca stub combat_note dos truques por grant_spell (cantrip1/2).
 
 DELETE FROM rpg.phb_effect_note n

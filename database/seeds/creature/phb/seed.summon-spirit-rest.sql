@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Summon restantes + Inseto Gigante + Animar Objetos (blocos no texto da magia).
 -- Escala: phb_creature_scale_by_slot; mapa phb_spell_spirit*.
 

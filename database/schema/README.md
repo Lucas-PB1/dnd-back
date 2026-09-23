@@ -13,6 +13,11 @@ SSOT do DDL. Um arquivo ≈ um objeto (`CREATE`). Ordem = prefixo numérico + pa
 | `045_triggers/` | `CREATE TRIGGER` |
 | `050_runtime/` | RLS policies (`DO $$ …`) |
 
-Mudou o modelo? Edite o `CREATE` e rode `npm run db:setup`. **Sem ALTER.**
+Mudou o modelo?
 
-Gerado a partir do baseline histórico; não editar `database/baseline/` (removido após migração).
+| Caminho | Ação |
+|---------|------|
+| Wipe OK (dev) | Editar `CREATE` aqui + entity → `npm run db:setup` |
+| DB com dados | Idem **e** migration TypeORM (`npm run db:migration:create`) — ver [`../migrations/README.md`](../migrations/README.md) |
+
+**Nunca** editar migration já aplicada. Runner: [`BaselineSchema`](../../src/database/migrations/1727000000000-BaselineSchema.ts) · política: [`../migrations/README.md`](../migrations/README.md).

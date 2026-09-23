@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- PVE-7b: Arma Espiritual + Conjure* como 1 actor no skirmish (sem mapa / sem N tokens).
 -- Arma Espiritual: efeito flutuante → companion leve (ataque no turno após o PC).
 -- Conjurar Animais: aura PHB 2024 ≈ 1 bando com pulso 3d10 (aprox. ataque).

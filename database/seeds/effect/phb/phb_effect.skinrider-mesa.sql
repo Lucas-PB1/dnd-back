@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Transe do Cavaleiro da Pele (Primal Spirit): enter/end tipados
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),

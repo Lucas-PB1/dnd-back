@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-function isSupabaseDatabaseUrl(url: string): boolean {
+export function isSupabaseDatabaseUrl(url: string): boolean {
   return /supabase\.(co|com)/i.test(url);
 }
 

@@ -41,6 +41,7 @@ const SEED_DOMAINS = new Set([
   'economy',
   'creature',
   'effect',
+  'notes',
 ]);
 
 const SEED_NAME_RE =
@@ -107,15 +108,19 @@ for (const filePath of seedFiles) {
   if (/\bDROP\s+(TABLE|TYPE|SCHEMA)\b/i.test(text)) {
     fail(`DROP TABLE/TYPE forbidden in seed: ${rel}`);
   }
-  if (/\bDELETE\s+FROM\b/i.test(text)) {
-    fail(`DELETE FROM forbidden in seed (use truncate + upsert): ${rel}`);
+
+  const truncateScoped = /seed-mode:\s*truncate-scoped/i.test(text);
+  if (/\bDELETE\s+FROM\b/i.test(text) && !truncateScoped) {
+    fail(
+      `DELETE FROM forbidden in seed (use truncate + upsert, or seed-mode: truncate-scoped): ${rel}`,
+    );
   }
 
   const hasInsert = /\bINSERT\b/i.test(text);
   const hasConflict = /\bON\s+CONFLICT\b/i.test(text);
-  const truncateScoped = /seed-mode:\s*truncate-scoped/i.test(text);
-  if (hasInsert && !hasConflict && !truncateScoped) {
-    fail(`INSERT without ON CONFLICT: ${rel}`);
+  const hasNotExists = /\bNOT\s+EXISTS\b/i.test(text);
+  if (hasInsert && !hasConflict && !hasNotExists && !truncateScoped) {
+    fail(`INSERT without ON CONFLICT / NOT EXISTS: ${rel}`);
   }
 }
 

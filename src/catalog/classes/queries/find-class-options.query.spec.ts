@@ -64,6 +64,33 @@ describe('FindClassOptionsQuery', () => {
     expect(result.data[1]?.optionKey).toBe('blessedStrikes');
   });
 
+  it('includes option defs without catalog values', async () => {
+    optionValuesRepo.manager.query.mockResolvedValue([
+      {
+        optionKey: 'expertiseSkill1',
+        optionLabel: 'Especialização',
+        unlockLevel: 2,
+        valueType: 'skill',
+        valueId: null,
+        valueLabel: null,
+        sortOrder: null,
+        benefit: null,
+      },
+    ]);
+
+    const result = await query.execute('ranger', 2);
+
+    expect(result.data).toEqual([
+      {
+        optionKey: 'expertiseSkill1',
+        label: 'Especialização',
+        unlockLevel: 2,
+        valueType: 'skill',
+        values: [],
+      },
+    ]);
+  });
+
   it('returns empty page when class has no feature options', async () => {
     optionValuesRepo.manager.query.mockResolvedValue([]);
     const result = await query.execute('fighter', 5);

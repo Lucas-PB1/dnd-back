@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Espírito Primal (Grim Hollow) — Guardião / Atacante × Terra / Mar / Céu
 -- Blocos completos GH ainda não extractados: escala provisória alinhada ao padrão Beast Master
 -- (HP base+nível; AC base + Sabedoria do conjurador). Ajustar quando o extract chegar.

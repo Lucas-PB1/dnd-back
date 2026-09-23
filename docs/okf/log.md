@@ -1,5 +1,41 @@
 # log
 
+## 2026-09-23 — TORM-5 Cutover (trilha fechada)
+
+* **Update**: `db:validate:sequences` verde (NOT EXISTS + `truncate-scoped` para DELETE/INSERT); docs cutover (`sql-layout`, `infrastructure`, `DEPLOY`, READMEs); plano filho `typeorm-migrations-backlog.md` **apagado**; TORM riscado no backlog. Smoke: `db:setup` local.
+
+— refs: [`database/migrations/README.md`](../../database/migrations/README.md), [`validate-sql-sequences.mjs`](../../scripts/db/validate-sql-sequences.mjs), [`backlog.md`](../plans/backlog.md) — motivo: fechar trilha TORM (1…5).
+
+## 2026-09-23 — TORM-4 Seeds ledger
+
+* **Update**: runner via DataSource (`run-seeds-cli` + `seed-runner`); tabela `rpg.seed_migration` (version + sha256); scripts `db:seed` (pendentes), `db:seed:fresh`, `db:seed:status`; `db:setup` usa fresh. Domínio `notes` no validate.
+
+— refs: [`run-seeds.mjs`](../../scripts/db/run-seeds.mjs), [`seed-runner.ts`](../../src/database/seed-runner.ts), [`0171_seed_migration.sql`](../../database/schema/020_tables/0171_seed_migration.sql) — motivo: catálogo versionado fora de MigrationInterface.
+
+## 2026-09-23 — TORM-3 Política forward
+
+* **Update**: docs wipe vs forward (`database/migrations/README.md`, `sql-layout.md`, skill/rule catalog-sql-first); regra “nunca editar migration aplicada”; forward idempotente `AddWeaponSecondaryMastery` (`secondary_mastery_id`).
+
+— refs: [`1727000001000-AddWeaponSecondaryMastery.ts`](../../src/database/migrations/1727000001000-AddWeaponSecondaryMastery.ts), [`database/migrations/README.md`](../../database/migrations/README.md), [`sql-layout.md`](../architecture/sql-layout.md), [`typeorm-migrations-backlog.md`](../plans/typeorm-migrations-backlog.md) — motivo: fechar TORM-3 com política operacional clara.
+
+## 2026-09-22 — TORM-2 Baseline schema
+
+* **Update**: `BaselineSchema1727000000000` aplica `database/schema/**` via TypeORM; removidos `025_alters/` (já no CREATE), stub `0139_phb_strike_option`, `run-migrations.mjs` e `db:schema:migrate*`. `db:setup` = validate + reset + migrate + seed.
+
+— refs: [`1727000000000-BaselineSchema.ts`](../../src/database/migrations/1727000000000-BaselineSchema.ts), [`apply-schema-sql.ts`](../../src/database/apply-schema-sql.ts), [`typeorm-migrations-backlog.md`](../plans/typeorm-migrations-backlog.md) — motivo: TypeORM dono do DDL; aposentar ledger `schema_migration`.
+
+## 2026-09-22 — TORM-1 DataSource CLI
+
+* **Update**: `src/database/data-source.ts` + `cli-data-source-options`; wrapper `scripts/db/run-typeorm.mjs` (`--target=local|supabase|all`); scripts `db:migrate` / `show` / `migration:create|generate`; `db:setup` usa `db:schema:migrate*` (legado) até TORM-2. Smoke local: `rpg.migrations` criada, zero pendentes.
+
+— refs: [`data-source.ts`](../../src/database/data-source.ts), [`run-typeorm.mjs`](../../scripts/db/run-typeorm.mjs), [`typeorm-migrations-backlog.md`](../plans/typeorm-migrations-backlog.md) — motivo: fechar TORM-1 sem quebrar setup declarative.
+
+## 2026-09-22 — Abertura trilha TORM (TypeORM migrations)
+
+* **Update**: fila **TORM-1…5** aberta — trocar `run-migrations.mjs` / `rpg.schema_migration` por TypeORM nativo; seeds via DataSource + `rpg.seed_migration`. DB-0 “migrations vazias” supersedido; índice PVE permanece fechado. Sem código nesta abertura.
+
+— refs: [`typeorm-migrations-backlog.md`](../plans/typeorm-migrations-backlog.md), [`backlog.md`](../plans/backlog.md), [`pve-skirmish-index.md`](../plans/pve-skirmish-index.md), [`docs/README.md`](../README.md) — motivo: materializar plano de runner DDL no backlog do dnd-api.
+
 ## 2026-09-18 — Front alternateRolls (Atacante Selvagem)
 
 * **Update** (19:15 UTC): flag `damageRerollChoice` na ficha; toggle + banner escolhe 1ª/2ª; API devolve `alternateRolls` com total completo (arma alt. + extras). Skirmish/duelo escolha tipada fica residual.

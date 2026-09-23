@@ -64,7 +64,7 @@ Isso evita `ERR_REQUIRE_ESM` documentado em [jwks-rsa#507](https://github.com/au
 
 ## Pré-requisitos
 
-- Schema `rpg` migrado + seeds no Supabase (`npm run db:migrate:supabase` + `npm run db:seed:supabase`)
+- Schema `rpg` migrado + seeds no Supabase (`npm run db:migrate:supabase` + `npm run db:seed:fresh -- --target=supabase`, ou `db:setup:all`)
 - Conta Vercel · CLI ≥ 48.4 (`npm i -g vercel` ou `devDependency` no projeto)
 - Supabase: Project URL + Publishable key
 

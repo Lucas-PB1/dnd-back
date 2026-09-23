@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Monster Manual 2024 — Monsters A–B (alfabeto).
 -- Extract: docs/source/extracts/mm/monsters-ab.json
 -- Nota: MM 2024 não tem Lair Actions separadas; usos lendários incluem “(N in Lair)” quando aplicável.

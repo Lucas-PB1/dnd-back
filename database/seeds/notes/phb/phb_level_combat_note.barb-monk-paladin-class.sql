@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Notas de classe (estáticas) — bárbaro, monge, paladino.
 -- Números vivos (dado no ataque, velocidade, bônus de Fúria) vêm do motor, não de nota.
 

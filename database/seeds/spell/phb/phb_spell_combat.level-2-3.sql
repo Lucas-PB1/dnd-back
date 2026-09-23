@@ -1,3 +1,4 @@
+-- seed-mode: truncate-scoped
 -- Magias PHB níveis 2–3 ofensivas/cura (PVE-1c). Condições tipadas → `phb_spell_combat.conditions.sql` (PVE-3b).
 -- PVE-7b: arma-espiritual saiu do one-shot (actor via phb_spell_spirit).
 DELETE FROM rpg.phb_spell_combat WHERE spell_slug = 'arma-espiritual';
