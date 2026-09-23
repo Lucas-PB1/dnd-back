@@ -44,7 +44,7 @@ Várias tabelas compartilham o mesmo shape:
 
 | Par | Similaridade de colunas |
 |-----|------------------------:|
-| `phb_creature_template_action` ↔ `phb_vehicle_template_action` | ~100% |
+| `phb_stat_block_action` ↔ `phb_stat_block_action` | ~100% |
 | `…_speed` ↔ `…_speed` | ~100% |
 | `…_trait` ↔ `…_trait` | ~100% |
 | templates raiz | ~37% (domínios divergem: CR vs crew/cargo) |

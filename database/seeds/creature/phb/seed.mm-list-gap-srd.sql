@@ -100,8 +100,8 @@ ON CONFLICT (template_slug) DO UPDATE SET
   scale_min_slot = EXCLUDED.scale_min_slot, ac_base = EXCLUDED.ac_base, ac_per_slot = EXCLUDED.ac_per_slot,
   hp_base = EXCLUDED.hp_base, hp_per_slot = EXCLUDED.hp_per_slot, hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('cobra-voadora', 'fly', 60),
   ('cobra-voadora', 'swim', 30),
   ('cobra-voadora', 'walk', 30),
@@ -122,8 +122,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('enxame-de-cobras-venenosas', 'walk', 30),
   ('enxame-de-piranhas', 'swim', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('cobra-voadora', 'Sentidos', 'Visão às Cegas 3 m. Percepção Passiva 11.', 0),
   ('cobra-voadora', 'Flyby', 'The snake doesn''t provoke opportunity attacks when it flies out of an enemy''s reach.', 1),
   ('coruja-gigante', 'Sentidos', 'Visão no Escuro 36 m. Percepção Passiva 15.', 0),
@@ -154,9 +154,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('enxame-de-piranhas', 'Swarm', 'The swarm can occupy another creature''s space and vice versa, and the swarm can move through any opening large enough for a Tiny quipper. The swarm can''t regain hit points or gain temporary hit points.', 2),
   ('enxame-de-piranhas', 'Water Breathing', 'The swarm can breathe only underwater.', 3);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug IN ('cobra-voadora', 'coruja-gigante', 'aguia-gigante', 'alce-gigante', 'abutre-gigante', 'enxame-de-morcegos', 'enxame-de-ratos', 'enxame-de-corvos', 'enxame-de-insetos', 'enxame-de-cobras-venenosas', 'enxame-de-piranhas');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('cobra-voadora', 'Bite', 'action'::rpg.actor_action_bucket, 6, '1', 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 1 piercing damage plus 7 (3d4) poison damage.', 1),
   ('coruja-gigante', 'Talons', 'action'::rpg.actor_action_bucket, 3, '8', 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 8 (2d6 + 1) slashing damage.', 1),

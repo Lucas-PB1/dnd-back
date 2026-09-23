@@ -323,8 +323,8 @@ ON CONFLICT (template_slug) DO UPDATE SET
   hp_per_slot = EXCLUDED.hp_per_slot,
   hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('abutre', 'walk', 10),
   ('abutre', 'fly', 50),
   ('aguia', 'walk', 10),
@@ -397,8 +397,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('vespa-gigante', 'walk', 10),
   ('vespa-gigante', 'fly', 50);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('abutre', 'Sentidos', 'Percepção Passiva 13.', 0),
   ('abutre', 'Pack Tactics', 'The vulture has Advantage on an attack roll against a creature if at least one of the vulture’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.', 1),
   ('aguia', 'Sentidos', 'Percepção Passiva 16.', 0),
@@ -470,9 +470,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('vespa-gigante', 'Sentidos', 'Percepção Passiva 10.', 0),
   ('vespa-gigante', 'Flyby', 'The wasp doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach.', 1);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug IN ('abutre', 'aguia', 'alossauro', 'anquilossauro', 'aranha-lobo-gigante', 'arquelon', 'babuino', 'besouro-de-fogo-gigante', 'cavalo-marinho', 'centopeia-gigante', 'cervo', 'chacal', 'cobra-constritora-gigante', 'cobra-venenosa-gigante', 'crocodilo-gigante', 'escorpiao-gigante', 'falcao-sangrento', 'hiena', 'hiena-gigante', 'hipopotamo', 'javali-gigante', 'lagarto-gigante', 'lula-gigante', 'macaco-gigante', 'mamute', 'morcego-gigante', 'orca', 'piranha', 'plessiossauro', 'polvo-gigante', 'pteranodonte', 'ra-gigante', 'rato-gigante', 'rinoceronte', 'sapo-gigante', 'tigre-dentes-de-sabre', 'tiranossauro', 'triceratops', 'tubarao-cacador', 'tubarao-gigante', 'urso-polar', 'vespa-gigante');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('abutre', 'Beak', 'action'::rpg.actor_action_bucket, 2, '2', 'Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Piercing damage.', 1),
   ('aguia', 'Talons', 'action'::rpg.actor_action_bucket, 4, '4', 'Melee Attack Roll: +4, reach 5 feet. Hit: 4 (1d4 + 2) Slashing damage.', 1),

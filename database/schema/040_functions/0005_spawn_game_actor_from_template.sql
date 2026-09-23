@@ -63,24 +63,24 @@ BEGIN
 
     INSERT INTO rpg.game_actor_speed (actor_id, movement_kind, speed_ft)
     SELECT v_actor_id, movement_kind, speed_ft
-    FROM rpg.phb_creature_template_speed
-    WHERE template_slug = p_template_slug;
+    FROM rpg.phb_stat_block_speed
+    WHERE creature_template_slug = p_template_slug;
 
     INSERT INTO rpg.game_actor_action (
       actor_id, name, action_bucket, attack_bonus, damage_expression, reach_ft, description, sort_order
     )
     SELECT
       v_actor_id, name, action_bucket, attack_bonus, damage_expression, reach_ft, description, sort_order
-    FROM rpg.phb_creature_template_action
-    WHERE template_slug = p_template_slug;
+    FROM rpg.phb_stat_block_action
+    WHERE creature_template_slug = p_template_slug;
 
     INSERT INTO rpg.game_actor_spell (
       actor_id, spell_slug, usage_kind, uses_per_day, slot_level, recharge_dice, sort_order
     )
     SELECT
       v_actor_id, spell_slug, usage_kind, uses_per_day, slot_level, recharge_dice, sort_order
-    FROM rpg.phb_creature_template_spell
-    WHERE template_slug = p_template_slug;
+    FROM rpg.phb_stat_block_spell
+    WHERE creature_template_slug = p_template_slug;
 
   ELSIF p_actor_kind = 'vehicle' THEN
     SELECT * INTO v_vehicle
@@ -129,16 +129,16 @@ BEGIN
 
     INSERT INTO rpg.game_actor_speed (actor_id, movement_kind, speed_ft)
     SELECT v_actor_id, movement_kind, speed_ft
-    FROM rpg.phb_vehicle_template_speed
-    WHERE template_slug = p_template_slug;
+    FROM rpg.phb_stat_block_speed
+    WHERE vehicle_template_slug = p_template_slug;
 
     INSERT INTO rpg.game_actor_action (
       actor_id, name, action_bucket, attack_bonus, damage_expression, reach_ft, description, sort_order
     )
     SELECT
       v_actor_id, name, action_bucket, attack_bonus, damage_expression, reach_ft, description, sort_order
-    FROM rpg.phb_vehicle_template_action
-    WHERE template_slug = p_template_slug;
+    FROM rpg.phb_stat_block_action
+    WHERE vehicle_template_slug = p_template_slug;
 
   ELSE
     RAISE EXCEPTION 'Unsupported actor_kind % for spawn', p_actor_kind;

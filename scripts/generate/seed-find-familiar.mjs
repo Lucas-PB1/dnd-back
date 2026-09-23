@@ -254,10 +254,10 @@ out.push(`ON CONFLICT (template_slug) DO UPDATE SET
 `);
 
 out.push(
-  `DELETE FROM rpg.phb_creature_template_speed WHERE template_slug IN (${slugList});`,
+  `DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug IN (${slugList});`,
 );
 out.push(
-  `INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES`,
+  `INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES`,
 );
 const speeds = [];
 for (const form of forms) {
@@ -282,10 +282,10 @@ out.push(speeds.join(',\n') + ';');
 out.push('');
 
 out.push(
-  `DELETE FROM rpg.phb_creature_template_trait WHERE template_slug IN (${slugList});`,
+  `DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug IN (${slugList});`,
 );
 out.push(
-  `INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES`,
+  `INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES`,
 );
 const traits = [];
 for (const form of forms) {
@@ -320,10 +320,9 @@ out.push(traits.join(',\n') + ';');
 out.push('');
 
 out.push(
-  `DELETE FROM rpg.phb_creature_template_action WHERE template_slug IN (${slugList});`,
+  `DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug IN (${slugList});`,
 );
-out.push(`INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+out.push(`INSERT INTO rpg.phb_stat_block_action (`n  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES`);
 const actions = [];
 for (const form of forms) {

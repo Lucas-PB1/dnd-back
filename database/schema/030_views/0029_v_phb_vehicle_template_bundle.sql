@@ -22,8 +22,8 @@ SELECT
       )
       ORDER BY s.movement_kind
     )
-    FROM rpg.phb_vehicle_template_speed s
-    WHERE s.template_slug = t.slug
+    FROM rpg.phb_stat_block_speed s
+    WHERE s.vehicle_template_slug = t.slug
   ), '[]'::jsonb) AS speeds,
   COALESCE((
     SELECT jsonb_agg(
@@ -39,8 +39,8 @@ SELECT
       )
       ORDER BY a.sort_order, a.name
     )
-    FROM rpg.phb_vehicle_template_action a
-    WHERE a.template_slug = t.slug
+    FROM rpg.phb_stat_block_action a
+    WHERE a.vehicle_template_slug = t.slug
   ), '[]'::jsonb) AS actions,
   COALESCE((
     SELECT jsonb_agg(
@@ -51,8 +51,8 @@ SELECT
       )
       ORDER BY tr.sort_order, tr.name
     )
-    FROM rpg.phb_vehicle_template_trait tr
-    WHERE tr.template_slug = t.slug
+    FROM rpg.phb_stat_block_trait tr
+    WHERE tr.vehicle_template_slug = t.slug
   ), '[]'::jsonb) AS traits
 FROM rpg.phb_vehicle_template t;
 

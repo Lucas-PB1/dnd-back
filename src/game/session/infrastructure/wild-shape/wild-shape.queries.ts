@@ -60,8 +60,8 @@ export async function loadWildShapeTemplateRow(
   >(
     `SELECT t.slug, t.name, t.creature_type, t.challenge_rating, t.armor_class,
             EXISTS (
-              SELECT 1 FROM rpg.phb_creature_template_speed s
-              WHERE s.template_slug = t.slug AND s.movement_kind = 'fly'
+              SELECT 1 FROM rpg.phb_stat_block_speed s
+              WHERE s.creature_template_slug = t.slug AND s.movement_kind = 'fly'
             ) AS has_fly
      FROM rpg.phb_creature_template t
      WHERE t.slug = $1`,
@@ -131,8 +131,8 @@ export async function listEligibleWildShapeBeasts(
   >(
     `SELECT t.slug, t.name, t.creature_type, t.challenge_rating, t.armor_class,
             EXISTS (
-              SELECT 1 FROM rpg.phb_creature_template_speed s
-              WHERE s.template_slug = t.slug AND s.movement_kind = 'fly'
+              SELECT 1 FROM rpg.phb_stat_block_speed s
+              WHERE s.creature_template_slug = t.slug AND s.movement_kind = 'fly'
             ) AS has_fly
      FROM rpg.phb_creature_template t
      WHERE lower(t.creature_type) = 'beast'

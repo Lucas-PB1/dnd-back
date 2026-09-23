@@ -1,6 +1,6 @@
 # Schema genérico — backlog (primitivas, não tabelas de feature)
 
-**Status:** aberto (GEN-0…5 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
+**Status:** aberto (GEN-0…6 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
 **Norte:** banco modela **primitivas**; feature do livro = **dado** (`kind` + payload), não tabela nova.
 
 Auditoria 2026-09-23 (repo `check` → copiada para cá):
@@ -45,7 +45,7 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | **GEN-3** | ~~Combat note única (class/subclass/heritage/boon)~~ **feito** | S | GEN-1 | −2 |
 | **GEN-4** | ~~Feat requirement: header + `clause` polimórfica~~ **feito** | M | GEN-1 | −5 |
 | **GEN-5** | ~~Feature gate class\|subclass polimórfico~~ **feito** | M | GEN-1 | −1 |
-| **GEN-6** | Stat-block children: unificar creature↔vehicle (+ opcional actor snapshot) | M | GEN-1 | −3…−7 |
+| **GEN-6** | ~~Stat-block children: unificar creature↔vehicle (+ opcional actor snapshot)~~ **feito** | M | GEN-1 | −3 |
 | **GEN-7** | Matar tabelas **de feature** → catalog/effect/option (Beastborne, Dungeoneer, Persona Mask, Wild Shape bands DDL, manobras nomeadas…) | L | GEN-2…4 | −5…−12 |
 | **GEN-8** | Combate: uma sessão + participantes (skirmish/duel/encounter) | L | GEN-6 | −2…−4 |
 | **GEN-9** | Effect satellites: **agrupar por shape** (não JSONB total sem ADR) | L | GEN-7 | −15…−17 |
@@ -94,9 +94,9 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-6 — Stat-block children
 
-- [ ] Unificar speed/action/trait (e spell) creature↔vehicle
-- [ ] Decidir: manter `game_actor_*` como snapshot **ou** mesmo polimorfismo
-- [ ] `spawn_game_actor_from_template` + seeds criatura/veículo
+- [x] Unificar speed/action/trait/spell → `phb_stat_block_*` (dual FK + `owner_kind`/`template_slug` gerados)
+- [x] Manter `game_actor_*` como snapshot em spawn (A3; sem polimorfismo runtime)
+- [x] `spawn_game_actor_from_template` + bundles + seeds criatura/veículo + `db:setup` verde
 
 ### GEN-7 — Sem tabela de feature
 
@@ -145,5 +145,4 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 | Cenário | Δ tabelas | Alvo ~ |
 |---------|----------:|-------:|
 | Conservador (GEN-1…6) | −12 | ~165 |
-| Agressivo (+7,8,9 parcial) | −32…−37 | ~140 |
-| Radical (effects JSONB) | −40…−50 | ~130 | só com ADR GEN-9 = G3 |
+| Agressivo (+7,8,9 parcial) | −32…−37 | 

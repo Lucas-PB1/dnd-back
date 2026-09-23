@@ -111,8 +111,8 @@ ON CONFLICT (template_slug) DO UPDATE SET
   hp_per_slot = EXCLUDED.hp_per_slot,
   hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('aranha', 'climb', 20),
   ('aranha', 'walk', 20),
   ('coruja', 'fly', 60),
@@ -134,8 +134,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('sapo', 'swim', 20),
   ('sapo', 'walk', 20);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('aranha', 'Sentidos', 'Visão no Escuro 9 m. Percepção Passiva 12.', 0),
   ('aranha', 'Escalada de Aranha', 'Pode escalar superfícies difíceis, inclusive de cabeça para baixo, sem teste.', 1),
   ('aranha', 'Sentido de Teia', 'Em contato com uma teia, sabe a localização exata de qualquer criatura em contato com a mesma teia.', 2),
@@ -165,9 +165,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('sapo', 'Anfíbio', 'Pode respirar ar e água.', 1),
   ('sapo', 'Salto em Pé', 'Salto em distância até 3 m e em altura até 1,5 m, com ou sem corrida.', 2);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug IN ('aranha', 'coruja', 'corvo', 'doninha', 'falcao', 'gato', 'lagarto', 'morcego', 'polvo', 'rato', 'sapo');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('aranha', 'Mordida', 'action'::rpg.actor_action_bucket, 4, '1', 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 1 piercing damage, and the target must succeed on a DC 9 Constitution saving throw or take 2 (1d4) poison damage.', 1),
   ('coruja', 'Garras', 'action'::rpg.actor_action_bucket, 3, '1', 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 1 slashing damage.', 1),

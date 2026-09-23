@@ -136,7 +136,7 @@ ON CONFLICT (slug) DO UPDATE SET
   cargo_capacity_lb = EXCLUDED.cargo_capacity_lb;
 
 -- Deslocamentos (mph × 10 em speed_ft; drawn = walk quando puxado)
-INSERT INTO rpg.phb_vehicle_template_speed (template_slug, movement_kind, speed_ft)
+INSERT INTO rpg.phb_stat_block_speed (vehicle_template_slug, movement_kind, speed_ft)
 VALUES
   ('bote', 'remo', 15),
   ('barco-de-quilha', 'remo', 10),
@@ -155,8 +155,8 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Ações genéricas de combate naval (DMG / mesa — placeholders até armas detalhadas)
-INSERT INTO rpg.phb_vehicle_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, sort_order
+INSERT INTO rpg.phb_stat_block_action (
+  vehicle_template_slug, name, action_bucket, attack_bonus, damage_expression, sort_order
 )
 SELECT v.slug, v.name, v.bucket::rpg.actor_action_bucket, v.bonus::int, v.damage, v.ord
 FROM (VALUES
@@ -165,6 +165,6 @@ FROM (VALUES
   ('navio-a-remo', 'Aríete', 'action', NULL::int, '4d10+10', 1)
 ) AS v(slug, name, bucket, bonus, damage, ord)
 WHERE NOT EXISTS (
-  SELECT 1 FROM rpg.phb_vehicle_template_action a
-  WHERE a.template_slug = v.slug AND a.name = v.name
+  SELECT 1 FROM rpg.phb_stat_block_action a
+  WHERE a.vehicle_template_slug = v.slug AND a.name = v.name
 );

@@ -33,24 +33,24 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-aberrante-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-aberrante-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-aberrante-devorador', 'walk', 30),
   ('espirito-aberrante-pseudo-observador', 'walk', 30),
   ('espirito-aberrante-pseudo-observador', 'fly', 30),
   ('espirito-aberrante-slaad', 'walk', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-aberrante-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-aberrante-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-aberrante-devorador', 'Aura Sussurrante', 'No início do turno: Salvaguarda de Sabedoria (CD da magia) em cada criatura (exceto você) a 1,5 m — Falha: 2d6 Psíquico.', 0),
   ('espirito-aberrante-devorador', 'Imunidades', 'Psíquico. Visão no Escuro 18 m; Percepção passiva 10. Dialeto Obscuro + idiomas que você fala.', 1),
   ('espirito-aberrante-pseudo-observador', 'Imunidades', 'Psíquico. Visão no Escuro 18 m; Percepção passiva 10. Dialeto Obscuro + idiomas que você fala. Voo (pairar).', 0),
   ('espirito-aberrante-slaad', 'Regeneração', 'Recupera 5 PV no início do turno se tiver ≥1 PV.', 0),
   ('espirito-aberrante-slaad', 'Imunidades', 'Psíquico. Visão no Escuro 18 m; Percepção passiva 10. Dialeto Obscuro + idiomas que você fala.', 1);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-aberrante-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-aberrante-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-aberrante-devorador', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo (arredondado para baixo).', 1),
   ('espirito-aberrante-devorador', 'Pancada Psíquica', 'action'::rpg.actor_action_bucket, NULL, '1d8+3', 'Ataque corpo a corpo: bônus = ataque mágico. Dano: 1d8+3 + círculo (Psíquico).', 2),
@@ -99,23 +99,23 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-constructo-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-constructo-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-constructo-argila', 'walk', 30),
   ('espirito-constructo-metal', 'walk', 30),
   ('espirito-constructo-pedra', 'walk', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-constructo-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-constructo-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-constructo-argila', 'Resistências / Imunidades', 'Resistência Venenoso. Imune a Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado.', 0),
   ('espirito-constructo-metal', 'Corpo Aquecido', 'Criatura que acerta corpo a corpo ou inicia turno imobilizando o espírito: 1d10 Ígneo.', 0),
   ('espirito-constructo-metal', 'Resistências / Imunidades', 'Resistência Venenoso. Imune a Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado.', 1),
   ('espirito-constructo-pedra', 'Letargia Empedernida', 'Criatura a 3 m no início do turno: Salvaguarda de Sabedoria (CD da magia) — Falha: sem AoO e deslocamento pela metade até o próximo turno do espírito.', 0),
   ('espirito-constructo-pedra', 'Resistências / Imunidades', 'Resistência Venenoso. Imune a Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado.', 1);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-constructo-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-constructo-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-constructo-argila', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo em Pancada.', 1),
   ('espirito-constructo-argila', 'Pancada', 'action'::rpg.actor_action_bucket, NULL, '1d8+4', 'Ataque corpo a corpo: bônus = ataque mágico. Dano: 1d8+4 + círculo (Contundente).', 2),
@@ -152,20 +152,20 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'espirito-draconico';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'espirito-draconico';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-draconico', 'walk', 30),
   ('espirito-draconico', 'swim', 30),
   ('espirito-draconico', 'fly', 60);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'espirito-draconico';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'espirito-draconico';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-draconico', 'Resistências Compartilhadas', 'Ao invocar, escolha uma resistência (Ácido/Elétrico/Gélido/Ígneo/Venenoso); você ganha essa resistência até a magia terminar.', 0),
   ('espirito-draconico', 'Imunidades', 'Amedrontado, Enfeitiçado, Envenenado. Visão às Cegas 9 m; Visão no Escuro 18 m; Percepção passiva 12.', 1);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug = 'espirito-draconico';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug = 'espirito-draconico';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-draconico', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo em Dilacerar + Ataque de Sopro.', 1),
   ('espirito-draconico', 'Dilacerar', 'action'::rpg.actor_action_bucket, NULL, '1d6+4', 'Ataque corpo a corpo: bônus = ataque mágico, alcance 3 m. Dano: 1d6+4 + círculo (Perfurante).', 2),
@@ -209,24 +209,24 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-infero-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-infero-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-infero-demonio', 'walk', 40),
   ('espirito-infero-demonio', 'climb', 40),
   ('espirito-infero-diabo', 'walk', 40),
   ('espirito-infero-diabo', 'fly', 60),
   ('espirito-infero-yugoloth', 'walk', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-infero-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-infero-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-infero-demonio', 'Espasmos da Morte', 'Ao 0 PV ou fim da magia: explode; Salvaguarda de Destreza (CD da magia) em Emanação 3 m — Falha: 2d10 + círculo Ígneo.', 0),
   ('espirito-infero-demonio', 'Resistência à Magia', 'Vantagem em salvaguardas contra magias e efeitos mágicos. Resistência Ígneo; Imune Venenoso/Envenenado.', 1),
   ('espirito-infero-diabo', 'Visão Diabólica', 'Escuridão mágica não impede Visão no Escuro. Resistência à Magia; Resistência Ígneo; Imune Venenoso/Envenenado.', 0),
   ('espirito-infero-yugoloth', 'Resistência à Magia', 'Vantagem em salvaguardas contra magias. Resistência Ígneo; Imune Venenoso/Envenenado.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-infero-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-infero-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-infero-demonio', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo.', 1),
   ('espirito-infero-demonio', 'Mordida', 'action'::rpg.actor_action_bucket, NULL, '1d12+3', 'Ataque corpo a corpo: bônus = ataque mágico. Dano: 1d12+3 + círculo (Necrótico).', 2),
@@ -275,24 +275,24 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-morto-vivo-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-morto-vivo-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-morto-vivo-esqueletico', 'walk', 30),
   ('espirito-morto-vivo-fantasmagorico', 'walk', 30),
   ('espirito-morto-vivo-fantasmagorico', 'fly', 40),
   ('espirito-morto-vivo-putrido', 'walk', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-morto-vivo-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-morto-vivo-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-morto-vivo-esqueletico', 'Imunidades', 'Necrótico, Venenoso; Amedrontado, Envenenado, Exaustão, Paralisado.', 0),
   ('espirito-morto-vivo-fantasmagorico', 'Passagem Incorpórea', 'Move-se através de criaturas/objetos como terreno difícil; se terminar dentro de objeto, é desviado e sofre 1d10 Energético / 1,5 m.', 0),
   ('espirito-morto-vivo-fantasmagorico', 'Imunidades', 'Necrótico, Venenoso; Amedrontado, Envenenado, Exaustão, Paralisado. Voo (pairar).', 1),
   ('espirito-morto-vivo-putrido', 'Aura Purulenta', 'Criatura (exceto você) que inicia turno a 1,5 m: Salvaguarda de Constituição (CD da magia) — Falha: Envenenado até o início do próximo turno.', 0),
   ('espirito-morto-vivo-putrido', 'Imunidades', 'Necrótico, Venenoso; Amedrontado, Envenenado, Exaustão, Paralisado.', 1);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-morto-vivo-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-morto-vivo-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-morto-vivo-esqueletico', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo.', 1),
   ('espirito-morto-vivo-esqueletico', 'Raio da Cova', 'action'::rpg.actor_action_bucket, NULL, '2d4+3', 'Ataque à distância: bônus = ataque mágico, alcance 45 m. Dano: 2d4+3 + círculo (Necrótico).', 2),
@@ -341,8 +341,8 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'inseto-gigante-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'inseto-gigante-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('inseto-gigante-aranha', 'walk', 40),
   ('inseto-gigante-aranha', 'climb', 40),
   ('inseto-gigante-centopeia', 'walk', 40),
@@ -351,15 +351,15 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('inseto-gigante-vespa', 'climb', 40),
   ('inseto-gigante-vespa', 'fly', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'inseto-gigante-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'inseto-gigante-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('inseto-gigante-aranha', 'Escalada de Aranha', 'Escala superfícies difíceis e tetos sem teste.', 0),
   ('inseto-gigante-centopeia', 'Escalada de Aranha', 'Escala superfícies difíceis e tetos sem teste.', 0),
   ('inseto-gigante-vespa', 'Escalada de Aranha', 'Escala superfícies difíceis e tetos sem teste. Voo 12 m.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'inseto-gigante-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'inseto-gigante-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('inseto-gigante-aranha', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'Metade do círculo.', 1),
   ('inseto-gigante-aranha', 'Punição Venenosa', 'action'::rpg.actor_action_bucket, NULL, '1d6+3', 'Ataque corpo a corpo: bônus = ataque mágico, alcance 3 m. Dano: 1d6+3 + círculo Perfurante + 1d4 Venenoso.', 2),
@@ -410,8 +410,8 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'objeto-animado-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'objeto-animado-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('objeto-animado-medio', 'walk', 30),
   ('objeto-animado-grande', 'walk', 30),
   ('objeto-animado-enorme', 'walk', 30);
@@ -419,8 +419,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
 -- Fonte: PHB 2024 Animated Object (D&D Beyond scrap em docs/source/scrap).
 -- Orçamento do cast (não no template): máx. objetos = mod. conjuração;
 -- Médio ou menor = 1, Grande = 2, Enorme = 3. PB = PB do conjurador.
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'objeto-animado-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'objeto-animado-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('objeto-animado-medio', 'Imunidades', 'Venenoso, Psíquico; Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado.', 0),
   ('objeto-animado-medio', 'Sentidos', 'Visão às Cegas 9 m; Percepção Passiva 6.', 1),
   ('objeto-animado-medio', 'Idiomas', 'Compreende os idiomas que você conhece.', 2),
@@ -434,9 +434,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('objeto-animado-enorme', 'Idiomas', 'Compreende os idiomas que você conhece.', 2),
   ('objeto-animado-enorme', 'Bônus de Proficiência', 'Igual ao Bônus de Proficiência do conjurador.', 3);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'objeto-animado-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'objeto-animado-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('objeto-animado-medio', 'Pancada', 'action'::rpg.actor_action_bucket, NULL, '1d4+3',
    'Ataque corpo a corpo (alcance 1,5 m): bônus = seu bônus de ataque mágico. Acerto: dano Energético 1d4+3. Usando slot acima de 5º: +1d4 por círculo.', 1),

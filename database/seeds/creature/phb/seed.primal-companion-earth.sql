@@ -36,20 +36,20 @@ INSERT INTO rpg.phb_creature_template (
   initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-earth';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'primal-companion-earth';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('primal-companion-earth', 'walk', 40),
   ('primal-companion-earth', 'climb', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'primal-companion-earth';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'primal-companion-earth';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('primal-companion-earth', 'Vínculo Primal', 'Some o Bônus de Proficiência do patrulheiro a testes de habilidade e salvaguardas da fera.', 0),
   ('primal-companion-earth', 'Sentidos', 'Visão no escuro 18 m; Percepção passiva 12. Compreende os idiomas que você conhece.', 1);
 
-DELETE FROM rpg.phb_creature_template_action
-WHERE template_slug = 'primal-companion-earth' AND name IN ('Golpe da Fera', 'Golpe da Besta');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action
+WHERE creature_template_slug = 'primal-companion-earth' AND name IN ('Golpe da Fera', 'Golpe da Besta');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES (
   'primal-companion-earth',
   'Golpe da Besta',
@@ -93,21 +93,21 @@ INSERT INTO rpg.phb_creature_template (
   initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-sky';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'primal-companion-sky';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('primal-companion-sky', 'walk', 10),
   ('primal-companion-sky', 'fly', 60);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'primal-companion-sky';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'primal-companion-sky';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('primal-companion-sky', 'Voo de Passagem', 'A fera não provoca Ataques de Oportunidade ao voar para fora do alcance de um inimigo.', 0),
   ('primal-companion-sky', 'Vínculo Primal', 'Some o Bônus de Proficiência do patrulheiro a testes de habilidade e salvaguardas da fera.', 1),
   ('primal-companion-sky', 'Sentidos', 'Visão no escuro 18 m; Percepção passiva 12. Compreende os idiomas que você conhece.', 2);
 
-DELETE FROM rpg.phb_creature_template_action
-WHERE template_slug = 'primal-companion-sky' AND name IN ('Golpe da Fera', 'Golpe da Besta');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action
+WHERE creature_template_slug = 'primal-companion-sky' AND name IN ('Golpe da Fera', 'Golpe da Besta');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES (
   'primal-companion-sky',
   'Golpe da Besta',
@@ -151,21 +151,21 @@ INSERT INTO rpg.phb_creature_template (
   initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'primal-companion-sea';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'primal-companion-sea';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('primal-companion-sea', 'walk', 5),
   ('primal-companion-sea', 'swim', 60);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'primal-companion-sea';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'primal-companion-sea';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('primal-companion-sea', 'Anfíbio', 'A fera pode respirar ar e água.', 0),
   ('primal-companion-sea', 'Vínculo Primal', 'Some o Bônus de Proficiência do patrulheiro a testes de habilidade e salvaguardas da fera.', 1),
   ('primal-companion-sea', 'Sentidos', 'Visão no escuro 27 m; Percepção passiva 12. Compreende os idiomas que você conhece.', 2);
 
-DELETE FROM rpg.phb_creature_template_action
-WHERE template_slug = 'primal-companion-sea' AND name IN ('Golpe da Fera', 'Golpe da Besta');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action
+WHERE creature_template_slug = 'primal-companion-sea' AND name IN ('Golpe da Fera', 'Golpe da Besta');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES (
   'primal-companion-sea',
   'Golpe da Besta',

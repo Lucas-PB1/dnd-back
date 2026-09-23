@@ -31,12 +31,12 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('camelo', 'walk', 50);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('camelo', 'walk', 50);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('camelo', 'Capacidade de carga', '225 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('camelo', 'Sentidos', 'Percepção passiva 9', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('camelo', 'Capacidade de carga', '225 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('camelo', 'Sentidos', 'Percepção passiva 9', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('camelo', 'Mordida', 'action'::rpg.actor_action_bucket, 5, '1d4+0', 'Ataque corpo a corpo: +5, alcance 1,5 m., um alvo. Acerto: 2 (1d4) de dano de Concussão.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('camelo', 'Mordida', 'action'::rpg.actor_action_bucket, 5, '1d4+0', 'Ataque corpo a corpo: +5, alcance 1,5 m., um alvo. Acerto: 2 (1d4) de dano de Concussão.', 1);
 
 -- Elefante (elefante)
 INSERT INTO rpg.phb_creature_template (
@@ -66,14 +66,14 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('elefante', 'walk', 40);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('elefante', 'walk', 40);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('elefante', 'Capacidade de carga', '660 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('elefante', 'Sentidos', 'Percepção passiva 10', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('elefante', 'Capacidade de carga', '660 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('elefante', 'Sentidos', 'Percepção passiva 10', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'O elefante realiza dois ataques de Chifrar.', 1);
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Chifrar', 'action'::rpg.actor_action_bucket, 8, '15 (2d8+6)', 'Ataque corpo a corpo: +8, alcance 1,5 m. Acerto: 15 (2d8 + 6) de dano Perfurante. Se o elefante se moveu pelo menos 6 m em linha reta em direção ao alvo imediatamente antes do acerto, o alvo também fica Caído.', 2);
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Atropelar', 'bonus'::rpg.actor_action_bucket, NULL, '17 (2d10+6)', 'Teste de resistência de Destreza: CD 16, uma criatura a até 1,5 m que esteja Caída. Falha: 17 (2d10 + 6) de dano de Concussão. Sucesso: metade do dano.', 3);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL, 'O elefante realiza dois ataques de Chifrar.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Chifrar', 'action'::rpg.actor_action_bucket, 8, '15 (2d8+6)', 'Ataque corpo a corpo: +8, alcance 1,5 m. Acerto: 15 (2d8 + 6) de dano Perfurante. Se o elefante se moveu pelo menos 6 m em linha reta em direção ao alvo imediatamente antes do acerto, o alvo também fica Caído.', 2);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('elefante', 'Atropelar', 'bonus'::rpg.actor_action_bucket, NULL, '17 (2d10+6)', 'Teste de resistência de Destreza: CD 16, uma criatura a até 1,5 m que esteja Caída. Falha: 17 (2d10 + 6) de dano de Concussão. Sucesso: metade do dano.', 3);
 
 -- Cavalo de Carga (cavalo-de-carga)
 INSERT INTO rpg.phb_creature_template (
@@ -103,12 +103,12 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-carga', 'walk', 40);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-carga', 'walk', 40);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-carga', 'Capacidade de carga', '270 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-carga', 'Sentidos', 'Percepção passiva 10', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-carga', 'Capacidade de carga', '270 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-carga', 'Sentidos', 'Percepção passiva 10', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-carga', 'Cascos', 'action'::rpg.actor_action_bucket, 6, '2d4+4', 'Ataque corpo a corpo: +6, alcance 1,5 m., um alvo. Acerto: 9 (2d4 + 4) de dano de Concussão.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-carga', 'Cascos', 'action'::rpg.actor_action_bucket, 6, '2d4+4', 'Ataque corpo a corpo: +6, alcance 1,5 m., um alvo. Acerto: 9 (2d4 + 4) de dano de Concussão.', 1);
 
 -- Cavalo de Montaria (cavalo-de-montaria)
 INSERT INTO rpg.phb_creature_template (
@@ -138,12 +138,12 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-montaria', 'walk', 60);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-montaria', 'walk', 60);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-montaria', 'Capacidade de carga', '240 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-montaria', 'Sentidos', 'Percepção passiva 10', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-montaria', 'Capacidade de carga', '240 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-montaria', 'Sentidos', 'Percepção passiva 10', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-montaria', 'Cascos', 'action'::rpg.actor_action_bucket, 5, '2d4+3', 'Ataque corpo a corpo: +5, alcance 1,5 m., um alvo. Acerto: 8 (2d4 + 3) de dano de Concussão.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-montaria', 'Cascos', 'action'::rpg.actor_action_bucket, 5, '2d4+3', 'Ataque corpo a corpo: +5, alcance 1,5 m., um alvo. Acerto: 8 (2d4 + 3) de dano de Concussão.', 1);
 
 -- Mastim (mastim)
 INSERT INTO rpg.phb_creature_template (
@@ -173,14 +173,14 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('mastim', 'walk', 40);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('mastim', 'walk', 40);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mastim', 'Capacidade de carga', '97.5 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mastim', 'Audição e Faro Aguçados', 'O mastim tem vantagem em testes de Sabedoria (Percepção) que dependam de audição ou olfato.', 1);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mastim', 'Perícias', 'Percepção +3', 2);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mastim', 'Sentidos', 'Percepção passiva 13', 3);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mastim', 'Capacidade de carga', '97.5 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mastim', 'Audição e Faro Aguçados', 'O mastim tem vantagem em testes de Sabedoria (Percepção) que dependam de audição ou olfato.', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mastim', 'Perícias', 'Percepção +3', 2);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mastim', 'Sentidos', 'Percepção passiva 13', 3);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('mastim', 'Mordida', 'action'::rpg.actor_action_bucket, 3, '1d6+1', 'Ataque corpo a corpo: +3, alcance 1,5 m., um alvo. Acerto: 4 (1d6 + 1) de dano Perfurante. Se o alvo for uma criatura, deve passar em um teste de resistência de Força CD 11 ou ficar Caído.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('mastim', 'Mordida', 'action'::rpg.actor_action_bucket, 3, '1d6+1', 'Ataque corpo a corpo: +3, alcance 1,5 m., um alvo. Acerto: 4 (1d6 + 1) de dano Perfurante. Se o alvo for uma criatura, deve passar em um teste de resistência de Força CD 11 ou ficar Caído.', 1);
 
 -- Mula (mula)
 INSERT INTO rpg.phb_creature_template (
@@ -210,14 +210,14 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('mula', 'walk', 40);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('mula', 'walk', 40);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mula', 'Capacidade de carga', '210 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mula', 'Animal de Carga', 'A mula conta como uma categoria de tamanho maior para determinar sua capacidade de carga.', 1);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mula', 'Pé Firme', 'A mula tem vantagem em testes de resistência de Força e Destreza contra efeitos que a derrubariam.', 2);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('mula', 'Sentidos', 'Percepção passiva 10', 3);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mula', 'Capacidade de carga', '210 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mula', 'Animal de Carga', 'A mula conta como uma categoria de tamanho maior para determinar sua capacidade de carga.', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mula', 'Pé Firme', 'A mula tem vantagem em testes de resistência de Força e Destreza contra efeitos que a derrubariam.', 2);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('mula', 'Sentidos', 'Percepção passiva 10', 3);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('mula', 'Cascos', 'action'::rpg.actor_action_bucket, 4, '1d4+2', 'Ataque corpo a corpo: +2, alcance 1,5 m., um alvo. Acerto: 4 (1d4 + 2) de dano de Concussão.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('mula', 'Cascos', 'action'::rpg.actor_action_bucket, 4, '1d4+2', 'Ataque corpo a corpo: +2, alcance 1,5 m., um alvo. Acerto: 4 (1d4 + 2) de dano de Concussão.', 1);
 
 -- Pônei (ponei)
 INSERT INTO rpg.phb_creature_template (
@@ -247,12 +247,12 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('ponei', 'walk', 40);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('ponei', 'walk', 40);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('ponei', 'Capacidade de carga', '112.5 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('ponei', 'Sentidos', 'Percepção passiva 10', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('ponei', 'Capacidade de carga', '112.5 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('ponei', 'Sentidos', 'Percepção passiva 10', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('ponei', 'Cascos', 'action'::rpg.actor_action_bucket, 4, '2d4+2', 'Ataque corpo a corpo: +4, alcance 1,5 m., um alvo. Acerto: 7 (2d4 + 2) de dano de Concussão.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('ponei', 'Cascos', 'action'::rpg.actor_action_bucket, 4, '2d4+2', 'Ataque corpo a corpo: +4, alcance 1,5 m., um alvo. Acerto: 7 (2d4 + 2) de dano de Concussão.', 1);
 
 -- Cavalo de Guerra (cavalo-de-guerra)
 INSERT INTO rpg.phb_creature_template (
@@ -282,9 +282,9 @@ INSERT INTO rpg.phb_creature_template (
   hit_points_formula = EXCLUDED.hit_points_formula, initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-guerra', 'walk', 60);
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES ('cavalo-de-guerra', 'walk', 60);
 
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-guerra', 'Capacidade de carga', '270 kg', 0);
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES ('cavalo-de-guerra', 'Sentidos', 'Percepção passiva 11', 1);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-guerra', 'Capacidade de carga', '270 kg', 0);
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES ('cavalo-de-guerra', 'Sentidos', 'Percepção passiva 11', 1);
 
-INSERT INTO rpg.phb_creature_template_action (template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-guerra', 'Cascos', 'action'::rpg.actor_action_bucket, 6, '9 (2d4+4)', 'Ataque corpo a corpo: +6, alcance 1,5 m. Acerto: 9 (2d4 + 4) de dano de Concussão. Se o cavalo se moveu pelo menos 6 m em linha reta em direção ao alvo imediatamente antes do acerto, o alvo sofre 5 (2d4) de dano de Concussão extra e, se for Enorme ou menor, fica Caído.', 1);
+INSERT INTO rpg.phb_stat_block_action (creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order) VALUES ('cavalo-de-guerra', 'Cascos', 'action'::rpg.actor_action_bucket, 6, '9 (2d4+4)', 'Ataque corpo a corpo: +6, alcance 1,5 m. Acerto: 9 (2d4 + 4) de dano de Concussão. Se o cavalo se moveu pelo menos 6 m em linha reta em direção ao alvo imediatamente antes do acerto, o alvo sofre 5 (2d4) de dano de Concussão extra e, se for Enorme ou menor, fica Caído.', 1);

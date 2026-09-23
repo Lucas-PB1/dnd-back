@@ -58,11 +58,11 @@ ON CONFLICT (slug) DO UPDATE SET
   initiative_modifier = EXCLUDED.initiative_modifier,
   ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed
-WHERE template_slug LIKE 'primal-companion-guardian-%'
+DELETE FROM rpg.phb_stat_block_speed
+WHERE creature_template_slug LIKE 'primal-companion-guardian-%'
    OR template_slug LIKE 'primal-companion-striker-%';
 
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft)
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft)
 VALUES
   ('primal-companion-guardian-land', 'walk', 30),
   ('primal-companion-guardian-sea', 'walk', 5),
@@ -75,13 +75,13 @@ VALUES
   ('primal-companion-striker-sky', 'walk', 10),
   ('primal-companion-striker-sky', 'fly', 60);
 
-DELETE FROM rpg.phb_creature_template_action
-WHERE (template_slug LIKE 'primal-companion-guardian-%'
+DELETE FROM rpg.phb_stat_block_action
+WHERE (creature_template_slug LIKE 'primal-companion-guardian-%'
     OR template_slug LIKE 'primal-companion-striker-%')
   AND name IN ('Golpe da Fera', 'Golpe da Besta');
 
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, sort_order
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, sort_order
 )
 SELECT slug, 'Golpe da Besta', 'action'::rpg.actor_action_bucket, NULL::int, damage, 1
 FROM (VALUES

@@ -54,9 +54,9 @@ ON CONFLICT (template_slug) DO UPDATE SET
   hp_per_slot = EXCLUDED.hp_per_slot,
   hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed
-WHERE template_slug LIKE 'montaria-sobrenatural-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed
+WHERE creature_template_slug LIKE 'montaria-sobrenatural-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('montaria-sobrenatural-celestial', 'walk', 60),
   ('montaria-sobrenatural-celestial', 'fly', 60),
   ('montaria-sobrenatural-feerico', 'walk', 60),
@@ -64,9 +64,9 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('montaria-sobrenatural-infero', 'walk', 60),
   ('montaria-sobrenatural-infero', 'fly', 60);
 
-DELETE FROM rpg.phb_creature_template_trait
-WHERE template_slug LIKE 'montaria-sobrenatural-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait
+WHERE creature_template_slug LIKE 'montaria-sobrenatural-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('montaria-sobrenatural-celestial', 'Vínculo Vital',
    'Ao recuperar PV de uma magia de 1º círculo ou superior, a montaria recupera o mesmo número se você estiver a até 1,5 m dela.', 0),
   ('montaria-sobrenatural-celestial', 'Sentidos', 'Percepção passiva 11. Telepatia 1,5 km (apenas com você).', 1),
@@ -77,10 +77,10 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
    'Ao recuperar PV de uma magia de 1º círculo ou superior, a montaria recupera o mesmo número se você estiver a até 1,5 m dela.', 0),
   ('montaria-sobrenatural-infero', 'Sentidos', 'Percepção passiva 11. Telepatia 1,5 km (apenas com você).', 1);
 
-DELETE FROM rpg.phb_creature_template_action
-WHERE template_slug LIKE 'montaria-sobrenatural-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action
+WHERE creature_template_slug LIKE 'montaria-sobrenatural-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
 (
   'montaria-sobrenatural-celestial', 'Pancada Sobrenatural', 'action'::rpg.actor_action_bucket, NULL, '1d8',

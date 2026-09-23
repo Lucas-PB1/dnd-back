@@ -23,18 +23,18 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'arma-espiritual';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'arma-espiritual';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('arma-espiritual', 'fly', 20);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'arma-espiritual';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'arma-espiritual';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('arma-espiritual', 'Energia espectral',
    'Proxy skirmish da magia Arma Espiritual. Não é criatura atacável nas regras; no skirmish o inimigo prioriza o PC. Desaparece se a concentração cair.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug = 'arma-espiritual';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug = 'arma-espiritual';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('arma-espiritual', 'Golpe Espectral', 'action'::rpg.actor_action_bucket, NULL, '1d8+0',
    'Ataque mágico corpo a corpo: bônus = ataque mágico do conjurador. Dano: 1d8 + modificador de conjuração (Energético). Upcast: +1d8 por círculo acima de 2 (aprox. no skirmish = 1d8 base).', 1);
@@ -81,18 +81,18 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'bando-animais-espectrais';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'bando-animais-espectrais';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('bando-animais-espectrais', 'walk', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'bando-animais-espectrais';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'bando-animais-espectrais';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('bando-animais-espectrais', 'Proxy skirmish',
    'Conjurar Animais (PHB 2024) é aura/bando sem ficha. No skirmish vira 1 actor com pulso de dano equivalente (3d10 Cortante).', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug = 'bando-animais-espectrais';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug = 'bando-animais-espectrais';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('bando-animais-espectrais', 'Enxame Espectral', 'action'::rpg.actor_action_bucket, NULL, '3d10',
    'Aprox. do pulso Dex 3d10 Cortante da aura: ataque com bônus = ataque mágico do conjurador. Upcast +1d10 por círculo acima de 3 (aprox. = 3d10 base).', 1);

@@ -33,8 +33,8 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-bestial-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-bestial-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-bestial-ar', 'walk', 30),
   ('espirito-bestial-ar', 'fly', 60),
   ('espirito-bestial-terra', 'walk', 30),
@@ -42,8 +42,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('espirito-bestial-agua', 'walk', 30),
   ('espirito-bestial-agua', 'swim', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-bestial-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-bestial-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-bestial-ar', 'Sobrevoo', 'Não provoca Ataques de Oportunidade ao voar para fora do alcance de um inimigo.', 0),
   ('espirito-bestial-ar', 'Sentidos', 'Visão no Escuro 18 m; Percepção passiva 12. Compreende os idiomas que você fala.', 1),
   ('espirito-bestial-terra', 'Táticas de Grupo', 'Vantagem no ataque se um aliado estiver a 1,5 m do alvo e não Incapacitado.', 0),
@@ -52,9 +52,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('espirito-bestial-agua', 'Táticas de Grupo', 'Vantagem no ataque se um aliado estiver a 1,5 m do alvo e não Incapacitado.', 1),
   ('espirito-bestial-agua', 'Sentidos', 'Visão no Escuro 18 m; Percepção passiva 12. Compreende os idiomas que você fala.', 2);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-bestial-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-bestial-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-bestial-ar', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL,
    'Número de Dilacerar = metade do círculo do slot (arredondado para baixo).', 1),
@@ -113,8 +113,8 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-feerico-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-feerico-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-feerico-alegre', 'walk', 30),
   ('espirito-feerico-alegre', 'fly', 30),
   ('espirito-feerico-enfurecido', 'walk', 30),
@@ -122,15 +122,15 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('espirito-feerico-malandro', 'walk', 30),
   ('espirito-feerico-malandro', 'fly', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-feerico-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-feerico-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-feerico-alegre', 'Imunidades', 'Enfeitiçado. Visão no Escuro 18 m; Percepção passiva 10. Silvestre + idiomas que você fala.', 0),
   ('espirito-feerico-enfurecido', 'Imunidades', 'Enfeitiçado. Visão no Escuro 18 m; Percepção passiva 10. Silvestre + idiomas que você fala.', 0),
   ('espirito-feerico-malandro', 'Imunidades', 'Enfeitiçado. Visão no Escuro 18 m; Percepção passiva 10. Silvestre + idiomas que você fala.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-feerico-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-feerico-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-feerico-alegre', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL,
    'Número de Lâmina Feérica = metade do círculo (arredondado para baixo).', 1),
@@ -201,8 +201,8 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-elemental-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-elemental-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-elemental-ar', 'walk', 40),
   ('espirito-elemental-ar', 'fly', 40),
   ('espirito-elemental-terra', 'walk', 40),
@@ -211,16 +211,16 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('espirito-elemental-agua', 'walk', 40),
   ('espirito-elemental-agua', 'swim', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-elemental-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-elemental-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-elemental-ar', 'Estado Amorfo', 'Move-se por espaço de 2,5 cm sem terreno difícil. Resistências: Elétrico e Trovejante.', 0),
   ('espirito-elemental-terra', 'Resistências', 'Cortante e Perfurante. Imunidades: Venenoso; Envenenado, Exaustão, Paralisado, Petrificado.', 0),
   ('espirito-elemental-fogo', 'Estado Amorfo', 'Move-se por espaço de 2,5 cm sem terreno difícil. Imunidade Ígneo.', 0),
   ('espirito-elemental-agua', 'Estado Amorfo', 'Move-se por espaço de 2,5 cm sem terreno difícil. Resistência Ácido.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-elemental-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-elemental-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-elemental-ar', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL,
    'Número de Pancada = metade do círculo (arredondado para baixo).', 1),
@@ -278,23 +278,23 @@ ON CONFLICT (slug) DO UPDATE SET
   hit_points_formula = EXCLUDED.hit_points_formula,
   initiative_modifier = EXCLUDED.initiative_modifier, ability_scores = EXCLUDED.ability_scores;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug LIKE 'espirito-celestial-%';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug LIKE 'espirito-celestial-%';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('espirito-celestial-defensor', 'walk', 30),
   ('espirito-celestial-defensor', 'fly', 40),
   ('espirito-celestial-vingador', 'walk', 30),
   ('espirito-celestial-vingador', 'fly', 40);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug LIKE 'espirito-celestial-%';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug LIKE 'espirito-celestial-%';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('espirito-celestial-defensor', 'Resistências / Imunidades',
    'Resistência Radiante. Imune a Amedrontado e Enfeitiçado. Visão no Escuro 18 m; Percepção passiva 12. Celestial + idiomas que você fala.', 0),
   ('espirito-celestial-vingador', 'Resistências / Imunidades',
    'Resistência Radiante. Imune a Amedrontado e Enfeitiçado. Visão no Escuro 18 m; Percepção passiva 12. Celestial + idiomas que você fala.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug LIKE 'espirito-celestial-%';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug LIKE 'espirito-celestial-%';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('espirito-celestial-defensor', 'Ataques Múltiplos', 'action'::rpg.actor_action_bucket, NULL, NULL,
    'Número de ataques = metade do círculo (arredondado para baixo).', 1),

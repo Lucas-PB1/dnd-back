@@ -329,8 +329,8 @@ ON CONFLICT (template_slug) DO UPDATE SET
   hp_per_slot = EXCLUDED.hp_per_slot,
   hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft) VALUES
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft) VALUES
   ('alce', 'walk', 50),
   ('aranha', 'walk', 20),
   ('aranha', 'climb', 20),
@@ -404,8 +404,8 @@ INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed
   ('urso-pardo', 'walk', 40),
   ('urso-pardo', 'climb', 30);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('alce', 'Sentidos', 'Visão no Escuro 18 m. Percepção Passiva 12.', 0),
   ('aranha', 'Sentidos', 'Visão no Escuro 9 m. Percepção Passiva 10.', 0),
   ('aranha', 'Spider Climb', 'The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check.', 1),
@@ -475,9 +475,9 @@ INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, s
   ('urso-negro', 'Sentidos', 'Visão no Escuro 18 m. Percepção Passiva 15.', 0),
   ('urso-pardo', 'Sentidos', 'Visão no Escuro 18 m. Percepção Passiva 13.', 0);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug IN ('alce', 'aranha', 'aranha-gigante', 'cabra', 'cabra-gigante', 'camelo', 'caranguejo', 'caranguejo-gigante', 'cavalo-de-guerra', 'cavalo-de-montaria', 'cavalo-de-tracao', 'cavalo-marinho-gigante', 'cobra-constritora', 'cobra-venenosa', 'coruja', 'corvo', 'crocodilo', 'doninha', 'doninha-gigante', 'elefante', 'escorpiao', 'falcao', 'gato', 'javali', 'lagarto', 'leao', 'lobo', 'lobo-terrivel', 'macaco', 'mastim', 'morcego', 'mula', 'pantera', 'polvo', 'ponei', 'rato', 'sapo', 'texugo', 'texugo-gigante', 'tigre', 'tubarao-de-recife', 'urso-negro', 'urso-pardo');
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES
   ('alce', 'Ram', 'action'::rpg.actor_action_bucket, 5, '6', 'Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Bludgeoning damage and has the Prone condition.', 1),
   ('aranha', 'Bite', 'action'::rpg.actor_action_bucket, 4, '1', 'Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 2 (1d4) Poison damage.', 1),

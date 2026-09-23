@@ -37,21 +37,21 @@ ON CONFLICT (template_slug) DO UPDATE SET
   hp_per_slot = EXCLUDED.hp_per_slot,
   hp_mode = EXCLUDED.hp_mode;
 
-DELETE FROM rpg.phb_creature_template_speed WHERE template_slug = 'montaria-fantasmagorica';
-INSERT INTO rpg.phb_creature_template_speed (template_slug, movement_kind, speed_ft)
+DELETE FROM rpg.phb_stat_block_speed WHERE creature_template_slug = 'montaria-fantasmagorica';
+INSERT INTO rpg.phb_stat_block_speed (creature_template_slug, movement_kind, speed_ft)
 VALUES ('montaria-fantasmagorica', 'walk', 100);
 
-DELETE FROM rpg.phb_creature_template_trait WHERE template_slug = 'montaria-fantasmagorica';
-INSERT INTO rpg.phb_creature_template_trait (template_slug, name, description, sort_order) VALUES
+DELETE FROM rpg.phb_stat_block_trait WHERE creature_template_slug = 'montaria-fantasmagorica';
+INSERT INTO rpg.phb_stat_block_trait (creature_template_slug, name, description, sort_order) VALUES
   ('montaria-fantasmagorica', 'Ilusão quase real',
    'Usa o bloco de Cavalo de Montaria, com Deslocamento de 30 m (20 km/h). Equipamento criado some a mais de 3 m. Quando a magia termina, o cavaleiro tem 1 minuto para desmontar.', 0),
   ('montaria-fantasmagorica', 'Dissipar no dano',
    'A magia se encerra se a montaria sofrer qualquer dano (despawn na ficha).', 1),
   ('montaria-fantasmagorica', 'Sentidos', 'Percepção passiva 10.', 2);
 
-DELETE FROM rpg.phb_creature_template_action WHERE template_slug = 'montaria-fantasmagorica';
-INSERT INTO rpg.phb_creature_template_action (
-  template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
+DELETE FROM rpg.phb_stat_block_action WHERE creature_template_slug = 'montaria-fantasmagorica';
+INSERT INTO rpg.phb_stat_block_action (
+  creature_template_slug, name, action_bucket, attack_bonus, damage_expression, description, sort_order
 ) VALUES (
   'montaria-fantasmagorica', 'Cascos', 'action'::rpg.actor_action_bucket, 5, '2d4+3',
   'Ataque corpo a corpo: +5, alcance 1,5 m., um alvo. Acerto: 8 (2d4 + 3) de dano de Concussão.', 1
