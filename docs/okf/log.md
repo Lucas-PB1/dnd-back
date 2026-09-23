@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-23 — Abertura trilha GEN (schema genérico)
+
+* **Update**: fila **GEN-0…10** aberta — norte “primitivas, não tabela de feature”; auditoria copiada de `check/` para `docs/architecture/schema-audit/` (inventory, quality, consolidation); GEN-0 docs fechado; próximo = GEN-1 higiene. Não é mesa ficha.
+
+— refs: [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md), [`schema-audit/`](../architecture/schema-audit/), [`backlog.md`](../plans/backlog.md), [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) — motivo: materializar enxugada onda 2 no backlog do dnd-api.
+
 ## 2026-09-23 — TORM-5 Cutover (trilha fechada)
 
 * **Update**: `db:validate:sequences` verde (NOT EXISTS + `truncate-scoped` para DELETE/INSERT); docs cutover (`sql-layout`, `infrastructure`, `DEPLOY`, READMEs); plano filho `typeorm-migrations-backlog.md` **apagado**; TORM riscado no backlog. Smoke: `db:setup` local.
