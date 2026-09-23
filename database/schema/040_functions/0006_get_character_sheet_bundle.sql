@@ -25,8 +25,9 @@ AS $$
         )
         ORDER BY sc.choice_kind
       )
-      FROM rpg.player_character_species_choice sc
+      FROM rpg.player_character_choice sc
       WHERE sc.character_id = p_character_id
+        AND sc.domain = 'species'::rpg.character_choice_domain
         AND sc.choice_kind NOT LIKE 'heritage_%'
     ), '[]'::jsonb),
     'heritageChoices', COALESCE((
@@ -60,8 +61,9 @@ AS $$
           'choiceKind', sc.choice_kind,
           'choiceSlug', sc.choice_slug
         )
-        FROM rpg.player_character_species_choice sc
+        FROM rpg.player_character_choice sc
         WHERE sc.character_id = p_character_id
+          AND sc.domain = 'species'::rpg.character_choice_domain
           AND sc.choice_kind LIKE 'heritage_opt_%'
       ) heritage_rows
     ), COALESCE((
@@ -72,8 +74,9 @@ AS $$
         )
         ORDER BY sc.choice_kind
       )
-      FROM rpg.player_character_species_choice sc
+      FROM rpg.player_character_choice sc
       WHERE sc.character_id = p_character_id
+        AND sc.domain = 'species'::rpg.character_choice_domain
         AND sc.choice_kind LIKE 'heritage_%'
     ), '[]'::jsonb)),
     'subclassOptions', COALESCE((
@@ -197,8 +200,9 @@ AS $$
             )
             ORDER BY c.choice_kind
           )
-          FROM rpg.player_character_transformation_choice c
+          FROM rpg.player_character_choice c
           WHERE c.character_id = p_character_id
+            AND c.domain = 'transformation'::rpg.character_choice_domain
         ), '[]'::jsonb)
       )
       FROM rpg.player_character_transformation t

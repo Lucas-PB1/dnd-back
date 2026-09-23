@@ -24,21 +24,28 @@ export async function syncSkillsAndOrigin(
 
   const originSync = resolveOriginChoicesForSync(input);
   if (originSync?.kind === 'heritage') {
-    await deps.speciesChoices.delete({ characterId });
+    await deps.characterChoices.delete({
+      characterId,
+      domain: 'species',
+    });
     await syncHeritageChoices(
       deps.dataSource,
       characterId,
       originSync.choices,
     );
   } else if (originSync?.kind === 'species') {
-    await deps.speciesChoices.delete({ characterId });
+    await deps.characterChoices.delete({
+      characterId,
+      domain: 'species',
+    });
     const phbChoices = originSync.choices.filter(
       (choice) => !isHeritageChoiceKind(choice.choiceKind),
     );
     if (phbChoices.length > 0) {
-      await deps.speciesChoices.insert(
+      await deps.characterChoices.insert(
         phbChoices.map((choice) => ({
           characterId,
+          domain: 'species' as const,
           choiceKind: choice.choiceKind,
           choiceSlug: choice.choiceSlug,
         })),

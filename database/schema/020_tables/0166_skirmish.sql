@@ -13,7 +13,7 @@ CREATE TABLE rpg.skirmish (
   pc_reaction_available BOOLEAN NOT NULL DEFAULT TRUE,
   pc_oa_available BOOLEAN NOT NULL DEFAULT FALSE,
   pc_savage_attacker_used BOOLEAN NOT NULL DEFAULT FALSE,
-  winner_kind TEXT CHECK (winner_kind IS NULL OR winner_kind IN ('pc', 'actor')),
+  winner_kind rpg.combatant_kind,
   end_reason TEXT CHECK (end_reason IS NULL OR end_reason IN ('hp', 'forfeit')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -28,7 +28,7 @@ CREATE UNIQUE INDEX uq_skirmish_one_active_per_user
 CREATE TABLE rpg.skirmish_combatant (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   skirmish_id UUID NOT NULL REFERENCES rpg.skirmish(id) ON DELETE CASCADE,
-  kind TEXT NOT NULL CHECK (kind IN ('pc', 'actor')),
+  kind rpg.combatant_kind NOT NULL,
   character_id UUID REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE CASCADE,
   display_name TEXT NOT NULL CHECK (char_length(display_name) BETWEEN 1 AND 120),
@@ -37,8 +37,8 @@ CREATE TABLE rpg.skirmish_combatant (
   sort_order INT NOT NULL DEFAULT 0,
   is_active BOOLEAN NOT NULL DEFAULT TRUE,
   CONSTRAINT skirmish_combatant_shape_check CHECK (
-    (kind = 'pc' AND character_id IS NOT NULL AND actor_id IS NULL)
-    OR (kind = 'actor' AND actor_id IS NOT NULL AND character_id IS NULL)
+    (kind = 'pc'::rpg.combatant_kind AND character_id IS NOT NULL AND actor_id IS NULL)
+    OR (kind = 'actor'::rpg.combatant_kind AND actor_id IS NOT NULL AND character_id IS NULL)
   )
 );
 

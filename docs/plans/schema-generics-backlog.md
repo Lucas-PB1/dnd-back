@@ -1,6 +1,6 @@
 # Schema genérico — backlog (primitivas, não tabelas de feature)
 
-**Status:** aberto · **Não é** mesa ficha · **Não é** combate tipado residual  
+**Status:** aberto (GEN-0…2 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
 **Norte:** banco modela **primitivas**; feature do livro = **dado** (`kind` + payload), não tabela nova.
 
 Auditoria 2026-09-23 (repo `check` → copiada para cá):
@@ -40,8 +40,8 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | # | Pacote | Tam. | Dep | Δ tabelas (est.) |
 |---|--------|------|-----|-----------------:|
 | **GEN-0** | ~~Docs no repo + link no backlog SSOT~~ **feito** | S | — | 0 |
-| **GEN-1** | Higiene: PK `phb_class_proficiency`; drop enums órfãos; CHECKs repetidos → enums | S | GEN-0 | 0 |
-| **GEN-2** | Runtime choice única (`species` + `transformation` idênticos) | S | GEN-1 | −1 |
+| **GEN-1** | ~~Higiene: PK `phb_class_proficiency`; drop enums órfãos; CHECKs repetidos → enums~~ **feito** | S | GEN-0 | 0 |
+| **GEN-2** | ~~Runtime choice única (`species` + `transformation` idênticos)~~ **feito** | S | GEN-1 | −1 |
 | **GEN-3** | Combat note única (class/subclass/heritage/boon) | S | GEN-1 | −2 |
 | **GEN-4** | Feat requirement: header + `clause` polimórfica | M | GEN-1 | −5 |
 | **GEN-5** | Feature gate class\|subclass polimórfico | M | GEN-1 | −1 |
@@ -64,16 +64,16 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-1 — Higiene
 
-- [ ] PK em `phb_class_proficiency` alinhada ao CHECK `ref_id`/`ref_slug`
-- [ ] Remover ou passar a usar: `resource_owner_kind`, `combat_modifier_kind`, `combat_modifier_owner`
-- [ ] Enum compartilhado onde o mesmo CHECK se repete (`rank` thread, `owner_kind` class/subclass, `kind` pc/actor, …)
-- [ ] `db:setup` / migrate local verde
+- [x] PK em `phb_class_proficiency` (`ref_key` gerado + PK `(class_id, kind, ref_key)`)
+- [x] Removidos órfãos: `resource_owner_kind`, `combat_modifier_kind`, `combat_modifier_owner` (SSOT = `effect_combat_mod_kind` / `effect_owner_kind`)
+- [x] Enums compartilhados: `thread_milestone_rank`, `class_subclass_owner`, `combatant_kind`, `damage_affinity_kind`, `spell_list_type`, `campaign_member_role`
+- [x] `db:setup` / migrate local verde
 
 ### GEN-2 — Choice runtime
 
-- [ ] Uma tabela `player_character_choice` (ou equivalente) com `domain`
-- [ ] Dropar `player_character_species_choice` + `player_character_transformation_choice`
-- [ ] Entities + seeds + consumers atualizados
+- [x] Uma tabela `player_character_choice` com `domain` (`character_choice_domain`)
+- [x] Dropar `player_character_species_choice` + `player_character_transformation_choice`
+- [x] Entities + seeds + consumers atualizados
 
 ### GEN-3 — Combat note
 
@@ -133,7 +133,7 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ## DoD da trilha
 
-- [ ] GEN-0…1 fechados (higiene + docs)
+- [x] GEN-0…1 fechados (higiene + docs)
 - [ ] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
 - [ ] GEN-7: zero tabelas novas “de feature” no schema SSOT
 - [ ] GEN-8/9: ADR + implementação ou adiados com motivo em Notas do [`backlog.md`](backlog.md)

@@ -13,8 +13,9 @@ export async function loadCharacterSpeciesChoices(
     { choice_kind: string; choice_slug: string }[]
   >(
     `SELECT choice_kind::text AS choice_kind, choice_slug
-     FROM rpg.player_character_species_choice
-     WHERE character_id = $1`,
+     FROM rpg.player_character_choice
+     WHERE character_id = $1
+       AND domain = 'species'::rpg.character_choice_domain`,
     [characterId],
   );
   return rows.map((row) => ({

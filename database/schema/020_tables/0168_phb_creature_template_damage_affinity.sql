@@ -5,8 +5,7 @@ CREATE TABLE rpg.phb_creature_template_damage_affinity (
     REFERENCES rpg.phb_creature_template(slug) ON DELETE CASCADE,
   damage_type_slug TEXT NOT NULL
     REFERENCES rpg.phb_damage_type(slug),
-  kind TEXT NOT NULL
-    CHECK (kind IN ('resistance', 'vulnerability', 'immunity')),
+  kind rpg.damage_affinity_kind NOT NULL,
   PRIMARY KEY (template_slug, damage_type_slug, kind)
 );
 

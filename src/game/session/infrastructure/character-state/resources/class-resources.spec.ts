@@ -96,7 +96,7 @@ describe('character-state/class-resources', () => {
         const text = String(sql);
         if (text.includes('player_character_feat')) return [];
         if (text.includes('player_character_item')) return [];
-        if (text.includes('player_character_species_choice')) return [];
+        if (text.includes('player_character_choice')) return [];
         if (text.includes('player_character_heritage_trait')) return [];
         if (text.includes('player_character_thread')) return [];
         if (text.includes('phb_class_economy_action')) return [];
@@ -179,7 +179,7 @@ describe('character-state/class-resources', () => {
         const text = String(sql);
         if (text.includes('player_character_feat')) return [];
         if (text.includes('player_character_item')) return [];
-        if (text.includes('player_character_species_choice')) {
+        if (text.includes('player_character_choice')) {
           return [
             { choice_kind: 'bearfolk_lineage', choice_slug: 'andari' },
           ];

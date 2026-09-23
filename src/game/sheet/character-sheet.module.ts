@@ -27,7 +27,7 @@ import {
   PlayerCharacterFeat,
   PlayerCharacterLanguage,
   PlayerCharacterOption,
-  PlayerCharacterSpeciesChoice,
+  PlayerCharacterChoice,
   PlayerCharacterSpell,
   PlayerCharacterThread,
   PlayerCharacterThreadMilestone,
@@ -78,7 +78,7 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
   imports: [
     TypeOrmModule.forFeature([
       PlayerCharacterSkill,
-      PlayerCharacterSpeciesChoice,
+      PlayerCharacterChoice,
       PlayerCharacterOption,
       PlayerCharacterFeat,
       PlayerCharacterSpell,

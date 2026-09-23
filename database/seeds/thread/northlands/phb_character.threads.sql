@@ -189,7 +189,8 @@ FROM (VALUES
   ('sworn-huskarl', 'superior', 'grand-reward', 'Grande Recompensa', 'Item Very Rare (ex.: arma +3, Dancing Sword, Oathbow, Staff of Thunder and Lightning, Horn of the Hrimthursar).', NULL, 1)
 ) AS v(thread_slug, rank, benefit_key, name, description, choice_group, sort_order)
 JOIN rpg.phb_character_thread_milestone m
-  ON m.thread_slug = v.thread_slug AND m.rank = v.rank
+  ON m.thread_slug = v.thread_slug
+ AND m.rank = v.rank::rpg.thread_milestone_rank
 ON CONFLICT (milestone_id, benefit_key) DO UPDATE SET
   name = EXCLUDED.name,
   description = EXCLUDED.description,

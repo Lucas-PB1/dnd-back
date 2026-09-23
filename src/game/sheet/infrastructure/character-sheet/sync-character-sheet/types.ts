@@ -1,17 +1,17 @@
 import { Repository } from 'typeorm';
 import { PlayerCharacterSkill } from '../../player-character-skill.entity';
 import {
+  PlayerCharacterChoice,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
   PlayerCharacterLanguage,
   PlayerCharacterOption,
-  PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
 } from '../../player-sheet.entities';
 
 export type CharacterSheetSyncDeps = {
   skills: Repository<PlayerCharacterSkill>;
-  speciesChoices: Repository<PlayerCharacterSpeciesChoice>;
+  characterChoices: Repository<PlayerCharacterChoice>;
   options: Repository<PlayerCharacterOption>;
   feats: Repository<PlayerCharacterFeat>;
   spells: Repository<PlayerCharacterSpell>;

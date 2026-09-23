@@ -3,3 +3,6 @@ CREATE TABLE rpg.player_character_transformation (
   transformation_slug TEXT NOT NULL REFERENCES rpg.phb_feat(slug),
   stage SMALLINT NOT NULL CHECK (stage BETWEEN 1 AND 4)
 );
+
+COMMENT ON TABLE rpg.player_character_transformation IS
+  'Transformação GH Cap. 6 ativa na ficha (1:1). Não usar player_character_feat. Choices → player_character_choice(domain=transformation).';

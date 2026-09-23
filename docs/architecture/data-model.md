@@ -25,8 +25,14 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 | `starting_package_source` | class, background |
 | `spell_grant_origin` | feat, species, class |
 | `class_proficiency_kind` | saving_throw, primary_ability, armor_training, weapon, fighting_style |
-| `resource_owner_kind` | class, subclass |
-| `combat_modifier_kind` | hp_bonus, unarmored_defense |
+| `effect_combat_mod_kind` | hp_bonus, unarmored_defense (SSOT; órfãos `combat_modifier_*` removidos GEN-1) |
+| `thread_milestone_rank` | least, lesser, greater, superior |
+| `class_subclass_owner` | class, subclass (notes / initiative / schedule) |
+| `combatant_kind` | pc, actor |
+| `damage_affinity_kind` | resistance, vulnerability, immunity |
+| `spell_list_type` | known, prepared, always_prepared |
+| `campaign_member_role` | dm, player, assistant |
+| `character_choice_domain` | species, transformation (`player_character_choice`) |
 | `hit_die`, `feat_category`, `condition_slug`, … | Lote A (lookups → ENUM) |
 | `actor_kind`, `innate_spell_usage`, `actor_action_bucket` | Fichas de mesa (`game_actor*`) — `011_actor_types.sql` |
 
@@ -121,7 +127,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 ## Runtime (ficha / campanha / actors)
 
-- `player_character` (+ skill, spell, language, feat, item, equipment, state, species_choice, option)
+- `player_character` (+ skill, spell, language, feat, item, equipment, state, `player_character_choice`, option)
 - **`player_character_state.boarded_actor_id`** — PC a bordo de um `game_actor` (vehicle/mount); migração `P040`
 - **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`; veículos vinculados usam `parent_character_id`
 - `campaign`, `campaign_member`, `campaign_character`, `campaign_encounter`, `campaign_encounter_combatant`

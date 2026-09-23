@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS rpg.phb_initiative_rule (
   id BIGSERIAL PRIMARY KEY,
-  owner_kind TEXT NOT NULL CHECK (owner_kind IN ('class', 'subclass')),
+  owner_kind rpg.class_subclass_owner NOT NULL,
   class_id BIGINT REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
   subclass_id BIGINT REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
   unlock_level INTEGER NOT NULL CHECK (unlock_level BETWEEN 1 AND 20),
@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS rpg.phb_initiative_rule (
   ability_slug TEXT REFERENCES rpg.phb_ability(slug),
   label TEXT NOT NULL,
   CONSTRAINT phb_initiative_rule_owner CHECK (
-    (owner_kind = 'class' AND class_id IS NOT NULL AND subclass_id IS NULL)
-    OR (owner_kind = 'subclass' AND subclass_id IS NOT NULL AND class_id IS NULL)
+    (owner_kind = 'class'::rpg.class_subclass_owner AND class_id IS NOT NULL AND subclass_id IS NULL)
+    OR (owner_kind = 'subclass'::rpg.class_subclass_owner AND subclass_id IS NOT NULL AND class_id IS NULL)
   ),
   CONSTRAINT phb_initiative_rule_ability CHECK (
     (rule_kind = 'ability_bonus' AND ability_slug IS NOT NULL)

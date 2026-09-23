@@ -9,10 +9,10 @@ import {
 } from './sync-character-sheet';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
+  PlayerCharacterChoice,
   PlayerCharacterFeat,
   PlayerCharacterLanguage,
   PlayerCharacterOption,
-  PlayerCharacterSpeciesChoice,
 } from '../player-sheet.entities';
 import { asDep } from '@common/testing/as-dep';
 
@@ -33,8 +33,8 @@ describe('syncCharacterSheet', () => {
   beforeEach(() => {
     deps = {
       skills: repo<PlayerCharacterSkill>() as unknown as Repository<PlayerCharacterSkill>,
-      speciesChoices:
-        repo<PlayerCharacterSpeciesChoice>() as unknown as Repository<PlayerCharacterSpeciesChoice>,
+      characterChoices:
+        repo<PlayerCharacterChoice>() as unknown as Repository<PlayerCharacterChoice>,
       options: repo<PlayerCharacterOption>() as unknown as Repository<PlayerCharacterOption>,
       feats: repo<PlayerCharacterFeat>() as unknown as Repository<PlayerCharacterFeat>,
       spells: asDep(repo()),
@@ -110,11 +110,14 @@ describe('syncCharacterSheet', () => {
       subclassOptions: [{ optionKey: 'feature', valueId: 'fire' }],
       classOptions: [{ optionKey: 'expertiseSkill1', valueId: 'stealth' }],
     });
-    expect(deps.speciesChoices.insert).toHaveBeenCalled();
+    expect(deps.characterChoices.insert).toHaveBeenCalled();
     expect(deps.options.insert).toHaveBeenCalled();
 
     await syncCharacterSheet(deps, characterId, { speciesChoices: [] });
-    expect(deps.speciesChoices.delete).toHaveBeenCalledWith({ characterId });
+    expect(deps.characterChoices.delete).toHaveBeenCalledWith({
+      characterId,
+      domain: 'species',
+    });
   });
 
   it('syncs feats, feat options, spells, and equipment', async () => {
@@ -165,7 +168,7 @@ describe('clearCharacterSheet helpers', () => {
   beforeEach(() => {
     deps = {
       skills: asDep(repo()),
-      speciesChoices: asDep(repo()),
+      characterChoices: asDep(repo()),
       options: asDep(repo()),
       feats: asDep(repo()),
       spells: asDep(repo()),
@@ -192,6 +195,9 @@ describe('clearCharacterSheet helpers', () => {
 
   it('clearSpeciesChoices deletes species choices', async () => {
     await clearSpeciesChoices(deps, characterId);
-    expect(deps.speciesChoices.delete).toHaveBeenCalledWith({ characterId });
+    expect(deps.characterChoices.delete).toHaveBeenCalledWith({
+      characterId,
+      domain: 'species',
+    });
   });
 });

@@ -62,9 +62,11 @@ export async function syncHeritageChoices(
       continue;
     }
     await dataSource.query(
-      `INSERT INTO rpg.player_character_species_choice (character_id, choice_kind, choice_slug)
-       VALUES ($1::uuid, $2, $3)
-       ON CONFLICT (character_id, choice_kind) DO UPDATE SET choice_slug = EXCLUDED.choice_slug`,
+      `INSERT INTO rpg.player_character_choice
+         (character_id, domain, choice_kind, choice_slug)
+       VALUES ($1::uuid, 'species'::rpg.character_choice_domain, $2, $3)
+       ON CONFLICT (character_id, domain, choice_kind)
+       DO UPDATE SET choice_slug = EXCLUDED.choice_slug`,
       [characterId, choice.choiceKind, choice.choiceSlug.trim()],
     );
   }

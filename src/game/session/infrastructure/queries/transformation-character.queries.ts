@@ -27,8 +27,9 @@ export async function loadCharacterTransformation(
     { choice_kind: string; choice_slug: string }[]
   >(
     `SELECT choice_kind, choice_slug
-     FROM rpg.player_character_transformation_choice
-     WHERE character_id = $1::uuid`,
+     FROM rpg.player_character_choice
+     WHERE character_id = $1::uuid
+       AND domain = 'transformation'::rpg.character_choice_domain`,
     [characterId],
   );
 

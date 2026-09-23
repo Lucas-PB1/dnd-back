@@ -64,7 +64,8 @@ Legenda da coluna **Ação**:
 | `phb_species_option_def` / `_value` | MERGE→option | idem | `scope='species'` (+ colunas Lote B) |
 | `phb_feat_option_def` / `_value` | MERGE→option | idem | `scope='feat'` (filtros de magia em def) |
 | Runtime choices | MERGE→option | `player_character_option` | Sem views compat (P007 stub) |
-| `player_character_species_choice` | KEEP | tipado | Ainda separado |
+| `player_character_species_choice` | MERGE→choice | `player_character_choice(domain=species)` | GEN-2 |
+| `player_character_transformation_choice` | MERGE→choice | `player_character_choice(domain=transformation)` | GEN-2 |
 
 **Delta real:** −4 tabelas catálogo; **views compat removidas** (código aponta só a `phb_option_*` / `player_character_option`)
 

@@ -1,10 +1,13 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { OptionScope } from '@entities/reference/phb-option.entity';
 
-@Entity({ schema: 'rpg', name: 'player_character_species_choice' })
-export class PlayerCharacterSpeciesChoice {
+@Entity({ schema: 'rpg', name: 'player_character_choice' })
+export class PlayerCharacterChoice {
   @PrimaryColumn({ name: 'character_id', type: 'uuid' })
   characterId!: string;
+
+  @PrimaryColumn({ type: 'text' })
+  domain!: 'species' | 'transformation';
 
   @PrimaryColumn({ name: 'choice_kind' })
   choiceKind!: string;

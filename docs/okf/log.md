@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-23 — GEN-2 choice runtime única
+
+* **Update**: `player_character_choice(domain, choice_kind, choice_slug)` unifica species + transformation (−1 tabela); enum `character_choice_domain`; sync/load/RLS/bundle atualizados. Próximo = GEN-3.
+
+— refs: [`0113_player_character_choice.sql`](../../database/schema/020_tables/0113_player_character_choice.sql), [`0052_character_choice_domain.sql`](../../database/schema/010_enums/0052_character_choice_domain.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-2 (choices idênticas).
+
+## 2026-09-23 — GEN-1 higiene schema
+
+* **Update**: PK `phb_class_proficiency` via `ref_key` gerado; drop enums órfãos (`resource_owner_kind`, `combat_modifier_*`); enums compartilhados (`thread_milestone_rank`, `class_subclass_owner`, `combatant_kind`, `damage_affinity_kind`, `spell_list_type`, `campaign_member_role`). Próximo = GEN-2.
+
+— refs: [`0044_phb_class_proficiency.sql`](../../database/schema/020_tables/0044_phb_class_proficiency.sql), [`0046_thread_milestone_rank.sql`](../../database/schema/010_enums/0046_thread_milestone_rank.sql)…[`0051_campaign_member_role.sql`](../../database/schema/010_enums/0051_campaign_member_role.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar higiene GEN-1 (Δ tabelas 0).
+
 ## 2026-09-23 — Abertura trilha GEN (schema genérico)
 
 * **Update**: fila **GEN-0…10** aberta — norte “primitivas, não tabela de feature”; auditoria copiada de `check/` para `docs/architecture/schema-audit/` (inventory, quality, consolidation); GEN-0 docs fechado; próximo = GEN-1 higiene. Não é mesa ficha.

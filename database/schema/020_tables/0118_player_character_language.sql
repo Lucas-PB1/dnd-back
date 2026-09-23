@@ -4,8 +4,6 @@ CREATE TABLE rpg.player_character_language (
   PRIMARY KEY (character_id, language_slug)
 );
 
-CREATE INDEX idx_player_character_species_choice_character
-  ON rpg.player_character_species_choice(character_id);
 CREATE INDEX idx_player_character_option_character
   ON rpg.player_character_option(character_id);
 CREATE INDEX idx_player_character_option_scope_owner

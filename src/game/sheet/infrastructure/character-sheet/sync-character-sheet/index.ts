@@ -43,5 +43,5 @@ export async function clearSpeciesChoices(
   deps: CharacterSheetSyncDeps,
   characterId: string,
 ): Promise<void> {
-  await deps.speciesChoices.delete({ characterId });
+  await deps.characterChoices.delete({ characterId, domain: 'species' });
 }

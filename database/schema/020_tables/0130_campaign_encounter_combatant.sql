@@ -1,7 +1,7 @@
 CREATE TABLE rpg.campaign_encounter_combatant (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   encounter_id UUID NOT NULL REFERENCES rpg.campaign_encounter(id) ON DELETE CASCADE,
-  kind TEXT NOT NULL DEFAULT 'pc',
+  kind rpg.combatant_kind NOT NULL DEFAULT 'pc',
   character_id UUID REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE CASCADE,
   initiative_total INT,
@@ -12,15 +12,14 @@ CREATE TABLE rpg.campaign_encounter_combatant (
   hit_points_max INT NULL CHECK (hit_points_max IS NULL OR hit_points_max >= 1),
   temp_hp INT NOT NULL DEFAULT 0 CHECK (temp_hp >= 0),
   conditions TEXT[] NOT NULL DEFAULT '{}',
-  CONSTRAINT campaign_encounter_combatant_kind_check CHECK (kind IN ('pc', 'actor')),
   CONSTRAINT campaign_encounter_combatant_hp_bounds CHECK (
     hit_points_current IS NULL
     OR hit_points_max IS NULL
     OR hit_points_current <= hit_points_max
   ),
   CONSTRAINT campaign_encounter_combatant_shape_check CHECK (
-    (kind = 'pc' AND character_id IS NOT NULL AND actor_id IS NULL)
-    OR (kind = 'actor' AND actor_id IS NOT NULL AND character_id IS NULL)
+    (kind = 'pc'::rpg.combatant_kind AND character_id IS NOT NULL AND actor_id IS NULL)
+    OR (kind = 'actor'::rpg.combatant_kind AND actor_id IS NOT NULL AND character_id IS NULL)
   )
 );
 

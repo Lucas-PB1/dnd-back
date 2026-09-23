@@ -4,13 +4,20 @@ CREATE TABLE rpg.phb_class_proficiency (
   ref_id BIGINT,
   ref_slug TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
+  ref_key TEXT GENERATED ALWAYS AS (
+    CASE
+      WHEN ref_id IS NOT NULL THEN 'id:' || ref_id::text
+      ELSE 'slug:' || ref_slug
+    END
+  ) STORED,
   CONSTRAINT phb_class_proficiency_ref CHECK (
     (kind IN ('saving_throw'::rpg.class_proficiency_kind, 'primary_ability'::rpg.class_proficiency_kind)
       AND ref_id IS NOT NULL AND ref_slug IS NULL)
     OR (kind = 'armor_training'::rpg.class_proficiency_kind AND ref_id IS NOT NULL AND ref_slug IS NULL)
     OR (kind = 'weapon'::rpg.class_proficiency_kind AND ref_slug IS NOT NULL AND ref_id IS NULL)
     OR (kind = 'fighting_style'::rpg.class_proficiency_kind AND ref_id IS NOT NULL AND ref_slug IS NULL)
-  )
+  ),
+  PRIMARY KEY (class_id, kind, ref_key)
 );
 
 CREATE UNIQUE INDEX uq_phb_class_prof_id

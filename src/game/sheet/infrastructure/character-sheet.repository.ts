@@ -7,7 +7,7 @@ import {
   PlayerCharacterFeat,
   PlayerCharacterLanguage,
   PlayerCharacterOption,
-  PlayerCharacterSpeciesChoice,
+  PlayerCharacterChoice,
   PlayerCharacterSpell,
 } from './player-sheet.entities';
 import {
@@ -37,8 +37,8 @@ export class CharacterSheetRepository {
     private readonly dataSource: DataSource,
     @InjectRepository(PlayerCharacterSkill)
     private readonly skills: Repository<PlayerCharacterSkill>,
-    @InjectRepository(PlayerCharacterSpeciesChoice)
-    private readonly speciesChoices: Repository<PlayerCharacterSpeciesChoice>,
+    @InjectRepository(PlayerCharacterChoice)
+    private readonly characterChoices: Repository<PlayerCharacterChoice>,
     @InjectRepository(PlayerCharacterOption)
     private readonly options: Repository<PlayerCharacterOption>,
     @InjectRepository(PlayerCharacterFeat)
@@ -58,7 +58,7 @@ export class CharacterSheetRepository {
   private syncDeps() {
     return {
       skills: this.skills,
-      speciesChoices: this.speciesChoices,
+      characterChoices: this.characterChoices,
       options: this.options,
       feats: this.feats,
       spells: this.spells,
