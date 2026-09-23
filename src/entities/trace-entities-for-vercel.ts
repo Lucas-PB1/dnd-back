@@ -71,7 +71,7 @@ import './template/phb-wild-shape-cr-band.entity';
 import './template/phb-wild-shape-known-band.entity';
 import './template/phb-creature-scale.entity';
 import './spell/phb-spell-ref.entity';
-import './subclass-feature/phb-subclass-feature-gate.entity';
+import './class/phb-feature-gate.entity';
 import './subclass-feature/phb-subclass-precaution-spell.entity';
 import './subclass-feature/phb-subclass-ref.entity';
 import './subclass-feature/phb-subclass-table-action.entity';

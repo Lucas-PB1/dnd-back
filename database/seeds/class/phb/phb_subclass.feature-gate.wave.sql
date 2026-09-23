@@ -1,7 +1,7 @@
 -- Gates booleanos de subclasse (além do Sabujo).
 
-INSERT INTO rpg.phb_subclass_feature_gate (subclass_id, gate_key, unlock_level)
-SELECT s.id, v.gate_key, v.unlock_level
+INSERT INTO rpg.phb_feature_gate (owner_kind, class_id, subclass_id, gate_key, unlock_level)
+SELECT 'subclass'::rpg.class_subclass_owner, NULL, s.id, v.gate_key, v.unlock_level
 FROM rpg.phb_subclass s
 JOIN (
   VALUES
@@ -11,5 +11,7 @@ JOIN (
     ('soulknife', 'psychic_blades', 3)
 ) AS v(subclass_slug, gate_key, unlock_level)
   ON s.slug = v.subclass_slug
-ON CONFLICT (subclass_id, gate_key) DO UPDATE SET
+ON CONFLICT (subclass_id, gate_key)
+WHERE (subclass_id IS NOT NULL)
+DO UPDATE SET
   unlock_level = EXCLUDED.unlock_level;

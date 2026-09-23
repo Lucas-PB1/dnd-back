@@ -1,7 +1,7 @@
 -- Gates booleanos de nível por classe (PHB 2024).
 
-INSERT INTO rpg.phb_class_feature_gate (class_id, gate_key, unlock_level)
-SELECT c.id, v.gate_key, v.unlock_level
+INSERT INTO rpg.phb_feature_gate (owner_kind, class_id, subclass_id, gate_key, unlock_level)
+SELECT 'class'::rpg.class_subclass_owner, c.id, NULL, v.gate_key, v.unlock_level
 FROM rpg.phb_class c
 JOIN (
   VALUES
@@ -19,5 +19,7 @@ JOIN (
     ('ranger', 'relentless_hunter', 13)
 ) AS v(class_slug, gate_key, unlock_level)
   ON c.slug = v.class_slug
-ON CONFLICT (class_id, gate_key) DO UPDATE SET
+ON CONFLICT (class_id, gate_key)
+WHERE (class_id IS NOT NULL)
+DO UPDATE SET
   unlock_level = EXCLUDED.unlock_level;

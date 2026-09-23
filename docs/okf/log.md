@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-23 — GEN-5 feature gate única
+
+* **Update**: `phb_feature_gate(owner_kind class|subclass)` unifica class/subclass (−1 tabela); seeds + entity + loaders. Próximo = GEN-6.
+
+— refs: [`0150_phb_feature_gate.sql`](../../database/schema/020_tables/0150_phb_feature_gate.sql), [`phb-feature-gate.entity.ts`](../../src/entities/class/phb-feature-gate.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-5 (gates espelhados).
+
 ## 2026-09-23 — GEN-4 feat requirement clause
 
 * **Update**: `phb_feat_requirement_clause` polimórfica (−5 satélites); enum `feat_requirement_clause_kind`; view `v_phb_feat` + seeds. Próximo = GEN-5.

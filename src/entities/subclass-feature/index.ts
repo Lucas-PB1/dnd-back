@@ -4,7 +4,6 @@ export * from './phb-cunning-strike-effect.entity';
 export * from './phb-dungeoneer-slayer-type.entity';
 export * from './phb-gunslinger-maneuver.entity';
 export * from './phb-persona-mask.entity';
-export * from './phb-subclass-feature-gate.entity';
 export * from './phb-subclass-precaution-spell.entity';
 export * from './phb-subclass-ref.entity';
 export * from './phb-subclass-table-action.entity';

@@ -12,8 +12,7 @@ import { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
 import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { PhbSpecies } from '@entities/species/phb-species.entity';
 import { PhbSpeciesArmorPreset } from '@entities/species/phb-species-armor-preset.entity';
-import { PhbClassFeatureGate } from '@entities/class/phb-class-feature-gate.entity';
-import { PhbSubclassFeatureGate } from '@entities/subclass-feature/phb-subclass-feature-gate.entity';
+import { PhbFeatureGate } from '@entities/class/phb-feature-gate.entity';
 import { PhbCombatNote } from '@entities/reference/phb-combat-note.entity';
 import { PhbDamageType } from '@entities/reference/phb-damage-type.entity';
 import { PhbClassFeatureSchedule } from '@entities/class/phb-class-feature-schedule.entity';
@@ -67,8 +66,7 @@ import { PhbCreatureTemplateDamageAffinity } from '@entities/template/phb-creatu
       PhbOptionValue,
       PhbSpecies,
       PhbSpeciesArmorPreset,
-      PhbSubclassFeatureGate,
-      PhbClassFeatureGate,
+      PhbFeatureGate,
       PhbCombatNote,
       PhbDamageType,
       PhbClassFeatureSchedule,

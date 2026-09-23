@@ -163,15 +163,17 @@ export class LoadCombatMechanicalCatalog {
       this.dataSource.query(
         `
         SELECT s.slug, g.gate_key, g.unlock_level
-        FROM rpg.phb_subclass_feature_gate g
+        FROM rpg.phb_feature_gate g
         JOIN rpg.phb_subclass s ON s.id = g.subclass_id
+        WHERE g.owner_kind = 'subclass'::rpg.class_subclass_owner
         `,
       ),
       this.dataSource.query(
         `
         SELECT c.slug, g.gate_key, g.unlock_level
-        FROM rpg.phb_class_feature_gate g
+        FROM rpg.phb_feature_gate g
         JOIN rpg.phb_class c ON c.id = g.class_id
+        WHERE g.owner_kind = 'class'::rpg.class_subclass_owner
         `,
       ),
     ]);
