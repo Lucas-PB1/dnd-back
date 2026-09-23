@@ -56,7 +56,7 @@ import './reference/phb-initiative-rule.entity';
 import './equipment/phb-item.entity';
 import './equipment/phb-item-catalog-stats.entity';
 import './reference/phb-language.entity';
-import './reference/phb-level-combat-note.entity';
+import './reference/phb-combat-note.entity';
 import './class/phb-metamagic.entity';
 import './reference/phb-option.entity';
 import './subclass-feature/phb-persona-mask.entity';

@@ -1,7 +1,7 @@
 -- Heritage combat notes (GH traços com impacto de ficha/combate).
 
-INSERT INTO rpg.phb_heritage_combat_note (trait_id, min_trait_takes, note)
-SELECT ht.id, v.min_trait_takes, v.note
+INSERT INTO rpg.phb_combat_note (source_kind, trait_id, min_trait_takes, note)
+SELECT 'heritage_trait'::rpg.combat_note_source, ht.id, v.min_trait_takes, v.note
 FROM rpg.phb_heritage_trait ht
 JOIN (
   VALUES
@@ -18,5 +18,7 @@ JOIN (
     ('restorative-rest', 1, 'Descanso curto: gasta Dados de Vida adicionais.')
 ) AS v(trait_slug, min_trait_takes, note)
   ON ht.slug = v.trait_slug
-ON CONFLICT (trait_id, min_trait_takes) DO UPDATE SET
+ON CONFLICT (trait_id, min_trait_takes)
+WHERE (source_kind = 'heritage_trait'::rpg.combat_note_source)
+DO UPDATE SET
   note = EXCLUDED.note;

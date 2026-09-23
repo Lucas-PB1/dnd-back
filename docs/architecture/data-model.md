@@ -33,6 +33,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 | `spell_list_type` | known, prepared, always_prepared |
 | `campaign_member_role` | dm, player, assistant |
 | `character_choice_domain` | species, transformation (`player_character_choice`) |
+| `combat_note_source` | class_level, subclass_level, heritage_trait, transformation_boon |
 | `hit_die`, `feat_category`, `condition_slug`, … | Lote A (lookups → ENUM) |
 | `actor_kind`, `innate_spell_usage`, `actor_action_bucket` | Fichas de mesa (`game_actor*`) — `011_actor_types.sql` |
 

@@ -9,11 +9,12 @@ export async function loadTransformationBoonCombatNotes(
       boon_id: string;
       name_pt: string;
       economy: string[] | null;
-      note_pt: string | null;
+      note: string | null;
     }>
   >(
-    `SELECT boon_id, name_pt, economy, note_pt
-     FROM rpg.phb_transformation_boon_combat_note`,
+    `SELECT boon_id, name_pt, economy, note
+     FROM rpg.phb_combat_note
+     WHERE source_kind = 'transformation_boon'::rpg.combat_note_source`,
   );
 
   const map = new Map<string, Cap6BoonCombatNote>();
@@ -21,7 +22,7 @@ export async function loadTransformationBoonCombatNotes(
     map.set(row.boon_id, {
       namePt: row.name_pt,
       economy: row.economy ?? [],
-      ...(row.note_pt ? { notePt: row.note_pt } : {}),
+      ...(row.note ? { notePt: row.note } : {}),
     });
   }
   return map;

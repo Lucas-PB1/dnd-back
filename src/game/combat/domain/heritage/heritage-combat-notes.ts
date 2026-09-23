@@ -45,8 +45,9 @@ export async function loadHeritageCombatNotes(
     Array<{ trait_slug: string; min_trait_takes: number; note: string }>
   >(
     `SELECT ht.slug AS trait_slug, n.min_trait_takes, n.note
-     FROM rpg.phb_heritage_combat_note n
-     JOIN rpg.phb_heritage_trait ht ON ht.id = n.trait_id`,
+     FROM rpg.phb_combat_note n
+     JOIN rpg.phb_heritage_trait ht ON ht.id = n.trait_id
+     WHERE n.source_kind = 'heritage_trait'::rpg.combat_note_source`,
   );
   return rows.map((row) => ({
     traitSlug: row.trait_slug,

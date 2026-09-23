@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-23 — GEN-3 combat note única
+
+* **Update**: `phb_combat_note` unifica level/heritage/boon (−2 tabelas); enum `combat_note_source`; seeds + queries + entity. Próximo = GEN-4.
+
+— refs: [`0152_phb_combat_note.sql`](../../database/schema/020_tables/0152_phb_combat_note.sql), [`0053_combat_note_source.sql`](../../database/schema/010_enums/0053_combat_note_source.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-3 (notas de mesa por fonte).
+
 ## 2026-09-23 — GEN-2 choice runtime única
 
 * **Update**: `player_character_choice(domain, choice_kind, choice_slug)` unifica species + transformation (−1 tabela); enum `character_choice_domain`; sync/load/RLS/bundle atualizados. Próximo = GEN-3.

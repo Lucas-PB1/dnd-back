@@ -44,7 +44,7 @@ Regeneram seeds a partir de extracts/TS — não são one-offs de migrate:
 | `node scripts/generate/seed-order.mjs` | `database/seeds/SEED_ORDER.txt` |
 | `node scripts/generate/cap6-economy-seeds.mjs` | defs + grants + economy Cap.6 |
 | `node scripts/generate/cap6-choice-rules-seed.mjs` | `phb_transformation_choice_rules.all.sql` |
-| `node scripts/generate/cap6-boon-combat-notes-seed.mjs` | `phb_transformation_boon_combat_note.all.sql` |
+| `node scripts/generate/cap6-boon-combat-notes-seed.mjs` | `phb_transformation_boon_combat_note.all.sql` → `phb_combat_note` |
 
 ## Env
 

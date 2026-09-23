@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Gera seed de phb_transformation_boon_combat_note a partir dos batches TS Cap.6.
+ * Gera seed de phb_combat_note (transformation_boon) a partir dos batches TS Cap.6.
  * Uso: node scripts/generate/cap6-boon-combat-notes-seed.mjs
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
@@ -43,19 +43,21 @@ const values = Object.entries(notes)
       .join(', ');
     const notePt =
       meta.notePt != null ? `'${sqlEscape(meta.notePt)}'` : 'NULL';
-    return `  ('${sqlEscape(boonId)}', '${sqlEscape(meta.namePt)}', ARRAY[${economy}]::text[], ${notePt})`;
+    return `  ('transformation_boon'::rpg.combat_note_source, '${sqlEscape(boonId)}', '${sqlEscape(meta.namePt)}', ARRAY[${economy}]::text[], ${notePt})`;
   })
   .join(',\n');
 
 const out = `-- Cap.6 — notas de combate por boon (SSOT; gerado por scripts/generate/cap6-boon-combat-notes-seed.mjs)
 
-INSERT INTO rpg.phb_transformation_boon_combat_note (boon_id, name_pt, economy, note_pt)
+INSERT INTO rpg.phb_combat_note (source_kind, boon_id, name_pt, economy, note)
 VALUES
 ${values}
-ON CONFLICT (boon_id) DO UPDATE SET
+ON CONFLICT (boon_id)
+WHERE (source_kind = 'transformation_boon'::rpg.combat_note_source)
+DO UPDATE SET
   name_pt = EXCLUDED.name_pt,
   economy = EXCLUDED.economy,
-  note_pt = EXCLUDED.note_pt;
+  note = EXCLUDED.note;
 `;
 
 const outPath = join(

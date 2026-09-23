@@ -7,6 +7,6 @@ export * from './phb-damage-type.entity';
 export * from './phb-edition.entity';
 export * from './phb-initiative-rule.entity';
 export * from './phb-language.entity';
-export * from './phb-level-combat-note.entity';
+export * from './phb-combat-note.entity';
 export * from './phb-option.entity';
 export * from './phb-skill.entity';
