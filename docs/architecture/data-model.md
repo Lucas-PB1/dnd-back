@@ -34,6 +34,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 | `campaign_member_role` | dm, player, assistant |
 | `character_choice_domain` | species, transformation (`player_character_choice`) |
 | `combat_note_source` | class_level, subclass_level, heritage_trait, transformation_boon |
+| `feat_requirement_clause_kind` | ability, feat, feat_option, skill, species, weapon_proficiency |
 | `hit_die`, `feat_category`, `condition_slug`, … | Lote A (lookups → ENUM) |
 | `actor_kind`, `innate_spell_usage`, `actor_action_bucket` | Fichas de mesa (`game_actor*`) — `011_actor_types.sql` |
 
@@ -108,7 +109,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 ### 9. Feats
 
-- `phb_feat` (`category` ENUM), `phb_feat_benefit`, `phb_feat_requirement` (+ ability)
+- `phb_feat` (`category` ENUM), `phb_feat_benefit`, `phb_feat_requirement` (+ `phb_feat_requirement_clause`)
 - Opções via `phb_option_*` (`scope='feat'`)
 
 ### 10. Creature / vehicle templates (catálogo read-only)

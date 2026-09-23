@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-23 — GEN-4 feat requirement clause
+
+* **Update**: `phb_feat_requirement_clause` polimórfica (−5 satélites); enum `feat_requirement_clause_kind`; view `v_phb_feat` + seeds. Próximo = GEN-5.
+
+— refs: [`0082_phb_feat_requirement_clause.sql`](../../database/schema/020_tables/0082_phb_feat_requirement_clause.sql), [`0054_feat_requirement_clause_kind.sql`](../../database/schema/010_enums/0054_feat_requirement_clause_kind.sql), [`0024_v_phb_feat.sql`](../../database/schema/030_views/0024_v_phb_feat.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-4 (pré-requisitos tipados).
+
 ## 2026-09-23 — GEN-3 combat note única
 
 * **Update**: `phb_combat_note` unifica level/heritage/boon (−2 tabelas); enum `combat_note_source`; seeds + queries + entity. Próximo = GEN-4.

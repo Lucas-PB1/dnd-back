@@ -75,8 +75,12 @@ ON CONFLICT (feat_id) DO UPDATE SET
   minimum_level = NULL,
   requires_weapon_mastery = FALSE;
 
-INSERT INTO rpg.phb_feat_requirement_ability (feat_id, ability_id, minimum_score)
-SELECT feat.id, ability.id, requirement.minimum_score
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, ability_id, minimum_score)
+SELECT
+  feat.id,
+  'ability'::rpg.feat_requirement_clause_kind,
+  ability.id,
+  requirement.minimum_score
 FROM (
   VALUES
     ('axe-fighter', 'forca', 13),
@@ -95,12 +99,14 @@ FROM (
 ) AS requirement(feat_slug, ability_slug, minimum_score)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
 JOIN rpg.phb_ability ability ON ability.slug = requirement.ability_slug
-ON CONFLICT (feat_id, ability_id) DO UPDATE SET
+ON CONFLICT (feat_id, ability_id)
+WHERE (clause_kind = 'ability'::rpg.feat_requirement_clause_kind)
+DO UPDATE SET
   minimum_score = EXCLUDED.minimum_score;
 
 -- Perícias exigidas (todas as listadas)
-INSERT INTO rpg.phb_feat_requirement_skill (feat_id, skill_id)
-SELECT feat.id, skill.id
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, skill_id)
+SELECT feat.id, 'skill'::rpg.feat_requirement_clause_kind, skill.id
 FROM (
   VALUES
     ('combat-flyting', 'deception'),
@@ -109,7 +115,9 @@ FROM (
 ) AS requirement(feat_slug, skill_slug)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
 JOIN rpg.phb_skill skill ON skill.slug = requirement.skill_slug
-ON CONFLICT (feat_id, skill_id) DO NOTHING;
+ON CONFLICT (feat_id, skill_id)
+WHERE (clause_kind = 'skill'::rpg.feat_requirement_clause_kind)
+DO NOTHING;
 
 -- Espécies aceitas (OR — Giganteide ou Trollide)
 INSERT INTO rpg.phb_feat_requirement (
@@ -122,8 +130,8 @@ WHERE f.slug = 'blessing-of-angrboda-and-bergelmir'
 ON CONFLICT (feat_id) DO UPDATE SET
   minimum_level = 4;
 
-INSERT INTO rpg.phb_feat_requirement_species (feat_id, species_id)
-SELECT feat.id, species.id
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, species_id)
+SELECT feat.id, 'species'::rpg.feat_requirement_clause_kind, species.id
 FROM (
   VALUES
     ('blessing-of-angrboda-and-bergelmir', 'giantkin'),
@@ -131,7 +139,9 @@ FROM (
 ) AS requirement(feat_slug, species_slug)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
 JOIN rpg.phb_species species ON species.slug = requirement.species_slug
-ON CONFLICT (feat_id, species_id) DO NOTHING;
+ON CONFLICT (feat_id, species_id)
+WHERE (clause_kind = 'species'::rpg.feat_requirement_clause_kind)
+DO NOTHING;
 
 -- Garante linha em phb_feat_requirement antes das FKs de feat (deps)
 INSERT INTO rpg.phb_feat_requirement (
@@ -158,8 +168,8 @@ WHERE f.slug IN (
 )
 ON CONFLICT (feat_id) DO NOTHING;
 
-INSERT INTO rpg.phb_feat_requirement_feat (feat_id, required_feat_id)
-SELECT feat.id, required.id
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, required_feat_id)
+SELECT feat.id, 'feat'::rpg.feat_requirement_clause_kind, required.id
 FROM (
   VALUES
     ('clout', 'inspiring-leader'),
@@ -178,24 +188,28 @@ FROM (
 ) AS dep(feat_slug, required_slug)
 JOIN rpg.phb_feat feat ON feat.slug = dep.feat_slug
 JOIN rpg.phb_feat required ON required.slug = dep.required_slug
-ON CONFLICT (feat_id, required_feat_id) DO NOTHING;
+ON CONFLICT (feat_id, required_feat_id)
+WHERE (clause_kind = 'feat'::rpg.feat_requirement_clause_kind)
+DO NOTHING;
 
 -- Proficiência de arma/item
-INSERT INTO rpg.phb_feat_requirement_weapon_proficiency (feat_id, proficiency_slug)
-SELECT feat.id, requirement.proficiency_slug
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, proficiency_slug)
+SELECT feat.id, 'weapon_proficiency'::rpg.feat_requirement_clause_kind, requirement.proficiency_slug
 FROM (
   VALUES
     ('axe-fighter', 'armas-marciais'),
     ('axe-thrower', 'machadinhas')
 ) AS requirement(feat_slug, proficiency_slug)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
-ON CONFLICT (feat_id, proficiency_slug) DO NOTHING;
+ON CONFLICT (feat_id, proficiency_slug)
+WHERE (clause_kind = 'weapon_proficiency'::rpg.feat_requirement_clause_kind)
+DO NOTHING;
 
 -- Opção de talento pré-requisito (Adepto Elemental → tipo de dano)
-INSERT INTO rpg.phb_feat_requirement_feat_option (
-  feat_id, required_feat_id, option_key, value_id
+INSERT INTO rpg.phb_feat_requirement_clause (
+  feat_id, clause_kind, required_feat_id, option_key, value_id
 )
-SELECT feat.id, required.id, requirement.option_key, requirement.value_id
+SELECT feat.id, 'feat_option'::rpg.feat_requirement_clause_kind, required.id, requirement.option_key, requirement.value_id
 FROM (
   VALUES
     ('ice-mastery', 'elemental-adept', 'damageType', 'cold'),
@@ -203,4 +217,6 @@ FROM (
 ) AS requirement(feat_slug, required_slug, option_key, value_id)
 JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
 JOIN rpg.phb_feat required ON required.slug = requirement.required_slug
-ON CONFLICT (feat_id, required_feat_id, option_key, value_id) DO NOTHING;
+ON CONFLICT (feat_id, required_feat_id, option_key, value_id)
+WHERE (clause_kind = 'feat_option'::rpg.feat_requirement_clause_kind)
+DO NOTHING;

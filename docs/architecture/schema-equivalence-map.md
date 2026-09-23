@@ -139,7 +139,7 @@ Legenda da coluna **Ação**:
 | `phb_ability`, `phb_skill`, `phb_language`, `phb_alignment` | |
 | `phb_fighting_style`, `phb_weapon_property`, `phb_weapon_mastery` | |
 | `phb_spell`, `phb_spell_slot_pattern`, `phb_spell_slot_by_level` | |
-| `phb_feat`, `phb_feat_benefit`, `phb_feat_requirement`, `phb_feat_requirement_ability` | requirement pode enxugar depois |
+| `phb_feat`, `phb_feat_benefit`, `phb_feat_requirement`, `phb_feat_requirement_clause` | GEN-4: satélites → clause |
 | `phb_item`, `phb_weapon`, `phb_armor`, `phb_tool`, `phb_weapon_property_link` | herança por extensão |
 | `phb_background` + skill / ability_option / tool_option / language / boost_option | links KEEP; packages → lote D |
 | `phb_class_feature`, `phb_class_progression`, `phb_subclass_feature`, `phb_subclass_progression` | |

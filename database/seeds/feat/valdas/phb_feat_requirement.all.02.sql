@@ -15,10 +15,16 @@ ON CONFLICT (feat_id) DO UPDATE SET
   minimum_level = EXCLUDED.minimum_level,
   requires_spellcasting = EXCLUDED.requires_spellcasting;
 
-INSERT INTO rpg.phb_feat_requirement_ability (feat_id, ability_id, minimum_score)
-SELECT feat.id, ability.id, 13
+INSERT INTO rpg.phb_feat_requirement_clause (feat_id, clause_kind, ability_id, minimum_score)
+SELECT
+  feat.id,
+  'ability'::rpg.feat_requirement_clause_kind,
+  ability.id,
+  13
 FROM rpg.phb_feat feat
 JOIN rpg.phb_ability ability ON ability.slug = 'destreza'
 WHERE feat.slug = 'marksman-s-luck'
-ON CONFLICT (feat_id, ability_id) DO UPDATE SET
+ON CONFLICT (feat_id, ability_id)
+WHERE (clause_kind = 'ability'::rpg.feat_requirement_clause_kind)
+DO UPDATE SET
   minimum_score = EXCLUDED.minimum_score;

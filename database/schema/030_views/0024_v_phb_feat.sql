@@ -33,49 +33,55 @@ LEFT JOIN LATERAL (
   SELECT jsonb_agg(
     jsonb_build_object(
       'abilitySlug', ability.slug,
-      'minimumScore', ability_requirement.minimum_score
+      'minimumScore', clause.minimum_score
     )
     ORDER BY ability.sort_order
   ) AS items
-  FROM rpg.phb_feat_requirement_ability ability_requirement
-  JOIN rpg.phb_ability ability ON ability.id = ability_requirement.ability_id
-  WHERE ability_requirement.feat_id = feat.id
+  FROM rpg.phb_feat_requirement_clause clause
+  JOIN rpg.phb_ability ability ON ability.id = clause.ability_id
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'ability'::rpg.feat_requirement_clause_kind
 ) ability_requirements ON TRUE
 LEFT JOIN LATERAL (
   SELECT jsonb_agg(required.slug ORDER BY required.slug) AS items
-  FROM rpg.phb_feat_requirement_feat requirement_feat
-  JOIN rpg.phb_feat required ON required.id = requirement_feat.required_feat_id
-  WHERE requirement_feat.feat_id = feat.id
+  FROM rpg.phb_feat_requirement_clause clause
+  JOIN rpg.phb_feat required ON required.id = clause.required_feat_id
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'feat'::rpg.feat_requirement_clause_kind
 ) required_feats ON TRUE
 LEFT JOIN LATERAL (
   SELECT jsonb_agg(skill.slug ORDER BY skill.slug) AS items
-  FROM rpg.phb_feat_requirement_skill requirement_skill
-  JOIN rpg.phb_skill skill ON skill.id = requirement_skill.skill_id
-  WHERE requirement_skill.feat_id = feat.id
+  FROM rpg.phb_feat_requirement_clause clause
+  JOIN rpg.phb_skill skill ON skill.id = clause.skill_id
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'skill'::rpg.feat_requirement_clause_kind
 ) required_skills ON TRUE
 LEFT JOIN LATERAL (
   SELECT jsonb_agg(species.slug ORDER BY species.slug) AS items
-  FROM rpg.phb_feat_requirement_species requirement_species
-  JOIN rpg.phb_species species ON species.id = requirement_species.species_id
-  WHERE requirement_species.feat_id = feat.id
+  FROM rpg.phb_feat_requirement_clause clause
+  JOIN rpg.phb_species species ON species.id = clause.species_id
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'species'::rpg.feat_requirement_clause_kind
 ) required_species ON TRUE
 LEFT JOIN LATERAL (
-  SELECT jsonb_agg(weapon_prof.proficiency_slug ORDER BY weapon_prof.proficiency_slug) AS items
-  FROM rpg.phb_feat_requirement_weapon_proficiency weapon_prof
-  WHERE weapon_prof.feat_id = feat.id
+  SELECT jsonb_agg(clause.proficiency_slug ORDER BY clause.proficiency_slug) AS items
+  FROM rpg.phb_feat_requirement_clause clause
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'weapon_proficiency'::rpg.feat_requirement_clause_kind
 ) required_weapon_profs ON TRUE
 LEFT JOIN LATERAL (
   SELECT jsonb_agg(
     jsonb_build_object(
       'featSlug', required.slug,
-      'optionKey', feat_option.option_key,
-      'valueId', feat_option.value_id
+      'optionKey', clause.option_key,
+      'valueId', clause.value_id
     )
-    ORDER BY required.slug, feat_option.option_key, feat_option.value_id
+    ORDER BY required.slug, clause.option_key, clause.value_id
   ) AS items
-  FROM rpg.phb_feat_requirement_feat_option feat_option
-  JOIN rpg.phb_feat required ON required.id = feat_option.required_feat_id
-  WHERE feat_option.feat_id = feat.id
+  FROM rpg.phb_feat_requirement_clause clause
+  JOIN rpg.phb_feat required ON required.id = clause.required_feat_id
+  WHERE clause.feat_id = feat.id
+    AND clause.clause_kind = 'feat_option'::rpg.feat_requirement_clause_kind
 ) required_feat_options ON TRUE
 LEFT JOIN LATERAL (
   SELECT jsonb_agg(
@@ -87,6 +93,3 @@ LEFT JOIN LATERAL (
   FROM rpg.phb_feat_benefit benefit
   WHERE benefit.feat_id = feat.id
 ) benefits ON TRUE;
-
--- Opções de truque para Andari (lista de cantrips de Druida).
--- Kind opcional na validação padrão; exigido quando bearfolk_lineage = andari.

@@ -1,6 +1,6 @@
 # Schema genérico — backlog (primitivas, não tabelas de feature)
 
-**Status:** aberto (GEN-0…3 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
+**Status:** aberto (GEN-0…4 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
 **Norte:** banco modela **primitivas**; feature do livro = **dado** (`kind` + payload), não tabela nova.
 
 Auditoria 2026-09-23 (repo `check` → copiada para cá):
@@ -43,7 +43,7 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | **GEN-1** | ~~Higiene: PK `phb_class_proficiency`; drop enums órfãos; CHECKs repetidos → enums~~ **feito** | S | GEN-0 | 0 |
 | **GEN-2** | ~~Runtime choice única (`species` + `transformation` idênticos)~~ **feito** | S | GEN-1 | −1 |
 | **GEN-3** | ~~Combat note única (class/subclass/heritage/boon)~~ **feito** | S | GEN-1 | −2 |
-| **GEN-4** | Feat requirement: header + `clause` polimórfica | M | GEN-1 | −5 |
+| **GEN-4** | ~~Feat requirement: header + `clause` polimórfica~~ **feito** | M | GEN-1 | −5 |
 | **GEN-5** | Feature gate class\|subclass polimórfico | M | GEN-1 | −1 |
 | **GEN-6** | Stat-block children: unificar creature↔vehicle (+ opcional actor snapshot) | M | GEN-1 | −3…−7 |
 | **GEN-7** | Matar tabelas **de feature** → catalog/effect/option (Beastborne, Dungeoneer, Persona Mask, Wild Shape bands DDL, manobras nomeadas…) | L | GEN-2…4 | −5…−12 |
@@ -83,9 +83,9 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-4 — Feat requirements
 
-- [ ] `phb_feat_requirement` header KEEP
-- [ ] `phb_feat_requirement_clause` polimórfica
-- [ ] Dropar 6 satélites; seeds reescritos
+- [x] `phb_feat_requirement` header KEEP
+- [x] `phb_feat_requirement_clause` polimórfica
+- [x] Dropar 6 satélites; seeds reescritos
 
 ### GEN-5 — Feature gates
 
