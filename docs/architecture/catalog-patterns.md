@@ -1,8 +1,8 @@
 # Padrões do catálogo — DRY SQL
 
-Auditoria P7 (2026-07-27); atualizado com consolidação A–G (2026-08-07).  
-Fonte: [`database/baseline/`](../../database/baseline/) + [`database/seeds/`](../../database/seeds/).  
-ADR: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · **Read models:** [`adr-read-model-layers.md`](adr-read-model-layers.md).
+Auditoria P7 (2026-07-27); atualizado com consolidação A–G (2026-08-07) e trilha GEN (2026-09-25).  
+Fonte: [`database/schema/`](../../database/schema/) + [`database/seeds/`](../../database/seeds/).  
+ADRs: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) (onda 1) · [`adr-schema-generics.md`](adr-schema-generics.md) (onda 2 — primitivas) · **Read models:** [`adr-read-model-layers.md`](adr-read-model-layers.md).
 
 ## Princípio
 
@@ -25,6 +25,8 @@ Colunas extras nullable por scope (filtros de magia no feat, `unlock_level` na s
 **ENUM:** `rpg.option_value_type`, `rpg.option_scope`.
 
 Runtime: `player_character_option` (RLS em P004).
+
+**Catálogo miúdo de subclasse** (máscaras, aspectos, tipos de presa) = `option_def` + `option_value`, com colunas extras tipadas quando preciso (ex.: `benefit`) — **não** `phb_<feature>_*` (GEN-7; seed `subclass/valdas/phb_subclass.option-feature-catalogs.sql`). Progressão por nível (ex.: faixas de Forma Selvagem) = `phb_class_feature_schedule`.
 
 ---
 
@@ -155,7 +157,7 @@ Matriz canônica para **leitura em runtime** (ficha, mesa, dados). ADR: [`adr-re
 | Estado de sessão | Entity + repository/facade | `CharacterStateRepository` |
 | Recursos de classe | Queries dedicadas | `session/infrastructure/queries/class-resource-*.queries.ts` |
 | Reload de arma (JSONB item) | TypeORM `PhbItem.properties` | `session/infrastructure/queries/item-reload-capacity.queries.ts` |
-| Flags rage/reckless/beastborne no roll | TypeORM `PlayerCharacterState` | `session/infrastructure/queries/character-combat-flags.queries.ts` |
+| Flags rage/reckless/beastborne no roll | TypeORM `PlayerCharacterState` (`select: featureState`, §14) | `session/infrastructure/queries/character-combat-flags.queries.ts` |
 | Validação create/update ficha | ✅ Orquestração em `domain/validation/`; leitura em `sheet/infrastructure/queries/` | [`adr-sheet-validation-layers.md`](./adr-sheet-validation-layers.md) |
 | Progressão magia / slots | ✅ `sheet/infrastructure/queries/spell-progression.queries.ts` | Views `v_*` via TypeORM |
 | Existe slug? (escrita ficha) | ✅ `CatalogLookupService` (`assert*` 400 / `find*OrFail` 404) | API `find-*-by-slug` **delega** o fetch; sem `repo.findOne` paralelo |
@@ -173,7 +175,7 @@ Camadas view / MV / RPC JSONB: [`adr-read-model-layers.md`](./adr-read-model-lay
 | Catálogo join simples | View `v_phb_*` | API compêndio, detail |
 | Catálogo pesado / lista | **MV** `mv_*` (refresh pós-seed) | Feat, species choices, bundles, spell-by-class |
 | Lookup enum | ENUM + view VALUES | Labels PT estáticos |
-| Espelho 1:1 | **Tabela** `phb_*` (não nova view) | Manobras, masks — views legadas deprecadas |
+| Espelho 1:1 | **Tabela** `phb_*` (não nova view) | Manobras — views legadas deprecadas (masks → `option_*`, §1) |
 | Runtime hot path | RPC JSONB bundle | Ficha, combate, actor |
 | Runtime + regra catálogo | RPC (estado) + queries (MV/view lista fechada) | Ver ADR § Decisão 5 |
 
@@ -184,7 +186,7 @@ Implementação das MVs pendentes: DoD no ADR.
 ## Checklist — nova tabela de catálogo
 
 1. Existe entidade pai clara (`phb_*` + FK)?
-2. Cabe em `option_*`, `starting_*`, `spell_grant`, `class_proficiency`, ou `phb_effect` (+ satélite)?
+2. Cabe em `option_*`, `starting_*`, `spell_grant`, `class_proficiency`, `class_feature_schedule`, ou `phb_effect` (+ satélite)? Tem o **mesmo shape** de uma tabela existente? → valor novo no discriminador (§13), não tabela.
 3. A leitura repete JOIN de 3+ migrations? → view `v_phb_*`.
 4. A ficha precisa da regra? → projeção na [lista fechada](adr-read-model-layers.md#decisão-5--fronteira-runtime--catálogo) (MV/view via `infrastructure/queries/`).
 5. Migration já aplicada em prod? → **nova** migration (neste repo: rewrite + `db:setup` enquanto sem produção).
@@ -196,3 +198,46 @@ Implementação das MVs pendentes: DoD no ADR.
 ADR: [`adr-effect-engine.md`](adr-effect-engine.md) · Dicionário: [`effect-dictionary.md`](effect-dictionary.md).
 
 Núcleo + satélites tipados (sem JSONB mecânico). SSOT de pools/HP/UD = `phb_effect`; tabelas legadas `resource_grant` / `combat_modifier` **DROP**.
+
+Satélites de mesmo shape dividem tabela com discriminador (GEN-9): `phb_effect_grant_ref`, `_scalar`, `_advantage`, `_sense_env`, `_dice` — mapa lógico → físico no [dicionário](effect-dictionary.md#satélite-lógico--tabela-física-gen-9). Payload novo de shape existente = valor novo no discriminador + CHECK + `@ChildEntity` (§13).
+
+---
+
+## 13. Tabela com discriminador + TypeORM STI (GEN-8 / GEN-9)
+
+Quando N tabelas têm o mesmo shape (ou quase), uma tabela com coluna discriminadora substitui todas.
+
+**SQL:**
+
+- Discriminador `TEXT` com `CHECK (... IN (...))` (ou ENUM se reusado em FK composta, ex.: `combat_session_mode`).
+- Colunas específicas **nullable e sem default**; um CHECK por valor do discriminador obriga as colunas daquele tipo e zera as dos outros.
+- Filho que precisa do mesmo modo do pai: FK composta `(parent_id, parent_mode) → parent(id, mode)` + `UNIQUE (id, mode)` no pai (`combat_participant`).
+- Seeds declaram o discriminador: `INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, …) SELECT 'numeric', …`.
+
+**TypeORM:**
+
+```ts
+@Entity({ schema: 'rpg', name: 'phb_effect_scalar' })
+@TableInheritance({ column: { type: 'text', name: 'scalar_kind' } })
+export class PhbEffectScalar { @PrimaryColumn(...) effectId!: string; }
+
+@ChildEntity('numeric')
+export class PhbEffectNumeric extends PhbEffectScalar { /* colunas do tipo */ }
+```
+
+- Pai registrado no `forFeature` junto das filhas.
+- TypeORM grava o discriminador no INSERT, filtra `IN (...)` no SELECT e, no JOIN `OneToOne` do lado inverso, acrescenta `AND <disc>='<valor>'` ⇒ repositories e relações existentes **não mudam**.
+- Irmãs podem mapear a mesma coluna com nomes de propriedade diferentes (`Skirmish.userId` e `Duel.createdBy` → `created_by`).
+
+Exemplos: `combat_session` / `combat_participant` (`game/shared/infrastructure/combat-session.entity.ts`), `phb-effect-payload-groups.entity.ts`.
+
+---
+
+## 14. Estado por feature do PC (`feature_state`, GEN-10)
+
+`player_character_state.feature_state` é JSONB **esparso** (chave ausente = default). SSOT de chaves/defaults: `src/game/session/domain/character-feature-state.ts`.
+
+- Poder novo de classe/subclasse = chave nova em `CharacterFeatureState` (+ getter/setter na entity se for ergonômico) — **não** coluna.
+- Referência a outra linha (`game_actor`) continua **coluna com FK**.
+- TypeORM: getters/setters com nomes estáveis (`state.rageActive`). `select`/`where` usam `featureState`; spread de instância não copia getters.
+- SQL cru: `feature_state->>'<chave>'`; consumir = `feature_state - '<chave>'`.

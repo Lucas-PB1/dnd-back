@@ -35,6 +35,7 @@ Estilo de escrita: [`style-guide.md`](style-guide.md) (base Google developer doc
 | Doc | Para quê |
 |------|----------|
 | [`architecture/adr-schema-consolidation.md`](architecture/adr-schema-consolidation.md) | Consolidação A→G (Aceito) |
+| [`architecture/adr-schema-generics.md`](architecture/adr-schema-generics.md) | Schema por primitivas — trilha GEN-0…10 (Aceito) |
 | [`architecture/schema-equivalence-map.md`](architecture/schema-equivalence-map.md) | Mapa histórico tabela → alvo (lotes DONE) |
 | [`architecture/schema-audit/`](architecture/schema-audit/) | Auditoria 2026-09 (inventário, qualidade, enxugada) — trilha GEN |
 | [`architecture/adr-sheet-validation-layers.md`](architecture/adr-sheet-validation-layers.md) | Validators ficha vs `infrastructure/queries` |
@@ -84,7 +85,6 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
-| [`plans/schema-generics-backlog.md`](plans/schema-generics-backlog.md) | **GEN** — schema por primitivas / enxugada onda 2 (**aberto**) |
 | [`plans/pve-skirmish-index.md`](plans/pve-skirmish-index.md) | **Fila PVE + DB-0** — **fechado**; DB runner → TypeORM |
 | [`plans/legado-cleanup-backlog.md`](plans/legado-cleanup-backlog.md) | **Limpeza código morto** — `/legado` (LEG-1…5 **fechados**) |
 | [`plans/resolve-pattern-backlog.md`](plans/resolve-pattern-backlog.md) | **Padrão resolve** — canônico vs legado/hardcode (RES-1…5 **fechados**) |

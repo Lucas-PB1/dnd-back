@@ -1,6 +1,6 @@
 # Análise de qualidade — tabelas similares
 
-> Auditoria 2026-09-23 · trilha [`schema-generics-backlog.md`](../../plans/schema-generics-backlog.md).
+> Auditoria 2026-09-23 · trilha GEN fechada — decisões em [`adr-schema-generics.md`](../adr-schema-generics.md).
 
 Revisão com lentes **DRY**, **Clean Code**, **DDD** (contextos) e **SQL-first** sobre `schema.sql`.
 Foco: tabelas parecidas, duplicação de conhecimento e falhas estruturais.

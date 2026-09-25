@@ -1,6 +1,6 @@
 # Inventário do schema `rpg`
 
-> Auditoria 2026-09-23 · trilha [`schema-generics-backlog.md`](../../plans/schema-generics-backlog.md).
+> Auditoria 2026-09-23 · trilha GEN fechada — decisões em [`adr-schema-generics.md`](../adr-schema-generics.md). Contagens refletem o dump **antes** da trilha.
 
 Análise do arquivo `schema.sql` (DDL extraído do dnd-api).
 

@@ -1,6 +1,6 @@
 # Enxugada do schema `rpg` — comparação profunda e consolidação
 
-> **Backlog vivo:** [`../../plans/schema-generics-backlog.md`](../../plans/schema-generics-backlog.md) (trilha **GEN**).  
+> **Trilha GEN fechada (2026-09-25):** decisões e resultado em [`../adr-schema-generics.md`](../adr-schema-generics.md).  
 > Origem: auditoria 2026-09-23 (repo `check`); espelho em `docs/architecture/schema-audit/`.
 
 Objetivo: **reduzir o número de tabelas e relações** sem destruir o domínio D&D / Dende.  

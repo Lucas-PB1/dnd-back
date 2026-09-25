@@ -1,10 +1,16 @@
 # log
 
+## 2026-09-25 — trilha GEN fechada
+
+* **Update**: decisões GEN-0…10 consolidadas em ADR próprio; plano filho `schema-generics-backlog.md` **apagado** (política docs) e links redirecionados. `catalog-patterns.md` ganhou §13 (tabela com discriminador + TypeORM STI) e §14 (`feature_state`), catálogo miúdo de subclasse → `option_*` e checklist "mesmo shape → discriminador".
+
+— refs: [`adr-schema-generics.md`](../architecture/adr-schema-generics.md), [`catalog-patterns.md`](../architecture/catalog-patterns.md), [`backlog.md`](../plans/backlog.md) — motivo: fechar DoD da trilha GEN.
+
 ## 2026-09-25 — GEN-10 feature_state esparso
 
 * **Update**: 17 colunas de feature do `player_character_state` (Fúria, Imprudente, Arma Sagrada, Forma Selvagem, Forma Estrelada, máscaras, aspecto bestial, mísseis, mutação, transe, câmaras, troca do alto-elfo) → `feature_state JSONB` esparso. Getters/setters na entity preservam a API (~550 usos intactos); FKs para `game_actor` continuam coluna. `db:setup` verde + smoke Postgres. Trilha GEN-0…10 concluída.
 
-— refs: [`0129_player_character_state.sql`](../../database/schema/020_tables/0129_player_character_state.sql), [`character-feature-state.ts`](../../src/game/session/domain/character-feature-state.ts), [`player-character-state.entity.ts`](../../src/game/session/infrastructure/player-character-state.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-10 (row de estado para de crescer por subclasse).
+— refs: [`0129_player_character_state.sql`](../../database/schema/020_tables/0129_player_character_state.sql), [`character-feature-state.ts`](../../src/game/session/domain/character-feature-state.ts), [`player-character-state.entity.ts`](../../src/game/session/infrastructure/player-character-state.entity.ts), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-10 (row de estado para de crescer por subclasse).
 
 ## 2026-09-25 — GEN-9 effect satellites por shape (G2)
 
@@ -16,55 +22,55 @@
 
 * **Update**: `campaign_encounter(+_combatant)`, `duel(+_member)` e `skirmish` → `combat_session(mode)` + `combat_participant(session_mode)` com FK composta e CHECKs por modo (−3 tabelas). TypeORM STI (`@ChildEntity`) mantém repositories/services intactos; RLS por modo; sem views de compat. `db:setup` verde + smoke STI no Postgres. Próximo = GEN-10 ou GEN-9.
 
-— refs: [`0137_combat_session.sql`](../../database/schema/020_tables/0137_combat_session.sql), [`0138_combat_participant.sql`](../../database/schema/020_tables/0138_combat_participant.sql), [`0056_combat_session_mode.sql`](../../database/schema/010_enums/0056_combat_session_mode.sql), [`combat-session.entity.ts`](../../src/game/shared/infrastructure/combat-session.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-8 (três runtimes de combate, um schema).
+— refs: [`0137_combat_session.sql`](../../database/schema/020_tables/0137_combat_session.sql), [`0138_combat_participant.sql`](../../database/schema/020_tables/0138_combat_participant.sql), [`0056_combat_session_mode.sql`](../../database/schema/010_enums/0056_combat_session_mode.sql), [`combat-session.entity.ts`](../../src/game/shared/infrastructure/combat-session.entity.ts), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-8 (três runtimes de combate, um schema).
 
 ## 2026-09-23 — GEN-7 sem tabela de feature
 
 * **Update**: Masks/Beastborne/Slayer → `phb_option_*`; Wild Shape bands → `phb_class_feature_schedule` (−5); manobras BM/Gunslinger **KEEP** (audit). Loader combat-mechanical + wild-shape queries alinhados. Próximo = GEN-10 ou GEN-8.
 
-— refs: [`phb_subclass.option-feature-catalogs.sql`](../../database/seeds/subclass/valdas/phb_subclass.option-feature-catalogs.sql), [`phb_class_feature_schedule.wave4.sql`](../../database/seeds/catalog/phb/phb_class_feature_schedule.wave4.sql), [`load-combat-mechanical-catalog`](../../src/game/combat/application/load-combat-mechanical-catalog/), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-7 (feature = dado, não DDL).
+— refs: [`phb_subclass.option-feature-catalogs.sql`](../../database/seeds/subclass/valdas/phb_subclass.option-feature-catalogs.sql), [`phb_class_feature_schedule.wave4.sql`](../../database/seeds/catalog/phb/phb_class_feature_schedule.wave4.sql), [`load-combat-mechanical-catalog`](../../src/game/combat/application/load-combat-mechanical-catalog/), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-7 (feature = dado, não DDL).
 
 ## 2026-09-23 — GEN-6 stat-block children
 
 * **Update**: `phb_stat_block_{speed,action,spell,trait}` unifica filhos creature↔vehicle (−3…−4 tabelas espelho); dual FK + `owner_kind`/`template_slug` gerados; `game_actor_*` permanece snapshot no spawn (A3). Seeds + bundles + wild-shape + `db:setup` verde. Próximo = GEN-7.
 
-— refs: [`0103_phb_stat_block_speed.sql`](../../database/schema/020_tables/0103_phb_stat_block_speed.sql)…[`0106_phb_stat_block_trait.sql`](../../database/schema/020_tables/0106_phb_stat_block_trait.sql), [`0055_stat_block_owner.sql`](../../database/schema/010_enums/0055_stat_block_owner.sql), [`0005_spawn_game_actor_from_template.sql`](../../database/schema/040_functions/0005_spawn_game_actor_from_template.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-6 (children de stat-block polimórficos no catálogo).
+— refs: [`0103_phb_stat_block_speed.sql`](../../database/schema/020_tables/0103_phb_stat_block_speed.sql)…[`0106_phb_stat_block_trait.sql`](../../database/schema/020_tables/0106_phb_stat_block_trait.sql), [`0055_stat_block_owner.sql`](../../database/schema/010_enums/0055_stat_block_owner.sql), [`0005_spawn_game_actor_from_template.sql`](../../database/schema/040_functions/0005_spawn_game_actor_from_template.sql), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-6 (children de stat-block polimórficos no catálogo).
 
 ## 2026-09-23 — GEN-5 feature gate única
 
 * **Update**: `phb_feature_gate(owner_kind class|subclass)` unifica class/subclass (−1 tabela); seeds + entity + loaders. Próximo = GEN-6.
 
-— refs: [`0150_phb_feature_gate.sql`](../../database/schema/020_tables/0150_phb_feature_gate.sql), [`phb-feature-gate.entity.ts`](../../src/entities/class/phb-feature-gate.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-5 (gates espelhados).
+— refs: [`0150_phb_feature_gate.sql`](../../database/schema/020_tables/0150_phb_feature_gate.sql), [`phb-feature-gate.entity.ts`](../../src/entities/class/phb-feature-gate.entity.ts), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-5 (gates espelhados).
 
 ## 2026-09-23 — GEN-4 feat requirement clause
 
 * **Update**: `phb_feat_requirement_clause` polimórfica (−5 satélites); enum `feat_requirement_clause_kind`; view `v_phb_feat` + seeds. Próximo = GEN-5.
 
-— refs: [`0082_phb_feat_requirement_clause.sql`](../../database/schema/020_tables/0082_phb_feat_requirement_clause.sql), [`0054_feat_requirement_clause_kind.sql`](../../database/schema/010_enums/0054_feat_requirement_clause_kind.sql), [`0024_v_phb_feat.sql`](../../database/schema/030_views/0024_v_phb_feat.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-4 (pré-requisitos tipados).
+— refs: [`0082_phb_feat_requirement_clause.sql`](../../database/schema/020_tables/0082_phb_feat_requirement_clause.sql), [`0054_feat_requirement_clause_kind.sql`](../../database/schema/010_enums/0054_feat_requirement_clause_kind.sql), [`0024_v_phb_feat.sql`](../../database/schema/030_views/0024_v_phb_feat.sql), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-4 (pré-requisitos tipados).
 
 ## 2026-09-23 — GEN-3 combat note única
 
 * **Update**: `phb_combat_note` unifica level/heritage/boon (−2 tabelas); enum `combat_note_source`; seeds + queries + entity. Próximo = GEN-4.
 
-— refs: [`0152_phb_combat_note.sql`](../../database/schema/020_tables/0152_phb_combat_note.sql), [`0053_combat_note_source.sql`](../../database/schema/010_enums/0053_combat_note_source.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-3 (notas de mesa por fonte).
+— refs: [`0152_phb_combat_note.sql`](../../database/schema/020_tables/0152_phb_combat_note.sql), [`0053_combat_note_source.sql`](../../database/schema/010_enums/0053_combat_note_source.sql), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-3 (notas de mesa por fonte).
 
 ## 2026-09-23 — GEN-2 choice runtime única
 
 * **Update**: `player_character_choice(domain, choice_kind, choice_slug)` unifica species + transformation (−1 tabela); enum `character_choice_domain`; sync/load/RLS/bundle atualizados. Próximo = GEN-3.
 
-— refs: [`0113_player_character_choice.sql`](../../database/schema/020_tables/0113_player_character_choice.sql), [`0052_character_choice_domain.sql`](../../database/schema/010_enums/0052_character_choice_domain.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-2 (choices idênticas).
+— refs: [`0113_player_character_choice.sql`](../../database/schema/020_tables/0113_player_character_choice.sql), [`0052_character_choice_domain.sql`](../../database/schema/010_enums/0052_character_choice_domain.sql), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar GEN-2 (choices idênticas).
 
 ## 2026-09-23 — GEN-1 higiene schema
 
 * **Update**: PK `phb_class_proficiency` via `ref_key` gerado; drop enums órfãos (`resource_owner_kind`, `combat_modifier_*`); enums compartilhados (`thread_milestone_rank`, `class_subclass_owner`, `combatant_kind`, `damage_affinity_kind`, `spell_list_type`, `campaign_member_role`). Próximo = GEN-2.
 
-— refs: [`0044_phb_class_proficiency.sql`](../../database/schema/020_tables/0044_phb_class_proficiency.sql), [`0046_thread_milestone_rank.sql`](../../database/schema/010_enums/0046_thread_milestone_rank.sql)…[`0051_campaign_member_role.sql`](../../database/schema/010_enums/0051_campaign_member_role.sql), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar higiene GEN-1 (Δ tabelas 0).
+— refs: [`0044_phb_class_proficiency.sql`](../../database/schema/020_tables/0044_phb_class_proficiency.sql), [`0046_thread_milestone_rank.sql`](../../database/schema/010_enums/0046_thread_milestone_rank.sql)…[`0051_campaign_member_role.sql`](../../database/schema/010_enums/0051_campaign_member_role.sql), [`adr-schema-generics.md`](../architecture/adr-schema-generics.md) — motivo: fechar higiene GEN-1 (Δ tabelas 0).
 
 ## 2026-09-23 — Abertura trilha GEN (schema genérico)
 
 * **Update**: fila **GEN-0…10** aberta — norte “primitivas, não tabela de feature”; auditoria copiada de `check/` para `docs/architecture/schema-audit/` (inventory, quality, consolidation); GEN-0 docs fechado; próximo = GEN-1 higiene. Não é mesa ficha.
 
-— refs: [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md), [`schema-audit/`](../architecture/schema-audit/), [`backlog.md`](../plans/backlog.md), [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) — motivo: materializar enxugada onda 2 no backlog do dnd-api.
+— refs: [`adr-schema-generics.md`](../architecture/adr-schema-generics.md), [`schema-audit/`](../architecture/schema-audit/), [`backlog.md`](../plans/backlog.md), [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) — motivo: materializar enxugada onda 2 no backlog do dnd-api.
 
 ## 2026-09-23 — TORM-5 Cutover (trilha fechada)
 
