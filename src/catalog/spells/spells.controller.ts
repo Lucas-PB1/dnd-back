@@ -9,7 +9,9 @@ import {
 import { SpellsQueryDto } from './dto/spells-query.dto';
 import { FindSpellsQuery } from './queries/find-spells.query';
 import { FindSpellBySlugQuery } from './queries/find-spell-by-slug.query';
+import { FindSpellSpiritVariantsQuery } from './queries/find-spell-spirit-variants.query';
 import { SpellResponseDto } from './dto/spell-response.dto';
+import { SpellSpiritVariantsResponseDto } from './dto/spell-spirit-variants-response.dto';
 
 @ApiTags('catalog-spells')
 @Controller('spells')
@@ -17,6 +19,7 @@ export class SpellsController {
   constructor(
     private readonly findSpells: FindSpellsQuery,
     private readonly findSpellBySlug: FindSpellBySlugQuery,
+    private readonly findSpiritVariants: FindSpellSpiritVariantsQuery,
   ) {}
 
   @Get()
@@ -39,6 +42,15 @@ export class SpellsController {
       saveAbility: query.saveAbility,
       rangeKind: query.rangeKind,
     });
+  }
+
+  @Get('spirit-variants')
+  @ApiOperation({
+    summary: 'Variantes de espírito por magia de invocação (spiritVariantKey)',
+  })
+  @ApiOkResponse({ type: [SpellSpiritVariantsResponseDto] })
+  findSpiritVariantsAll(): Promise<SpellSpiritVariantsResponseDto[]> {
+    return this.findSpiritVariants.execute();
   }
 
   @Get(':slug')
