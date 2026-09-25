@@ -131,6 +131,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 ## Runtime (ficha / campanha / actors)
 
 - `player_character` (+ skill, spell, language, feat, item, equipment, state, `player_character_choice`, option)
+- **`player_character_state.feature_state`** — JSONB esparso com o estado por feature (Fúria, Forma Selvagem, Forma Estrelada, máscaras, câmaras de arma de fogo, …); chaves/defaults em `src/game/session/domain/character-feature-state.ts`. Poder novo = chave nova, não coluna (GEN-10)
 - **`player_character_state.boarded_actor_id`** — PC a bordo de um `game_actor` (vehicle/mount); migração `P040`
 - **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`; veículos vinculados usam `parent_character_id`
 - `campaign`, `campaign_member`, `campaign_character`; encontros em `combat_session` (`mode = 'encounter'`) + `combat_participant`

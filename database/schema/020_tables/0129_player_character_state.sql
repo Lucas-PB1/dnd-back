@@ -10,30 +10,24 @@ CREATE TABLE rpg.player_character_state (
   death_save_failures INT NOT NULL DEFAULT 0 CHECK (death_save_failures BETWEEN 0 AND 3),
   inspiration BOOLEAN NOT NULL DEFAULT FALSE,
   granted_spell_uses JSONB NOT NULL DEFAULT '{}'::jsonb,
-  high_elf_cantrip_swap_available BOOLEAN NOT NULL DEFAULT false,
-  firearm_chambers JSONB NOT NULL DEFAULT '{}'::jsonb,
-  rage_active BOOLEAN NOT NULL DEFAULT FALSE,
-  reckless_active BOOLEAN NOT NULL DEFAULT FALSE,
-  sacred_weapon_active BOOLEAN NOT NULL DEFAULT FALSE,
-  persona_masks JSONB NOT NULL DEFAULT '[]'::jsonb,
-  bestial_aspect_level INTEGER NOT NULL DEFAULT 0 CHECK (bestial_aspect_level >= 0 AND bestial_aspect_level <= 5),
-  missile_shield_armed BOOLEAN NOT NULL DEFAULT false,
-  giga_missile_armed BOOLEAN NOT NULL DEFAULT false,
-  starry_form_active BOOLEAN NOT NULL DEFAULT FALSE,
-  stellar_constellation TEXT NULL,
-  wild_shape_active BOOLEAN NOT NULL DEFAULT FALSE,
-  wild_shape_template_slug TEXT NULL,
-  wild_shape_known_slugs TEXT[] NOT NULL DEFAULT '{}',
-  wild_shape_form_swap_available BOOLEAN NOT NULL DEFAULT TRUE,
   wild_shape_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,
-  /** Mutação Aberrante ativa (Cap. 6): chitinous-shell | eldritch-limbs | slimy-form. */
-  aberrant_mutation_active TEXT NULL,
   boarded_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,
-  /** Transe do Cavaleiro da Pele (Primal Spirit nv.10): posse do companheiro. */
-  skinrider_trance_active BOOLEAN NOT NULL DEFAULT FALSE,
+  /** Transe do Cavaleiro da Pele (Primal Spirit nv.10): companheiro possuído. */
   skinrider_actor_id UUID REFERENCES rpg.game_actor(id) ON DELETE SET NULL,
   /** Circunstâncias de mesa (snow_ice | in_water | extreme_cold) — toggles de ficha. */
-  mesa_circumstances TEXT[] NOT NULL DEFAULT '{}'
+  mesa_circumstances TEXT[] NOT NULL DEFAULT '{}',
+  /**
+   * Estado por feature, esparso (chave ausente = default). Chaves e defaults em
+   * src/game/session/domain/character-feature-state.ts — poder novo = chave nova, não coluna.
+   */
+  feature_state JSONB NOT NULL DEFAULT '{}'::jsonb,
+  CONSTRAINT player_character_state_feature_state_object
+    CHECK (jsonb_typeof(feature_state) = 'object'),
+  CONSTRAINT player_character_state_bestial_aspect_level
+    CHECK (
+      NOT feature_state ? 'bestialAspectLevel'
+      OR (feature_state->>'bestialAspectLevel')::int BETWEEN 0 AND 5
+    )
 );
 
 CREATE INDEX idx_player_character_state_concentration

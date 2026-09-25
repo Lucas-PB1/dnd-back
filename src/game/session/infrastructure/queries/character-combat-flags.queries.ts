@@ -22,12 +22,7 @@ export async function loadWeaponCombatFlags(
   );
   const state = await dataSource.getRepository(PlayerCharacterState).findOne({
     where: { characterId },
-    select: [
-      'rageActive',
-      'recklessActive',
-      'bestialAspectLevel',
-      'sacredWeaponActive',
-    ],
+    select: ['characterId', 'featureState'],
   });
   if (!state) return IDLE_WEAPON_COMBAT_FLAGS;
   return {

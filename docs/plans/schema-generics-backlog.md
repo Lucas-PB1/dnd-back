@@ -49,7 +49,7 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | **GEN-7** | ~~Matar tabelas **de feature** → catalog/effect/option~~ **feito** (−5; manobras KEEP) | L | GEN-2…4 | −5 |
 | **GEN-8** | ~~Combate: uma sessão + participantes (skirmish/duel/encounter)~~ **feito** | L | GEN-6 | −3 |
 | **GEN-9** | ~~Effect satellites: **agrupar por shape** (não JSONB total sem ADR)~~ **feito** (G2) | L | GEN-7 | −10 |
-| **GEN-10** | `player_character_state`: flags/trackers genéricos (sem coluna por poder) | M | GEN-7 | 0 (ou +1 flag table) |
+| **GEN-10** | ~~`player_character_state`: flags/trackers genéricos (sem coluna por poder)~~ **feito** (−17 colunas) | M | GEN-7 | 0 |
 
 Ordem sugerida: **GEN-0 → 1 → 2 → 3 → 4/5 → 6 → 7 → 10 → 8 → 9**.  
 GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
@@ -150,9 +150,20 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-10 — PC state genérico
 
-- [ ] Substituir bools de feature (`rage_active`, `starry_form_*`, …) por mapa tipado
-- [ ] JSONB versionado **ou** `player_character_flag`
-- [ ] Consumers session/combat
+**ADR (inline)**
+
+- **Decisão:** coluna `feature_state JSONB` **esparsa** (chave ausente = default) em vez de tabela `player_character_flag` — estado é 1:1 com o PC, lido/escrito sempre junto da row; tabela extra só traria JOIN. Sem versão no JSON: as chaves são opcionais e o default mora no código.
+- **Movidas (17 colunas → 1):** `high_elf_cantrip_swap_available`, `firearm_chambers`, `rage_active`, `reckless_active`, `sacred_weapon_active`, `persona_masks`, `bestial_aspect_level`, `missile_shield_armed`, `giga_missile_armed`, `starry_form_active`, `stellar_constellation`, `wild_shape_active`, `wild_shape_template_slug`, `wild_shape_known_slugs`, `wild_shape_form_swap_available`, `aberrant_mutation_active`, `skinrider_trance_active`.
+- **Mantidas como coluna:** estado genérico de ficha (slots, recursos, condições, PV temp., DV, death saves, inspiração, `granted_spell_uses`, `mesa_circumstances`) e **referências FK** a `game_actor` (`wild_shape_actor_id`, `boarded_actor_id`, `skinrider_actor_id`) — JSONB perderia `ON DELETE SET NULL`.
+- **SSOT de chaves/defaults:** `src/game/session/domain/character-feature-state.ts` (`CharacterFeatureState`, `readFeature`/`writeFeature`). Escrita remove chave quando volta ao default.
+- **TypeORM:** `PlayerCharacterState` expõe getters/setters com os nomes antigos sobre `featureState` ⇒ ~550 usos em session/combat/dice/effects **inalterados**. Limites: `select`/`where` do TypeORM precisam usar `featureState` (1 query ajustada); spread de instância não copia os getters (nenhum caso encontrado).
+- **DB:** CHECK `jsonb_typeof = 'object'` + faixa 0–5 de `bestialAspectLevel`. SQL cru usa `feature_state->>'<chave>'` (troca de truque do alto-elfo).
+- **Regra:** poder novo de classe/subclasse = chave nova em `CharacterFeatureState` (+ accessor se for ergonômico), **não** coluna.
+
+- [x] Substituir bools de feature (`rage_active`, `starry_form_*`, …) por mapa tipado
+- [x] JSONB esparso (`feature_state`) — sem `player_character_flag`
+- [x] Consumers session/combat (API da entity preservada; 1 query + 1 SQL cru ajustados)
+- [x] `db:setup` verde + smoke Postgres (round-trip, select, CHECK) + Jest sem regressão
 
 ## Anti-padrões
 
@@ -168,7 +179,8 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 - [x] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
 - [x] GEN-7: zero tabelas novas “de feature” no schema SSOT (purge Masks/Beastborne/Slayer/WS; manobras KEEP documentado)
 - [x] GEN-8/9: ADR + implementação (inline acima)
-- [ ] `data-model.md` / `catalog-patterns.md` atualizados
+- [x] GEN-10: `feature_state` esparso
+- [ ] `data-model.md` / `catalog-patterns.md` atualizados (`data-model` ok; `catalog-patterns` pendente)
 - [ ] Plano filho **apagado** quando a trilha fechar (política docs)
 
 ## Pacotes de economia (referência rápida)

@@ -90,6 +90,7 @@ describe('CharacterStateRepository', () => {
     skinriderTranceActive: false,
     skinriderActorId: null,
         mesaCircumstances: [],
+        featureState: {},
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -171,6 +172,7 @@ describe('CharacterStateRepository', () => {
     skinriderTranceActive: false,
     skinriderActorId: null,
         mesaCircumstances: [],
+        featureState: {},
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 

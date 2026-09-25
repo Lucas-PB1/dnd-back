@@ -50,6 +50,7 @@ describe('mutations', () => {
     skinriderTranceActive: false,
     skinriderActorId: null,
     mesaCircumstances: [],
+    featureState: {},
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

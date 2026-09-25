@@ -15,16 +15,14 @@ export async function assertAndConsumeHighElfCantripSwap(
   const next = nextChoices.find((c) => c.choiceKind === HIGH_ELF_CANTRIP)?.choiceSlug;
   if (next === undefined || next === previous) return;
 
-  const rows = await dataSource.query<
-    { high_elf_cantrip_swap_available: boolean }[]
-  >(
-    `SELECT high_elf_cantrip_swap_available
+  const rows = await dataSource.query<{ available: boolean | null }[]>(
+    `SELECT (feature_state->>'highElfCantripSwapAvailable')::boolean AS available
      FROM rpg.player_character_state
      WHERE character_id = $1
      LIMIT 1`,
     [characterId],
   );
-  const available = rows[0]?.high_elf_cantrip_swap_available === true;
+  const available = rows[0]?.available === true;
   if (!available) {
     throw new BadRequestException(
       'High Elf cantrip can only be swapped after a Long Rest',
@@ -32,7 +30,7 @@ export async function assertAndConsumeHighElfCantripSwap(
   }
   await dataSource.query(
     `UPDATE rpg.player_character_state
-     SET high_elf_cantrip_swap_available = false
+     SET feature_state = feature_state - 'highElfCantripSwapAvailable'
      WHERE character_id = $1`,
     [characterId],
   );

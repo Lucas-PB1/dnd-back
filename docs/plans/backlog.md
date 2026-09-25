@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-23 — trilha **GEN** (GEN-0…9 feitos; falta GEN-10). TORM fechada.
+**Última revisão:** 2026-09-23 — trilha **GEN** (GEN-0…10 feitos; pendente só fechamento de docs). TORM fechada.
 
 **Combate / PVE** **não** vive no Ativo mesa → [`pve-skirmish-index.md`](pve-skirmish-index.md) (fechado) · residual: [`combat-real-deferred.md`](combat-real-deferred.md).  
 **DB / migrations:** TypeORM — [`database/migrations/README.md`](../../database/migrations/README.md) · [`sql-layout.md`](../architecture/sql-layout.md).  

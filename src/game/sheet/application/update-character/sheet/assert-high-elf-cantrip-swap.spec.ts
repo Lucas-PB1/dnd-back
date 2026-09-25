@@ -20,9 +20,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
   });
 
   it('rejects swap when flag is false', async () => {
-    dataSource.query.mockResolvedValueOnce([
-      { high_elf_cantrip_swap_available: false },
-    ]);
+    dataSource.query.mockResolvedValueOnce([{ available: null }]);
     await expect(
       assertAndConsumeHighElfCantripSwap(
         asDep(dataSource),
@@ -35,7 +33,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
 
   it('consumes flag when swap allowed', async () => {
     dataSource.query
-      .mockResolvedValueOnce([{ high_elf_cantrip_swap_available: true }])
+      .mockResolvedValueOnce([{ available: true }])
       .mockResolvedValueOnce([]);
     await assertAndConsumeHighElfCantripSwap(
       asDep(dataSource),
@@ -45,7 +43,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
     );
     expect(dataSource.query).toHaveBeenCalledTimes(2);
     expect(dataSource.query.mock.calls[1][0]).toContain(
-      'high_elf_cantrip_swap_available = false',
+      "feature_state - 'highElfCantripSwapAvailable'",
     );
   });
 });

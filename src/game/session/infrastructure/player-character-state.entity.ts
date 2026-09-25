@@ -1,4 +1,9 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
+import {
+  readFeature,
+  writeFeature,
+  type StoredCharacterFeatureState,
+} from '../domain/character-feature-state';
 
 export type SpellSlotsUsed = Record<string, number>;
 export type ResourcesUsed = Record<string, number>;
@@ -17,9 +22,6 @@ export class PlayerCharacterState {
 
   @Column({ name: 'granted_spell_uses', type: 'jsonb', default: {} })
   grantedSpellUses!: GrantedSpellUses;
-
-  @Column({ name: 'high_elf_cantrip_swap_available', type: 'boolean', default: false })
-  highElfCantripSwapAvailable!: boolean;
 
   @Column({ name: 'concentrating_on', type: 'text', nullable: true })
   concentratingOn!: string | null;
@@ -42,63 +44,138 @@ export class PlayerCharacterState {
   @Column({ type: 'boolean', default: false })
   inspiration!: boolean;
 
-  @Column({ name: 'firearm_chambers', type: 'jsonb', default: {} })
-  firearmChambers!: Record<string, number>;
-
-  @Column({ name: 'rage_active', type: 'boolean', default: false })
-  rageActive!: boolean;
-
-  @Column({ name: 'reckless_active', type: 'boolean', default: false })
-  recklessActive!: boolean;
-
-  @Column({ name: 'sacred_weapon_active', type: 'boolean', default: false })
-  sacredWeaponActive!: boolean;
-
-  @Column({ name: 'persona_masks', type: 'jsonb', default: [] })
-  personaMasks!: string[];
-
-  @Column({ name: 'bestial_aspect_level', type: 'int', default: 0 })
-  bestialAspectLevel!: number;
-
-  @Column({ name: 'missile_shield_armed', type: 'boolean', default: false })
-  missileShieldArmed!: boolean;
-
-  @Column({ name: 'giga_missile_armed', type: 'boolean', default: false })
-  gigaMissileArmed!: boolean;
-
-  @Column({ name: 'starry_form_active', type: 'boolean', default: false })
-  starryFormActive!: boolean;
-
-  @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
-  stellarConstellation!: string | null;
-
-  @Column({ name: 'wild_shape_active', type: 'boolean', default: false })
-  wildShapeActive!: boolean;
-
-  @Column({ name: 'wild_shape_template_slug', type: 'text', nullable: true })
-  wildShapeTemplateSlug!: string | null;
-
-  @Column({ name: 'wild_shape_known_slugs', type: 'text', array: true, default: [] })
-  wildShapeKnownSlugs!: string[];
-
-  @Column({ name: 'wild_shape_form_swap_available', type: 'boolean', default: true })
-  wildShapeFormSwapAvailable!: boolean;
-
   @Column({ name: 'wild_shape_actor_id', type: 'uuid', nullable: true })
   wildShapeActorId!: string | null;
 
-  @Column({ name: 'aberrant_mutation_active', type: 'text', nullable: true })
-  aberrantMutationActive!: string | null;
-
   @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
   boardedActorId!: string | null;
-
-  @Column({ name: 'skinrider_trance_active', type: 'boolean', default: false })
-  skinriderTranceActive!: boolean;
 
   @Column({ name: 'skinrider_actor_id', type: 'uuid', nullable: true })
   skinriderActorId!: string | null;
 
   @Column({ name: 'mesa_circumstances', type: 'text', array: true, default: [] })
   mesaCircumstances!: string[];
+
+  /** Sparse per-feature state; use the typed accessors below instead of reading it directly. */
+  @Column({ name: 'feature_state', type: 'jsonb', default: {} })
+  featureState!: StoredCharacterFeatureState;
+
+  get highElfCantripSwapAvailable(): boolean {
+    return readFeature(this.featureState, 'highElfCantripSwapAvailable');
+  }
+  set highElfCantripSwapAvailable(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'highElfCantripSwapAvailable', v);
+  }
+
+  get firearmChambers(): Record<string, number> {
+    return readFeature(this.featureState, 'firearmChambers');
+  }
+  set firearmChambers(v: Record<string, number>) {
+    this.featureState = writeFeature(this.featureState, 'firearmChambers', v);
+  }
+
+  get rageActive(): boolean {
+    return readFeature(this.featureState, 'rageActive');
+  }
+  set rageActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'rageActive', v);
+  }
+
+  get recklessActive(): boolean {
+    return readFeature(this.featureState, 'recklessActive');
+  }
+  set recklessActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'recklessActive', v);
+  }
+
+  get sacredWeaponActive(): boolean {
+    return readFeature(this.featureState, 'sacredWeaponActive');
+  }
+  set sacredWeaponActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'sacredWeaponActive', v);
+  }
+
+  get personaMasks(): string[] {
+    return readFeature(this.featureState, 'personaMasks');
+  }
+  set personaMasks(v: string[]) {
+    this.featureState = writeFeature(this.featureState, 'personaMasks', v);
+  }
+
+  get bestialAspectLevel(): number {
+    return readFeature(this.featureState, 'bestialAspectLevel');
+  }
+  set bestialAspectLevel(v: number) {
+    this.featureState = writeFeature(this.featureState, 'bestialAspectLevel', v);
+  }
+
+  get missileShieldArmed(): boolean {
+    return readFeature(this.featureState, 'missileShieldArmed');
+  }
+  set missileShieldArmed(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'missileShieldArmed', v);
+  }
+
+  get gigaMissileArmed(): boolean {
+    return readFeature(this.featureState, 'gigaMissileArmed');
+  }
+  set gigaMissileArmed(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'gigaMissileArmed', v);
+  }
+
+  get starryFormActive(): boolean {
+    return readFeature(this.featureState, 'starryFormActive');
+  }
+  set starryFormActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'starryFormActive', v);
+  }
+
+  get stellarConstellation(): string | null {
+    return readFeature(this.featureState, 'stellarConstellation');
+  }
+  set stellarConstellation(v: string | null) {
+    this.featureState = writeFeature(this.featureState, 'stellarConstellation', v);
+  }
+
+  get wildShapeActive(): boolean {
+    return readFeature(this.featureState, 'wildShapeActive');
+  }
+  set wildShapeActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'wildShapeActive', v);
+  }
+
+  get wildShapeTemplateSlug(): string | null {
+    return readFeature(this.featureState, 'wildShapeTemplateSlug');
+  }
+  set wildShapeTemplateSlug(v: string | null) {
+    this.featureState = writeFeature(this.featureState, 'wildShapeTemplateSlug', v);
+  }
+
+  get wildShapeKnownSlugs(): string[] {
+    return readFeature(this.featureState, 'wildShapeKnownSlugs');
+  }
+  set wildShapeKnownSlugs(v: string[]) {
+    this.featureState = writeFeature(this.featureState, 'wildShapeKnownSlugs', v);
+  }
+
+  get wildShapeFormSwapAvailable(): boolean {
+    return readFeature(this.featureState, 'wildShapeFormSwapAvailable');
+  }
+  set wildShapeFormSwapAvailable(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'wildShapeFormSwapAvailable', v);
+  }
+
+  get aberrantMutationActive(): string | null {
+    return readFeature(this.featureState, 'aberrantMutationActive');
+  }
+  set aberrantMutationActive(v: string | null) {
+    this.featureState = writeFeature(this.featureState, 'aberrantMutationActive', v);
+  }
+
+  get skinriderTranceActive(): boolean {
+    return readFeature(this.featureState, 'skinriderTranceActive');
+  }
+  set skinriderTranceActive(v: boolean) {
+    this.featureState = writeFeature(this.featureState, 'skinriderTranceActive', v);
+  }
 }

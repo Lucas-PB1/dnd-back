@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-25 — GEN-10 feature_state esparso
+
+* **Update**: 17 colunas de feature do `player_character_state` (Fúria, Imprudente, Arma Sagrada, Forma Selvagem, Forma Estrelada, máscaras, aspecto bestial, mísseis, mutação, transe, câmaras, troca do alto-elfo) → `feature_state JSONB` esparso. Getters/setters na entity preservam a API (~550 usos intactos); FKs para `game_actor` continuam coluna. `db:setup` verde + smoke Postgres. Trilha GEN-0…10 concluída.
+
+— refs: [`0129_player_character_state.sql`](../../database/schema/020_tables/0129_player_character_state.sql), [`character-feature-state.ts`](../../src/game/session/domain/character-feature-state.ts), [`player-character-state.entity.ts`](../../src/game/session/infrastructure/player-character-state.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-10 (row de estado para de crescer por subclasse).
+
 ## 2026-09-25 — GEN-9 effect satellites por shape (G2)
 
 * **Update**: 15 satélites `phb_effect_*` → 5 tabelas com discriminador (`grant_ref`, `scalar`, `advantage`, `sense_env`, `dice`; −10). CHECK por kind trava colunas; TypeORM STI mantém `PhbEffect.spell`/`.numeric`/… e consumidores intactos. 310 INSERTs de seed reescritos. `db:setup` verde + smoke ORM (1394 effects, 0 cruzamentos). Falta GEN-10.

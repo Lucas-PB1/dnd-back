@@ -13,7 +13,6 @@ export async function findOrCreateCharacterState(
       spellSlotsUsed: {},
       resourcesUsed: {},
       grantedSpellUses: {},
-      highElfCantripSwapAvailable: false,
       conditions: [],
       tempHp: 0,
       concentratingOn: null,
@@ -21,25 +20,10 @@ export async function findOrCreateCharacterState(
       deathSaveSuccesses: 0,
       deathSaveFailures: 0,
       inspiration: false,
-      firearmChambers: {},
-      rageActive: false,
-      recklessActive: false,
-      sacredWeaponActive: false,
-      personaMasks: [],
-      bestialAspectLevel: 0,
-      missileShieldArmed: false,
-      gigaMissileArmed: false,
-      starryFormActive: false,
-      stellarConstellation: null,
-      wildShapeActive: false,
-      wildShapeTemplateSlug: null,
-      wildShapeKnownSlugs: [],
-      wildShapeFormSwapAvailable: true,
       wildShapeActorId: null,
-      aberrantMutationActive: null,
       boardedActorId: null,
-      skinriderTranceActive: false,
       skinriderActorId: null,
+      featureState: {},
     });
     await stateRepo.save(row);
   }
@@ -49,56 +33,11 @@ export async function findOrCreateCharacterState(
   if (!row.grantedSpellUses) {
     row.grantedSpellUses = {};
   }
-  if (!row.firearmChambers) {
-    row.firearmChambers = {};
-  }
-  if (row.rageActive == null) {
-    row.rageActive = false;
-  }
-  if (row.recklessActive == null) {
-    row.recklessActive = false;
-  }
-  if (row.sacredWeaponActive == null) {
-    row.sacredWeaponActive = false;
-  }
-  if (!row.personaMasks) {
-    row.personaMasks = [];
-  }
-  if (row.bestialAspectLevel == null) {
-    row.bestialAspectLevel = 0;
-  }
-  if (row.missileShieldArmed == null) {
-    row.missileShieldArmed = false;
-  }
-  if (row.gigaMissileArmed == null) {
-    row.gigaMissileArmed = false;
-  }
-  if (row.starryFormActive == null) {
-    row.starryFormActive = false;
-  }
-  if (row.stellarConstellation === undefined) {
-    row.stellarConstellation = null;
-  }
-  if (row.wildShapeActive == null) {
-    row.wildShapeActive = false;
-  }
-  if (row.wildShapeTemplateSlug === undefined) {
-    row.wildShapeTemplateSlug = null;
-  }
-  if (!row.wildShapeKnownSlugs) {
-    row.wildShapeKnownSlugs = [];
-  }
-  if (row.wildShapeFormSwapAvailable == null) {
-    row.wildShapeFormSwapAvailable = true;
+  if (!row.featureState) {
+    row.featureState = {};
   }
   if (row.wildShapeActorId === undefined) {
     row.wildShapeActorId = null;
-  }
-  if (row.aberrantMutationActive === undefined) {
-    row.aberrantMutationActive = null;
-  }
-  if (row.skinriderTranceActive == null) {
-    row.skinriderTranceActive = false;
   }
   if (row.skinriderActorId === undefined) {
     row.skinriderActorId = null;
