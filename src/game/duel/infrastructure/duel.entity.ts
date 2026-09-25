@@ -1,10 +1,10 @@
 import {
+  ChildEntity,
   Column,
   CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CombatSession } from '../../shared/infrastructure/combat-session.entity';
 import type { DuelEndReason, DuelStatus } from '../domain/duel-status';
 import type { DuelArenaEffect } from '../domain/arena-effects';
 
@@ -13,11 +13,8 @@ export type DuelCombatLogEntry = {
   text: string;
 };
 
-@Entity({ schema: 'rpg', name: 'duel' })
-export class Duel {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+@ChildEntity('duel')
+export class Duel extends CombatSession {
   @Column({ type: 'text', default: 'open' })
   status!: DuelStatus;
 

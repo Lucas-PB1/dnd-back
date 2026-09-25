@@ -1,10 +1,7 @@
 import type { PhbBattleMasterManeuver } from '@entities/subclass-feature/phb-battle-master-maneuver.entity';
-import type { PhbBeastborneAspectBenefit } from '@entities/subclass-feature/phb-beastborne-aspect-benefit.entity';
 import type { PhbClassPanelAction } from '@entities/class/phb-class-panel-action.entity';
 import type { PhbCunningStrikeEffect } from '@entities/subclass-feature/phb-cunning-strike-effect.entity';
-import type { PhbDungeoneerSlayerType } from '@entities/subclass-feature/phb-dungeoneer-slayer-type.entity';
 import type { PhbGunslingerManeuver } from '@entities/subclass-feature/phb-gunslinger-maneuver.entity';
-import type { PhbPersonaMask } from '@entities/subclass-feature/phb-persona-mask.entity';
 import type { PhbSubclassPrecautionSpell } from '@entities/subclass-feature/phb-subclass-precaution-spell.entity';
 import type { PhbSubclassTableAction } from '@entities/subclass-feature/phb-subclass-table-action.entity';
 import type { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
@@ -15,15 +12,23 @@ import type { StrikeOption } from '../../domain/strike-option';
 import { mapEconomyActions, mapPanelActions } from './map-ui-actions';
 import type { CombatMechanicalCatalog } from './types';
 
+/** Catálogo de feature via `phb_option_value` (GEN-7). */
+export type FeatureOptionRow = {
+  valueId: string;
+  label: string;
+  benefit: string | null;
+  sortOrder: number;
+};
+
 export type CombatMechanicalCatalogRows = {
   gunslingerRows: PhbGunslingerManeuver[];
   battleMasterRows: PhbBattleMasterManeuver[];
   cunningRows: PhbCunningStrikeEffect[];
   strikeOptions: StrikeOption[];
   tableActionRows: PhbSubclassTableAction[];
-  personaRows: PhbPersonaMask[];
-  beastborneRows: PhbBeastborneAspectBenefit[];
-  slayerRows: PhbDungeoneerSlayerType[];
+  personaRows: FeatureOptionRow[];
+  beastborneRows: FeatureOptionRow[];
+  slayerRows: FeatureOptionRow[];
   precautionRows: PhbSubclassPrecautionSpell[];
   economyRows: VPhbClassEconomyAction[];
   panelRows: PhbClassPanelAction[];
@@ -114,13 +119,13 @@ export function mapCombatMechanicalCatalog(
         row.repeatPoolCost == null ? undefined : Number(row.repeatPoolCost),
     })),
     personaMasks: personaRows.map((row) => ({
-      slug: row.slug,
-      name: row.name,
+      slug: row.valueId,
+      name: row.label,
     })),
-    personaMaskSlugs: personaRows.map((row) => row.slug),
+    personaMaskSlugs: personaRows.map((row) => row.valueId),
     beastborneAspectBenefits: beastborneRows.map((row) => ({
-      level: Number(row.aspectLevel),
-      note: row.note,
+      level: Number(row.valueId),
+      note: row.benefit ?? row.label,
     })),
     dungeoneerSlayerLabels: slayerRows.map((row) => row.label),
     precautionSpells: precautionRows.map((row) => ({

@@ -1,5 +1,17 @@
 # log
 
+## 2026-09-25 — GEN-8 combat session única
+
+* **Update**: `campaign_encounter(+_combatant)`, `duel(+_member)` e `skirmish` → `combat_session(mode)` + `combat_participant(session_mode)` com FK composta e CHECKs por modo (−3 tabelas). TypeORM STI (`@ChildEntity`) mantém repositories/services intactos; RLS por modo; sem views de compat. `db:setup` verde + smoke STI no Postgres. Próximo = GEN-10 ou GEN-9.
+
+— refs: [`0137_combat_session.sql`](../../database/schema/020_tables/0137_combat_session.sql), [`0138_combat_participant.sql`](../../database/schema/020_tables/0138_combat_participant.sql), [`0056_combat_session_mode.sql`](../../database/schema/010_enums/0056_combat_session_mode.sql), [`combat-session.entity.ts`](../../src/game/shared/infrastructure/combat-session.entity.ts), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-8 (três runtimes de combate, um schema).
+
+## 2026-09-23 — GEN-7 sem tabela de feature
+
+* **Update**: Masks/Beastborne/Slayer → `phb_option_*`; Wild Shape bands → `phb_class_feature_schedule` (−5); manobras BM/Gunslinger **KEEP** (audit). Loader combat-mechanical + wild-shape queries alinhados. Próximo = GEN-10 ou GEN-8.
+
+— refs: [`phb_subclass.option-feature-catalogs.sql`](../../database/seeds/subclass/valdas/phb_subclass.option-feature-catalogs.sql), [`phb_class_feature_schedule.wave4.sql`](../../database/seeds/catalog/phb/phb_class_feature_schedule.wave4.sql), [`load-combat-mechanical-catalog`](../../src/game/combat/application/load-combat-mechanical-catalog/), [`schema-generics-backlog.md`](../plans/schema-generics-backlog.md) — motivo: fechar GEN-7 (feature = dado, não DDL).
+
 ## 2026-09-23 — GEN-6 stat-block children
 
 * **Update**: `phb_stat_block_{speed,action,spell,trait}` unifica filhos creature↔vehicle (−3…−4 tabelas espelho); dual FK + `owner_kind`/`template_slug` gerados; `game_actor_*` permanece snapshot no spawn (A3). Seeds + bundles + wild-shape + `db:setup` verde. Próximo = GEN-7.

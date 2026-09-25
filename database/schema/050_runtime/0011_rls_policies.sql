@@ -5,43 +5,56 @@ BEGIN
     RETURN;
   END IF;
 
-  ALTER TABLE rpg.duel ENABLE ROW LEVEL SECURITY;
-  ALTER TABLE rpg.duel_member ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE rpg.combat_session ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE rpg.combat_participant ENABLE ROW LEVEL SECURITY;
 
-  DROP POLICY IF EXISTS duel_member_select ON rpg.duel;
-  CREATE POLICY duel_member_select ON rpg.duel
+  DROP POLICY IF EXISTS combat_session_duel_member_select ON rpg.combat_session;
+  CREATE POLICY combat_session_duel_member_select ON rpg.combat_session
     FOR SELECT USING (
-      id IN (SELECT duel_id FROM rpg.duel_member WHERE user_id = auth.uid())
-    );
-
-  DROP POLICY IF EXISTS duel_creator_insert ON rpg.duel;
-  CREATE POLICY duel_creator_insert ON rpg.duel
-    FOR INSERT WITH CHECK (created_by = auth.uid());
-
-  DROP POLICY IF EXISTS duel_member_update ON rpg.duel;
-  CREATE POLICY duel_member_update ON rpg.duel
-    FOR UPDATE USING (
-      id IN (SELECT duel_id FROM rpg.duel_member WHERE user_id = auth.uid())
-    );
-
-  DROP POLICY IF EXISTS duel_creator_delete ON rpg.duel;
-  CREATE POLICY duel_creator_delete ON rpg.duel
-    FOR DELETE USING (created_by = auth.uid());
-
-  DROP POLICY IF EXISTS duel_member_own_select ON rpg.duel_member;
-  CREATE POLICY duel_member_own_select ON rpg.duel_member
-    FOR SELECT USING (
-      user_id = auth.uid()
-      OR duel_id IN (
-        SELECT duel_id FROM rpg.duel_member WHERE user_id = auth.uid()
+      mode = 'duel'
+      AND id IN (
+        SELECT session_id FROM rpg.combat_participant
+        WHERE session_mode = 'duel' AND user_id = auth.uid()
       )
     );
 
-  DROP POLICY IF EXISTS duel_member_own_write ON rpg.duel_member;
-  CREATE POLICY duel_member_own_write ON rpg.duel_member
-    FOR ALL USING (user_id = auth.uid())
+  DROP POLICY IF EXISTS combat_session_duel_creator_insert ON rpg.combat_session;
+  CREATE POLICY combat_session_duel_creator_insert ON rpg.combat_session
+    FOR INSERT WITH CHECK (mode = 'duel' AND created_by = auth.uid());
+
+  DROP POLICY IF EXISTS combat_session_duel_member_update ON rpg.combat_session;
+  CREATE POLICY combat_session_duel_member_update ON rpg.combat_session
+    FOR UPDATE USING (
+      mode = 'duel'
+      AND id IN (
+        SELECT session_id FROM rpg.combat_participant
+        WHERE session_mode = 'duel' AND user_id = auth.uid()
+      )
+    );
+
+  DROP POLICY IF EXISTS combat_session_duel_creator_delete ON rpg.combat_session;
+  CREATE POLICY combat_session_duel_creator_delete ON rpg.combat_session
+    FOR DELETE USING (mode = 'duel' AND created_by = auth.uid());
+
+  DROP POLICY IF EXISTS combat_participant_duel_select ON rpg.combat_participant;
+  CREATE POLICY combat_participant_duel_select ON rpg.combat_participant
+    FOR SELECT USING (
+      session_mode = 'duel'
+      AND (
+        user_id = auth.uid()
+        OR session_id IN (
+          SELECT session_id FROM rpg.combat_participant
+          WHERE session_mode = 'duel' AND user_id = auth.uid()
+        )
+      )
+    );
+
+  DROP POLICY IF EXISTS combat_participant_duel_own_write ON rpg.combat_participant;
+  CREATE POLICY combat_participant_duel_own_write ON rpg.combat_participant
+    FOR ALL USING (session_mode = 'duel' AND user_id = auth.uid())
     WITH CHECK (
-      user_id = auth.uid()
+      session_mode = 'duel'
+      AND user_id = auth.uid()
       AND character_id IN (
         SELECT id FROM rpg.player_character WHERE user_id = auth.uid()
       )

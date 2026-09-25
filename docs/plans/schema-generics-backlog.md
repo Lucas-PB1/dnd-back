@@ -1,6 +1,6 @@
 # Schema genérico — backlog (primitivas, não tabelas de feature)
 
-**Status:** aberto (GEN-0…6 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
+**Status:** aberto (GEN-0…7 feitos) · **Não é** mesa ficha · **Não é** combate tipado residual  
 **Norte:** banco modela **primitivas**; feature do livro = **dado** (`kind` + payload), não tabela nova.
 
 Auditoria 2026-09-23 (repo `check` → copiada para cá):
@@ -46,8 +46,8 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | **GEN-4** | ~~Feat requirement: header + `clause` polimórfica~~ **feito** | M | GEN-1 | −5 |
 | **GEN-5** | ~~Feature gate class\|subclass polimórfico~~ **feito** | M | GEN-1 | −1 |
 | **GEN-6** | ~~Stat-block children: unificar creature↔vehicle (+ opcional actor snapshot)~~ **feito** | M | GEN-1 | −3 |
-| **GEN-7** | Matar tabelas **de feature** → catalog/effect/option (Beastborne, Dungeoneer, Persona Mask, Wild Shape bands DDL, manobras nomeadas…) | L | GEN-2…4 | −5…−12 |
-| **GEN-8** | Combate: uma sessão + participantes (skirmish/duel/encounter) | L | GEN-6 | −2…−4 |
+| **GEN-7** | ~~Matar tabelas **de feature** → catalog/effect/option~~ **feito** (−5; manobras KEEP) | L | GEN-2…4 | −5 |
+| **GEN-8** | ~~Combate: uma sessão + participantes (skirmish/duel/encounter)~~ **feito** | L | GEN-6 | −3 |
 | **GEN-9** | Effect satellites: **agrupar por shape** (não JSONB total sem ADR) | L | GEN-7 | −15…−17 |
 | **GEN-10** | `player_character_state`: flags/trackers genéricos (sem coluna por poder) | M | GEN-7 | 0 (ou +1 flag table) |
 
@@ -100,16 +100,37 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-7 — Sem tabela de feature
 
-- [ ] Inventário: listar `phb_*` cujo nome é subclass/feature
-- [ ] Cada uma → effect / option / catalog entry / resource
-- [ ] Proibir PR que adicione `phb_<feature_name>_…` sem ADR
+**Inventário → destino**
+
+| Tabela | Destino |
+|--------|---------|
+| `phb_persona_mask` | `phb_option_*` (`personaMask`) |
+| `phb_beastborne_aspect_benefit` | `phb_option_*` (`bestialAspect` + `benefit`) |
+| `phb_dungeoneer_slayer_type` | `phb_option_*` (`slayerType`) |
+| `phb_wild_shape_cr_band` / `_known_band` | `phb_class_feature_schedule` (`wild_shape_*`) |
+| `phb_battle_master_maneuver` / `phb_gunslinger_maneuver` | **KEEP** (contratos runtime distintos — audit §12) |
+| `phb_cunning_strike_effect` | **KEEP** por ora (shape ≠ option; candidato futuro effect/catalog) |
+| `phb_subclass_precaution_spell` / `phb_spell_spirit*` | adiados (junction / spawn — não “catálogo de feature” puro) |
+
+- [x] Inventário + destinos no backlog
+- [x] Migrar trio Masks/Beastborne/Slayer + wild-shape bands (−5 tabelas)
+- [x] Regra prática: sem `phb_<feature>_…` novo sem ADR (anti-padrão acima)
+- [x] `db:setup` + testes mecânicos wild-shape/catalog verdes
 
 ### GEN-8 — Combat session
 
-- [ ] ADR: mode skirmish|duel|encounter
-- [ ] `combat_session` + `combat_participant`
-- [ ] Views de compat ou migrate API skirmish/duel/encounter
-- [ ] RLS/policies
+**ADR (inline)**
+
+- **Decisão:** `rpg.combat_session(mode combat_session_mode)` + `rpg.combat_participant(session_mode)`; FK composta `(session_id, session_mode) → (id, mode)` impede participante de modo errado. Colunas específicas de modo são nullable, travadas por `CHECK combat_session_shape_by_mode` / `combat_participant_shape_by_mode`; status validado por modo (`open|ready|active|finished|cancelled` duel; `active|finished` skirmish; `active|closed` encounter).
+- **Unicidade:** `invite_code` único; 1 encounter ativo por campanha; 1 skirmish ativa por `created_by`; `(session_id, character_id|actor_id)` e `(session_id, user_id)` em duel.
+- **TypeORM:** Single Table Inheritance — `CombatSession` / `CombatParticipant` (`@TableInheritance`) em `game/shared/infrastructure`; `Duel`, `Skirmish`, `CampaignEncounter` e respectivos participantes viram `@ChildEntity(mode)`. Repositories/services **inalterados** (discriminador no INSERT + `mode IN (...)` no SELECT automáticos).
+- **Renomes de coluna:** `duel_id|skirmish_id|encounter_id → session_id`; skirmish `user_id → created_by`; duel `initiative → initiative_total`; `current_combatant_id → current_participant_id`. Propriedades TS mantidas.
+- **Sem views de compat** (wipe local via `db:setup`); RLS por modo na mesma tabela (políticas permissivas somam por OR).
+
+- [x] ADR: mode skirmish|duel|encounter
+- [x] `combat_session` + `combat_participant` (−5 +2 = −3 tabelas)
+- [x] API skirmish/duel/encounter migrada via STI (sem views de compat)
+- [x] RLS/policies (`0008`/`0011`/`0012` por modo; FK `created_by → auth.users` em `0007`)
 
 ### GEN-9 — Effect payloads
 
@@ -135,8 +156,8 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 - [x] GEN-0…1 fechados (higiene + docs)
 - [x] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
-- [ ] GEN-7: zero tabelas novas “de feature” no schema SSOT
-- [ ] GEN-8/9: ADR + implementação ou adiados com motivo em Notas do [`backlog.md`](backlog.md)
+- [x] GEN-7: zero tabelas novas “de feature” no schema SSOT (purge Masks/Beastborne/Slayer/WS; manobras KEEP documentado)
+- [ ] GEN-8/9: ADR + implementação ou adiados com motivo em Notas do [`backlog.md`](backlog.md) (GEN-8 feito)
 - [ ] `data-model.md` / `catalog-patterns.md` atualizados
 - [ ] Plano filho **apagado** quando a trilha fechar (política docs)
 

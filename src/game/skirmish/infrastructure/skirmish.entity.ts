@@ -1,10 +1,10 @@
 import {
+  ChildEntity,
   Column,
   CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CombatSession } from '../../shared/infrastructure/combat-session.entity';
 import type {
   SkirmishCombatLogEntry,
   SkirmishEndReason,
@@ -12,12 +12,9 @@ import type {
   SkirmishWinnerKind,
 } from '../domain/skirmish-status';
 
-@Entity({ schema: 'rpg', name: 'skirmish' })
-export class Skirmish {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({ name: 'user_id', type: 'uuid' })
+@ChildEntity('skirmish')
+export class Skirmish extends CombatSession {
+  @Column({ name: 'created_by', type: 'uuid' })
   userId!: string;
 
   @Column({ name: 'character_id', type: 'uuid' })
@@ -32,7 +29,7 @@ export class Skirmish {
   @Column({ name: 'turn_attacks_remaining', type: 'int', nullable: true })
   turnAttacksRemaining!: number | null;
 
-  @Column({ name: 'current_combatant_id', type: 'uuid', nullable: true })
+  @Column({ name: 'current_participant_id', type: 'uuid', nullable: true })
   currentCombatantId!: string | null;
 
   @Column({ name: 'combat_log', type: 'jsonb', default: [] })

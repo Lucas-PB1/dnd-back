@@ -25,6 +25,9 @@ export const FEATURE_SCHEDULE_KEYS = {
   personaMasksEquipped: 'persona_masks_equipped',
   personaMasksKnown: 'persona_masks_known',
   portentD20Count: 'portent_d20_count',
+  wildShapeCrMax: 'wild_shape_cr_max',
+  wildShapeAllowFly: 'wild_shape_allow_fly',
+  wildShapeFormsKnown: 'wild_shape_forms_known',
 } as const;
 
 export type FeatureScheduleKey =

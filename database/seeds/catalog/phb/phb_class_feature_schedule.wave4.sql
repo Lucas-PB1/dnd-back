@@ -63,3 +63,23 @@ WHERE s.slug = 'diviner'
     SELECT 1 FROM rpg.phb_class_feature_schedule x
     WHERE x.subclass_id = s.id AND x.feature_key = v.feature_key AND x.unlock_level = v.unlock_level
   );
+
+-- GEN-7: Forma Selvagem (antes phb_wild_shape_*_band)
+INSERT INTO rpg.phb_class_feature_schedule (owner_kind, class_id, subclass_id, feature_key, unlock_level, value_num)
+SELECT 'class', c.id, NULL, v.feature_key, v.unlock_level, v.value_num
+FROM rpg.phb_class c
+CROSS JOIN (
+  VALUES
+    ('wild_shape_cr_max', 2, 0.25::float8),
+    ('wild_shape_cr_max', 4, 0.5::float8),
+    ('wild_shape_cr_max', 8, 1::float8),
+    ('wild_shape_allow_fly', 8, 1::float8),
+    ('wild_shape_forms_known', 2, 4::float8),
+    ('wild_shape_forms_known', 4, 6::float8),
+    ('wild_shape_forms_known', 8, 8::float8)
+) AS v(feature_key, unlock_level, value_num)
+WHERE c.slug = 'druid'
+  AND NOT EXISTS (
+    SELECT 1 FROM rpg.phb_class_feature_schedule s
+    WHERE s.class_id = c.id AND s.feature_key = v.feature_key AND s.unlock_level = v.unlock_level
+  );

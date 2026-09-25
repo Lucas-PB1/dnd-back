@@ -282,11 +282,12 @@ describe('DruidActionsHandler', () => {
   const effectCatalog = { load: jest.fn().mockResolvedValue(DRUID_EFFECTS) };
   const dataSource = {
     query: jest.fn().mockImplementation(async (sql: string) => {
-      if (String(sql).includes('phb_wild_shape_cr_band')) {
+      if (String(sql).includes('phb_class_feature_schedule')) {
         return [
-          { min_level: 2, cr_max: '1/4', allow_fly: false },
-          { min_level: 4, cr_max: '1/2', allow_fly: false },
-          { min_level: 8, cr_max: '1', allow_fly: true },
+          { unlock_level: 2, feature_key: 'wild_shape_cr_max', value_num: 0.25 },
+          { unlock_level: 4, feature_key: 'wild_shape_cr_max', value_num: 0.5 },
+          { unlock_level: 8, feature_key: 'wild_shape_cr_max', value_num: 1 },
+          { unlock_level: 8, feature_key: 'wild_shape_allow_fly', value_num: 1 },
         ];
       }
       if (String(sql).includes('WHERE lower(t.creature_type)')) {
@@ -360,11 +361,12 @@ describe('DruidActionsHandler', () => {
   beforeEach(() => {
     ctx.resetMocks();
     dataSource.query.mockImplementation(async (sql: string) => {
-      if (String(sql).includes('phb_wild_shape_cr_band')) {
+      if (String(sql).includes('phb_class_feature_schedule')) {
         return [
-          { min_level: 2, cr_max: '1/4', allow_fly: false },
-          { min_level: 4, cr_max: '1/2', allow_fly: false },
-          { min_level: 8, cr_max: '1', allow_fly: true },
+          { unlock_level: 2, feature_key: 'wild_shape_cr_max', value_num: 0.25 },
+          { unlock_level: 4, feature_key: 'wild_shape_cr_max', value_num: 0.5 },
+          { unlock_level: 8, feature_key: 'wild_shape_cr_max', value_num: 1 },
+          { unlock_level: 8, feature_key: 'wild_shape_allow_fly', value_num: 1 },
         ];
       }
       if (String(sql).includes('WHERE lower(t.creature_type)')) {
@@ -494,11 +496,12 @@ describe('DruidActionsHandler', () => {
 
   it('replaces one known form after long rest', async () => {
     dataSource.query.mockImplementation(async (sql: string) => {
-      if (String(sql).includes('phb_wild_shape_cr_band')) {
+      if (String(sql).includes('phb_class_feature_schedule')) {
         return [
-          { min_level: 2, cr_max: '1/4', allow_fly: false },
-          { min_level: 4, cr_max: '1/2', allow_fly: false },
-          { min_level: 8, cr_max: '1', allow_fly: true },
+          { unlock_level: 2, feature_key: 'wild_shape_cr_max', value_num: 0.25 },
+          { unlock_level: 4, feature_key: 'wild_shape_cr_max', value_num: 0.5 },
+          { unlock_level: 8, feature_key: 'wild_shape_cr_max', value_num: 1 },
+          { unlock_level: 8, feature_key: 'wild_shape_allow_fly', value_num: 1 },
         ];
       }
       return [

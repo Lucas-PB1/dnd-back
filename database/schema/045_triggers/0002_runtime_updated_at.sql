@@ -6,8 +6,8 @@ CREATE TRIGGER tr_campaign_updated_at
   BEFORE UPDATE ON rpg.campaign
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
-CREATE TRIGGER tr_campaign_encounter_updated_at
-  BEFORE UPDATE ON rpg.campaign_encounter
+CREATE TRIGGER tr_combat_session_updated_at
+  BEFORE UPDATE ON rpg.combat_session
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
 CREATE TRIGGER tr_game_actor_updated_at

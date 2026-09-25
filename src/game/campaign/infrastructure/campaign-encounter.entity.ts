@@ -1,19 +1,16 @@
 import {
+  ChildEntity,
   Column,
   CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CombatSession } from '../../shared/infrastructure/combat-session.entity';
 
 export type CampaignEncounterStatus = 'active' | 'closed';
 export type CreatureHpVisibility = 'hidden' | 'percent' | 'exact';
 
-@Entity({ schema: 'rpg', name: 'campaign_encounter' })
-export class CampaignEncounter {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+@ChildEntity('encounter')
+export class CampaignEncounter extends CombatSession {
   @Column({ name: 'campaign_id', type: 'uuid' })
   campaignId!: string;
 

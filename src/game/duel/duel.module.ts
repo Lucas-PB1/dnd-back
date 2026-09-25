@@ -7,6 +7,10 @@ import { CharacterSessionModule } from '../session/character-session.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { EffectsModule } from '../effects/effects.module';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
+import {
+  CombatParticipant,
+  CombatSession,
+} from '../shared/infrastructure/combat-session.entity';
 import { Duel } from './infrastructure/duel.entity';
 import { DuelMember } from './infrastructure/duel-member.entity';
 import { DuelRepository } from './infrastructure/duel.repository';
@@ -23,7 +27,13 @@ import { DuelsController } from './duels.controller';
     CharacterDiceModule,
     CharacterSessionModule,
     CharacterSheetModule,
-    TypeOrmModule.forFeature([Duel, DuelMember, PlayerCharacter]),
+    TypeOrmModule.forFeature([
+      CombatSession,
+      CombatParticipant,
+      Duel,
+      DuelMember,
+      PlayerCharacter,
+    ]),
   ],
   controllers: [DuelsController],
   providers: [

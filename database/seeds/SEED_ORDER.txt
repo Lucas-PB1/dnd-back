@@ -161,6 +161,7 @@ item/valdas/phb_item.familiars.sql
 economy/valdas/seed.pp2-resources.sql
 item/valdas/seed.weapon-charms.sql
 subclass/valdas/phb_subclass_prepared_spell.player-pack-2.sql
+subclass/valdas/phb_subclass.option-feature-catalogs.sql
 feat/valdas/phb_feat_requirement.all.03.sql
 feat/valdas/phb_feat_option.spellblade.sql
 catalog/steinhardt/phb_edition.base.sql
@@ -168,8 +169,6 @@ subclass/steinhardt/phb_subclass.all.sql
 class/steinhardt/phb_subclass.feature-gate.blood-hound.sql
 class/phb/phb_class.feature-gate.all.sql
 class/phb/phb_subclass.feature-gate.wave.sql
-class/phb/phb_wild_shape_cr_band.all.sql
-class/phb/phb_wild_shape_known_band.all.sql
 subclass/steinhardt/phb_subclass_feature.all.sql
 spell/steinhardt/phb_spell.all.sql
 subclass/steinhardt/phb_subclass_prepared_spell.all.sql
@@ -350,9 +349,6 @@ economy/valdas/phb_gunslinger_maneuver.all.sql
 economy/phb/phb_battle_master_maneuver.all.sql
 economy/phb/phb_cunning_strike_effect.all.sql
 economy/phb/phb_subclass_table_action.all.sql
-economy/phb/phb_persona_mask.all.sql
-economy/phb/phb_beastborne_aspect_benefit.all.sql
-economy/phb/phb_dungeoneer_slayer_type.all.sql
 economy/phb/phb_subclass_precaution_spell.all.sql
 economy/phb/phb_class_economy_action.all.sql
 class/phb/phb_class_panel_action.all.sql

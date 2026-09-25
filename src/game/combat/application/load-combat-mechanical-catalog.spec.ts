@@ -11,9 +11,6 @@ describe('LoadCombatMechanicalCatalog cache', () => {
     const battleMasterRepo = emptyFindRepo();
     const cunningRepo = emptyFindRepo();
     const tableActionRepo = emptyFindRepo();
-    const personaMaskRepo = emptyFindRepo();
-    const beastborneRepo = emptyFindRepo();
-    const slayerRepo = emptyFindRepo();
     const precautionRepo = emptyFindRepo();
     const economyRepo = emptyFindRepo();
     const panelRepo = emptyFindRepo();
@@ -30,9 +27,6 @@ describe('LoadCombatMechanicalCatalog cache', () => {
       asDep(battleMasterRepo),
       asDep(cunningRepo),
       asDep(tableActionRepo),
-      asDep(personaMaskRepo),
-      asDep(beastborneRepo),
-      asDep(slayerRepo),
       asDep(precautionRepo),
       asDep(economyRepo),
       asDep(panelRepo),

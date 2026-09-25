@@ -11,6 +11,10 @@ import { ActorModule } from '../actor/actor.module';
 import { GameActor } from '../actor/infrastructure/game-actor.entity';
 import { GameActorAction } from '../actor/infrastructure/game-actor-action.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
+import {
+  CombatParticipant,
+  CombatSession,
+} from '../shared/infrastructure/combat-session.entity';
 import { Skirmish } from './infrastructure/skirmish.entity';
 import { SkirmishCombatant } from './infrastructure/skirmish-combatant.entity';
 import { SkirmishRepository } from './infrastructure/skirmish.repository';
@@ -27,6 +31,8 @@ import { SkirmishesController } from './skirmishes.controller';
     ActorModule,
     EffectsModule,
     TypeOrmModule.forFeature([
+      CombatSession,
+      CombatParticipant,
       Skirmish,
       SkirmishCombatant,
       GameActor,

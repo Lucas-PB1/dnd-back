@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { PhbBattleMasterManeuver } from '@entities/subclass-feature/phb-battle-master-maneuver.entity';
-import { PhbBeastborneAspectBenefit } from '@entities/subclass-feature/phb-beastborne-aspect-benefit.entity';
 import { PhbClassPanelAction } from '@entities/class/phb-class-panel-action.entity';
 import { PhbCunningStrikeEffect } from '@entities/subclass-feature/phb-cunning-strike-effect.entity';
-import { PhbDungeoneerSlayerType } from '@entities/subclass-feature/phb-dungeoneer-slayer-type.entity';
 import { PhbGunslingerManeuver } from '@entities/subclass-feature/phb-gunslinger-maneuver.entity';
 import { PhbOptionValue } from '@entities/reference/phb-option.entity';
-import { PhbPersonaMask } from '@entities/subclass-feature/phb-persona-mask.entity';
 import { PhbSubclassPrecautionSpell } from '@entities/subclass-feature/phb-subclass-precaution-spell.entity';
 import { PhbSubclassRef } from '@entities/subclass-feature/phb-subclass-ref.entity';
 import { PhbSubclassTableAction } from '@entities/subclass-feature/phb-subclass-table-action.entity';
@@ -19,7 +16,10 @@ import {
   STRIKE_OPTION_REQUIRES_KEY,
   buildStrikeOptionsFromEffects,
 } from '../../domain/build-strike-options-from-effects';
-import { mapCombatMechanicalCatalog } from './map-rows';
+import {
+  mapCombatMechanicalCatalog,
+  type FeatureOptionRow,
+} from './map-rows';
 import type { CombatMechanicalCatalog } from './types';
 import { loadAllFeatureSchedules } from '../../infrastructure/feature-schedule.queries';
 
@@ -27,6 +27,10 @@ export type {
   CombatMechanicalCatalog,
   PersonaMaskCatalogEntry,
 } from './types';
+
+const PERSONA_MASK_OPTION_KEY = 'personaMask';
+const BESTIAL_ASPECT_OPTION_KEY = 'bestialAspect';
+const SLAYER_TYPE_OPTION_KEY = 'slayerType';
 
 @Injectable()
 export class LoadCombatMechanicalCatalog {
@@ -45,12 +49,6 @@ export class LoadCombatMechanicalCatalog {
     private readonly cunningRepo: Repository<PhbCunningStrikeEffect>,
     @InjectRepository(PhbSubclassTableAction)
     private readonly tableActionRepo: Repository<PhbSubclassTableAction>,
-    @InjectRepository(PhbPersonaMask)
-    private readonly personaMaskRepo: Repository<PhbPersonaMask>,
-    @InjectRepository(PhbBeastborneAspectBenefit)
-    private readonly beastborneRepo: Repository<PhbBeastborneAspectBenefit>,
-    @InjectRepository(PhbDungeoneerSlayerType)
-    private readonly slayerRepo: Repository<PhbDungeoneerSlayerType>,
     @InjectRepository(PhbSubclassPrecautionSpell)
     private readonly precautionRepo: Repository<PhbSubclassPrecautionSpell>,
     @InjectRepository(VPhbClassEconomyAction)
@@ -102,9 +100,7 @@ export class LoadCombatMechanicalCatalog {
       battleMasterRows,
       cunningRows,
       tableActionRows,
-      personaRows,
-      beastborneRows,
-      slayerRows,
+      featureOptions,
       precautionRows,
       economyRows,
       panelRows,
@@ -116,9 +112,7 @@ export class LoadCombatMechanicalCatalog {
       this.battleMasterRepo.find(),
       this.cunningRepo.find({ relations: ['subclass'] }),
       this.tableActionRepo.find({ relations: ['subclass'] }),
-      this.personaMaskRepo.find({ relations: ['subclass'] }),
-      this.beastborneRepo.find(),
-      this.slayerRepo.find({ order: { sortOrder: 'ASC' } }),
+      this.loadFeatureOptionCatalogs(),
       this.precautionRepo.find({
         where: { subclass: { slug: 'dungeoneer' } },
         relations: ['subclass', 'spell'],
@@ -139,9 +133,9 @@ export class LoadCombatMechanicalCatalog {
       cunningRows,
       strikeOptions,
       tableActionRows,
-      personaRows,
-      beastborneRows,
-      slayerRows,
+      personaRows: featureOptions.personaRows,
+      beastborneRows: featureOptions.beastborneRows,
+      slayerRows: featureOptions.slayerRows,
       precautionRows,
       economyRows,
       panelRows,
@@ -150,6 +144,41 @@ export class LoadCombatMechanicalCatalog {
       featureSchedulesByClassSlug: featureSchedules.byClassSlug,
       featureSchedulesBySubclassSlug: featureSchedules.bySubclassSlug,
     });
+  }
+
+  private async loadFeatureOptionCatalogs(): Promise<{
+    personaRows: FeatureOptionRow[];
+    beastborneRows: FeatureOptionRow[];
+    slayerRows: FeatureOptionRow[];
+  }> {
+    const rows = await this.optionValueRepo.find({
+      where: {
+        scope: 'subclass',
+        optionKey: In([
+          PERSONA_MASK_OPTION_KEY,
+          BESTIAL_ASPECT_OPTION_KEY,
+          SLAYER_TYPE_OPTION_KEY,
+        ]),
+      },
+      order: { sortOrder: 'ASC' },
+    });
+    const toRow = (row: PhbOptionValue): FeatureOptionRow => ({
+      valueId: row.valueId,
+      label: row.label,
+      benefit: row.benefit,
+      sortOrder: row.sortOrder,
+    });
+    return {
+      personaRows: rows
+        .filter((r) => r.optionKey === PERSONA_MASK_OPTION_KEY)
+        .map(toRow),
+      beastborneRows: rows
+        .filter((r) => r.optionKey === BESTIAL_ASPECT_OPTION_KEY)
+        .map(toRow),
+      slayerRows: rows
+        .filter((r) => r.optionKey === SLAYER_TYPE_OPTION_KEY)
+        .map(toRow),
+    };
   }
 
   private async loadFeatureGates(): Promise<{

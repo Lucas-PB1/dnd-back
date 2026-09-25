@@ -12,6 +12,10 @@ import { PlayerCharacterState } from '../session/infrastructure/player-character
 import { Campaign } from './infrastructure/campaign.entity';
 import { CampaignMember } from './infrastructure/campaign-member.entity';
 import { CampaignCharacter } from './infrastructure/campaign-character.entity';
+import {
+  CombatParticipant,
+  CombatSession,
+} from '../shared/infrastructure/combat-session.entity';
 import { CampaignEncounter } from './infrastructure/campaign-encounter.entity';
 import { CampaignEncounterCombatant } from './infrastructure/campaign-encounter-combatant.entity';
 import { CampaignRepository } from './infrastructure/campaign.repository';
@@ -42,6 +46,8 @@ import { CharacterSheetModule } from '../sheet/character-sheet.module';
       Campaign,
       CampaignMember,
       CampaignCharacter,
+      CombatSession,
+      CombatParticipant,
       CampaignEncounter,
       CampaignEncounterCombatant,
       PlayerCharacterState,

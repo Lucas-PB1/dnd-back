@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-23 — trilha **GEN** (GEN-0…6 feitos; próximo GEN-7 feature→primitiva). TORM fechada.
+**Última revisão:** 2026-09-23 — trilha **GEN** (GEN-0…8 feitos; próximo GEN-10 ou GEN-9). TORM fechada.
 
 **Combate / PVE** **não** vive no Ativo mesa → [`pve-skirmish-index.md`](pve-skirmish-index.md) (fechado) · residual: [`combat-real-deferred.md`](combat-real-deferred.md).  
 **DB / migrations:** TypeORM — [`database/migrations/README.md`](../../database/migrations/README.md) · [`sql-layout.md`](../architecture/sql-layout.md).  
@@ -49,7 +49,7 @@ Treasure (mágico, propriedades, maestria) detalhe de regras: [`treasure-rules-v
 
 | Trilha | Conteúdo |
 |--------|----------|
-| **GEN** | **Aberto** — GEN-0…6 feitos; próximo GEN-7 — [`schema-generics-backlog.md`](schema-generics-backlog.md) · audit [`schema-audit/`](../architecture/schema-audit/) |
+| **GEN** | **Aberto** — GEN-0…7 feitos; próximo GEN-10/8 — [`schema-generics-backlog.md`](schema-generics-backlog.md) · audit [`schema-audit/`](../architecture/schema-audit/) |
 | **TORM** | ~~TypeORM migrations + seed ledger~~ **feito** (TORM-1…5) — [`database/migrations/README.md`](../../database/migrations/README.md) |
 | **DB-0 + PVE-0…10** | ~~feito~~ — combate tipado skirmish/duelo/encontro; DB-0 greenfield **supersedido** por TORM |
 | **LEG** | ~~Limpeza código morto~~ **feito** (LEG-1…5) — [`legado-cleanup-backlog.md`](legado-cleanup-backlog.md) |

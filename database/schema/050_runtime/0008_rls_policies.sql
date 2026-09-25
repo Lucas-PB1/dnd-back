@@ -5,63 +5,71 @@ BEGIN
     RETURN;
   END IF;
 
-  ALTER TABLE rpg.campaign_encounter ENABLE ROW LEVEL SECURITY;
-  ALTER TABLE rpg.campaign_encounter_combatant ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE rpg.combat_session ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE rpg.combat_participant ENABLE ROW LEVEL SECURITY;
 
-  DROP POLICY IF EXISTS campaign_encounter_member_select ON rpg.campaign_encounter;
-  CREATE POLICY campaign_encounter_member_select ON rpg.campaign_encounter
+  DROP POLICY IF EXISTS combat_session_encounter_member_select ON rpg.combat_session;
+  CREATE POLICY combat_session_encounter_member_select ON rpg.combat_session
     FOR SELECT USING (
-      campaign_id IN (
+      mode = 'encounter'
+      AND campaign_id IN (
         SELECT campaign_id FROM rpg.campaign_member WHERE user_id = auth.uid()
       )
     );
 
-  DROP POLICY IF EXISTS campaign_encounter_staff_write ON rpg.campaign_encounter;
-  CREATE POLICY campaign_encounter_staff_write ON rpg.campaign_encounter
+  DROP POLICY IF EXISTS combat_session_encounter_staff_write ON rpg.combat_session;
+  CREATE POLICY combat_session_encounter_staff_write ON rpg.combat_session
     FOR ALL USING (
-      campaign_id IN (
+      mode = 'encounter'
+      AND campaign_id IN (
         SELECT campaign_id FROM rpg.campaign_member
         WHERE user_id = auth.uid() AND role IN ('dm', 'assistant')
       )
     )
     WITH CHECK (
-      campaign_id IN (
+      mode = 'encounter'
+      AND campaign_id IN (
         SELECT campaign_id FROM rpg.campaign_member
         WHERE user_id = auth.uid() AND role IN ('dm', 'assistant')
       )
     );
 
-  DROP POLICY IF EXISTS campaign_encounter_combatant_member_select
-    ON rpg.campaign_encounter_combatant;
-  CREATE POLICY campaign_encounter_combatant_member_select
-    ON rpg.campaign_encounter_combatant
+  DROP POLICY IF EXISTS combat_participant_encounter_member_select
+    ON rpg.combat_participant;
+  CREATE POLICY combat_participant_encounter_member_select
+    ON rpg.combat_participant
     FOR SELECT USING (
-      encounter_id IN (
-        SELECT e.id
-        FROM rpg.campaign_encounter e
-        JOIN rpg.campaign_member m ON m.campaign_id = e.campaign_id
-        WHERE m.user_id = auth.uid()
+      session_mode = 'encounter'
+      AND session_id IN (
+        SELECT s.id
+        FROM rpg.combat_session s
+        JOIN rpg.campaign_member m ON m.campaign_id = s.campaign_id
+        WHERE s.mode = 'encounter' AND m.user_id = auth.uid()
       )
     );
 
-  DROP POLICY IF EXISTS campaign_encounter_combatant_staff_write
-    ON rpg.campaign_encounter_combatant;
-  CREATE POLICY campaign_encounter_combatant_staff_write
-    ON rpg.campaign_encounter_combatant
+  DROP POLICY IF EXISTS combat_participant_encounter_staff_write
+    ON rpg.combat_participant;
+  CREATE POLICY combat_participant_encounter_staff_write
+    ON rpg.combat_participant
     FOR ALL USING (
-      encounter_id IN (
-        SELECT e.id
-        FROM rpg.campaign_encounter e
-        JOIN rpg.campaign_member m ON m.campaign_id = e.campaign_id
-        WHERE m.user_id = auth.uid() AND m.role IN ('dm', 'assistant')
+      session_mode = 'encounter'
+      AND session_id IN (
+        SELECT s.id
+        FROM rpg.combat_session s
+        JOIN rpg.campaign_member m ON m.campaign_id = s.campaign_id
+        WHERE s.mode = 'encounter'
+          AND m.user_id = auth.uid() AND m.role IN ('dm', 'assistant')
       )
     )
     WITH CHECK (
-      encounter_id IN (
-        SELECT e.id
-        FROM rpg.campaign_encounter e
-        JOIN rpg.campaign_member m ON m.campaign_id = e.campaign_id
-        WHERE m.user_id = auth.uid() AND m.role IN ('dm', 'assistant')
+      session_mode = 'encounter'
+      AND session_id IN (
+        SELECT s.id
+        FROM rpg.combat_session s
+        JOIN rpg.campaign_member m ON m.campaign_id = s.campaign_id
+        WHERE s.mode = 'encounter'
+          AND m.user_id = auth.uid() AND m.role IN ('dm', 'assistant')
       )
     );
 END $$;

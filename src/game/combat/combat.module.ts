@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhbBattleMasterManeuver } from '@entities/subclass-feature/phb-battle-master-maneuver.entity';
-import { PhbBeastborneAspectBenefit } from '@entities/subclass-feature/phb-beastborne-aspect-benefit.entity';
 import { PhbClassPanelAction } from '@entities/class/phb-class-panel-action.entity';
 import { PhbCunningStrikeEffect } from '@entities/subclass-feature/phb-cunning-strike-effect.entity';
-import { PhbDungeoneerSlayerType } from '@entities/subclass-feature/phb-dungeoneer-slayer-type.entity';
 import { PhbGunslingerManeuver } from '@entities/subclass-feature/phb-gunslinger-maneuver.entity';
 import { PhbItem } from '@entities/equipment/phb-item.entity';
-import { PhbPersonaMask } from '@entities/subclass-feature/phb-persona-mask.entity';
 import { PhbSpellRef } from '@entities/spell/phb-spell-ref.entity';
 import { PhbOptionValue } from '@entities/reference/phb-option.entity';
 import { PhbSpecies } from '@entities/species/phb-species.entity';
@@ -57,9 +54,6 @@ import { PhbCreatureTemplateDamageAffinity } from '@entities/template/phb-creatu
       PhbBattleMasterManeuver,
       PhbCunningStrikeEffect,
       PhbSubclassTableAction,
-      PhbPersonaMask,
-      PhbBeastborneAspectBenefit,
-      PhbDungeoneerSlayerType,
       PhbSubclassPrecautionSpell,
       VPhbClassEconomyAction,
       PhbClassPanelAction,

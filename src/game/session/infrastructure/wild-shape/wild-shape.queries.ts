@@ -2,10 +2,10 @@ import { DataSource } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
 import {
   isBeastEligibleForWildShape,
-  parseChallengeRating,
   WILD_SHAPE_BASE_CR_BANDS,
   type WildShapeCrBand,
 } from '@game/combat/domain/druid/wild-shape-eligibility';
+import { FEATURE_SCHEDULE_KEYS } from '@game/combat/domain/feature-schedule';
 
 export type WildShapeTemplateRow = {
   slug: string;
@@ -20,28 +20,53 @@ export async function loadWildShapeCrBands(
   dataSource: DataSource,
 ): Promise<WildShapeCrBand[]> {
   const rows = await dataSource.query<
-    { min_level: number; cr_max: string; allow_fly: boolean }[]
+    { unlock_level: number; feature_key: string; value_num: number }[]
   >(
-    `SELECT min_level, cr_max, allow_fly
-     FROM rpg.phb_wild_shape_cr_band
-     ORDER BY min_level ASC`,
+    `SELECT s.unlock_level, s.feature_key, s.value_num
+     FROM rpg.phb_class_feature_schedule s
+     JOIN rpg.phb_class c ON c.id = s.class_id
+     WHERE c.slug = 'druid'
+       AND s.feature_key IN ($1, $2)
+     ORDER BY s.unlock_level ASC`,
+    [
+      FEATURE_SCHEDULE_KEYS.wildShapeCrMax,
+      FEATURE_SCHEDULE_KEYS.wildShapeAllowFly,
+    ],
   );
   if (rows.length === 0) {
     return [...WILD_SHAPE_BASE_CR_BANDS];
   }
-  return rows.map((row) => {
-    const crMax = parseChallengeRating(row.cr_max);
-    if (crMax == null) {
-      throw new BadRequestException(
-        `phb_wild_shape_cr_band.cr_max inválido: ${row.cr_max}`,
-      );
+
+  const byLevel = new Map<number, { crMax?: number; allowFly?: boolean }>();
+  for (const row of rows) {
+    const level = Number(row.unlock_level);
+    let band = byLevel.get(level);
+    if (!band) {
+      band = {};
+      byLevel.set(level, band);
     }
-    return {
-      minLevel: row.min_level,
-      crMax,
-      allowFly: row.allow_fly,
-    };
-  });
+    if (row.feature_key === FEATURE_SCHEDULE_KEYS.wildShapeCrMax) {
+      band.crMax = Number(row.value_num);
+    } else if (row.feature_key === FEATURE_SCHEDULE_KEYS.wildShapeAllowFly) {
+      band.allowFly = Number(row.value_num) > 0;
+    }
+  }
+
+  const out: WildShapeCrBand[] = [];
+  let lastCr = WILD_SHAPE_BASE_CR_BANDS[0]?.crMax ?? 0.25;
+  let lastFly = false;
+  for (const minLevel of [...byLevel.keys()].sort((a, b) => a - b)) {
+    const band = byLevel.get(minLevel)!;
+    if (band.crMax != null) lastCr = band.crMax;
+    if (band.allowFly != null) lastFly = band.allowFly;
+    if (band.crMax != null) {
+      out.push({ minLevel, crMax: lastCr, allowFly: lastFly });
+    } else if (out.length > 0) {
+      out[out.length - 1] = { ...out[out.length - 1], allowFly: lastFly };
+    }
+  }
+
+  return out.length > 0 ? out : [...WILD_SHAPE_BASE_CR_BANDS];
 }
 
 export async function loadWildShapeTemplateRow(

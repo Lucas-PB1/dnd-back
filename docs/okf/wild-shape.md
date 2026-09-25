@@ -17,8 +17,8 @@ Wild Shape **não** é uma ontologia de “formas de druida”. É **elegibilida
 | Camada | SSOT |
 | --- | --- |
 | Identidade | `phb_creature_template` (`creature_type` Beast, `challenge_rating`) |
-| Elegibilidade base | `phb_wild_shape_cr_band` + domínio (`maxWildShapeCr`, fly) |
-| Formas conhecidas | `phb_wild_shape_known_band` (4@2 / 6@4 / 8@8) + estado na ficha |
+| Elegibilidade base | `phb_class_feature_schedule` (`wild_shape_cr_max` / `wild_shape_allow_fly`) + domínio |
+| Formas conhecidas | schedule `wild_shape_forms_known` (4@2 / 6@4 / 8@8) + estado na ficha |
 | Elegibilidade Moon | CR = ⌊nível/3⌋; fly ainda pela tabela base |
 | Runtime | `wild_shape_*` na ficha + `game_actor` (`creature`, parent = PC) |
 | Economia / painel | `wild-shape`, `moon-combat-wild-shape`, `wild-shape-end`, set/replace known |

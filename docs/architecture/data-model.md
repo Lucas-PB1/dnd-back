@@ -54,7 +54,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_spell_source` — metadado de origem (listas/subclass)
 - `phb_spell_grant` — magias concedidas (feat/class); views `v_phb_feat_granted_spell` / `v_phb_class_granted_spell` — espécie via `phb_effect`
 - `phb_spell_combat` — resolução tipada skirmish/duelo (`apply_condition`, `arena_darkness`, … — ver [`spell-combat.md`](spell-combat.md))
-- `skirmish` — arena PVE; `arena_effects` / `pc_reaction_available` / `pc_oa_available`
+- `combat_session` (`mode` encounter|duel|skirmish) + `combat_participant` — sessão de combate única (TypeORM STI: `CampaignEncounter`, `Duel`, `Skirmish`); skirmish = arena PVE com `arena_effects` / `pc_reaction_available` / `pc_oa_available`
 
 ### 3. Classes
 
@@ -133,7 +133,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `player_character` (+ skill, spell, language, feat, item, equipment, state, `player_character_choice`, option)
 - **`player_character_state.boarded_actor_id`** — PC a bordo de um `game_actor` (vehicle/mount); migração `P040`
 - **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`; veículos vinculados usam `parent_character_id`
-- `campaign`, `campaign_member`, `campaign_character`, `campaign_encounter`, `campaign_encounter_combatant`
+- `campaign`, `campaign_member`, `campaign_character`; encontros em `combat_session` (`mode = 'encounter'`) + `combat_participant`
 - Criticals: FKs ownership, subclass∈class, XOR combatant (`pc` ↔ `character_id` **ou** `actor` ↔ `actor_id`), UNIQUEs de membership
 
 Combatente de encontro: `kind IN ('pc','actor')`. Criaturas manuais viram `game_actor` linkado por `actor_id` (sem colunas duplicadas de PV/CA/nome no combatente).

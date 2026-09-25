@@ -6,7 +6,7 @@ export type WildShapeCrBand = {
   allowFly: boolean;
 };
 
-/** Faixas canônicas base (espelho do seed `phb_wild_shape_cr_band`). */
+/** Faixas canônicas base (espelho do schedule `wild_shape_cr_max` / `wild_shape_allow_fly`). */
 export const WILD_SHAPE_BASE_CR_BANDS: readonly WildShapeCrBand[] = [
   { minLevel: 2, crMax: 0.25, allowFly: false },
   { minLevel: 4, crMax: 0.5, allowFly: false },

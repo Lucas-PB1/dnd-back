@@ -1,16 +1,9 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { ChildEntity, Column, CreateDateColumn } from 'typeorm';
+import { CombatParticipant } from '../../shared/infrastructure/combat-session.entity';
 
-@Entity({ schema: 'rpg', name: 'duel_member' })
-export class DuelMember {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({ name: 'duel_id', type: 'uuid' })
+@ChildEntity('duel')
+export class DuelMember extends CombatParticipant {
+  @Column({ name: 'session_id', type: 'uuid' })
   duelId!: string;
 
   @Column({ name: 'user_id', type: 'uuid' })
@@ -22,7 +15,7 @@ export class DuelMember {
   @Column({ type: 'boolean', default: false })
   ready!: boolean;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'initiative_total', type: 'int', nullable: true })
   initiative!: number | null;
 
   @Column({ name: 'hit_points_current', type: 'int', nullable: true })

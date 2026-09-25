@@ -1,13 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ChildEntity, Column } from 'typeorm';
+import { CombatParticipant } from '../../shared/infrastructure/combat-session.entity';
 
 export type EncounterCombatantKind = 'pc' | 'actor';
 
-@Entity({ schema: 'rpg', name: 'campaign_encounter_combatant' })
-export class CampaignEncounterCombatant {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({ name: 'encounter_id', type: 'uuid' })
+@ChildEntity('encounter')
+export class CampaignEncounterCombatant extends CombatParticipant {
+  @Column({ name: 'session_id', type: 'uuid' })
   encounterId!: string;
 
   @Column({ type: 'text', default: 'pc' })
