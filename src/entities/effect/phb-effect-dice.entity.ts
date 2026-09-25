@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectDicePayload } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_dice' })
-export class PhbEffectDice {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('dice')
+export class PhbEffectDice extends PhbEffectDicePayload {
   @Column({ type: 'text' })
   die!: string;
 

@@ -20,8 +20,8 @@ ins AS (
   ) AS v(action_slug, slot_level)
   RETURNING id, action_slug
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'fixed_slot',
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'fixed_slot',
   CASE action_slug
     WHEN 'arcane-recovery-1' THEN 1
     WHEN 'arcane-recovery-2' THEN 2
@@ -78,8 +78,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'level_times_2'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'level_times_2'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),
 fx AS (
@@ -104,8 +104,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 0 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 0 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),
 fx AS (
@@ -158,8 +158,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'abjurer'),
 fx AS (
@@ -184,8 +184,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'portent_d20_count'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'portent_d20_count'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'diviner'),
 fx AS (

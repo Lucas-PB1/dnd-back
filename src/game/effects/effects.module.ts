@@ -28,6 +28,13 @@ import { PhbEffectRestQuirk } from '@entities/effect/phb-effect-rest-quirk.entit
 import { PhbEffectSaveAdvantage } from '@entities/effect/phb-effect-save-advantage.entity';
 import { PhbEffectSense } from '@entities/effect/phb-effect-sense.entity';
 import { PhbEffectSpell } from '@entities/effect/phb-effect-spell.entity';
+import {
+  PhbEffectAdvantage,
+  PhbEffectDicePayload,
+  PhbEffectGrantRef,
+  PhbEffectScalar,
+  PhbEffectSenseEnv,
+} from '@entities/effect/phb-effect-payload-groups.entity';
 import { PhbEffectWeapon } from '@entities/effect/phb-effect-weapon.entity';
 import { PhbFeatRef } from '@entities/feat/phb-feat-ref.entity';
 import { PhbSpecies } from '@entities/species/phb-species.entity';
@@ -40,6 +47,11 @@ import { LoadEffectCatalog } from './application/load-effect-catalog';
   imports: [
     TypeOrmModule.forFeature([
       PhbEffect,
+      PhbEffectGrantRef,
+      PhbEffectScalar,
+      PhbEffectAdvantage,
+      PhbEffectSenseEnv,
+      PhbEffectDicePayload,
       PhbEffectSpell,
       PhbEffectCastEconomy,
       PhbEffectNumeric,

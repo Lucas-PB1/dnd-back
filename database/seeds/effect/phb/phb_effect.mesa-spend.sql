@@ -11,8 +11,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_species WHERE slug = 'orc'),
 fx AS (
@@ -35,8 +35,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_pb_d4'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_pb_d4'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'),
 fx AS (
@@ -60,8 +60,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus_times_2'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus_times_2'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_species WHERE slug = 'werekin'),
 fx AS (
@@ -85,8 +85,8 @@ ins AS (
   FROM ht
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_pb_d6'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_pb_d6'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'focused-edge'),
 fx AS (
@@ -109,8 +109,8 @@ ins AS (
   FROM ht
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_pb_d4'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_pb_d4'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'stalwart-edge'),
 fx AS (
@@ -133,8 +133,8 @@ ins AS (
   FROM ht
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
 fx AS (
@@ -159,8 +159,8 @@ ins AS (
   FROM ht
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d6_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_1d6_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH ht AS (SELECT id FROM rpg.phb_heritage_trait WHERE slug = 'unparalleled-endurance'),
 fx AS (
@@ -185,8 +185,8 @@ ins AS (
   FROM th
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH th AS (SELECT id FROM rpg.phb_character_thread WHERE slug = 'fatebound'),
 fx AS (
@@ -209,8 +209,8 @@ ins AS (
   FROM c
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'level_times_2'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'level_times_2'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH c AS (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'),
 ins AS (
@@ -223,5 +223,5 @@ ins AS (
   FROM c
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'level_div_2'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'level_div_2'::rpg.effect_amount_formula, NULL FROM ins;

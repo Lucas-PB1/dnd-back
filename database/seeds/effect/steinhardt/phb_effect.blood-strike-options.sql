@@ -29,8 +29,8 @@ cost AS (
   FROM gate
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d8', 'psychic' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d8', 'psychic' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -43,8 +43,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'psychic' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'psychic' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -89,8 +89,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d6', 'fire' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d6', 'fire' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -103,8 +103,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'fire' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'fire' FROM ins;
 
 INSERT INTO rpg.phb_effect (
   kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label,
@@ -127,8 +127,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d8', 'piercing' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d8', 'piercing' FROM cost;
 
 INSERT INTO rpg.phb_effect (
   kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label,
@@ -150,8 +150,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '1d6', '3d6', 18, 'piercing' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '1d6', '3d6', 18, 'piercing' FROM ins;
 
 -- constraining-strike
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
@@ -165,8 +165,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d8', 'acid' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d8', 'acid' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -179,8 +179,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'acid' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'acid' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -208,8 +208,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d10', 'radiant' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d10', 'radiant' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -222,8 +222,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', NULL, 18, 'radiant' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', NULL, 18, 'radiant' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -265,8 +265,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d4', 'slashing' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d4', 'slashing' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -279,8 +279,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '1d6', '3d6', 18, 'slashing' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '1d6', '3d6', 18, 'slashing' FROM ins;
 
 INSERT INTO rpg.phb_effect (
   kind, owner_kind, owner_id, trigger, unlock_level, sort_order, label,
@@ -303,8 +303,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d6', 'necrotic' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d6', 'necrotic' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -317,8 +317,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'necrotic' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'necrotic' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -346,8 +346,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d4', 'thunder' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d4', 'thunder' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -360,8 +360,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'thunder' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'thunder' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -403,8 +403,8 @@ cost AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, damage_type_slug)
-SELECT id, '1d6', 'necrotic' FROM cost;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, damage_type_slug)
+SELECT 'dice', id, '1d6', 'necrotic' FROM cost;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (
@@ -417,8 +417,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die, die_at_level, at_level, damage_type_slug)
-SELECT id, '2d6', '4d6', 18, 'necrotic' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die, die_at_level, at_level, damage_type_slug)
+SELECT 'dice', id, '2d6', '4d6', 18, 'necrotic' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'blood-hound'),
 ins AS (

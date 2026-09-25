@@ -98,8 +98,8 @@ ins AS (
   ) AS v(action_slug, unlock_level, slot_level)
   RETURNING id, action_slug
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'fixed_slot',
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'fixed_slot',
   CASE action_slug
     WHEN 'natural-recovery-1' THEN 1
     WHEN 'natural-recovery-2' THEN 2
@@ -139,8 +139,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'land'),
 ins AS (
@@ -153,8 +153,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'land'),
 fx AS (
@@ -215,8 +215,8 @@ ins AS (
   ) AS v(action_slug, unlock_level, label)
   RETURNING id, action_slug
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-the-city'),
 ins AS (
@@ -263,8 +263,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 -- Forma Selvagem de Combate (Lua)
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'),

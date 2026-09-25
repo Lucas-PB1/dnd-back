@@ -13,8 +13,8 @@ ins AS (
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'pact_slots_recovery_count'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'pact_slots_recovery_count'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
 fx AS (
@@ -22,8 +22,8 @@ fx AS (
   JOIN cls ON cls.id = e.owner_id
   WHERE e.action_slug = 'magical-cunning' AND e.kind = 'recover_spell_slot'
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'pact_slot_level', NULL FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'pact_slot_level', NULL FROM fx;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
 fx AS (
@@ -49,8 +49,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'),
 fx AS (
@@ -76,8 +76,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'),
 ins AS (
@@ -90,8 +90,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d10' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d10' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'),
 fx AS (
@@ -167,8 +167,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '8d10' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '8d10' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'),
 fx AS (
@@ -193,8 +193,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'),
 fx AS (
@@ -202,8 +202,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'searing-vengeance' AND e.kind = 'table_roll'
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d8' FROM fx;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d8' FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'),
 fx AS (

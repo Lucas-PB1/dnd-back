@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectGrantRef } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_language' })
-export class PhbEffectLanguage {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('language')
+export class PhbEffectLanguage extends PhbEffectGrantRef {
   @Column({ type: 'text', name: 'option_key', nullable: true })
   optionKey!: string | null;
 

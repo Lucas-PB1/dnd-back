@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectScalar } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
 export type EffectAmountFormula =
@@ -38,11 +39,8 @@ export type EffectAmountFormula =
   | 'one_plus_half_hp_max'
   | 'level_plus_flat';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_numeric' })
-export class PhbEffectNumeric {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('numeric')
+export class PhbEffectNumeric extends PhbEffectScalar {
   @Column({ type: 'text', name: 'amount_formula' })
   amountFormula!: EffectAmountFormula;
 

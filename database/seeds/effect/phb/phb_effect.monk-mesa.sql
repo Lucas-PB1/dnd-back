@@ -64,8 +64,8 @@ ins AS (
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'monk'),
 ins AS (
@@ -95,8 +95,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'open-hand'),
 ins AS (
@@ -126,8 +126,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'open-hand'),
 fx AS (
@@ -152,8 +152,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'open-hand'),
 ins AS (
@@ -183,8 +183,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'elements'),
 ins AS (
@@ -214,8 +214,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'elements'),
 ins AS (
@@ -228,8 +228,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_3d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_3d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'elements'),
 ins AS (
@@ -259,8 +259,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'mercy'),
 fx AS (
@@ -285,8 +285,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'mercy'),
 fx AS (
@@ -329,8 +329,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 5 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 5 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'mercy'),
 ins AS (
@@ -343,8 +343,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '4d10' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '4d10' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'mercy'),
 fx AS (
@@ -352,8 +352,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'hand-of-ultimate-mercy' AND e.kind = 'heal'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'mercy'),
 ins AS (
@@ -477,8 +477,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 ins AS (
@@ -491,8 +491,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_2d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_2d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 ins AS (
@@ -522,8 +522,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 fx AS (
@@ -582,8 +582,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_3d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_3d_schedule'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 fx AS (

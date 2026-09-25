@@ -14,8 +14,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'berserker'),
 fx AS (
@@ -42,8 +42,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'zealot'),
 fx AS (
@@ -70,8 +70,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
 fx AS (
@@ -98,8 +98,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
 fx AS (
@@ -126,8 +126,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
 fx AS (
@@ -154,8 +154,8 @@ ins AS (
   FROM c
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'level_div_2'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'level_div_2'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH c AS (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'),
 fx AS (

@@ -1,5 +1,11 @@
 # log
 
+## 2026-09-25 — GEN-9 effect satellites por shape (G2)
+
+* **Update**: 15 satélites `phb_effect_*` → 5 tabelas com discriminador (`grant_ref`, `scalar`, `advantage`, `sense_env`, `dice`; −10). CHECK por kind trava colunas; TypeORM STI mantém `PhbEffect.spell`/`.numeric`/… e consumidores intactos. 310 INSERTs de seed reescritos. `db:setup` verde + smoke ORM (1394 effects, 0 cruzamentos). Falta GEN-10.
+
+— refs: [`0055_phb_effect_grant_ref.sql`](../../database/schema/020_tables/0055_phb_effect_grant_ref.sql), [`0059_phb_effect_scalar.sql`](../../database/schema/020_tables/0059_phb_effect_scalar.sql), [`0066_phb_effect_advantage.sql`](../../database/schema/020_tables/0066_phb_effect_advantage.sql), [`0067_phb_effect_sense_env.sql`](../../database/schema/020_tables/0067_phb_effect_sense_env.sql), [`0145_phb_effect_dice.sql`](../../database/schema/020_tables/0145_phb_effect_dice.sql), [`phb-effect-payload-groups.entity.ts`](../../src/entities/effect/phb-effect-payload-groups.entity.ts), [`effect-dictionary.md`](../architecture/effect-dictionary.md) — motivo: fechar GEN-9 (menos tabelas sem abrir mão de tipagem SQL).
+
 ## 2026-09-25 — GEN-8 combat session única
 
 * **Update**: `campaign_encounter(+_combatant)`, `duel(+_member)` e `skirmish` → `combat_session(mode)` + `combat_participant(session_mode)` com FK composta e CHECKs por modo (−3 tabelas). TypeORM STI (`@ChildEntity`) mantém repositories/services intactos; RLS por modo; sem views de compat. `db:setup` verde + smoke STI no Postgres. Próximo = GEN-10 ou GEN-9.

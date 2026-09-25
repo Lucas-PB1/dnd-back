@@ -100,7 +100,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_option_def` / `phb_option_value` — scope unificado
 - `phb_resource_definition` — definição de pool; cotas via `phb_effect` (`grant_resource` + `phb_effect_resource`)
 - HP bonus / unarmored defense: `phb_effect` (`combat_mod` + `phb_effect_combat_mod`) → views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`
-- `phb_effect` + satélites — SSOT mecânico (ADR [`adr-effect-engine.md`](adr-effect-engine.md); dicionário [`effect-dictionary.md`](effect-dictionary.md)); tabelas legadas `phb_resource_grant` / `phb_combat_modifier` **DROP**
+- `phb_effect` + satélites — SSOT mecânico (ADR [`adr-effect-engine.md`](adr-effect-engine.md); dicionário [`effect-dictionary.md`](effect-dictionary.md)); payloads de mesmo shape agrupados com discriminador (`phb_effect_grant_ref`, `_scalar`, `_advantage`, `_sense_env`, `_dice` — GEN-9); tabelas legadas `phb_resource_grant` / `phb_combat_modifier` **DROP**
 
 ### 8. Combat mechanical catalog
 

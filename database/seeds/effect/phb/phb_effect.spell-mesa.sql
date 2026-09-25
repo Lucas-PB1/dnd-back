@@ -11,8 +11,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d8' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d8' FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'),
 fx AS (
@@ -20,8 +20,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'heal' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'),
 fx AS (
@@ -29,8 +29,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'heal' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key)
-SELECT id, 'upcast_dice:2' FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key)
+SELECT 'spell', id, 'upcast_dice:2' FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'),
 fx AS (
@@ -53,8 +53,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d4' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d4' FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'),
 fx AS (
@@ -62,8 +62,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'heal' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'),
 fx AS (
@@ -71,8 +71,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'heal' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key)
-SELECT id, 'upcast_dice:1' FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key)
+SELECT 'spell', id, 'upcast_dice:1' FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'),
 fx AS (
@@ -95,8 +95,8 @@ ins AS (
   FROM sp
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d4' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d4' FROM ins;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'),
 fx AS (
@@ -104,8 +104,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'temp_hp' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 4 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 4 FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'),
 fx AS (
@@ -113,8 +113,8 @@ fx AS (
   JOIN sp ON sp.id = e.owner_id
   WHERE e.kind = 'temp_hp' AND e.owner_kind = 'spell' AND e.trigger = 'on_cast'
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key)
-SELECT id, 'upcast_flat:5' FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key)
+SELECT 'spell', id, 'upcast_flat:5' FROM fx;
 
 WITH sp AS (SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'),
 fx AS (

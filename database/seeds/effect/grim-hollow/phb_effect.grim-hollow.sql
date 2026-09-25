@@ -172,8 +172,8 @@ fx AS (
   WHERE e.owner_kind = 'feat' AND e.kind = 'reduce_exhaustion_on_rest'
     AND e.trigger = 'on_rest_short'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'survivor'),
 fx AS (
@@ -182,8 +182,8 @@ fx AS (
   WHERE e.owner_kind = 'feat' AND e.kind = 'reduce_exhaustion_on_rest'
     AND e.trigger = 'on_rest_long'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'convincing-inquisitor'),
 ins AS (
@@ -437,8 +437,8 @@ ins AS (
   FROM feat
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bloodMagicSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bloodMagicSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'sangromantic-initiate'),
 fx AS (
@@ -582,8 +582,8 @@ fx AS (
   JOIN feat ON feat.id = e.owner_id
   WHERE e.owner_kind = 'feat' AND e.kind = 'reduce_target_speed_on_hit'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 15 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 15 FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-gut'),
 rd AS (SELECT id FROM rpg.phb_resource_definition WHERE slug = 'iron-gut-quick-recover'),
@@ -666,8 +666,8 @@ ins AS (
          'on_damage_roll'::rpg.effect_trigger, 1, 2, 'Queima-roupa +2'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'opportunist'),
 ins AS (
@@ -678,8 +678,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 1, 'Reação +2 ataque'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
 
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT e.id, 'Escopo: ataque feito como Reação.'
@@ -696,8 +696,8 @@ ins AS (
          'on_damage_roll'::rpg.effect_trigger, 1, 2, 'Reação +2 dano'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
 
 WITH rows(slug, sort_order, label, note) AS (
   VALUES
@@ -774,8 +774,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 1, 'Voo 12 m'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 40 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 40 FROM ins;
 
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT e.id, '40 ft = 12 m; hover (grant_fly_speed).'
@@ -792,8 +792,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 2, 'Queda Graciosa tipada'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 60 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 60 FROM ins;
 
 INSERT INTO rpg.phb_effect_note (effect_id, note)
 SELECT e.id, 'Cap 60 ft/rodada = 18 m (slow_fall).'

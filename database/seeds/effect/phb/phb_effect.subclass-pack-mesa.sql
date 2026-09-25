@@ -13,8 +13,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d10' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d10' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
 fx AS (
@@ -22,8 +22,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.owner_kind = 'subclass' AND e.action_slug = 'armor-regen'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
 fx AS (
@@ -49,8 +49,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'),
 fx AS (
@@ -100,8 +100,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d10_plus_level'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_1d10_plus_level'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
 fx AS (
@@ -126,8 +126,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_2d6_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_2d6_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'the-unbroken-circle'),
 fx AS (
@@ -155,8 +155,8 @@ ins AS (
   CROSS JOIN (VALUES (10, 2), (14, 3)) AS v(unlock_level, sort_order)
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 -- GSB Arauto Couatl — Proteção Pacífica (dado + CAR; faces de mesa d6 até haver schedule)
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'couatl-herald'),
@@ -170,8 +170,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'couatl-herald'),
 fx AS (
@@ -179,8 +179,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.owner_kind = 'subclass' AND e.action_slug = 'peaceful-ward'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'couatl-herald'),
 fx AS (
@@ -205,8 +205,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-choreography'),
 fx AS (
@@ -234,8 +234,8 @@ ins AS (
   ) AS v(action_slug, sort_order, label)
   RETURNING id, action_slug
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d12' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d12' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-glacier'),
 fx AS (
@@ -244,8 +244,8 @@ fx AS (
   WHERE e.owner_kind = 'subclass'
     AND e.action_slug IN ('cold-fortress-entry', 'cold-fortress-renew')
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-glacier'),
 fx AS (

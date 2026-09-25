@@ -12,8 +12,8 @@ ins AS (
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d10_plus_level'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_1d10_plus_level'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'),
 ins AS (
@@ -155,8 +155,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'),
 fx AS (

@@ -38,8 +38,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'),
 fx AS (
@@ -65,8 +65,8 @@ ins AS (
   RETURNING id
 ),
 num AS (
-  INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-  SELECT id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins
+  INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+  SELECT 'numeric', id, 'schedule_die_plus_flat'::rpg.effect_amount_formula, NULL FROM ins
   RETURNING effect_id
 )
 INSERT INTO rpg.phb_effect_table_roll (effect_id, result_scale, apply_bestial_aspect)
@@ -135,8 +135,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 -- Ladrão de Magias
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'arcane-trickster'),
@@ -150,8 +150,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'arcane-trickster'),
 ins AS (
@@ -181,8 +181,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
 ins AS (
@@ -212,8 +212,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'thief'),
 fx AS (

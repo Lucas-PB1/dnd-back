@@ -23,8 +23,8 @@ ins AS (
   FROM species s
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_language (effect_id, option_key, language_slug, choice_count)
-SELECT id, 'speciesLanguage', NULL, 2 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, language_slug, choice_count)
+SELECT 'language', id, 'speciesLanguage', NULL, 2 FROM ins;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Anão (gates dwarfCultureId: phb | baugsmidr | fjord)
@@ -43,8 +43,8 @@ ins AS (
   FROM species CROSS JOIN (VALUES ('phb'), ('baugsmidr')) AS v(culture)
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
 
 -- Visão 90 ft — fjord
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
@@ -58,8 +58,8 @@ ins AS (
          'dwarfCultureId', 'fjord'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 90, NULL FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 90, NULL FROM ins;
 
 -- Resist. + save veneno — phb + baugsmidr
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
@@ -81,8 +81,8 @@ ins AS (
   ) AS v(kind, sort_order, label, culture)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT id, 'poison', NULL FROM ins WHERE kind = 'damage_resistance';
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', id, 'poison', NULL FROM ins WHERE kind = 'damage_resistance';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
 fx AS (
@@ -92,8 +92,8 @@ fx AS (
     AND e.requires_option_key = 'dwarfCultureId'
     AND e.requires_option_value IN ('phb', 'baugsmidr')
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'poisoned' FROM fx;
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'poisoned' FROM fx;
 
 -- Tenacidade — phb + fjord
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
@@ -145,8 +145,8 @@ ins AS (
          'Sismiconsciência', 'dwarfCultureId', 'phb'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'tremorsense'::rpg.effect_sense_slug, 60, 10 FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'tremorsense'::rpg.effect_sense_slug, 60, 10 FROM ins;
 
 -- Baugsmidr: check_advantage + Sentir Magia
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
@@ -165,8 +165,8 @@ ins AS (
   ) AS v(sort_order, label)
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_check_advantage (effect_id, skill_slug, circumstance_tag, ability_slug)
-SELECT id,
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, skill_slug, circumstance_tag, ability_slug)
+SELECT 'check', id,
   CASE WHEN sort_order = 20 THEN 'arcana' ELSE NULL END,
   CASE WHEN sort_order = 21 THEN 'craft_magic_item' ELSE NULL END,
   NULL
@@ -238,8 +238,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'human_skill', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'human_skill', 'skill'::rpg.effect_proficiency_kind
 FROM ins WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'human'),
@@ -248,8 +248,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species' AND e.kind = 'grant_feat'
 )
-INSERT INTO rpg.phb_effect_feat (effect_id, option_key, feat_category)
-SELECT id, 'human_origin_feat', 'origin' FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, feat_category)
+SELECT 'feat', id, 'human_origin_feat', 'origin' FROM fx;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Aasimar
@@ -270,8 +270,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT id,
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', id,
   CASE sort_order WHEN 10 THEN 'necrotic' ELSE 'radiant' END,
   NULL
 FROM ins WHERE kind = 'damage_resistance';
@@ -282,8 +282,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species' AND e.kind = 'grant_sense' AND e.sort_order = 12
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL FROM fx;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL FROM fx;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'),
 rows AS (
@@ -325,8 +325,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, spell.id, NULL, 0
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, spell.id, NULL, 0
 FROM ins CROSS JOIN spell WHERE ins.kind = 'grant_spell';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'),
@@ -380,8 +380,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'),
@@ -390,8 +390,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species' AND e.kind = 'damage_resistance'
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT id, NULL, 'dragonAncestryId' FROM fx;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', id, NULL, 'dragonAncestryId' FROM fx;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'),
 rows AS (
@@ -452,8 +452,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
@@ -464,8 +464,8 @@ fx AS (
     AND e.kind IN ('save_advantage', 'grant_proficiency', 'rest_quirk', 'spellcasting_ability')
     AND e.sort_order BETWEEN 11 AND 14
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'charmed' FROM fx WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'charmed' FROM fx WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
 fx AS (
@@ -474,8 +474,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'elf_keen_senses', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'elf_keen_senses', 'skill'::rpg.effect_proficiency_kind
 FROM fx WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
@@ -513,8 +513,8 @@ ins AS (
          'lineageId', 'drow'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
 
 -- Wood-elf speed_set 35 ft
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
@@ -528,8 +528,8 @@ ins AS (
          'lineageId', 'wood-elf'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 35 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 35 FROM ins;
 
 -- Magias por linhagem (S049 + N008)
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
@@ -563,8 +563,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, s.spell_level
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, s.spell_level
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;
@@ -611,8 +611,8 @@ ins AS (
          'lineageId', 'high-elf'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT id, NULL, 'high_elf_cantrip', 0 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', id, NULL, 'high_elf_cantrip', 0 FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'elf'),
 fx AS (
@@ -643,8 +643,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'gnome'),
@@ -653,8 +653,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species' AND e.sort_order IN (11, 12)
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, ARRAY['inteligencia', 'sabedoria', 'carisma']::text[], NULL
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, ARRAY['inteligencia', 'sabedoria', 'carisma']::text[], NULL
 FROM fx WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'gnome'),
@@ -688,8 +688,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, s.spell_level
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, s.spell_level
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;
@@ -773,8 +773,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'restrained' FROM ins WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'restrained' FROM ins WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'goliath'),
 fx AS (
@@ -800,8 +800,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 10, 'Visão no Escuro 36 m'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 120, NULL FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'orc'),
 rows AS (
@@ -851,8 +851,8 @@ fx AS (
     AND e.kind = 'survive_at_zero'
     AND e.resource_slug = 'relentlessEndurance'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Halfling
@@ -874,8 +874,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'frightened' FROM ins WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'frightened' FROM ins WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'halfling'),
 ins AS (
@@ -910,8 +910,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'),
@@ -943,8 +943,8 @@ ins AS (
   FROM species CROSS JOIN rows r
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT ins.id, r.dtype, NULL
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', ins.id, r.dtype, NULL
 FROM ins JOIN rows r ON r.sort_order = ins.sort_order;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'),
@@ -957,8 +957,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 30, 'Presença Sobrenatural'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, spell.id, NULL, 0 FROM ins CROSS JOIN spell;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, spell.id, NULL, 0 FROM ins CROSS JOIN spell;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'),
 fx AS (
@@ -994,8 +994,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, s.spell_level
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, s.spell_level
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;
@@ -1034,8 +1034,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
@@ -1056,8 +1056,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'geppettin_skill', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'geppettin_skill', 'skill'::rpg.effect_proficiency_kind
 FROM fx WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
@@ -1071,8 +1071,8 @@ ins AS (
          'constructionId', 'marionette'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_reach (effect_id, bonus_ft, exclude_property_slugs)
-SELECT id, 5, ARRAY['reach', 'two-handed', 'versatile']::text[] FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, bonus_ft, exclude_property_slugs)
+SELECT 'reach', id, 5, ARRAY['reach', 'two-handed', 'versatile']::text[] FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
 ins AS (
@@ -1085,8 +1085,8 @@ ins AS (
          'constructionId', 'bisque'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
 fx AS (
@@ -1163,8 +1163,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'mandrake_skill', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'mandrake_skill', 'skill'::rpg.effect_proficiency_kind
 FROM fx WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
@@ -1185,8 +1185,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, s.spell_level
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, s.spell_level
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;
@@ -1275,8 +1275,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT id, 'cold', NULL FROM ins WHERE kind = 'damage_resistance';
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', id, 'cold', NULL FROM ins WHERE kind = 'damage_resistance';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'bearfolk'),
 ins AS (
@@ -1285,8 +1285,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_environmental_immunity (effect_id, hazard_slug)
-SELECT id, 'extreme_cold'::rpg.effect_env_hazard
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, hazard_slug)
+SELECT 'environmental_immunity', id, 'extreme_cold'::rpg.effect_env_hazard
 FROM ins WHERE kind = 'environmental_immunity';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'bearfolk'),
@@ -1296,8 +1296,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'frightened' FROM ins WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'frightened' FROM ins WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'bearfolk'),
 fx AS (
@@ -1324,8 +1324,8 @@ ins AS (
          'bearfolkLineageId', 'andari'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT id, NULL, 'andari_druid_cantrip', 0 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', id, NULL, 'andari_druid_cantrip', 0 FROM ins;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'bearfolk'),
 fx AS (
@@ -1351,8 +1351,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'beastkin_instinct', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'beastkin_instinct', 'skill'::rpg.effect_proficiency_kind
 FROM ins WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'beastkin'),
@@ -1361,8 +1361,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species' AND e.kind = 'damage_die_override'
 )
-INSERT INTO rpg.phb_effect_damage_die (effect_id, applies_to, die)
-SELECT id, 'unarmed'::rpg.effect_damage_applies_to, '1d6' FROM fx;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, applies_to, die)
+SELECT 'damage_die', id, 'unarmed'::rpg.effect_damage_applies_to, '1d6' FROM fx;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'beastkin'),
 ins AS (
@@ -1385,8 +1385,8 @@ ins AS (
   ) AS v(kind, sort_order, label, adaptation)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'prone' FROM ins WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'prone' FROM ins WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'beastkin'),
 fx AS (
@@ -1441,8 +1441,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id, NULL, 'grappled' FROM ins WHERE kind = 'save_advantage';
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id, NULL, 'grappled' FROM ins WHERE kind = 'save_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'giantkin'),
 fx AS (
@@ -1478,8 +1478,8 @@ ins AS (
   FROM species CROSS JOIN env e
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_environmental_immunity (effect_id, hazard_slug)
-SELECT ins.id, e.hazard
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, hazard_slug)
+SELECT 'environmental_immunity', ins.id, e.hazard
 FROM ins JOIN env e ON e.sort_order = ins.sort_order;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'giantkin'),
@@ -1503,8 +1503,8 @@ ins AS (
   FROM species CROSS JOIN saves s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT ins.id, NULL, s.cond
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', ins.id, NULL, s.cond
 FROM ins JOIN saves s ON s.sort_order = ins.sort_order;
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'giantkin'),
@@ -1525,8 +1525,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, CASE WHEN s.spell_slug = 'queda-suave' THEN 1 ELSE 2 END
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, CASE WHEN s.spell_slug = 'queda-suave' THEN 1 ELSE 2 END
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;
@@ -1552,8 +1552,8 @@ ins AS (
          'giantkinAncestryId', 'stone'
   FROM species RETURNING id
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL FROM ins;
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL FROM ins;
 
 -- Trollkin
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'trollkin'),
@@ -1571,8 +1571,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 120, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 120, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'trollkin'),
@@ -1582,8 +1582,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_damage_die (effect_id, applies_to, die)
-SELECT id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, applies_to, die)
+SELECT 'damage_die', id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
 FROM ins WHERE kind = 'damage_die_override';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'trollkin'),
@@ -1637,8 +1637,8 @@ ins AS (
   ) AS v(kind, sort_order, label, ancestry, cond)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_save_advantage (effect_id, ability_slugs, condition_slug)
-SELECT id,
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, ability_slugs, condition_slug)
+SELECT 'save', id,
   NULL,
   CASE sort_order WHEN 30 THEN 'grappled' WHEN 32 THEN 'stunned' ELSE NULL END
 FROM ins WHERE kind = 'save_advantage';
@@ -1660,8 +1660,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'werekin'),
@@ -1671,8 +1671,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_damage_die (effect_id, applies_to, die)
-SELECT id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, applies_to, die)
+SELECT 'damage_die', id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
 FROM ins WHERE kind = 'damage_die_override';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'werekin'),
@@ -1682,8 +1682,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'werekin_prowess', 'skill'::rpg.effect_proficiency_kind
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'werekin_prowess', 'skill'::rpg.effect_proficiency_kind
 FROM ins WHERE kind = 'grant_proficiency';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'werekin'),
@@ -1693,8 +1693,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_check_advantage (effect_id, skill_slug, circumstance_tag, ability_slug)
-SELECT id, 'perception', 'scent_track', NULL
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, skill_slug, circumstance_tag, ability_slug)
+SELECT 'check', id, 'perception', 'scent_track', NULL
 FROM ins WHERE kind = 'check_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'werekin'),
@@ -1749,8 +1749,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_damage_type (effect_id, damage_type_slug, option_key)
-SELECT id, 'lightning', NULL FROM ins WHERE kind = 'damage_resistance';
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, damage_type_slug, option_key)
+SELECT 'damage_type', id, 'lightning', NULL FROM ins WHERE kind = 'damage_resistance';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'manikin'),
 ins AS (
@@ -1832,8 +1832,8 @@ ins AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_damage_die (effect_id, applies_to, die)
-SELECT id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, applies_to, die)
+SELECT 'damage_die', id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
 FROM ins WHERE kind = 'damage_die_override';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'scourgeborne'),
@@ -1898,8 +1898,8 @@ ins AS (
   ) AS v(kind, trigger, sort_order, label)
   RETURNING id, kind, sort_order
 )
-INSERT INTO rpg.phb_effect_sense (effect_id, sense_slug, range_ft, duration_minutes)
-SELECT id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
+INSERT INTO rpg.phb_effect_sense_env (sense_env_kind, effect_id, sense_slug, range_ft, duration_minutes)
+SELECT 'sense', id, 'darkvision'::rpg.effect_sense_slug, 60, NULL
 FROM ins WHERE kind = 'grant_sense';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'feathren'),
@@ -1919,8 +1919,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_check_advantage (effect_id, skill_slug, circumstance_tag, ability_slug)
-SELECT id, 'animal-handling', 'avian_feline', NULL
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, skill_slug, circumstance_tag, ability_slug)
+SELECT 'check', id, 'animal-handling', 'avian_feline', NULL
 FROM fx WHERE kind = 'check_advantage';
 
 WITH species AS (SELECT id FROM rpg.phb_species WHERE slug = 'feathren'),
@@ -1930,8 +1930,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id,
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id,
   CASE sort_order WHEN 13 THEN 'feathren_tool_1' ELSE 'feathren_tool_2' END,
   'tool'::rpg.effect_proficiency_kind
 FROM fx WHERE kind = 'grant_proficiency';
@@ -1943,8 +1943,8 @@ fx AS (
   JOIN species ON species.id = e.owner_id
   WHERE e.owner_kind = 'species'
 )
-INSERT INTO rpg.phb_effect_damage_die (effect_id, applies_to, die)
-SELECT id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, applies_to, die)
+SELECT 'damage_die', id, 'unarmed'::rpg.effect_damage_applies_to, '1d6'
 FROM fx WHERE kind = 'damage_die_override';
 
 -- Magias fixas Identificar / Aprimorar + por option aviária/felina
@@ -1972,8 +1972,8 @@ ins AS (
   FROM species CROSS JOIN spells s
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, sp.id, NULL, s.spell_level
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, sp.id, NULL, s.spell_level
 FROM ins
 JOIN spells s ON s.sort_order = ins.sort_order
 JOIN rpg.phb_spell sp ON sp.slug = s.spell_slug;

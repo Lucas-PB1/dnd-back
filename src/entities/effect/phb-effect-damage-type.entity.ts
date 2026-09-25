@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectGrantRef } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_damage_type' })
-export class PhbEffectDamageType {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('damage_type')
+export class PhbEffectDamageType extends PhbEffectGrantRef {
   @Column({ type: 'text', name: 'damage_type_slug', nullable: true })
   damageTypeSlug!: string | null;
 

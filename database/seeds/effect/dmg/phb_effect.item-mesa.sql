@@ -13,8 +13,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '2d4' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '2d4' FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_item WHERE slug = 'pocao-de-cura'),
 fx AS (
@@ -22,8 +22,8 @@ fx AS (
   JOIN owner ON owner.id = e.owner_id
   WHERE e.owner_kind = 'item' AND e.action_slug = 'item-pocao-de-cura-usar'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM fx;
 
 WITH owner AS (SELECT id FROM rpg.phb_item WHERE slug = 'pocao-de-cura'),
 fx AS (
@@ -48,8 +48,8 @@ ins AS (
   FROM owner
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
 
 WITH owner AS (SELECT id FROM rpg.phb_item WHERE slug = 'pocao-de-heroismo'),
 fx AS (

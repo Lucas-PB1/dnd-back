@@ -98,8 +98,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 1, 'CA vs ND superior'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 2 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'),
 fx AS (

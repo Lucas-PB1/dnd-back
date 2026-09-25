@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectSenseEnv } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_sense' })
-export class PhbEffectSense {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('sense')
+export class PhbEffectSense extends PhbEffectSenseEnv {
   @Column({ type: 'text', name: 'sense_slug' })
   senseSlug!: string;
 

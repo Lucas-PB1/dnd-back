@@ -31,8 +31,8 @@ ins AS (
   FROM feat
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_2d4_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_2d4_plus_flat'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-seraph'),
 fx AS (
@@ -58,8 +58,8 @@ ins AS (
   FROM feat
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'gh-transformation-lich'),
 fx AS (

@@ -19,6 +19,20 @@ Preferir reusar kind existente ou `combat_note`/`table_note`. Kind novo exige EN
 | `trigger` | Quando o runtime considera o efeito |
 | Satélite | Params tipados; CHECK amarra ao `kind` |
 
+### Satélite lógico → tabela física (GEN-9)
+
+Os nomes `phb_effect_<payload>` abaixo são **payloads lógicos** (1 entity TypeORM `@ChildEntity` cada, relação homônima em `PhbEffect`). Payloads de mesmo shape dividem uma tabela com coluna discriminadora; CHECK por kind trava as colunas.
+
+| Tabela física | Discriminador | Payloads lógicos |
+|---------------|---------------|------------------|
+| `phb_effect_grant_ref` | `grant_kind` | `spell`, `feat`, `language`, `proficiency`, `damage_type` |
+| `phb_effect_scalar` | `scalar_kind` | `numeric`, `reach`, `companion`, `purchase_discount` |
+| `phb_effect_advantage` | `advantage_kind` | `check` (`check_advantage`), `save` (`save_advantage`) |
+| `phb_effect_sense_env` | `sense_env_kind` | `sense`, `environmental_immunity` |
+| `phb_effect_dice` | `dice_kind` | `dice`, `damage_die` |
+
+Demais satélites seguem 1 tabela = 1 payload (`cast_economy`, `resource`, `combat_mod`, `note`, `weapon`, `rest_quirk`, `condition`, `save`, `forced_movement`, `combat_flag`, `table_roll`, `temp_hp`). Seed: `INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, …) SELECT 'numeric', …`. Payload novo de shape existente = valor novo no discriminador + CHECK + `@ChildEntity`, não tabela nova.
+
 Triggers: `passive` · `on_build` · `on_table_action` · `on_resource_spend` · `on_cast` · `on_purchase` · `on_damage_roll` · `on_d20_nat1` · `on_bloodied` · `on_rest_short` · `on_rest_long` · `on_death_save`
 
 ## Padrões Fase 5

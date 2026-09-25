@@ -95,6 +95,8 @@ seed SQL  →  LoadEffectCatalog.execute(...)  →  CatalogEffect[]
 
 Inventário vivo dos kinds **com wire tipado**. Kinds só-seed/`combat_note` ficam no dicionário sem linha aqui até haver consumidor.
 
+Coluna "Satélite" = payload lógico (entity/relação em `PhbEffect`); tabela física agrupada em [`effect-dictionary.md` § Satélite lógico → tabela física](effect-dictionary.md#satélite-lógico--tabela-física-gen-9).
+
 | Kind | Satélite | Função / bridge | Call sites típicos |
 |------|----------|-----------------|-------------------|
 | `grant_resource` | `phb_effect_resource` | schedule SQL effects-only | feat/class/subclass/item/species resources |

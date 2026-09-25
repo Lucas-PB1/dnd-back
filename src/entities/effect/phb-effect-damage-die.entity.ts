@@ -1,13 +1,11 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectDicePayload } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
 export type EffectDamageAppliesTo = 'unarmed' | 'weapon';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_damage_die' })
-export class PhbEffectDamageDie {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('damage_die')
+export class PhbEffectDamageDie extends PhbEffectDicePayload {
   @Column({ type: 'text', name: 'applies_to' })
   appliesTo!: EffectDamageAppliesTo;
 

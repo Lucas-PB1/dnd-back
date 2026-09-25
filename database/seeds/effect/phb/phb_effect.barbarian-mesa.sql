@@ -27,8 +27,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'level'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'level'::rpg.effect_amount_formula, NULL FROM ins;
 
 -- Imprudente
 WITH c AS (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'),
@@ -74,8 +74,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'rage_bonus_d6'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'rage_bonus_d6'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'berserker'),
 fx AS (
@@ -100,8 +100,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'berserker'),
 fx AS (
@@ -126,8 +126,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'rage_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'rage_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'zealot'),
 fx AS (
@@ -153,8 +153,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d12' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d12' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'zealot'),
 fx AS (
@@ -196,8 +196,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'rage_bonus_d6'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'rage_bonus_d6'::rpg.effect_amount_formula, NULL FROM ins;
 
 -- Ramos da Árvore
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'world-tree'),
@@ -211,8 +211,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'eight_plus_mod_plus_pb'::rpg.effect_amount_formula, NULL FROM ins;
 
 -- Magia indiscutível
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
@@ -284,8 +284,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
 fx AS (
@@ -293,8 +293,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'cantrip-sure-strike' AND e.kind = 'table_roll'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'half_level_if_rage'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'half_level_if_rage'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
 fx AS (
@@ -318,8 +318,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d8' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d8' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
 fx AS (
@@ -327,8 +327,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'burning-hands-slap' AND e.kind = 'table_roll'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
 ins AS (
@@ -341,8 +341,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '6d6' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '6d6' FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
 fx AS (
@@ -350,8 +350,8 @@ fx AS (
   JOIN sc ON sc.id = e.owner_id
   WHERE e.action_slug = 'i-cast-fist' AND e.kind = 'table_roll'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 -- Companheiro / Forma do Selvagem
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
@@ -365,8 +365,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, false FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, false FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
 ins AS (
@@ -379,8 +379,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, true FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, true FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit')
 INSERT INTO rpg.phb_effect (
@@ -402,8 +402,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, true FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, true FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'pathofthe-primal-spirit'),
 ins AS (
@@ -416,5 +416,5 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, true FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, true FROM ins;

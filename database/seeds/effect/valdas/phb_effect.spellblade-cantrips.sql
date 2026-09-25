@@ -43,8 +43,8 @@ ins AS (
   )
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id,
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id,
   CASE sort_order WHEN 10 THEN 'cantrip1' ELSE 'cantrip2' END,
   0
 FROM ins

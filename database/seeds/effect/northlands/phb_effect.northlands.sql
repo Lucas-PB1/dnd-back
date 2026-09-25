@@ -35,8 +35,8 @@ ins AS (
          'eir-vitality-points', 1, 2, 'Surto de Vitalidade'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-eir'),
 ins AS (
@@ -49,8 +49,8 @@ ins AS (
          'eir-vitality-points', 1, 3, 'Canalizar Vitalidade'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-eir'),
 ins AS (
@@ -79,8 +79,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Lança Solar'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0
 FROM ins CROSS JOIN rpg.phb_spell s WHERE s.slug = 'chama-sagrada';
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-baldur'),
@@ -127,8 +127,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Raio de Gelo'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0 FROM ins
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0 FROM ins
 CROSS JOIN rpg.phb_spell s WHERE s.slug = 'raio-de-gelo';
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-boreas'),
@@ -149,8 +149,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 2, 'Magia de Inverno — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bonusSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bonusSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-boreas'),
 fx AS (
@@ -194,8 +194,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Conhecimento Selvagem'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'wildKnowledge', 'skill'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'wildKnowledge', 'skill'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-freyr-and-freyja'),
 spells AS (
@@ -213,8 +213,8 @@ ins AS (
   FROM feat CROSS JOIN spells
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0
 FROM ins
 JOIN spells ON spells.sort_order = ins.sort_order
 JOIN rpg.phb_spell s ON s.slug = spells.spell_slug;
@@ -228,8 +228,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 4, 'Magia Verde — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bonusSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bonusSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-freyr-and-freyja'),
 fx AS (
@@ -275,8 +275,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, spells.sort_order, spells.label
   FROM feat CROSS JOIN spells RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 1
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 1
 FROM ins JOIN spells ON spells.sort_order = ins.sort_order
 JOIN rpg.phb_spell s ON s.slug = spells.spell_slug;
 
@@ -326,8 +326,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Enganação'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'deception', 'skill'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'deception', 'skill'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-loki'),
 ins AS (
@@ -357,8 +357,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, spells.sort_order, spells.label
   FROM feat CROSS JOIN spells RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0
 FROM ins JOIN spells ON spells.sort_order = ins.sort_order
 JOIN rpg.phb_spell s ON s.slug = spells.spell_slug;
 
@@ -371,8 +371,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 5, 'Magia do Trapaceiro — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bonusSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bonusSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-loki'),
 fx AS (
@@ -425,8 +425,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 2, 'Golpe Certo'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0 FROM ins
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0 FROM ins
 CROSS JOIN rpg.phb_spell s WHERE s.slug = 'golpe-certeiro';
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-sif'),
@@ -438,8 +438,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 3, 'Proeza de Sif — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bonusSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bonusSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-sif'),
 fx AS (
@@ -491,8 +491,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 2, 'Truque — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'cantripChoice', 0 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'cantripChoice', 0 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-thor'),
 ins AS (
@@ -503,8 +503,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 3, 'Golpe Trovejante'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 1 FROM ins
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 1 FROM ins
 CROSS JOIN rpg.phb_spell s WHERE s.slug = 'destruicao-estrondosa';
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-thor'),
@@ -543,8 +543,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Ferramenta de Artesão'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'artisanTool', 'tool'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'artisanTool', 'tool'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-volund'),
 ins AS (
@@ -574,8 +574,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, spells.sort_order, spells.label
   FROM feat CROSS JOIN spells RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0
 FROM ins JOIN spells ON spells.sort_order = ins.sort_order
 JOIN rpg.phb_spell s ON s.slug = spells.spell_slug;
 
@@ -588,8 +588,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 5, 'Magia da Forja — opção'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'bonusSpell', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'bonusSpell', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-volund'),
 fx AS (
@@ -627,8 +627,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Amarrado ao Saber'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'loreSkill', 'skill'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'loreSkill', 'skill'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-wotan'),
 ins AS (
@@ -652,8 +652,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 3, 'Orientação'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, spell_level)
-SELECT ins.id, s.id, 0 FROM ins
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, spell_level)
+SELECT 'spell', ins.id, s.id, 0 FROM ins
 CROSS JOIN rpg.phb_spell s WHERE s.slug = 'orientacao';
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-wotan'),
@@ -665,8 +665,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 4, 'Qualquer magia de 1º'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, option_key, spell_level)
-SELECT id, 'anyFirstLevel', 1 FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, spell_level)
+SELECT 'spell', id, 'anyFirstLevel', 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-wotan'),
 fx AS (
@@ -709,8 +709,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Suprimentos de Cervejeiro'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'brewersSupplies', 'tool'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'brewersSupplies', 'tool'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'brewer'),
 ins AS (
@@ -721,8 +721,8 @@ ins AS (
          'on_purchase'::rpg.effect_trigger, 1, 2, 'Desconto comida/bebida'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_purchase_discount (effect_id, percent_off, non_magic_only, food_drink_only)
-SELECT id, 50, FALSE, TRUE FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, percent_off, non_magic_only, food_drink_only)
+SELECT 'purchase_discount', id, 50, FALSE, TRUE FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'brewer'),
 ins AS (
@@ -764,8 +764,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Sobrevivência'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'survival', 'skill'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'survival', 'skill'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'fisher'),
 ins AS (
@@ -800,8 +800,8 @@ ins AS (
          'on_build'::rpg.effect_trigger, 1, 1, 'Ferramentas de Navegador'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id, 'navigatorsTools', 'tool'::rpg.effect_proficiency_kind FROM ins;
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id, 'navigatorsTools', 'tool'::rpg.effect_proficiency_kind FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'northern-raider'),
 ins AS (
@@ -864,8 +864,8 @@ ins AS (
   ) AS v(kind, sort_order, label)
   RETURNING id, sort_order
 )
-INSERT INTO rpg.phb_effect_proficiency (effect_id, option_key, proficiency_kind)
-SELECT id,
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, option_key, proficiency_kind)
+SELECT 'proficiency', id,
   CASE sort_order WHEN 1 THEN 'musicalInstrument' ELSE 'loreSkill' END,
   CASE sort_order
     WHEN 1 THEN 'instrument'::rpg.effect_proficiency_kind
@@ -913,8 +913,8 @@ FROM ins
 ON CONFLICT (effect_id) DO UPDATE SET note = EXCLUDED.note;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'cold-plunge-training')
-INSERT INTO rpg.phb_effect_check_advantage (effect_id, skill_slug, circumstance_tag, ability_slug)
-SELECT e.id, 'athletics', 'in_water', NULL
+INSERT INTO rpg.phb_effect_advantage (advantage_kind, effect_id, skill_slug, circumstance_tag, ability_slug)
+SELECT 'check', e.id, 'athletics', 'in_water', NULL
 FROM rpg.phb_effect e
 JOIN feat ON feat.id = e.owner_id
 WHERE e.owner_kind = 'feat'
@@ -1063,8 +1063,8 @@ ins AS (
   FROM feat
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id, option_key, spell_level)
-SELECT ins.id, s.id, 'bonusSpell', 1
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id, option_key, spell_level)
+SELECT 'spell', ins.id, s.id, 'bonusSpell', 1
 FROM ins
 CROSS JOIN rpg.phb_spell s
 WHERE s.slug = 'curar-ferimentos';
@@ -1124,8 +1124,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 1, 'Passo na Neve'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-skadi'),
 fx AS (
@@ -1167,8 +1167,8 @@ fx AS (
   JOIN feat ON feat.id = e.owner_id
   WHERE e.owner_kind = 'feat' AND e.kind = 'reduce_exhaustion_on_rest'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula,
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula,
   CASE WHEN trigger = 'on_rest_short' THEN 1 ELSE 2 END
 FROM fx;
 
@@ -1225,8 +1225,8 @@ fx AS (
   SELECT e.id FROM rpg.phb_effect e JOIN feat ON feat.id = e.owner_id
   WHERE e.kind = 'ac_bonus'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
 
 -- —— spear-expert ——
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'spear-expert'),
@@ -1257,8 +1257,8 @@ fx AS (
   SELECT e.id FROM rpg.phb_effect e JOIN feat ON feat.id = e.owner_id
   WHERE e.kind = 'ac_bonus'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM fx;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'spear-expert'),
 fx AS (
@@ -1409,8 +1409,8 @@ ins AS (
          'on_damage_roll'::rpg.effect_trigger, 1, 1, 'Selvageria +PB'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'savagery'),
 fx AS (
@@ -1433,8 +1433,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 2, 'Ombro a Ombro +1'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 1 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'shield-wall'),
 fx AS (
@@ -1457,8 +1457,8 @@ ins AS (
          'passive'::rpg.effect_trigger, 1, 1, 'Escaramuçador +3 m'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 10 FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'skirmisher'),
 ins AS (
@@ -1469,8 +1469,8 @@ ins AS (
          'on_damage_roll'::rpg.effect_trigger, 1, 2, 'Golpear e Desaparecer'
   FROM feat RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'proficiency_bonus'::rpg.effect_amount_formula, NULL FROM ins;
 
 WITH feat AS (SELECT id FROM rpg.phb_feat WHERE slug = 'skirmisher'),
 fx AS (

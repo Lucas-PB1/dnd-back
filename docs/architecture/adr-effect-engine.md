@@ -16,7 +16,7 @@ Queremos autorar traços (talento, espécie, classe, item, heritage) como **comp
 ## Decisão
 
 1. Tabela unificada `rpg.phb_effect` (`kind` + `owner` + `trigger` + portões comuns).
-2. **Satélites tipados** por família de params (`phb_effect_spell`, `phb_effect_cast_economy`, `phb_effect_numeric`, …) — **sem** JSONB como SSOT mecânico.
+2. **Satélites tipados** por família de params (`phb_effect_spell`, `phb_effect_cast_economy`, `phb_effect_numeric`, …) — **sem** JSONB como SSOT mecânico. Desde GEN-9, payloads de mesmo shape compartilham tabela com discriminador (TypeORM STI; ver [`effect-dictionary.md`](effect-dictionary.md#satélite-lógico--tabela-física-gen-9)).
 3. Dicionário fechado de `kind` (doc vivo); kind novo = satélite + serviço + entrada no dicionário no mesmo PR.
 4. Runtime em `src/game/effects/` (loader + executor por kind).
 5. Irredutíveis (metamagia, forma selvagem de druida, fluxos com UI especial) permanecem em handlers até existir kind honesto. Toggle de Fúria/Imprudente e companion de mesa usam kinds genéricos (`toggle_combat_flag`, `sync_companion`, `companion_command`).

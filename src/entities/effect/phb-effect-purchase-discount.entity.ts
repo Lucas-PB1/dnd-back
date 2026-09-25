@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { ChildEntity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { PhbEffectScalar } from './phb-effect-payload-groups.entity';
 import { PhbEffect } from './phb-effect.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_effect_purchase_discount' })
-export class PhbEffectPurchaseDiscount {
-  @PrimaryColumn({ type: 'bigint', name: 'effect_id' })
-  effectId!: string;
-
+@ChildEntity('purchase_discount')
+export class PhbEffectPurchaseDiscount extends PhbEffectScalar {
   @Column({ type: 'int', name: 'percent_off' })
   percentOff!: number;
 

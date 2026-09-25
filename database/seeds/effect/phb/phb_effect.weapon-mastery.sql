@@ -16,8 +16,8 @@ ins AS (
   )
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'attack_ability_mod'::rpg.effect_amount_formula, NULL FROM ins
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'attack_ability_mod'::rpg.effect_amount_formula, NULL FROM ins
 ON CONFLICT (effect_id) DO NOTHING;
 
 -- Vex: vantagem até consumir vs o alvo
@@ -107,8 +107,8 @@ ins AS (
   )
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'fixed'::rpg.effect_amount_formula, 3 FROM ins
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'fixed'::rpg.effect_amount_formula, 3 FROM ins
 ON CONFLICT (effect_id) DO NOTHING;
 
 -- Nick: ataque leve extra na ação Atacar

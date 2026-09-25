@@ -41,6 +41,7 @@ import './effect/phb-effect-save.entity';
 import './effect/phb-effect-save-advantage.entity';
 import './effect/phb-effect-sense.entity';
 import './effect/phb-effect-spell.entity';
+import './effect/phb-effect-payload-groups.entity';
 import './effect/phb-effect-table-roll.entity';
 import './effect/phb-effect-temp-hp.entity';
 import './effect/phb-effect-weapon.entity';

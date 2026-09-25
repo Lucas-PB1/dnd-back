@@ -48,7 +48,7 @@ Rules: `catalog-sql-first.mdc` · `file-size.mdc` · `typescript-docs.mdc`
 | **GEN-6** | ~~Stat-block children: unificar creature↔vehicle (+ opcional actor snapshot)~~ **feito** | M | GEN-1 | −3 |
 | **GEN-7** | ~~Matar tabelas **de feature** → catalog/effect/option~~ **feito** (−5; manobras KEEP) | L | GEN-2…4 | −5 |
 | **GEN-8** | ~~Combate: uma sessão + participantes (skirmish/duel/encounter)~~ **feito** | L | GEN-6 | −3 |
-| **GEN-9** | Effect satellites: **agrupar por shape** (não JSONB total sem ADR) | L | GEN-7 | −15…−17 |
+| **GEN-9** | ~~Effect satellites: **agrupar por shape** (não JSONB total sem ADR)~~ **feito** (G2) | L | GEN-7 | −10 |
 | **GEN-10** | `player_character_state`: flags/trackers genéricos (sem coluna por poder) | M | GEN-7 | 0 (ou +1 flag table) |
 
 Ordem sugerida: **GEN-0 → 1 → 2 → 3 → 4/5 → 6 → 7 → 10 → 8 → 9**.  
@@ -134,9 +134,19 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 
 ### GEN-9 — Effect payloads
 
-- [ ] ADR: G2 (agrupar shapes) vs G3 (JSONB) — default **G2**
-- [ ] Migrar satélites isomórficos primeiro (grant_ref, advantage, sense…)
-- [ ] Effect dictionary + seeds + engine loaders
+**ADR (inline)**
+
+- **Decisão: G2.** G3 (JSONB) rejeitado — perde CHECK/FK por kind e exigiria reescrever o runner.
+- **Grupos (15 → 5, −10 tabelas; 27 → 17 satélites):** `phb_effect_grant_ref(grant_kind)` = spell/feat/language/proficiency/damage_type; `phb_effect_scalar(scalar_kind)` = numeric/reach/companion/purchase_discount; `phb_effect_advantage(advantage_kind)` = check/save; `phb_effect_sense_env(sense_env_kind)` = sense/environmental_immunity; `phb_effect_dice(dice_kind)` absorve damage_die. PK segue `effect_id` (1 payload por grupo por effect — verificado nos dados antes do merge).
+- **Integridade:** CHECK por kind obriga as colunas do payload e zera as dos outros (colunas sem default; seeds explícitos). FKs (`spell_id`, `language_slug`) preservadas.
+- **TypeORM:** STI — pai por grupo em `phb-effect-payload-groups.entity.ts`; as 15 entities viram `@ChildEntity(valor)`. O JOIN eager `OneToOne` (lado inverso) recebe `AND <discriminador>='valor'` do próprio TypeORM ⇒ relações `PhbEffect.spell`, `.numeric`, … e **todos os consumidores inalterados**.
+- **Mantidos 1:1** (shape único ou semântica própria): cast_economy, resource, combat_mod, note, weapon, rest_quirk, condition, save, forced_movement, combat_flag, table_roll, temp_hp. A estimativa −15…−17 da auditoria contava fundir parte desses; fica como follow-up só se aparecer shape comum real.
+- **Seeds:** 310 INSERTs reescritos mecanicamente (`INSERT INTO <grupo> (<disc>, …) SELECT '<valor>', …`).
+
+- [x] ADR: G2 (agrupar shapes) vs G3 (JSONB) — **G2**
+- [x] Migrar satélites isomórficos (grant_ref, scalar, advantage, sense_env, dice)
+- [x] Effect dictionary (tabela lógico→físico) + seeds + engine loaders (sem mudança de consumidor)
+- [x] `db:setup` verde + smoke ORM: 1394 effects, 412 payloads, 0 cruzamentos entre kinds
 
 ### GEN-10 — PC state genérico
 
@@ -157,7 +167,7 @@ GEN-8 e GEN-9 são os de maior risco de API/engine — ADR curto antes de codar.
 - [x] GEN-0…1 fechados (higiene + docs)
 - [x] Pelo menos pacote conservador GEN-2…6 feito (≈ −12 tabelas)
 - [x] GEN-7: zero tabelas novas “de feature” no schema SSOT (purge Masks/Beastborne/Slayer/WS; manobras KEEP documentado)
-- [ ] GEN-8/9: ADR + implementação ou adiados com motivo em Notas do [`backlog.md`](backlog.md) (GEN-8 feito)
+- [x] GEN-8/9: ADR + implementação (inline acima)
 - [ ] `data-model.md` / `catalog-patterns.md` atualizados
 - [ ] Plano filho **apagado** quando a trilha fechar (política docs)
 

@@ -13,8 +13,8 @@ ins AS (
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_spell (effect_id, spell_id)
-SELECT ins.id, sp.id
+INSERT INTO rpg.phb_effect_grant_ref (grant_kind, effect_id, spell_id)
+SELECT 'spell', ins.id, sp.id
 FROM ins
 CROSS JOIN (SELECT id FROM rpg.phb_spell WHERE slug = 'marca-do-predador') sp;
 
@@ -46,8 +46,8 @@ ins AS (
   FROM cls
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_dice (effect_id, die)
-SELECT id, '1d8' FROM ins;
+INSERT INTO rpg.phb_effect_dice (dice_kind, effect_id, die)
+SELECT 'dice', id, '1d8' FROM ins;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
 fx AS (
@@ -55,8 +55,8 @@ fx AS (
   JOIN cls ON cls.id = e.owner_id
   WHERE e.action_slug = 'tireless' AND e.kind = 'temp_hp'
 )
-INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-SELECT id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+SELECT 'numeric', id, 'ability_mod'::rpg.effect_amount_formula, NULL FROM fx;
 
 WITH cls AS (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
 fx AS (
@@ -192,8 +192,8 @@ ins AS (
   RETURNING id
 ),
 num AS (
-  INSERT INTO rpg.phb_effect_numeric (effect_id, amount_formula, flat)
-  SELECT id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins
+  INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, amount_formula, flat)
+  SELECT 'numeric', id, 'dice_1d4'::rpg.effect_amount_formula, NULL FROM ins
   RETURNING effect_id
 )
 INSERT INTO rpg.phb_effect_table_roll (effect_id, result_scale, apply_bestial_aspect)
@@ -221,8 +221,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, false FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, false FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master'),
 ins AS (
@@ -235,8 +235,8 @@ ins AS (
   FROM sc
   RETURNING id
 )
-INSERT INTO rpg.phb_effect_companion (effect_id, restore_hp)
-SELECT id, true FROM ins;
+INSERT INTO rpg.phb_effect_scalar (scalar_kind, effect_id, restore_hp)
+SELECT 'companion', id, true FROM ins;
 
 WITH sc AS (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master')
 INSERT INTO rpg.phb_effect (
