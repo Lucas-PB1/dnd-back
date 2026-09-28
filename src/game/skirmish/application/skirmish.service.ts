@@ -215,6 +215,7 @@ export class SkirmishService {
       pcReactionAvailable: true,
       pcOaAvailable: false,
       pcSavageAttackerUsed: false,
+      pendingDamageChoice: null,
       combatLog: [
         {
           at: new Date().toISOString(),
@@ -316,11 +317,19 @@ export class SkirmishService {
       throw new ForbiddenException('Wait for the creature turn to resolve');
     }
     await this.assertPcCanAct(skirmish);
+    if (skirmish.pendingDamageChoice) {
+      throw new BadRequestException('Escolha de dano pendente');
+    }
     if ((skirmish.turnAttacksRemaining ?? 1) <= 0) {
       throw new BadRequestException('Sem ataques restantes neste turno');
     }
     if (dto.savageAttacker) {
       await this.assertSavageAttackerAllowed(userId, skirmish);
+      if (dto.battleMasterManeuverSlug) {
+        throw new BadRequestException(
+          'Atacante Selvagem não pode combinar manobra neste fluxo',
+        );
+      }
     }
     const rolled = await this.resolveAttack(
       userId,
@@ -328,8 +337,44 @@ export class SkirmishService {
       attacker,
       target,
       dto,
+      null,
+      !dto.savageAttacker,
     );
-    if (dto.savageAttacker) {
+    if (
+      dto.savageAttacker &&
+      rolled.hit &&
+      rolled.damageTotal != null &&
+      rolled.damageExpression != null &&
+      rolled.alternateDamageRolls?.[0]
+    ) {
+      const alternate = rolled.alternateDamageRolls[0];
+      skirmish.pendingDamageChoice = {
+        attackerCombatantId: attacker.id,
+        targetCombatantId: target.id,
+        attackTotal: rolled.attackTotal,
+        attackExpression: rolled.attackExpression,
+        attackRolls: rolled.attackRolls,
+        targetAc: rolled.targetAc,
+        critical: rolled.critical,
+        note: rolled.note,
+        base: {
+          expression: rolled.damageExpression,
+          total: rolled.damageTotal,
+          rolls: rolled.damageRolls,
+        },
+        alternate,
+      };
+      await this.repo.saveSkirmish(skirmish);
+      const detail = await this.detailOf(skirmish);
+      return this.attackResult(attacker.id, target.id, rolled, detail, null, {
+        attackTotal: rolled.attackTotal,
+        targetAc: rolled.targetAc,
+        critical: rolled.critical,
+        base: skirmish.pendingDamageChoice.base,
+        alternate,
+      });
+    }
+    if (dto.savageAttacker && rolled.hit) {
       skirmish.pcSavageAttackerUsed = true;
     }
     skirmish.turnAttacksRemaining = Math.max(
@@ -342,21 +387,93 @@ export class SkirmishService {
       this.attackLogLine(attacker.displayName, target.displayName, rolled),
     );
     await this.maybeFinish(skirmish);
-    const detail = await this.detailOf(skirmish);
+    return this.attackResult(
+      attacker.id,
+      target.id,
+      rolled,
+      await this.detailOf(skirmish),
+    );
+  }
+
+  async chooseDamage(
+    userId: string,
+    id: string,
+    choice: 'base' | 'alternate',
+  ): Promise<SkirmishAttackResultDto> {
+    const skirmish = await this.requireOwned(userId, id);
+    this.assertActive(skirmish);
+    const pending = skirmish.pendingDamageChoice;
+    if (!pending) {
+      throw new BadRequestException('Nenhuma escolha de dano pendente');
+    }
+    const combatants = await this.repo.listCombatants(skirmish.id);
+    const attacker = combatants.find(
+      (row) => row.id === pending.attackerCombatantId,
+    );
+    const target = combatants.find(
+      (row) => row.id === pending.targetCombatantId,
+    );
+    if (!attacker || !target || attacker.kind !== 'pc') {
+      throw new BadRequestException('Ataque pendente inválido');
+    }
+    const selected = choice === 'alternate' ? pending.alternate : pending.base;
+    const rolled: CombatAttackRoll & { targetAc: number } = {
+      hit: true,
+      critical: pending.critical,
+      attackTotal: pending.attackTotal,
+      attackExpression: pending.attackExpression,
+      attackRolls: pending.attackRolls,
+      naturalD20: 0,
+      damageTotal: selected.total,
+      damageExpression: selected.expression,
+      damageRolls: selected.rolls,
+      note: pending.note,
+      targetAc: pending.targetAc,
+    };
+    await this.applyAttackDamage(userId, skirmish, target, rolled);
+    skirmish.pendingDamageChoice = null;
+    skirmish.pcSavageAttackerUsed = true;
+    skirmish.turnAttacksRemaining = Math.max(
+      0,
+      (skirmish.turnAttacksRemaining ?? 1) - 1,
+    );
+    await this.repo.saveSkirmish(skirmish);
+    await this.appendLog(
+      skirmish,
+      `${this.attackLogLine(attacker.displayName, target.displayName, rolled)} · Atacante Selvagem: ${choice === 'alternate' ? 'segunda' : 'primeira'} rolagem escolhida`,
+    );
+    await this.maybeFinish(skirmish);
+    return this.attackResult(
+      attacker.id,
+      target.id,
+      rolled,
+      await this.detailOf(skirmish),
+    );
+  }
+
+  private attackResult(
+    attackerCombatantId: string,
+    targetCombatantId: string,
+    rolled: CombatAttackRoll & { targetAc: number },
+    skirmish: SkirmishDetailDto,
+    damageTotal = rolled.hit ? rolled.damageTotal : null,
+    damageChoice: SkirmishAttackResultDto['damageChoice'] = null,
+  ): SkirmishAttackResultDto {
     return {
-      skirmish: detail,
+      skirmish,
       hit: rolled.hit,
       critical: rolled.critical,
       attackTotal: rolled.attackTotal,
       attackExpression: rolled.attackExpression,
       attackRolls: rolled.attackRolls,
       targetAc: rolled.targetAc,
-      damageTotal: rolled.hit ? rolled.damageTotal : null,
-      damageExpression: rolled.hit ? rolled.damageExpression : null,
-      damageRolls: rolled.hit ? rolled.damageRolls : [],
+      damageTotal,
+      damageExpression: damageTotal == null ? null : rolled.damageExpression,
+      damageRolls: damageTotal == null ? [] : rolled.damageRolls,
       note: rolled.note,
-      attackerCombatantId: attacker.id,
-      targetCombatantId: target.id,
+      attackerCombatantId,
+      targetCombatantId,
+      damageChoice,
     };
   }
 
@@ -456,6 +573,7 @@ export class SkirmishService {
       note: rolled.note,
       attackerCombatantId: pc.id,
       targetCombatantId: actorTarget.id,
+      damageChoice: null,
     };
   }
 
@@ -852,6 +970,7 @@ export class SkirmishService {
     target: SkirmishCombatant,
     dto: ResolveSkirmishAttackDto | Record<string, never>,
     defenderReaction: IncomingHitDefenseKind | null = null,
+    applyDamage = true,
   ): Promise<CombatAttackRoll & { targetAc: number }> {
     const targetAc = await resolveCombatantArmorClass({
       loadPc: (characterId) =>
@@ -945,6 +1064,7 @@ export class SkirmishService {
         ? dto.battleMasterManeuverSlug
         : undefined;
     if (
+      applyDamage &&
       rolled.hit &&
       maneuverSlug &&
       attacker.kind === 'pc' &&
@@ -979,33 +1099,41 @@ export class SkirmishService {
       };
     }
 
-    if (rolled.damageTotal != null && rolled.damageTotal > 0 && rolled.hit) {
-      const applied = await applyCombatantHpDamage({
-        loadCharacter: (characterId) =>
-          this.characters
-            .findOwnedOrFail(userId, characterId)
-            .catch(() => null),
-        characterState: this.characterState,
-        actorState: this.actorState,
-        actors: this.actors,
-        target,
-        damage: rolled.damageTotal,
-        dataSource: this.dataSource,
-      });
-      const concNote = noteSkirmishConcentrationBreak({
-        skirmish,
-        damagedCharacterId: target.characterId,
-        concentration: applied.concentration,
-      });
-      if (concNote) {
-        await this.repo.saveSkirmish(skirmish);
-        await this.appendLog(skirmish, concNote);
-      }
-      if (applied.concentration.broken && target.kind === 'pc') {
-        await this.repairTurnAfterSpiritDespawn(skirmish);
-      }
-    }
+    if (applyDamage) await this.applyAttackDamage(userId, skirmish, target, rolled);
     return { ...rolled, targetAc: effectiveAc };
+  }
+
+  private async applyAttackDamage(
+    userId: string,
+    skirmish: Skirmish,
+    target: SkirmishCombatant,
+    rolled: CombatAttackRoll,
+  ): Promise<void> {
+    if (rolled.damageTotal == null || rolled.damageTotal <= 0 || !rolled.hit) {
+      return;
+    }
+    const applied = await applyCombatantHpDamage({
+      loadCharacter: (characterId) =>
+        this.characters.findOwnedOrFail(userId, characterId).catch(() => null),
+      characterState: this.characterState,
+      actorState: this.actorState,
+      actors: this.actors,
+      target,
+      damage: rolled.damageTotal,
+      dataSource: this.dataSource,
+    });
+    const concNote = noteSkirmishConcentrationBreak({
+      skirmish,
+      damagedCharacterId: target.characterId,
+      concentration: applied.concentration,
+    });
+    if (concNote) {
+      await this.repo.saveSkirmish(skirmish);
+      await this.appendLog(skirmish, concNote);
+    }
+    if (applied.concentration.broken && target.kind === 'pc') {
+      await this.repairTurnAfterSpiritDespawn(skirmish);
+    }
   }
 
   private async resolveVisionAdvantage(
@@ -1361,6 +1489,9 @@ export class SkirmishService {
   }
 
   private async assertPcCanAct(skirmish: Skirmish): Promise<void> {
+    if (skirmish.pendingDamageChoice) {
+      throw new BadRequestException('Escolha de dano pendente');
+    }
     const current = await this.currentCombatant(skirmish);
     if (current.kind !== 'pc') {
       throw new ForbiddenException('Not this combatant turn');

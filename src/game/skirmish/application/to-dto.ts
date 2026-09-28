@@ -163,5 +163,14 @@ export async function toSkirmishDetail(input: {
     awaitingActorResolution: awaitingActor,
     canOpportunityAttack: oaGate.ok,
     combatLog: input.skirmish.combatLog,
+    pendingDamageChoice: input.skirmish.pendingDamageChoice
+      ? {
+          attackTotal: input.skirmish.pendingDamageChoice.attackTotal,
+          targetAc: input.skirmish.pendingDamageChoice.targetAc,
+          critical: input.skirmish.pendingDamageChoice.critical,
+          base: input.skirmish.pendingDamageChoice.base,
+          alternate: input.skirmish.pendingDamageChoice.alternate,
+        }
+      : null,
   };
 }

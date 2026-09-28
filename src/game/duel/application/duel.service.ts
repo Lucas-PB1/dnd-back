@@ -134,6 +134,19 @@ export class DuelService {
     return this.toDetail(duel, members, userId);
   }
 
+  async chooseDamage(
+    userId: string,
+    duelId: string,
+    choice: 'base' | 'alternate',
+  ): Promise<DuelDetailDto> {
+    const { duel, members } = await this.combat.chooseDamage(
+      userId,
+      duelId,
+      choice,
+    );
+    return this.toDetail(duel, members, userId);
+  }
+
   async castSpell(
     userId: string,
     duelId: string,

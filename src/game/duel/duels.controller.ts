@@ -23,6 +23,7 @@ import { AuthUser } from '@identity/auth-user';
 import { DuelService } from './application/duel.service';
 import {
   CreateDuelDto,
+  ChooseDuelDamageDto,
   DuelAttackDto,
   DuelCastSpellDto,
   DuelConditionDto,
@@ -102,6 +103,18 @@ export class DuelsController {
     @Body() dto: DuelAttackDto,
   ): Promise<DuelDetailDto> {
     return this.duels.attack(user.id, id, dto);
+  }
+
+  @Post(':id/choose-damage')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Choose a pending Savage Attacker damage roll' })
+  @ApiOkResponse({ type: DuelDetailDto })
+  chooseDamage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ChooseDuelDamageDto,
+  ): Promise<DuelDetailDto> {
+    return this.duels.chooseDamage(user.id, id, dto.choice);
   }
 
   @Post(':id/cast')

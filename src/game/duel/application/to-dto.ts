@@ -189,5 +189,13 @@ export function toDetailDto(input: {
     seesInMagicalDarkness:
       viewerRole === 'participant' ? input.seesInMagicalDarkness : false,
     combatLog,
+    pendingDamageChoice:
+      viewerRole === 'participant' &&
+      mine?.characterId === duel.pendingDamageChoice?.attackerCharacterId
+        ? {
+            base: duel.pendingDamageChoice.base,
+            alternate: duel.pendingDamageChoice.alternate,
+          }
+        : null,
   };
 }

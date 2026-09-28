@@ -54,6 +54,9 @@ export class Skirmish extends CombatSession {
   @Column({ name: 'pc_savage_attacker_used', type: 'boolean', default: false })
   pcSavageAttackerUsed!: boolean;
 
+  @Column({ name: 'pending_damage_choice', type: 'jsonb', nullable: true })
+  pendingDamageChoice!: SkirmishPendingDamageChoice | null;
+
   @Column({ name: 'winner_kind', type: 'text', nullable: true })
   winnerKind!: SkirmishWinnerKind | null;
 
@@ -66,3 +69,16 @@ export class Skirmish extends CombatSession {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 }
+
+export type SkirmishPendingDamageChoice = {
+  attackerCombatantId: string;
+  targetCombatantId: string;
+  attackTotal: number;
+  attackExpression: string;
+  attackRolls: number[];
+  targetAc: number;
+  critical: boolean;
+  note: string | null;
+  base: { expression: string; total: number; rolls: number[] };
+  alternate: { expression: string; total: number; rolls: number[] };
+};

@@ -90,6 +90,29 @@ export class ResolveSkirmishAttackDto extends CombatAttackFlagsDto {
   battleMasterManeuverSlug?: string;
 }
 
+export class ChooseSkirmishDamageDto {
+  @ApiProperty({ enum: ['base', 'alternate'] })
+  @IsIn(['base', 'alternate'])
+  choice!: 'base' | 'alternate';
+}
+
+export class SkirmishDamageChoiceDto {
+  @ApiProperty()
+  attackTotal!: number;
+
+  @ApiProperty()
+  targetAc!: number;
+
+  @ApiProperty()
+  critical!: boolean;
+
+  @ApiProperty({ type: Object })
+  base!: { expression: string; total: number; rolls: number[] };
+
+  @ApiProperty({ type: Object })
+  alternate!: { expression: string; total: number; rolls: number[] };
+}
+
 export class CastSkirmishSpellDto {
   @ApiProperty({ example: 'raio-de-fogo' })
   @IsString()
@@ -352,6 +375,9 @@ export class SkirmishDetailDto extends SkirmishSummaryDto {
 
   @ApiProperty({ type: [SkirmishLogEntryDto] })
   combatLog!: SkirmishLogEntryDto[];
+
+  @ApiPropertyOptional({ type: SkirmishDamageChoiceDto, nullable: true })
+  pendingDamageChoice!: SkirmishDamageChoiceDto | null;
 }
 
 export class SkirmishAttackResultDto {
@@ -393,4 +419,7 @@ export class SkirmishAttackResultDto {
 
   @ApiProperty()
   targetCombatantId!: string;
+
+  @ApiPropertyOptional({ type: SkirmishDamageChoiceDto, nullable: true })
+  damageChoice!: SkirmishDamageChoiceDto | null;
 }

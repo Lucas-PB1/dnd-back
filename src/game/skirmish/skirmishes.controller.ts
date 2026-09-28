@@ -26,6 +26,7 @@ import { SkirmishService } from './application/skirmish.service';
 import {
   AppendSkirmishLogDto,
   CastSkirmishSpellDto,
+  ChooseSkirmishDamageDto,
   CreateSkirmishDto,
   EndSkirmishTurnDto,
   PatchSkirmishConditionDto,
@@ -82,6 +83,18 @@ export class SkirmishesController {
     @Body() dto: ResolveSkirmishAttackDto,
   ): Promise<SkirmishAttackResultDto> {
     return this.skirmishes.attack(user.id, id, dto);
+  }
+
+  @Post(':id/choose-damage')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Choose a pending Savage Attacker damage roll' })
+  @ApiOkResponse({ type: SkirmishAttackResultDto })
+  chooseDamage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ChooseSkirmishDamageDto,
+  ): Promise<SkirmishAttackResultDto> {
+    return this.skirmishes.chooseDamage(user.id, id, dto.choice);
   }
 
   @Post(':id/end-turn')

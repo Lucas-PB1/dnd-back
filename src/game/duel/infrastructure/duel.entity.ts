@@ -13,6 +13,16 @@ export type DuelCombatLogEntry = {
   text: string;
 };
 
+export type DuelPendingDamageChoice = {
+  attackerCharacterId: string;
+  defenderCharacterId: string;
+  attackLabel: string;
+  visionNote: string;
+  critical: boolean;
+  base: { expression: string; total: number; rolls: number[] };
+  alternate: { expression: string; total: number; rolls: number[] };
+};
+
 @ChildEntity('duel')
 export class Duel extends CombatSession {
   @Column({ type: 'text', default: 'open' })
@@ -32,6 +42,12 @@ export class Duel extends CombatSession {
 
   @Column({ name: 'turn_attacks_remaining', type: 'int', nullable: true })
   turnAttacksRemaining!: number | null;
+
+  @Column({ name: 'savage_attacker_used', type: 'boolean', default: false })
+  savageAttackerUsed!: boolean;
+
+  @Column({ name: 'pending_damage_choice', type: 'jsonb', nullable: true })
+  pendingDamageChoice!: DuelPendingDamageChoice | null;
 
   @Column({ name: 'combat_log', type: 'jsonb', default: [] })
   combatLog!: DuelCombatLogEntry[];

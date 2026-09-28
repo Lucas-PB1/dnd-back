@@ -62,6 +62,13 @@ export class DuelAttackDto {
   @IsIn(['melee', 'ranged'])
   mode!: 'melee' | 'ranged';
 
+  @ApiPropertyOptional({
+    description: 'Atacante Selvagem: rola duas vezes e aguarda a escolha do dano',
+  })
+  @IsOptional()
+  @IsBoolean()
+  savageAttacker?: boolean;
+
   @ApiPropertyOptional({ type: DuelBloodStrikeDto })
   @IsOptional()
   @ValidateNested()
@@ -333,6 +340,20 @@ export class DuelCombatLogEntryDto {
   text!: string;
 }
 
+export class DuelDamageChoiceDto {
+  @ApiProperty({ type: Object })
+  base!: { expression: string; total: number; rolls: number[] };
+
+  @ApiProperty({ type: Object })
+  alternate!: { expression: string; total: number; rolls: number[] };
+}
+
+export class ChooseDuelDamageDto {
+  @ApiProperty({ enum: ['base', 'alternate'] })
+  @IsIn(['base', 'alternate'])
+  choice!: 'base' | 'alternate';
+}
+
 export class DuelMemberDto {
   @ApiProperty()
   userId!: string;
@@ -448,4 +469,7 @@ export class DuelDetailDto extends DuelSummaryDto {
 
   @ApiProperty({ type: [DuelCombatLogEntryDto] })
   combatLog!: DuelCombatLogEntryDto[];
+
+  @ApiPropertyOptional({ type: DuelDamageChoiceDto, nullable: true })
+  pendingDamageChoice!: DuelDamageChoiceDto | null;
 }

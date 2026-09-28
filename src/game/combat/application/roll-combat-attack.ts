@@ -21,6 +21,11 @@ export type CombatAttackRoll = {
   damageTotal: number | null;
   damageExpression: string | null;
   damageRolls: number[];
+  alternateDamageRolls?: Array<{
+    expression: string;
+    total: number;
+    rolls: number[];
+  }>;
   note: string | null;
 };
 
@@ -205,6 +210,7 @@ export async function rollPcCombatAttack(input: {
     damageTotal: damage.total,
     damageExpression: damage.expression,
     damageRolls: damage.rolls ?? [],
+    alternateDamageRolls: damage.alternateRolls,
     note: notes.join(' · ') || null,
   };
 }

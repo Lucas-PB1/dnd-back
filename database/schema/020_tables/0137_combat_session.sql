@@ -24,9 +24,11 @@ CREATE TABLE rpg.combat_session (
   pc_reaction_available BOOLEAN NOT NULL DEFAULT TRUE,
   pc_oa_available BOOLEAN NOT NULL DEFAULT FALSE,
   pc_savage_attacker_used BOOLEAN NOT NULL DEFAULT FALSE,
+  pending_damage_choice JSONB,
   winner_kind rpg.combatant_kind,
   -- duel + skirmish
   turn_attacks_remaining INT CHECK (turn_attacks_remaining IS NULL OR turn_attacks_remaining >= 0),
+  savage_attacker_used BOOLEAN NOT NULL DEFAULT FALSE,
   combat_log JSONB NOT NULL DEFAULT '[]'::jsonb,
   arena_effects TEXT[] NOT NULL DEFAULT '{}',
   arena_effect_source_character_id UUID REFERENCES rpg.player_character(id) ON DELETE SET NULL,
