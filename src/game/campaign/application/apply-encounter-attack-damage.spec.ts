@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { applyEncounterAttackDamage } from './apply-encounter-attack-damage';
 import { combatantFixture as combatant } from '@common/testing/combatant.fixture';
+import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 
 describe('applyEncounterAttackDamage', () => {
   it('skips when damage is zero', async () => {
@@ -17,7 +18,11 @@ describe('applyEncounterAttackDamage', () => {
   });
 
   it('applies temp HP then current HP on a PC', async () => {
-    const character = { id: 'c1', hitPointsCurrent: 20 };
+    const character = {
+      id: 'c1',
+      hitPointsCurrent: 20,
+      abilityScores: DEFAULT_ABILITY_SCORES,
+    };
     const campaigns = {
       findCharactersByIds: jest.fn().mockResolvedValue([character]),
     };
@@ -47,7 +52,11 @@ describe('applyEncounterAttackDamage', () => {
   });
 
   it('patches actor HP and temp HP', async () => {
-    const actor = { id: 'actor1', hitPointsCurrent: 12 };
+    const actor = {
+      id: 'actor1',
+      hitPointsCurrent: 12,
+      abilityScores: DEFAULT_ABILITY_SCORES,
+    };
     const actors = { findOne: jest.fn().mockResolvedValue(actor) };
     const actorState = {
       ensureState: jest.fn().mockResolvedValue({ tempHp: 2 }),

@@ -12,9 +12,11 @@ describe('syncTransformation', () => {
 
   it('clears transformation when null', async () => {
     await syncTransformation(asDep(dataSource), 'char-1', null);
-    expect(query).toHaveBeenCalledTimes(1);
-    expect(query.mock.calls[0][0]).toContain('DELETE FROM rpg.player_character_transformation');
+    expect(query).toHaveBeenCalledTimes(2);
+    expect(query.mock.calls[0][0]).toContain('DELETE FROM rpg.player_character_choice');
     expect(query.mock.calls[0][1]).toEqual(['char-1']);
+    expect(query.mock.calls[1][0]).toContain('DELETE FROM rpg.player_character_transformation');
+    expect(query.mock.calls[1][1]).toEqual(['char-1']);
   });
 
   it('inserts transformation and choices', async () => {
@@ -27,14 +29,14 @@ describe('syncTransformation', () => {
       ],
     });
 
-    expect(query).toHaveBeenCalledTimes(4);
-    expect(query.mock.calls[1][0]).toContain('INSERT INTO rpg.player_character_transformation');
-    expect(query.mock.calls[1][1]).toEqual([
+    expect(query).toHaveBeenCalledTimes(5);
+    expect(query.mock.calls[2][0]).toContain('INSERT INTO rpg.player_character_transformation');
+    expect(query.mock.calls[2][1]).toEqual([
       'char-1',
       'gh-transformation-vampire',
       3,
     ]);
-    expect(query.mock.calls[2][1]).toEqual(['char-1', 'stage1Boon', 'bloodline']);
-    expect(query.mock.calls[3][1]).toEqual(['char-1', 'stage2Boon', 'charm']);
+    expect(query.mock.calls[3][1]).toEqual(['char-1', 'stage1Boon', 'bloodline']);
+    expect(query.mock.calls[4][1]).toEqual(['char-1', 'stage2Boon', 'charm']);
   });
 });

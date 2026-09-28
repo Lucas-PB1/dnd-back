@@ -27,6 +27,7 @@ describe('FindWeaponsQuery', () => {
   let query: FindWeaponsQuery;
   let qb: {
     innerJoinAndSelect: jest.Mock;
+    leftJoinAndSelect: jest.Mock;
     orderBy: jest.Mock;
     addOrderBy: jest.Mock;
     andWhere: jest.Mock;
@@ -37,6 +38,7 @@ describe('FindWeaponsQuery', () => {
   beforeEach(() => {
     qb = {
       innerJoinAndSelect: jest.fn().mockReturnThis(),
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
